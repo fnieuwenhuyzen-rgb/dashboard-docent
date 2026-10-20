@@ -1,0 +1,16 @@
+{
+  "name": "Lesdag muziek",
+  "short_name": "Lesdag",
+  "description": "Voorbereiden en lesgeven muziek, CSG Prins Maurits",
+  "start_url": "./#vandaag",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5f9",
+  "theme_color": "#5B247F",
+  "lang": "nl",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

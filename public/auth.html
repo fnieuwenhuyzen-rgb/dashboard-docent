@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Inloggen…</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{font:16px system-ui,sans-serif;margin:3rem 1rem;color:#2a2230;background:#faf8fb;text-align:center}</style>
+</head>
+<body>
+<p>Je wordt teruggestuurd naar Lesdag…</p>
+<script src="vendor/msal-redirect-bridge.min.js"></script>
+<script>
+  // Antwoordpagina voor de Microsoft-login (MSAL v5 redirect bridge).
+  msalRedirectBridge.broadcastResponseToMainFrame().catch(function (e) {
+    document.body.innerHTML = '<p>Inloggen is niet gelukt: ' + String(e && e.message || e).replace(/</g, '&lt;') + '</p><p><a href="./">Terug naar Lesdag</a></p>';
+  });
+</script>
+</body>
+</html>
