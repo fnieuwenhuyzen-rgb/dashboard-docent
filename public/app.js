@@ -190,7 +190,7 @@ function planning(van, tot) {
 function benodigd(l) {
   const out = []; const add = x => { if (x && !out.includes(x)) out.push(x); };
   (l.benodigd || []).forEach(add);
-  const txt = [l.titel, l.detail, (l.fasen || []).join(' '), (l.formatief || {}).tekst, (l.formatief || {}).soort].join(' ');
+  const txt = [l.titel, l.detail, (l.fasen || []).map(LESMODUS.faseTekst).join(' '), (l.formatief || {}).tekst, (l.formatief || {}).soort].join(' ');
   for (const [re, n] of BENODIGD) if (re.test(txt)) add(n);
   return out;
 }
@@ -250,7 +250,7 @@ function uurKaart(s, x, nu) {
     <div class="regel"><span class="chip">${esc(lgNaam(lg))} · les uit lesweek ${x.item.w}</span>${diff > 0 ? `<span class="chip let">${diff} ${diff === 1 ? 'week' : 'weken'} achter op de planning</span>` : diff < 0 ? `<span class="chip ok">${-diff} week voor</span>` : ''}${plan}${ev}${u.anderLokaal ? `<span class="chip rood">ander lokaal: ${esc(u.lokaal)}</span>` : ''}${u.zermelo ? '<span class="chip">Zermelo</span>' : ''}</div>
     ${l.doel ? `<p class="doel">${esc(l.doel)}</p>` : l.detail ? `<p class="doel">${esc(l.detail)}</p>` : ''}
     ${vor && vor.st.n ? `<div class="vorige">Vorige keer${vor.st.d ? ' (' + esc(fmtD(vor.st.d)) + (vor.st.st ? ', ' + esc(vor.st.st) : '') + ')' : ''}: ${esc(vor.st.n)}</div>` : ''}
-    ${(l.fasen || []).length ? `<details class="meer"><summary>Lesverloop</summary><ol class="fasen">${l.fasen.map(f => `<li>${esc(f)}</li>`).join('')}</ol></details>` : ''}
+    ${(l.fasen || []).length ? `<details class="meer"><summary>Lesverloop</summary><ol class="fasen">${l.fasen.map(f => `<li>${esc(LESMODUS.faseTekst(f))}</li>`).join('')}</ol></details>` : ''}
     ${matLinks(l)}
     <div class="knoppen">${x.klaar ? '' : `<button class="btn hoofd" data-start="${esc(u.id)}|${s}">▶ Geef les</button>`}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button>${x.klaar ? '' : `<button class="btn" data-uitval="${s}|${u.id}">valt uit</button>`}</div>
   </div></div>`;
@@ -366,7 +366,7 @@ function openBewerk(id) {
     <label>Lesvraag <input name="vraag" value="${esc(l.vraag || '')}"></label>
     <label>Lesdoel <textarea name="doel">${esc(l.doel || '')}</textarea></label>
     <label>Inhoud <textarea name="detail">${esc(l.detail || '')}</textarea></label>
-    <label>Lesverloop (één fase per regel, begin met minuten: "10 min · instructie") <textarea name="fasen" rows="5">${esc((l.fasen || []).join('\n'))}</textarea></label>
+    <label>Lesverloop. Per fase een regel "10 min · uitleg · Kop voor de leerlingen" (soorten: start, luisteren, uitleg, doen, gesprek, check, afsluiten); daaronder "- stap", "? wat te doen als je klaar bent" en "&gt; notitie voor jezelf" <textarea name="fasen" rows="10">${esc(LESMODUS.fasenNaarTekst(l.fasen))}</textarea></label>
     <label>Formatieve check <input name="fsoort" value="${esc((l.formatief || {}).soort || '')}" placeholder="exit ticket, wisbordje…"></label>
     <label>Hoe check je het? <textarea name="ftekst">${esc((l.formatief || {}).tekst || '')}</textarea></label>
     <label>Rode draad identiteit <textarea name="identiteit">${esc(l.identiteit || '')}</textarea></label>
@@ -383,7 +383,8 @@ function sluit() { $('#drawer').classList.remove('open'); $('#scrim').hidden = t
 function bewaarBewerk(f) {
   const id = $('#drawer').dataset.id; const g = k => (f.get(k) || '').trim(); const lines = k => g(k).split('\n').map(x => x.trim()).filter(Boolean);
   const meta = $('#drawer')._matMeta || {};
-  const o = { titel: g('titel'), vraag: g('vraag'), doel: g('doel'), detail: g('detail'), fasen: lines('fasen'), identiteit: g('identiteit'), benodigd: lines('benodigd'),
+  const oudItem = reeks(id.split(':')[0]).find(x => x.id === id); const oudFasen = oudItem ? (les(oudItem).fasen || []) : [];
+  const o = { titel: g('titel'), vraag: g('vraag'), doel: g('doel'), detail: g('detail'), fasen: LESMODUS.tekstNaarFasen(g('fasen'), oudFasen), identiteit: g('identiteit'), benodigd: lines('benodigd'),
     formatief: { soort: g('fsoort'), tekst: g('ftekst') },
     materiaal: lines('materiaal').map(x => { const i = x.indexOf('|'); const m = i < 0 ? { t: x, u: '' } : { t: x.slice(0, i).trim(), u: x.slice(i + 1).trim() }; return meta[m.u] ? Object.assign({}, meta[m.u], { t: m.t }) : m; }) };
   if (f.get('type')) o.type = f.get('type');
@@ -398,29 +399,31 @@ function startLes(uurId, s) {
   let x = uurId ? p.uren.find(y => y.u.id === uurId) : null;
   if (!x) { const nu = nuMin(); x = p.uren.find(y => !y.klaar && !y.uitval && y.item && nu < minuten(y.u.eind)) || p.uren.find(y => y.item && !y.klaar && !y.uitval); }
   if (!x || !x.item) { toast('Geen les meer om te geven vandaag'); return; }
-  const l = les(x.item); const slides = [];
+  const l = les(x.item);
   const t = l.type === 'toets' ? toetsVan(x.item.lg, l.toets) : null;
-  slides.push({ k: 'titel', h: `<p class="eyebrow">${esc(x.u.groep)} · ${esc(lgNaam(x.item.lg))} · ${esc(x.u.lokaal || '')}</p><h1>${esc(l.titel || '')}</h1>${t ? `<p class="detail">${esc(t.naam)} · ${esc(t.waar || '')}</p>` : ''}${l.vraag ? `<p class="vraag">${esc(l.vraag)}</p>` : ''}` });
-  if (l.doel || (l.criteria || []).length) slides.push({ k: 'doel', h: `<p class="eyebrow">Vandaag</p><h2>${esc(l.doel || '')}</h2>${(l.criteria || []).length ? `<ul class="groot">${l.criteria.map(c => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}` });
-  if ((l.fasen || []).length) l.fasen.forEach((f, i) => { const m = f.match(/^(\d+)\s*min/i); slides.push({ k: 'fase', min: m ? +m[1] : 0, h: `<p class="eyebrow">Fase ${i + 1} van ${l.fasen.length}${m ? ' · ' + m[1] + ' minuten' : ''}</p><h2>${esc(f.replace(/^\d+\s*min\s*·?\s*/i, ''))}</h2>${i === 0 && l.detail ? `<p class="detail">${esc(l.detail)}</p>` : ''}` }); });
-  else if (l.detail) slides.push({ k: 'inhoud', h: `<p class="eyebrow">Les</p><h2>${esc(l.detail)}</h2>` });
-  if (l.formatief && (l.formatief.soort || l.formatief.tekst)) slides.push({ k: 'check', h: `<p class="eyebrow">Check · ${esc(l.formatief.soort || '')}</p><h2>${esc(l.formatief.tekst || '')}</h2>` });
-  if (l.identiteit) slides.push({ k: 'id', h: `<p class="eyebrow">Rode draad</p><h2>${esc(l.identiteit)}</h2>` });
   const th = x.item.week.thuis || {};
-  if ((l.materiaal || []).length || th.mb) slides.push({ k: 'mat', h: `<p class="eyebrow">Materiaal</p><div class="mats" style="flex-direction:column;align-items:flex-start;gap:.6rem">${(l.materiaal || []).map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}${th.mb ? `<span>Musicbox: ${esc(th.mb)} · <a href="https://digitaal.musicboxmethode.nl" target="_blank" rel="noopener">open Musicbox</a></span>` : ''}</div><div id="pv" style="display:contents"></div>` });
-  if (th.mb || th.learn || th.extra) slides.push({ k: 'thuis', h: `<p class="eyebrow">Thuis</p><ul class="groot">${th.mb ? `<li>Musicbox: ${esc(th.mb)}</li>` : ''}${th.learn ? `<li>Leren: ${esc(th.learn)}</li>` : ''}${th.extra ? `<li>${esc(th.extra)}</li>` : ''}</ul>` });
-  slides.push({ k: 'af', h: '' });
-  LES = { x, l, s, slides, i: 0, left: 0, timer: null, keuze: x.half ? 'gegeven' : 'gegeven' };
+  const vor = vorigeNotitie(x.u.groep, reeks(x.item.lg).indexOf(x.item));
+  const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
+  const slides = LESMODUS.bouwSlides(l, { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor && vor.st.n ? vor.st.n : '', benodigd: benodigd(l), materiaalHtml });
+  LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now() };
   $('#les').hidden = false; document.body.style.overflow = 'hidden'; toonSlide();
 }
 function toonSlide() {
   const P = LES; const sl = P.slides[P.i]; stopTimer();
   const body = sl.k === 'af' ? afrondenHtml() : sl.h;
-  $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)} · ${esc(P.x.u.lokaal || '')}</span><span class="sp"></span><span class="stip">${P.slides.map((_, j) => `<i class="${j === P.i ? 'nu' : ''}"></i>`).join('')}</span></div>
-  <div class="slide">${body}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button>${sl.min ? `<button class="timer" data-l="timer">⏱ <span id="tl">${pad(sl.min * 60)}</span></button>` : ''}<span class="sp"></span><button data-l="scherm">volledig scherm</button>${sl.k !== 'af' ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
-  if (sl.min) P.left = sl.min * 60;
+  const soort = sl.soort || sl.k; const kl = LESMODUS.SOORT[sl.soort];
+  const fasen = P.slides.filter(x => x.k === 'fase'); const fi = fasen.indexOf(sl);
+  if (sl.min) { P.left = sl.min * 60; P.tot = sl.min * 60; } else { P.left = 0; P.tot = 0; }
+  $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
+  $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="klok" id="klok">${klok()}</span></div>
+  <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}</div>
+  ${sl.k === 'fase' && sl.min ? timerHtml() : ''}
+  <div class="notities ${P.notities && sl.docent && sl.docent !== true ? 'open' : ''}" id="notities">${sl.docent && sl.docent !== true ? `<b>Docent</b> ${esc(sl.docent)}` : ''}</div>
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${sl.docent && sl.docent !== true ? `<button data-l="notities" aria-pressed="${P.notities}">notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
+  if (sl.min) timer(true);
 }
+function klok() { const d = new Date(); return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes(); }
+function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.left, LES.tot)}</div>`; }
 function afrondenHtml() {
   const P = LES;
   return `<div class="afronden"><p class="eyebrow">Les afronden · ${esc(P.x.u.groep)}</p><h2>${esc(P.l.titel || '')}</h2>
@@ -430,9 +433,17 @@ function afrondenHtml() {
 }
 function pad(sec) { const m = Math.floor(sec / 60), s = sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; }
 function stopTimer() { if (LES && LES.timer) { clearInterval(LES.timer); LES.timer = null; } }
-function timer() {
-  const P = LES; if (P.timer) { stopTimer(); return; }
-  P.timer = setInterval(() => { P.left--; const el = $('#tl'); if (el) { el.textContent = pad(Math.max(0, P.left)); if (P.left <= 0) el.parentElement.classList.add('over'); } }, 1000);
+function timer(auto) {
+  const P = LES; if (!P) return;
+  if (P.timer && !auto) { stopTimer(); const b = $('#tbtn'); if (b) b.textContent = 'start timer'; return; }
+  if (P.timer) return;
+  const r = 54, c = 2 * Math.PI * r;
+  P.timer = setInterval(() => {
+    P.left--; const el = $('#tl'); const ring = $('#ring'); const k = $('#klok'); if (k) k.textContent = klok();
+    if (el) el.textContent = pad(Math.max(0, P.left));
+    if (ring) { const v = ring.querySelector('.voort'); if (v) v.style.strokeDashoffset = c * (1 - Math.max(0, Math.min(1, P.left / (P.tot || 1)))); if (P.left <= 0) ring.classList.add('over'); else if (P.left <= 60) ring.classList.add('bijna'); }
+  }, 1000);
+  const b = $('#tbtn'); if (b) b.textContent = 'pauze timer';
 }
 function sluitLes() { stopTimer(); LES = null; $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
 function slaLesOp() {
@@ -462,6 +473,8 @@ document.addEventListener('click', async e => {
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
     else if (D.l === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
     else if (D.l === 'timer') timer();
+    else if (D.l === 'notities') { LES.notities = !LES.notities; $('#notities').classList.toggle('open', LES.notities); b.setAttribute('aria-pressed', LES.notities); }
+    else if (D.vink != null) { const p = b.getAttribute('aria-pressed') === 'true'; b.setAttribute('aria-pressed', !p); }
     else if (D.l === 'naaraf') { LES.i = LES.slides.length - 1; toonSlide(); }
     else if (D.l === 'sluit') sluitLes();
     else if (D.l === 'scherm') { const el = $('#les'); if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {}); else if (document.exitFullscreen) document.exitFullscreen().catch(() => {}); }
@@ -534,6 +547,8 @@ document.addEventListener('keydown', e => {
     if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); } }
     else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); if (LES.i > 0) { LES.i--; toonSlide(); } }
     else if (e.key === 't') timer();
+    else if (e.key === 'n') { LES.notities = !LES.notities; const n = $('#notities'); if (n && n.textContent.trim()) n.classList.toggle('open', LES.notities); const b = document.querySelector('#les [data-l="notities"]'); if (b) b.setAttribute('aria-pressed', LES.notities); }
+    else if (e.key === 'f') { const el = $('#les'); if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {}); else if (document.exitFullscreen) document.exitFullscreen().catch(() => {}); }
     else if (e.key === 'Escape' && !document.fullscreenElement) sluitLes();
     return;
   }

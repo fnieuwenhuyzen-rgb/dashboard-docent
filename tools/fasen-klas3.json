@@ -1,0 +1,219 @@
+{
+  "_uitleg": "Lesverloop klas 3 als fasen voor het digibord: {min, soort, kop (voor de leerlingen), stappen[], klaar (verlenging), docent (notitie, niet op het bord), beeld}. tools/zet-fasen.js zet dit in inhoud-klas3.json.",
+  "De band in het lokaal": [
+    {"min": 5, "soort": "start", "kop": "Welkom bij muziek in klas 3: dit jaar speel je in een band", "stappen": ["Wie speelt al een instrument? Steek je hand op.", "Wat weet je nog van klas 2: akkoorden, maat, vormdelen?"], "docent": "Kort houden. Noteer wie al iets speelt; dat helpt bij het verdelen van rollen."},
+    {"min": 10, "soort": "uitleg", "kop": "Zo werken we dit jaar", "stappen": ["Je speelt in een vaste groep: zang, gitaar, keyboard, bas, drums.", "Elke speelles eindigt met een kort filmpje van je groep.", "Twee PTO-toetsen: een speelstuk (P1, periode 2) en een theorietoets (T1, periode 3).", "Afspraken: instrumenten netjes terug, je bent verantwoordelijk voor je geluid en je plek."], "beeld": {"soort": "kaarten", "items": [{"k": "Periode 1", "t": "Songbox 1 samen spelen"}, {"k": "Periode 2", "t": "Way Maker · speelstuk P1"}, {"k": "Periode 3", "t": "Instrumenten, bands en orkesten · T1"}, {"k": "Periode 4", "t": "Songbox 2 en slotoptreden"}]}, "docent": "Speelles-document kort samenvatten; het staat in de sectiemap."},
+    {"min": 10, "soort": "doen", "kop": "Rondje langs de instrumenten", "stappen": ["Loop in groepjes langs zang, gitaar, keyboard, bas en drums.", "Probeer bij elk instrument één ding: een akkoord, een groove, een toon.", "Bedenk: welk instrument wil ik dit blok leren?"], "docent": "Zet per instrument één eenvoudige opdracht klaar (G-akkoord, grondtoon G, basisgroove)."},
+    {"min": 15, "soort": "gesprek", "kop": "Groepen maken en een songbox kiezen", "stappen": ["Maak groepen van vier of vijf met alle rollen bezet.", "Verdeel de instrumenten: iedereen één rol.", "Kies samen songbox 1 in Musicbox en schrijf de keuze op het groepsblad."], "klaar": "Zoek in Musicbox de tutorial van je eigen partij op en kijk het eerste stuk.", "docent": "Stuur op evenwichtige groepen: in elke groep minstens één leerling die al iets speelt."},
+    {"min": 5, "soort": "afsluiten", "kop": "Groepsblad inleveren", "stappen": ["Namen, instrument per persoon en de gekozen songbox.", "Volgende week: akkoorden en ritme van jullie song."]}
+  ],
+  "Songbox 1: akkoorden en ritme": [
+    {"min": 5, "soort": "luisteren", "kop": "Luister: welke instrumenten hoor je?", "stappen": ["Luister naar het origineel van jullie song.", "Noem per instrument wat het doet: ritme, akkoorden of melodie."], "docent": "Origineel klaarzetten via Musicbox. Vraag eerst de drummers, dan de rest."},
+    {"min": 10, "soort": "uitleg", "kop": "De akkoorden en het basisritme", "stappen": ["De akkoordenreeks staat op het bord: wissel op de eerste tel van de maat.", "Het basisritme: de drummer telt, de rest speelt mee op de tel.", "Tel hardop mee: 1, 2, 3, 4."], "docent": "Laat de akkoordenreeks van de gekozen song zien; speel hem één keer voor op keyboard."},
+    {"min": 25, "soort": "doen", "kop": "Oefen je partij met de tutorial", "stappen": ["Open in Musicbox de tutorial van je instrument, niveau 1.", "Speel eerst langzaam, dan iets sneller.", "Lukt het? Dan niveau 2."], "klaar": "Speel samen met iemand uit je groep: akkoorden plus ritme.", "docent": "Loop langs de keyboards en gitaren; daar lopen de meeste leerlingen vast op de wisselingen."},
+    {"min": 5, "soort": "check", "kop": "Duimen: kan ik de wisselingen op tempo meespelen?", "stappen": ["Duim omhoog: ja.", "Duim opzij: bijna.", "Duim omlaag: nog niet, ik heb hulp nodig."], "docent": "Noteer de duimen omlaag; die leerlingen volgende week als eerste helpen."}
+  ],
+  "Songbox 1: partijen per instrument": [
+    {"min": 5, "soort": "start", "kop": "Opwarmen: akkoorden en ritme van vorige week", "stappen": ["Drummers tellen af.", "Eén rondje akkoorden met de hele klas."]},
+    {"min": 5, "soort": "uitleg", "kop": "Niveaus: kies wat bij je past", "stappen": ["Niveau 1: de basis. Lukt het? Ga naar niveau 2.", "Loop je vast? Pak het niveau eronder. Dat is slim, niet zwak."], "docent": "Benoem dat niveau kiezen bij de les hoort; dat haalt de drempel weg."},
+    {"min": 30, "soort": "doen", "kop": "Oefen je partij van begin tot eind", "stappen": ["Speel je partij mee met de tutorial.", "Markeer het stuk waar je vastloopt.", "Vraag hulp aan een groepsgenoot of de docent."], "klaar": "Help iemand in je groep die nog vastloopt, of speel je partij op niveau 2.", "docent": "Observatielijst: per leerling lukt / lukt deels / nog niet."},
+    {"min": 5, "soort": "afsluiten", "kop": "In je groep: wat lukt al, wat nog niet?", "stappen": ["Iedereen zegt één ding dat lukt en één ding dat nog niet lukt.", "Spreek af wie wie helpt volgende week."]}
+  ],
+  "Songbox 1: samen beginnen en eindigen": [
+    {"min": 5, "soort": "uitleg", "kop": "Hoe begint een band samen?", "stappen": ["Iemand telt af: 1, 2, 3, 4.", "Zonder aftel begint iedereen op een ander moment. Luister maar."], "docent": "Demonstreer met twee leerlingen: één keer zonder aftel, één keer met."},
+    {"min": 10, "soort": "doen", "kop": "Oefen alleen de inzet, vijf keer", "stappen": ["Spreek af wie aftelt.", "Tel af en speel alleen de eerste maat.", "Stop, en opnieuw. Vijf keer."]},
+    {"min": 20, "soort": "doen", "kop": "Couplet en refrein doorspelen met metronoom", "stappen": ["Zet de metronoom of drumloop in het tempo van de song.", "Speel couplet en refrein zonder te stoppen.", "Spreek af hoe je eindigt: samen op de laatste tel."], "klaar": "Speel het nog een keer zonder metronoom: houden jullie het tempo?", "docent": "Tempo per groep iets lager zetten dan het origineel."},
+    {"min": 10, "soort": "check", "kop": "Elke groep laat de inzet en het slot horen", "stappen": ["De klas luistert.", "Wat was strak? Noem één ding per groep."]}
+  ],
+  "Hoe zit een song in elkaar?": [
+    {"min": 5, "soort": "luisteren", "kop": "Steek je hand op bij elk refrein", "stappen": ["We luisteren naar jullie song.", "Hand omhoog zodra het refrein begint."], "docent": "Zet de song klaar; let op wie te vroeg of te laat is, dat zijn de leerlingen die het vormgevoel nog missen."},
+    {"min": 15, "soort": "uitleg", "kop": "De vormdelen van een song", "stappen": ["Intro: de opening, vaak zonder zang.", "Couplet: het verhaal, elke keer nieuwe tekst.", "Refrein: de kern, elke keer dezelfde tekst en melodie.", "Bridge: iets nieuws, vlak voor het laatste refrein.", "Outro: het slot."], "beeld": {"soort": "vorm", "items": [{"d": "Intro", "m": 4}, {"d": "Couplet 1", "m": 8}, {"d": "Refrein", "m": 8}, {"d": "Couplet 2", "m": 8}, {"d": "Refrein", "m": 8}, {"d": "Bridge", "m": 4}, {"d": "Refrein", "m": 8}, {"d": "Outro", "m": 4}]}, "docent": "Herhaling uit klas 2. Vervang het voorbeeldschema door het echte schema van de song als dat afwijkt."},
+    {"min": 15, "soort": "doen", "kop": "Teken het vormschema van jullie song", "stappen": ["In tweetallen: luister nog een keer en schrijf de delen op in volgorde.", "Tel het aantal maten per deel.", "Teken het als blokken op je blad."], "klaar": "Kleur de delen die hetzelfde zijn in dezelfde kleur. Hoeveel verschillende delen heeft de song?"},
+    {"min": 10, "soort": "check", "kop": "Wisbordje: het vormschema van onze song", "stappen": ["Zet het schema op je wisbordje en houd het omhoog.", "Vergelijk met het bord: klopt de volgorde?"]}
+  ],
+  "Songbox 1: dynamiek en samenspel": [
+    {"min": 5, "soort": "luisteren", "kop": "Luister: wat gebeurt er bij de overgang naar het refrein?", "stappen": ["Let op de drums, de bas en de zang.", "Wordt het voller, harder, hoger?"]},
+    {"min": 10, "soort": "uitleg", "kop": "Zacht in het couplet, vol in het refrein", "stappen": ["Drums: couplet op de hihat, refrein op de ride of crash.", "Gitaar en keyboard: couplet losse tonen, refrein volle akkoorden.", "Zang: couplet verhalend, refrein uit volle borst.", "Spreek af wie het refrein inzet."], "beeld": {"soort": "opbouw", "items": [{"d": "intro", "v": 1}, {"d": "couplet", "v": 2}, {"d": "refrein", "v": 4}, {"d": "couplet", "v": 2}, {"d": "refrein", "v": 4}]}},
+    {"min": 25, "soort": "doen", "kop": "Oefen de overgang van couplet naar refrein", "stappen": ["Speel alleen de laatste twee maten van het couplet en de eerste twee van het refrein.", "Herhaal tot het verschil hoorbaar is.", "Speel daarna couplet en refrein helemaal."], "klaar": "Maak het verschil nog groter: couplet nog zachter, refrein nog voller.", "docent": "Per groep één tip geven, niet meer."},
+    {"min": 5, "soort": "check", "kop": "Eén groep speelt de overgang voor", "stappen": ["De rest luistert: hoorde je het verschil?", "Noem één ding dat je hoorde."]}
+  ],
+  "Songbox 1: doorspelen": [
+    {"min": 5, "soort": "start", "kop": "Opwarmen: inzet en refrein", "stappen": ["Aftellen, inzet, refrein. Twee keer."]},
+    {"min": 5, "soort": "uitleg", "kop": "Doorspelen is de regel", "stappen": ["Maak je een fout? Speel door. De band stopt niet.", "Tel in je hoofd mee en stap weer in bij de volgende maat."], "docent": "Benoem dat fouten erbij horen; dat is de belangrijkste les van samenspel."},
+    {"min": 25, "soort": "doen", "kop": "Speel de hele song, drie keer", "stappen": ["Van intro tot outro, zonder te stoppen.", "Na de derde keer: wie wil, wisselt van rol.", "Nog één keer met de nieuwe rollen."], "klaar": "Kies een rol die je nog nooit speelde en probeer het couplet."},
+    {"min": 10, "soort": "afsluiten", "kop": "Exit ticket: ons lastigste deel", "stappen": ["Welk deel van de song is voor jouw groep nog het lastigst?", "Wat doe je eraan voor volgende week?"], "docent": "Exit tickets inzamelen; ze geven de oefenpunten voor de opnameles."}
+  ],
+  "Songbox 1: opnemen en terugluisteren": [
+    {"min": 5, "soort": "uitleg", "kop": "Vandaag nemen we op", "stappen": ["Eén telefoon per groep, horizontaal, op afstand van de drums.", "Luistervragen staan op het bord: wat hoor je, wat kan beter?"], "beeld": {"soort": "kaarten", "items": [{"k": "Samenspel", "t": "Luisteren we naar elkaar?"}, {"k": "Ritme", "t": "Houden we het tempo?"}, {"k": "Toon", "t": "Klinkt het zuiver?"}, {"k": "Techniek", "t": "Spelen we de partij netjes?"}]}},
+    {"min": 15, "soort": "doen", "kop": "Laatste repetitie en opname", "stappen": ["Speel de song één keer door als repetitie.", "Neem de tweede keer op.", "Deel de opname via Magister met de docent."]},
+    {"min": 15, "soort": "gesprek", "kop": "Luister terug met de vier vragen", "stappen": ["Luister de opname samen terug.", "Iedereen noemt twee sterke punten met een voorbeeld.", "Iedereen noemt één verbeterpunt en hoe je dat aanpakt."], "klaar": "Luister naar de opname van een andere groep en geef hun één compliment."},
+    {"min": 10, "soort": "afsluiten", "kop": "Vooruitblik: een nieuwe song voor periode 2", "stappen": ["Elke groep deelt één verbeterpunt met de klas.", "Na de herfstvakantie: Way Maker, het lied voor jullie speelstuk."], "docent": "Noem Way Maker alvast en laat het origineel kort horen als er tijd is."}
+  ],
+  "Kiezen voor muziek in de bovenbouw": [
+    {"min": 5, "soort": "start", "kop": "Wat denk je dat muziek in de bovenbouw is?", "stappen": ["Schrijf in één zin op wat je denkt.", "Drie leerlingen lezen voor."]},
+    {"min": 15, "soort": "uitleg", "kop": "Muziek in havo 4 en 5, vwo 4 tot 6", "stappen": ["Luisteren: muziek herkennen en begrijpen, van barok tot pop.", "Spelen: alleen en samen, met een examenconcert.", "Maken: eigen muziek en arrangementen.", "Erop uit: De Doelen in Rotterdam en de Messiah in Leiden met honderden jongeren."], "beeld": {"soort": "kaarten", "items": [{"k": "Luisteren", "t": "muziek herkennen en analyseren"}, {"k": "Spelen", "t": "alleen, samen, examenconcert"}, {"k": "Maken", "t": "eigen muziek en arrangementen"}, {"k": "Erop uit", "t": "De Doelen, Messiah in Leiden"}]}, "docent": "Vertel iets persoonlijks over de Messiah; dat blijft hangen."},
+    {"min": 10, "soort": "doen", "kop": "Proefopdracht in examenvorm", "stappen": ["Luister naar het fragment.", "Beantwoord de twee vragen op je blad.", "We bespreken de antwoorden."], "docent": "Eén luisterfragment met twee vragen, zoals in het CE. Laat zien dat het te doen is."},
+    {"min": 10, "soort": "gesprek", "kop": "Jouw vragen", "stappen": ["Wat wil je weten over muziek in de bovenbouw?", "Rooster, profiel, examen, concerten: alles mag."]},
+    {"min": 5, "soort": "afsluiten", "kop": "Exit ticket: past muziek bij mij?", "stappen": ["Twee dingen die je niet wist.", "Eén vraag die je nog hebt."]}
+  ],
+  "Nieuwe songbox: Way Maker (Sinach)": [
+    {"min": 5, "soort": "luisteren", "kop": "Luister: Way Maker", "stappen": ["Luister naar het origineel van Sinach.", "Let op: hoe begint het, en hoe eindigt het?"], "docent": "Origineel (Sinach, Lagos, 2015) klaarzetten. Geen tekst op het bord; die bespreken we mondeling."},
+    {"min": 15, "soort": "uitleg", "kop": "Een lied uit Lagos dat de hele wereld zingt", "stappen": ["Sinach schreef Way Maker in 2015 in Nigeria.", "Binnen een paar jaar werd het overal gezongen: in kerken, op straat, in stadions.", "De tekst gaat over God die een weg baant waar wij die niet zien.", "Het lied heeft maar vier akkoorden en groeit van rustig naar vol."], "beeld": {"soort": "vorm", "items": [{"d": "Intro", "m": 4}, {"d": "Couplet", "m": 8}, {"d": "Refrein", "m": 8}, {"d": "Couplet", "m": 8}, {"d": "Refrein", "m": 8}, {"d": "Bridge", "m": 8}, {"d": "Refrein", "m": 8}, {"d": "Outro", "m": 4}]}, "docent": "Vormschema is een voorstel; pas het aan op de versie die je kiest voor de songbox."},
+    {"min": 10, "soort": "doen", "kop": "Zing de vier akkoorden mee", "stappen": ["Zing op 'oe' de grondtoon van elk akkoord mee met het bord.", "Teken het vormschema op je blad."], "beeld": {"soort": "akkoorden", "items": ["G", "D", "Em", "C"]}},
+    {"min": 10, "soort": "uitleg", "kop": "Zo werkt het speelstuk (P1)", "stappen": ["Je speelt in een groep voor de docent, niet voor de klas.", "Iedereen krijgt een eigen cijfer.", "Spelen telt dubbel: samenspel, ritme, toon, techniek.", "Reflectie telt één keer: eigen reflectie en feedback op groepsgenoten."], "beeld": {"soort": "tabel", "rijen": [["Onderdeel", "Soort", "Telt"], ["Samenspel", "spelen", "× 2"], ["Ritme", "spelen", "× 2"], ["Toon", "spelen", "× 2"], ["Techniek", "spelen", "× 2"], ["Eigen reflectie", "reflectie", "× 1"], ["Feedback op groepsgenoten", "reflectie", "× 1"]]}},
+    {"min": 5, "soort": "afsluiten", "kop": "Welk instrument wil je bij dit lied spelen?", "stappen": ["Schrijf je eerste en tweede keus op het wisbordje.", "Volgende week: de akkoorden op gitaar, keyboard en ukelele."]}
+  ],
+  "Way Maker: akkoorden en begeleiding": [
+    {"min": 5, "soort": "start", "kop": "Opwarmen: de vier akkoorden", "stappen": ["G, D, Em, C: pak ze één voor één.", "Wissel op mijn teken."], "beeld": {"soort": "akkoorden", "items": ["G", "D", "Em", "C"]}},
+    {"min": 10, "soort": "uitleg", "kop": "Wisselen op de 1, slaan in het ritme", "stappen": ["Elk akkoord duurt één maat; wissel op de eerste tel.", "Gitaar en ukelele: slagpatroon neer, neer, op, op, neer, op.", "Keyboard: liggende akkoorden, links de grondtoon."], "docent": "Speel het slagpatroon voor; laat eerst op een gedempte snaar meeslaan."},
+    {"min": 25, "soort": "doen", "kop": "Oefen: eerst zonder, dan met het origineel", "stappen": ["Speel de reeks vier keer rond in een langzaam tempo.", "Zet dan het origineel aan en speel mee.", "Lukt het? Probeer het slagpatroon in het refrein voller te maken."], "klaar": "Zoek uit welke tonen in elk akkoord zitten en speel ze als gebroken akkoord."},
+    {"min": 5, "soort": "check", "kop": "Samen één rondje met de zangers", "stappen": ["Akkoorden, slag en zang tegelijk.", "Duimen: kan ik de reeks op tempo spelen?"]}
+  ],
+  "Way Maker: partijen voor zang, bas en drums": [
+    {"min": 5, "soort": "start", "kop": "Zing het lied mee met het origineel", "stappen": ["Iedereen zingt, ook de drummers.", "Let op waar het refrein hoger gaat."]},
+    {"min": 10, "soort": "uitleg", "kop": "Zang, bas en drums: ieder een eigen taak", "stappen": ["Zang: de melodie van couplet en refrein, zuiver en op de tekst.", "Bas: de grondtoon van elk akkoord op de tel: G, D, E, C.", "Drums: een rustige groove voor het couplet en een vollere voor het refrein."], "beeld": {"soort": "kaarten", "items": [{"k": "Zang", "t": "melodie, zuiver, tekst duidelijk"}, {"k": "Bas", "t": "grondtonen G · D · E · C"}, {"k": "Drums", "t": "rustige groove, volle groove"}]}},
+    {"min": 25, "soort": "doen", "kop": "Oefen per partij, dan samen met de akkoorden", "stappen": ["Zangers oefenen met het origineel; bassisten en drummers met de metronoom.", "Na tien minuten: voeg je bij de akkoordspelers van je groep.", "Speel couplet en refrein samen."], "klaar": "Bas: probeer de kwint erbij. Drums: voeg een fill toe vóór het refrein.", "docent": "Luister per partij: zuiver, op de tel, groove houdbaar. Noteer wie hulp nodig heeft."},
+    {"min": 5, "soort": "afsluiten", "kop": "Couplet en refrein met de hele klas", "stappen": ["Eén keer samen, iedereen op zijn eigen partij."]}
+  ],
+  "Groepen maken en de beoordeling bespreken": [
+    {"min": 10, "soort": "uitleg", "kop": "Zo ga je het speelstuk afronden", "stappen": ["Oefenen: het hele stuk een paar keer doorspelen.", "Voorspelen: met je groep voor de docent, zonder klas.", "Reflecteren: direct daarna het reflectieformulier.", "Cijfer: iedereen apart, op zes onderdelen."], "beeld": {"soort": "tabel", "rijen": [["Score", "Betekenis"], ["4", "onvoldoende"], ["6", "voldoende"], ["8", "goed"], ["10", "uitstekend"]]}, "docent": "Leerlingblad uitdelen; het rekenvoorbeeld (7,0) samen doorlopen."},
+    {"min": 10, "soort": "gesprek", "kop": "Vaste groepen voor het speelstuk", "stappen": ["Groepen van vier of vijf, alle partijen bezet.", "Schrijf per persoon de partij op het leerlingblad.", "Spreek af wie aftelt."], "docent": "Zorg dat elke groep een drummer of percussionist heeft."},
+    {"min": 20, "soort": "doen", "kop": "Eerste keer samenspelen in je nieuwe groep", "stappen": ["Couplet en refrein, langzaam.", "Stop na elk rondje en bespreek: wat ging goed?"], "klaar": "Probeer de bridge erbij."},
+    {"min": 5, "soort": "afsluiten", "kop": "Jouw leerdoel voor het speelstuk", "stappen": ["Kijk naar de vier speelonderdelen: waar sta je nu?", "Schrijf één persoonlijk leerdoel op je leerlingblad."]}
+  ],
+  "Way Maker: oefenen in groepen": [
+    {"min": 5, "soort": "start", "kop": "Opwarmen: akkoorden en groove samen", "stappen": ["Eén rondje met de hele klas."]},
+    {"min": 5, "soort": "uitleg", "kop": "Slim oefenen", "stappen": ["Eerst langzaam, dan op tempo.", "Eerst zonder zang, dan met.", "Stop bij een fout niet helemaal: speel het stukje opnieuw."], "beeld": {"soort": "kaarten", "items": [{"k": "1 · Langzaam", "t": "dan op tempo"}, {"k": "2 · Zonder zang", "t": "dan met zang"}, {"k": "3 · Stukje opnieuw", "t": "niet het hele lied"}]}},
+    {"min": 30, "soort": "doen", "kop": "Oefenen in je groep", "stappen": ["Verdeel je over het lokaal en de ruimtes ernaast.", "Speel couplet en refrein tot het samen klinkt.", "De docent komt bij elke groep langs."], "klaar": "Speel het lied met de opbouw: couplet rustig, refrein vol. In de kerstweek mag je ook Mary's Boy Child proberen.", "docent": "Activiteitenweek B: les kan uitvallen. Zo ja, deze fase overslaan en volgende week hier verdergaan."},
+    {"min": 5, "soort": "afsluiten", "kop": "Filmpje van de tussenstand", "stappen": ["Neem één minuut op en deel het via Magister.", "Volgende week krijg je per groep één tip."]}
+  ],
+  "Way Maker: opbouw en dynamiek": [
+    {"min": 5, "soort": "luisteren", "kop": "Luister: waar groeit het lied?", "stappen": ["Een live-versie van Way Maker.", "Steek je hand op waar het voller wordt, en laat hem zakken waar het terugvalt."], "docent": "Live-versie klaarzetten; per groep de tip van het filmpje van vorige week geven."},
+    {"min": 10, "soort": "uitleg", "kop": "Opbouwen doe je samen", "stappen": ["Drums: van hihat naar volle groove.", "Gitaar en keyboard: van losse tonen naar volle akkoorden.", "Zang: van één stem naar meer stemmen.", "Eén plek waar je terugvalt, en dan het laatste refrein vol."], "beeld": {"soort": "opbouw", "items": [{"d": "intro", "v": 1}, {"d": "couplet", "v": 2}, {"d": "refrein", "v": 3}, {"d": "couplet", "v": 2}, {"d": "refrein", "v": 4}, {"d": "bridge", "v": 1}, {"d": "refrein", "v": 4}, {"d": "outro", "v": 2}]}},
+    {"min": 25, "soort": "doen", "kop": "Maak een opbouwplan en oefen het", "stappen": ["Teken op het vormschema per deel: rustig, half, vol.", "Spreek per instrument af wat je doet in elk deel.", "Oefen de overgangen apart, daarna het hele lied."], "klaar": "Voeg een stilte toe vlak voor het laatste refrein."},
+    {"min": 5, "soort": "check", "kop": "Twee groepen spelen hun opbouw voor", "stappen": ["Luisteraars: waar hoorde je de opbouw?", "Was de terugval duidelijk?"]}
+  ],
+  "Tussenstand: voorspelen met feedback": [
+    {"min": 5, "soort": "uitleg", "kop": "Vandaag: een tussenstand, geen cijfer", "stappen": ["Elke groep speelt het hele lied voor.", "Je krijgt per onderdeel een voorlopige score en één tip.", "De klas luistert met de vier speelonderdelen in de hand."], "beeld": {"soort": "kaarten", "items": [{"k": "Samenspel", "t": "Luister ik naar de anderen?"}, {"k": "Ritme", "t": "Hou ik het tempo vast?"}, {"k": "Toon", "t": "Speel ik zuiver en de juiste noten?"}, {"k": "Techniek", "t": "Beheers ik mijn instrument?"}]}, "docent": "Voorlopige kolom in het scoreblad of op papier. Benadruk: formatief, niet voor het cijfer."},
+    {"min": 30, "soort": "doen", "kop": "Voorspelen per groep", "stappen": ["Volgorde staat op het bord.", "Klasgenoten schrijven per groep één compliment op.", "Na het spelen: de docent geeft elke speler een score en een tip."], "docent": "Per leerling: vier scores en één tip. Hou het tempo erin: zeven minuten per groep."},
+    {"min": 10, "soort": "afsluiten", "kop": "Jouw twee werkpunten voor de laatste twee lessen", "stappen": ["Schrijf de tip van de docent op je leerlingblad.", "Kies met je groep wat jullie eerst oefenen."]}
+  ],
+  "Laatste repetitie en eigen reflectie": [
+    {"min": 5, "soort": "uitleg", "kop": "Zo gaat de toetsles volgende week", "stappen": ["Volgorde van voorspelen staat vast.", "Je speelt voor de docent, de klas oefent intussen stil of luistert buiten het lokaal.", "Daarna vul je meteen het reflectieformulier in."]},
+    {"min": 10, "soort": "uitleg", "kop": "Een goede tip is concreet", "stappen": ["Niet: 'Het was goed.'", "Wel: 'Bij het refrein ging je sneller spelen. Tel de eerste maat in je hoofd mee.'", "Wat hoorde je, waar in het stuk, en wat kan beter?"], "beeld": {"soort": "kaarten", "items": [{"k": "Wat hoorde je?", "t": "sneller spelen, valse toon, te hard"}, {"k": "Waar in het stuk?", "t": "refrein, bridge, inzet"}, {"k": "Wat kan beter?", "t": "meetellen, langzamer oefenen, zachter"}]}},
+    {"min": 25, "soort": "doen", "kop": "Laatste repetitie: oefen je werkpunten", "stappen": ["Eerst jouw twee werkpunten, apart.", "Dan het hele lied, twee keer.", "Loop de checklist op je leerlingblad na."], "klaar": "Speel het lied één keer met je ogen dicht: hoor je de anderen?"},
+    {"min": 5, "soort": "afsluiten", "kop": "Checklist", "stappen": ["Iedereen weet welke partij hij of zij speelt.", "We hebben het stuk een paar keer helemaal doorgespeeld.", "We weten hoe we beginnen en hoe we eindigen.", "Instrumenten staan klaar en zijn gestemd.", "Ik weet wat ik zelf nog moet oefenen."]}
+  ],
+  "Terugblik P1 en peerfeedback afronden": [
+    {"min": 5, "soort": "start", "kop": "Terugkijken op de toetsles", "stappen": ["Wat viel je op toen je voorspeelde?", "Wat was anders dan in de repetities?"]},
+    {"min": 20, "soort": "doen", "kop": "Reflectieformulier afmaken", "stappen": ["Eigen reflectie: wat ging goed, wat kan beter, is je leerdoel gelukt?", "Geef elke groepsgenoot een compliment en een concrete tip.", "Concreet: wat hoorde je, waar in het stuk, wat kan beter?"], "docent": "Reflectieformulieren inzamelen; reflectiescores in het scoreblad."},
+    {"min": 10, "soort": "gesprek", "kop": "Wissel de feedback uit in je groep", "stappen": ["Lees je tip hardop voor aan de ander.", "De ander zegt wat hij of zij ermee gaat doen."]},
+    {"min": 10, "soort": "afsluiten", "kop": "Vooruitblik: instrumenten, bands en orkesten", "stappen": ["Periode 3 is een theorieblok: welke instrumenten zijn er en hoe werken ze samen?", "Afgesloten met T1.", "Schrijf op: wat wil je in dit blok leren?"]}
+  ],
+  "Instrumenten: snaarinstrumenten": [
+    {"min": 5, "soort": "luisteren", "kop": "Drie fragmenten: welk instrument hoor je?", "stappen": ["Schrijf per fragment je antwoord op.", "We vergelijken na het derde fragment."], "docent": "Viool, gitaar, harp. Fragmenten uit de map Instrumenten toets."},
+    {"min": 15, "soort": "uitleg", "kop": "Snaren, klankkast, strijken en tokkelen", "stappen": ["Een snaar trilt; de klankkast maakt het geluid groter.", "Strijken: viool, altviool, cello, contrabas, van hoog naar laag.", "Tokkelen: gitaar, harp, ukelele, basgitaar."], "beeld": {"soort": "kaarten", "items": [{"k": "Viool", "t": "hoogste strijker", "kleur": "#fde68a"}, {"k": "Altviool", "t": "iets groter, lager", "kleur": "#fde68a"}, {"k": "Cello", "t": "tussen de knieën", "kleur": "#fde68a"}, {"k": "Contrabas", "t": "laagste strijker, staand", "kleur": "#fcd34d"}, {"k": "Gitaar", "t": "tokkelen, zes snaren", "kleur": "#a5b4fc"}, {"k": "Harp", "t": "tokkelen, 47 snaren", "kleur": "#a5b4fc"}]}, "docent": "Laat een gitaar en een viool zien als ze in het lokaal zijn; strijk en tokkel op dezelfde snaar."},
+    {"min": 15, "soort": "doen", "kop": "Musicbox: Instrumenten en speeltechnieken", "stappen": ["Open de box en maak de opdrachten over snaarinstrumenten.", "Vul je infoblad aan: zet bij elk snaarinstrument strijken of tokkelen."], "klaar": "Zoek op: hoe heet het strijkinstrument tussen viool en cello in een strijkkwartet, en wat speelt het?"},
+    {"min": 10, "soort": "check", "kop": "Luisterquiz: vijf snaarinstrumenten", "stappen": ["Antwoord op je wisbordje.", "Omhoog na elk fragment."]}
+  ],
+  "Instrumenten: houtblazers en koperblazers": [
+    {"min": 5, "soort": "luisteren", "kop": "Twee fragmenten: hout of koper?", "stappen": ["Luister en kies.", "Wat is het verschil in klank?"]},
+    {"min": 15, "soort": "uitleg", "kop": "Hoe ontstaat de toon bij een blazer?", "stappen": ["Hout: lucht over een gat (fluit) of langs een riet (klarinet, hobo, fagot, saxofoon).", "Koper: je lippen trillen in het mondstuk (trompet, hoorn, trombone, tuba).", "De saxofoon is van metaal, maar heeft een riet: dus houtblazer."], "beeld": {"soort": "kaarten", "items": [{"k": "Fluit", "t": "hout · lucht over een gat", "kleur": "#bbf7d0"}, {"k": "Klarinet", "t": "hout · enkel riet", "kleur": "#bbf7d0"}, {"k": "Hobo", "t": "hout · dubbel riet", "kleur": "#bbf7d0"}, {"k": "Fagot", "t": "hout · dubbel riet, laag", "kleur": "#bbf7d0"}, {"k": "Saxofoon", "t": "hout · enkel riet, metaal", "kleur": "#bbf7d0"}, {"k": "Trompet", "t": "koper · hoog", "kleur": "#fdba74"}, {"k": "Hoorn", "t": "koper · rond, warm", "kleur": "#fdba74"}, {"k": "Trombone", "t": "koper · schuif", "kleur": "#fdba74"}, {"k": "Tuba", "t": "koper · laagste", "kleur": "#fdba74"}]}},
+    {"min": 15, "soort": "doen", "kop": "Musicbox-opdrachten blazers en één weetje", "stappen": ["Maak de opdrachten over blazers.", "Kies in tweetallen één instrument en zoek één weetje op.", "Zet het weetje op je infoblad."], "klaar": "Zoek een fragment waarin jouw instrument een solo speelt."},
+    {"min": 10, "soort": "check", "kop": "Exit ticket", "stappen": ["Noem twee houtblazers en twee koperblazers.", "Leg uit waarom de saxofoon een houtblazer is."]}
+  ],
+  "Instrumenten: slagwerk, toetsen en elektronica": [
+    {"min": 5, "soort": "luisteren", "kop": "Drumstel of pauken?", "stappen": ["Twee fragmenten.", "Wat is het verschil in klank en in rol?"]},
+    {"min": 15, "soort": "uitleg", "kop": "Slagwerk, toetsen en elektrische instrumenten", "stappen": ["Gestemd slagwerk heeft toonhoogte: pauken, xylofoon, buisklokken.", "Ongestemd slagwerk niet: drumstel, tamboerijn, claves, djembé.", "Toetsinstrumenten: piano, orgel, klavecimbel, synthesizer.", "Elektrisch: elektrische gitaar, basgitaar, keyboard."], "beeld": {"soort": "kaarten", "items": [{"k": "Gestemd slagwerk", "t": "pauken, xylofoon, buisklokken", "kleur": "#c4b5fd"}, {"k": "Ongestemd slagwerk", "t": "drumstel, tamboerijn, djembé", "kleur": "#c4b5fd"}, {"k": "Toetsen", "t": "piano, orgel, klavecimbel, synthesizer", "kleur": "#f9a8d4"}, {"k": "Elektrisch", "t": "elektrische gitaar, basgitaar, keyboard", "kleur": "#67e8f9"}]}},
+    {"min": 15, "soort": "doen", "kop": "Percussie uit de kast: benoem en bespeel", "stappen": ["Elk tweetal pakt een instrument uit de kast.", "Benoem het met het infoblad en speel een ritme.", "Wissel na twee minuten door.", "Daarna de Musicbox-opdrachten."], "klaar": "Speel met drie instrumenten samen een groove van vier maten."},
+    {"min": 10, "soort": "check", "kop": "Luisterquiz: zes fragmenten", "stappen": ["Slagwerk, toetsen of elektrisch?", "Welk instrument precies?"]}
+  ],
+  "Het symfonieorkest": [
+    {"min": 5, "soort": "luisteren", "kop": "Kijk: een orkest op het podium", "stappen": ["Wat valt je op aan hoe de musici zitten?", "Wie zit vooraan, wie achteraan?"], "docent": "Video van een symfonieorkest, bij voorkeur van boven gefilmd."},
+    {"min": 15, "soort": "uitleg", "kop": "Vier groepen en één dirigent", "stappen": ["Strijkers vooraan: zacht, met velen.", "Houtblazers in het midden.", "Koperblazers en slagwerk achteraan: hard, met weinigen.", "De dirigent geeft tempo, inzetten en dynamiek, en luistert naar het geheel."], "beeld": {"soort": "orkest"}},
+    {"min": 15, "soort": "doen", "kop": "Teken de opstelling en plaats de instrumenten", "stappen": ["In tweetallen: teken de halve cirkel met de vier groepen.", "Zet er zoveel mogelijk instrumenten in op de goede plek.", "Daarna: Musicbox-box Het orkest, instrumentgroepen."], "klaar": "Waarom zitten de strijkers vooraan en het slagwerk achteraan? Schrijf het in twee zinnen op."},
+    {"min": 10, "soort": "doen", "kop": "Dirigeer de klas", "stappen": ["De klas is het orkest: bodypercussie in vier groepen.", "Eén leerling dirigeert: tempo, inzet, zachter, harder, stop.", "Wissel van dirigent."], "docent": "Wisbordje-check aan het eind: teken de orkestopstelling met de vier groepen."}
+  ],
+  "Bands en ensembles": [
+    {"min": 5, "soort": "luisteren", "kop": "Vijf fragmenten: welke bezetting?", "stappen": ["Popband, bigband, jazzcombo, strijkkwartet of koor?", "Schrijf je antwoord op."]},
+    {"min": 15, "soort": "uitleg", "kop": "Wie speelt er, en wat doet elke groep?", "stappen": ["Popband: zang, gitaar, bas, drums, keyboard.", "Bigband: saxen, trompetten, trombones en een ritmesectie.", "Jazzcombo: klein, met solo's om de beurt.", "Strijkkwartet: twee violen, altviool, cello.", "Koor: sopraan, alt, tenor, bas.", "De ritmesectie (drums, bas, akkoordinstrument) is de kern van pop en jazz."], "beeld": {"soort": "kaarten", "items": [{"k": "Popband", "t": "zang, gitaar, bas, drums, keys"}, {"k": "Bigband", "t": "saxen, trompetten, trombones, ritmesectie"}, {"k": "Jazzcombo", "t": "klein, solo's om de beurt"}, {"k": "Strijkkwartet", "t": "2 violen, altviool, cello"}, {"k": "Koor", "t": "sopraan, alt, tenor, bas"}]}},
+    {"min": 15, "soort": "doen", "kop": "Musicbox: orkestvormen en bezettingen", "stappen": ["Maak de opdrachten in de box Het orkest.", "Vul je begrippenlijst voor T1 aan met de bezettingen."], "klaar": "Bedenk een bezetting die niet bestaat en beschrijf hoe die zou klinken."},
+    {"min": 10, "soort": "check", "kop": "Luisterquiz: bezettingen", "stappen": ["Vijf nieuwe fragmenten.", "Antwoord op je wisbordje."]}
+  ],
+  "Rollen in een band en orkest": [
+    {"min": 5, "soort": "luisteren", "kop": "Way Maker in een bandversie: wie draagt wat?", "stappen": ["Wie draagt het ritme?", "Wie draagt de melodie?", "Wie vult de harmonie?"]},
+    {"min": 10, "soort": "uitleg", "kop": "Drie rollen: ritme, melodie, harmonie", "stappen": ["Ritme: drums en bas houden de band bij elkaar.", "Melodie: zang of een solo-instrument vertelt het verhaal.", "Harmonie: gitaar, keyboard of de strijkers vullen de akkoorden.", "In het orkest is het precies zo, met andere instrumenten."], "beeld": {"soort": "kaarten", "items": [{"k": "Ritme", "t": "drums, bas · pauken, contrabas"}, {"k": "Melodie", "t": "zang, solo · 1e violen, fluit"}, {"k": "Harmonie", "t": "gitaar, keys · 2e violen, hoorns"}]}},
+    {"min": 25, "soort": "doen", "kop": "Speel Way Maker en benoem je rol", "stappen": ["Speel het lied in je eigen band.", "Zeg na het spelen welke rol jouw partij had.", "Wissel één keer van rol en speel het couplet opnieuw."], "klaar": "Laat één rol weg en speel het couplet: wat mis je?"},
+    {"min": 5, "soort": "check", "kop": "Exit ticket", "stappen": ["Welke rol had jouw partij vandaag?", "Wat gebeurt er als die rol wegvalt?"]}
+  ],
+  "Oefentoets instrumenten, bands en orkesten · Herhaling en vragen voor T1": [
+    {"min": 5, "soort": "uitleg", "kop": "Wat vraagt T1, en hoe werkt de toets in Musicbox?", "stappen": ["Instrumenten herkennen op gehoor en op beeld.", "Bezettingen herkennen.", "Begrippen van periode 3.", "Inloggen via Magister; de toets opent als de docent hem start."]},
+    {"min": 20, "soort": "check", "kop": "Oefentoets in Musicbox", "stappen": ["Koptelefoon op, laptop open.", "Maak de oefentoets in je eigen tempo.", "Je score telt niet mee: hij laat zien wat je nog moet oefenen."], "docent": "Oefentoets vooraf klaarzetten; de toetsinstructie Musicbox staat in de sectiemap."},
+    {"min": 15, "soort": "doen", "kop": "Maak je herhaallijst en oefen met Trainerz", "stappen": ["Schrijf op welke onderdelen onder de zeven scoorden.", "Oefen die met Trainerz en het infoblad.", "Overhoor elkaar in tweetallen."], "klaar": "Maak voor een klasgenoot drie quizvragen met een fragment."},
+    {"min": 5, "soort": "afsluiten", "kop": "Vragen voor T1", "stappen": ["Wat is nog onduidelijk?", "Volgende week: de toets."]}
+  ],
+  "Oefentoets instrumenten, bands en orkesten": [
+    {"min": 5, "soort": "uitleg", "kop": "Wat vraagt T1, en hoe werkt de toets in Musicbox?", "stappen": ["Instrumenten herkennen op gehoor en op beeld.", "Bezettingen herkennen.", "Begrippen van periode 3.", "Inloggen via Magister; de toets opent als de docent hem start."]},
+    {"min": 25, "soort": "check", "kop": "Oefentoets in Musicbox", "stappen": ["Koptelefoon op, laptop open.", "Maak de oefentoets in je eigen tempo.", "Je score telt niet mee: hij laat zien wat je nog moet oefenen."], "docent": "Oefentoets vooraf klaarzetten; de toetsinstructie Musicbox staat in de sectiemap."},
+    {"min": 10, "soort": "doen", "kop": "Maak je herhaallijst", "stappen": ["Schrijf op welke onderdelen onder de zeven scoorden.", "Dat zijn je oefenpunten voor volgende week."]},
+    {"min": 5, "soort": "afsluiten", "kop": "Vragen verzamelen", "stappen": ["Schrijf één vraag op die je volgende week beantwoord wilt hebben."]}
+  ],
+  "Herhaling en vragen voor T1": [
+    {"min": 5, "soort": "start", "kop": "Jullie vragen van vorige week", "stappen": ["We beantwoorden ze klassikaal."]},
+    {"min": 25, "soort": "doen", "kop": "Werk je herhaallijst af", "stappen": ["Trainerz, infoblad en luisterfragmenten.", "Overhoor elkaar in tweetallen: wijs een instrument aan, de ander noemt de groep en de speeltechniek."], "klaar": "Maak voor een klasgenoot drie quizvragen met een fragment."},
+    {"min": 10, "soort": "check", "kop": "Luisterquiz: tien fragmenten", "stappen": ["Instrument of bezetting?", "Onder de zeven goed? Dan thuis verder oefenen met Trainerz."]},
+    {"min": 5, "soort": "afsluiten", "kop": "Afspraken voor de toetsles", "stappen": ["Laptop opgeladen, koptelefoon mee.", "Inloggen via Magister.", "De toets opent als de docent hem start."]}
+  ],
+  "Songbox 2 kiezen": [
+    {"min": 5, "soort": "start", "kop": "Terugblik T1", "stappen": ["Wat ging goed, wat was lastig?"]},
+    {"min": 10, "soort": "luisteren", "kop": "Drie songboxen: luister en kies", "stappen": ["We luisteren naar drie songs uit Musicbox.", "Let op: kunnen wij dit spelen, en vinden we het leuk?"], "docent": "Drie songboxen vooraf kiezen en beluisteren; let op teksten die passen bij de school."},
+    {"min": 10, "soort": "gesprek", "kop": "Stemmen", "stappen": ["Iedereen stemt, de meerderheid beslist.", "De keuze staat vast voor periode 4."]},
+    {"min": 15, "soort": "doen", "kop": "Nieuwe rollen en de tutorials verkennen", "stappen": ["Kies een rol die je dit jaar nog niet speelde.", "Open de tutorial van je nieuwe partij en bekijk het begin."], "klaar": "Speel de eerste vier maten van je nieuwe partij."},
+    {"min": 5, "soort": "afsluiten", "kop": "Groepsblad", "stappen": ["Namen en nieuwe rollen inleveren."]}
+  ],
+  "Songbox 2 kiezen en partijen leren": [
+    {"min": 5, "soort": "start", "kop": "Terugblik T1 en het laatste blok", "stappen": ["Wat ging goed bij T1?", "Dit blok eindigt met een slotoptreden in de klas."]},
+    {"min": 10, "soort": "luisteren", "kop": "Luister en stem: welke song wordt het?", "stappen": ["Twee of drie songs uit Musicbox.", "Kunnen wij dit spelen, en vinden we het leuk?", "Stemmen; de meerderheid beslist."], "docent": "Songboxen vooraf kiezen; let op teksten die passen bij de school."},
+    {"min": 25, "soort": "doen", "kop": "Nieuwe rol kiezen en beginnen met de tutorial", "stappen": ["Kies een rol die je dit jaar nog niet speelde.", "Open de tutorial van je nieuwe partij, niveau 1.", "Speel de eerste vier maten."], "klaar": "Speel de eerste acht maten samen met iemand van je groep."},
+    {"min": 5, "soort": "afsluiten", "kop": "Groepsblad", "stappen": ["Namen en nieuwe rollen inleveren."]}
+  ],
+  "Songbox 2: partijen leren": [
+    {"min": 5, "soort": "start", "kop": "Zing de song mee met het origineel", "stappen": ["Iedereen zingt mee, ook op je nieuwe instrument."]},
+    {"min": 5, "soort": "uitleg", "kop": "Een nieuw instrument leren: klein beginnen", "stappen": ["Eén maat tot het lukt, dan twee.", "Herhalen, herhalen, herhalen.", "Pas daarna het tempo omhoog."]},
+    {"min": 30, "soort": "doen", "kop": "Oefen je nieuwe partij met de tutorial", "stappen": ["Niveau 1, langzaam.", "Markeer het stuk waar je vastloopt.", "Vraag een ervaren speler in je groep om hulp."], "klaar": "Help iemand die jouw oude instrument nu speelt.", "docent": "Loop vooral langs leerlingen op een nieuw instrument."},
+    {"min": 5, "soort": "check", "kop": "Duimen: kan ik mijn partij meespelen?", "stappen": ["Omhoog, opzij of omlaag."]}
+  ],
+  "Songbox 2: samenspel": [
+    {"min": 5, "soort": "start", "kop": "Opwarmen: inzet en akkoorden", "stappen": ["Aftellen en de eerste vier maten, twee keer."]},
+    {"min": 5, "soort": "uitleg", "kop": "Alles van dit jaar in één les", "stappen": ["Aftellen en samen inzetten.", "Luisteren naar elkaar.", "Couplet zacht, refrein vol.", "Doorspelen bij een fout."], "beeld": {"soort": "kaarten", "items": [{"k": "Aftellen", "t": "samen inzetten"}, {"k": "Luisteren", "t": "naar elkaar"}, {"k": "Dynamiek", "t": "zacht, dan vol"}, {"k": "Doorspelen", "t": "ook na een fout"}]}},
+    {"min": 30, "soort": "doen", "kop": "Oefenen in je groep", "stappen": ["Couplet en refrein, met metronoom of drumloop.", "Ervaren spelers helpen beginners met hun partij."], "klaar": "Speel zonder metronoom: houden jullie het tempo?"},
+    {"min": 5, "soort": "check", "kop": "Eén groep speelt couplet en refrein voor", "stappen": ["Luisteraars: noem één sterk punt bij samenspel, ritme, toon of techniek."]}
+  ],
+  "Songbox 2: eigen arrangement": [
+    {"min": 5, "soort": "luisteren", "kop": "Twee versies van één song", "stappen": ["Wat verschilt in de intro?", "Wat verschilt in het slot?"], "docent": "Origineel en een cover of live-versie klaarzetten."},
+    {"min": 10, "soort": "uitleg", "kop": "Maak de song van jezelf", "stappen": ["Intro: begin met één instrument.", "Break: iedereen stopt, één instrument speelt door.", "Slot: herhaal het refrein, sterf uit, of eindig hard op één tel."], "beeld": {"soort": "kaarten", "items": [{"k": "Intro", "t": "één instrument, dan de rest"}, {"k": "Break", "t": "stop, één instrument door"}, {"k": "Slot", "t": "uitsterven of hard op één"}]}},
+    {"min": 25, "soort": "doen", "kop": "Bedenk je arrangement en probeer het uit", "stappen": ["Kies een intro, een break en een slot.", "Zet ze in je vormschema.", "Oefen de drie plekken apart, dan het hele lied."], "klaar": "Voeg een extra refrein toe in een andere dynamiek."},
+    {"min": 5, "soort": "afsluiten", "kop": "Elke groep vertelt het plan in drie zinnen", "stappen": ["Onze intro is…", "Onze break is…", "Ons slot is…"]}
+  ],
+  "Songbox 2: doorspelen": [
+    {"min": 5, "soort": "start", "kop": "Opwarmen: intro en slot", "stappen": ["Alleen de intro, dan alleen het slot."]},
+    {"min": 30, "soort": "doen", "kop": "Generale repetitie: drie keer doorspelen", "stappen": ["Eén: langzaam en netjes.", "Twee: op tempo.", "Drie: opnemen."], "klaar": "Luister de opname terug en kies één plek die je beter wilt."},
+    {"min": 10, "soort": "gesprek", "kop": "Terugluisteren en één verbeterpunt kiezen", "stappen": ["Luister de opname samen terug.", "Kies één verbeterpunt voor het slotoptreden.", "Spreek de volgorde van volgende week af."]}
+  ],
+  "Slotoptreden in de klas": [
+    {"min": 5, "soort": "uitleg", "kop": "Podiumafspraken", "stappen": ["Volgorde staat op het bord.", "Wie speelt, geeft iets; wie luistert, ontvangt het.", "Applaus na elke groep."]},
+    {"min": 30, "soort": "doen", "kop": "Het slotoptreden", "stappen": ["Elke groep speelt het eigen arrangement.", "De docent neemt op.", "Luisteraars schrijven één concreet compliment op."], "docent": "Opnemen; de opname is het luisterfragment voor de terugblikles."},
+    {"min": 10, "soort": "afsluiten", "kop": "Complimentenronde", "stappen": ["Elke groep krijgt de complimenten van de klas.", "Waar tijd is: de opname terugluisteren."]}
+  ],
+  "Terugblik op het jaar": [
+    {"min": 5, "soort": "luisteren", "kop": "Luister: ons slotoptreden", "stappen": ["De opname van vorige week.", "Hoor je hoe ver je gekomen bent?"]},
+    {"min": 15, "soort": "doen", "kop": "Terugblikblad", "stappen": ["Wat kon ik in september, wat kan ik nu?", "Welke theorie blijft hangen?", "Wat wil ik nog leren?"]},
+    {"min": 15, "soort": "gesprek", "kop": "Muziek na klas 3", "stappen": ["Muziek in de bovenbouw: luisteren, spelen, maken, erop uit.", "Het schoolkoor, de Sing-In, PMZingt!", "Wat kun je buiten school met muziek: kerk, band, les, thuis?"], "beeld": {"soort": "kaarten", "items": [{"k": "Bovenbouw", "t": "muziek als examenvak"}, {"k": "Schoolkoor", "t": "elke week samen zingen"}, {"k": "Sing-In en PMZingt!", "t": "optreden op school"}, {"k": "Buiten school", "t": "kerk, band, les, thuis"}]}},
+    {"min": 10, "soort": "afsluiten", "kop": "Eén zin: wat neem je mee?", "stappen": ["Schrijf je zin op het bord.", "We lezen ze samen."]}
+  ],
+  "Vrij samenspel": [
+    {"min": 5, "soort": "uitleg", "kop": "Vandaag kies je zelf", "stappen": ["Een song van dit jaar, Way Maker, of iets anders uit Musicbox.", "Nieuwe groepen mogen."]},
+    {"min": 35, "soort": "doen", "kop": "Samenspelen", "stappen": ["Speel wat je wilt, zo goed als je kunt.", "Nodig iemand uit een andere groep uit om mee te spelen."]},
+    {"min": 5, "soort": "afsluiten", "kop": "Opruimen en afscheid", "stappen": ["Instrumenten op hun plek, snoeren opgerold.", "Rondje: wat was je mooiste muziekmoment dit jaar?"]}
+  ]
+}
