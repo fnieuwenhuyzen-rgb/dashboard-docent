@@ -40,6 +40,14 @@
     "toetsinstructie": {
       "t": "Toetsinstructie Musicbox (afname digitale toets)",
       "u": "01 Onderbouw muziek\\Toetsinstructie Music Box.docx"
+    },
+    "pres08": {
+      "t": "Presentatie: Songbox 1 opnemen en terugluisteren (PowerPoint)",
+      "u": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027\\08 Songbox 1 - opnemen en terugluisteren.pptx"
+    },
+    "pres11": {
+      "t": "Presentatie: Way Maker kennismaken (PowerPoint)",
+      "u": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027\\11 Way Maker - kennismaken.pptx"
     }
   },
   "lessen": {
@@ -656,6 +664,7 @@
       },
       "identiteit": "Eerlijk naar jezelf luisteren en elkaar opbouwend feedback geven: zo groei je samen.",
       "materiaal": [
+        "pres08",
         "mb",
         "speelles"
       ],
@@ -912,6 +921,7 @@
       },
       "identiteit": "Way Maker wordt gezongen in Lagos, Londen en Middelharnis. De tekst gaat over vertrouwen op God die een weg baant waar wij die niet zien. Wat betekent dat voor jou?",
       "materiaal": [
+        "pres11",
         "mb",
         "leerlingblad"
       ],
