@@ -25,7 +25,7 @@ De repository is gekoppeld aan GitHub; Cloudflare Pages bouwt vanzelf uit de map
 
 Sinds 20 oktober staan de appbestanden in `public/`; `bron/`, `tools/`, `worker/` en de notities staan ernaast en gaan niet mee. Worker bijwerken: `npx wrangler deploy worker/rooster-proxy.js --name lesdag-rooster`.
 
-GitHub-koppeling gestart op 20 oktober 2026 (avond): lokale git-repository in deze map, branch `main`. Nog te doen: repository op GitHub aanmaken en pushen, Direct Upload-project `lesdag-muziek` vervangen door een Pages-project met Git-koppeling (zelfde naam, zodat het adres en de Worker-CORS blijven kloppen).
+GitHub-koppeling klaar op 20 oktober 2026 (avond): repository https://github.com/fnieuwenhuyzen-rgb/dashboard-docent (privé, branch `main`). Het Direct Upload-project is verwijderd en vervangen door een Pages-project met Git-koppeling onder dezelfde naam `lesdag-muziek` (build command leeg, output `public`). Elke push naar `main` komt vanzelf online; het adres en de Worker-CORS zijn ongewijzigd.
 
 ## Gegevens
 
