@@ -33,6 +33,10 @@ GitHub-koppeling klaar op 20 oktober 2026 (avond): repository https://github.com
 - Eigen staat van Frans (rooster, voortgang, aanpassingen per les, sectie-afvinkingen) staat los daarvan in localStorage (`lesdag-staat`) en, na inloggen, in OneDrive (`Apps/Lesdag/lesdag.json`). Een nieuwe basis.json overschrijft die niet. Les-id's zijn `leergang:lesweek.lesnummer`; verander de weekindeling van een leergang dus niet zonder migratie.
 - `bron/leergang-dashboard.html` is het claude.ai-artifact "Leergang muziek" (https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2), versie 11. `bron/leergang-data.json` is de data daaruit. `tools/newdata.py` + `tools/build.py` + `tools/sectie.js` bouwden die data en het dashboard (paden in de scripts verwijzen naar de oude werkmap; pas aan voor gebruik).
 
+## Lesinhoud invullen
+
+Lesinhoud per klas staat in `tools/inhoud-<naam>.json` (gekoppeld op lestitel; velden vraag, doel, criteria, fasen, formatief, identiteit, materiaal, benodigd; materiaal via sleutels in `_mat`). `node tools/merge-inhoud.js <naam> <klas> [<klas>...] [--force]` zet het in `public/data/basis.json` én `bron/leergang-data.json`; bestaande velden blijven staan tenzij `--force`. Daarna de data in `bron/leergang-dashboard.html` verversen (data-blok `<script id="data">` vervangen door `bron/leergang-data.json`, met `</` als `<\/`) en het artifact publiceren via zijn URL. Gedaan: klas 3 (`inhoud-klas3.json`, havo 3 en vwo 3, 20 oktober 2026, artifact versie 12). Nog leeg: BB1, keuzeuur h3, mavo 3, mavo 4.
+
 ## Inhoudelijke afspraken
 
 - Klas 3 (havo 3, vwo 3): periode 2 is een eigen songbox op basis van **Way Maker** (Sinach), basis voor PTO P1. De songbox moet nog gemaakt worden; eerst onderzoeken hoe Musicbox-musicsheets zijn opgebouwd (Frans moet daarvoor inloggen in Musicbox of de map 01 Onderbouw muziek delen). Geen volledige songteksten opnemen (auteursrecht).
