@@ -1,0 +1,261 @@
+{
+  "_uitleg": "Lesinhoud week 8 (26-30 oktober 2026) voor de lespresentaties. Per klas: thema (accentkleur), map, en lessen met fasen als objecten {min, soort, kop, stappen, klaar, docent}. Gebouwd door tools/maak-decks-week8.js.",
+  "vwo4": {
+    "klas": "vwo 4", "thema": "klas4", "map": "02 Keuzevak muziek\\VWO\\VWO 4\\Lessen 2026-2027", "blok": "Periode 1 · De voorlopers van de jazz", "blokKort": "voorlopers van de jazz",
+    "thuis": { "mb": "Voorlopers van de jazz · N2 b6 Musicsheets 6.1 t/m 6.5", "extra": "Oefenlog: je partij twee keer tien minuten · Messiah elke dag even" },
+    "lessen": [
+      {
+        "titel": "Samenspel: blues met zang", "code": "P1 · les 8.1", "bestand": "08.1 Blues met zang - samenspel.pptx",
+        "vraag": "Hoe blijf je samen als iedereen iets anders speelt?",
+        "doel": "Je speelt je vaste partij in de blues en zingt This old hammer met call-and-response.",
+        "criteria": ["Ik val na een fout weer in op de juiste maat", "Ik zing de response zuiver op de call"],
+        "fasen": [
+          { "min": 5, "soort": "start", "kop": "This old hammer: ik roep, jullie antwoorden", "stappen": ["Staan, voeten op de grond. Ik zing de call, jullie zingen de response.", "De response begint precies op de tel. Niet te vroeg, niet erachteraan.", "Tweede ronde: zonder mij. Wie neemt de call over?"], "klaar": "Zing de response eens heel zacht en dan heel vol. Welke past bij een werklied?", "docent": "Call-and-response in de groef houden: tik de tel mee op de tafel. Bij twijfel over de toonhoogte: eerst de response alleen laten zingen, dan pas de call erbij." },
+          { "min": 10, "soort": "doen", "kop": "Partijen checken: twaalf maten per instrument", "stappen": ["Per groep: ieder speelt zijn vaste partij één chorus (twaalf maten) alleen, de rest telt mee.", "Bas: grondtoon op I, IV en V. Akkoorden: wissel op de één van maat 5, 7, 9, 11.", "Zang: waar valt de call, waar de response? Zet het op je schema."], "klaar": "Speel je partij met de ogen dicht. Lukt het nog?", "docent": "Twaalfmatenschema op het bord laten staan (kaart BL schema). Let op maat 9-10: V-IV, daar gaat het vaak mis." },
+          { "min": 25, "soort": "doen", "kop": "Doorspelen in je groep: niet stoppen, instappen", "stappen": ["Speel het stuk drie keer helemaal door. Wie een fout maakt, speelt niet opnieuw maar stapt in bij de volgende maat.", "Drummer of bassist telt af: één, twee, één twee drie vier.", "Na elke keer: één zin. Waar werd het wiebelig?"], "klaar": "Ruil van partij met iemand uit je groep en speel nog een keer door.", "docent": "Rouleren langs de groepen; per groep één concreet samenspelpunt geven (inzet, tempo, maat 9-10). Niet repareren, laten doorspelen." },
+          { "min": 5, "soort": "afsluiten", "kop": "Eén tip per groep voor volgende week", "stappen": ["Elke groep luistert naar een andere groep: één top, één tip.", "Schrijf de tip op jullie schema. Daar beginnen we volgende week mee.", "Woensdag: improviseren op de bluestoonladder en de generale voor PT1."], "docent": "Tips verzamelen op het bord; terug laten komen in de lesmodus van woensdag." }
+        ],
+        "formatief": { "soort": "peerfeedback", "tekst": "Elke groep luistert naar een andere groep: één tip, één top." },
+        "identiteit": "This old hammer is een werklied. Wat deed samen zingen voor mensen die dit werk moesten doen, dag in dag uit?",
+        "extra": { "1": { "soort": "tabel", "kol": [0.26, 0.3, 0.44], "rijen": [["Maat", "Akkoord", "Zang"], ["1 - 4", "I (C)", "call · response"], ["5 - 6", "IV (F)", "call"], ["7 - 8", "I (C)", "response"], ["9", "V (G)", "call"], ["10", "IV (F)", "response"], ["11 - 12", "I (C)", "turnaround"]] } }
+      },
+      {
+        "titel": "Improviseren en generale PT1", "code": "P1 · les 8.2", "bestand": "08.2 Improviseren op de bluestoonladder - generale PT1.pptx",
+        "vraag": "Durf ik te improviseren op de bluestoonladder?",
+        "doel": "Je improviseert vier maten op de bluestoonladder en speelt het stuk twee keer helemaal door.",
+        "criteria": ["Mijn improvisatie blijft in het schema", "Wij beginnen en eindigen samen"],
+        "fasen": [
+          { "min": 10, "soort": "start", "kop": "Messiah: And the glory of the Lord (nr. 4), daarna Hallelujah (nr. 44)", "stappen": ["Nr. 4: de inzet van de alten, dan de rest erbij. Let op de lange noot op 'Lord'.", "Nr. 44 herhalen: alleen het begin tot de eerste 'King of Kings'.", "Eén aandachtspunt: eindklinkers samen loslaten."], "docent": "Opname van de oefensite erbij; nr. 4 maat 1-20, nr. 44 tot letter B. Niet langer dan tien minuten." },
+          { "min": 10, "soort": "uitleg", "kop": "De bluestoonladder in C: zes noten, drie zijn genoeg", "stappen": ["C · Es · F · Fis · G · Bes · C. De Es en de Fis zijn de 'blue notes': ze schuren tegen het akkoord aan.", "Begin met drie noten: C, Es en G. Daar kun je al een solo mee spelen.", "Een goede solo heeft rust: speel een motief, wacht, speel het nog eens iets anders."], "klaar": "Speel een motief van twee noten en herhaal het in elke maat van het schema.", "docent": "Kaart TL 1a. Op het keyboard voordoen: eerst alleen C-Es-G in het ritme van de call, dan de Fis erbij als 'kriebel'. Niet de hele toonladder op en neer laten spelen." },
+          { "min": 20, "soort": "doen", "kop": "Soloruil: vier maten per persoon, dan de generale", "stappen": ["Het stuk loopt door; om de vier maten is de volgende aan de beurt voor de solo. De rest speelt de partij zachter.", "Niemand stopt. Geen inspiratie? Speel dan de grondtoon in het ritme van de call.", "Daarna: twee keer helemaal doorspelen zoals bij PT1. Begin en einde samen."], "klaar": "Solo over twaalf maten in plaats van vier.", "docent": "Volgorde van de soloruil vooraf vastleggen (met de klok mee). Bij de generale zelf de tijd nemen: dit is de toetssituatie." },
+          { "min": 5, "soort": "check", "kop": "Klaar-voor-PT1-lijst", "stappen": ["Drie kruisjes: mijn partij, mijn inzet, mijn improvisatie.", "Mis je er twee? Oefen thuis met de opname en zet dat in je oefenlog.", "PT1 is na de toetsweek: zelfde stuk, zelfde groep."], "docent": "Lijstjes innemen of fotograferen; wie twee kruisjes mist, krijgt de opname van vandaag." }
+        ],
+        "formatief": { "soort": "zelfcheck", "tekst": "Klaar-voor-PT1-lijst: partij, inzet, improvisatie. Wie twee kruisjes mist, oefent thuis met de opname." },
+        "extra": { "1": { "soort": "kaarten", "items": [{ "k": "C", "t": "grondtoon · altijd goed" }, { "k": "Es", "t": "blue note · schuurt" }, { "k": "F", "t": "op het IV-akkoord" }, { "k": "Fis", "t": "blue note · doorgang" }, { "k": "G", "t": "kwint · rustpunt" }, { "k": "Bes", "t": "septiem · bluesklank" }] } }
+      }
+    ]
+  },
+  "vwo5": {
+    "klas": "vwo 5", "thema": "klas5", "map": "02 Keuzevak muziek\\VWO\\VWO 5\\Lessen 2026-2027", "blok": "Periode 1 · Het classicisme", "blokKort": "classicisme",
+    "thuis": { "mb": "Classicisme · N2 b8 Musicsheets 8.1 t/m 8.6", "extra": "Messiah elke dag even" },
+    "lessen": [
+      {
+        "titel": "Praktijktoets P9: solowerk en samenspel", "code": "P1 · P9", "bestand": "08.1 Praktijktoets P9 - solowerk en samenspel.pptx", "type": "toets",
+        "vraag": "Wat laat ik vandaag horen?",
+        "doel": "Je speelt je solowerk en je samenspelstuk voor de klas, in het P9-format dat we vorige week hebben geoefend.",
+        "criteria": ["Ik begin en eindig overtuigend", "Ik speel door na een fout", "Ik luister naar mijn medespelers"],
+        "fasen": [
+          { "min": 10, "soort": "start", "kop": "Inzingen: And the glory of the Lord (nr. 4), daarna Hallelujah (nr. 44)", "stappen": ["Nr. 4 vanaf het begin; nr. 44 herhalen tot 'King of Kings'.", "Daarna: instrumenten stemmen, standaards klaar, telefoon weg.", "De volgorde van vandaag staat op het bord."], "docent": "Kort houden: het inzingen is bedoeld om de spanning uit de ruimte te halen. Volgorde: eerst de duo's en groepen, dan de solo's." },
+          { "min": 35, "soort": "doen", "kop": "De uitvoeringen: zo gaat het", "stappen": ["Wie aan de beurt is, zegt kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.", "Het publiek luistert zoals op een concert: stil, telefoon weg, applaus na afloop.", "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.", "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."], "docent": "Scorelijst per leerling: solo en samenspel apart. Donderdag de resterende uitvoeringen. Opnemen met de telefoon op het statief, zodat de format-reflectie thuis kan." }
+        ],
+        "formatief": { "soort": "toets", "tekst": "P9 telt mee. Je krijgt je cijfer na de tweede toetsles, met een opmerking per onderdeel." },
+        "extra": { "1": { "soort": "kaarten", "items": [{ "k": "Toon en zuiverheid", "t": "klinkt het zoals bedoeld?" }, { "k": "Ritme en tempo", "t": "blijft het staan?" }, { "k": "Uitdrukking", "t": "dynamiek, frasering, karakter" }, { "k": "Samenspel", "t": "luisteren en reageren" }] } }
+      },
+      {
+        "titel": "Inspelen en terugluisteren", "code": "P1 · les 8.2", "bestand": "08.2 Inspelen en terugluisteren.pptx",
+        "vraag": "Wat neem ik mee naar P10?",
+        "doel": "Je speelt in of beoordeelt je eigen uitvoering, en je noteert één ding dat je meeneemt naar P10.",
+        "criteria": ["Format ingevuld, of klaar om donderdag te spelen"],
+        "fasen": [
+          { "min": 10, "soort": "start", "kop": "Messiah: nr. 4 en nr. 44 herhalen", "stappen": ["Nr. 4: de fugatische inzetten, stem voor stem.", "Nr. 44: vanaf 'The kingdom of this world'. Let op het tempo: niet gaan rennen.", "Eén aandachtspunt per stemgroep."], "docent": "Opname oefensite. Hier mag wat langer aan de inzetten geschaafd worden; de rest van de les is zelfstandig." },
+          { "min": 35, "soort": "doen", "kop": "Twee sporen: nog spelen of al geweest", "stappen": ["Nog niet geweest: speel je stukken twee keer helemaal door, in een hoek van het lokaal of in de oefenruimte. Niet repareren, doorspelen.", "Al geweest: luister je opname terug en vul het format in voor je eigen uitvoering. Eén punt dat je meeneemt naar P10, concreet: welke maat, welk probleem.", "Klaar? Luister naar de opname van een klasgenoot en geef één tip op het format."], "klaar": "Speel je moeilijkste passage drie keer in een langzaam tempo, dan één keer op tempo.", "docent": "Rouleren; bij de 'nog spelen'-groep vooral het begin en einde laten oefenen. Formats aan het eind van de les innemen." }
+        ],
+        "formatief": { "soort": "zelfbeoordeling", "tekst": "Format voor je eigen uitvoering: één concreet punt voor P10." }
+      },
+      {
+        "titel": "Praktijktoets P9, vervolg", "code": "P1 · P9", "bestand": "08.3 Praktijktoets P9 vervolg - Brahms naast Mozart.pptx", "type": "toets",
+        "vraag": "Wat hoor je als je Brahms naast Mozart zet?",
+        "doel": "De laatste uitvoeringen van P9. Daarna luister je naar een pianoconcert van Brahms naast een van Mozart en benoem je wat er anders is.",
+        "criteria": ["Resterende uitvoeringen gedaan", "Drie verschillen tussen Brahms en Mozart benoemd"],
+        "fasen": [
+          { "min": 25, "soort": "doen", "kop": "De laatste uitvoeringen", "stappen": ["Zelfde afspraken als maandag: aankondigen, spelen, applaus.", "Wie al geweest is, luistert zoals op een concert en noteert één top per uitvoering.", "Daarna is P9 afgerond voor iedereen."], "docent": "Scorelijst afmaken; opnamen bewaren in de klasmap." },
+          { "min": 15, "soort": "luisteren", "kop": "Brahms naast Mozart: een pianoconcert, honderd jaar later", "stappen": ["Eerst Mozart: een pianoconcert uit de jaren 1780. Hoe groot is het orkest, hoe is de piano begeleid, hoe lang zijn de zinnen?", "Dan Brahms: een pianoconcert uit de negentiende eeuw. Wat is er gegroeid, wat is dikker, wat is anders?", "Schrijf drie verschillen op: bezetting, klank, vorm of karakter."], "klaar": "Welk fragment zou je kiezen voor een film over hoop? En waarom?", "docent": "Fragmenten: Mozart KV 488 (A-groot) eerste deel, opening en piano-inzet; Brahms nr. 2 opus 83, opening met hoorn en piano. Twee keer twee minuten is genoeg. Dit is de opmaat naar de romantiek, na de toetsweek." },
+          { "min": 5, "soort": "gesprek", "kop": "Wat maakt classicisme classicisme?", "stappen": ["Jullie drie verschillen op het bord.", "Welke daarvan horen bij het classicisme zelf: evenwicht, heldere zinnen, bescheiden orkest?", "Volgende week toetsweek: Musicbox b8 Musicsheets 8.1 t/m 8.6 en Messiah."], "docent": "Afsluiten met de kernwoorden van het blok: periodebouw, Alberti-bas, sonatevorm, orkest zonder trombones." }
+        ],
+        "formatief": { "soort": "gesprek", "tekst": "Drie verschillen tussen Brahms en Mozart op het bord. Welke horen bij het classicisme zelf?" }
+      }
+    ]
+  },
+  "havo4": {
+    "klas": "havo 4", "thema": "klas4", "map": "02 Keuzevak muziek\\Havo\\Havo 4\\Lessen 2026-2027", "blok": "Blok 1 · Jazz en blues", "blokKort": "jazz en blues",
+    "thuis": { "extra": "Aantekeningen hoofdstuk 1 af · Messiah tien minuten" },
+    "lessen": [
+      {
+        "titel": "Liedsoorten: blues, geestelijk lied, song; oefentoets notatie", "code": "B1 · les 8.1", "bestand": "08.1 Liedsoorten - blues, geestelijk lied, song.pptx",
+        "vraag": "Wat is een geestelijk lied?",
+        "doel": "Je onderscheidt blues, geestelijk lied en song, en je maakt de oefentoets notatie.",
+        "criteria": ["Ik hoor bij drie fragmenten welke liedsoort het is", "Oefentoets notatie gemaakt en nagekeken"],
+        "fasen": [
+          { "min": 5, "soort": "luisteren", "kop": "Drie fragmenten: wat voor lied is dit?", "stappen": ["Je hoort drie korte fragmenten. Schrijf per fragment één woord op: waar gaat het over, en voor wie is het gezongen?", "Nog niet benoemen. Eerst horen."], "docent": "Fragmenten: een twaalfmatenblues (bijv. Bessie Smith), een gospel/spiritual (bijv. Swing low), een popsong met couplet-refrein. Elk dertig seconden." },
+          { "min": 10, "soort": "uitleg", "kop": "Blues, geestelijk lied en song: drie liedsoorten", "stappen": ["Blues: twaalf maten, de tekst in AAB (zin, dezelfde zin, antwoord), blue notes, over het leven zoals het is.", "Geestelijk lied: gezongen tot of over God, bedoeld om samen te zingen: psalm, gezang, spiritual, gospel, worship.", "Song: couplet en refrein, één zanger met band, over wat de zanger zelf meemaakt."], "klaar": "Noem van elke soort één voorbeeld dat je zelf kent.", "docent": "Terug naar de drie fragmenten: welk woord hadden ze opgeschreven, klopt dat met de liedsoort? De spiritual is tegelijk blues-wortel en geestelijk lied: dat is het bruggetje naar de rode draad." },
+          { "min": 20, "soort": "doen", "kop": "Oefentoets notatie: zelfde soort vragen als in de toetsweek", "stappen": ["Alleen, in stilte. Notennamen in de vioolsleutel, ritme natikken en noteren, maatsoort herkennen.", "Sla over wat je niet weet en kom er later op terug.", "Klaar? Controleer de notennamen nog een keer via de lijnen: E-G-B-D-F."], "docent": "Oefentoets uitdelen; tijd bewaken. Wie eerder klaar is: aantekeningen hoofdstuk 1 afmaken." },
+          { "min": 10, "soort": "check", "kop": "Nakijken: je foutenlijst", "stappen": ["Kijk na met de sleutel op het bord. Tel niet je punten, maar schrijf op wát je fout had: notennaam, ritme of maatsoort.", "Dat is je foutenlijst. Daar oefen je mee voor de toetsweek.", "Wie wil, zet op het bord: welke fout kwam het meest voor?"], "docent": "Meest gemaakte fout klassikaal uitleggen. Foutenlijst in de aantekeningen laten plakken." }
+        ],
+        "formatief": { "soort": "oefentoets", "tekst": "Oefentoets notatie: niet je punten tellen, maar je foutenlijst maken." },
+        "identiteit": "Een geestelijk lied is niet 'rustige muziek'. Het is een lied dat je samen zingt tot of over God: een psalm, een spiritual, een gospel. Wat maakt een lied voor jou geestelijk?",
+        "extra": { "1": { "soort": "kaarten", "items": [{ "k": "Blues", "t": "12 maten · AAB · blue notes" }, { "k": "Geestelijk lied", "t": "samen zingen · tot of over God" }, { "k": "Song", "t": "couplet en refrein · één zanger" }] } }
+      },
+      {
+        "titel": "Ensemblestuk afronden", "code": "B1 · les 8.2", "bestand": "08.2 Ensemblestuk afronden.pptx",
+        "vraag": "Klinkt ons ensemblestuk af?",
+        "doel": "Je zingt Glory to God in en rondt het ensemblestuk met je groep af.",
+        "criteria": ["Ons ensemblestuk gaat één keer helemaal door zonder stoppen"],
+        "fasen": [
+          { "min": 15, "soort": "start", "kop": "Messiah: Glory to God (nr. 6), daarna nr. 2 herhalen", "stappen": ["Glory to God: de hoge inzet van de sopranen en alten, dan 'and peace on earth' laag en rustig.", "Nr. 2 herhalen: de inzetten per stem.", "Rechtop, adem laag, eindmedeklinkers samen."], "docent": "Opname van de oefensite. Het contrast hoog-laag in Glory to God hardop benoemen: dat komt in havo 5 terug." },
+          { "min": 25, "soort": "doen", "kop": "Afronden: van 'bijna' naar 'af'", "stappen": ["Speel het stuk één keer door en markeer de plek waar het wiebelt. Alleen díe plek oefenen, vijf keer, langzaam.", "Dan het begin en het einde: samen inzetten, samen stoppen. Wie telt af?", "Daarna nog een keer helemaal door, zonder stoppen."], "klaar": "Speel het stuk een keer zachter dan je gewend bent. Hoor je elkaar beter?", "docent": "Rouleren; per groep één plek aanwijzen om te isoleren. Niet het hele stuk laten herhalen." },
+          { "min": 5, "soort": "afsluiten", "kop": "Generale: één keer door, één tip", "stappen": ["Elke groep speelt het stuk één keer door voor een andere groep.", "De luisterende groep geeft één tip: concreet, met de maat erbij.", "Volgende les: je eigen improvisatie afronden en opnemen."], "docent": "Tips kort noteren; dit is de laatste ensemblerepetitie voor de toetsweek." }
+        ],
+        "formatief": { "soort": "generale", "tekst": "Eén keer door voor een andere groep. Eén tip, met de maat erbij." }
+      },
+      {
+        "titel": "Improvisatie afronden en opnemen", "code": "B1 · les 8.3", "bestand": "08.3 Improvisatie afronden en opnemen.pptx",
+        "vraag": "Is mijn improvisatie klaar?",
+        "doel": "Je rondt je improvisatie af en neemt hem op.",
+        "criteria": ["Mijn opname staat erop", "Ik heb één verbeterpunt opgeschreven"],
+        "fasen": [
+          { "min": 15, "soort": "doen", "kop": "Afronden: een begin, een midden, een einde", "stappen": ["Speel je improvisatie één keer door. Heeft hij een duidelijk begin en een duidelijk einde?", "Kies één motief dat je minstens twee keer laat terugkomen. Dat maakt een solo herkenbaar.", "Oefen de overgang naar je einde: de laatste twee maten."], "klaar": "Speel je improvisatie een keer met de helft van de noten. Mis je iets?", "docent": "Koptelefoons bij de keyboards. Wie nog geen motief heeft: twee noten uit de bluestoonladder in het ritme van de call." },
+          { "min": 20, "soort": "doen", "kop": "Opnemen: één keer goed", "stappen": ["Telefoon op de standaard, een meter afstand, niet bewegen tijdens de opname.", "Zeg eerst je naam en 'improvisatie blok 1', dan spelen. Het hoeft niet perfect; het moet áf zijn.", "Maximaal drie pogingen. Kies zelf de beste en zet hem in de inlevermap."], "docent": "Opnameplekken verdelen over lokaal en oefenruimte; stilte-afspraak. Inleveren via de Teams-opdracht." },
+          { "min": 10, "soort": "check", "kop": "Terugluisteren: één verbeterpunt", "stappen": ["Luister je opname terug met koptelefoon. Niet oordelen over het geheel; zoek één plek.", "Schrijf op: maat, wat je hoort, wat je volgende keer anders doet.", "Dat punt neem je mee naar blok 2."], "docent": "Verbeterpunten verzamelen; het is tegelijk de reflectie voor P1." }
+        ],
+        "formatief": { "soort": "opname", "tekst": "Opname beluisteren: één verbeterpunt, met de maat erbij." }
+      }
+    ]
+  },
+  "havo5": {
+    "klas": "havo 5", "thema": "klas5", "map": "02 Keuzevak muziek\\Havo\\Havo 5\\Lessen 2026-2027", "blok": "Blok 1 · Examenstof op analyseniveau", "blokKort": "examenstof op analyseniveau",
+    "thuis": { "mb": "Examentraining Pop en Jazz: examenvragen", "extra": "Zelfcheck T3 invullen" },
+    "lessen": [
+      {
+        "titel": "Examentraining T3: samenklank, compositietechniek en vorm bij fragmenten; notatie volgen en ritme noteren", "kort": "Examentraining T3", "code": "B1 · les 8.1", "bestand": "08.1 Examentraining T3 - samenklank, compositietechniek, vorm.pptx",
+        "vraag": "Hoe scoor ik op examentraining?",
+        "doel": "Je oefent samenklank, compositietechniek en vorm bij fragmenten in examenvorm, en je maakt je foutenlijst voor T3.",
+        "criteria": ["Alle vragen beantwoord binnen de tijd", "Foutenlijst gemaakt per categorie"],
+        "fasen": [
+          { "min": 30, "soort": "doen", "kop": "Fragmenten in examenvorm: lees eerst, luister dan", "stappen": ["Elk fragment klinkt twee of drie keer. Lees vóór de eerste keer de vraag: waar moet je op letten?", "Samenklank: consonant of dissonant, majeur of mineur, welke akkoorden. Compositietechniek: herhaling, imitatie, sequens, variatie, canon. Vorm: couplet-refrein, ABA, rondo, variatievorm.", "Notatie volgen: lees mee met de vinger; ritme noteren: eerst de tellen strepen, dan de noten."], "klaar": "Zet bij elke vraag een vraagteken als je gokte. Die kom je straks op je foutenlijst tegen.", "docent": "Examenvorm: stil, fragmenten op vaste tijden, niet terugspoelen op verzoek. Fragmenten uit de examentraining Pop en Jazz (Musicbox) en een oud examen havo." },
+          { "min": 15, "soort": "check", "kop": "Nakijken: je foutenlijst per categorie", "stappen": ["Kijk na met het antwoordmodel. Zet elke fout in een kolom: samenklank, compositietechniek, vorm, notatie of ritme.", "Welke kolom is het langst? Dat is je oefenpunt voor de toetsweek.", "Vul thuis de zelfcheck T3 in en neem je foutenlijst mee."], "docent": "Meest voorkomende fout klassikaal bespreken met het fragment erbij. T3 is in toetsweek 1 (135 minuten)." }
+        ],
+        "formatief": { "soort": "examentraining", "tekst": "Foutenlijst per categorie. De langste kolom is je oefenpunt voor T3." },
+        "extra": { "0": { "soort": "kaarten", "items": [{ "k": "Samenklank", "t": "consonant · dissonant · majeur · mineur" }, { "k": "Compositietechniek", "t": "herhaling · imitatie · sequens · variatie · canon" }, { "k": "Vorm", "t": "couplet-refrein · ABA · rondo · variaties" }, { "k": "Notatie en ritme", "t": "meelezen · tellen strepen · dan noteren" }] } }
+      },
+      {
+        "titel": "Close harmony; consonant en dissonant zingen", "code": "B1 · les 8.2", "bestand": "08.2 Close harmony - consonant en dissonant zingen.pptx",
+        "vraag": "Klinkt close harmony?",
+        "doel": "Je zingt Glory to God in, en daarna zing je zelf consonant en dissonant.",
+        "criteria": ["Ik hoor het verschil tussen consonant en dissonant", "Ik heb zelf een dissonant gezongen en vastgehouden"],
+        "fasen": [
+          { "min": 20, "soort": "start", "kop": "Messiah: Glory to God (nr. 6), daarna nr. 2 herhalen", "stappen": ["Glory to God: de engelen hoog en helder, 'and peace on earth' laag en breed. Zing het verschil.", "Nr. 2 herhalen: de inzetten per stem, dan samen.", "Luister bij het samenzingen naar de stem naast je, niet alleen naar je eigen partij."], "docent": "Opname oefensite. Het hoog-laag-contrast is precies de rode draad van vandaag: hemel en aarde in twee registers." },
+          { "min": 20, "soort": "doen", "kop": "Close harmony: drie stemmen dicht op elkaar", "stappen": ["In drie groepen een drieklank zingen: grondtoon, terts, kwint. Dat is consonant: het rust.", "Nu schuift één groep een halve toon omhoog en houdt vast. Dat is dissonant: het schuurt, het wil ergens heen.", "Los het op: de schuivende groep gaat terug. Voel je het verschil in je buik?", "Daarna een close-harmony-fragment per groep: de akkoorden liggen binnen één octaaf."], "klaar": "Laat de dissonant acht tellen staan zonder op te lossen. Wie houdt het vol?", "docent": "Keyboard erbij om de drieklank te geven. Fragment: een close-harmony-arrangement uit de Musicbox-box of een barbershop-tag van vier maten. Syllabus g: samenklank." },
+          { "min": 5, "soort": "check", "kop": "Duimen: consonant of dissonant?", "stappen": ["Ik speel zes samenklanken. Duim omhoog bij consonant, duim omlaag bij dissonant.", "Twee keer twijfel? Dat is een oefenpunt voor T3.", "Maandag: je eerste schets voor P3 afronden."], "docent": "Zes samenklanken op het keyboard: drieklank, secunde, kwint, tritonus, septiemakkoord, cluster." }
+        ],
+        "formatief": { "soort": "duimen", "tekst": "Zes samenklanken: duim omhoog bij consonant, omlaag bij dissonant." },
+        "identiteit": "Glory to God (Lucas 2:14): de engelen zingen hoog, 'peace on earth' klinkt laag. Händel zet hemel en aarde in twee registers tegenover elkaar."
+      },
+      {
+        "titel": "P3: eerste schets afronden", "code": "B1 · les 8.3", "bestand": "08.3 P3 - eerste schets afronden.pptx",
+        "vraag": "Is mijn eerste schets af?",
+        "doel": "Je rondt schets 1 van je compositie voor P3 af en neemt hem op.",
+        "criteria": ["Schets 1 is compleet: begin, midden, einde", "Schets 1 staat opgenomen"],
+        "fasen": [
+          { "min": 40, "soort": "doen", "kop": "Schets 1 afmaken: compleet gaat vóór mooi", "stappen": ["Pak je vormschema van vorige week. Welk deel ontbreekt nog? Dat maak je eerst.", "Een schets mag ruw zijn: de juiste akkoorden, een melodie die klopt, een einde dat eindigt.", "Neem de schets op zodra hij compleet is. Dan pas verbeteren.", "Klaar? Schrijf drie dingen op die je in schets 2 wilt veranderen."], "klaar": "Speel je schets voor iemand die hem nog niet kent. Waar kijkt die verbaasd?", "docent": "Rouleren; per leerling één vraag stellen over het ontbrekende deel. Niet meeschrijven aan de compositie. Opnamen in de inlevermap P3." },
+          { "min": 5, "soort": "afsluiten", "kop": "Opgenomen? Dan is schets 1 af", "stappen": ["Opname in de inlevermap, met je naam en 'schets 1'.", "Na de toetsweek: schets 2, met feedback van mij op schets 1.", "Toetsweek: T3 analyseren, 135 minuten. Foutenlijst en zelfcheck mee."], "docent": "Checken wie nog niet heeft ingeleverd; die leveren voor de toetsweek digitaal in." }
+        ],
+        "formatief": { "soort": "opname", "tekst": "Schets 1 opgenomen en ingeleverd." }
+      }
+    ]
+  },
+  "vwo6": {
+    "klas": "vwo 6", "thema": "klas6", "map": "02 Keuzevak muziek\\VWO\\VWO 6\\Lessen 2026-2027", "blok": "Module 1 · Middeleeuwen en renaissance", "blokKort": "middeleeuwen en renaissance",
+    "thuis": { "extra": "Toetsweek voorbereiden: T9 middeleeuwen, renaissance en moderne pop · zelfreflectie schrijven" },
+    "lessen": [
+      {
+        "titel": "Persoonlijke interpretaties (deel 1) met peerfeedback", "code": "M1 · les 8.1", "bestand": "08.1 Persoonlijke interpretaties deel 1.pptx",
+        "vraag": "Wat maakt jouw interpretatie van oude muziek persoonlijk?",
+        "doel": "Je presenteert je persoonlijke interpretatie van een middeleeuws of renaissancestuk en je verwerkt de peerfeedback meteen.",
+        "criteria": ["Ik heb gepresenteerd: bron, wat ik behield, wat ik veranderde, waarom", "Ik heb één verbetering uit de feedback doorgevoerd"],
+        "fasen": [
+          { "min": 25, "soort": "doen", "kop": "Presentaties, deel 1: vier minuten per persoon", "stappen": ["Volgorde staat op het bord. Vier minuten: laat je bron horen (twintig seconden), dan je eigen versie, dan twee zinnen: wat behield je, wat veranderde je, waarom.", "Publiek: luisterkader invullen tijdens het luisteren, niet erna.", "Geen 'sorry' vooraf. Gewoon beginnen."], "docent": "Tijd strak bewaken: timer zichtbaar. Opnemen voor het portfolio. De helft van de klas vandaag, de rest woensdag." },
+          { "min": 10, "soort": "gesprek", "kop": "Peerfeedback: een top en een tip, met de maat erbij", "stappen": ["Per presentatie één top en één tip, hardop, vanuit je luisterkader.", "Een tip gaat over een keuze, niet over een smaak: 'de tekstplaatsing in het tweede couplet' in plaats van 'ik vond het mooi'.", "De maker schrijft de tips op en zegt niets terug. Alleen 'dank je'."], "docent": "Zelf de laatste feedbackgever zijn, niet de eerste. Letten op: verwijzing naar de bron (modus, isoritmiek, cantus firmus, tekstplaatsing)." },
+          { "min": 10, "soort": "doen", "kop": "Eén verbetering nu doorvoeren", "stappen": ["Kies één tip die je vandaag nog kunt uitvoeren. Doe dat nu: in je partituur, in je opname of in je toelichting.", "Schrijf in je reflectie: welke tip, wat je veranderde, wat het opleverde.", "Woensdag deel 2. Daarna: toetsweek, T9."], "docent": "Reflectie hoort bij de toetsweekvoorbereiding (zelfreflectie thuis)." }
+        ],
+        "formatief": { "soort": "peerfeedback", "tekst": "Per presentatie één top en één tip, over een keuze, met de maat erbij." },
+        "extra": { "0": { "soort": "kaarten", "items": [{ "k": "Bron", "t": "welk stuk, welke tijd, welke stijl?" }, { "k": "Behouden", "t": "wat hoor je nog van het origineel?" }, { "k": "Veranderd", "t": "bezetting · tempo · harmonie · tekst" }, { "k": "Waarom", "t": "wat wilde de maker laten horen?" }] } }
+      },
+      {
+        "titel": "Persoonlijke interpretaties (deel 2) met peerfeedback", "code": "M1 · les 8.2", "bestand": "08.2 Persoonlijke interpretaties deel 2.pptx",
+        "vraag": "Wat hebben we van elkaars interpretaties geleerd?",
+        "doel": "De tweede helft presenteert de persoonlijke interpretatie; iedereen verwerkt peerfeedback en we halen de rode lijn uit alle presentaties.",
+        "criteria": ["Ik heb gepresenteerd: bron, wat ik behield, wat ik veranderde, waarom", "Ik kan twee manieren noemen waarop je oude muziek nieuw kunt maken"],
+        "fasen": [
+          { "min": 25, "soort": "doen", "kop": "Presentaties, deel 2: vier minuten per persoon", "stappen": ["Zelfde opzet als maandag: bron kort, eigen versie, twee zinnen toelichting.", "Publiek: luisterkader invullen tijdens het luisteren.", "Wie maandag al is geweest, let extra op: welke keuzes zie je terugkomen?"], "docent": "Timer zichtbaar; opnemen voor het portfolio." },
+          { "min": 10, "soort": "gesprek", "kop": "Peerfeedback en de rode lijn", "stappen": ["Per presentatie één top en één tip, over een keuze.", "Daarna samen: welke manieren om oude muziek nieuw te maken hebben we nu gehoord? Op het bord.", "Welke daarvan deden Josquin en Dufay zelf al, met de muziek van hún voorgangers?"], "docent": "Bordlijst: andere bezetting, ander tempo, harmonie eronder, tekst vervangen, ritme veranderen, fragment als sample. Koppelen aan parodiemis en cantus-firmus-techniek: hergebruik is zo oud als de muziek zelf." },
+          { "min": 10, "soort": "doen", "kop": "Verbeteren en afronden voor het portfolio", "stappen": ["Voer één tip door en rond je toelichting af.", "Zet opname, partituur of leadsheet en toelichting in je portfolio.", "Vrijdag: examenstukken en het examenconcert."], "docent": "Portfolio-inlevering vóór de toetsweek." }
+        ],
+        "formatief": { "soort": "peerfeedback", "tekst": "Per presentatie één top en één tip. Daarna: welke manieren om oude muziek nieuw te maken hebben we gehoord?" },
+        "identiteit": "Josquin en Dufay bouwden hun missen op bestaande melodieën, vaak uit de kerk, soms uit de kroeg. Wat jij vandaag deed, deden zij vijfhonderd jaar geleden al: iets ouds met eerbied nieuw maken."
+      },
+      {
+        "titel": "Examenstukken doornemen; moeilijke passages; praktische zaken examenconcert", "kort": "Examenstukken en examenconcert", "code": "M1 · les 8.3", "bestand": "08.3 Examenstukken en examenconcert.pptx",
+        "vraag": "Welke passage houdt mij nu nog tegen?",
+        "doel": "Je neemt je examenstukken door, oefent je moeilijkste passage gericht en weet wat er praktisch geregeld moet zijn voor het examenconcert.",
+        "criteria": ["Mijn moeilijkste passage is vandaag geoefend met een plan", "Ik weet wat ik vóór het examenconcert zelf regel"],
+        "fasen": [
+          { "min": 15, "soort": "doen", "kop": "Examenstukken doornemen: waar sta je?", "stappen": ["Speel elk examenstuk één keer door, zonder stoppen. Markeer in de partituur elke plek waar je hapert.", "Zet per stuk een kleur: groen (staat), oranje (wiebelt), rood (nog niet).", "Kies de ene passage die het meest rood is. Daar gaat de volgende fase over."], "docent": "Doorspeelronde laten lopen; zelf de kleuren noteren voor het overzicht van het examenconcert." },
+          { "min": 15, "soort": "doen", "kop": "Moeilijke passage: klein, langzaam, vaak", "stappen": ["Isoleer twee maten. Speel ze op de helft van het tempo, vijf keer goed achter elkaar.", "Dan het tempo een stap omhoog. Weer vijf keer goed.", "Dan de twee maten ervóór erbij: de inloop is meestal het echte probleem."], "klaar": "Speel de passage met de ogen dicht, of zing hem mee terwijl je speelt.", "docent": "Rouleren; bij elke leerling kijken of de isolatie klein genoeg is. Oefenlog laten invullen: passage, tempo, aantal keren." },
+          { "min": 15, "soort": "gesprek", "kop": "Examenconcert: wat regel je zelf, wat regelen wij", "stappen": ["Datum, tijd en plek van het examenconcert; wanneer is de generale.", "Jij regelt: je begeleider, je bladmuziek in drievoud, je kleding, je instrument gestemd.", "Wij regelen: zaal, piano, versterking, programma en jury.", "Vragen nu. Daarna staan de afspraken in Teams."], "docent": "Praktische lijst doornemen; datum en tijden invullen uit de jaarplanning. Toetsweek 1 start maandag: T9 (135 minuten)." }
+        ],
+        "formatief": { "soort": "oefenlog", "tekst": "Oefenlog: passage, tempo, aantal keren. Thuis: zelfreflectie voor de toetsweek." },
+        "extra": { "2": { "soort": "tabel", "kol": [0.46, 0.18, 0.36], "rijen": [["Wat", "Wie", "Wanneer"], ["Begeleider vastleggen", "jij", "vóór de generale"], ["Bladmuziek in drievoud", "jij", "generale"], ["Instrument en kleding", "jij", "de dag zelf"], ["Zaal, piano, versterking", "sectie", "geregeld"], ["Programma en jury", "sectie", "na de toetsweek"]] } }
+      }
+    ]
+  },
+  "mavo3": {
+    "klas": "mavo 3", "thema": "mavo", "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\Lessen 2026-2027", "blok": "Periode 1 · Ritme, maat en presentatie zang", "blokKort": "presentatie zang",
+    "lessen": [
+      {
+        "titel": "Presentatie 1: zang", "code": "P1 · presentatie 1", "bestand": "08 Presentatie 1 - zang.pptx", "type": "praktijk",
+        "vraag": "Durf ik te zingen voor de klas?",
+        "doel": "Je zingt je lied voor de klas. Presentatie 1 telt mee voor periode 1, samen met presentatie 2 en 3.",
+        "criteria": ["Ik ken mijn tekst", "Ik blijf in de maat", "Ik sta rechtop en kijk naar het publiek"],
+        "fasen": [
+          { "min": 5, "soort": "start", "kop": "Afspraken voor vandaag", "stappen": ["De volgorde staat op het bord. Wie aan de beurt is, loopt rustig naar voren.", "Publiek: stil, telefoon in je tas, applaus na afloop. Voor iedereen.", "Zenuwen zijn normaal. Adem drie keer diep in voordat je begint."], "docent": "Volgorde vooraf bepalen; leerlingen die het spannend vinden niet als eerste en niet als laatste." },
+          { "min": 5, "soort": "start", "kop": "Inzingen: samen, dan alleen", "stappen": ["Samen: één couplet van het klassenlied, zacht, dan vol.", "Lipbubbels en sirenes van laag naar hoog.", "Nu is je stem wakker."], "docent": "Kort en luchtig; het inzingen is er om de spanning te breken." },
+          { "min": 30, "soort": "doen", "kop": "De presentaties", "stappen": ["Zeg je naam en de titel van je lied. Tel jezelf in of knik naar de begeleiding.", "Ga je de tekst kwijt? Zing door op 'la' tot je hem weer hebt. Niet stoppen.", "Publiek: schrijf per zanger één ding op dat goed ging."], "docent": "Beoordelen op de drie criteria plus de blokdoelen ritme en maat. Opnemen met de telefoon op het statief voor de terugblik volgende week." },
+          { "min": 5, "soort": "afsluiten", "kop": "Wat ging goed?", "stappen": ["Per zanger één compliment uit het publiek, hardop.", "Volgende week: we luisteren samen terug en herhalen ritme en maat.", "Presentatie 2 komt in periode 2."], "docent": "Cijfer volgende week met de terugblik; gemiddelde van drie presentaties telt voor P1." }
+        ],
+        "formatief": { "soort": "presentatie", "tekst": "Per zanger één compliment uit het publiek. De cijfers volgen bij de terugblik volgende week." }
+      }
+    ]
+  },
+  "mavo4": {
+    "klas": "mavo 4", "thema": "mavo", "map": "02 Keuzevak muziek\\Mavo\\Mavo 4\\Lessen 2026-2027", "blok": "Blok 1 · Begrippen, instrumenten en klankkleur", "blokKort": "klankkleur",
+    "thuis": { "mb": "Uitvoering: articulatie en speeltechnieken", "learn": "Articulatie, speeltechnieken en uitvoeringswijzen: de begrippen van vandaag" },
+    "lessen": [
+      {
+        "titel": "Uitvoeringspraktijk", "code": "B1 · les 8.1", "bestand": "08.1 Uitvoeringspraktijk - articulatie en speeltechnieken.pptx",
+        "vraag": "Hoe hoor je hóe iets gespeeld wordt?",
+        "doel": "Je herkent articulatie (legato, staccato), speeltechnieken (pizzicato, strijken, glissando, slappen, scratchen) en uitvoeringswijzen (a capella, akoestisch, elektronisch, tutti, solo, rappen) in fragmenten.",
+        "criteria": ["Ik hoor legato en staccato uit elkaar", "Ik benoem bij vijf fragmenten de speeltechniek of uitvoeringswijze"],
+        "fasen": [
+          { "min": 5, "soort": "luisteren", "kop": "Twee keer dezelfde melodie: wat is anders?", "stappen": ["Je hoort één melodie twee keer. De noten zijn hetzelfde. Wat is er anders?", "Schrijf één woord op."], "docent": "Zelf spelen op het keyboard: eerst legato, dan staccato. Woorden verzamelen: 'gebonden', 'los', 'hakkelig', 'vloeiend'." },
+          { "min": 15, "soort": "uitleg", "kop": "Articulatie en speeltechnieken: zo noem je het", "stappen": ["Articulatie is hóe je de noten aan elkaar plakt: legato (gebonden), staccato (kort en los).", "Speeltechnieken: pizzicato (tokkelen op een strijkinstrument), strijken, glissando (glijden over de tonen), slappen (bas met de duim slaan), scratchen (plaat heen en weer onder de naald).", "Bij elk begrip hoor je een fragment. Zeg het woord hardop mee."], "klaar": "Doe met je stem een glissando en een staccato. Welke is moeilijker?", "docent": "Fragmenten: strijkkwartet pizzicato/arco, trombone-glissando, slapbas (funk), scratch (hiphop). Per begrip maximaal twintig seconden." },
+          { "min": 15, "soort": "doen", "kop": "Uitvoeringswijzen: wie speelt er, en hoe?", "stappen": ["A capella (alleen stemmen), akoestisch (zonder versterking), elektronisch (synthesizer, computer), tutti (iedereen) en solo (één), rappen (ritmisch spreken).", "Vijf fragmenten. Per fragment: welke uitvoeringswijze, en welke speeltechniek hoor je erbij?", "Vergelijk met je buur. Verschil van mening? Nog een keer luisteren."], "klaar": "Bedenk een nummer dat je kent waarin de uitvoeringswijze halverwege verandert.", "docent": "Fragmenten: a capella (bijv. een vocal group), akoestische versie van een popsong, elektronische track, tutti-passage orkest met solo erna, rap. Antwoorden op het werkblad." },
+          { "min": 10, "soort": "check", "kop": "Vijf fragmenten, vijf antwoorden", "stappen": ["Nog vijf korte fragmenten, alleen. Noteer: articulatie of speeltechniek, en uitvoeringswijze.", "Nakijken met je buur. Wat had je fout? Dat begrip leer je thuis als eerste.", "Dinsdag: repetitie 5 en het programma van het concert."], "docent": "Snelle check; begrippen staan in de Musicbox-box 'Uitvoering'." }
+        ],
+        "formatief": { "soort": "luistercheck", "tekst": "Vijf fragmenten: articulatie of speeltechniek, en uitvoeringswijze. Wat je fout had, leer je thuis als eerste." },
+        "extra": { "1": { "soort": "kaarten", "items": [{ "k": "Legato · staccato", "t": "gebonden · kort en los" }, { "k": "Pizzicato · strijken", "t": "tokkelen · met de strijkstok" }, { "k": "Glissando", "t": "glijden over de tonen" }, { "k": "Slappen", "t": "bas slaan met de duim" }, { "k": "Scratchen", "t": "plaat onder de naald" }, { "k": "Tutti · solo", "t": "iedereen · één" }] } }
+      },
+      {
+        "titel": "Repetitie 5 en programma opzetten", "code": "B1 · les 8.2", "bestand": "08.2 Repetitie 5 en programma opzetten.pptx",
+        "vraag": "In welke volgorde klinkt ons concert het best?",
+        "doel": "Je repeteert jullie nummers en jullie zetten samen het programma van het concert op: volgorde en wat je zegt tussen de nummers.",
+        "criteria": ["Ons nummer gaat één keer helemaal door", "De volgorde van het concert staat op papier, met wie wat aankondigt"],
+        "fasen": [
+          { "min": 10, "soort": "start", "kop": "Wat hebben we, en waar staat het?", "stappen": ["Alle nummers op het bord. Per nummer een kleur: groen (staat), oranje (wiebelt), rood (nog niet).", "Hoe lang duurt het concert als alles erin zit? Tel het op.", "Welke nummers moeten vandaag de meeste aandacht?"], "docent": "Lijst vanaf de vorige repetities; tussenstand van vorige week erbij." },
+          { "min": 25, "soort": "doen", "kop": "Repetitie 5: de oranje nummers eerst", "stappen": ["Per nummer: begin, de wiebelplek, het einde. Niet het hele nummer vijf keer.", "Wie niet speelt, luistert als publiek en geeft één tip.", "Elk nummer één keer helemaal door aan het eind."], "klaar": "Speel het begin van je nummer alsof het publiek net binnenkomt: rustig en zeker.", "docent": "Rouleren; tijd per nummer bewaken (vijf minuten). Opnemen voor de terugluisterles." },
+          { "min": 10, "soort": "gesprek", "kop": "Het programma: volgorde en wat je zegt", "stappen": ["Opener: iets dat zeker staat en energie heeft. Afsluiter: het nummer dat iedereen kent.", "Tussen de nummers: één zin per aankondiging. Wie zegt wat? Zet namen erbij.", "Het programma gaat op papier en komt in Teams."], "docent": "Programma vastleggen; dinsdagavond 27 oktober is de voorlichtingsavond voor ouders mavo 4, daar het concert noemen." }
+        ],
+        "formatief": { "soort": "programma", "tekst": "Het programma staat op papier: volgorde, wie wat aankondigt, hoe lang het duurt." }
+      }
+    ]
+  }
+}
