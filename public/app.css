@@ -255,3 +255,18 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .toast{position:fixed;left:50%;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);font-family:var(--kop);padding:.5rem 1rem;border-radius:8px;z-index:70;max-width:calc(100% - 32px)}
 @media (max-width:640px){.uur{grid-template-columns:1fr}.lesrij{grid-template-columns:2.6rem minmax(0,1fr)}.lesrij .acties{grid-column:2}.srij{grid-template-columns:1fr}h1{font-size:1.5rem}}
 @media (prefers-reduced-motion:reduce){.drawer{transition:none}}
+/* werkblokken en taken op Vandaag */
+.blokken{display:flex;flex-wrap:wrap;gap:.4rem}
+.blok{display:grid;gap:.1rem;border-radius:8px;padding:.4rem .7rem;font-family:var(--kop);font-size:.9rem;background:var(--uit-zacht);color:var(--uit);min-width:8rem}
+.blok .bt{font-size:.75rem;font-variant-numeric:tabular-nums;opacity:.85}
+.blok.b-start{background:var(--let-zacht);color:var(--let)}
+.blok.b-werk{background:var(--paars-zacht);color:var(--paars);font-weight:700}
+.blok.b-les{background:var(--praktijk);color:var(--praktijk-ink)}
+.taak{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.2rem .6rem;align-items:center;padding:.4rem 0;border-top:1px solid var(--line)}
+.taak .tb{display:flex;gap:.3rem;align-items:center}
+.taak .sub{grid-column:1/-1;font-size:.85rem;color:var(--muted);margin-left:1.6rem}
+.taak.af span{text-decoration:line-through;color:var(--muted)}
+.taak.laat .chk span{color:var(--rood)}
+.taakform{margin-top:.6rem;flex-wrap:wrap}
+.taakform input#tT{flex:1 1 14rem}
+.kaart h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:.8rem 0 .2rem}

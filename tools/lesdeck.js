@@ -53,7 +53,6 @@ function slideAgenda(p, les, meta, img) {
     s.addText(K.faseNaam[f.soort] + ' · ' + f.min + ' min', { x: x + 0.85, y: y + 0.3, w: bw - 1.05, h: 0.4, fontFace: KOPB, fontSize: 11, bold: true, color: K.fase[f.soort], margin: 0, isTextBox: true, valign: 'middle' });
     s.addText(f.kop, { x: x + 0.25, y: y + 0.95, w: bw - 0.5, h: 2.2, fontFace: KOPB, fontSize: 15, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top' });
   });
-  s.addText('Pijltje rechts om verder te gaan. Elke fase heeft zijn eigen kleur: oranje horen en doen, oker benoemen, groen doen, paars check en afsluiten.', { x: M, y: 5.3, w: W - 2 * M, h: 0.5, fontFace: BODY, fontSize: 12, color: K.grijs, margin: 0, isTextBox: true });
   return s;
 }
 function slideDoel(p, les, meta, img) {
