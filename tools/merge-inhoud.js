@@ -29,7 +29,7 @@ function doe(bestand, pak) {
     for (const w of k.weken) {
       for (let i = 1; i <= 6; i++) {
         const l = w['l' + i]; if (!l) continue;
-        if (l.type !== 'theorie' && l.type !== 'praktijk') continue;
+        if (l.type !== 'theorie' && l.type !== 'praktijk' && l.type !== 'toets') continue;
         const src = inhoud.lessen[l.titel];
         if (!src) { telling.mis.push(w.w + ': ' + l.titel); continue; }
         vul(l, src, telling); telling.lessen++;
