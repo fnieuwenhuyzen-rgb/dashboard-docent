@@ -288,6 +288,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .ag-nu{position:absolute;left:-4px;right:0;border-top:2px solid var(--rood);z-index:3;pointer-events:none}
 .ag-nu::before{content:"";position:absolute;left:0;top:-5px;width:8px;height:8px;border-radius:50%;background:var(--rood)}
 .ag-it{position:absolute;display:flex;flex-direction:column;align-items:flex-start;gap:0;overflow:hidden;text-align:left;border-radius:6px;border:1px solid transparent;padding:.2rem .4rem;font-family:var(--kop);font-size:.82rem;line-height:1.2;cursor:pointer;z-index:1}
+.ag-it>*{flex-shrink:0}
 .ag-it b{font-weight:700;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ag-it .ag-t{font-size:.72rem;opacity:.85;font-variant-numeric:tabular-nums;white-space:nowrap}
 .ag-it .ag-s{font-size:.75rem;opacity:.9;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
