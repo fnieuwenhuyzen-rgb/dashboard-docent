@@ -306,10 +306,10 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .ag-vrij b{font-weight:600}
 .ag-vrij:hover,.ag-vrij.sel{background:var(--paars-zacht)}
 .ag-hd{display:flex;flex-wrap:wrap;gap:.3rem;margin:0 0 .5rem 3.35rem}
-.ag-chip{border:0;border-radius:999px;padding:.12rem .55rem;font-family:var(--kop);font-size:.78rem;cursor:pointer;background:var(--theorie);color:var(--theorie-ink);text-align:left}
+.ag-chip{border:0;border-radius:999px;padding:.12rem .55rem;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--kop);font-size:.78rem;cursor:pointer;background:var(--theorie);color:var(--theorie-ink);text-align:left}
 .ag-chip.ag-deadline{background:var(--let-zacht);color:var(--let)}
 .wkagenda{padding:.7rem}
-.ag-scroll{overflow-x:auto}
+.ag-scroll{overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
 .ag-scroll>*{min-width:640px}
 .ag-kop{display:grid;grid-template-columns:3rem repeat(var(--n),minmax(0,1fr));gap:0 .35rem;margin-bottom:.4rem}
 .ag-dag{border:0;background:transparent;text-align:left;padding:.2rem .3rem;border-radius:6px;cursor:pointer;font-family:var(--kop)}
