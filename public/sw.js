@@ -1,5 +1,5 @@
 // Offline: de app en de leergangen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v2';
+const CACHE = 'lesdag-v3';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });

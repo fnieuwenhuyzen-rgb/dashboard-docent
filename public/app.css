@@ -270,3 +270,55 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .taakform{margin-top:.6rem;flex-wrap:wrap}
 .taakform input#tT{flex:1 1 14rem}
 .kaart h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:.8rem 0 .2rem}
+
+/* agenda: dag en week als tijdlijn; lessen, afspraken en geplande taken op hun tijd, vrije blokken klikbaar */
+.eyebrow{font-family:var(--kop);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--paars);margin:0 0 .25rem}
+.dagagenda{display:grid;grid-template-columns:minmax(260px,420px) minmax(0,1fr);gap:1rem;align-items:start;margin-bottom:1rem}
+.agpaneel{position:sticky;top:5rem;min-width:0}
+.agpaneel .uur{grid-template-columns:4.6rem minmax(0,1fr)}
+@media (max-width:820px){.dagagenda{grid-template-columns:1fr}.agpaneel{position:static}}
+.agkaart{padding:.7rem .7rem .9rem}
+.ag-raster{display:grid;grid-template-columns:3rem repeat(var(--n),minmax(0,1fr));gap:0 .35rem}
+.ag-as{position:relative}
+.ag-as span{position:absolute;right:.35rem;transform:translateY(-50%);font-family:var(--kop);font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.ag-as span:first-child{transform:none}
+.ag-kol{position:relative;border-left:1px solid var(--line)}
+.ag-kol.vandaag{background:color-mix(in srgb,var(--paars-zacht) 45%,transparent)}
+.ag-lijn{position:absolute;left:0;right:0;border-top:1px solid var(--line);pointer-events:none}
+.ag-nu{position:absolute;left:-4px;right:0;border-top:2px solid var(--rood);z-index:3;pointer-events:none}
+.ag-nu::before{content:"";position:absolute;left:0;top:-5px;width:8px;height:8px;border-radius:50%;background:var(--rood)}
+.ag-it{position:absolute;display:flex;flex-direction:column;align-items:flex-start;gap:0;overflow:hidden;text-align:left;border-radius:6px;border:1px solid transparent;padding:.2rem .4rem;font-family:var(--kop);font-size:.82rem;line-height:1.2;cursor:pointer;z-index:1}
+.ag-it b{font-weight:700;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ag-it .ag-t{font-size:.72rem;opacity:.85;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ag-it .ag-s{font-size:.75rem;opacity:.9;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ag-it.kort{flex-direction:row;align-items:center;gap:.35rem}
+.ag-it.kort b{font-size:.78rem}
+.ag-it.sel{outline:2px solid var(--paars);outline-offset:1px;z-index:2}
+.ag-les{background:var(--praktijk);color:var(--praktijk-ink);border-color:color-mix(in srgb,var(--praktijk-ink) 25%,transparent)}
+.ag-les.nu{box-shadow:0 0 0 2px var(--paars)}
+.ag-klaar{background:var(--uit-zacht);color:var(--uit)}
+.ag-uitval{background:repeating-linear-gradient(135deg,var(--uit-zacht) 0 6px,var(--surface) 6px 12px);color:var(--uit);text-decoration:line-through}
+.ag-sectie{background:var(--theorie);color:var(--theorie-ink)}
+.ag-taak{background:var(--paars);color:#fff}
+.ag-taakaf{background:var(--paars-zacht);color:var(--paars);text-decoration:line-through}
+.ag-start{background:transparent;color:var(--muted);border:1px dashed var(--line)}
+.ag-vrij{background:transparent;color:var(--paars);border:1px dashed color-mix(in srgb,var(--paars) 40%,transparent)}
+.ag-vrij b{font-weight:600}
+.ag-vrij:hover,.ag-vrij.sel{background:var(--paars-zacht)}
+.ag-hd{display:flex;flex-wrap:wrap;gap:.3rem;margin:0 0 .5rem 3.35rem}
+.ag-chip{border:0;border-radius:999px;padding:.12rem .55rem;font-family:var(--kop);font-size:.78rem;cursor:pointer;background:var(--theorie);color:var(--theorie-ink);text-align:left}
+.ag-chip.ag-deadline{background:var(--let-zacht);color:var(--let)}
+.wkagenda{padding:.7rem}
+.ag-scroll{overflow-x:auto}
+.ag-scroll>*{min-width:640px}
+.ag-kop{display:grid;grid-template-columns:3rem repeat(var(--n),minmax(0,1fr));gap:0 .35rem;margin-bottom:.4rem}
+.ag-dag{border:0;background:transparent;text-align:left;padding:.2rem .3rem;border-radius:6px;cursor:pointer;font-family:var(--kop)}
+.ag-dag:hover{background:var(--paars-zacht)}
+.ag-dag b{display:block;font-size:.95rem}
+.ag-dag small{display:block;color:var(--let);font-size:.72rem}
+.ag-dag.vandaag b{color:var(--paars)}
+.ag-hdrij .ag-hd{margin:0}
+.planform{display:grid;gap:.6rem;margin-top:.5rem}
+.planform label{display:grid;gap:.2rem;font-family:var(--kop);font-size:.85rem;color:var(--muted)}
+.planform select,.planform input{width:100%}
+.planform .rij>*{flex:1 1 8rem}
