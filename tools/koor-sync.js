@@ -13,7 +13,7 @@ const root = path.join(__dirname, '..');
 function lees() {
   let tekst;
   if (process.argv[2]) tekst = fs.readFileSync(process.argv[2], 'utf8');
-  else tekst = execSync('npx.cmd --yes wrangler@4.151.2 d1 execute pmkoor-leden --remote --json --command "SELECT id, data FROM inhoud_versies ORDER BY id DESC LIMIT 1"', { cwd: KOORAPP, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'inherit'] });
+  else tekst = execSync('"' + path.join(path.dirname(process.execPath), 'npx.cmd') + '" --yes wrangler@4.151.2 d1 execute pmkoor-leden --remote --json --command "SELECT id, data FROM inhoud_versies ORDER BY id DESC LIMIT 1"', { cwd: KOORAPP, env: Object.assign({}, process.env, { PATH: path.dirname(process.execPath) + path.delimiter + process.env.PATH }), encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'inherit'] });
   tekst = tekst.replace(/^\uFEFF/, ''); const r = JSON.parse(tekst.slice(tekst.indexOf('[')));
   const rij = r[0].results[0];
   return { versie: rij.id, data: JSON.parse(rij.data) };
@@ -64,7 +64,7 @@ for (const v of data.voorjaar || []) if (/datum volgt/i.test(v.text || '')) take
 
 const p = path.join(root, 'public/data/basis.json');
 const basis = JSON.parse(fs.readFileSync(p, 'utf8'));
-basis.koor = { bron: 'Koorapp', url: URL, inhoudsversie: versie, bijgewerkt: new Date().toISOString().slice(0, 16).replace('T', ' '),
+basis.koor = { bron: 'Koorapp', url: URL, inhoudsversie: versie, bijgewerkt: new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Amsterdam' }).slice(0, 16),
   standaard: { dag: 2, van: '12:45', tot: '14:00', titel: 'Schoolkoor' }, agenda, taken };
 fs.writeFileSync(p, JSON.stringify(basis), 'utf8');
 console.log(`koor: inhoudsversie ${versie}, ${agenda.length} agenda-items vanaf ${vanaf}, ${taken.length} taken`);
