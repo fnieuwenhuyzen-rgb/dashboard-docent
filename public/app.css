@@ -323,3 +323,12 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .planform label{display:grid;gap:.2rem;font-family:var(--kop);font-size:.85rem;color:var(--muted)}
 .planform select,.planform input{width:100%}
 .planform .rij>*{flex:1 1 8rem}
+
+/* schoolkoor in de agenda */
+.ag-koor{background:var(--rood-zacht);color:var(--rood);border-color:color-mix(in srgb,var(--rood) 30%,transparent)}
+.ag-chip.ag-koor{background:var(--rood-zacht);color:var(--rood)}
+.ag-chip.ag-koorvrij{background:var(--uit-zacht);color:var(--uit)}
+.koorkaart{border-top:4px solid var(--rood)}
+.koorkaart .eyebrow{color:var(--rood)}
+.koorkaart .fasen li{margin-bottom:.25rem}
+.ag-weekend{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.6rem 0 0;font-family:var(--kop)}
