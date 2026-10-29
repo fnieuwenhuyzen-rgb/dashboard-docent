@@ -18,7 +18,7 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 - [ ] **Way Maker-box in Musicbox** (verborgen, id `71df1713-b814-4ddf-ae6d-85c300843784`): beoordelen en zelf zichtbaar maken.
 - [ ] **Presentaties klas 3:** oordeel over les 8 en 11, daarna de overige 32 lessen.
 - [ ] **Proef Nu-scherm (branch `proef-nu`):** een paar dagen gebruiken op https://proef-nu.lesdag-muziek.pages.dev (eigen opslag, dus eerst rooster en pauzes daar invullen). Daarna kiezen: naar `main`, bijschaven of laten. Vragen:
-  - Wat zijn de pauzetijden van school? Zermelo geeft alleen jouw lessen door. Invullen bij Instellingen, Pauzes.
+  - Pauzes komen uit het Zermelo-rooster (Frans: "de roostermaker plant ze"). Lesdag neemt afspraken met "pauze" over, anders de vaste gaten van 10 tot 40 minuten tussen lesuren; pauzedienst of surveillance telt als werk. Nagaan met het echte rooster of de goede tijden eruit komen (Instellingen, Pauzes, laat ze zien).
   - Klopt "meer dan 5,5 uur werk = 30 minuten pauze" voor jou, of zegt de cao VO iets anders? Nu staat 30 minuten in `RUST.nodig`.
   - Werkt het tweede venster voor het bord op de schoollaptop (pop-up toestaan), en de pijltjes van je presenter in de regie?
 
@@ -47,6 +47,7 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 
 Ontwerpprincipes (gesprek 29-10): het scherm volgt de dag; pauzes zijn van Frans en nooit vrij voor taken; in een pauze toont Nu niets over werk; valt een pauze weg (koor, Sing-In "in de pauzes"), dan een rustblok in het eerste vrije blok daarna, nooit in een les; lestijd ligt vast, Lesdag haalt nooit iets uit een les; werkblokken hoogstens twee derde vol; open punten krijgen bij het afsluiten een moment; na het afsluiten is het stil; geen scores of rode tellers; stem en gehoor (water, oordoppen).
 Gebouwd: route `#nu` (standaard) met partituur, nu-kaart per moment (`moment()`), straks, voorstellen (ja/later), opdrachtbalk Ctrl K met snelle taak in gewone taal (`leesTaak`), regie `#regie/<uur>/<dag>` met bord `#bord/<uur>/<dag>` in een tweede venster, scherm aan en trillen twee minuten voor het eind van een fase, pauzes in Instellingen, pauzes en rustblokken ook in Dag en Week. Getest met een verzonnen rooster en een nagebootste klok, ook op 375 px.
+Ronde 2 (29-10, na "aan de UI en UX is toch niets veranderd?"): nieuwe schil. Zijbalk met pictogrammen op laptop en liggende tablet, tabbalk onderaan onder 900 px; Nu met grote nu-balk (wat, klok, nog-zoveel-minuten, voortgangsstreep) die van kleur wisselt per moment (`data-moment`); hoofdknoppen van het moment in een actiebalk onderaan (`<!--dok-->` in de kaarten, `dokUit`); bladeren door de dag met ‹ ›, pijltjes en vegen (`nuStap`); voorbije blokken vervaagd; pauzes uit Zermelo (`zPauzes`, eigen pauzes alleen als het rooster niet klopt). Getest op 1280, 800×1280 en 375 px.
 
 ## E. Klein en technisch
 

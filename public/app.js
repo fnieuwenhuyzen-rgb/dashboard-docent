@@ -152,7 +152,7 @@ async function zOphalen(melden) {
   try {
     const r = await fetch(px, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: tok, weken: 3 }) });
     if (!r.ok) throw new Error('Zermelo antwoordt ' + r.status);
-    const events = icsParse(await r.text()); const van = maandagVan(vandaag());
+    const events = icsParse(await r.text()); const van = maandagVan(vandaag()); ZPZ = null;
     ZC = { opgehaald: Date.now(), van, tot: addD(van, 20), events };
     try { localStorage.setItem('lesdag-zermelo', JSON.stringify(ZC)); } catch (e) {}
     if (melden) toast(`Rooster opgehaald: ${events.filter(zMuziek).length} muzieklessen in drie weken`);
@@ -197,9 +197,14 @@ function benodigd(l) {
 }
 
 /* ---------- weergave: algemeen ---------- */
+const SVG = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const ICO = { nu: SVG('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'), vandaag: SVG('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M8 14h3"/>'),
+  week: SVG('<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M8 10v10M13 10v10M18 10v10"/>'), groepen: SVG('<circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.3"/><path d="M3.5 19.5c.6-3 2.8-5 5.5-5s4.9 2 5.5 5M15 15.2c2.6-.5 4.8 1.2 5.4 4.3"/>'),
+  rooster: SVG('<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9.3h16M4 14.6h16M9.3 4v16M14.6 4v16"/>'), sectie: SVG('<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>'),
+  instellingen: SVG('<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>'), zoek: SVG('<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>') };
 const ROUTES = [['nu', 'Nu'], ['vandaag', 'Dag'], ['week', 'Week'], ['groepen', 'Groepen'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['instellingen', 'Instellingen']];
 function render() {
-  $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k ? 'aria-current="page"' : ''}>${n}</a>`).join('');
+  $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k || (k === 'nu' && route.naam === 'regie') ? 'aria-current="page"' : ''}><span class="ico" aria-hidden="true">${ICO[k] || ''}</span><span class="nl">${n}</span></a>`).join('');
   if (route.naam !== 'regie' && !LES) waak(false);
   const f = { nu: viewNu, regie: viewRegie, vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen, beoordelen: viewBeoordelen }[route.naam] || viewNu;
   $('#main').innerHTML = f();
@@ -295,18 +300,40 @@ function dagItems(s, p) {
   return { items, heleDag, werkdag, pz };
 }
 /* ---------- pauzes en herstel ----------
-   S.pauzes: de pauzes van school ({van, tot}). Ze zijn van Frans: er komen nooit taken in en het Nu-scherm toont dan niets over werk.
+   De pauzes komen uit het Zermelo-rooster (de roostermaker plant ze): afspraken met "pauze" erin, of anders de vaste gaten tussen
+   de lesuren. S.pauzes ({van, tot}) is alleen voor als het rooster niet klopt; die gaan dan voor. Pauzes zijn van Frans: er komen nooit
+   taken in en het Nu-scherm toont dan niets over werk. Pauzedienst of surveillance in het rooster telt als werk.
    Valt een pauze weg (een les, het koor, een afspraak, of "in de pauzes" zoals de Sing-In), dan telt Lesdag wat er overblijft.
    Bij meer dan 5,5 uur werk hoort 30 minuten pauze (Arbeidstijdenwet). Komt de dag tekort, dan houdt Lesdag een rustblok vrij
    in het eerste vrije blok na de gemiste pauze; nooit in een les, nooit ten koste van lestijd. S.rust[dag] = 'weg': Frans werkt toch. */
 const RUST = { nodig: 30, na: 330, min: 15 };
-function pauzesVan() { return (S.pauzes || []).map(p => ({ van: minuten(p.van), tot: minuten(p.tot) })).filter(p => p.tot > p.van).sort((a, b) => a.van - b.van); }
+let ZPZ = null;
+const zTekst = e => e.summary + ' ' + e.desc;
+const zDienst = e => /surveillance|pauzedienst|toezicht|\bdienst\b/i.test(zTekst(e));
+function zPauzes() { // {perDag: {datum: [{van, tot}]}, vast: [{van, tot}]} uit het opgehaalde rooster
+  if (!ZC || !ZC.events) return null; if (ZPZ && ZPZ.op === ZC.opgehaald) return ZPZ.res;
+  const ev = ZC.events.filter(e => e.start && e.eind && !e.vervallen); const perDag = {}; const tel = {};
+  ev.filter(e => /\bpauze\b/i.test(zTekst(e)) && !zDienst(e)).forEach(e => (perDag[e.d] = perDag[e.d] || []).push({ van: minuten(e.start), tot: minuten(e.eind) }));
+  if (Object.keys(perDag).length) Object.values(perDag).forEach(L => L.forEach(p => { const k = p.van + '-' + p.tot; tel[k] = (tel[k] || 0) + 1; }));
+  else { const dagen = {}; ev.forEach(e => (dagen[e.d] = dagen[e.d] || []).push([minuten(e.start), minuten(e.eind)])); // vaste gaten van 10 tot 40 minuten tussen lesuren
+    Object.values(dagen).forEach(L => { L.sort((x, y) => x[0] - y[0]); let eind = L[0][1]; for (let i = 1; i < L.length; i++) { const g = L[i][0] - eind; if (g >= 10 && g <= 40) { const k = eind + '-' + L[i][0]; tel[k] = (tel[k] || 0) + 1; } eind = Math.max(eind, L[i][1]); } }); }
+  const vast = Object.keys(tel).filter(k => tel[k] >= 2).map(k => { const [van, tot] = k.split('-').map(Number); return { van, tot }; }).sort((x, y) => x.van - y.van);
+  ZPZ = { op: ZC.opgehaald, res: { perDag, vast } }; return ZPZ.res;
+}
+function pauzesVan(s) {
+  const eigen = (S.pauzes || []).map(p => ({ van: minuten(p.van), tot: minuten(p.tot) })).filter(p => p.tot > p.van);
+  const z = zPauzes(); const L = eigen.length ? eigen : z ? (s && z.perDag[s]) || z.vast : [];
+  return L.slice().sort((x, y) => x.van - y.van);
+}
+const pauzeBron = () => (S.pauzes || []).length ? 'eigen' : (zPauzes() || { vast: [] }).vast.length ? 'rooster' : '';
 function pauzeDag(s, items, heleDag) {
-  const P = pauzesVan(); if (!P.length) return { onbekend: true, vrij: [], weg: [], vrijMin: 0, tekort: 0, rust: null };
+  const P = pauzesVan(s); if (!P.length) return { onbekend: true, vrij: [], weg: [], vrijMin: 0, tekort: 0, rust: null };
   const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'koor'].includes(it.soort));
   const inPauzes = heleDag.find(it => /pauze/i.test(it.titel || '') && it.soort !== 'deadline');
+  const dienst = ((ZC && ZC.events) || []).filter(e => e.d === s && !e.vervallen && zDienst(e)).map(e => ({ van: minuten(e.start), tot: minuten(e.eind), titel: cap(e.summary.trim()) }));
   const vrij = [], weg = [];
-  for (const p of P) { const door = inPauzes ? inPauzes.titel : (bezet.find(it => it.van < p.tot && it.tot > p.van) || {}).titel; (door ? weg : vrij).push(Object.assign({ door, viaDag: !!inPauzes, i: inPauzes && inPauzes.i }, p)); }
+  for (const p of P) { const dn = dienst.find(x => x.van < p.tot && x.tot > p.van); const door = inPauzes ? inPauzes.titel : dn ? dn.titel : (bezet.find(it => it.van < p.tot && it.tot > p.van) || {}).titel;
+    (door ? weg : vrij).push(Object.assign({ door, viaDag: !!(inPauzes || dn), i: inPauzes ? inPauzes.i : dn ? { id: 'pd:' + s + p.van, d: s, titel: dn.titel, info: 'uit je rooster' } : null }, p)); }
   const vrijMin = vrij.reduce((a, p) => a + p.tot - p.van, 0);
   const eind = Math.max(AG.werkTot, ...bezet.map(it => it.tot)); const werkMin = eind - AG.van;
   const tekort = werkMin > RUST.na && vrijMin < RUST.nodig ? RUST.nodig - vrijMin : 0;
@@ -316,19 +343,13 @@ function pauzeDag(s, items, heleDag) {
     let cur = Math.max(AG.werkVan, weg[0].tot);
     for (const [a, b] of vast.concat([[AG.werkTot, AG.werkTot]])) { if (b <= cur) continue; const e = Math.min(a, AG.werkTot); if (e - cur >= RUST.min) { rust = { van: cur, tot: cur + Math.min(e - cur, Math.max(RUST.min, tekort)) }; break; } cur = Math.max(cur, b); if (cur >= AG.werkTot) break; }
   }
-  return { s, vrij, weg, vrijMin, tekort, rust, werkMin };
+  return { s, vrij, weg, vrijMin, tekort, rust, werkMin, bron: pauzeBron() };
 }
 function pauzeTekst(pz) {
   if (!pz || pz.onbekend || !pz.tekort) return '';
   const g = {}; pz.weg.forEach(p => { (g[p.door] = g[p.door] || []).push(hm(p.van)); });
   const w = Object.entries(g).map(([d, t]) => `${d} om ${t.join(' en ')}`).join('; ');
   return `${pz.vrijMin ? 'Vandaag maar ' + pz.vrijMin + ' minuten pauze' : 'Vandaag geen pauze'}, door ${w}. ${pz.rust ? `Om ${hm(pz.rust.van)} houdt Lesdag ${pz.rust.tot - pz.rust.van} minuten rust voor je vrij.` : S.rust[pz.s] === 'weg' ? 'Je koos ervoor om door te werken.' : 'Er is geen vrij blok meer voor rust.'}`;
-}
-function pauzeGok() { // pauzes uit het rooster: gaten van 15 tot 40 minuten tussen twee lessen, op minstens twee dagen hetzelfde
-  const r = S.rooster.length ? S.rooster : zVastRooster(); const tel = {};
-  [1, 2, 3, 4, 5].forEach(d => { const u = r.filter(x => +x.dag === d).sort((a, b) => minuten(a.start) - minuten(b.start));
-    for (let i = 1; i < u.length; i++) { const g = minuten(u[i].start) - minuten(u[i - 1].eind); if (g >= 15 && g <= 40) { const k = u[i - 1].eind + '-' + u[i].start; tel[k] = (tel[k] || 0) + 1; } } });
-  return Object.keys(tel).filter(k => tel[k] >= 2).map(k => { const [van, tot] = k.split('-'); return { van, tot }; });
 }
 /* werkblokken plannen met lucht: hoogstens twee derde vol, de rest is voor wie aanklopt, de gang, koffie */
 const LUCHT = 2 / 3;
@@ -506,17 +527,42 @@ function viewNu() {
   const kijk = nuKijk && (nuKijk === 'afsluiten' || A.items.some(it => it.key === nuKijk)) ? nuKijk : null;
   const rustig = !kijk && (m.m === 'pauze' || m.m === 'rust'); const stil = !kijk && (m.m === 'stil' || m.m === 'vrijedag');
   const geenVoorstel = rustig || stil || (!kijk && (m.m === 'start' || m.m === 'afsluiten' || m.m === 'tussen')); // vóór 8:30 en bij het afsluiten: niets erbij
-  const kaart = kijk ? kijkKaart(s, p, A, kijk, nu) : nuKaart(s, p, A, m, nu);
-  const pzChip = A.pz && !A.pz.onbekend ? `<span class="chip ${A.pz.tekort ? 'let' : 'ok'}">${A.pz.vrijMin} min pauze</span>` : '';
-  let h = `<div class="kop"><div><h1>${esc(cap(fmtLang(s)))}</h1><div class="sub">${lesweekVan(s) ? 'lesweek ' + lesweekVan(s) : esc(p.reden || '')} ${pzChip}</div></div>
-    <div class="knoppen">${kijk ? '<button class="btn" data-kijk="">Terug naar nu</button>' : ''}</div></div>`;
-  if (!rustig && A.werkdag && !(S.pauzes || []).length) h += pauzeVraag();
+  const [kaart, acties] = dokUit(kijk ? kijkKaart(s, p, A, kijk, nu) : nuKaart(s, p, A, m, nu));
+  const kIt = kijk && kijk !== 'afsluiten' ? A.items.find(it => it.key === kijk) : null;
+  const mom = kijk ? (kIt ? MOMSOORT[kIt.soort] || 'werkblok' : 'afsluiten') : m.m;
+  let h = `<div class="nu" data-moment="${mom}">` + nuBalk(s, p, A, m, nu, kijk, kIt);
+  if (!rustig && A.werkdag && A.pz && A.pz.onbekend) h += pauzeVraag();
   if (A.werkdag || A.items.length) h += partituur(s, A, nu, kijk || (m.it && m.it.key) || (m.x && 'les:' + m.x.u.id) || (m.m === 'afsluiten' ? 'afsluiten' : ''));
   h += `<div class="nu-grid"><div class="nu-kaart">${kaart}</div>${stil ? '' : `<aside class="nu-zij">
     <div class="kaart"><p class="eyebrow">Straks</p>${straks(s, A, m, nu, rustig)}</div>
     ${geenVoorstel ? '' : `<div class="kaart"><p class="eyebrow">Voorstellen, jij beslist</p>${voorstellen(s, p, A, m, nu)}</div>`}</aside>`}</div>`;
-  if (!rustig && !stil) h += `<button class="nu-cmd" data-palet=""><span>Typ wat je wilt doen, of een taak: "mail ouders koor morgen 10:30"</span><kbd>Ctrl K</kbd></button>`;
-  return h;
+  if (!rustig && (acties || !stil)) h += `<div class="dok"><div class="dok-in"><div class="dok-acties">${acties}</div>${stil ? '' : `<button class="dok-zoek" data-palet="" aria-label="Zoek of typ een taak">${ICO.zoek}<span>Zoek, of typ een taak</span><kbd>Ctrl K</kbd></button>`}</div></div>`;
+  return h + '</div>';
+}
+/* de hoofdknoppen van een nu-kaart staan tussen <!--dok--> en <!--/dok-->; op Nu gaan ze naar de actiebalk onderaan, in duimbereik */
+function dokUit(h) { const r = h.match(/<!--dok-->([\s\S]*?)<!--\/dok-->/); return r ? [h.replace(r[0], ''), r[1]] : [h, '']; }
+const MOMSOORT = { les: 'les', klaar: 'les', uitval: 'les', vrij: 'werkblok', taak: 'taak', taakaf: 'taak', sectie: 'afspraak', koor: 'koor', pauze: 'pauze', rust: 'rust', start: 'start' };
+const MOMNAAM = { start: 'Opstarten', tussen: 'Tussendoor', pauze: 'Pauze', rust: 'Rustblok', koor: 'Schoolkoor', werkblok: 'Werkblok', afsluiten: 'Dag afsluiten' };
+function nuBalk(s, p, A, m, nu, kijk, kIt) {
+  const it = kIt || m.it || (m.x ? A.items.find(x => x.key === 'les:' + m.x.u.id) : null);
+  const wat = kijk === 'afsluiten' ? 'Dag afsluiten' : kIt ? (kIt.x ? kIt.x.u.groep + (kIt.x.item ? ' · ' + (les(kIt.x.item).titel || '') : '') : ptLabel(kIt) || 'Vrij blok')
+    : m.m === 'les' ? 'Les · ' + m.it.x.u.groep : m.m === 'voorLes' ? 'Zo meteen: ' + m.x.u.groep : m.m === 'naLes' ? 'Na de bel · ' + m.x.u.groep
+    : m.m === 'taak' || m.m === 'afspraak' ? m.it.titel : m.m === 'stil' ? (S.afgesloten[s] ? 'Morgen staat klaar' : 'Je dag zit erop') : m.m === 'vrijedag' ? cap(p.reden || 'Vrij') : MOMNAAM[m.m] || '';
+  let nog = '', v = null;
+  if (it && it.van != null && m.m !== 'stil') { if (it.van <= nu && nu < it.tot) { nog = `nog ${it.tot - nu} min · tot ${hm(it.tot)}`; v = (nu - it.van) / (it.tot - it.van); } else if (it.van > nu) nog = `over ${it.van - nu} min · ${hm(it.van)}–${hm(it.tot)}`; else nog = `${hm(it.van)}–${hm(it.tot)} · voorbij`; }
+  const pz = A.pz && !A.pz.onbekend ? ` · <span class="${A.pz.tekort ? 'nb-let' : ''}">${A.pz.vrijMin} min pauze</span>` : '';
+  return `<div class="nu-balk"><div class="nb-links"><p class="nb-dag">${kijk ? 'Ander moment · ' : ''}${esc(cap(fmtLang(s)))}${lesweekVan(s) ? ' · lesweek ' + lesweekVan(s) : ''}${pz}</p><h1 class="nb-wat">${esc(wat)}</h1>${nog ? `<p class="nb-nog">${esc(nog)}</p>` : ''}</div>
+    <div class="nb-rechts"><div class="nb-klok">${hm(nu)}</div><div class="nb-stap"><button class="nb-knop" data-stap="-1" aria-label="Vorig moment">‹</button>${kijk ? '<button class="nb-knop nb-nu" data-kijk="">Nu</button>' : ''}<button class="nb-knop" data-stap="1" aria-label="Volgend moment">›</button></div></div>
+    ${v != null ? `<i class="nb-voort" style="width:${Math.round(v * 100)}%"></i>` : ''}</div>`;
+}
+function nuStap(d) { // door je dag bladeren: pijltjes op de laptop, vegen op de tablet
+  const s = vandaag(); const p = planning(s, s)[s]; const A = dagItems(s, p); const nu = nuMin(); const m = moment(s, p, A, nu);
+  const L = A.items.filter(it => it.soort !== 'uitval').map(it => ({ key: it.key, van: it.van })).concat(A.werkdag ? [{ key: 'afsluiten', van: AG.werkTot - 15 }] : []).sort((x, y) => x.van - y.van);
+  if (!L.length) return;
+  const live = (m.it && m.it.key) || (m.x && 'les:' + m.x.u.id) || (m.m === 'afsluiten' ? 'afsluiten' : null);
+  let i = L.findIndex(x => x.key === (nuKijk || live));
+  if (i < 0) { i = L.findIndex(x => x.van > nu); if (i < 0) i = L.length; if (d > 0) i -= 1; }
+  const j = Math.max(0, Math.min(L.length - 1, i + d)); nuKijk = L[j].key === live ? null : L[j].key; render();
 }
 function nuKaart(s, p, A, m, nu) {
   if (m.m === 'vrijedag') return vrijeDagKaart(s, p);
@@ -551,7 +597,7 @@ function partituur(s, A, nu, sel) {
     let its = A.items.filter(it => soorten.includes(it.soort));
     if (naam === 'rust' && A.werkdag) its = its.concat([{ key: 'afsluiten', van: AG.werkTot - 15, tot: AG.werkTot, soort: 'afsluiten', titel: 'afsluiten' }]);
     if (naam === 'koor' && !its.length) return '';
-    return `<div class="pt-baan"><span class="pt-naam">${naam}</span>${its.map(it => `<button class="pt-b pt-${it.soort}${sel === it.key ? ' sel' : ''}" style="left:${pc(it.van)}%;width:calc(${(pc(it.tot) - pc(it.van)).toFixed(2)}% - 2px)" data-kijk="${esc(it.key)}" aria-label="${esc(hm(it.van) + '–' + hm(it.tot) + ' ' + (ptLabel(it) || 'vrij'))}"><span>${esc(ptLabel(it))}</span></button>`).join('')}</div>`;
+    return `<div class="pt-baan"><span class="pt-naam">${naam}</span>${its.map(it => `<button class="pt-b pt-${it.soort}${sel === it.key ? ' sel' : ''}${s === vandaag() && it.tot <= nu ? ' voorbij' : ''}" style="left:${pc(it.van)}%;width:calc(${(pc(it.tot) - pc(it.van)).toFixed(2)}% - 2px)" data-kijk="${esc(it.key)}" aria-label="${esc(hm(it.van) + '–' + hm(it.tot) + ' ' + (ptLabel(it) || 'vrij'))}"><span>${esc(ptLabel(it))}</span></button>`).join('')}</div>`;
   }).join('');
   const uren = []; for (let m = AG.van; m <= AG.tot; m += 60) uren.push(m);
   const nuL = s === vandaag() && nu >= AG.van && nu <= AG.tot ? `<i class="pt-nu" style="left:${pc(nu)}%"></i>` : '';
@@ -562,7 +608,7 @@ function straks(s, A, m, nu, rustig) {
   const its = A.items.filter(it => it.van > nu && it.soort !== 'start' && it.soort !== 'uitval' && !(it.soort === 'vrij' && it.tot - it.van < 15)).slice(0, rustig ? 1 : 4);
   if (!its.length) return '<p class="leeg">Niets meer vandaag.</p>';
   const nm = it => it.soort === 'les' ? `${it.titel} · ${it.sub}` : it.soort === 'vrij' ? `werkblok, ${it.tot - it.van} min` : it.soort === 'pauze' ? 'pauze' : it.soort === 'rust' ? 'rustblok' : it.titel;
-  return its.map(it => `<button class="nu-straks" data-kijk="${esc(it.key)}"><b>${hm(it.van)}</b><span>${esc(nm(it))}</span></button>`).join('');
+  return its.map(it => `<button class="nu-straks" data-s="${it.soort}" data-kijk="${esc(it.key)}"><b>${hm(it.van)}</b><span>${esc(nm(it))}</span></button>`).join('');
 }
 function klaarLijst(s, l) { const b = benodigd(l).slice(); if (b.includes('Drums / percussie')) b.push('Oordoppen voor jezelf'); (S.klaarExtra[s] || []).forEach(x => { if (!b.includes(x)) b.push(x); }); return b; }
 function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">deels</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
@@ -582,7 +628,7 @@ function voorLesKaart(s, p, x, nu) {
     <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>
     ${vor && vor.st.n ? `<div class="melding" style="margin-top:.7rem">Vorige keer: ${esc(vor.st.n)}</div>` : ''}
     ${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}
-    <div class="knoppen" style="margin-top:.9rem"><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button>${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button></div>
+    <!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok--><div class="knoppen" style="margin-top:.9rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button></div>
     ${rest.length ? `<h3>Nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
 }
 function lesKaart(s, x, nu) {
@@ -590,14 +636,14 @@ function lesKaart(s, x, nu) {
   const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
   const fasen = (l.fasen || []).map(LESMODUS.fase);
   return `<div class="kaart"><p class="eyebrow">Les loopt · ${esc(x.u.groep)} · nog ${rest} min · tot ${esc(x.u.eind)}</p><h2>${esc(l.titel || '')}</h2>
-    ${bordLoopt ? `<p class="lead">Het bord loopt in het andere venster.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn hoofd" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a></div>` : `<div class="knoppen" style="margin:.6rem 0"><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button></div>`}
+    ${bordLoopt ? `<p class="lead">Het bord loopt in het andere venster.</p><!--dok--><a class="btn hoofd" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a><!--/dok-->` : `<!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok-->`}
     ${fasen.length ? `<h3>Verloop · alleen jij ziet dit</h3><ol class="fasen nu-fasen">${fasen.map(f => `<li><b>${f.min} min · ${esc(LESMODUS.SOORT[f.soort].naam.toLowerCase())}</b> ${esc(f.kop)}${f.docent ? `<div class="sub">${esc(f.docent)}</div>` : ''}</li>`).join('')}</ol>` : ''}
     ${bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div>`;
 }
 function naLesKaart(s, p, x, nu) {
   const l = les(x.item); const rest = teAfronden(s, p, nu).filter(y => y !== x);
   return `<div class="kaart"><p class="eyebrow">De bel ging · ${esc(x.u.groep)} · ${esc(x.u.start)}–${esc(x.u.eind)}</p><h2>Hoe ging het?</h2><p class="lead">${esc(l.titel || '')}</p>
-    <div class="nu-keuzes"><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Deels, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button></div>
+    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Deels, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
     <details class="meer"><summary>Notitie voor de volgende les</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc((status(x.u.groep, x.item.id) || {}).n || '')}</textarea></details>
     <p class="sub" style="margin-top:.6rem">De notitie gaat mee naar de volgende les van ${esc(x.u.groep)}. Straks komt terug in je volgende werkblok, niet in je pauze.</p>
     ${rest.length ? `<h3>Ook nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
@@ -613,8 +659,8 @@ function rustKaart(s, it, A, live) {
 function taakKaart(s, it) {
   const k = it.k;
   return `<div class="kaart"><p class="eyebrow">Nu gepland · ${esc(k.plan.van)}–${esc(k.plan.tot)}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
-    <div class="knoppen" style="margin-top:.8rem">${k.af ? '' : k.start ? `<span class="chip">bezig sinds ${esc(new Date(k.start).toTimeString().slice(0, 5))}</span>` : `<button class="btn" data-taakstart="${esc(k.id)}">Begin</button>`}
-    <label class="chk"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label></div>
+    <!--dok-->${k.af ? '' : k.start ? `<span class="chip">bezig sinds ${esc(new Date(k.start).toTimeString().slice(0, 5))}</span>` : `<button class="btn" data-taakstart="${esc(k.id)}">Begin</button>`}
+    <label class="chk"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label><!--/dok-->
     <p class="sub" style="margin-top:.6rem">Met Begin en Klaar leert Lesdag hoe lang zulke taken bij jou duren. Dat blijft in je eigen opslag.</p></div>`;
 }
 /* wat er nog moet en nog niet in de agenda staat: [{v, titel, min, d, sub}] */
@@ -668,23 +714,22 @@ function afsluitKaart(s, p, A, nu) {
     ${open.map(it => rij('Niet af: ' + it.k.titel, '', chips('eigen:' + it.k.id, schat(it.k.bron, it.k.min)) + `<label class="chk"><input type="checkbox" data-taakaf="${esc(it.k.id)}"><span>klaar</span></label>`)).join('')}
     ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min))).join('')}
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
-    <div class="knoppen" style="margin-top:1rem"><button class="btn hoofd" data-afsluiten="${s}">Dag afsluiten</button></div></div>`;
+    <!--dok--><button class="btn hoofd" data-afsluiten="${s}">Dag afsluiten</button><!--/dok--></div>`;
 }
 function stilKaart(s) {
   const dicht = !!S.afgesloten[s];
   return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${dicht ? 'Morgen staat klaar' : 'Je dag zit erop'}</h2>
     <p class="lead">${dicht ? 'Lesdag is stil tot morgen 8:00.' : 'Afsluiten kost een paar minuten. Daarna is Lesdag stil.'}</p>
     ${S.goed[s] ? `<blockquote class="nu-goed">${esc(S.goed[s])}</blockquote>` : ''}
-    <div class="knoppen" style="margin-top:.8rem">${dicht ? `<button class="btn" data-heropen="${s}">Toch nog iets doen</button>` : '<button class="btn hoofd" data-kijk="afsluiten">Dag afsluiten</button>'}<button class="btn" data-dag="${volgendeLesdag(s, 1)}">Morgen bekijken</button></div></div>`;
+    <!--dok-->${dicht ? `<button class="btn" data-heropen="${s}">Toch nog iets doen</button>` : '<button class="btn hoofd" data-kijk="afsluiten">Dag afsluiten</button>'}<button class="btn" data-dag="${volgendeLesdag(s, 1)}">Morgen bekijken</button><!--/dok--></div>`;
 }
 function vrijeDagKaart(s, p) {
   return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${esc(cap(p.reden || 'Vrij'))}</h2><p class="lead">Lesdag heeft vandaag niets voor je.</p>
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
 }
 function pauzeVraag() {
-  const g = pauzeGok();
-  return `<div class="kaart nu-vraag"><h2>Wanneer zijn je pauzes?</h2><p class="lead">Dan houdt Lesdag ze vrij. Er komen geen taken in, en tijdens je pauze laat dit scherm niets over werk zien.</p>
-    <div class="knoppen" style="margin-top:.6rem">${g.length ? `<button class="btn hoofd" data-pzneem="${esc(g.map(x => x.van + '-' + x.tot).join(','))}">Uit je rooster: ${esc(g.map(x => x.van + '–' + x.tot).join(' en '))}, overnemen</button>` : ''}<a class="btn" href="#instellingen">Zelf invullen</a></div></div>`;
+  return `<div class="kaart nu-vraag"><h2>Je pauzes</h2><p class="lead">${ZC && ZC.events ? 'In je rooster vond Lesdag geen vaste pauzes.' : 'Lesdag haalt je pauzes uit je rooster in Zermelo. Plak daarvoor je Zermelo-link bij Instellingen.'} Daarna houdt Lesdag ze vrij.</p>
+    <div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#instellingen">Naar Instellingen</a></div></div>`;
 }
 /* voorstellen: hoogstens drie, nooit in een pauze; Frans zegt ja of later. Nooit iets uit een les halen. */
 function voorstellen(s, p, A, m, nu) {
@@ -932,9 +977,10 @@ function viewInstellingen() {
   <div class="kaart"><h2>Rooster uit Zermelo</h2>${zProxy() ? `<p class="lead">Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
     <form class="form" id="zForm"><div class="rij"><label style="flex:3 1 18rem">Zermelo-link <input id="zLink" type="password" autocomplete="off" placeholder="${S.zermeloToken ? 'opgeslagen (••••' + esc(S.zermeloToken.slice(-4)) + ')' : 'https://csgpm.zportal.nl/api/v3/ical?access_token=…'}"></label><button class="btn hoofd" type="submit">Opslaan en ophalen</button>${S.zermeloToken ? '<button class="btn" type="button" data-zophalen="">Nu ophalen</button><button class="btn rood" type="button" data-zweg="">Link verwijderen</button>' : ''}</div></form>
     <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}.` : 'Nog niet opgehaald.'}</p>` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div>
-  <div class="kaart"><h2>Pauzes</h2><p class="lead">Lesdag houdt je pauzes vrij: er komen geen taken in, en het Nu-scherm laat dan niets over werk zien. Valt een pauze weg door het koor of de Sing-In, dan houdt Lesdag later op de dag een rustblok vrij. Nooit in een les.</p>
+  <div class="kaart"><h2>Pauzes</h2><p class="lead">${(zPauzes() || { vast: [] }).vast.length ? 'Uit je rooster in Zermelo: ' + esc(zPauzes().vast.map(p => hm(p.van) + '–' + hm(p.tot)).join(', ')) + '.' : ZC ? 'In je rooster vond Lesdag geen vaste pauzes.' : 'Zodra je Zermelo-link er staat, haalt Lesdag je pauzes uit je rooster.'} Lesdag houdt ze vrij: er komen geen taken in, en het Nu-scherm laat dan niets over werk zien. Valt een pauze weg (pauzedienst, koor, Sing-In), dan houdt Lesdag later op de dag een rustblok vrij. Nooit in een les.</p>
+    <details class="meer" style="margin-top:.6rem" ${(S.pauzes || []).length ? 'open' : ''}><summary>Kloppen ze niet? Zelf invullen (gaat voor het rooster)</summary>
     <form class="form" id="pzForm" style="margin-top:.6rem">${(S.pauzes || []).concat([{ van: '', tot: '' }]).map((p, i) => `<div class="rij"><label>Van<input type="time" name="van" value="${p.van ? esc(p.van.padStart(5, '0')) : ''}"></label><label>Tot<input type="time" name="tot" value="${p.tot ? esc(p.tot.padStart(5, '0')) : ''}"></label>${p.van ? `<button class="btn klein" type="button" data-pzweg="${i}">weg</button>` : ''}</div>`).join('')}
-    <div class="knoppen"><button class="btn hoofd" type="submit">Pauzes opslaan</button>${!(S.pauzes || []).length && pauzeGok().length ? `<button class="btn" type="button" data-pzneem="${esc(pauzeGok().map(x => x.van + '-' + x.tot).join(','))}">Uit je rooster: ${esc(pauzeGok().map(x => x.van + '–' + x.tot).join(' en '))}</button>` : ''}</div></form></div>
+    <div class="knoppen"><button class="btn hoofd" type="submit">Pauzes opslaan</button></div></form></details></div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
@@ -1076,6 +1122,7 @@ document.addEventListener('click', async e => {
     return;
   }
   if (D.palet != null) { paletOpen(); return; }
+  if (D.stap) { nuStap(+D.stap); return; }
   if (D.kijk != null) { nuKijk = D.kijk || null; if (route.naam !== 'nu') location.hash = 'nu'; else render(); return; }
   if (D.bord) { const [u, s] = D.bord.split('|'); bordOpen(u, s); return; }
   if (D.rg) { if (D.rg === 'ga') rgStuur('ga', { i: +D.i }); else if (D.rg === 'sluit') { rgStuur('sluit'); RG = null; location.hash = 'nu'; } else rgStuur(D.rg); return; }
@@ -1092,7 +1139,6 @@ document.addEventListener('click', async e => {
   if (D.afsluiten) { const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); toast('Morgen staat klaar. Fijne avond.'); return; }
   if (D.heropen) { delete S.afgesloten[D.heropen]; bewaar(); return; }
   if (D.taakstart) { const k = (S.taken || []).find(k => k.id === D.taakstart); if (k) { k.start = Date.now(); bewaar(); } return; }
-  if (D.pzneem) { S.pauzes = D.pzneem.split(',').map(x => { const [van, tot] = x.split('-'); return { van, tot }; }); bewaar(); toast('Pauzes opgeslagen. Lesdag houdt ze vrij.'); return; }
   if (D.pzweg != null) { S.pauzes.splice(+D.pzweg, 1); bewaar(); return; }
   if (D.ag) { const i = D.ag.indexOf('|'); const d = D.ag.slice(0, i); agSel[d] = D.ag.slice(i + 1); dagKeuze = d; if (route.naam !== 'vandaag') location.hash = 'vandaag'; else { render(); if (innerWidth < 820) { const pn = $('.agpaneel'); if (pn) pn.scrollIntoView({ behavior: 'smooth', block: 'start' }); } } return; }
   if (D.ontplan) { const k = (S.taken || []).find(k => k.id === D.ontplan); if (k) { agSel[k.plan.dag] = ''; delete k.plan; } bewaar(); toast('Uit de agenda gehaald; de taak staat nog in je lijst'); return; }
@@ -1175,6 +1221,9 @@ $('#scrim').addEventListener('click', sluit);
 document.addEventListener('keydown', e => {
   if (PAL) { if (e.key === 'Escape') { e.preventDefault(); paletDicht(); } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); PAL.i = Math.max(0, Math.min(PAL.L.length - 1, PAL.i + (e.key === 'ArrowDown' ? 1 : -1))); paletToon(); } else if (e.key === 'Enter') { e.preventDefault(); paletKies(PAL.i); } return; }
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k' && !LES) { e.preventDefault(); paletOpen(); return; }
+  if (route.naam === 'nu' && !LES && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName) && !$('#drawer').classList.contains('open')) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); nuStap(e.key === 'ArrowRight' ? 1 : -1); return; }
+    if (e.key === 'Escape' && nuKijk) { nuKijk = null; render(); return; } }
   if (route.naam === 'regie' && !LES && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) { // de presenter stuurt pijltjes naar het venster dat voorop staat
     if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); rgStuur('volgende'); return; }
     if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); rgStuur('vorige'); return; }
@@ -1314,6 +1363,9 @@ async function syncNu(melden) {
   } catch (e) { setSync('fout', 'OneDrive niet bereikbaar, staat op dit apparaat'); console.warn(e); if (melden) toast('Synchroniseren lukt niet'); }
 }
 setInterval(() => { const a = document.activeElement; if (!LES && !PAL && ['vandaag', 'nu'].includes(route.naam) && !document.hidden && !(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) && !document.querySelector('#main details[open]')) render(); }, 60000); // het scherm volgt de klok, niet tijdens typen
+let veeg = null; // vegen over de nu-kaart: naar het vorige of volgende moment
+document.addEventListener('pointerdown', e => { veeg = e.pointerType === 'touch' && route.naam === 'nu' && e.target.closest('.nu-kaart') && !e.target.closest('input,textarea,select') ? { x: e.clientX, y: e.clientY } : null; });
+document.addEventListener('pointerup', e => { if (!veeg) return; const dx = e.clientX - veeg.x, dy = e.clientY - veeg.y; veeg = null; if (Math.abs(dx) > 70 && Math.abs(dy) < 50) nuStap(dx < 0 ? 1 : -1); });
 document.addEventListener('input', e => { if (e.target.id === 'palQ' && PAL) { PAL.q = e.target.value; PAL.i = 0; paletToon(); } });
 document.addEventListener('visibilitychange', () => { if (!document.hidden && (LES || route.naam === 'regie')) waak(true); });
 document.addEventListener('visibilitychange', () => { if (document.hidden || LES) return; if (M365.account) syncNu(false); if (S.zermeloToken && zProxy() && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000)) zOphalen(false); });
