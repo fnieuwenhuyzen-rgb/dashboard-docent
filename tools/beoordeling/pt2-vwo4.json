@@ -4,59 +4,222 @@
   "toets": "PT2",
   "titel": "Praktijktoets PT2: solowerk en eigen compositie",
   "thema": "Barok",
-  "weging": 3, "herkansbaar": false,
-  "velden": ["Solowerk", "Instrument of zang", "Titel compositie"],
+  "weging": 3,
+  "herkansbaar": false,
+  "velden": [
+    "Solowerk",
+    "Instrument of zang",
+    "Titel compositie"
+  ],
   "vooruit": "Eén punt voor P9 in vwo 5",
   "leerlingTitel": "Zo beoordeel ik mijn solowerk en mijn compositie",
   "leerlingInstructie": "Gebruik dit bij de generale en de laatste repetitie, en na de toets. Zet per onderdeel een kruisje bij wat je hoorde of zag en schrijf je score op. Je docent let op dezelfde onderdelen.",
   "pta": "PTA vwo 4 2026-2027, P2 (in studiewijzer en lesplanning PT2): periode 4 in de les (ma 7 jun), weging 3, 45 minuten, niet herkansbaar. B1 solowerk en B2 eigen compositie of improvisatie van minimaal 12 maten; de notatie (inleveren lesweek 34) telt mee. Beoordeling op presentatie en muzikaliteit.",
   "map": "02 Keuzevak muziek\\VWO\\VWO 4\\P2 Praktijktoets - Solowerk en compositie barok\\Beoordeling",
   "lessen": [
-    { "lg": "vwo4", "w": 29, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo4", "w": 33, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo4", "w": 34, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo4", "w": 35, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] },
-    { "lg": "vwo4", "w": 35, "slot": "l2", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "vwo4",
+      "w": 29,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 33,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 34,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 35,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 35,
+      "slot": "l2",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Solowerk", "stuk": "solowerk",
+      "groep": "Solowerk",
+      "stuk": "solowerk",
       "criteria": [
-        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, begin en slot, doorspelen", "weging": 1,
-          "docent": ["Geen aankondiging; begint opnieuw of stopt bij een fout.", "Kondigt het stuk aan; begin of slot aarzelend, stopt soms na een fout.", "Noemt stuk en componist; duidelijk begin en slot; speelt door na een fout.", "Presenteert als op een concert: rustige aankondiging, overtuigende inzet en slot."],
-          "leerling": ["Ik kondig niets aan en stop als er iets misgaat.", "Ik kondig het stuk aan, maar begin of eindig aarzelend.", "Ik noem stuk en componist, begin en eindig duidelijk en speel door na een fout.", "Ik presenteer zoals op een concert: rustig, met een overtuigend begin en slot."] },
-        { "id": "toon", "naam": "Toon, ritme en tempo", "uitleg": "zuiver, nauwkeurig, stabiel", "weging": 2,
-          "docent": ["Toon vaak onzuiver of geforceerd; tempo zakt in of jaagt, ritmes onnauwkeurig.", "Overwegend zuiver en in tempo; op lastige plekken wisselt de toon of hapert het ritme.", "Zuivere, heldere toon en stabiel tempo, ook in de moeilijkste maten.", "Beheerste toon met kleur; strak en levendig tempo dat het karakter draagt."],
-          "leerling": ["Mijn toon is vaak onzuiver en mijn tempo zakt in of jaagt.", "Mijn toon en tempo zijn meestal goed, behalve op lastige plekken.", "Mijn toon is zuiver en mijn tempo staat, ook in de moeilijkste maten.", "Ik kleur mijn toon en mijn tempo past bij het karakter van het stuk."] },
-        { "id": "frasering", "naam": "Frasering en stijl", "uitleg": "frasen, dynamiek, articulatie, karakter", "weging": 2,
-          "docent": ["Vlak: geen frasering of dynamiek te horen.", "Enkele frasen en dynamische verschillen hoorbaar; karakter nog weinig uitgewerkt.", "Frasen ademen en lopen naar een slot; dynamiek en articulatie passen bij de stijl.", "Overtuigend in stijl, bij barok bv. heldere articulatie, terrassendynamiek en versieringen."],
-          "leerling": ["Je hoort geen frasering of dynamiek.", "Je hoort af en toe een frase of dynamiek.", "Mijn frasen ademen en mijn dynamiek en articulatie passen bij de stijl.", "Je hoort de stijl van het stuk, bij barok bijvoorbeeld terrassendynamiek."] }
+        {
+          "id": "presentatie",
+          "naam": "Presentatie",
+          "uitleg": "aankondigen, begin en slot, doorspelen",
+          "weging": 1,
+          "docent": [
+            "Geen aankondiging; begint opnieuw of stopt bij een fout.",
+            "Kondigt het stuk aan; begin of slot aarzelend, stopt soms na een fout.",
+            "Noemt stuk en componist; duidelijk begin en slot; speelt door na een fout.",
+            "Presenteert als op een concert: rustige aankondiging, overtuigende inzet en slot."
+          ],
+          "leerling": [
+            "Ik kondig niets aan en stop als er iets misgaat.",
+            "Ik kondig het stuk aan, maar begin of eindig aarzelend.",
+            "Ik noem stuk en componist, begin en eindig duidelijk en speel door na een fout.",
+            "Ik presenteer zoals op een concert: rustig, met een overtuigend begin en slot."
+          ]
+        },
+        {
+          "id": "toon",
+          "naam": "Toon, ritme en tempo",
+          "uitleg": "zuiver, nauwkeurig, stabiel",
+          "weging": 2,
+          "docent": [
+            "Toon vaak onzuiver of geforceerd; tempo zakt in of jaagt, ritmes onnauwkeurig.",
+            "Overwegend zuiver en in tempo; op lastige plekken wisselt de toon of hapert het ritme.",
+            "Zuivere, heldere toon en stabiel tempo, ook in de moeilijkste maten.",
+            "Beheerste toon met kleur; strak en levendig tempo dat het karakter draagt."
+          ],
+          "leerling": [
+            "Mijn toon is vaak onzuiver en mijn tempo zakt in of jaagt.",
+            "Mijn toon en tempo zijn meestal goed, behalve op lastige plekken.",
+            "Mijn toon is zuiver en mijn tempo staat, ook in de moeilijkste maten.",
+            "Ik kleur mijn toon en mijn tempo past bij het karakter van het stuk."
+          ]
+        },
+        {
+          "id": "frasering",
+          "naam": "Frasering en stijl",
+          "uitleg": "frasen, dynamiek, articulatie, karakter",
+          "weging": 2,
+          "docent": [
+            "Vlak: geen frasering of dynamiek te horen.",
+            "Enkele frasen en dynamische verschillen hoorbaar; karakter nog weinig uitgewerkt.",
+            "Frasen ademen en lopen naar een slot; dynamiek en articulatie passen bij de stijl.",
+            "Overtuigend in stijl, bij barok bv. heldere articulatie, terrassendynamiek en versieringen."
+          ],
+          "leerling": [
+            "Je hoort geen frasering of dynamiek.",
+            "Je hoort af en toe een frase of dynamiek.",
+            "Mijn frasen ademen en mijn dynamiek en articulatie passen bij de stijl.",
+            "Je hoort de stijl van het stuk, bij barok bijvoorbeeld terrassendynamiek."
+          ]
+        }
       ]
     },
     {
-      "groep": "Eigen compositie", "stuk": "compositie of improvisatie, minimaal 12 maten",
+      "groep": "Eigen compositie",
+      "stuk": "compositie of improvisatie, minimaal 12 maten",
       "criteria": [
-        { "id": "bouw", "naam": "Barokke bouw", "uitleg": "baslijn, sequens, melodie op akkoordtonen, slot", "weging": 2,
-          "docent": ["Losse ideeën zonder baslijn of duidelijk slot; geen barokke middelen te horen.", "Baslijn en melodie aanwezig; één barok middel (bv. sequens) te horen, het slot is zwak.", "Baslijn met sequens, melodie op akkoordtonen; duidelijke vraag en antwoord en een slot.", "Bewust gebouwd: sequens of voortspinnen; bas en melodie vullen elkaar aan; sterk slot."],
-          "leerling": ["Mijn stuk heeft geen baslijn of slot en klinkt niet barok.", "Mijn stuk heeft een baslijn, een melodie en één barok middel, zoals een sequens.", "Mijn baslijn heeft een sequens, mijn melodie gebruikt akkoordtonen en heeft een slot.", "Ik gebruik barokke middelen bewust; bas en melodie vullen elkaar aan."] },
-        { "id": "notatie", "naam": "Notatie", "uitleg": "minimaal 12 maten, compleet en leesbaar", "weging": 1,
-          "docent": ["Korter dan 12 maten, of de notatie is onvolledig of onleesbaar.", "12 maten genoteerd; sleutel, ritmes of maatstrepen kloppen niet overal.", "Compleet en leesbaar: sleutel, maatsoort, ritmes en maatstrepen kloppen.", "Verzorgd als een uitgave: ook tempo, dynamiek en articulatie staan erin."],
-          "leerling": ["Mijn stuk is korter dan 12 maten of mijn notatie is niet compleet.", "Ik heb 12 maten genoteerd, maar niet alles klopt.", "Mijn notatie is compleet en leesbaar; ritmes en maatstrepen kloppen.", "Mijn notatie is verzorgd, met tempo, dynamiek en articulatie."] },
-        { "id": "uitvoering", "naam": "Uitvoering", "uitleg": "speelt wat er staat, in tempo", "weging": 1,
-          "docent": ["De uitvoering valt stil of wijkt sterk af van de notatie.", "Grotendeels zoals genoteerd, met haperingen.", "Zeker en in tempo, zoals genoteerd.", "Muzikaal uitgevoerd; frasering en dynamiek maken de ideeën hoorbaar."],
-          "leerling": ["Ik val stil of speel iets anders dan er staat.", "Ik speel het grotendeels zoals genoteerd, met haperingen.", "Ik speel mijn stuk zeker en in tempo, zoals het er staat.", "Ik speel mijn stuk muzikaal, met frasering en dynamiek."] },
-        { "id": "keuzes", "naam": "Uitleg van keuzes", "uitleg": "hoe heb je het gemaakt, en waarom zo?", "weging": 1,
-          "docent": ["Kan niet vertellen hoe het stuk gemaakt is.", "Beschrijft de stappen (eerst baslijn, dan melodie) zonder keuzes te onderbouwen.", "Legt uit welke barokke middelen gebruikt zijn en waarom, met de juiste begrippen.", "Onderbouwt keuzes met een barok voorbeeld uit de lessen en noemt wat beter kan."],
-          "leerling": ["Ik kan niet vertellen hoe ik mijn stuk heb gemaakt.", "Ik vertel de stappen: eerst de baslijn, dan de melodie.", "Ik leg uit welke barokke middelen ik gebruik en waarom.", "Ik onderbouw mijn keuzes met een voorbeeld uit de barok en weet wat beter kan."] }
+        {
+          "id": "bouw",
+          "naam": "Barokke bouw",
+          "uitleg": "baslijn, sequens, melodie op akkoordtonen, slot",
+          "weging": 2,
+          "docent": [
+            "Losse ideeën zonder baslijn of duidelijk slot; geen barokke middelen te horen.",
+            "Baslijn en melodie aanwezig; één barok middel (bv. sequens) te horen, het slot is zwak.",
+            "Baslijn met sequens, melodie op akkoordtonen; duidelijke vraag en antwoord en een slot.",
+            "Bewust gebouwd: sequens of voortspinnen; bas en melodie vullen elkaar aan; sterk slot."
+          ],
+          "leerling": [
+            "Mijn stuk heeft geen baslijn of slot en klinkt niet barok.",
+            "Mijn stuk heeft een baslijn, een melodie en één barok middel, zoals een sequens.",
+            "Mijn baslijn heeft een sequens, mijn melodie gebruikt akkoordtonen en heeft een slot.",
+            "Ik gebruik barokke middelen bewust; bas en melodie vullen elkaar aan."
+          ]
+        },
+        {
+          "id": "notatie",
+          "naam": "Notatie",
+          "uitleg": "minimaal 12 maten, compleet en leesbaar",
+          "weging": 1,
+          "docent": [
+            "Korter dan 12 maten, of de notatie is onvolledig of onleesbaar.",
+            "12 maten genoteerd; sleutel, ritmes of maatstrepen kloppen niet overal.",
+            "Compleet en leesbaar: sleutel, maatsoort, ritmes en maatstrepen kloppen.",
+            "Verzorgd als een uitgave: ook tempo, dynamiek en articulatie staan erin."
+          ],
+          "leerling": [
+            "Mijn stuk is korter dan 12 maten of mijn notatie is niet compleet.",
+            "Ik heb 12 maten genoteerd, maar niet alles klopt.",
+            "Mijn notatie is compleet en leesbaar; ritmes en maatstrepen kloppen.",
+            "Mijn notatie is verzorgd, met tempo, dynamiek en articulatie."
+          ]
+        },
+        {
+          "id": "uitvoering",
+          "naam": "Uitvoering",
+          "uitleg": "speelt wat er staat, in tempo",
+          "weging": 1,
+          "docent": [
+            "De uitvoering valt stil of wijkt sterk af van de notatie.",
+            "Grotendeels zoals genoteerd, met haperingen.",
+            "Zeker en in tempo, zoals genoteerd.",
+            "Muzikaal uitgevoerd; frasering en dynamiek maken de ideeën hoorbaar."
+          ],
+          "leerling": [
+            "Ik val stil of speel iets anders dan er staat.",
+            "Ik speel het grotendeels zoals genoteerd, met haperingen.",
+            "Ik speel mijn stuk zeker en in tempo, zoals het er staat.",
+            "Ik speel mijn stuk muzikaal, met frasering en dynamiek."
+          ]
+        },
+        {
+          "id": "keuzes",
+          "naam": "Uitleg van keuzes",
+          "uitleg": "hoe heb je het gemaakt, en waarom zo?",
+          "weging": 1,
+          "docent": [
+            "Kan niet vertellen hoe het stuk gemaakt is.",
+            "Beschrijft de stappen (eerst baslijn, dan melodie) zonder keuzes te onderbouwen.",
+            "Legt uit welke barokke middelen gebruikt zijn en waarom, met de juiste begrippen.",
+            "Onderbouwt keuzes met een barok voorbeeld uit de lessen en noemt wat beter kan."
+          ],
+          "leerling": [
+            "Ik kan niet vertellen hoe ik mijn stuk heb gemaakt.",
+            "Ik vertel de stappen: eerst de baslijn, dan de melodie.",
+            "Ik leg uit welke barokke middelen ik gebruik en waarom.",
+            "Ik onderbouw mijn keuzes met een voorbeeld uit de barok en weet wat beter kan."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

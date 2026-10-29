@@ -11,7 +11,8 @@ try {
   $s.Cells.Item(1,1) = "$($M.titel) · $($M.klas)"; $s.Cells.Item(1,1).Font.Bold = $true; $s.Cells.Item(1,1).Font.Size = 14
   $s.Cells.Item(2,1) = "Score per onderdeel: 4, 6, 8 of 10 (tussenscores 5, 7, 9 mogen). $($M.cijfer)"
   $velden = @($M.velden | Where-Object { $_ }); $vooruit = if ($M.vooruit) { $M.vooruit } else { 'Punt om aan te werken' }
-  $kop = @('Leerling') + $velden; foreach ($k in $C) { $kop += "$($k.c.naam) ($($k.c.weging)x)" }; $kop += @('Cijfer', 'Opmerking per onderdeel', $vooruit)
+  $kop = @('Leerling') + $velden; foreach ($k in $C) { $kop += "$($k.c.naam) ($($k.c.weging)x)" }; $zb = [int]$M.zelfbeoordeling; $extra = if ($zb) { 2 } else { 0 }
+  $kop += @($(if ($zb) { 'Cijfer docent' } else { 'Cijfer' })); if ($zb) { $kop += @("Zelfbeoordeling ($zb%)", 'Eindcijfer') }; $kop += @('Opmerking per onderdeel', $vooruit)
   for ($i = 0; $i -lt $kop.Count; $i++) { $s.Cells.Item(4, $i + 1) = $kop[$i] }
   for ($i = 0; $i -lt $C.Count; $i++) { $s.Cells.Item(3, $i + 2 + $velden.Count) = $C[$i].groep }
   $eerste = 2 + $velden.Count; $laatste = $eerste - 1 + $C.Count; $cijferKol = $laatste + 1
@@ -20,14 +21,15 @@ try {
     $delen = @(); for ($i = 0; $i -lt $C.Count; $i++) { $delen += "$(& $kolL ($eerste + $i))$r*$($C[$i].c.weging)" }
     $bereik = "$(& $kolL $eerste)${r}:$(& $kolL $laatste)$r"
     $s.Cells.Item($r, $cijferKol).Formula = "=IF(COUNT($bereik)=$($C.Count),ROUND(($($delen -join '+'))/$somW,1),`"`")"
+    if ($zb) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $s.Cells.Item($r, $cijferKol + 2).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk)),ROUND($ck*$((100 - $zb) / 100)+$zk*$($zb / 100),1),`"`")" }
   }
   $v = $s.Range("$(& $kolL $eerste)5:$(& $kolL $laatste)40").Validation; $v.Delete()
   $v.Add(2, 1, 1, '4', '10'); $v.ErrorMessage = 'Vul een score van 4 tot en met 10 in.'
-  $hdr = $s.Range("A4:$(& $kolL ($cijferKol + 2))4"); $hdr.Font.Bold = $true; $hdr.Font.Color = 0xFFFFFF; $hdr.Interior.Color = 0x23238C; $hdr.WrapText = $true
-  $s.Range("A3:$(& $kolL ($cijferKol + 2))3").Font.Italic = $true
+  $hdr = $s.Range("A4:$(& $kolL ($cijferKol + 2 + $extra))4"); $hdr.Font.Bold = $true; $hdr.Font.Color = 0xFFFFFF; $hdr.Interior.Color = 0x23238C; $hdr.WrapText = $true
+  $s.Range("A3:$(& $kolL ($cijferKol + 2 + $extra))3").Font.Italic = $true
   for ($i = 1; $i -lt $eerste; $i++) { $s.Columns.Item($i).ColumnWidth = 22 }
-  for ($i = $eerste; $i -le $cijferKol; $i++) { $s.Columns.Item($i).ColumnWidth = 12 }
-  $s.Columns.Item($cijferKol).Font.Bold = $true; $s.Columns.Item($cijferKol + 1).ColumnWidth = 50; $s.Columns.Item($cijferKol + 2).ColumnWidth = 40
+  for ($i = $eerste; $i -le $cijferKol + $extra; $i++) { $s.Columns.Item($i).ColumnWidth = 12 }
+  $s.Columns.Item($cijferKol + $extra).Font.Bold = $true; $s.Columns.Item($cijferKol + 1 + $extra).ColumnWidth = 50; $s.Columns.Item($cijferKol + 2 + $extra).ColumnWidth = 40
   $s.Rows.Item(4).RowHeight = 32; $s.Activate(); $x.ActiveWindow.SplitRow = 4; $x.ActiveWindow.FreezePanes = $true
   # rubric
   $t = $wb.Worksheets.Item(2); $t.Name = 'Rubric'

@@ -4,59 +4,194 @@
   "toets": "P1 · presentatie 2",
   "titel": "Praktijktoets P1, presentatie 2: akkoordinstrument",
   "thema": "Toonhoogte, tempo en presentatie akkoordinstrument",
-  "weging": 15, "herkansbaar": true,
-  "velden": ["Lied", "Instrument", "Duo met"],
+  "weging": 15,
+  "herkansbaar": true,
+  "velden": [
+    "Lied",
+    "Instrument",
+    "Duo met"
+  ],
   "vooruit": "Eén punt voor presentatie 3",
   "leerlingTitel": "Zo beoordeel ik mijn presentatie op gitaar, ukelele of keyboard",
   "leerlingInstructie": "Zeg je naam, de titel van je lied en je instrument. Tel samen af. Mis je een akkoord? Speel door op de tel en pak het volgende akkoord.",
   "pta": "PTA mavo 3 2026-2027, P1 muzikale presentaties: gemiddelde van minstens drie praktijkdelen (zang/melodie, akkoordinstrument, slagwerk), weging 15, 45 minuten, herkansbaar in TW3, domeinen K2, K4, K5 en K6. Presentatie 2 (akkoordinstrument) is in lesweek 19.",
   "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\P1 Praktijktoets - Muzikale presentaties\\Beoordeling",
   "lessen": [
-    { "lg": "mavo3", "w": 17, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "mavo3", "w": 19, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] },
-    { "lg": "mavo3", "w": 36, "slot": "l1", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "mavo3",
+      "w": 17,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "mavo3",
+      "w": 19,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "mavo3",
+      "w": 36,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 9 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3.",
   "onderdelen": [
     {
-      "groep": "Presentatie", "stuk": "het hele optreden",
+      "groep": "Presentatie",
+      "stuk": "het hele optreden",
       "criteria": [
-        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, samen beginnen en eindigen, doorspelen", "weging": 1,
-          "docent": ["Kondigt niets aan; begin en slot zijn onduidelijk; stopt bij een fout.", "Noemt naam en titel; begint en eindigt aarzelend; stopt soms na een fout.", "Noemt naam, titel en instrument; duidelijk begin en slot; speelt door na een fout.", "Rustige aankondiging, zekere inzet en slot; een fout valt bijna niet op."],
-          "leerling": ["Ik zeg niets vooraf en stop als het misgaat.", "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.", "Ik zeg naam, titel en instrument, begin en eindig duidelijk en speel door.", "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."] }
+        {
+          "id": "presentatie",
+          "naam": "Presentatie",
+          "uitleg": "aankondigen, samen beginnen en eindigen, doorspelen",
+          "weging": 1,
+          "docent": [
+            "Kondigt niets aan; begin en slot zijn onduidelijk; stopt bij een fout.",
+            "Noemt naam en titel; begint en eindigt aarzelend; stopt soms na een fout.",
+            "Noemt naam, titel en instrument; duidelijk begin en slot; speelt door na een fout.",
+            "Rustige aankondiging, zekere inzet en slot; een fout valt bijna niet op."
+          ],
+          "leerling": [
+            "Ik zeg niets vooraf en stop als het misgaat.",
+            "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.",
+            "Ik zeg naam, titel en instrument, begin en eindig duidelijk en speel door.",
+            "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."
+          ]
+        }
       ]
     },
     {
-      "groep": "Akkoordinstrument", "stuk": "begeleiding van het lied",
+      "groep": "Akkoordinstrument",
+      "stuk": "begeleiding van het lied",
       "criteria": [
-        { "id": "grepen", "naam": "Akkoorden", "uitleg": "juiste grepen, akkoorden klinken", "weging": 2,
-          "docent": ["Veel grepen fout of onvolledig; akkoorden klinken dof of vals.", "Kent de grepen; een paar akkoorden klinken nog dof of met een verkeerde toon.", "Alle akkoorden juist gegrepen en ze klinken helder.", "Akkoorden klinken vol en helder, ook een moeilijkere greep zoals F."],
-          "leerling": ["Veel van mijn akkoorden zijn fout of klinken dof.", "Ik ken de grepen, maar een paar akkoorden klinken nog niet mooi.", "Al mijn akkoorden zijn goed en klinken helder.", "Mijn akkoorden klinken vol en helder, ook een moeilijke greep zoals F."] },
-        { "id": "wisselen", "naam": "Akkoordwisselingen", "uitleg": "op tijd wisselen, in tempo", "weging": 2,
-          "docent": ["Stopt bij bijna elke wissel; het lied valt steeds stil.", "Wisselt goed, maar soms te laat; het tempo hapert bij lastige wissels.", "Wisselt op tijd en in tempo; de begeleiding loopt door.", "Wisselt soepel en precies op de tel, ook bij snelle wissels."],
-          "leerling": ["Ik stop bij bijna elke wissel.", "Ik wissel goed, maar soms te laat.", "Ik wissel op tijd en het lied loopt door.", "Ik wissel soepel en precies op de tel, ook als het snel gaat."] },
-        { "id": "patroon", "naam": "Slag- of begeleidingspatroon", "uitleg": "patroon vasthouden, vast tempo", "weging": 2,
-          "docent": ["Geen vast patroon; het tempo zakt in of jaagt.", "Speelt een eenvoudig patroon, grotendeels in een vast tempo.", "Houdt het gekozen patroon het hele lied vast in een stabiel tempo.", "Patroon met groove en dynamiek; past het patroon bewust aan het lied aan."],
-          "leerling": ["Ik heb geen vast patroon en mijn tempo zakt in of jaagt.", "Ik speel een eenvoudig patroon, meestal in hetzelfde tempo.", "Ik houd mijn patroon het hele lied vast in hetzelfde tempo.", "Mijn patroon heeft groove en past bij het lied, met hard en zacht."] },
-        { "id": "techniek", "naam": "Houding en techniek", "uitleg": "instrument vasthouden, vingers, aanslag", "weging": 1,
-          "docent": ["Houding en vingerzetting staan het spelen in de weg.", "Redelijke houding; vingers en aanslag nog onrustig of gespannen.", "Goede houding en vingerzetting; rustige, gelijke aanslag.", "Ontspannen en zeker; kan opkijken naar publiek of duopartner tijdens het spelen."],
-          "leerling": ["Mijn houding en vingers maken het spelen moeilijk.", "Mijn houding is redelijk, maar mijn vingers zijn nog gespannen.", "Ik zit of sta goed en mijn vingers staan goed.", "Ik speel ontspannen en kan zelfs opkijken tijdens het spelen."] }
+        {
+          "id": "grepen",
+          "naam": "Akkoorden",
+          "uitleg": "juiste grepen, akkoorden klinken",
+          "weging": 2,
+          "docent": [
+            "Veel grepen fout of onvolledig; akkoorden klinken dof of vals.",
+            "Kent de grepen; een paar akkoorden klinken nog dof of met een verkeerde toon.",
+            "Alle akkoorden juist gegrepen en ze klinken helder.",
+            "Akkoorden klinken vol en helder, ook een moeilijkere greep zoals F."
+          ],
+          "leerling": [
+            "Veel van mijn akkoorden zijn fout of klinken dof.",
+            "Ik ken de grepen, maar een paar akkoorden klinken nog niet mooi.",
+            "Al mijn akkoorden zijn goed en klinken helder.",
+            "Mijn akkoorden klinken vol en helder, ook een moeilijke greep zoals F."
+          ]
+        },
+        {
+          "id": "wisselen",
+          "naam": "Akkoordwisselingen",
+          "uitleg": "op tijd wisselen, in tempo",
+          "weging": 2,
+          "docent": [
+            "Stopt bij bijna elke wissel; het lied valt steeds stil.",
+            "Wisselt goed, maar soms te laat; het tempo hapert bij lastige wissels.",
+            "Wisselt op tijd en in tempo; de begeleiding loopt door.",
+            "Wisselt soepel en precies op de tel, ook bij snelle wissels."
+          ],
+          "leerling": [
+            "Ik stop bij bijna elke wissel.",
+            "Ik wissel goed, maar soms te laat.",
+            "Ik wissel op tijd en het lied loopt door.",
+            "Ik wissel soepel en precies op de tel, ook als het snel gaat."
+          ]
+        },
+        {
+          "id": "patroon",
+          "naam": "Slag- of begeleidingspatroon",
+          "uitleg": "patroon vasthouden, vast tempo",
+          "weging": 2,
+          "docent": [
+            "Geen vast patroon; het tempo zakt in of jaagt.",
+            "Speelt een eenvoudig patroon, grotendeels in een vast tempo.",
+            "Houdt het gekozen patroon het hele lied vast in een stabiel tempo.",
+            "Patroon met groove en dynamiek; past het patroon bewust aan het lied aan."
+          ],
+          "leerling": [
+            "Ik heb geen vast patroon en mijn tempo zakt in of jaagt.",
+            "Ik speel een eenvoudig patroon, meestal in hetzelfde tempo.",
+            "Ik houd mijn patroon het hele lied vast in hetzelfde tempo.",
+            "Mijn patroon heeft groove en past bij het lied, met hard en zacht."
+          ]
+        },
+        {
+          "id": "techniek",
+          "naam": "Houding en techniek",
+          "uitleg": "instrument vasthouden, vingers, aanslag",
+          "weging": 1,
+          "docent": [
+            "Houding en vingerzetting staan het spelen in de weg.",
+            "Redelijke houding; vingers en aanslag nog onrustig of gespannen.",
+            "Goede houding en vingerzetting; rustige, gelijke aanslag.",
+            "Ontspannen en zeker; kan opkijken naar publiek of duopartner tijdens het spelen."
+          ],
+          "leerling": [
+            "Mijn houding en vingers maken het spelen moeilijk.",
+            "Mijn houding is redelijk, maar mijn vingers zijn nog gespannen.",
+            "Ik zit of sta goed en mijn vingers staan goed.",
+            "Ik speel ontspannen en kan zelfs opkijken tijdens het spelen."
+          ]
+        }
       ]
     },
     {
-      "groep": "Samenspel", "stuk": "met duopartner of zang",
+      "groep": "Samenspel",
+      "stuk": "met duopartner of zang",
       "criteria": [
-        { "id": "samenspel", "naam": "Samenspel", "uitleg": "luisteren, gelijk blijven, de zang dragen", "weging": 1,
-          "docent": ["Speelt los van de ander; loopt voor of achter; te hard of te zacht.", "Luistert naar de ander; blijft meestal gelijk; balans soms uit.", "Blijft gelijk met de ander; de begeleiding draagt de zang of melodie.", "Reageert op de ander; zo begeleid dat anderen er makkelijk op kunnen zingen."],
-          "leerling": ["Ik speel los van mijn duopartner.", "Ik luister naar mijn partner en blijf meestal gelijk.", "Ik blijf gelijk met mijn partner en mijn begeleiding helpt de zang.", "Ik reageer op mijn partner; je kunt makkelijk op mijn begeleiding zingen."] }
+        {
+          "id": "samenspel",
+          "naam": "Samenspel",
+          "uitleg": "luisteren, gelijk blijven, de zang dragen",
+          "weging": 1,
+          "docent": [
+            "Speelt los van de ander; loopt voor of achter; te hard of te zacht.",
+            "Luistert naar de ander; blijft meestal gelijk; balans soms uit.",
+            "Blijft gelijk met de ander; de begeleiding draagt de zang of melodie.",
+            "Reageert op de ander; zo begeleid dat anderen er makkelijk op kunnen zingen."
+          ],
+          "leerling": [
+            "Ik speel los van mijn duopartner.",
+            "Ik luister naar mijn partner en blijf meestal gelijk.",
+            "Ik blijf gelijk met mijn partner en mijn begeleiding helpt de zang.",
+            "Ik reageer op mijn partner; je kunt makkelijk op mijn begeleiding zingen."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

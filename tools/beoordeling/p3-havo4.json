@@ -4,60 +4,200 @@
   "toets": "P3",
   "titel": "Mondelinge toets P3: muziek en cultuur",
   "thema": "Concerten en Messiah",
-  "weging": 5, "herkansbaar": false,
-  "velden": ["Onbekend fragment", "Half A4 ingeleverd", "Vervolgvraag"],
+  "weging": 5,
+  "herkansbaar": false,
+  "velden": [
+    "Onbekend fragment",
+    "Half A4 ingeleverd",
+    "Vervolgvraag"
+  ],
   "vooruit": "Eén punt voor havo 5",
   "leerlingTitel": "Zo bereid ik mijn mondeling voor",
   "leerlingInstructie": "Gebruik dit vóór het gesprek. Lees je half A4 en je aantekeningen van de twee concerten en de Messiah nog eens door. Zet per onderdeel een kruisje bij wat je nu al kunt en oefen wat nog niet lukt.",
   "pta": "PTA havo 4 2026-2027, P3: mondeling in TW3, weging 5, 15 minuten, niet herkansbaar, domein A3 en C. Vooraf een half A4; deel 1 de concerten (15 okt, 18 feb) en de Messiah (12 mrt), deel 2 een onbekend fragment plaatsen.",
   "map": "02 Keuzevak muziek\\Havo\\Havo 4\\P3 Mondelinge toets - Concerten en Messiah\\Beoordeling",
   "lessen": [
-    { "lg": "havo4", "w": 25, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 26, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 27, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 28, "slot": "l1", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "havo4",
+      "w": 25,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 26,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 27,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 28,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Deel 1: de drie activiteiten", "stuk": "twee concerten in De Doelen en de Messiah in Leiden",
+      "groep": "Deel 1: de drie activiteiten",
+      "stuk": "twee concerten in De Doelen en de Messiah in Leiden",
       "criteria": [
-        { "id": "tijd", "naam": "Muziek in de tijd plaatsen", "uitleg": "uit welke tijd en stijl kwam de muziek?", "weging": 2,
-          "docent": ["Kan de muziek niet in een tijd of stijl plaatsen.", "Plaatst één of twee activiteiten juist, zonder kenmerken te noemen.", "Plaatst alle drie juist (bv. Messiah barok, Brahms romantiek) met een kenmerk per stijl.", "Plaatst alle drie juist en vergelijkt de avonden op stijl, bezetting en klank."],
-          "leerling": ["Ik weet niet uit welke tijd de muziek kwam.", "Ik weet het van één of twee avonden, maar noem geen kenmerken.", "Ik plaats alle drie in de juiste stijl en noem per stijl een kenmerk.", "Ik plaats alle drie en vergelijk de avonden op stijl, bezetting en klank."] },
-        { "id": "functie", "naam": "Waarvoor de muziek bedoeld was", "uitleg": "kerk, concertzaal of feest?", "weging": 2,
-          "docent": ["Noemt geen functie of een functie die niet klopt.", "Noemt een functie, maar legt niet uit waaraan je dat merkt.", "Noemt per activiteit de functie en legt die uit met tekst, bezetting of plek.", "Legt de functie uit en verbindt die met wat hij of zij zelf heeft gehoord en meegemaakt."],
-          "leerling": ["Ik weet niet waarvoor de muziek bedoeld was.", "Ik noem waarvoor de muziek was, maar niet waaraan je dat merkt.", "Ik noem per avond waarvoor de muziek was en leg uit waaraan je dat merkt.", "Ik verbind de functie met wat ik zelf heb gehoord en meegemaakt."] }
+        {
+          "id": "tijd",
+          "naam": "Muziek in de tijd plaatsen",
+          "uitleg": "uit welke tijd en stijl kwam de muziek?",
+          "weging": 2,
+          "docent": [
+            "Kan de muziek niet in een tijd of stijl plaatsen.",
+            "Plaatst één of twee activiteiten juist, zonder kenmerken te noemen.",
+            "Plaatst alle drie juist (bv. Messiah barok, Brahms romantiek) met een kenmerk per stijl.",
+            "Plaatst alle drie juist en vergelijkt de avonden op stijl, bezetting en klank."
+          ],
+          "leerling": [
+            "Ik weet niet uit welke tijd de muziek kwam.",
+            "Ik weet het van één of twee avonden, maar noem geen kenmerken.",
+            "Ik plaats alle drie in de juiste stijl en noem per stijl een kenmerk.",
+            "Ik plaats alle drie en vergelijk de avonden op stijl, bezetting en klank."
+          ]
+        },
+        {
+          "id": "functie",
+          "naam": "Waarvoor de muziek bedoeld was",
+          "uitleg": "kerk, concertzaal of feest?",
+          "weging": 2,
+          "docent": [
+            "Noemt geen functie of een functie die niet klopt.",
+            "Noemt een functie, maar legt niet uit waaraan je dat merkt.",
+            "Noemt per activiteit de functie en legt die uit met tekst, bezetting of plek.",
+            "Legt de functie uit en verbindt die met wat hij of zij zelf heeft gehoord en meegemaakt."
+          ],
+          "leerling": [
+            "Ik weet niet waarvoor de muziek bedoeld was.",
+            "Ik noem waarvoor de muziek was, maar niet waaraan je dat merkt.",
+            "Ik noem per avond waarvoor de muziek was en leg uit waaraan je dat merkt.",
+            "Ik verbind de functie met wat ik zelf heb gehoord en meegemaakt."
+          ]
+        }
       ]
     },
     {
-      "groep": "Deel 2: onbekend fragment", "stuk": "fragment dat je niet kent",
+      "groep": "Deel 2: onbekend fragment",
+      "stuk": "fragment dat je niet kent",
       "criteria": [
-        { "id": "horen", "naam": "Beschrijven wat je hoort", "uitleg": "bezetting, klank, vorm en ritme", "weging": 2,
-          "docent": ["Beschrijft weinig of niets van wat te horen is.", "Noemt één of twee dingen, bv. de bezetting, zonder verder te luisteren.", "Beschrijft bezetting, klank, vorm en ritme juist.", "Beschrijft precies wat er klinkt en wijst aan waar in het fragment iets gebeurt."],
-          "leerling": ["Ik weet niet goed wat ik hoor.", "Ik noem één of twee dingen, zoals de instrumenten.", "Ik beschrijf bezetting, klank, vorm en ritme.", "Ik beschrijf precies wat ik hoor en weet waar in het fragment het gebeurt."] },
-        { "id": "beargumenteren", "naam": "Plaatsen en beargumenteren", "uitleg": "redeneren vanuit wat je hoort, niet uit je hoofd", "weging": 2,
-          "docent": ["Gokt of noemt een stijl zonder reden.", "Plaatst het fragment met één argument, of redeneert vooral vanuit geleerde feiten.", "Plaatst het fragment met argumenten vanuit wat te horen is.", "Weegt argumenten af, ook wat er niet bij past, en komt tot een goed onderbouwde keuze."],
-          "leerling": ["Ik gok of noem een stijl zonder reden.", "Ik noem één reden, of ik zeg vooral wat ik uit mijn hoofd ken.", "Ik plaats het fragment met redenen uit wat ik hoor.", "Ik weeg mijn redenen af, ook wat er niet bij past, en kies goed onderbouwd."] }
+        {
+          "id": "horen",
+          "naam": "Beschrijven wat je hoort",
+          "uitleg": "bezetting, klank, vorm en ritme",
+          "weging": 2,
+          "docent": [
+            "Beschrijft weinig of niets van wat te horen is.",
+            "Noemt één of twee dingen, bv. de bezetting, zonder verder te luisteren.",
+            "Beschrijft bezetting, klank, vorm en ritme juist.",
+            "Beschrijft precies wat er klinkt en wijst aan waar in het fragment iets gebeurt."
+          ],
+          "leerling": [
+            "Ik weet niet goed wat ik hoor.",
+            "Ik noem één of twee dingen, zoals de instrumenten.",
+            "Ik beschrijf bezetting, klank, vorm en ritme.",
+            "Ik beschrijf precies wat ik hoor en weet waar in het fragment het gebeurt."
+          ]
+        },
+        {
+          "id": "beargumenteren",
+          "naam": "Plaatsen en beargumenteren",
+          "uitleg": "redeneren vanuit wat je hoort, niet uit je hoofd",
+          "weging": 2,
+          "docent": [
+            "Gokt of noemt een stijl zonder reden.",
+            "Plaatst het fragment met één argument, of redeneert vooral vanuit geleerde feiten.",
+            "Plaatst het fragment met argumenten vanuit wat te horen is.",
+            "Weegt argumenten af, ook wat er niet bij past, en komt tot een goed onderbouwde keuze."
+          ],
+          "leerling": [
+            "Ik gok of noem een stijl zonder reden.",
+            "Ik noem één reden, of ik zeg vooral wat ik uit mijn hoofd ken.",
+            "Ik plaats het fragment met redenen uit wat ik hoor.",
+            "Ik weeg mijn redenen af, ook wat er niet bij past, en kies goed onderbouwd."
+          ]
+        }
       ]
     },
     {
-      "groep": "Het gesprek", "stuk": "deel 1 en deel 2",
+      "groep": "Het gesprek",
+      "stuk": "deel 1 en deel 2",
       "criteria": [
-        { "id": "vaktermen", "naam": "Vaktermen", "uitleg": "juiste begrippen op de juiste plek", "weging": 1,
-          "docent": ["Gebruikt geen of verkeerde vaktermen.", "Gebruikt enkele vaktermen, niet altijd juist.", "Gebruikt de vaktermen juist, bv. koor, aria, recitatief, basso continuo.", "Gebruikt vaktermen vanzelf en juist, ook om twee stukken met elkaar te vergelijken."],
-          "leerling": ["Ik gebruik geen vaktermen of de verkeerde.", "Ik gebruik een paar vaktermen, niet altijd goed.", "Ik gebruik de vaktermen goed, zoals koor, aria, recitatief of basso continuo.", "Ik gebruik vaktermen vanzelf, ook als ik twee stukken vergelijk."] },
-        { "id": "doordenken", "naam": "Doordenken op een vervolgvraag", "uitleg": "reageren op een vraag van de docent", "weging": 1,
-          "docent": ["Kan op een vervolgvraag niet reageren.", "Geeft een kort antwoord, maar denkt niet verder.", "Geeft op een vervolgvraag een antwoord met uitleg.", "Denkt hardop verder, legt verbanden en stelt zelf een vraag terug."],
-          "leerling": ["Op een vervolgvraag weet ik niets te zeggen.", "Ik geef een kort antwoord, maar denk niet verder.", "Ik geef op een vervolgvraag een antwoord met uitleg.", "Ik denk hardop verder, leg verbanden en stel zelf ook een vraag."] }
+        {
+          "id": "vaktermen",
+          "naam": "Vaktermen",
+          "uitleg": "juiste begrippen op de juiste plek",
+          "weging": 1,
+          "docent": [
+            "Gebruikt geen of verkeerde vaktermen.",
+            "Gebruikt enkele vaktermen, niet altijd juist.",
+            "Gebruikt de vaktermen juist, bv. koor, aria, recitatief, basso continuo.",
+            "Gebruikt vaktermen vanzelf en juist, ook om twee stukken met elkaar te vergelijken."
+          ],
+          "leerling": [
+            "Ik gebruik geen vaktermen of de verkeerde.",
+            "Ik gebruik een paar vaktermen, niet altijd goed.",
+            "Ik gebruik de vaktermen goed, zoals koor, aria, recitatief of basso continuo.",
+            "Ik gebruik vaktermen vanzelf, ook als ik twee stukken vergelijk."
+          ]
+        },
+        {
+          "id": "doordenken",
+          "naam": "Doordenken op een vervolgvraag",
+          "uitleg": "reageren op een vraag van de docent",
+          "weging": 1,
+          "docent": [
+            "Kan op een vervolgvraag niet reageren.",
+            "Geeft een kort antwoord, maar denkt niet verder.",
+            "Geeft op een vervolgvraag een antwoord met uitleg.",
+            "Denkt hardop verder, legt verbanden en stelt zelf een vraag terug."
+          ],
+          "leerling": [
+            "Op een vervolgvraag weet ik niets te zeggen.",
+            "Ik geef een kort antwoord, maar denk niet verder.",
+            "Ik geef op een vervolgvraag een antwoord met uitleg.",
+            "Ik denk hardop verder, leg verbanden en stel zelf ook een vraag."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

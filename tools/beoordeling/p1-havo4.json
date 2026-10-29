@@ -4,58 +4,221 @@
   "toets": "P1",
   "titel": "Praktijktoets P1: samenspel en improvisatie",
   "thema": "Jazz en barok",
-  "weging": 7, "herkansbaar": true,
-  "velden": ["Ensemblestuk", "Eigen partij", "Akkoordenschema"],
+  "weging": 7,
+  "herkansbaar": true,
+  "velden": [
+    "Ensemblestuk",
+    "Eigen partij",
+    "Akkoordenschema"
+  ],
   "vooruit": "Eén punt voor P2",
   "leerlingTitel": "Zo beoordeel ik mijn samenspel en improvisatie",
   "pta": "PTA havo 4 2026-2027, P1: periode 2 in de les (lesweek 17), weging 7, 45 minuten, herkansbaar in de les. Domein B1 zingen en spelen en B2 improviseren. Beoordeling op eigen partij zelfstandig, maat, toon, luisteren en balans, samen inzetten en eindigen, en een improvisatie met opbouw die in de maat blijft en bij de akkoorden past.",
   "map": "02 Keuzevak muziek\\Havo\\Havo 4\\P1 Praktijktoets - Samenspel en improvisatie\\Beoordeling",
   "lessen": [
-    { "lg": "havo4", "w": 15, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 16, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 16, "slot": "l3", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 17, "slot": "l2", "wat": ["docent", "scoreblad", "leerling"] },
-    { "lg": "havo4", "w": 17, "slot": "l3", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "havo4",
+      "w": 15,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 16,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 16,
+      "slot": "l3",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 17,
+      "slot": "l2",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 17,
+      "slot": "l3",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Samenspel", "stuk": "ensemblestuk",
+      "groep": "Samenspel",
+      "stuk": "ensemblestuk",
       "criteria": [
-        { "id": "partij", "naam": "Eigen partij", "uitleg": "zelfstandig en correct, niet meeliften", "weging": 2,
-          "docent": ["Partij niet ingestudeerd; leunt op anderen of valt weg als de eigen stem alleen klinkt.", "Partij grotendeels correct; hapert op moeilijke plekken, maar blijft herkenbaar.", "Partij vrijwel foutloos en zelfstandig, ook waar de eigen stem alleen of als eerste inzet.", "Beheerst de partij volledig en met overtuiging; heeft ruimte over om op de anderen te reageren."],
-          "leerling": ["Ik ken mijn partij nog niet goed en leun op de anderen.", "Ik speel of zing mijn partij grotendeels goed, met haperingen op moeilijke plekken.", "Ik voer mijn partij zelfstandig en bijna foutloos uit, ook als ik alleen inzet.", "Ik beheers mijn partij helemaal en heb ruimte om op de anderen te reageren."] },
-        { "id": "maat", "naam": "Maat en puls", "uitleg": "puls vasthouden, ook bij tempowisselingen", "weging": 1,
-          "docent": ["Raakt de puls regelmatig kwijt en vindt die zonder hulp niet terug.", "Houdt de puls meestal vast; loopt bij overgangen soms voor of achter.", "Stabiel in de gezamenlijke puls, ook bij overgangen en tempowisselingen.", "Geeft het ensemble houvast in de puls, ook bij een ritardando of tempowissel."],
-          "leerling": ["Ik raak de maat vaak kwijt.", "Ik blijf meestal in de maat, behalve bij overgangen.", "Ik blijf in de maat, ook bij overgangen en tempowisselingen.", "Ik geef de anderen houvast in de maat, ook als het tempo verandert."] },
-        { "id": "toon", "naam": "Toon en zuiverheid", "uitleg": "zuiver zingen of spelen met een goede toon", "weging": 1,
-          "docent": ["Zingt vaak onzuiver of speelt met een geforceerde, onvaste toon.", "Overwegend zuiver; de toon wisselt op hoge of lastige plekken.", "Zuiver en met een heldere, gedragen toon door het hele stuk.", "Zuiver binnen de samenklank; kleurt de toon bewust, passend bij het karakter."],
-          "leerling": ["Ik zing vaak onzuiver of mijn toon is onvast.", "Ik zing of speel meestal zuiver, behalve op lastige plekken.", "Ik zing of speel het hele stuk zuiver en met een heldere toon.", "Ik klink zuiver in de samenklank en kleur mijn toon bij het karakter."] },
-        { "id": "samen", "naam": "Luisteren en samenspelen", "uitleg": "balans, samen inzetten en eindigen, na een fout weer instappen", "weging": 2,
-          "docent": ["Speelt los van de anderen; volume past niet bij de rol; mist inzetten of stopt na een fout.", "Past het volume soms aan; zet meestal samen in en eindigt samen; komt na een fout met hulp terug.", "Past balans en dynamiek bewust aan; zet samen in en eindigt samen; stapt na een fout zelf weer in.", "Reageert steeds op het geheel; geeft of volgt inzetten met oogcontact of adem; een fout valt nauwelijks op."],
-          "leerling": ["Ik let alleen op mijn eigen partij, mis inzetten of stop als het misgaat.", "Ik pas soms mijn volume aan, begin en eindig meestal samen en kom na een fout met hulp terug.", "Ik pas mijn volume aan de anderen aan, begin en eindig samen en stap na een fout zelf weer in.", "Ik luister steeds naar het geheel, geef of volg inzetten en herstel een fout zonder dat je het merkt."] }
+        {
+          "id": "partij",
+          "naam": "Eigen partij",
+          "uitleg": "zelfstandig en correct, niet meeliften",
+          "weging": 2,
+          "docent": [
+            "Partij niet ingestudeerd; leunt op anderen of valt weg als de eigen stem alleen klinkt.",
+            "Partij grotendeels correct; hapert op moeilijke plekken, maar blijft herkenbaar.",
+            "Partij vrijwel foutloos en zelfstandig, ook waar de eigen stem alleen of als eerste inzet.",
+            "Beheerst de partij volledig en met overtuiging; heeft ruimte over om op de anderen te reageren."
+          ],
+          "leerling": [
+            "Ik ken mijn partij nog niet goed en leun op de anderen.",
+            "Ik speel of zing mijn partij grotendeels goed, met haperingen op moeilijke plekken.",
+            "Ik voer mijn partij zelfstandig en bijna foutloos uit, ook als ik alleen inzet.",
+            "Ik beheers mijn partij helemaal en heb ruimte om op de anderen te reageren."
+          ]
+        },
+        {
+          "id": "maat",
+          "naam": "Maat en puls",
+          "uitleg": "puls vasthouden, ook bij tempowisselingen",
+          "weging": 1,
+          "docent": [
+            "Raakt de puls regelmatig kwijt en vindt die zonder hulp niet terug.",
+            "Houdt de puls meestal vast; loopt bij overgangen soms voor of achter.",
+            "Stabiel in de gezamenlijke puls, ook bij overgangen en tempowisselingen.",
+            "Geeft het ensemble houvast in de puls, ook bij een ritardando of tempowissel."
+          ],
+          "leerling": [
+            "Ik raak de maat vaak kwijt.",
+            "Ik blijf meestal in de maat, behalve bij overgangen.",
+            "Ik blijf in de maat, ook bij overgangen en tempowisselingen.",
+            "Ik geef de anderen houvast in de maat, ook als het tempo verandert."
+          ]
+        },
+        {
+          "id": "toon",
+          "naam": "Toon en zuiverheid",
+          "uitleg": "zuiver zingen of spelen met een goede toon",
+          "weging": 1,
+          "docent": [
+            "Zingt vaak onzuiver of speelt met een geforceerde, onvaste toon.",
+            "Overwegend zuiver; de toon wisselt op hoge of lastige plekken.",
+            "Zuiver en met een heldere, gedragen toon door het hele stuk.",
+            "Zuiver binnen de samenklank; kleurt de toon bewust, passend bij het karakter."
+          ],
+          "leerling": [
+            "Ik zing vaak onzuiver of mijn toon is onvast.",
+            "Ik zing of speel meestal zuiver, behalve op lastige plekken.",
+            "Ik zing of speel het hele stuk zuiver en met een heldere toon.",
+            "Ik klink zuiver in de samenklank en kleur mijn toon bij het karakter."
+          ]
+        },
+        {
+          "id": "samen",
+          "naam": "Luisteren en samenspelen",
+          "uitleg": "balans, samen inzetten en eindigen, na een fout weer instappen",
+          "weging": 2,
+          "docent": [
+            "Speelt los van de anderen; volume past niet bij de rol; mist inzetten of stopt na een fout.",
+            "Past het volume soms aan; zet meestal samen in en eindigt samen; komt na een fout met hulp terug.",
+            "Past balans en dynamiek bewust aan; zet samen in en eindigt samen; stapt na een fout zelf weer in.",
+            "Reageert steeds op het geheel; geeft of volgt inzetten met oogcontact of adem; een fout valt nauwelijks op."
+          ],
+          "leerling": [
+            "Ik let alleen op mijn eigen partij, mis inzetten of stop als het misgaat.",
+            "Ik pas soms mijn volume aan, begin en eindig meestal samen en kom na een fout met hulp terug.",
+            "Ik pas mijn volume aan de anderen aan, begin en eindig samen en stap na een fout zelf weer in.",
+            "Ik luister steeds naar het geheel, geef of volg inzetten en herstel een fout zonder dat je het merkt."
+          ]
+        }
       ]
     },
     {
-      "groep": "Improvisatie", "stuk": "minstens een minuut over een bekend akkoordenschema",
+      "groep": "Improvisatie",
+      "stuk": "minstens een minuut over een bekend akkoordenschema",
       "criteria": [
-        { "id": "opbouw", "naam": "Opbouw", "uitleg": "motieven, frasen, hoogtepunt en slot", "weging": 2,
-          "docent": ["Losse noten zonder herkenbare motieven; geen opbouw, of stopt voor de minuut om is.", "Haalt de minuut met korte motieven en frasen; de opbouw is nog beperkt.", "Herhaalt en varieert motieven; frasen met begin en eind; hoorbare opbouw naar een hoogtepunt.", "Ontwikkelt motieven tot een samenhangend verhaal met opbouw, hoogtepunt en overtuigend slot."],
-          "leerling": ["Ik speel losse noten en stop voor de minuut om is.", "Ik haal de minuut met korte motieven, maar er zit weinig opbouw in.", "Ik herhaal en varieer motieven en bouw op naar een hoogtepunt.", "Mijn improvisatie vertelt een verhaal: begin, opbouw, hoogtepunt en een duidelijk slot."] },
-        { "id": "groove", "naam": "In de maat", "uitleg": "puls en groove van de begeleiding", "weging": 1,
-          "docent": ["Valt regelmatig uit de maat; geen verband met de puls van de begeleiding.", "Blijft meestal in de maat; eenvoudig ritme, groove of swing wisselend aanwezig.", "Zit stevig in puls en groove; gebruikt ritmische variatie zoals syncopen en rusten.", "Ritmisch vrij en trefzeker met behoud van de puls; bouwt spanning op met syncopen of anticipatie."],
-          "leerling": ["Ik raak de maat van de begeleiding kwijt.", "Ik blijf meestal in de maat, met een eenvoudig ritme.", "Ik zit stevig in de groove en gebruik syncopen en rusten.", "Ik speel ritmisch vrij en blijf toch precies in de puls."] },
-        { "id": "akkoorden", "naam": "Past bij de akkoorden", "uitleg": "toonmateriaal en akkoordwisselingen", "weging": 1,
-          "docent": ["Toonmateriaal past niet bij het schema; botsingen blijven onopgelost.", "Blijft grotendeels binnen passend toonmateriaal, zoals pentatoniek; volgt het schema globaal.", "Volgt de akkoordwisselingen hoorbaar; landt op akkoordtonen en gebruikt blue notes met een doel.", "Speelt bewust met en tegen de harmonie: akkoordtonen, doorgangsnoten en spanningstonen geven richting."],
-          "leerling": ["Mijn noten passen vaak niet bij de akkoorden.", "Ik blijf meestal in de juiste toonladder, zoals de pentatoniek.", "Je hoort dat ik de akkoordwisselingen volg; ik land op akkoordtonen.", "Ik speel bewust met akkoordtonen en spanningstonen; dat geeft mijn improvisatie richting."] }
+        {
+          "id": "opbouw",
+          "naam": "Opbouw",
+          "uitleg": "motieven, frasen, hoogtepunt en slot",
+          "weging": 2,
+          "docent": [
+            "Losse noten zonder herkenbare motieven; geen opbouw, of stopt voor de minuut om is.",
+            "Haalt de minuut met korte motieven en frasen; de opbouw is nog beperkt.",
+            "Herhaalt en varieert motieven; frasen met begin en eind; hoorbare opbouw naar een hoogtepunt.",
+            "Ontwikkelt motieven tot een samenhangend verhaal met opbouw, hoogtepunt en overtuigend slot."
+          ],
+          "leerling": [
+            "Ik speel losse noten en stop voor de minuut om is.",
+            "Ik haal de minuut met korte motieven, maar er zit weinig opbouw in.",
+            "Ik herhaal en varieer motieven en bouw op naar een hoogtepunt.",
+            "Mijn improvisatie vertelt een verhaal: begin, opbouw, hoogtepunt en een duidelijk slot."
+          ]
+        },
+        {
+          "id": "groove",
+          "naam": "In de maat",
+          "uitleg": "puls en groove van de begeleiding",
+          "weging": 1,
+          "docent": [
+            "Valt regelmatig uit de maat; geen verband met de puls van de begeleiding.",
+            "Blijft meestal in de maat; eenvoudig ritme, groove of swing wisselend aanwezig.",
+            "Zit stevig in puls en groove; gebruikt ritmische variatie zoals syncopen en rusten.",
+            "Ritmisch vrij en trefzeker met behoud van de puls; bouwt spanning op met syncopen of anticipatie."
+          ],
+          "leerling": [
+            "Ik raak de maat van de begeleiding kwijt.",
+            "Ik blijf meestal in de maat, met een eenvoudig ritme.",
+            "Ik zit stevig in de groove en gebruik syncopen en rusten.",
+            "Ik speel ritmisch vrij en blijf toch precies in de puls."
+          ]
+        },
+        {
+          "id": "akkoorden",
+          "naam": "Past bij de akkoorden",
+          "uitleg": "toonmateriaal en akkoordwisselingen",
+          "weging": 1,
+          "docent": [
+            "Toonmateriaal past niet bij het schema; botsingen blijven onopgelost.",
+            "Blijft grotendeels binnen passend toonmateriaal, zoals pentatoniek; volgt het schema globaal.",
+            "Volgt de akkoordwisselingen hoorbaar; landt op akkoordtonen en gebruikt blue notes met een doel.",
+            "Speelt bewust met en tegen de harmonie: akkoordtonen, doorgangsnoten en spanningstonen geven richting."
+          ],
+          "leerling": [
+            "Mijn noten passen vaak niet bij de akkoorden.",
+            "Ik blijf meestal in de juiste toonladder, zoals de pentatoniek.",
+            "Je hoort dat ik de akkoordwisselingen volg; ik land op akkoordtonen.",
+            "Ik speel bewust met akkoordtonen en spanningstonen; dat geeft mijn improvisatie richting."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

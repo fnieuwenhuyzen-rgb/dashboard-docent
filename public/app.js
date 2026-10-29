@@ -41,7 +41,7 @@ function vrijReden(s) {
 const maandagVan = s => { const d = dOf(s); const w = (d.getDay() + 6) % 7; return addD(s, -w); };
 
 /* ---------- staat ---------- */
-function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {} }; }
+function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, beoord: { lijsten: {}, toetsen: {} } }; }
 function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 function bewaar(stil) {
   S.updated = Date.now();
@@ -199,7 +199,7 @@ function benodigd(l) {
 const ROUTES = [['vandaag', 'Vandaag'], ['week', 'Week'], ['groepen', 'Groepen'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['instellingen', 'Instellingen']];
 function render() {
   $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k ? 'aria-current="page"' : ''}>${n}</a>`).join('');
-  const f = { vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen }[route.naam] || viewVandaag;
+  const f = { vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen, beoordelen: viewBeoordelen }[route.naam] || viewVandaag;
   $('#main').innerHTML = f();
 }
 function toast(t) { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => { el.hidden = true; }, 3500); }
@@ -400,7 +400,7 @@ function uurKaart(s, x, nu) {
     ${vor && vor.st.n ? `<div class="vorige">Vorige keer${vor.st.d ? ' (' + esc(fmtD(vor.st.d)) + (vor.st.st ? ', ' + esc(vor.st.st) : '') + ')' : ''}: ${esc(vor.st.n)}</div>` : ''}
     ${(l.fasen || []).length ? `<details class="meer"><summary>Lesverloop</summary><ol class="fasen">${l.fasen.map(f => `<li>${esc(LESMODUS.faseTekst(f))}</li>`).join('')}</ol></details>` : ''}
     ${matLinks(l)}
-    <div class="knoppen">${x.klaar ? '' : `<button class="btn hoofd" data-start="${esc(u.id)}|${s}">▶ Geef les</button>`}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button>${x.klaar ? '' : `<button class="btn" data-uitval="${s}|${u.id}">valt uit</button>`}</div>
+    <div class="knoppen">${x.klaar ? '' : `<button class="btn hoofd" data-start="${esc(u.id)}|${s}">▶ Geef les</button>`}${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button>${x.klaar ? '' : `<button class="btn" data-uitval="${s}|${u.id}">valt uit</button>`}</div>
   </div></div>`;
 }
 
@@ -436,6 +436,8 @@ function viewGroepen() {
     <label style="font-family:var(--kop);font-size:.85rem;color:var(--muted)">Leergang <select id="gLg" data-g="${esc(g)}">${Object.keys(B.leergangen).map(k => `<option value="${k}" ${k === lg ? 'selected' : ''}>${esc(lgNaam(k))}</option>`).join('')}</select></label></div>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" data-opplan="${esc(g)}">Op de planning zetten</button><span class="sub" style="font-family:var(--kop);font-size:.85rem;color:var(--muted)">alle lessen vóór deze lesweek gelden dan als gegeven</span></div>
     <div class="voortgang" style="margin-top:.6rem"><i style="width:${r.length ? Math.round(gegeven / r.length * 100) : 0}%"></i></div></div>`;
+  const bms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg));
+  if (bms.length) h += `<div class="kaart"><h2>Beoordelen</h2><p class="lead">Ook om in te halen of na te kijken buiten de toetsles.</p><div class="knoppen" style="margin-top:.5rem">${bms.map(m => { const T = S.beoord.toetsen[m.id + '|' + g]; const n = T ? Object.values(T.ll).filter(r => r.af || bmEind(m, r) != null).length : 0; return `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(g)}">${esc(m.toets)} ${esc(m.titel.replace(/^[^:]*:\s*/, ''))}${n ? ` (${n} klaar)` : ''}</button>`; }).join('')}</div></div>`;
   h += `<div class="kaart">${r.map((x, i) => { const l = les(x); const st = status(g, x.id); return `<div class="lesrij ${i === vi ? 'volgende' : ''}"><span class="wk">${i + 1}<br>wk ${x.w}</span><div><div class="regel" style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:baseline">${chipType(l)}<b style="font-family:var(--kop)">${esc(l.titel || '')}</b>${st.st ? `<span class="chip ${st.st === 'gegeven' ? 'ok' : st.st === 'half' ? 'let' : ''}">${esc(st.st)}${st.d ? ' ' + esc(fmtD(st.d)) : ''}</span>` : ''}</div>${st.n ? `<div class="vorige">${esc(st.n)}</div>` : ''}</div>
     <div class="acties knoppen"><button class="btn klein" data-bewerk="${esc(x.id)}">bewerk</button>${afgerond(st) ? `<button class="btn klein" data-reset="${esc(g)}|${esc(x.id)}">niet gegeven</button>` : `<button class="btn klein" data-markeer="${esc(g)}|${esc(x.id)}">gegeven</button>`}</div></div>`; }).join('')}</div>`;
   return h;
@@ -712,8 +714,114 @@ document.addEventListener('keydown', e => {
   }
   if (e.key === 'Escape') sluit();
 });
-function leesRoute() { const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) ? n : 'vandaag', arg: a }; }
+function leesRoute() { const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || n === 'beoordelen' ? n : 'vandaag', arg: a }; }
 window.addEventListener('hashchange', () => { leesRoute(); sluit(); render(); window.scrollTo(0, 0); });
+
+/* ---------- beoordelen ----------
+   Modellen: data/beoordeling.json (uit tools/beoordeling, zonder leerlinggegevens).
+   Klassenlijsten en scores staan alleen in S.beoord: op dit apparaat en in de eigen OneDrive, nooit op de server. */
+let BM = [];
+let bmSel = null, bmLijstOpen = false, bmKlok = null;
+const bmVoor = item => BM.filter(m => (m.lessen || []).some(k => k.lg === item.lg && k.w === item.w && k.slot === 'l' + item.li && (k.wat || []).includes('docent')));
+const bmCrit = m => m.onderdelen.flatMap(o => o.criteria.map(c => Object.assign({ groep: o.groep }, c)));
+const bmSomW = m => bmCrit(m).reduce((a, c) => a + c.weging, 0);
+const komma = x => x == null ? '' : String(x).replace('.', ',');
+function bmToets(mid, g) { const k = mid + '|' + g; return S.beoord.toetsen[k] || (S.beoord.toetsen[k] = { ll: {}, volgorde: [], start: vandaag() }); }
+function bmRij(T, id) { return T.ll[id] || (T.ll[id] = { s: {}, v: {}, opm: {} }); }
+function bmCijfer(m, r) { const C = bmCrit(m); if (!r || C.some(c => r.s[c.id] == null)) return null; return Math.round(C.reduce((a, c) => a + r.s[c.id] * c.weging, 0) / bmSomW(m) * 10) / 10; }
+function bmEind(m, r) { const d = bmCijfer(m, r); const zb = +m.zelfbeoordeling || 0; if (d == null || !zb) return d; if (r.zelf == null) return null; return Math.round((d * (100 - zb) + r.zelf * zb) / 10) / 10; }
+function bmVolgorde(T, lijst) { const ids = lijst.map(x => x.id); const v = (T.volgorde || []).filter(id => ids.includes(id)); ids.forEach(id => { if (!v.includes(id)) v.push(id); }); T.volgorde = v; return v; }
+function bmParse(txt) { // Magister: één leerling per regel, kolommen met tabs; nummers en klascodes vallen weg
+  return txt.split(/\r?\n/).map(r => r.split('\t').map(x => x.trim()).filter(x => x && !/^\d+$/.test(x) && !/^[a-z]{0,2}\d[a-z0-9]{0,3}$/i.test(x)).join(' ').replace(/\s+/g, ' ').trim())
+    .filter(n => n && !/^(naam|leerling|leerlingen|achternaam|roepnaam|stamnummer|klas|groep)\b/i.test(n));
+}
+function bmLijstKaart(g, lijst) {
+  return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de namen uit Magister en plak ze hieronder, één leerling per regel. Nummers en klascodes haalt de app er zelf uit. De namen blijven op dit apparaat en in je eigen OneDrive.</p>
+    <textarea id="bmLijst" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
+    <div class="knoppen"><button class="btn hoofd" data-bm="lijstopslaan">Opslaan</button>${lijst.length ? '<button class="btn" data-bm="lijstdicht">Annuleren</button>' : ''}</div></div>`;
+}
+function bmNiveauTekst(c, v) {
+  if (v == null) return '';
+  const i = [4, 6, 8, 10].indexOf(v); if (i >= 0) return c.docent[i] || '';
+  return `Tussen ${v - 1} en ${v + 1}.`;
+}
+function viewBeoordelen() {
+  const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); const g = decodeURIComponent(route.arg[1] || '');
+  if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
+  const lijst = S.beoord.lijsten[g] || []; const zb = +m.zelfbeoordeling || 0;
+  let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
+    <div class="knoppen"><button class="btn" data-bm="lijst">Klassenlijst</button>${lijst.length ? '<button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="#vandaag">Klaar</a></div></div>`;
+  if (!lijst.length || bmLijstOpen) return h + bmLijstKaart(g, lijst);
+  const T = bmToets(m.id, g); const vol = bmVolgorde(T, lijst); const naam = id => (lijst.find(x => x.id === id) || {}).naam || '';
+  const klaar = id => { const r = T.ll[id]; return r && (r.af || bmEind(m, r) != null); };
+  const cur = vol.includes(bmSel) ? bmSel : (vol.find(id => !klaar(id)) || vol[0]); bmSel = cur;
+  const cijfers = vol.map(id => bmEind(m, T.ll[id])).filter(x => x != null);
+  h += `<div class="bm-raster"><div class="kaart bm-lijst"><div class="regel"><b>${vol.filter(klaar).length} van ${vol.length} klaar</b>${cijfers.length ? `<span class="chip">gemiddeld ${komma(Math.round(cijfers.reduce((a, b) => a + b, 0) / cijfers.length * 10) / 10)}</span>` : ''}<button class="btn klein" data-bm="loten">Volgorde loten</button></div>
+    <ol>${vol.map((id, i) => { const r = T.ll[id]; const e = bmEind(m, r); return `<li class="${id === cur ? 'nu' : ''} ${klaar(id) ? 'klaar' : ''}"><button class="bm-naam" data-bmkies="${id}">${esc(naam(id))}</button><span class="bm-c">${r && r.af ? 'inhalen' : e != null ? komma(e) : bmCijfer(m, r) != null ? 'zelfbeoordeling?' : ''}</span><span class="bm-pijl"><button class="btn klein" data-bmop="${id}|-1" aria-label="eerder">▲</button><button class="btn klein" data-bmop="${id}|1" aria-label="later">▼</button></span></li>`; }).join('')}</ol></div>`;
+  const r = bmRij(T, cur); const d = bmCijfer(m, r), e = bmEind(m, r);
+  h += `<div class="kaart bm-scoor"><div class="kop"><h2>${esc(naam(cur))}</h2><div class="knoppen"><button class="btn klein" data-bm="klok"><span id="bmKlok">${bmKlok ? pad(Math.floor((Date.now() - bmKlok) / 1000)) : '0:00'}</span>&nbsp;${bmKlok ? 'stop' : 'start'}</button><label class="chk"><input type="checkbox" data-bmaf ${r.af ? 'checked' : ''}><span>afwezig, inhalen</span></label></div></div>
+    <div class="bm-velden">${(m.velden || []).map(v => `<label>${esc(v)}<input data-bmveld="${esc(v)}" value="${esc(r.v[v] || '')}"></label>`).join('')}</div>`;
+  for (const o of m.onderdelen) {
+    h += `<h3 class="bm-groep">${esc(o.groep)}${o.stuk ? ` <small>${esc(o.stuk)}</small>` : ''}</h3>`;
+    for (const c of o.criteria) {
+      const v = r.s[c.id];
+      h += `<div class="bm-crit"><div class="bm-cnaam"><b>${esc(c.naam)}</b><small>${esc(c.uitleg || '')} · weegt ${c.weging}×</small></div>
+        <div class="bm-knoppen">${[4, 5, 6, 7, 8, 9, 10].map(x => `<button class="${x % 2 ? 'tussen' : ''}" data-bmscore="${esc(c.id)}|${x}" aria-pressed="${v === x}">${x}</button>`).join('')}</div>
+        <p class="bm-niv">${esc(bmNiveauTekst(c, v))}</p></div>`;
+    }
+    h += `<label class="bm-opm">Opmerking ${esc(o.groep.toLowerCase())}<textarea rows="2" data-bmopm="${esc(o.groep)}">${esc(r.opm[o.groep] || '')}</textarea></label>`;
+  }
+  if (zb) h += `<h3 class="bm-groep">Zelfbeoordeling <small>${zb}% van het eindcijfer: hoe eerlijk en concreet beoordeelt de leerling de eigen uitvoering?</small></h3>
+    <div class="bm-knoppen">${[4, 5, 6, 7, 8, 9, 10].map(x => `<button class="${x % 2 ? 'tussen' : ''}" data-bmzelf="${x}" aria-pressed="${r.zelf === x}">${x}</button>`).join('')}</div>`;
+  h += `<label class="bm-opm">${esc(m.vooruit || 'Eén punt om aan te werken')}<textarea rows="2" data-bmvooruit>${esc(r.vooruit || '')}</textarea></label>
+    <div class="bm-voet"><div><span>Cijfer docent <b>${d != null ? komma(d) : '–'}</b></span>${zb ? `<span>Eindcijfer <b>${e != null ? komma(e) : '–'}</b></span>` : ''}</div>
+    <div class="knoppen"><button class="btn" data-bm="vorige">Vorige</button><button class="btn hoofd" data-bm="volgende">Volgende</button></div></div></div></div>`;
+  return h;
+}
+function bmExport(m, g) {
+  const lijst = S.beoord.lijsten[g] || []; const T = bmToets(m.id, g); const C = bmCrit(m); const zb = +m.zelfbeoordeling || 0;
+  const cel = x => { const s = x == null ? '' : String(x); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const kop = ['Leerling', ...(m.velden || []), ...C.map(c => `${c.naam} (${c.weging}x)`), zb ? 'Cijfer docent' : 'Cijfer', ...(zb ? [`Zelfbeoordeling (${zb}%)`, 'Eindcijfer'] : []), 'Opmerking per onderdeel', m.vooruit || 'Punt om aan te werken'];
+  const rijen = bmVolgorde(T, lijst).map(id => { const r = T.ll[id] || { s: {}, v: {}, opm: {} }; const naam = lijst.find(x => x.id === id).naam;
+    if (r.af) return [naam, ...(m.velden || []).map(v => (r.v || {})[v] || ''), ...C.map(() => ''), 'inhalen'];
+    const opm = Object.entries(r.opm || {}).filter(([, t]) => t).map(([k, t]) => k + ': ' + t).join(' | ');
+    return [naam, ...(m.velden || []).map(v => r.v[v] || ''), ...C.map(c => r.s[c.id] ?? ''), komma(bmCijfer(m, r)), ...(zb ? [r.zelf ?? '', komma(bmEind(m, r))] : []), opm, r.vooruit || '']; });
+  const csv = '﻿' + [kop, ...rijen].map(r => r.map(cel).join(';')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `${m.toets} ${m.klas} ${g} ${vandaag()}.csv`.replace(/[\\/:*?"<>|·]/g, ' ').replace(/\s+/g, ' '); a.click(); URL.revokeObjectURL(a.href);
+  toast('Scoreblad gedownload; open het in Excel en bewaar het in je OneDrive');
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-beoordeel],[data-bm],[data-bmkies],[data-bmop],[data-bmscore],[data-bmzelf]'); if (!b) return;
+  const D = b.dataset;
+  if (D.beoordeel) { const [mid, g] = D.beoordeel.split('|'); bmSel = null; bmLijstOpen = false; location.hash = 'beoordelen/' + encodeURIComponent(mid) + '/' + encodeURIComponent(g); return; }
+  const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); const g = decodeURIComponent(route.arg[1] || ''); if (!m) return;
+  const T = bmToets(m.id, g); const vol = bmVolgorde(T, S.beoord.lijsten[g] || []);
+  if (D.bm === 'lijst') { bmLijstOpen = true; render(); return; }
+  if (D.bm === 'lijstdicht') { bmLijstOpen = false; render(); return; }
+  if (D.bm === 'lijstopslaan') { const oud = S.beoord.lijsten[g] || []; const namen = bmParse($('#bmLijst').value);
+    S.beoord.lijsten[g] = namen.map((n, i) => (oud.find(x => x.naam === n) || { id: 'l' + Date.now().toString(36) + i, naam: n })); bmLijstOpen = false; bewaar(); toast(namen.length + ' leerlingen opgeslagen'); return; }
+  if (D.bm === 'export') { bmExport(m, g); return; }
+  if (D.bm === 'loten') { T.volgorde = vol.map(id => [Math.random(), id]).sort((a, c) => a[0] - c[0]).map(x => x[1]); bmSel = null; bewaar(); return; }
+  if (D.bm === 'klok') { bmKlok = bmKlok ? null : Date.now(); render(); return; }
+  if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { bmSel = vol[i]; bmKlok = null; render(); window.scrollTo(0, 0); } return; }
+  if (D.bmkies) { bmSel = D.bmkies; bmKlok = null; render(); return; }
+  if (D.bmop) { const [id, st] = D.bmop.split('|'); const i = vol.indexOf(id), j = i + +st; if (j >= 0 && j < vol.length) { [vol[i], vol[j]] = [vol[j], vol[i]]; T.volgorde = vol; bewaar(); } return; }
+  if (D.bmscore) { const [cid, x] = D.bmscore.split('|'); const r = bmRij(T, bmSel); r.s[cid] = r.s[cid] === +x ? undefined : +x; if (r.s[cid] == null) delete r.s[cid]; bewaar(); return; }
+  if (D.bmzelf) { const r = bmRij(T, bmSel); r.zelf = r.zelf === +D.bmzelf ? undefined : +D.bmzelf; bewaar(); return; }
+});
+document.addEventListener('input', e => {
+  const t = e.target; if (route.naam !== 'beoordelen' || !t.closest('.bm-scoor')) return;
+  const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); if (!m || !bmSel) return;
+  const r = bmRij(bmToets(m.id, decodeURIComponent(route.arg[1] || '')), bmSel);
+  if (t.dataset.bmveld) r.v[t.dataset.bmveld] = t.value;
+  else if (t.dataset.bmopm) r.opm[t.dataset.bmopm] = t.value;
+  else if (t.dataset.bmvooruit != null) r.vooruit = t.value;
+  else if (t.dataset.bmaf != null) { r.af = t.checked; bewaar(); return; }
+  else return;
+  bewaar(true);
+});
+setInterval(() => { const el = document.getElementById('bmKlok'); if (el && bmKlok) el.textContent = pad(Math.floor((Date.now() - bmKlok) / 1000)); }, 1000);
 
 /* ---------- synchronisatie ---------- */
 async function syncNu(melden) {
@@ -734,6 +842,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden || LES
   S = laadLokaal(); leesRoute();
   try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
+  try { BM = await (await fetch('data/beoordeling.json', { cache: 'no-cache' })).json(); } catch (e) { BM = []; }
   render();
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }

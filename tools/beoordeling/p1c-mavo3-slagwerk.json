@@ -4,59 +4,194 @@
   "toets": "P1 · presentatie 3",
   "titel": "Praktijktoets P1, presentatie 3: slagwerk",
   "thema": "Slagwerk: groove in lagen, break en fill",
-  "weging": 15, "herkansbaar": true,
-  "velden": ["Lied of groove", "Instrument", "Groep"],
+  "weging": 15,
+  "herkansbaar": true,
+  "velden": [
+    "Lied of groove",
+    "Instrument",
+    "Groep"
+  ],
   "vooruit": "Eén punt voor het examenconcert in mavo 4",
   "leerlingTitel": "Zo beoordeel ik mijn slagwerkpresentatie",
   "leerlingInstructie": "Zeg je naam, de titel en je instrument. Wie telt af? Spreek af hoe jullie beginnen en eindigen. Raak je de tel kwijt? Luister naar de anderen en val weer in op de één.",
   "pta": "PTA mavo 3 2026-2027, P1 muzikale presentaties: gemiddelde van minstens drie praktijkdelen (zang/melodie, akkoordinstrument, slagwerk), weging 15, 45 minuten, herkansbaar in TW3, domeinen K2, K4, K5 en K6. Presentatie 3 (slagwerk) is in lesweek 35.",
   "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\P1 Praktijktoets - Muzikale presentaties\\Beoordeling",
   "lessen": [
-    { "lg": "mavo3", "w": 34, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "mavo3", "w": 35, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] },
-    { "lg": "mavo3", "w": 36, "slot": "l1", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "mavo3",
+      "w": 34,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "mavo3",
+      "w": 35,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "mavo3",
+      "w": 36,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 9 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3.",
   "onderdelen": [
     {
-      "groep": "Presentatie", "stuk": "het hele optreden",
+      "groep": "Presentatie",
+      "stuk": "het hele optreden",
       "criteria": [
-        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, aftellen, begin en slot, doorspelen", "weging": 1,
-          "docent": ["Kondigt niets aan; geen afgesproken begin of slot; stopt bij een fout.", "Noemt naam en titel; begin of slot rommelig; stopt soms na een fout.", "Noemt naam, titel en instrument; telt af, duidelijk slot; speelt door na een fout.", "Zekere start en strak slot; een fout valt bijna niet op."],
-          "leerling": ["Ik zeg niets vooraf en stop als het misgaat.", "Ik zeg mijn naam en titel, maar ons begin of slot is rommelig.", "Ik zeg naam, titel en instrument, we tellen af, eindigen samen en ik speel door.", "We beginnen zeker en eindigen strak; een fout merkt bijna niemand."] }
+        {
+          "id": "presentatie",
+          "naam": "Presentatie",
+          "uitleg": "aankondigen, aftellen, begin en slot, doorspelen",
+          "weging": 1,
+          "docent": [
+            "Kondigt niets aan; geen afgesproken begin of slot; stopt bij een fout.",
+            "Noemt naam en titel; begin of slot rommelig; stopt soms na een fout.",
+            "Noemt naam, titel en instrument; telt af, duidelijk slot; speelt door na een fout.",
+            "Zekere start en strak slot; een fout valt bijna niet op."
+          ],
+          "leerling": [
+            "Ik zeg niets vooraf en stop als het misgaat.",
+            "Ik zeg mijn naam en titel, maar ons begin of slot is rommelig.",
+            "Ik zeg naam, titel en instrument, we tellen af, eindigen samen en ik speel door.",
+            "We beginnen zeker en eindigen strak; een fout merkt bijna niemand."
+          ]
+        }
       ]
     },
     {
-      "groep": "Slagwerk", "stuk": "eigen partij in de groove",
+      "groep": "Slagwerk",
+      "stuk": "eigen partij in de groove",
       "criteria": [
-        { "id": "timing", "naam": "Timing en tempo", "uitleg": "strak op de tel, vast tempo", "weging": 2,
-          "docent": ["Raakt de tel kwijt; tempo zakt in of jaagt.", "Grotendeels op de tel; het tempo schuift soms, vooral op lastige plekken.", "Speelt strak op de tel in een vast tempo, van begin tot eind.", "Zo strak dat de groep erop kan bouwen; het tempo voelt ontspannen en vast."],
-          "leerling": ["Ik raak de tel kwijt en mijn tempo zakt in of jaagt.", "Ik speel meestal op de tel, maar soms schuift mijn tempo.", "Ik speel strak op de tel en houd hetzelfde tempo.", "Mijn timing is zo strak dat de groep op mij kan bouwen."] },
-        { "id": "groove", "naam": "Groove en partij", "uitleg": "juiste ritme, handen en voeten samen", "weging": 2,
-          "docent": ["Partij onvolledig of verkeerd; klanken niet tegelijk.", "Speelt een eenvoudige groove met twee klanken, zoals bas en snare, met enkele fouten.", "Speelt de groove volledig en juist, bijvoorbeeld bas, snare en hi-hat samen.", "Groove klinkt vanzelf en met gevoel; voegt passende variatie toe."],
-          "leerling": ["Mijn partij klopt niet of ik speel niet alles.", "Ik speel een eenvoudige groove met twee klanken, met een paar fouten.", "Ik speel mijn hele groove goed, met alle klanken samen.", "Mijn groove klinkt vanzelf en ik voeg zelf iets passends toe."] },
-        { "id": "fill", "naam": "Break en fill", "uitleg": "fill spelen, weer invallen op de één", "weging": 1,
-          "docent": ["Geen fill of break; of raakt erna de draad kwijt.", "Speelt een eenvoudige fill; valt daarna aarzelend weer in.", "Speelt break of fill op de afgesproken plek en valt op de één weer in.", "Fill past bij het stuk en loopt soepel over in de groove."],
-          "leerling": ["Ik speel geen fill of ik raak daarna de draad kwijt.", "Ik speel een eenvoudige fill, maar val aarzelend weer in.", "Ik speel mijn fill op de goede plek en val weer in op de één.", "Mijn fill past bij het stuk en loopt soepel over in de groove."] },
-        { "id": "klank", "naam": "Techniek en klank", "uitleg": "sticks of handen, aanslag, hard en zacht", "weging": 1,
-          "docent": ["Aanslag onrustig of geforceerd; klank hard en ongelijk.", "Redelijke aanslag; de klank is nog ongelijk tussen handen.", "Gelijke aanslag met een heldere klank; speelt hard en zacht op aanwijzing.", "Speelt ontspannen; gebruikt aanslag en dynamiek bewust in de groove."],
-          "leerling": ["Mijn aanslag is onrustig en mijn klank is hard en ongelijk.", "Mijn aanslag is redelijk, maar mijn handen klinken nog niet gelijk.", "Ik sla gelijk en helder en speel hard en zacht als het moet.", "Ik speel ontspannen en gebruik hard en zacht zelf in de groove."] }
+        {
+          "id": "timing",
+          "naam": "Timing en tempo",
+          "uitleg": "strak op de tel, vast tempo",
+          "weging": 2,
+          "docent": [
+            "Raakt de tel kwijt; tempo zakt in of jaagt.",
+            "Grotendeels op de tel; het tempo schuift soms, vooral op lastige plekken.",
+            "Speelt strak op de tel in een vast tempo, van begin tot eind.",
+            "Zo strak dat de groep erop kan bouwen; het tempo voelt ontspannen en vast."
+          ],
+          "leerling": [
+            "Ik raak de tel kwijt en mijn tempo zakt in of jaagt.",
+            "Ik speel meestal op de tel, maar soms schuift mijn tempo.",
+            "Ik speel strak op de tel en houd hetzelfde tempo.",
+            "Mijn timing is zo strak dat de groep op mij kan bouwen."
+          ]
+        },
+        {
+          "id": "groove",
+          "naam": "Groove en partij",
+          "uitleg": "juiste ritme, handen en voeten samen",
+          "weging": 2,
+          "docent": [
+            "Partij onvolledig of verkeerd; klanken niet tegelijk.",
+            "Speelt een eenvoudige groove met twee klanken, zoals bas en snare, met enkele fouten.",
+            "Speelt de groove volledig en juist, bijvoorbeeld bas, snare en hi-hat samen.",
+            "Groove klinkt vanzelf en met gevoel; voegt passende variatie toe."
+          ],
+          "leerling": [
+            "Mijn partij klopt niet of ik speel niet alles.",
+            "Ik speel een eenvoudige groove met twee klanken, met een paar fouten.",
+            "Ik speel mijn hele groove goed, met alle klanken samen.",
+            "Mijn groove klinkt vanzelf en ik voeg zelf iets passends toe."
+          ]
+        },
+        {
+          "id": "fill",
+          "naam": "Break en fill",
+          "uitleg": "fill spelen, weer invallen op de één",
+          "weging": 1,
+          "docent": [
+            "Geen fill of break; of raakt erna de draad kwijt.",
+            "Speelt een eenvoudige fill; valt daarna aarzelend weer in.",
+            "Speelt break of fill op de afgesproken plek en valt op de één weer in.",
+            "Fill past bij het stuk en loopt soepel over in de groove."
+          ],
+          "leerling": [
+            "Ik speel geen fill of ik raak daarna de draad kwijt.",
+            "Ik speel een eenvoudige fill, maar val aarzelend weer in.",
+            "Ik speel mijn fill op de goede plek en val weer in op de één.",
+            "Mijn fill past bij het stuk en loopt soepel over in de groove."
+          ]
+        },
+        {
+          "id": "klank",
+          "naam": "Techniek en klank",
+          "uitleg": "sticks of handen, aanslag, hard en zacht",
+          "weging": 1,
+          "docent": [
+            "Aanslag onrustig of geforceerd; klank hard en ongelijk.",
+            "Redelijke aanslag; de klank is nog ongelijk tussen handen.",
+            "Gelijke aanslag met een heldere klank; speelt hard en zacht op aanwijzing.",
+            "Speelt ontspannen; gebruikt aanslag en dynamiek bewust in de groove."
+          ],
+          "leerling": [
+            "Mijn aanslag is onrustig en mijn klank is hard en ongelijk.",
+            "Mijn aanslag is redelijk, maar mijn handen klinken nog niet gelijk.",
+            "Ik sla gelijk en helder en speel hard en zacht als het moet.",
+            "Ik speel ontspannen en gebruik hard en zacht zelf in de groove."
+          ]
+        }
       ]
     },
     {
-      "groep": "Samenspel", "stuk": "groove in lagen",
+      "groep": "Samenspel",
+      "stuk": "groove in lagen",
       "criteria": [
-        { "id": "samenspel", "naam": "Samenspel", "uitleg": "luisteren, samen de groove vasthouden, balans", "weging": 2,
-          "docent": ["Speelt los van de groep; overstemt de anderen of valt weg.", "Luistert naar de groep; blijft meestal gelijk; balans soms uit.", "Blijft gelijk met de groep; de lagen van de groove zijn goed in balans.", "Reageert op de anderen en geeft cues; de groep klinkt als één groove."],
-          "leerling": ["Ik speel los van de groep en ben te hard of te zacht.", "Ik luister naar de groep en blijf meestal gelijk.", "Ik blijf gelijk met de groep en we klinken in balans.", "Ik reageer op de anderen; samen klinken we als één groove."] }
+        {
+          "id": "samenspel",
+          "naam": "Samenspel",
+          "uitleg": "luisteren, samen de groove vasthouden, balans",
+          "weging": 2,
+          "docent": [
+            "Speelt los van de groep; overstemt de anderen of valt weg.",
+            "Luistert naar de groep; blijft meestal gelijk; balans soms uit.",
+            "Blijft gelijk met de groep; de lagen van de groove zijn goed in balans.",
+            "Reageert op de anderen en geeft cues; de groep klinkt als één groove."
+          ],
+          "leerling": [
+            "Ik speel los van de groep en ben te hard of te zacht.",
+            "Ik luister naar de groep en blijf meestal gelijk.",
+            "Ik blijf gelijk met de groep en we klinken in balans.",
+            "Ik reageer op de anderen; samen klinken we als één groove."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

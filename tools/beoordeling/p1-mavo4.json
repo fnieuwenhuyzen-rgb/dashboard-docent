@@ -4,8 +4,13 @@
   "toets": "P1",
   "titel": "Praktijktoets P1: praktijkbeoordeling",
   "thema": "Zang, akkoordinstrument of slagwerk",
-  "weging": 10, "herkansbaar": true,
-  "velden": ["Nummer", "Zang, akkoord of slagwerk", "Begeleiding of groep"],
+  "weging": 10,
+  "herkansbaar": true,
+  "velden": [
+    "Nummer",
+    "Zang, akkoord of slagwerk",
+    "Begeleiding of groep"
+  ],
   "vooruit": "Eén punt voor het examenconcert",
   "leerlingTitel": "Zo beoordeel ik mijn praktijkbeoordeling",
   "leerlingInstructie": "Vul dit in na een doorloop en direct na de toets. Zet per onderdeel een kruisje bij wat past en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.",
@@ -13,46 +18,152 @@
   "map": "02 Keuzevak muziek\\Mavo\\Mavo 4\\P1 Praktijktoets - Praktijkbeoordeling\\Beoordeling",
   "lessen": [],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Musiceren", "stuk": "jouw nummer op zang, akkoordinstrument of slagwerk",
+      "groep": "Musiceren",
+      "stuk": "jouw nummer op zang, akkoordinstrument of slagwerk",
       "criteria": [
-        { "id": "techniek", "naam": "Toon en techniek", "uitleg": "zuiver zingen, akkoorden die klinken of een goede aanslag", "weging": 2,
-          "docent": ["Veel onzuivere tonen, akkoorden die niet klinken of slagen die wegvallen.", "Grotendeels zuiver of schoon gespeeld; op lastige plekken gaat het mis.", "Zuiver gezongen of schoon gespeeld; houding en techniek kloppen.", "Beheerst het hele nummer met een volle, zekere klank, ook op de lastige plekken."],
-          "leerling": ["Ik zing vaak vals of mijn akkoorden en slagen klinken niet.", "Het klinkt meestal goed, maar op lastige plekken gaat het mis.", "Ik zing zuiver of speel schoon, met een goede houding.", "Ik beheers het hele nummer en het klinkt vol en zeker."] },
-        { "id": "ritme", "naam": "Ritme en tempo", "uitleg": "in de maat blijven, ritmes kloppen, vast tempo", "weging": 2,
-          "docent": ["Raakt vaak uit de maat; het tempo zakt in of jaagt.", "Meestal in de maat; bij overgangen of akkoordwissels gaat het soms mis.", "Blijft in de maat in een vast tempo; de ritmes kloppen.", "Strak op de tel, ook bij overgangen, breaks en wissels."],
-          "leerling": ["Ik raak vaak uit de maat.", "Ik blijf meestal in de maat, maar bij overgangen gaat het soms mis.", "Ik blijf in de maat en houd het tempo vast.", "Ik speel of zing strak op de tel, ook bij overgangen."] },
-        { "id": "dynamiek", "naam": "Dynamiek en expressie", "uitleg": "hard en zacht, passend bij het nummer", "weging": 1,
-          "docent": ["Alles even hard; geen verschil te horen.", "Soms verschil in hard en zacht.", "Duidelijk verschil in hard en zacht, passend bij couplet en refrein.", "Dynamiek en klank maken het nummer spannend, bijvoorbeeld een opbouw naar het refrein."],
-          "leerling": ["Ik speel of zing alles even hard.", "Ik speel of zing soms harder en zachter.", "Je hoort bij mij hard en zacht, passend bij het nummer.", "Met hard en zacht maak ik het nummer spannend."] },
-        { "id": "eigen", "naam": "Eigen inbreng", "uitleg": "zelf iets bedenken: intro, slot, fill of variatie", "weging": 1,
-          "docent": ["Geen eigen inbreng; speelt of zingt alleen na.", "Kleine eigen keuze, bijvoorbeeld een eigen begin of slot.", "Bedenkt zelf een intro, slot, fill of variatie die past.", "Eigen inbreng die het nummer beter maakt, bijvoorbeeld een korte improvisatie."],
-          "leerling": ["Ik heb zelf niets bedacht.", "Ik heb een klein stukje zelf bedacht, zoals het begin of het slot.", "Ik heb zelf een intro, slot, fill of variatie bedacht die past.", "Mijn eigen idee maakt het nummer beter, bijvoorbeeld een korte improvisatie."] }
+        {
+          "id": "techniek",
+          "naam": "Toon en techniek",
+          "uitleg": "zuiver zingen, akkoorden die klinken of een goede aanslag",
+          "weging": 2,
+          "docent": [
+            "Veel onzuivere tonen, akkoorden die niet klinken of slagen die wegvallen.",
+            "Grotendeels zuiver of schoon gespeeld; op lastige plekken gaat het mis.",
+            "Zuiver gezongen of schoon gespeeld; houding en techniek kloppen.",
+            "Beheerst het hele nummer met een volle, zekere klank, ook op de lastige plekken."
+          ],
+          "leerling": [
+            "Ik zing vaak vals of mijn akkoorden en slagen klinken niet.",
+            "Het klinkt meestal goed, maar op lastige plekken gaat het mis.",
+            "Ik zing zuiver of speel schoon, met een goede houding.",
+            "Ik beheers het hele nummer en het klinkt vol en zeker."
+          ]
+        },
+        {
+          "id": "ritme",
+          "naam": "Ritme en tempo",
+          "uitleg": "in de maat blijven, ritmes kloppen, vast tempo",
+          "weging": 2,
+          "docent": [
+            "Raakt vaak uit de maat; het tempo zakt in of jaagt.",
+            "Meestal in de maat; bij overgangen of akkoordwissels gaat het soms mis.",
+            "Blijft in de maat in een vast tempo; de ritmes kloppen.",
+            "Strak op de tel, ook bij overgangen, breaks en wissels."
+          ],
+          "leerling": [
+            "Ik raak vaak uit de maat.",
+            "Ik blijf meestal in de maat, maar bij overgangen gaat het soms mis.",
+            "Ik blijf in de maat en houd het tempo vast.",
+            "Ik speel of zing strak op de tel, ook bij overgangen."
+          ]
+        },
+        {
+          "id": "dynamiek",
+          "naam": "Dynamiek en expressie",
+          "uitleg": "hard en zacht, passend bij het nummer",
+          "weging": 1,
+          "docent": [
+            "Alles even hard; geen verschil te horen.",
+            "Soms verschil in hard en zacht.",
+            "Duidelijk verschil in hard en zacht, passend bij couplet en refrein.",
+            "Dynamiek en klank maken het nummer spannend, bijvoorbeeld een opbouw naar het refrein."
+          ],
+          "leerling": [
+            "Ik speel of zing alles even hard.",
+            "Ik speel of zing soms harder en zachter.",
+            "Je hoort bij mij hard en zacht, passend bij het nummer.",
+            "Met hard en zacht maak ik het nummer spannend."
+          ]
+        },
+        {
+          "id": "eigen",
+          "naam": "Eigen inbreng",
+          "uitleg": "zelf iets bedenken: intro, slot, fill of variatie",
+          "weging": 1,
+          "docent": [
+            "Geen eigen inbreng; speelt of zingt alleen na.",
+            "Kleine eigen keuze, bijvoorbeeld een eigen begin of slot.",
+            "Bedenkt zelf een intro, slot, fill of variatie die past.",
+            "Eigen inbreng die het nummer beter maakt, bijvoorbeeld een korte improvisatie."
+          ],
+          "leerling": [
+            "Ik heb zelf niets bedacht.",
+            "Ik heb een klein stukje zelf bedacht, zoals het begin of het slot.",
+            "Ik heb zelf een intro, slot, fill of variatie bedacht die past.",
+            "Mijn eigen idee maakt het nummer beter, bijvoorbeeld een korte improvisatie."
+          ]
+        }
       ]
     },
     {
-      "groep": "Samenspel", "stuk": "met de begeleiding of de groep",
+      "groep": "Samenspel",
+      "stuk": "met de begeleiding of de groep",
       "criteria": [
-        { "id": "samenspel", "naam": "Samen met de begeleiding", "uitleg": "luisteren, samen beginnen en eindigen, niet te hard", "weging": 2,
-          "docent": ["Speelt of zingt los van de begeleiding; samen beginnen en eindigen lukt niet.", "Let op de begeleiding; samen beginnen en eindigen lukt meestal.", "Luistert en blijft gelijk; het volume past bij de anderen.", "Reageert op de anderen en vangt een fout op; het klinkt als één geheel."],
-          "leerling": ["Ik speel of zing los van de begeleiding.", "Ik let op de begeleiding; we beginnen en eindigen meestal samen.", "Ik luister, blijf gelijk en speel of zing niet te hard.", "Ik reageer op de anderen en help als er iets misgaat."] }
+        {
+          "id": "samenspel",
+          "naam": "Samen met de begeleiding",
+          "uitleg": "luisteren, samen beginnen en eindigen, niet te hard",
+          "weging": 2,
+          "docent": [
+            "Speelt of zingt los van de begeleiding; samen beginnen en eindigen lukt niet.",
+            "Let op de begeleiding; samen beginnen en eindigen lukt meestal.",
+            "Luistert en blijft gelijk; het volume past bij de anderen.",
+            "Reageert op de anderen en vangt een fout op; het klinkt als één geheel."
+          ],
+          "leerling": [
+            "Ik speel of zing los van de begeleiding.",
+            "Ik let op de begeleiding; we beginnen en eindigen meestal samen.",
+            "Ik luister, blijf gelijk en speel of zing niet te hard.",
+            "Ik reageer op de anderen en help als er iets misgaat."
+          ]
+        }
       ]
     },
     {
-      "groep": "Presenteren", "stuk": "voor de klas",
+      "groep": "Presenteren",
+      "stuk": "voor de klas",
       "criteria": [
-        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, houding, publiek, doorgaan na een fout", "weging": 2,
-          "docent": ["Geen aankondiging; onrustige houding; stopt bij een fout.", "Kondigt aan, maar aarzelend; kijkt weinig naar het publiek.", "Noemt naam, titel en instrument; rustige houding; gaat door na een fout.", "Presenteert als op een podium: zeker, met contact met het publiek; fouten vallen nauwelijks op."],
-          "leerling": ["Ik kondig niets aan en stop als er iets misgaat.", "Ik kondig aan, maar aarzel en kijk weinig naar het publiek.", "Ik noem naam, titel en instrument, sta rustig en ga door na een fout.", "Ik sta er zeker en maak contact met het publiek."] }
+        {
+          "id": "presentatie",
+          "naam": "Presentatie",
+          "uitleg": "aankondigen, houding, publiek, doorgaan na een fout",
+          "weging": 2,
+          "docent": [
+            "Geen aankondiging; onrustige houding; stopt bij een fout.",
+            "Kondigt aan, maar aarzelend; kijkt weinig naar het publiek.",
+            "Noemt naam, titel en instrument; rustige houding; gaat door na een fout.",
+            "Presenteert als op een podium: zeker, met contact met het publiek; fouten vallen nauwelijks op."
+          ],
+          "leerling": [
+            "Ik kondig niets aan en stop als er iets misgaat.",
+            "Ik kondig aan, maar aarzel en kijk weinig naar het publiek.",
+            "Ik noem naam, titel en instrument, sta rustig en ga door na een fout.",
+            "Ik sta er zeker en maak contact met het publiek."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

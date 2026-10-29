@@ -4,66 +4,214 @@
   "toets": "P19",
   "titel": "Praktijktoets P19: examenconcert",
   "thema": "Examenconcert",
-  "weging": 15, "herkansbaar": false,
-  "velden": ["Mijn programmaonderdelen", "Vaardigheden", "Rol in de organisatie"],
+  "weging": 15,
+  "herkansbaar": false,
+  "velden": [
+    "Mijn programmaonderdelen",
+    "Vaardigheden",
+    "Rol in de organisatie"
+  ],
   "vooruit": "Wat neem je mee",
   "leerlingTitel": "Zo beoordeel ik mijn examenconcert",
   "leerlingInstructie": "Vul dit in na de generale en na het concert. Zet per onderdeel een kruisje bij wat past en schrijf je score op. Lever het in op de maandag na het concert, samen met het feedbackformulier voor je groepsgenoten.",
   "pta": "PTA vwo 6 2026-2027, P19: examenconcert in periode 1/2 in de les, weging 15, 180 minuten, niet herkansbaar, domein B1 en B2; zang, instrument, slagwerk, improvisatie en compositie in een gevarieerd programma, als groep begroting, uitnodiging, publiciteit, locatie, aankleding, programmaboekje en presentatie, beoordeeld op presentatie, muzikaliteit en samenspel, met feedbackformulieren op de maandag erna.",
   "map": "02 Keuzevak muziek\\VWO\\VWO 6\\P19 Praktijktoets - Examenconcert\\Beoordeling",
   "lessen": [
-    { "lg": "vwo6", "w": 8, "slot": "l3", "wat": ["leerling"] },
-    { "lg": "vwo6", "w": 16, "slot": "l3", "wat": ["leerling"] },
-    { "lg": "vwo6", "w": 17, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo6", "w": 17, "slot": "l3", "wat": ["docent", "scoreblad"] },
-    { "lg": "vwo6", "w": 20, "slot": "l1", "wat": ["leerling"] }
+    {
+      "lg": "vwo6",
+      "w": 8,
+      "slot": "l3",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo6",
+      "w": 16,
+      "slot": "l3",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo6",
+      "w": 17,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo6",
+      "w": 17,
+      "slot": "l3",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    },
+    {
+      "lg": "vwo6",
+      "w": 20,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Presentatie", "stuk": "het hele concert",
+      "groep": "Presentatie",
+      "stuk": "het hele concert",
       "criteria": [
-        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondiging, houding, contact met publiek, begin en slot", "weging": 1,
-          "docent": ["Geen aankondiging; onrustig op het podium; stopt bij een fout.", "Kondigt aan, maar aarzelend; weinig contact met het publiek.", "Heldere aankondiging; rustige houding; duidelijk begin en slot; speelt door na een fout.", "Presenteert als op een echt concert: boeiend, met contact met het publiek en eigen uitstraling."],
-          "leerling": ["Ik kondig niets aan en stop als er iets misgaat.", "Ik kondig aan, maar aarzelend, en kijk weinig naar het publiek.", "Ik kondig helder aan, begin en eindig duidelijk en speel door na een fout.", "Ik presenteer als op een echt concert, met contact met het publiek."] }
+        {
+          "id": "presentatie",
+          "naam": "Presentatie",
+          "uitleg": "aankondiging, houding, contact met publiek, begin en slot",
+          "weging": 1,
+          "docent": [
+            "Geen aankondiging; onrustig op het podium; stopt bij een fout.",
+            "Kondigt aan, maar aarzelend; weinig contact met het publiek.",
+            "Heldere aankondiging; rustige houding; duidelijk begin en slot; speelt door na een fout.",
+            "Presenteert als op een echt concert: boeiend, met contact met het publiek en eigen uitstraling."
+          ],
+          "leerling": [
+            "Ik kondig niets aan en stop als er iets misgaat.",
+            "Ik kondig aan, maar aarzelend, en kijk weinig naar het publiek.",
+            "Ik kondig helder aan, begin en eindig duidelijk en speel door na een fout.",
+            "Ik presenteer als op een echt concert, met contact met het publiek."
+          ]
+        }
       ]
     },
     {
-      "groep": "Muzikaliteit", "stuk": "alle onderdelen waarin je zingt of speelt",
+      "groep": "Muzikaliteit",
+      "stuk": "alle onderdelen waarin je zingt of speelt",
       "criteria": [
-        { "id": "beheersing", "naam": "Techniek en beheersing", "uitleg": "zuiver, ritmisch zeker, stem of instrument onder controle", "weging": 2,
-          "docent": ["Vaak onzuiver of uit de maat; de partij loopt regelmatig vast.", "Overwegend zuiver en in de maat; op lastige plekken wankelt de partij.", "Zuiver en ritmisch zeker in alle onderdelen; stem of instrument goed onder controle.", "Volledig beheerst, ook in moeilijke passages; de techniek staat in dienst van de muziek."],
-          "leerling": ["Ik zing of speel vaak onzuiver of uit de maat en loop vast.", "Ik ben meestal zuiver en in de maat, maar wankel op lastige plekken.", "Ik ben zuiver en zeker in de maat en heb mijn stem of instrument onder controle.", "Ik beheers mijn partij helemaal, ook de moeilijke stukken."] },
-        { "id": "interpretatie", "naam": "Interpretatie", "uitleg": "dynamiek, frasering, stijl, eigen versie", "weging": 2,
-          "docent": ["Vlak: noten zonder dynamiek, frasering of stijlgevoel.", "Enige dynamiek en frasering; de stijl van het stuk is nog weinig hoorbaar.", "Dynamiek, frasering en stijl passen bij elk stuk; het karakter komt over.", "Eigen, overtuigende interpretatie met een herkenbare artistieke visie."],
-          "leerling": ["Je hoort bij mij geen dynamiek, frasering of stijl.", "Je hoort wat dynamiek en frasering, maar de stijl nog weinig.", "Dynamiek, frasering en stijl passen bij elk stuk.", "Ik breng een eigen versie met een duidelijke artistieke visie."] },
-        { "id": "veelzijdigheid", "naam": "Veelzijdigheid", "uitleg": "zang, instrument, slagwerk, improvisatie, compositie", "weging": 1,
-          "docent": ["Laat één vaardigheid horen; improvisatie en eigen werk ontbreken.", "Laat twee vaardigheden horen; improvisatie of eigen werk is nog voorzichtig.", "Laat meerdere vaardigheden horen, waaronder een improvisatie of eigen compositie.", "Breed en sterk: zang, instrument of slagwerk, en een overtuigende improvisatie of compositie."],
-          "leerling": ["Ik laat maar één vaardigheid horen.", "Ik laat twee vaardigheden horen; improviseren of eigen werk is nog voorzichtig.", "Ik laat meerdere vaardigheden horen, ook improvisatie of een eigen compositie.", "Ik laat breed en sterk horen wat ik kan, met een overtuigende improvisatie of compositie."] }
+        {
+          "id": "beheersing",
+          "naam": "Techniek en beheersing",
+          "uitleg": "zuiver, ritmisch zeker, stem of instrument onder controle",
+          "weging": 2,
+          "docent": [
+            "Vaak onzuiver of uit de maat; de partij loopt regelmatig vast.",
+            "Overwegend zuiver en in de maat; op lastige plekken wankelt de partij.",
+            "Zuiver en ritmisch zeker in alle onderdelen; stem of instrument goed onder controle.",
+            "Volledig beheerst, ook in moeilijke passages; de techniek staat in dienst van de muziek."
+          ],
+          "leerling": [
+            "Ik zing of speel vaak onzuiver of uit de maat en loop vast.",
+            "Ik ben meestal zuiver en in de maat, maar wankel op lastige plekken.",
+            "Ik ben zuiver en zeker in de maat en heb mijn stem of instrument onder controle.",
+            "Ik beheers mijn partij helemaal, ook de moeilijke stukken."
+          ]
+        },
+        {
+          "id": "interpretatie",
+          "naam": "Interpretatie",
+          "uitleg": "dynamiek, frasering, stijl, eigen versie",
+          "weging": 2,
+          "docent": [
+            "Vlak: noten zonder dynamiek, frasering of stijlgevoel.",
+            "Enige dynamiek en frasering; de stijl van het stuk is nog weinig hoorbaar.",
+            "Dynamiek, frasering en stijl passen bij elk stuk; het karakter komt over.",
+            "Eigen, overtuigende interpretatie met een herkenbare artistieke visie."
+          ],
+          "leerling": [
+            "Je hoort bij mij geen dynamiek, frasering of stijl.",
+            "Je hoort wat dynamiek en frasering, maar de stijl nog weinig.",
+            "Dynamiek, frasering en stijl passen bij elk stuk.",
+            "Ik breng een eigen versie met een duidelijke artistieke visie."
+          ]
+        },
+        {
+          "id": "veelzijdigheid",
+          "naam": "Veelzijdigheid",
+          "uitleg": "zang, instrument, slagwerk, improvisatie, compositie",
+          "weging": 1,
+          "docent": [
+            "Laat één vaardigheid horen; improvisatie en eigen werk ontbreken.",
+            "Laat twee vaardigheden horen; improvisatie of eigen werk is nog voorzichtig.",
+            "Laat meerdere vaardigheden horen, waaronder een improvisatie of eigen compositie.",
+            "Breed en sterk: zang, instrument of slagwerk, en een overtuigende improvisatie of compositie."
+          ],
+          "leerling": [
+            "Ik laat maar één vaardigheid horen.",
+            "Ik laat twee vaardigheden horen; improviseren of eigen werk is nog voorzichtig.",
+            "Ik laat meerdere vaardigheden horen, ook improvisatie of een eigen compositie.",
+            "Ik laat breed en sterk horen wat ik kan, met een overtuigende improvisatie of compositie."
+          ]
+        }
       ]
     },
     {
-      "groep": "Samenspel", "stuk": "de stukken die je met anderen speelt",
+      "groep": "Samenspel",
+      "stuk": "de stukken die je met anderen speelt",
       "criteria": [
-        { "id": "samenspel", "naam": "Samenspel", "uitleg": "luisteren, balans, samen beginnen en eindigen, ruimte geven", "weging": 2,
-          "docent": ["Speelt los van de anderen; de balans klopt niet.", "Let op de anderen; samen beginnen en eindigen lukt meestal.", "Past tempo en volume aan; de melodie blijft hoorbaar; geeft en volgt inzetten.", "Reageert op de anderen, geeft en neemt ruimte; het klinkt als één ensemble."],
-          "leerling": ["Ik speel los van de anderen.", "Ik let op de anderen; we beginnen en eindigen meestal samen.", "Ik pas tempo en volume aan; de melodie blijft hoorbaar.", "Ik reageer op de anderen; we klinken als één ensemble."] }
+        {
+          "id": "samenspel",
+          "naam": "Samenspel",
+          "uitleg": "luisteren, balans, samen beginnen en eindigen, ruimte geven",
+          "weging": 2,
+          "docent": [
+            "Speelt los van de anderen; de balans klopt niet.",
+            "Let op de anderen; samen beginnen en eindigen lukt meestal.",
+            "Past tempo en volume aan; de melodie blijft hoorbaar; geeft en volgt inzetten.",
+            "Reageert op de anderen, geeft en neemt ruimte; het klinkt als één ensemble."
+          ],
+          "leerling": [
+            "Ik speel los van de anderen.",
+            "Ik let op de anderen; we beginnen en eindigen meestal samen.",
+            "Ik pas tempo en volume aan; de melodie blijft hoorbaar.",
+            "Ik reageer op de anderen; we klinken als één ensemble."
+          ]
+        }
       ]
     },
     {
-      "groep": "Organisatie", "stuk": "als groep",
+      "groep": "Organisatie",
+      "stuk": "als groep",
       "criteria": [
-        { "id": "organisatie", "naam": "Organisatietaak", "uitleg": "begroting, uitnodiging, publiciteit, locatie, aankleding of programmaboekje", "weging": 2,
-          "docent": ["Taak niet of te laat uitgevoerd; anderen moeten het overnemen.", "Taak uitgevoerd, maar pas na aansporing; afspraken soms niet nagekomen.", "Taak zelfstandig en op tijd uitgevoerd; houdt zich aan planning en afspraken.", "Neemt verantwoordelijkheid: taak uitstekend uitgevoerd, denkt vooruit en helpt anderen."],
-          "leerling": ["Ik heb mijn taak niet of te laat gedaan.", "Ik heb mijn taak gedaan, maar pas toen iemand me eraan herinnerde.", "Ik heb mijn taak zelfstandig en op tijd gedaan en me aan afspraken gehouden.", "Ik heb verantwoordelijkheid genomen, vooruitgedacht en anderen geholpen."] }
+        {
+          "id": "organisatie",
+          "naam": "Organisatietaak",
+          "uitleg": "begroting, uitnodiging, publiciteit, locatie, aankleding of programmaboekje",
+          "weging": 2,
+          "docent": [
+            "Taak niet of te laat uitgevoerd; anderen moeten het overnemen.",
+            "Taak uitgevoerd, maar pas na aansporing; afspraken soms niet nagekomen.",
+            "Taak zelfstandig en op tijd uitgevoerd; houdt zich aan planning en afspraken.",
+            "Neemt verantwoordelijkheid: taak uitstekend uitgevoerd, denkt vooruit en helpt anderen."
+          ],
+          "leerling": [
+            "Ik heb mijn taak niet of te laat gedaan.",
+            "Ik heb mijn taak gedaan, maar pas toen iemand me eraan herinnerde.",
+            "Ik heb mijn taak zelfstandig en op tijd gedaan en me aan afspraken gehouden.",
+            "Ik heb verantwoordelijkheid genomen, vooruitgedacht en anderen geholpen."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

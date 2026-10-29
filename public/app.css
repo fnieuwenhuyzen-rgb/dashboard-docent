@@ -332,3 +332,36 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .koorkaart .eyebrow{color:var(--rood)}
 .koorkaart .fasen li{margin-bottom:.25rem}
 .ag-weekend{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.6rem 0 0;font-family:var(--kop)}
+
+/* beoordelen */
+.bm .eyebrow{text-transform:uppercase;letter-spacing:.08em;color:var(--rood);font-family:var(--kop);font-size:.8rem;font-weight:700;margin:0}
+.bm-raster{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:1rem;align-items:start;margin-top:1rem}
+@media (max-width:820px){.bm-raster{grid-template-columns:1fr}.bm-lijst{position:static;max-height:none}}
+.bm-lijst{position:sticky;top:4.2rem;max-height:calc(100vh - 5.5rem);overflow:auto}
+.bm-lijst .regel{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.5rem;font-family:var(--kop)}
+.bm-lijst ol{margin:0;padding-left:1.6rem}
+.bm-lijst li{display:flex;align-items:center;gap:.3rem;padding:.15rem 0;font-family:var(--kop)}
+.bm-lijst li.nu{background:var(--paars-zacht);border-radius:6px}
+.bm-lijst li.klaar .bm-naam{color:var(--muted)}
+.bm-naam{flex:1;text-align:left;background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:.3rem .2rem}
+.bm-c{font-variant-numeric:tabular-nums;font-weight:700;font-size:.9rem;min-width:2.2rem;text-align:right}
+.bm-pijl .btn{padding:.1rem .35rem;font-size:.7rem}
+.bm-scoor h2{font-size:1.5rem}
+.bm-scoor .kop{display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;align-items:center}
+.bm-velden{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.5rem;margin:.6rem 0}
+.bm-velden label,.bm-opm{display:flex;flex-direction:column;gap:.2rem;font-family:var(--kop);font-size:.85rem;color:var(--muted)}
+.bm-opm{margin:.5rem 0 .2rem}
+.bm-groep{margin:1rem 0 .3rem;padding-top:.6rem;border-top:1px solid var(--line);font-size:1.05rem}
+.bm-groep small{font-weight:400;color:var(--muted);font-size:.85rem}
+.bm-crit{display:grid;grid-template-columns:minmax(150px,1fr) auto;gap:.2rem .8rem;align-items:center;padding:.45rem 0}
+.bm-cnaam b{font-family:var(--kop);display:block}
+.bm-cnaam small{color:var(--muted);font-family:var(--kop);font-size:.8rem}
+.bm-knoppen{display:flex;gap:.3rem}
+.bm-knoppen button{min-width:3rem;min-height:3rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-family:var(--kop);font-weight:700;font-size:1.1rem;color:var(--ink);cursor:pointer}
+.bm-knoppen button.tussen{min-width:2.2rem;font-size:.85rem;font-weight:400;color:var(--muted)}
+.bm-knoppen button[aria-pressed="true"]{background:var(--paars);border-color:var(--paars);color:#fff}
+.bm-niv{grid-column:1/-1;margin:0;color:var(--muted);font-size:.95rem;min-height:1.2em}
+.bm-voet{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);margin:1rem -1.1rem -1rem;padding:.7rem 1.1rem;display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap;border-radius:0 0 10px 10px}
+.bm-voet span{font-family:var(--kop);margin-right:1rem}
+.bm-voet b{font-size:1.4rem;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.bm-crit{grid-template-columns:1fr}.bm-knoppen button{min-width:2.6rem;min-height:2.8rem}.bm-knoppen button.tussen{min-width:1.9rem}}

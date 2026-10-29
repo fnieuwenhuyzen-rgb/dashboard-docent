@@ -4,59 +4,193 @@
   "toets": "PT1",
   "titel": "Praktijktoets PT1: samenspel en zang",
   "thema": "Voorlopers van de jazz",
-  "weging": 3, "herkansbaar": false,
-  "velden": ["Stuk", "Mijn partij", "Groep"],
+  "weging": 3,
+  "herkansbaar": false,
+  "velden": [
+    "Stuk",
+    "Mijn partij",
+    "Groep"
+  ],
   "vooruit": "Eén punt voor PT2",
   "leerlingTitel": "Zo beoordeel ik ons samenspel en mijn zang",
   "leerlingInstructie": "Gebruik dit na de generale en na de toets. Zet per onderdeel een kruisje bij wat je hoorde en schrijf je score op. Je docent let op dezelfde onderdelen.",
   "pta": "PTA vwo 4 2026-2027, P1 (in studiewijzer en lesplanning PT1): periode 1 in de les (ma 9 nov), weging 3, 90 minuten, niet herkansbaar. Domein B1 zingen en spelen en B2 improviseren (bluesschema, call-and-response). Beoordeling op presentatie, muzikaliteit en samenspel.",
   "map": "02 Keuzevak muziek\\VWO\\VWO 4\\P1 Praktijktoets - Samenspel jazz-voorlopers\\Beoordeling",
   "lessen": [
-    { "lg": "vwo4", "w": 8, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "vwo4", "w": 8, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo4", "w": 10, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] }
+    {
+      "lg": "vwo4",
+      "w": 8,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 8,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 10,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Presentatie", "stuk": "samenspelstuk",
+      "groep": "Presentatie",
+      "stuk": "samenspelstuk",
       "criteria": [
-        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aftellen, begin en slot, doorspelen", "weging": 1,
-          "docent": ["Geen duidelijke start; de groep stopt bij een fout en begint opnieuw.", "Er wordt afgeteld en het stuk komt rond, maar begin of slot is aarzelend.", "Strak afgeteld, duidelijk begin en slot; na een fout speelt iedereen door.", "Klinkt als een optreden: zeker begin, afgesproken slot; fouten vallen nauwelijks op."],
-          "leerling": ["We beginnen niet duidelijk en stoppen als het misgaat.", "We tellen af en komen tot het eind, maar begin of slot is aarzelend.", "We beginnen en eindigen strak en ik speel door na een fout.", "Het klinkt als een optreden: zeker begin en een afgesproken slot."] }
+        {
+          "id": "presentatie",
+          "naam": "Presentatie",
+          "uitleg": "aftellen, begin en slot, doorspelen",
+          "weging": 1,
+          "docent": [
+            "Geen duidelijke start; de groep stopt bij een fout en begint opnieuw.",
+            "Er wordt afgeteld en het stuk komt rond, maar begin of slot is aarzelend.",
+            "Strak afgeteld, duidelijk begin en slot; na een fout speelt iedereen door.",
+            "Klinkt als een optreden: zeker begin, afgesproken slot; fouten vallen nauwelijks op."
+          ],
+          "leerling": [
+            "We beginnen niet duidelijk en stoppen als het misgaat.",
+            "We tellen af en komen tot het eind, maar begin of slot is aarzelend.",
+            "We beginnen en eindigen strak en ik speel door na een fout.",
+            "Het klinkt als een optreden: zeker begin en een afgesproken slot."
+          ]
+        }
       ]
     },
     {
-      "groep": "Muzikaliteit", "stuk": "eigen partij, zang en improvisatie",
+      "groep": "Muzikaliteit",
+      "stuk": "eigen partij, zang en improvisatie",
       "criteria": [
-        { "id": "partij", "naam": "Eigen partij in het schema", "uitleg": "twaalf maten, I-IV-V op tijd", "weging": 2,
-          "docent": ["Partij valt vaak weg; raakt de plek in het twaalfmatenschema kwijt.", "Partij grotendeels gespeeld; de wissel in maat 9-10 (V-IV) of het invallen na een fout wiebelt.", "Partij zeker en op tijd; wisselt op de één van de maat en valt na een fout direct weer in.", "Partij beheerst en muzikaal; weet steeds waar de groep is en geeft houvast in het schema."],
-          "leerling": ["Mijn partij valt vaak weg en ik weet niet waar we zijn in het schema.", "Ik speel mijn partij grotendeels, maar maat 9-10 of het invallen na een fout wiebelt.", "Ik wissel op de één van de maat en val na een fout meteen weer in.", "Ik speel mijn partij zeker en muzikaal en weet steeds waar we zijn."] },
-        { "id": "zang", "naam": "Zang: call-and-response", "uitleg": "zuiver, op de tel, verstaanbaar", "weging": 2,
-          "docent": ["Zang vaak onzuiver of te zacht; de response komt te laat of valt weg.", "Overwegend zuiver; de response valt meestal op de tel, de tekst is soms onduidelijk.", "Zuiver en goed verstaanbaar; call en response sluiten strak op elkaar aan.", "Zingt met expressie in de stijl van de blues; call en response hebben drive."],
-          "leerling": ["Ik zing vaak onzuiver of te zacht, en mijn response komt te laat.", "Ik zing meestal zuiver en op de tel, maar de tekst is soms onduidelijk.", "Ik zing zuiver en verstaanbaar; call en response sluiten strak aan.", "Ik zing met expressie, zoals in de blues, en geef de response drive."] },
-        { "id": "improvisatie", "naam": "Improvisatie", "uitleg": "bluestoonladder, in het schema, motief", "weging": 2,
-          "docent": ["Geen improvisatie, of de noten passen niet en de solo raakt los van het schema.", "Vier maten op de bluestoonladder (bv. C-Es-G); blijft in de maat, nog weinig vorm.", "Solo blijft in het schema, met een herkenbaar motief dat terugkomt en rust tussen de frasen.", "Varieert het motief, gebruikt blue notes bewust; de solo heeft een opbouw en een slot."],
-          "leerling": ["Ik improviseer niet, of mijn noten passen niet bij het schema.", "Ik improviseer vier maten op de bluestoonladder en blijf in de maat.", "Mijn solo heeft een motief dat terugkomt, met rust ertussen.", "Ik varieer mijn motief, gebruik blue notes en mijn solo heeft een opbouw."] }
+        {
+          "id": "partij",
+          "naam": "Eigen partij in het schema",
+          "uitleg": "twaalf maten, I-IV-V op tijd",
+          "weging": 2,
+          "docent": [
+            "Partij valt vaak weg; raakt de plek in het twaalfmatenschema kwijt.",
+            "Partij grotendeels gespeeld; de wissel in maat 9-10 (V-IV) of het invallen na een fout wiebelt.",
+            "Partij zeker en op tijd; wisselt op de één van de maat en valt na een fout direct weer in.",
+            "Partij beheerst en muzikaal; weet steeds waar de groep is en geeft houvast in het schema."
+          ],
+          "leerling": [
+            "Mijn partij valt vaak weg en ik weet niet waar we zijn in het schema.",
+            "Ik speel mijn partij grotendeels, maar maat 9-10 of het invallen na een fout wiebelt.",
+            "Ik wissel op de één van de maat en val na een fout meteen weer in.",
+            "Ik speel mijn partij zeker en muzikaal en weet steeds waar we zijn."
+          ]
+        },
+        {
+          "id": "zang",
+          "naam": "Zang: call-and-response",
+          "uitleg": "zuiver, op de tel, verstaanbaar",
+          "weging": 2,
+          "docent": [
+            "Zang vaak onzuiver of te zacht; de response komt te laat of valt weg.",
+            "Overwegend zuiver; de response valt meestal op de tel, de tekst is soms onduidelijk.",
+            "Zuiver en goed verstaanbaar; call en response sluiten strak op elkaar aan.",
+            "Zingt met expressie in de stijl van de blues; call en response hebben drive."
+          ],
+          "leerling": [
+            "Ik zing vaak onzuiver of te zacht, en mijn response komt te laat.",
+            "Ik zing meestal zuiver en op de tel, maar de tekst is soms onduidelijk.",
+            "Ik zing zuiver en verstaanbaar; call en response sluiten strak aan.",
+            "Ik zing met expressie, zoals in de blues, en geef de response drive."
+          ]
+        },
+        {
+          "id": "improvisatie",
+          "naam": "Improvisatie",
+          "uitleg": "bluestoonladder, in het schema, motief",
+          "weging": 2,
+          "docent": [
+            "Geen improvisatie, of de noten passen niet en de solo raakt los van het schema.",
+            "Vier maten op de bluestoonladder (bv. C-Es-G); blijft in de maat, nog weinig vorm.",
+            "Solo blijft in het schema, met een herkenbaar motief dat terugkomt en rust tussen de frasen.",
+            "Varieert het motief, gebruikt blue notes bewust; de solo heeft een opbouw en een slot."
+          ],
+          "leerling": [
+            "Ik improviseer niet, of mijn noten passen niet bij het schema.",
+            "Ik improviseer vier maten op de bluestoonladder en blijf in de maat.",
+            "Mijn solo heeft een motief dat terugkomt, met rust ertussen.",
+            "Ik varieer mijn motief, gebruik blue notes en mijn solo heeft een opbouw."
+          ]
+        }
       ]
     },
     {
-      "groep": "Samenspel", "stuk": "samenspelstuk",
+      "groep": "Samenspel",
+      "stuk": "samenspelstuk",
       "criteria": [
-        { "id": "groove", "naam": "Groove en tempo", "uitleg": "backbeat, swing, samen in tempo", "weging": 1,
-          "docent": ["Tempo zakt in of jaagt; de groep valt uit elkaar.", "Tempo grotendeels stabiel; backbeat of triolenfeel nog niet overal hoorbaar.", "Stabiel tempo met backbeat; de swing (triolenfeel) is in de groep te horen.", "Strakke groove die swingt; de groep houdt het tempo ook in de soloruil vast."],
-          "leerling": ["Ons tempo zakt in of jaagt en we raken elkaar kwijt.", "Ons tempo is meestal stabiel, maar de groove is nog niet overal te horen.", "We houden het tempo vast en je hoort de backbeat en de swing.", "Onze groove swingt en blijft staan, ook tijdens de solo's."] },
-        { "id": "luisteren", "naam": "Luisteren en balans", "uitleg": "samen beginnen en eindigen, ruimte voor zang en solo", "weging": 2,
-          "docent": ["Speelt los van de anderen; zang en solo worden overstemd.", "Let op de anderen; samen beginnen en eindigen lukt, de balans nog niet altijd.", "Speelt zachter onder zang en solo; zanger en solist blijven steeds hoorbaar.", "Reageert op de anderen, geeft en neemt ruimte; het klinkt als één band."],
-          "leerling": ["Ik speel los van de anderen en ben te hard onder zang of solo.", "Ik let op de anderen; we beginnen en eindigen samen.", "Ik speel zachter onder zang en solo, zodat je ze steeds hoort.", "Ik reageer op de anderen en geef ruimte; we klinken als één band."] }
+        {
+          "id": "groove",
+          "naam": "Groove en tempo",
+          "uitleg": "backbeat, swing, samen in tempo",
+          "weging": 1,
+          "docent": [
+            "Tempo zakt in of jaagt; de groep valt uit elkaar.",
+            "Tempo grotendeels stabiel; backbeat of triolenfeel nog niet overal hoorbaar.",
+            "Stabiel tempo met backbeat; de swing (triolenfeel) is in de groep te horen.",
+            "Strakke groove die swingt; de groep houdt het tempo ook in de soloruil vast."
+          ],
+          "leerling": [
+            "Ons tempo zakt in of jaagt en we raken elkaar kwijt.",
+            "Ons tempo is meestal stabiel, maar de groove is nog niet overal te horen.",
+            "We houden het tempo vast en je hoort de backbeat en de swing.",
+            "Onze groove swingt en blijft staan, ook tijdens de solo's."
+          ]
+        },
+        {
+          "id": "luisteren",
+          "naam": "Luisteren en balans",
+          "uitleg": "samen beginnen en eindigen, ruimte voor zang en solo",
+          "weging": 2,
+          "docent": [
+            "Speelt los van de anderen; zang en solo worden overstemd.",
+            "Let op de anderen; samen beginnen en eindigen lukt, de balans nog niet altijd.",
+            "Speelt zachter onder zang en solo; zanger en solist blijven steeds hoorbaar.",
+            "Reageert op de anderen, geeft en neemt ruimte; het klinkt als één band."
+          ],
+          "leerling": [
+            "Ik speel los van de anderen en ben te hard onder zang of solo.",
+            "Ik let op de anderen; we beginnen en eindigen samen.",
+            "Ik speel zachter onder zang en solo, zodat je ze steeds hoort.",
+            "Ik reageer op de anderen en geef ruimte; we klinken als één band."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

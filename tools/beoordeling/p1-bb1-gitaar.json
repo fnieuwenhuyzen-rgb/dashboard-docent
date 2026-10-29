@@ -4,52 +4,171 @@
   "toets": "P1",
   "titel": "Praktijktoets P1: liedpresentatie met gitaar",
   "thema": "Songs, toonhoogte en maat en ritme",
-  "weging": 10, "herkansbaar": true,
-  "velden": ["Lied", "Partij (tab of akkoorden)", "Groep"],
+  "weging": 10,
+  "herkansbaar": true,
+  "velden": [
+    "Lied",
+    "Partij (tab of akkoorden)",
+    "Groep"
+  ],
   "vooruit": "Eén punt voor het samen spelen van songs",
   "leerlingTitel": "Zo beoordeel ik mijn gitaarpresentatie",
   "leerlingInstructie": "Kies je partij: een tab of de akkoorden. Tel samen af. Speel door als het misgaat en val weer in op de tel.",
   "pta": "Vakwerkplan muziek 2026-2027, bijlage B PTO onderbouw: m1 en v1 P1 Liedpresentatie met gitaar, periode 2, weging 10, 45 minuten, herkansbaar. BB1 staat niet apart in het PTO; de toets is overgenomen van m1 en v1.",
   "map": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\Beoordeling",
   "lessen": [
-    { "lg": "bb1", "w": 17, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] }
+    {
+      "lg": "bb1",
+      "w": 17,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 8 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Gitaar", "stuk": "eigen partij: tab of akkoorden",
+      "groep": "Gitaar",
+      "stuk": "eigen partij: tab of akkoorden",
       "criteria": [
-        { "id": "noten", "naam": "Juiste noten", "uitleg": "juiste snaar en fret, of juiste greep", "weging": 2,
-          "docent": ["Veel verkeerde noten of grepen; de melodie of het akkoord is niet te herkennen.", "Meeste noten of grepen goed; een paar fouten of dof klinkende snaren.", "Alle noten of grepen goed; de partij klinkt helder.", "Een moeilijkere partij (meer snaren of drie akkoorden) helder en zonder fouten."],
-          "leerling": ["Ik speel veel verkeerde noten of grepen.", "Ik speel de meeste noten of grepen goed.", "Ik speel alle noten of grepen goed en het klinkt helder.", "Ik speel een moeilijkere partij goed, met meer snaren of drie akkoorden."] },
-        { "id": "ritme", "naam": "Ritme en puls", "uitleg": "op de tel, vast tempo", "weging": 2,
-          "docent": ["Raakt de puls kwijt; speelt niet op de tel.", "Grotendeels op de tel; het tempo hapert op lastige plekken.", "Speelt het hele lied op de tel in een vast tempo.", "Strak en vast; houdt de puls ook vast als een ander een fout maakt."],
-          "leerling": ["Ik raak de tel kwijt.", "Ik speel meestal op de tel, maar op lastige plekken hapert het.", "Ik speel het hele lied op de tel in hetzelfde tempo.", "Ik speel zo strak dat de anderen op mij kunnen bouwen."] },
-        { "id": "wisselen", "naam": "Doorspelen en wisselen", "uitleg": "van noot naar noot of akkoord naar akkoord", "weging": 1,
-          "docent": ["Stopt vaak; het lied valt steeds stil.", "Speelt het lied uit, maar wacht bij lastige wissels.", "Wisselt op tijd en speelt het lied zonder stoppen door.", "Wisselt soepel, ook tussen drie akkoorden zoals D, G en A."],
-          "leerling": ["Ik stop vaak tijdens het lied.", "Ik speel het lied uit, maar wacht soms bij een wissel.", "Ik wissel op tijd en speel door zonder te stoppen.", "Ik wissel soepel, ook tussen drie akkoorden."] }
+        {
+          "id": "noten",
+          "naam": "Juiste noten",
+          "uitleg": "juiste snaar en fret, of juiste greep",
+          "weging": 2,
+          "docent": [
+            "Veel verkeerde noten of grepen; de melodie of het akkoord is niet te herkennen.",
+            "Meeste noten of grepen goed; een paar fouten of dof klinkende snaren.",
+            "Alle noten of grepen goed; de partij klinkt helder.",
+            "Een moeilijkere partij (meer snaren of drie akkoorden) helder en zonder fouten."
+          ],
+          "leerling": [
+            "Ik speel veel verkeerde noten of grepen.",
+            "Ik speel de meeste noten of grepen goed.",
+            "Ik speel alle noten of grepen goed en het klinkt helder.",
+            "Ik speel een moeilijkere partij goed, met meer snaren of drie akkoorden."
+          ]
+        },
+        {
+          "id": "ritme",
+          "naam": "Ritme en puls",
+          "uitleg": "op de tel, vast tempo",
+          "weging": 2,
+          "docent": [
+            "Raakt de puls kwijt; speelt niet op de tel.",
+            "Grotendeels op de tel; het tempo hapert op lastige plekken.",
+            "Speelt het hele lied op de tel in een vast tempo.",
+            "Strak en vast; houdt de puls ook vast als een ander een fout maakt."
+          ],
+          "leerling": [
+            "Ik raak de tel kwijt.",
+            "Ik speel meestal op de tel, maar op lastige plekken hapert het.",
+            "Ik speel het hele lied op de tel in hetzelfde tempo.",
+            "Ik speel zo strak dat de anderen op mij kunnen bouwen."
+          ]
+        },
+        {
+          "id": "wisselen",
+          "naam": "Doorspelen en wisselen",
+          "uitleg": "van noot naar noot of akkoord naar akkoord",
+          "weging": 1,
+          "docent": [
+            "Stopt vaak; het lied valt steeds stil.",
+            "Speelt het lied uit, maar wacht bij lastige wissels.",
+            "Wisselt op tijd en speelt het lied zonder stoppen door.",
+            "Wisselt soepel, ook tussen drie akkoorden zoals D, G en A."
+          ],
+          "leerling": [
+            "Ik stop vaak tijdens het lied.",
+            "Ik speel het lied uit, maar wacht soms bij een wissel.",
+            "Ik wissel op tijd en speel door zonder te stoppen.",
+            "Ik wissel soepel, ook tussen drie akkoorden."
+          ]
+        }
       ]
     },
     {
-      "groep": "Zingen en samenspel", "stuk": "lied met de groep",
+      "groep": "Zingen en samenspel",
+      "stuk": "lied met de groep",
       "criteria": [
-        { "id": "meezingen", "naam": "Meezingen", "uitleg": "zingen en spelen tegelijk", "weging": 1,
-          "docent": ["Zingt niet mee.", "Zingt een deel mee, of stopt met spelen tijdens het zingen.", "Zingt het lied mee en blijft ondertussen spelen.", "Zingt duidelijk en zuiver mee en speelt zonder haperen door."],
-          "leerling": ["Ik zing niet mee.", "Ik zing een deel mee, of ik stop met spelen als ik zing.", "Ik zing het lied mee en blijf spelen.", "Ik zing duidelijk mee en speel tegelijk zonder haperen."] },
-        { "id": "samenspel", "naam": "Samenspel", "uitleg": "luisteren, samen beginnen en eindigen", "weging": 1,
-          "docent": ["Speelt los van de groep; te hard of te zacht.", "Luistert naar de groep; begint en eindigt meestal samen.", "Blijft gelijk met de groep; begint en eindigt samen.", "Luistert en past zich aan; de groep klinkt als één geheel."],
-          "leerling": ["Ik speel los van de groep.", "Ik luister naar de groep en we beginnen en eindigen meestal samen.", "Ik blijf gelijk met de groep en we beginnen en eindigen samen.", "Ik pas me aan de anderen aan; we klinken als één geheel."] },
-        { "id": "inzet", "naam": "Inzet en presentatie", "uitleg": "rustig beginnen, serieus, volhouden", "weging": 1,
-          "docent": ["Doet nauwelijks mee of speelt niet serieus.", "Doet mee, maar begint onrustig of geeft snel op.", "Begint rustig, speelt serieus en houdt vol tot het einde.", "Presenteert met zelfvertrouwen en helpt de groep op gang."],
-          "leerling": ["Ik doe nauwelijks mee.", "Ik doe mee, maar ik begin onrustig of geef snel op.", "Ik begin rustig, speel serieus en houd vol tot het einde.", "Ik speel met zelfvertrouwen en help mijn groep op gang."] }
+        {
+          "id": "meezingen",
+          "naam": "Meezingen",
+          "uitleg": "zingen en spelen tegelijk",
+          "weging": 1,
+          "docent": [
+            "Zingt niet mee.",
+            "Zingt een deel mee, of stopt met spelen tijdens het zingen.",
+            "Zingt het lied mee en blijft ondertussen spelen.",
+            "Zingt duidelijk en zuiver mee en speelt zonder haperen door."
+          ],
+          "leerling": [
+            "Ik zing niet mee.",
+            "Ik zing een deel mee, of ik stop met spelen als ik zing.",
+            "Ik zing het lied mee en blijf spelen.",
+            "Ik zing duidelijk mee en speel tegelijk zonder haperen."
+          ]
+        },
+        {
+          "id": "samenspel",
+          "naam": "Samenspel",
+          "uitleg": "luisteren, samen beginnen en eindigen",
+          "weging": 1,
+          "docent": [
+            "Speelt los van de groep; te hard of te zacht.",
+            "Luistert naar de groep; begint en eindigt meestal samen.",
+            "Blijft gelijk met de groep; begint en eindigt samen.",
+            "Luistert en past zich aan; de groep klinkt als één geheel."
+          ],
+          "leerling": [
+            "Ik speel los van de groep.",
+            "Ik luister naar de groep en we beginnen en eindigen meestal samen.",
+            "Ik blijf gelijk met de groep en we beginnen en eindigen samen.",
+            "Ik pas me aan de anderen aan; we klinken als één geheel."
+          ]
+        },
+        {
+          "id": "inzet",
+          "naam": "Inzet en presentatie",
+          "uitleg": "rustig beginnen, serieus, volhouden",
+          "weging": 1,
+          "docent": [
+            "Doet nauwelijks mee of speelt niet serieus.",
+            "Doet mee, maar begint onrustig of geeft snel op.",
+            "Begint rustig, speelt serieus en houdt vol tot het einde.",
+            "Presenteert met zelfvertrouwen en helpt de groep op gang."
+          ],
+          "leerling": [
+            "Ik doe nauwelijks mee.",
+            "Ik doe mee, maar ik begin onrustig of geef snel op.",
+            "Ik begin rustig, speel serieus en houd vol tot het einde.",
+            "Ik speel met zelfvertrouwen en help mijn groep op gang."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

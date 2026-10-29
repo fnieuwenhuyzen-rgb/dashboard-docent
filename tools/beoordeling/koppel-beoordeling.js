@@ -25,4 +25,6 @@ function doe(bestand, pak) {
   console.log(`${bestand}: ${n} koppelingen toegevoegd${mis.length ? '; les niet gevonden: ' + mis.join(' | ') : ''}`);
 }
 doe('public/data/basis.json', d => d.leergangen);
+// de modellen zelf voor de beoordelingsmodus van de app (geen leerlinggegevens)
+fs.writeFileSync(path.join(root, 'public/data/beoordeling.json'), JSON.stringify(modellen.map(M => { const { map, pta, ...rest } = M; return rest; })), 'utf8');
 doe('bron/leergang-data.json', d => d.klassen);

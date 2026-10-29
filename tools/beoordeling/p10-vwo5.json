@@ -4,65 +4,236 @@
   "toets": "P10",
   "titel": "Praktijktoets P10: eigen compositie",
   "thema": "Moderne jazz en pop",
-  "weging": 6, "herkansbaar": false,
-  "velden": ["Titel compositie", "Probleemstelling", "Bezetting"],
+  "weging": 6,
+  "herkansbaar": false,
+  "velden": [
+    "Titel compositie",
+    "Probleemstelling",
+    "Bezetting"
+  ],
   "vooruit": "Eén punt voor het examenconcert in vwo 6",
   "leerlingTitel": "Zo beoordeel ik mijn compositie en mijn uitvoering",
   "leerlingInstructie": "Gebruik dit bij je schetsen, bij het repeteren en de generale, en na de toets. Zet per onderdeel een kruisje bij wat je hoorde of zag en schrijf je score op. Je docent let op dezelfde onderdelen.",
   "pta": "PTA vwo 5 2026-2027, P10: periode 4 in de les (lesweek 35, 7 jun), weging 6, 45 minuten, niet herkansbaar. B1 en B2: eigen compositie of improvisatie (moderne jazz of pop) van minimaal 24 maten vanuit een probleemstelling, minimaal 4 schetsen, notatie; schetsen en notatie tellen mee.",
   "map": "02 Keuzevak muziek\\VWO\\VWO 5\\P10 Praktijktoets - Compositie moderne jazz en pop\\Beoordeling",
   "lessen": [
-    { "lg": "vwo5", "w": 25, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "vwo5", "w": 33, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo5", "w": 34, "slot": "l1", "wat": ["leerling"] },
-    { "lg": "vwo5", "w": 35, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] },
-    { "lg": "vwo5", "w": 35, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "vwo5", "w": 35, "slot": "l3", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "vwo5",
+      "w": 25,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo5",
+      "w": 33,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo5",
+      "w": 34,
+      "slot": "l1",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo5",
+      "w": 35,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo5",
+      "w": 35,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo5",
+      "w": 35,
+      "slot": "l3",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Compositie", "stuk": "compositie of improvisatie, minimaal 24 maten (ritmisch: minimaal 3 partijen)",
+      "groep": "Compositie",
+      "stuk": "compositie of improvisatie, minimaal 24 maten (ritmisch: minimaal 3 partijen)",
       "criteria": [
-        { "id": "probleemstelling", "naam": "Probleemstelling", "uitleg": "welke vraag lost je stuk op, en hoor je dat?", "weging": 2,
-          "docent": ["Geen probleemstelling, of het stuk heeft er niets mee te maken.", "Probleemstelling in één zin; in het stuk is de oplossing maar op één plek te horen.", "Duidelijke probleemstelling; het stuk lost die hoorbaar op.", "Scherpe probleemstelling; het hele stuk is erop gebouwd en de oplossing overtuigt."],
-          "leerling": ["Ik heb geen probleemstelling of mijn stuk heeft er niets mee te maken.", "Ik heb een probleemstelling, maar je hoort de oplossing maar op één plek.", "Mijn stuk lost mijn probleemstelling hoorbaar op.", "Mijn hele stuk is gebouwd op mijn probleemstelling en de oplossing overtuigt."] },
-        { "id": "middelen", "naam": "Muzikale middelen en stijl", "uitleg": "melodie, ritme, akkoorden, klank; jazz of pop te horen", "weging": 2,
-          "docent": ["Losse ideeën met veel herhaling; geen jazz- of popkenmerk te horen.", "Melodie, ritme en akkoorden aanwezig; één kenmerk van jazz of pop te horen.", "Middelen bewust gekozen; groove, akkoorden en klank passen bij de gekozen stijl.", "Ideeën uitgewerkt en gevarieerd; meerdere stijlkenmerken overtuigend ingezet."],
-          "leerling": ["Mijn ideeën staan los van elkaar en klinken niet als jazz of pop.", "Mijn stuk heeft melodie, ritme en akkoorden en één kenmerk van jazz of pop.", "Ik kies mijn middelen bewust; groove, akkoorden en klank passen bij de stijl.", "Ik werk mijn ideeën uit en gebruik meerdere stijlkenmerken overtuigend."] },
-        { "id": "bouw", "naam": "Bouw en lagen", "uitleg": "minimaal 24 maten, begin en slot, partijen vullen elkaar aan", "weging": 1,
-          "docent": ["Korter dan 24 maten, of geen herkenbaar begin en slot.", "24 maten met begin en slot; de lagen of partijen lopen nog los naast elkaar.", "Duidelijke vorm met begin, midden en slot; de partijen vullen elkaar aan.", "Bewuste vorm met herhaling en contrast; elke partij heeft een eigen taak."],
-          "leerling": ["Mijn stuk is korter dan 24 maten of heeft geen duidelijk begin en slot.", "Mijn stuk is 24 maten met begin en slot, maar de partijen lopen los.", "Mijn stuk heeft begin, midden en slot en de partijen vullen elkaar aan.", "Ik gebruik herhaling en contrast bewust en elke partij heeft een eigen taak."] }
+        {
+          "id": "probleemstelling",
+          "naam": "Probleemstelling",
+          "uitleg": "welke vraag lost je stuk op, en hoor je dat?",
+          "weging": 2,
+          "docent": [
+            "Geen probleemstelling, of het stuk heeft er niets mee te maken.",
+            "Probleemstelling in één zin; in het stuk is de oplossing maar op één plek te horen.",
+            "Duidelijke probleemstelling; het stuk lost die hoorbaar op.",
+            "Scherpe probleemstelling; het hele stuk is erop gebouwd en de oplossing overtuigt."
+          ],
+          "leerling": [
+            "Ik heb geen probleemstelling of mijn stuk heeft er niets mee te maken.",
+            "Ik heb een probleemstelling, maar je hoort de oplossing maar op één plek.",
+            "Mijn stuk lost mijn probleemstelling hoorbaar op.",
+            "Mijn hele stuk is gebouwd op mijn probleemstelling en de oplossing overtuigt."
+          ]
+        },
+        {
+          "id": "middelen",
+          "naam": "Muzikale middelen en stijl",
+          "uitleg": "melodie, ritme, akkoorden, klank; jazz of pop te horen",
+          "weging": 2,
+          "docent": [
+            "Losse ideeën met veel herhaling; geen jazz- of popkenmerk te horen.",
+            "Melodie, ritme en akkoorden aanwezig; één kenmerk van jazz of pop te horen.",
+            "Middelen bewust gekozen; groove, akkoorden en klank passen bij de gekozen stijl.",
+            "Ideeën uitgewerkt en gevarieerd; meerdere stijlkenmerken overtuigend ingezet."
+          ],
+          "leerling": [
+            "Mijn ideeën staan los van elkaar en klinken niet als jazz of pop.",
+            "Mijn stuk heeft melodie, ritme en akkoorden en één kenmerk van jazz of pop.",
+            "Ik kies mijn middelen bewust; groove, akkoorden en klank passen bij de stijl.",
+            "Ik werk mijn ideeën uit en gebruik meerdere stijlkenmerken overtuigend."
+          ]
+        },
+        {
+          "id": "bouw",
+          "naam": "Bouw en lagen",
+          "uitleg": "minimaal 24 maten, begin en slot, partijen vullen elkaar aan",
+          "weging": 1,
+          "docent": [
+            "Korter dan 24 maten, of geen herkenbaar begin en slot.",
+            "24 maten met begin en slot; de lagen of partijen lopen nog los naast elkaar.",
+            "Duidelijke vorm met begin, midden en slot; de partijen vullen elkaar aan.",
+            "Bewuste vorm met herhaling en contrast; elke partij heeft een eigen taak."
+          ],
+          "leerling": [
+            "Mijn stuk is korter dan 24 maten of heeft geen duidelijk begin en slot.",
+            "Mijn stuk is 24 maten met begin en slot, maar de partijen lopen los.",
+            "Mijn stuk heeft begin, midden en slot en de partijen vullen elkaar aan.",
+            "Ik gebruik herhaling en contrast bewust en elke partij heeft een eigen taak."
+          ]
+        }
       ]
     },
     {
-      "groep": "Schetsen en notatie", "stuk": "ingeleverd in lesweek 33",
+      "groep": "Schetsen en notatie",
+      "stuk": "ingeleverd in lesweek 33",
       "criteria": [
-        { "id": "schetsen", "naam": "Schetsen", "uitleg": "minimaal vier per compositie, de ontwikkeling is te volgen", "weging": 1,
-          "docent": ["Minder dan vier schetsen, of ze laten geen ontwikkeling zien.", "Vier schetsen; de stappen zijn klein of niet uitgelegd.", "Vier schetsen waarin je de ontwikkeling volgt; feedback is verwerkt.", "De schetsen laten zien welke ideeën zijn uitgeprobeerd, verworpen en verbeterd."],
-          "leerling": ["Ik heb minder dan vier schetsen of je ziet geen ontwikkeling.", "Ik heb vier schetsen, maar de stappen zijn klein.", "In mijn vier schetsen volg je hoe mijn stuk groeit; feedback heb ik verwerkt.", "Mijn schetsen laten zien wat ik probeerde, wat ik wegdeed en wat ik verbeterde."] },
-        { "id": "notatie", "naam": "Notatie", "uitleg": "programma of hand; compleet en leesbaar", "weging": 1,
-          "docent": ["Notatie ontbreekt, is onvolledig of onleesbaar.", "Alle maten genoteerd; ritmes, maatstrepen of partijen kloppen niet overal.", "Compleet en leesbaar: alle partijen, maatsoort, ritmes en akkoordsymbolen kloppen.", "Verzorgd als een uitgave: ook tempo, dynamiek, articulatie en speelaanwijzingen."],
-          "leerling": ["Mijn notatie ontbreekt of is niet compleet.", "Ik heb alles genoteerd, maar niet alles klopt.", "Mijn notatie is compleet en leesbaar, met alle partijen en akkoordsymbolen.", "Mijn notatie is verzorgd, met tempo, dynamiek, articulatie en speelaanwijzingen."] }
+        {
+          "id": "schetsen",
+          "naam": "Schetsen",
+          "uitleg": "minimaal vier per compositie, de ontwikkeling is te volgen",
+          "weging": 1,
+          "docent": [
+            "Minder dan vier schetsen, of ze laten geen ontwikkeling zien.",
+            "Vier schetsen; de stappen zijn klein of niet uitgelegd.",
+            "Vier schetsen waarin je de ontwikkeling volgt; feedback is verwerkt.",
+            "De schetsen laten zien welke ideeën zijn uitgeprobeerd, verworpen en verbeterd."
+          ],
+          "leerling": [
+            "Ik heb minder dan vier schetsen of je ziet geen ontwikkeling.",
+            "Ik heb vier schetsen, maar de stappen zijn klein.",
+            "In mijn vier schetsen volg je hoe mijn stuk groeit; feedback heb ik verwerkt.",
+            "Mijn schetsen laten zien wat ik probeerde, wat ik wegdeed en wat ik verbeterde."
+          ]
+        },
+        {
+          "id": "notatie",
+          "naam": "Notatie",
+          "uitleg": "programma of hand; compleet en leesbaar",
+          "weging": 1,
+          "docent": [
+            "Notatie ontbreekt, is onvolledig of onleesbaar.",
+            "Alle maten genoteerd; ritmes, maatstrepen of partijen kloppen niet overal.",
+            "Compleet en leesbaar: alle partijen, maatsoort, ritmes en akkoordsymbolen kloppen.",
+            "Verzorgd als een uitgave: ook tempo, dynamiek, articulatie en speelaanwijzingen."
+          ],
+          "leerling": [
+            "Mijn notatie ontbreekt of is niet compleet.",
+            "Ik heb alles genoteerd, maar niet alles klopt.",
+            "Mijn notatie is compleet en leesbaar, met alle partijen en akkoordsymbolen.",
+            "Mijn notatie is verzorgd, met tempo, dynamiek, articulatie en speelaanwijzingen."
+          ]
+        }
       ]
     },
     {
-      "groep": "Uitvoering", "stuk": "solo of samen, lesweek 35",
+      "groep": "Uitvoering",
+      "stuk": "solo of samen, lesweek 35",
       "criteria": [
-        { "id": "uitvoering", "naam": "Uitvoering", "uitleg": "zeker, in tempo, zoals genoteerd; samen of solo", "weging": 2,
-          "docent": ["De uitvoering valt stil of wijkt sterk af van de notatie.", "Grotendeels zoals genoteerd, met haperingen; het samenspel wankelt soms.", "Zeker en in tempo, zoals genoteerd; de groove of het samenspel staat.", "Muzikaal uitgevoerd; dynamiek en groove maken de oplossing van de vraag hoorbaar."],
-          "leerling": ["Ik val stil of we spelen iets anders dan er staat.", "We spelen het grotendeels zoals genoteerd, met haperingen.", "We spelen zeker en in tempo, zoals het er staat; de groove staat.", "We spelen muzikaal; je hoort de oplossing van mijn vraag in de uitvoering."] },
-        { "id": "toelichting", "naam": "Presentatie en toelichting", "uitleg": "aankondigen, probleemstelling en keuzes uitleggen", "weging": 1,
-          "docent": ["Geen aankondiging; kan niet vertellen hoe het stuk gemaakt is.", "Noemt titel en probleemstelling; beschrijft de stappen zonder keuzes te onderbouwen.", "Legt uit hoe de probleemstelling is opgelost, met de juiste begrippen.", "Onderbouwt keuzes met een voorbeeld uit moderne jazz of pop en noemt wat beter kan."],
-          "leerling": ["Ik kondig niets aan en kan niet vertellen hoe ik mijn stuk maakte.", "Ik noem titel en probleemstelling en vertel de stappen.", "Ik leg uit hoe ik mijn probleemstelling heb opgelost, met de juiste begrippen.", "Ik onderbouw mijn keuzes met een voorbeeld uit jazz of pop en weet wat beter kan."] }
+        {
+          "id": "uitvoering",
+          "naam": "Uitvoering",
+          "uitleg": "zeker, in tempo, zoals genoteerd; samen of solo",
+          "weging": 2,
+          "docent": [
+            "De uitvoering valt stil of wijkt sterk af van de notatie.",
+            "Grotendeels zoals genoteerd, met haperingen; het samenspel wankelt soms.",
+            "Zeker en in tempo, zoals genoteerd; de groove of het samenspel staat.",
+            "Muzikaal uitgevoerd; dynamiek en groove maken de oplossing van de vraag hoorbaar."
+          ],
+          "leerling": [
+            "Ik val stil of we spelen iets anders dan er staat.",
+            "We spelen het grotendeels zoals genoteerd, met haperingen.",
+            "We spelen zeker en in tempo, zoals het er staat; de groove staat.",
+            "We spelen muzikaal; je hoort de oplossing van mijn vraag in de uitvoering."
+          ]
+        },
+        {
+          "id": "toelichting",
+          "naam": "Presentatie en toelichting",
+          "uitleg": "aankondigen, probleemstelling en keuzes uitleggen",
+          "weging": 1,
+          "docent": [
+            "Geen aankondiging; kan niet vertellen hoe het stuk gemaakt is.",
+            "Noemt titel en probleemstelling; beschrijft de stappen zonder keuzes te onderbouwen.",
+            "Legt uit hoe de probleemstelling is opgelost, met de juiste begrippen.",
+            "Onderbouwt keuzes met een voorbeeld uit moderne jazz of pop en noemt wat beter kan."
+          ],
+          "leerling": [
+            "Ik kondig niets aan en kan niet vertellen hoe ik mijn stuk maakte.",
+            "Ik noem titel en probleemstelling en vertel de stappen.",
+            "Ik leg uit hoe ik mijn probleemstelling heb opgelost, met de juiste begrippen.",
+            "Ik onderbouw mijn keuzes met een voorbeeld uit jazz of pop en weet wat beter kan."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }

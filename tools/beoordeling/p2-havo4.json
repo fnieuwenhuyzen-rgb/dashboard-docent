@@ -4,54 +4,188 @@
   "toets": "P2",
   "titel": "Praktijktoets P2: melodie treffen",
   "thema": "Melodie lezen en zingen",
-  "weging": 8, "herkansbaar": true,
-  "velden": ["Melodie", "Toonsoort", "Zingen of spelen"],
+  "weging": 8,
+  "herkansbaar": true,
+  "velden": [
+    "Melodie",
+    "Toonsoort",
+    "Zingen of spelen"
+  ],
   "vooruit": "Eén punt om verder te oefenen",
   "leerlingTitel": "Zo beoordeel ik mijn melodie treffen",
   "leerlingInstructie": "Gebruik dit bij de proef en direct na de toets. Zet per onderdeel een kruisje bij wat je bij jezelf hoorde en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.",
   "pta": "PTA havo 4 2026-2027, P2: periode 3 in de les (lesweek 27), weging 8, 45 minuten, herkansbaar in de les. Domein B1 zingen en spelen. Onbekende melodie van 8 tot 16 maten in C, F of G met tien minuten voorbereiding, en een ritme van vier maten. Beoordeling op eerste toon zuiver, kloppende toonhoogtes, ritme en maat, en doorgaan na een fout.",
   "map": "02 Keuzevak muziek\\Havo\\Havo 4\\P2 Praktijktoets - Melodie lezen en zingen\\Beoordeling",
   "lessen": [
-    { "lg": "havo4", "w": 25, "slot": "l2", "wat": ["leerling"] },
-    { "lg": "havo4", "w": 27, "slot": "l2", "wat": ["docent", "scoreblad", "leerling"] },
-    { "lg": "havo4", "w": 27, "slot": "l3", "wat": ["docent", "scoreblad"] }
+    {
+      "lg": "havo4",
+      "w": 25,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 27,
+      "slot": "l2",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo4",
+      "w": 27,
+      "slot": "l3",
+      "wat": [
+        "docent",
+        "scoreblad"
+      ]
+    }
   ],
   "niveaus": [
-    { "score": 4, "naam": "Onvoldoende" },
-    { "score": 6, "naam": "Voldoende" },
-    { "score": 8, "naam": "Goed" },
-    { "score": 10, "naam": "Uitstekend" }
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Melodie", "stuk": "onbekende melodie, gezongen of gespeeld met begeleiding",
+      "groep": "Melodie",
+      "stuk": "onbekende melodie, gezongen of gespeeld met begeleiding",
       "criteria": [
-        { "id": "inzet", "naam": "Eerste toon", "uitleg": "na de grondtoon zelf zuiver inzetten", "weging": 1,
-          "docent": ["Vindt de eerste toon niet zelf; zet een andere toon in of heeft hulp nodig.", "Vindt de eerste toon na zoeken of bij een tweede poging.", "Zet de eerste toon na de grondtoon direct zuiver in.", "Zet direct zuiver en zeker in, meteen in het tempo van de begeleiding."],
-          "leerling": ["Ik vind de eerste toon niet zelf.", "Ik vind de eerste toon na wat zoeken of bij een tweede poging.", "Ik zet de eerste toon na de grondtoon meteen zuiver in.", "Ik zet meteen zuiver en zeker in, in het tempo van de begeleiding."] },
-        { "id": "toonhoogte", "naam": "Toonhoogtes", "uitleg": "stapjes en kleine sprongen kloppen", "weging": 3,
-          "docent": ["Veel toonhoogtes kloppen niet; de melodie is nauwelijks herkenbaar.", "Stapjes kloppen meestal; bij sprongen of na een lange noot gaat het soms mis.", "Vrijwel alle toonhoogtes kloppen, ook de sprongen; blijft in de toonsoort.", "Alle toonhoogtes kloppen en klinken zuiver; de melodie klinkt als ingestudeerd."],
-          "leerling": ["Veel noten kloppen niet; je herkent de melodie nauwelijks.", "De stapjes kloppen meestal, bij sprongen gaat het soms mis.", "Bijna alle noten kloppen, ook de sprongen.", "Alle noten kloppen en klinken zuiver, alsof ik de melodie al kende."] },
-        { "id": "ritme", "naam": "Ritme van de melodie", "uitleg": "notenwaarden en rusten", "weging": 2,
-          "docent": ["Notenwaarden en rusten kloppen vaak niet.", "Ritme meestal goed; lange noten of rusten soms te kort of te lang.", "Ritme klopt, ook bij lange noten en rusten.", "Ritme klopt precies en klinkt vloeiend, met adem op rusten en frase-einden."],
-          "leerling": ["Mijn ritme klopt vaak niet.", "Mijn ritme klopt meestal; lange noten of rusten maak ik soms te kort.", "Mijn ritme klopt, ook bij lange noten en rusten.", "Mijn ritme klopt precies en ik adem op de rusten en aan het eind van een zin."] },
-        { "id": "maat", "naam": "In de maat", "uitleg": "samen met de begeleiding", "weging": 1,
-          "docent": ["Loopt los van de begeleiding; het tempo zakt in of jaagt.", "Blijft meestal bij de begeleiding; wacht soms of loopt even voor.", "Blijft in de maat met de begeleiding, van de eerste tot de laatste maat.", "Beweegt mee in de puls; melodie en begeleiding klinken als één geheel."],
-          "leerling": ["Ik loop los van de begeleiding.", "Ik blijf meestal bij de begeleiding, soms wacht ik of loop ik voor.", "Ik blijf van begin tot eind in de maat met de begeleiding.", "Ik beweeg mee in de puls; mijn melodie en de begeleiding klinken als één geheel."] },
-        { "id": "doorgaan", "naam": "Doorgaan na een fout", "uitleg": "niet stoppen, de draad weer oppakken", "weging": 1,
-          "docent": ["Stopt bij een fout en begint opnieuw of komt niet verder.", "Hapert na een fout, maar pakt de draad weer op.", "Gaat na een fout direct door, op de goede tel.", "Herstelt een fout zo snel dat het nauwelijks opvalt."],
-          "leerling": ["Ik stop als ik een fout maak.", "Na een fout haper ik even, maar ik ga verder.", "Na een fout ga ik meteen door, op de goede tel.", "Ik herstel een fout zo snel dat bijna niemand het hoort."] }
+        {
+          "id": "inzet",
+          "naam": "Eerste toon",
+          "uitleg": "na de grondtoon zelf zuiver inzetten",
+          "weging": 1,
+          "docent": [
+            "Vindt de eerste toon niet zelf; zet een andere toon in of heeft hulp nodig.",
+            "Vindt de eerste toon na zoeken of bij een tweede poging.",
+            "Zet de eerste toon na de grondtoon direct zuiver in.",
+            "Zet direct zuiver en zeker in, meteen in het tempo van de begeleiding."
+          ],
+          "leerling": [
+            "Ik vind de eerste toon niet zelf.",
+            "Ik vind de eerste toon na wat zoeken of bij een tweede poging.",
+            "Ik zet de eerste toon na de grondtoon meteen zuiver in.",
+            "Ik zet meteen zuiver en zeker in, in het tempo van de begeleiding."
+          ]
+        },
+        {
+          "id": "toonhoogte",
+          "naam": "Toonhoogtes",
+          "uitleg": "stapjes en kleine sprongen kloppen",
+          "weging": 3,
+          "docent": [
+            "Veel toonhoogtes kloppen niet; de melodie is nauwelijks herkenbaar.",
+            "Stapjes kloppen meestal; bij sprongen of na een lange noot gaat het soms mis.",
+            "Vrijwel alle toonhoogtes kloppen, ook de sprongen; blijft in de toonsoort.",
+            "Alle toonhoogtes kloppen en klinken zuiver; de melodie klinkt als ingestudeerd."
+          ],
+          "leerling": [
+            "Veel noten kloppen niet; je herkent de melodie nauwelijks.",
+            "De stapjes kloppen meestal, bij sprongen gaat het soms mis.",
+            "Bijna alle noten kloppen, ook de sprongen.",
+            "Alle noten kloppen en klinken zuiver, alsof ik de melodie al kende."
+          ]
+        },
+        {
+          "id": "ritme",
+          "naam": "Ritme van de melodie",
+          "uitleg": "notenwaarden en rusten",
+          "weging": 2,
+          "docent": [
+            "Notenwaarden en rusten kloppen vaak niet.",
+            "Ritme meestal goed; lange noten of rusten soms te kort of te lang.",
+            "Ritme klopt, ook bij lange noten en rusten.",
+            "Ritme klopt precies en klinkt vloeiend, met adem op rusten en frase-einden."
+          ],
+          "leerling": [
+            "Mijn ritme klopt vaak niet.",
+            "Mijn ritme klopt meestal; lange noten of rusten maak ik soms te kort.",
+            "Mijn ritme klopt, ook bij lange noten en rusten.",
+            "Mijn ritme klopt precies en ik adem op de rusten en aan het eind van een zin."
+          ]
+        },
+        {
+          "id": "maat",
+          "naam": "In de maat",
+          "uitleg": "samen met de begeleiding",
+          "weging": 1,
+          "docent": [
+            "Loopt los van de begeleiding; het tempo zakt in of jaagt.",
+            "Blijft meestal bij de begeleiding; wacht soms of loopt even voor.",
+            "Blijft in de maat met de begeleiding, van de eerste tot de laatste maat.",
+            "Beweegt mee in de puls; melodie en begeleiding klinken als één geheel."
+          ],
+          "leerling": [
+            "Ik loop los van de begeleiding.",
+            "Ik blijf meestal bij de begeleiding, soms wacht ik of loop ik voor.",
+            "Ik blijf van begin tot eind in de maat met de begeleiding.",
+            "Ik beweeg mee in de puls; mijn melodie en de begeleiding klinken als één geheel."
+          ]
+        },
+        {
+          "id": "doorgaan",
+          "naam": "Doorgaan na een fout",
+          "uitleg": "niet stoppen, de draad weer oppakken",
+          "weging": 1,
+          "docent": [
+            "Stopt bij een fout en begint opnieuw of komt niet verder.",
+            "Hapert na een fout, maar pakt de draad weer op.",
+            "Gaat na een fout direct door, op de goede tel.",
+            "Herstelt een fout zo snel dat het nauwelijks opvalt."
+          ],
+          "leerling": [
+            "Ik stop als ik een fout maak.",
+            "Na een fout haper ik even, maar ik ga verder.",
+            "Na een fout ga ik meteen door, op de goede tel.",
+            "Ik herstel een fout zo snel dat bijna niemand het hoort."
+          ]
+        }
       ]
     },
     {
-      "groep": "Ritme", "stuk": "ritme van vier maten, meteen klappen of spelen",
+      "groep": "Ritme",
+      "stuk": "ritme van vier maten, meteen klappen of spelen",
       "criteria": [
-        { "id": "ritmeblad", "naam": "Ritme van blad", "uitleg": "kwarten, achtsten en een syncope", "weging": 2,
-          "docent": ["Klapt het ritme met veel fouten of verliest de maat.", "Klapt het ritme grotendeels goed; de syncope of een groep achtsten klopt nog niet.", "Klapt de vier maten in één keer goed, in een vast tempo.", "Klapt de vier maten meteen foutloos en strak; de syncope klinkt duidelijk tegen de tel."],
-          "leerling": ["Ik klap het ritme met veel fouten of raak de maat kwijt.", "Ik klap het ritme grotendeels goed, maar de syncope of de achtsten nog niet.", "Ik klap de vier maten in één keer goed, in een vast tempo.", "Ik klap de vier maten meteen foutloos en strak, ook de syncope."] }
+        {
+          "id": "ritmeblad",
+          "naam": "Ritme van blad",
+          "uitleg": "kwarten, achtsten en een syncope",
+          "weging": 2,
+          "docent": [
+            "Klapt het ritme met veel fouten of verliest de maat.",
+            "Klapt het ritme grotendeels goed; de syncope of een groep achtsten klopt nog niet.",
+            "Klapt de vier maten in één keer goed, in een vast tempo.",
+            "Klapt de vier maten meteen foutloos en strak; de syncope klinkt duidelijk tegen de tel."
+          ],
+          "leerling": [
+            "Ik klap het ritme met veel fouten of raak de maat kwijt.",
+            "Ik klap het ritme grotendeels goed, maar de syncope of de achtsten nog niet.",
+            "Ik klap de vier maten in één keer goed, in een vast tempo.",
+            "Ik klap de vier maten meteen foutloos en strak, ook de syncope."
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "zelfbeoordeling": 10
 }
