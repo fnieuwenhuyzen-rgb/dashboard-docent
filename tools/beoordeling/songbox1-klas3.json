@@ -1,0 +1,182 @@
+{
+  "id": "songbox1-klas3",
+  "klas": "havo 3 en vwo 3",
+  "toets": "Songbox 1",
+  "titel": "Speelstuk Songbox 1",
+  "thema": "Periode 1, songbox 1",
+  "velden": [
+    "Klas",
+    "Groep",
+    "Mijn partij"
+  ],
+  "vooruit": "Eén punt voor Way Maker",
+  "leerlingTitel": "Zo beoordeel ik mijn spel in songbox 1",
+  "leerlingInstructie": "Zet per onderdeel een kruisje bij wat je nu laat zien. Dit zijn dezelfde zes onderdelen als op je leerlingblad. Spelen telt dubbel, reflectie één keer.",
+  "pta": "Geen PTO-toets: cijfer voor het speelstuk van songbox 1 (leergang klas 3, lesweek 8: opnemen en terugluisteren), met dezelfde zes onderdelen en weging als het leerlingblad speelstuk.",
+  "map": "01 Onderbouw muziek\\Klas 3\\Songbox 1 periode 1\\Beoordeling",
+  "lessen": [
+    {
+      "lg": "vwo3",
+      "w": 8,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    },
+    {
+      "lg": "havo3",
+      "w": 8,
+      "slot": "l1",
+      "wat": [
+        "docent",
+        "scoreblad",
+        "leerling"
+      ]
+    }
+  ],
+  "niveaus": [
+    {
+      "score": 4,
+      "naam": "Onvoldoende"
+    },
+    {
+      "score": 6,
+      "naam": "Voldoende"
+    },
+    {
+      "score": 8,
+      "naam": "Goed"
+    },
+    {
+      "score": 10,
+      "naam": "Uitstekend"
+    }
+  ],
+  "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Spelen telt dubbel, reflectie één keer.",
+  "onderdelen": [
+    {
+      "groep": "Spelen (telt dubbel)",
+      "stuk": "songbox 1",
+      "criteria": [
+        {
+          "id": "samenspel",
+          "naam": "Samenspel",
+          "uitleg": "luisteren naar de anderen, samen opbouwen",
+          "weging": 2,
+          "docent": [
+            "Speelt los van de groep, te hard of te zacht; let niet op de anderen.",
+            "Houdt rekening met de groep; begint en eindigt samen, de opbouw is nog vlak.",
+            "Past zich aan de anderen aan en speelt de afgesproken opbouw en terugval soepel mee.",
+            "Voelt de groep aan en draagt mee de opbouw van rustig couplet naar vol refrein."
+          ],
+          "leerling": [
+            "Ik speel te hard of te zacht en let niet op de anderen.",
+            "Ik let op de anderen tijdens het spelen; we beginnen en eindigen samen.",
+            "Ik pas me aan de anderen aan en speel de opbouw en terugval soepel mee.",
+            "Ik voel aan wat de anderen doen en help het lied groeien van rustig naar vol."
+          ]
+        },
+        {
+          "id": "ritme",
+          "naam": "Ritme",
+          "uitleg": "tempo vasthouden, groove, wisselen op de tel",
+          "weging": 2,
+          "docent": [
+            "Raakt het tempo vaak kwijt; akkoorden of grondtonen komen niet op de tel.",
+            "Speelt de ritmes van de partij goed; wisselt meestal op de tel, soms met een hapering.",
+            "Speelt strak in de maat en met groove; wisselt akkoorden precies op de tel.",
+            "Timing zo strak dat de groep erop kan bouwen; de groove houdt stand, ook in de volle delen."
+          ],
+          "leerling": [
+            "Ik raak het tempo vaak kwijt of wissel te laat van akkoord.",
+            "Ik speel de ritmes goed en wissel meestal op de tel.",
+            "Ik speel strak in de maat, met groove, en wissel precies op de tel.",
+            "Mijn timing is zo strak dat de groep op mij kan bouwen, ook als het voller wordt."
+          ]
+        },
+        {
+          "id": "toon",
+          "naam": "Toon",
+          "uitleg": "zuiver en de juiste noten",
+          "weging": 2,
+          "docent": [
+            "Speelt of zingt vaak vals of verkeerde noten; akkoorden klinken niet schoon.",
+            "Speelt of zingt meestal zuiver en de juiste noten; een enkel akkoord klinkt nog niet goed.",
+            "Heldere, krachtige klank; akkoorden klinken schoon, melodie of grondtonen zuiver.",
+            "Mooie, verzorgde klank van intro tot outro, zacht in het couplet en vol in het refrein."
+          ],
+          "leerling": [
+            "Ik speel of zing vaak vals of verkeerde noten.",
+            "Ik speel of zing meestal zuiver en de juiste noten.",
+            "Mijn klank is helder en krachtig; mijn akkoorden of noten klinken schoon.",
+            "Mijn klank is mooi en verzorgd, van begin tot eind."
+          ]
+        },
+        {
+          "id": "techniek",
+          "naam": "Techniek",
+          "uitleg": "je instrument of stem beheersen",
+          "weging": 2,
+          "docent": [
+            "Heeft nog moeite met de basis: grepen, toetsen of slagen lukken niet.",
+            "Speelt de basis van de partij goed: de akkoorden, de grondtonen, de groove of de melodie.",
+            "Speelt de partij vloeiend, zonder te haperen bij de wissels.",
+            "Gebruikt technieken om het lied mooier of spannender te maken, zoals een vollere slag of groove."
+          ],
+          "leerling": [
+            "Ik heb nog moeite met de basis van mijn instrument.",
+            "Ik speel de basis van mijn partij goed.",
+            "Ik speel mijn partij vloeiend, zonder te haperen bij de wissels.",
+            "Ik gebruik technieken om het lied mooier of spannender te laten klinken."
+          ]
+        }
+      ]
+    },
+    {
+      "groep": "Reflectie (telt één keer)",
+      "stuk": "reflectieformulier",
+      "criteria": [
+        {
+          "id": "reflectie",
+          "naam": "Eigen reflectie",
+          "uitleg": "weten wat goed gaat en wat beter kan",
+          "weging": 1,
+          "docent": [
+            "Schrijft weinig of niets over het eigen spel.",
+            "Noemt een paar sterke en zwakke punten.",
+            "Noemt sterke en zwakke punten met concrete voorbeelden uit het lied.",
+            "Noemt sterke en zwakke punten met voorbeelden en koppelt ze aan het eigen leerdoel."
+          ],
+          "leerling": [
+            "Ik schrijf weinig of niets over mijn eigen spel.",
+            "Ik noem een paar sterke en zwakke punten.",
+            "Ik noem sterke en zwakke punten, met concrete voorbeelden uit het lied.",
+            "Ik noem sterke en zwakke punten met voorbeelden en koppel ze aan wat ik wilde leren."
+          ]
+        },
+        {
+          "id": "feedback",
+          "naam": "Feedback op groepsgenoten",
+          "uitleg": "een compliment en een bruikbare tip",
+          "weging": 1,
+          "docent": [
+            "Geeft geen feedback, of alleen 'goed' of 'slecht'.",
+            "Geeft algemene feedback.",
+            "Geeft elke groepsgenoot een compliment en een concrete tip: wat, en waar in het lied.",
+            "Geeft precieze tips die echt helpen, bijvoorbeeld waar in het refrein het tempo versnelde en wat je dan doet."
+          ],
+          "leerling": [
+            "Ik geef geen feedback, of alleen 'goed' of 'slecht'.",
+            "Ik geef algemene feedback.",
+            "Ik geef concrete tips waar iemand iets aan heeft.",
+            "Ik geef precieze tips die iemand echt helpen om beter te spelen."
+          ]
+        }
+      ]
+    }
+  ],
+  "zelfbeoordeling": 0
+}
