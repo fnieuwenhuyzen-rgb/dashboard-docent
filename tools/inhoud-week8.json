@@ -49,6 +49,7 @@
           { "min": 35, "soort": "doen", "kop": "De uitvoeringen: zo gaat het", "stappen": ["Wie aan de beurt is, zegt kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.", "Het publiek luistert zoals op een concert: stil, telefoon weg, applaus na afloop.", "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.", "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."], "docent": "Scorelijst per leerling: solo en samenspel apart. Donderdag de resterende uitvoeringen. Opnemen met de telefoon op het statief, zodat de format-reflectie thuis kan." }
         ],
         "formatief": { "soort": "toets", "tekst": "P9 telt mee. Je krijgt je cijfer na de tweede toetsles, met een opmerking per onderdeel." },
+        "bijlagen": [{ "t": "P9 beoordelingsformulier docent (Word)", "pad": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling\\P9 Beoordelingsformulier docent.docx" }, { "t": "P9 scoreblad vwo 5 (Excel, weging en cijfer)", "pad": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling\\P9 Scoreblad vwo 5.xlsx" }, { "t": "P9 format zelfbeoordeling leerling (Word)", "pad": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling\\P9 Format zelfbeoordeling leerling.docx" }],
         "extra": { "1": { "soort": "kaarten", "items": [{ "k": "Toon en zuiverheid", "t": "klinkt het zoals bedoeld?" }, { "k": "Ritme en tempo", "t": "blijft het staan?" }, { "k": "Uitdrukking", "t": "dynamiek, frasering, karakter" }, { "k": "Samenspel", "t": "luisteren en reageren" }] } }
       },
       {
@@ -60,7 +61,8 @@
           { "min": 10, "soort": "start", "kop": "Messiah: nr. 4 en nr. 44 herhalen", "stappen": ["Nr. 4: de fugatische inzetten, stem voor stem.", "Nr. 44: vanaf 'The kingdom of this world'. Let op het tempo: niet gaan rennen.", "Eén aandachtspunt per stemgroep."], "docent": "Opname oefensite. Hier mag wat langer aan de inzetten geschaafd worden; de rest van de les is zelfstandig." },
           { "min": 35, "soort": "doen", "kop": "Twee sporen: nog spelen of al geweest", "stappen": ["Nog niet geweest: speel je stukken twee keer helemaal door, in een hoek van het lokaal of in de oefenruimte. Niet repareren, doorspelen.", "Al geweest: luister je opname terug en vul het format in voor je eigen uitvoering. Eén punt dat je meeneemt naar P10, concreet: welke maat, welk probleem.", "Klaar? Luister naar de opname van een klasgenoot en geef één tip op het format."], "klaar": "Speel je moeilijkste passage drie keer in een langzaam tempo, dan één keer op tempo.", "docent": "Rouleren; bij de 'nog spelen'-groep vooral het begin en einde laten oefenen. Formats aan het eind van de les innemen." }
         ],
-        "formatief": { "soort": "zelfbeoordeling", "tekst": "Format voor je eigen uitvoering: één concreet punt voor P10." }
+        "formatief": { "soort": "zelfbeoordeling", "tekst": "Format voor je eigen uitvoering: één concreet punt voor P10." },
+        "bijlagen": [{ "t": "P9 format zelfbeoordeling leerling (Word)", "pad": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling\\P9 Format zelfbeoordeling leerling.docx" }]
       },
       {
         "titel": "Praktijktoets P9, vervolg", "code": "P1 · P9", "bestand": "08.3 Praktijktoets P9 vervolg - Brahms naast Mozart.pptx", "type": "toets",
@@ -72,7 +74,8 @@
           { "min": 15, "soort": "luisteren", "kop": "Brahms naast Mozart: een pianoconcert, honderd jaar later", "stappen": ["Eerst Mozart: een pianoconcert uit de jaren 1780. Hoe groot is het orkest, hoe is de piano begeleid, hoe lang zijn de zinnen?", "Dan Brahms: een pianoconcert uit de negentiende eeuw. Wat is er gegroeid, wat is dikker, wat is anders?", "Schrijf drie verschillen op: bezetting, klank, vorm of karakter."], "klaar": "Welk fragment zou je kiezen voor een film over hoop? En waarom?", "docent": "Fragmenten: Mozart KV 488 (A-groot) eerste deel, opening en piano-inzet; Brahms nr. 2 opus 83, opening met hoorn en piano. Twee keer twee minuten is genoeg. Dit is de opmaat naar de romantiek, na de toetsweek." },
           { "min": 5, "soort": "gesprek", "kop": "Wat maakt classicisme classicisme?", "stappen": ["Jullie drie verschillen op het bord.", "Welke daarvan horen bij het classicisme zelf: evenwicht, heldere zinnen, bescheiden orkest?", "Volgende week toetsweek: Musicbox b8 Musicsheets 8.1 t/m 8.6 en Messiah."], "docent": "Afsluiten met de kernwoorden van het blok: periodebouw, Alberti-bas, sonatevorm, orkest zonder trombones." }
         ],
-        "formatief": { "soort": "gesprek", "tekst": "Drie verschillen tussen Brahms en Mozart op het bord. Welke horen bij het classicisme zelf?" }
+        "formatief": { "soort": "gesprek", "tekst": "Drie verschillen tussen Brahms en Mozart op het bord. Welke horen bij het classicisme zelf?" },
+        "bijlagen": [{ "t": "P9 beoordelingsformulier docent (Word)", "pad": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling\\P9 Beoordelingsformulier docent.docx" }, { "t": "P9 scoreblad vwo 5 (Excel, weging en cijfer)", "pad": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling\\P9 Scoreblad vwo 5.xlsx" }]
       }
     ]
   },

@@ -1,0 +1,53 @@
+{
+  "id": "vwo5-P9",
+  "klas": "vwo 5",
+  "toets": "P9",
+  "titel": "Praktijktoets P9: solowerk en samenspel",
+  "thema": "Classicisme",
+  "pta": "PTA vwo 5 2026-2027, P9: periode 1 in de les, weging 6, 45 minuten, niet herkansbaar. Domein B1 zingen en spelen. Beoordeling op presentatie, muzikaliteit en samenspel.",
+  "map": "02 Keuzevak muziek/VWO/VWO 5/P9 Praktijktoets - Solowerk en samenspel classicisme/Beoordeling",
+  "lessen": ["vwo5 w7 l2 (zelfscore met het format)", "vwo5 w8 l1", "vwo5 w8 l2 (format eigen uitvoering)", "vwo5 w8 l3"],
+  "niveaus": [
+    { "score": 4, "naam": "Onvoldoende" },
+    { "score": 6, "naam": "Voldoende" },
+    { "score": 8, "naam": "Goed" },
+    { "score": 10, "naam": "Uitstekend" }
+  ],
+  "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
+  "onderdelen": [
+    {
+      "groep": "Presentatie", "stuk": "beide",
+      "criteria": [
+        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, begin en slot, doorspelen", "weging": 1,
+          "docent": ["Geen aankondiging; begin en slot onduidelijk; stopt bij een fout.", "Kondigt het stuk aan; begint en eindigt, maar aarzelend; stopt soms na een fout.", "Noemt stuk, componist en bezetting; duidelijk begin en slot; speelt door na een fout.", "Presenteert als op een concert: rustige aankondiging, overtuigende inzet en slot; fouten vallen nauwelijks op."],
+          "leerling": ["Ik kondig niets aan en stop als er iets misgaat.", "Ik kondig het stuk aan, maar begin of eindig aarzelend.", "Ik noem stuk, componist en bezetting, begin en eindig duidelijk en speel door na een fout.", "Ik presenteer zoals op een concert: rustig, overtuigend begin en slot."] }
+      ]
+    },
+    {
+      "groep": "Muzikaliteit", "stuk": "solowerk",
+      "criteria": [
+        { "id": "toon", "naam": "Toon en zuiverheid", "uitleg": "klinkt het zoals bedoeld?", "weging": 2,
+          "docent": ["Toon vaak onzuiver of geforceerd; noten vallen regelmatig weg.", "Overwegend zuiver; de toon wisselt nog op lastige plekken.", "Zuivere, heldere toon door het hele stuk.", "De toon krijgt bewust kleur, passend bij het karakter."],
+          "leerling": ["Mijn toon is vaak onzuiver of noten vallen weg.", "Mijn toon is meestal zuiver, behalve op lastige plekken.", "Mijn toon is het hele stuk zuiver en helder.", "Ik kleur mijn toon bewust, passend bij het karakter."] },
+        { "id": "ritme", "naam": "Ritme en tempo", "uitleg": "blijft het staan?", "weging": 2,
+          "docent": ["Tempo zakt in of jaagt; ritmes vaak onnauwkeurig.", "Grotendeels stabiel tempo; enkele ritmische fouten op lastige plekken.", "Stabiel tempo en nauwkeurig ritme, ook in de moeilijkste maten.", "Strak en levendig; het tempo draagt het karakter van het stuk."],
+          "leerling": ["Mijn tempo zakt in of jaagt.", "Mijn tempo is meestal stabiel, met een paar ritmefouten.", "Mijn tempo staat, ook in de moeilijkste maten.", "Mijn ritme is strak en levendig en past bij het karakter."] },
+        { "id": "uitdrukking", "naam": "Uitdrukking en stijl", "uitleg": "dynamiek, frasering, karakter, klassieke stijl", "weging": 2,
+          "docent": ["Vlak: geen dynamiek of frasering te horen.", "Enkele dynamische verschillen; frasen soms hoorbaar.", "Frasen ademen en eindigen op de cadens; dynamiek en contrast duidelijk hoorbaar.", "Overtuigend klassiek: heldere periodebouw, contrast tussen thema's, crescendo en decrescendo met een doel."],
+          "leerling": ["Je hoort geen dynamiek of frasering.", "Je hoort af en toe dynamiek en een frase.", "Mijn frasen ademen en eindigen op de cadens; je hoort dynamiek en contrast.", "Je hoort de klassieke stijl: periodebouw, contrast en crescendo met een doel."] }
+      ]
+    },
+    {
+      "groep": "Samenspel", "stuk": "samenspelstuk",
+      "criteria": [
+        { "id": "partij", "naam": "Eigen partij", "uitleg": "zeker en in tempo", "weging": 1,
+          "docent": ["De partij valt vaak weg of loopt vast.", "De partij is grotendeels gespeeld, met stops.", "De partij klinkt zeker en in tempo.", "De partij is beheerst en muzikaal vormgegeven."],
+          "leerling": ["Mijn partij valt vaak weg.", "Ik speel mijn partij grotendeels, met stops.", "Ik speel mijn partij zeker en in tempo.", "Ik speel mijn partij beheerst en muzikaal."] },
+        { "id": "luisteren", "naam": "Luisteren en reageren", "uitleg": "balans, samen beginnen en eindigen", "weging": 2,
+          "docent": ["Speelt los van de anderen; de balans klopt niet.", "Houdt rekening met de anderen; samen beginnen en samen eindigen lukt.", "Past tempo en volume aan; de melodie blijft steeds hoorbaar.", "Reageert op de anderen, geeft en neemt ruimte; het klinkt als één ensemble."],
+          "leerling": ["Ik speel los van de anderen.", "Ik let op de anderen; we beginnen en eindigen samen.", "Ik pas tempo en volume aan; de melodie blijft hoorbaar.", "Ik reageer op de anderen; we klinken als één ensemble."] }
+      ]
+    }
+  ]
+}

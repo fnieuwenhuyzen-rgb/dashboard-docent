@@ -16,13 +16,37 @@
       "t": "Presentatie: Praktijktoets P9: solowerk en samenspel (PowerPoint)",
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/Lessen%202026-2027/08.1%20Praktijktoets%20P9%20-%20solowerk%20en%20samenspel.pptx?web=1"
     },
+    "pres-vwo5-1-b1": {
+      "t": "P9 beoordelingsformulier docent (Word)",
+      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Beoordelingsformulier%20docent.docx?web=1"
+    },
+    "pres-vwo5-1-b2": {
+      "t": "P9 scoreblad vwo 5 (Excel, weging en cijfer)",
+      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Scoreblad%20vwo%205.xlsx?web=1"
+    },
+    "pres-vwo5-1-b3": {
+      "t": "P9 format zelfbeoordeling leerling (Word)",
+      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Format%20zelfbeoordeling%20leerling.docx?web=1"
+    },
     "pres-vwo5-2": {
       "t": "Presentatie: Inspelen en terugluisteren (PowerPoint)",
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/Lessen%202026-2027/08.2%20Inspelen%20en%20terugluisteren.pptx?web=1"
     },
+    "pres-vwo5-2-b1": {
+      "t": "P9 format zelfbeoordeling leerling (Word)",
+      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Format%20zelfbeoordeling%20leerling.docx?web=1"
+    },
     "pres-vwo5-3": {
       "t": "Presentatie: Praktijktoets P9, vervolg (PowerPoint)",
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/Lessen%202026-2027/08.3%20Praktijktoets%20P9%20vervolg%20-%20Brahms%20naast%20Mozart.pptx?web=1"
+    },
+    "pres-vwo5-3-b1": {
+      "t": "P9 beoordelingsformulier docent (Word)",
+      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Beoordelingsformulier%20docent.docx?web=1"
+    },
+    "pres-vwo5-3-b2": {
+      "t": "P9 scoreblad vwo 5 (Excel, weging en cijfer)",
+      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Scoreblad%20vwo%205.xlsx?web=1"
     },
     "pres-havo4-1": {
       "t": "Presentatie: Liedsoorten: blues, geestelijk lied, song; oefentoets notatie (PowerPoint)",
@@ -243,7 +267,10 @@
       },
       "materiaal": [
         "pres-vwo5-1",
-        "mb"
+        "mb",
+        "pres-vwo5-1-b1",
+        "pres-vwo5-1-b2",
+        "pres-vwo5-1-b3"
       ]
     },
     "Inspelen en terugluisteren": {
@@ -283,7 +310,8 @@
       },
       "materiaal": [
         "pres-vwo5-2",
-        "mb"
+        "mb",
+        "pres-vwo5-2-b1"
       ]
     },
     "Praktijktoets P9, vervolg": {
@@ -335,7 +363,9 @@
       },
       "materiaal": [
         "pres-vwo5-3",
-        "mb"
+        "mb",
+        "pres-vwo5-3-b1",
+        "pres-vwo5-3-b2"
       ]
     },
     "Liedsoorten: blues, geestelijk lied, song; oefentoets notatie": {

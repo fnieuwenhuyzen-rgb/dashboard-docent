@@ -10,6 +10,8 @@ for (const [kl, K] of Object.entries(INH)) {
     const key = 'pres-' + kl + '-' + (i + 1);
     out._mat[key] = { t: 'Presentatie: ' + (l.kort || l.titel) + ' (PowerPoint)', u: spUrl(K.map + String.fromCharCode(92) + l.bestand) };
     const mat = [key]; if (K.thuis && K.thuis.mb) mat.push('mb');
+    // bijlagen bij de les (bijv. beoordelingsformulieren): { t, pad } met pad vanaf de sectiebibliotheek
+    (l.bijlagen || []).forEach((b, j) => { const bk = key + '-b' + (j + 1); out._mat[bk] = { t: b.t, u: spUrl(b.pad) }; mat.push(bk); });
     out.lessen[l.titel] = { vraag: l.vraag, doel: l.doel, criteria: l.criteria, fasen: l.fasen, formatief: l.formatief, identiteit: l.identiteit, materiaal: mat };
   });
 }

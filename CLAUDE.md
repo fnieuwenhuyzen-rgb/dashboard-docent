@@ -68,3 +68,11 @@ In de app: `koorOp(s)` (Koorapp-item, anders op dinsdag de vaste repetitie 12:45
 - Mavo 4: twee lessen per week tot de meivakantie (aanname bevestigd door Frans). Mavo 3, havo 3, vwo 3, BB1, keuzeuur h3: één les per week.
 - Cijferinvoer-deadlines in de sectiedata zijn aannames (een week vóór de rapportvergadering); echte data nog onbekend.
 - Lesmateriaal voor leerlingen: niet in de schoolhuisstijl, printvriendelijk. De app zelf gebruikt paars #5B247F en rood #C5002E, Encode Sans Condensed en Neuton.
+
+## Beoordelingsmodellen (29-10)
+
+Frans wil per speel-/zangbeoordeling een formulier dat past bij niveau en stuk, in de les (Lesdag) en in de map `Beoordeling` van het PTA-onderdeel. Eén bron per model: `tools/beoordeling/<id>.json` (criteria, weging, niveaus 4/6/8/10 met docent- en leerlingtekst). Daaruit:
+- `node tools/beoordeling/maak-formulieren.js <model> <htmlmap>` + `powershell -File tools/beoordeling/naar-word.ps1 <htmlmap> <doelmap>`: docentformulier en leerlingformat (.docx + .pdf, A4 liggend, één pagina).
+- `powershell -File tools/beoordeling/maak-scoreblad.ps1 <model> <doel.xlsx>`: leeg scoreblad met cijferformule (som score × weging ÷ som wegingen) en rubric. Nooit leerlingnamen in deze bestanden.
+- Koppelen in Lesdag: `bijlagen: [{ t, pad }]` bij de les in `tools/inhoud-week8.json`, dan `koppel-week8.js` + merge.
+Klaar: vwo 5 P9 (presentatie 1×, toon 2×, ritme 2×, uitdrukking en stijl 2×, eigen partij 1×, luisteren en reageren 2×). Volgende: Way Maker P1 (kmu3), vwo 4 P1, havo 4 P1, mavo 3 P1. Later mogelijk een beoordelingsmodus in Lesdag die hetzelfde model leest (scores alleen lokaal/OneDrive).
