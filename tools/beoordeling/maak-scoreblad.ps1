@@ -10,10 +10,11 @@ try {
   $s = $wb.Worksheets.Item(1); $s.Name = $M.toets
   $s.Cells.Item(1,1) = "$($M.titel) · $($M.klas)"; $s.Cells.Item(1,1).Font.Bold = $true; $s.Cells.Item(1,1).Font.Size = 14
   $s.Cells.Item(2,1) = "Score per onderdeel: 4, 6, 8 of 10 (tussenscores 5, 7, 9 mogen). $($M.cijfer)"
-  $kop = @('Leerling', 'Solowerk', 'Samenspelstuk'); foreach ($k in $C) { $kop += "$($k.c.naam) ($($k.c.weging)x)" }; $kop += @('Cijfer', 'Opmerking per onderdeel', 'Punt voor P10')
+  $velden = @($M.velden | Where-Object { $_ }); $vooruit = if ($M.vooruit) { $M.vooruit } else { 'Punt om aan te werken' }
+  $kop = @('Leerling') + $velden; foreach ($k in $C) { $kop += "$($k.c.naam) ($($k.c.weging)x)" }; $kop += @('Cijfer', 'Opmerking per onderdeel', $vooruit)
   for ($i = 0; $i -lt $kop.Count; $i++) { $s.Cells.Item(4, $i + 1) = $kop[$i] }
-  for ($i = 0; $i -lt $C.Count; $i++) { $s.Cells.Item(3, $i + 4) = $C[$i].groep }
-  $eerste = 4; $laatste = 3 + $C.Count; $cijferKol = $laatste + 1
+  for ($i = 0; $i -lt $C.Count; $i++) { $s.Cells.Item(3, $i + 2 + $velden.Count) = $C[$i].groep }
+  $eerste = 2 + $velden.Count; $laatste = $eerste - 1 + $C.Count; $cijferKol = $laatste + 1
   $kolL = { param($n) $r = ''; while ($n -gt 0) { $m = ($n - 1) % 26; $r = [char](65 + $m) + $r; $n = [int](($n - $m) / 26) }; $r }
   for ($r = 5; $r -le 40; $r++) {
     $delen = @(); for ($i = 0; $i -lt $C.Count; $i++) { $delen += "$(& $kolL ($eerste + $i))$r*$($C[$i].c.weging)" }
@@ -24,7 +25,7 @@ try {
   $v.Add(2, 1, 1, '4', '10'); $v.ErrorMessage = 'Vul een score van 4 tot en met 10 in.'
   $hdr = $s.Range("A4:$(& $kolL ($cijferKol + 2))4"); $hdr.Font.Bold = $true; $hdr.Font.Color = 0xFFFFFF; $hdr.Interior.Color = 0x23238C; $hdr.WrapText = $true
   $s.Range("A3:$(& $kolL ($cijferKol + 2))3").Font.Italic = $true
-  $s.Columns.Item(1).ColumnWidth = 22; $s.Columns.Item(2).ColumnWidth = 22; $s.Columns.Item(3).ColumnWidth = 22
+  for ($i = 1; $i -lt $eerste; $i++) { $s.Columns.Item($i).ColumnWidth = 22 }
   for ($i = $eerste; $i -le $cijferKol; $i++) { $s.Columns.Item($i).ColumnWidth = 12 }
   $s.Columns.Item($cijferKol).Font.Bold = $true; $s.Columns.Item($cijferKol + 1).ColumnWidth = 50; $s.Columns.Item($cijferKol + 2).ColumnWidth = 40
   $s.Rows.Item(4).RowHeight = 32; $s.Activate(); $x.ActiveWindow.SplitRow = 4; $x.ActiveWindow.FreezePanes = $true

@@ -1,0 +1,61 @@
+{
+  "id": "p3-mavo4",
+  "klas": "mavo 4",
+  "toets": "P3",
+  "titel": "Eindopdracht P3: muziek en andere kunsten",
+  "thema": "Muziek in relatie tot een andere kunstvorm",
+  "weging": 10, "herkansbaar": false,
+  "velden": ["Kunstvorm", "Voorbeeld of productie", "Publiek muziekstuk"],
+  "vooruit": "Eén punt voor het centraal examen",
+  "leerlingTitel": "Zo beoordeel ik mijn eindopdracht",
+  "leerlingInstructie": "Lees je onderzoek en je presentatie nog eens door voordat je inlevert. Zet per onderdeel een kruisje bij wat past en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.",
+  "pta": "PTA mavo 4 2026-2027, P3: periode 3 in de les, weging 10, 30 minuten, niet herkansbaar, MU/V/1, MU/K/9 en MU/K/2; presentatie en onderzoek over muziek en minstens één andere kunstvorm, met een muziekstuk voor een ander publiek dan de muziekklas.",
+  "map": "02 Keuzevak muziek\\Mavo\\Mavo 4\\P3 Eindopdracht - Muziek en andere kunsten\\Beoordeling",
+  "lessen": [
+    { "lg": "mavo4", "w": 23, "slot": "l2", "wat": ["leerling"] },
+    { "lg": "mavo4", "w": 25, "slot": "l2", "wat": ["leerling"] },
+    { "lg": "mavo4", "w": 26, "slot": "l2", "wat": ["leerling"] },
+    { "lg": "mavo4", "w": 27, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] }
+  ],
+  "niveaus": [
+    { "score": 4, "naam": "Onvoldoende" },
+    { "score": 6, "naam": "Voldoende" },
+    { "score": 8, "naam": "Goed" },
+    { "score": 10, "naam": "Uitstekend" }
+  ],
+  "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
+  "onderdelen": [
+    {
+      "groep": "Onderzoek", "stuk": "muziek en de andere kunstvorm",
+      "criteria": [
+        { "id": "kunstvorm", "naam": "Kunstvorm en voorbeeld", "uitleg": "dans, drama, film, beeldende kunst of literatuur, met een echt voorbeeld", "weging": 1,
+          "docent": ["Kunstvorm onduidelijk of geen concreet voorbeeld.", "Kunstvorm benoemd met een voorbeeld, maar het voorbeeld past er maar half bij.", "Kunstvorm juist benoemd met een passend voorbeeld, zoals een clip, musical of film.", "Kunstvorm precies benoemd (bv. moderne dans, decor) met een goed gekozen voorbeeld."],
+          "leerling": ["Het is niet duidelijk welke kunstvorm ik onderzoek.", "Ik noem de kunstvorm, maar mijn voorbeeld past er maar half bij.", "Ik noem de kunstvorm en een voorbeeld dat goed past.", "Ik noem precies welke kunstvorm het is en mijn voorbeeld is goed gekozen."] },
+        { "id": "functie", "naam": "Functie van de kunstvorm", "uitleg": "verhalend, decoratief of ontspannend: wat voegt het toe?", "weging": 2,
+          "docent": ["Noemt geen functie.", "Noemt een functie, maar legt niet uit waarom.", "Noemt de functie en legt met het voorbeeld uit wat de kunstvorm toevoegt.", "Legt uit wat de kunstvorm toevoegt en welk effect dat heeft op de kijker of luisteraar."],
+          "leerling": ["Ik noem niet waarvoor de kunstvorm dient.", "Ik noem een functie, maar leg niet uit waarom.", "Ik noem de functie en laat met mijn voorbeeld zien wat het toevoegt.", "Ik leg uit wat de kunstvorm toevoegt en wat dat met de kijker doet."] },
+        { "id": "samenhang", "naam": "Samenhang met de muziek", "uitleg": "hoe muziek en kunstvorm samenwerken, met muziekbegrippen", "weging": 2,
+          "docent": ["Muziek en kunstvorm los van elkaar beschreven; geen muziekbegrippen.", "Noemt een verband, met een enkel begrip zoals tempo of dynamiek.", "Legt met muziekbegrippen uit hoe muziek en kunstvorm samenwerken, met een fragment.", "Laat op meerdere plekken zien hoe muziek en kunstvorm elkaar versterken, met juiste begrippen."],
+          "leerling": ["Ik beschrijf muziek en kunstvorm los van elkaar.", "Ik noem een verband, met een begrip zoals tempo of dynamiek.", "Ik leg met muziekbegrippen en een fragment uit hoe ze samenwerken.", "Ik laat op meer plekken zien hoe muziek en kunstvorm elkaar sterker maken."] },
+        { "id": "bronnen", "naam": "Bronnen en fragmenten", "uitleg": "goede bronnen, fragmenten die passen, bronnen genoemd", "weging": 1,
+          "docent": ["Geen bronnen of fragmenten, of tekst overgenomen zonder bron.", "Enkele bronnen en een fragment; niet steeds duidelijk waar iets vandaan komt.", "Betrouwbare bronnen en passende fragmenten; bronnen genoemd.", "Goed gekozen bronnen en fragmenten, in eigen woorden verwerkt en netjes vermeld."],
+          "leerling": ["Ik heb geen bronnen of fragmenten, of ik heb tekst overgenomen.", "Ik heb een paar bronnen, maar je ziet niet altijd waar iets vandaan komt.", "Ik gebruik goede bronnen en fragmenten en noem waar ze vandaan komen.", "Ik schrijf alles in eigen woorden en mijn bronnen en fragmenten zijn goed gekozen."] }
+      ]
+    },
+    {
+      "groep": "Presentatie", "stuk": "presentatie en muziekstuk",
+      "criteria": [
+        { "id": "presentatie", "naam": "Presenteren", "uitleg": "duidelijke opbouw, niet voorlezen, vragen beantwoorden", "weging": 2,
+          "docent": ["Geen duidelijke opbouw; leest voor; kan vragen niet beantwoorden.", "Opbouw te volgen; leest deels voor; beantwoordt een vraag kort.", "Duidelijke opbouw, vertelt vanuit de dia's en beantwoordt vragen.", "Boeiend en zeker verteld; beantwoordt vragen met uitleg en voorbeelden."],
+          "leerling": ["Mijn verhaal heeft geen duidelijke opbouw en ik lees voor.", "Je kunt mijn verhaal volgen, maar ik lees deels voor.", "Mijn verhaal is duidelijk, ik vertel vanuit mijn dia's en beantwoord vragen.", "Ik vertel boeiend en zeker en leg bij vragen goed uit."] },
+        { "id": "muziekstuk", "naam": "Muziekstuk voor publiek", "uitleg": "een muziekstuk presenteren voor ander publiek dan de muziekklas", "weging": 1,
+          "docent": ["Geen muziekstuk gepresenteerd, of alleen in de muziekklas.", "Muziekstuk gepresenteerd voor ander publiek, maar slecht voorbereid.", "Muziekstuk goed voorbereid gepresenteerd voor ander publiek, passend bij het onderwerp.", "Muziekstuk sluit aan bij het onderzoek en spreekt het publiek echt aan."],
+          "leerling": ["Ik heb geen muziekstuk laten horen voor ander publiek.", "Ik heb een muziekstuk laten horen, maar slecht voorbereid.", "Ik heb een muziekstuk goed voorbereid laten horen dat past bij mijn onderwerp.", "Mijn muziekstuk past bij mijn onderzoek en het publiek is echt geboeid."] },
+        { "id": "planning", "naam": "Planning en afspraken", "uitleg": "kunstvorm, opzet en eindversie op tijd, feedback gebruikt", "weging": 1,
+          "docent": ["Stappen niet of te laat ingeleverd; feedback niet gebruikt.", "Meeste stappen ingeleverd, soms pas na herinneren.", "Kunstvorm, opzet en eindversie op tijd; feedback op de opzet verwerkt.", "Werkt zelfstandig volgens planning en verbetert het werk zichtbaar met de feedback."],
+          "leerling": ["Ik heb stappen niet of te laat ingeleverd.", "Ik heb de meeste stappen ingeleverd, soms pas na herinneren.", "Ik lever alles op tijd in en heb de feedback op mijn opzet gebruikt.", "Ik werk zelfstandig volgens mijn planning en heb mijn werk met de feedback beter gemaakt."] }
+      ]
+    }
+  ]
+}

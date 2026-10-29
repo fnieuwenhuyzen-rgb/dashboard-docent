@@ -1,0 +1,64 @@
+{
+  "id": "p3-havo5",
+  "klas": "havo 5",
+  "toets": "P3",
+  "titel": "Praktijktoets P3: zelf componeren",
+  "thema": "Een muzikale vraag oplossen",
+  "weging": 15, "herkansbaar": false,
+  "velden": ["Titel stuk", "Muzikale vraag", "Bezetting"],
+  "vooruit": "Eén punt voor P4",
+  "leerlingTitel": "Zo beoordeel ik mijn eigen compositie",
+  "leerlingInstructie": "Gebruik dit tijdens het componeren, bij de laatste check van je bladmuziek en na de toets. Zet per onderdeel een kruisje bij wat past en schrijf je score op. Je docent let op dezelfde onderdelen.",
+  "pta": "PTA havo 5 2026-2027, P3: in de les (lesweek 17), weging 15, niet herkansbaar, domein B1 en B2. Eigen stuk dat een muzikale vraag oplost, minstens twee minuten en drie partijen, met vorm, bladmuziek, uitvoering en toelichting.",
+  "map": "02 Keuzevak muziek\\Havo\\Havo 5\\P3 Praktijktoets - Eigen compositie\\Beoordeling",
+  "lessen": [
+    { "lg": "havo5", "w": 11, "slot": "l3", "wat": ["leerling"] },
+    { "lg": "havo5", "w": 15, "slot": "l3", "wat": ["leerling"] },
+    { "lg": "havo5", "w": 16, "slot": "l1", "wat": ["leerling"] },
+    { "lg": "havo5", "w": 17, "slot": "l2", "wat": ["docent", "scoreblad", "leerling"] },
+    { "lg": "havo5", "w": 17, "slot": "l3", "wat": ["docent", "scoreblad"] }
+  ],
+  "niveaus": [
+    { "score": 4, "naam": "Onvoldoende" },
+    { "score": 6, "naam": "Voldoende" },
+    { "score": 8, "naam": "Goed" },
+    { "score": 10, "naam": "Uitstekend" }
+  ],
+  "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
+  "onderdelen": [
+    {
+      "groep": "Compositie", "stuk": "eigen stuk, minstens twee minuten, minstens drie partijen",
+      "criteria": [
+        { "id": "vraag", "naam": "Antwoord op de vraag", "uitleg": "lost het stuk de muzikale vraag hoorbaar op?", "weging": 2,
+          "docent": ["Geen vraag gekozen, of het stuk heeft er niets mee te maken.", "De vraag is gekozen; de oplossing is maar op één plek te horen.", "Het stuk geeft hoorbaar antwoord op de vraag.", "Het hele stuk is op de vraag gebouwd; het antwoord overtuigt en verrast."],
+          "leerling": ["Ik heb geen vraag of mijn stuk heeft er niets mee te maken.", "Ik heb een vraag, maar je hoort het antwoord maar op één plek.", "Mijn stuk geeft hoorbaar antwoord op mijn vraag.", "Mijn hele stuk is op mijn vraag gebouwd en het antwoord overtuigt."] },
+        { "id": "samenhang", "naam": "Samenhang en vorm", "uitleg": "materiaal uitgewerkt; vorm met herhaling en contrast", "weging": 2,
+          "docent": ["Losse ideeën of alleen herhaling; geen herkenbare vorm; korter dan twee minuten.", "Herkenbare vorm (bv. ABA); het materiaal wordt vooral herhaald, weinig uitgewerkt.", "Duidelijke vorm met herhaling en contrast; motief of thema wordt uitgewerkt.", "Hecht stuk: het materiaal groeit (bv. sequens, variatie) en het contrast heeft een doel."],
+          "leerling": ["Mijn stuk bestaat uit losse ideeën of alleen herhaling.", "Mijn stuk heeft een vorm, maar ik herhaal vooral.", "Mijn stuk heeft herhaling en contrast en ik werk mijn motief uit.", "Mijn materiaal groeit door het stuk en mijn contrast heeft een doel."] },
+        { "id": "middelen", "naam": "Bewuste keuzes", "uitleg": "tempo, dynamiek, klankkleur, samenklank, drie partijen", "weging": 2,
+          "docent": ["Geen keuzes te horen; de drie partijen ontbreken of doen hetzelfde.", "Drie partijen; één middel (bv. dynamiek) bewust gebruikt.", "Meerdere middelen bewust ingezet; elke partij heeft een eigen taak.", "Middelen en partijen werken samen en dragen allemaal bij aan het antwoord op de vraag."],
+          "leerling": ["Je hoort geen keuzes, of mijn partijen doen hetzelfde.", "Ik heb drie partijen en gebruik één middel bewust.", "Ik zet meerdere middelen bewust in en elke partij heeft een eigen taak.", "Al mijn middelen en partijen helpen om mijn vraag te beantwoorden."] }
+      ]
+    },
+    {
+      "groep": "Bladmuziek", "stuk": "inleveren uiterlijk vr 8 januari",
+      "criteria": [
+        { "id": "notatie", "naam": "Bladmuziek", "uitleg": "netjes, leesbaar, compleet, met tempo en dynamiek", "weging": 1,
+          "docent": ["Bladmuziek ontbreekt, is onvolledig of onleesbaar.", "Alle partijen genoteerd; ritmes, maatstrepen of tekens kloppen niet overal.", "Netjes en compleet: alle partijen, maatsoort, ritmes, tempo- en dynamiektekens.", "Verzorgd als een uitgave: ook articulatie en speelaanwijzingen; een ander kan ervan spelen."],
+          "leerling": ["Mijn bladmuziek ontbreekt of is niet compleet.", "Ik heb alle partijen genoteerd, maar niet alles klopt.", "Mijn bladmuziek is netjes en compleet, met tempo- en dynamiektekens.", "Een ander kan van mijn bladmuziek spelen, ook articulatie staat erin."] }
+      ]
+    },
+    {
+      "groep": "Uitvoering en toelichting", "stuk": "alleen of met klasgenoten, lesweek 17",
+      "criteria": [
+        { "id": "uitvoering", "naam": "Uitvoering", "uitleg": "klinkt het zoals het is opgeschreven?", "weging": 2,
+          "docent": ["De uitvoering valt stil of wijkt sterk af van de bladmuziek.", "Grotendeels zoals opgeschreven, met haperingen.", "Zeker en in tempo, zoals opgeschreven; tempo en dynamiek zijn te horen.", "Muzikaal uitgevoerd; de uitvoering maakt het antwoord op de vraag goed hoorbaar."],
+          "leerling": ["We vallen stil of spelen iets anders dan er staat.", "We spelen het grotendeels zoals opgeschreven, met haperingen.", "We spelen zeker en in tempo, zoals het er staat, met de dynamiek.", "We spelen muzikaal; je hoort mijn antwoord op de vraag goed."] },
+        { "id": "toelichting", "naam": "Toelichting", "uitleg": "hoe heb je de vraag opgelost, en waarom zo?", "weging": 1,
+          "docent": ["Kan niet vertellen hoe de vraag is opgelost.", "Noemt de vraag en beschrijft de stappen, zonder keuzes uit te leggen.", "Legt uit welke middelen de vraag oplossen en waarom, met de juiste begrippen.", "Onderbouwt keuzes met een voorbeeld uit de lessen en noemt wat beter kan."],
+          "leerling": ["Ik kan niet vertellen hoe ik de vraag heb opgelost.", "Ik noem mijn vraag en vertel de stappen.", "Ik leg uit welke middelen mijn vraag oplossen en waarom.", "Ik onderbouw mijn keuzes met een voorbeeld uit de lessen en weet wat beter kan."] }
+      ]
+    }
+  ]
+}
