@@ -17,6 +17,10 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 - [ ] **Examenconcerten:** telt de beoordeling door groepsgenoten mee? Nu alleen docent + 10% zelfbeoordeling. Groepscriteria (programma, eigen werk) krijgen mogelijk voor de hele klas dezelfde score.
 - [ ] **Way Maker-box in Musicbox** (verborgen, id `71df1713-b814-4ddf-ae6d-85c300843784`): beoordelen en zelf zichtbaar maken.
 - [ ] **Presentaties klas 3:** oordeel over les 8 en 11, daarna de overige 32 lessen.
+- [ ] **Proef Nu-scherm (branch `proef-nu`):** een paar dagen gebruiken op https://proef-nu.lesdag-muziek.pages.dev (eigen opslag, dus eerst rooster en pauzes daar invullen). Daarna kiezen: naar `main`, bijschaven of laten. Vragen:
+  - Wat zijn de pauzetijden van school? Zermelo geeft alleen jouw lessen door. Invullen bij Instellingen, Pauzes.
+  - Klopt "meer dan 5,5 uur werk = 30 minuten pauze" voor jou, of zegt de cao VO iets anders? Nu staat 30 minuten in `RUST.nodig`.
+  - Werkt het tweede venster voor het bord op de schoollaptop (pop-up toestaan), en de pijltjes van je presenter in de regie?
 
 ## B. Wacht op anderen
 
@@ -37,6 +41,12 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 3. Lesinhoud nog leeg: BB1, keuzeuur h3 (kmu3), delen van mavo 3 en mavo 4.
 4. Beoordelingsmodus stap 3, vóór 19-3-2027: overzicht per leerling over het jaar, vergelijking met de zelfbeoordeling.
 5. Dashboard-artifact verversen met de nieuwe data (lesinhoud, beoordelingen).
+6. Na de proef Nu-scherm: de tablet als afstandsbediening van het bord (klein doorgeefluik in Cloudflare; alleen fase en klok, geen leerlinggegevens). Nu werken bord en regie alleen op hetzelfde apparaat (BroadcastChannel).
+
+## Proef Nu-scherm (branch `proef-nu`, 29-10)
+
+Ontwerpprincipes (gesprek 29-10): het scherm volgt de dag; pauzes zijn van Frans en nooit vrij voor taken; in een pauze toont Nu niets over werk; valt een pauze weg (koor, Sing-In "in de pauzes"), dan een rustblok in het eerste vrije blok daarna, nooit in een les; lestijd ligt vast, Lesdag haalt nooit iets uit een les; werkblokken hoogstens twee derde vol; open punten krijgen bij het afsluiten een moment; na het afsluiten is het stil; geen scores of rode tellers; stem en gehoor (water, oordoppen).
+Gebouwd: route `#nu` (standaard) met partituur, nu-kaart per moment (`moment()`), straks, voorstellen (ja/later), opdrachtbalk Ctrl K met snelle taak in gewone taal (`leesTaak`), regie `#regie/<uur>/<dag>` met bord `#bord/<uur>/<dag>` in een tweede venster, scherm aan en trillen twee minuten voor het eind van een fase, pauzes in Instellingen, pauzes en rustblokken ook in Dag en Week. Getest met een verzonnen rooster en een nagebootste klok, ook op 375 px.
 
 ## E. Klein en technisch
 

@@ -46,6 +46,6 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 
 ## Opbouw van de code (kort)
 
-- `public/app.js`: alles behalve de lesmodus. Agenda: `dagItems`, `agendaRaster`, `agPaneel`, `planKaart`. Koor: `koorOp`, `koorKaart`. Beoordelen: `viewBeoordelen`, `bmExport` (route `#beoordelen/<model>/<groep>`). Service worker `public/sw.js`: verhoog `CACHE` bij elke wijziging in de vaste bestandenlijst.
+- `public/app.js`: alles behalve de lesmodus. Agenda: `dagItems`, `agendaRaster`, `agPaneel`, `planKaart`. Koor: `koorOp`, `koorKaart`. Beoordelen: `viewBeoordelen`, `bmExport` (route `#beoordelen/<model>/<groep>`). Nu-scherm (proef, branch `proef-nu`): `viewNu`, `moment`, `partituur`, `voorstellen`; pauzes `pauzeDag` (`S.pauzes`, rustblok); regie `viewRegie` + bord via BroadcastChannel; opdrachtbalk `paletOpen`, `leesTaak`. Principes in `OPEN-PUNTEN.md`, sectie Proef Nu-scherm. Service worker `public/sw.js`: verhoog `CACHE` bij elke wijziging in de vaste bestandenlijst.
 - `public/lesmodus.js`: digibordpresentatie (fasen als objecten `{min, soort, kop, stappen, klaar, docent, beeld}`).
 - `tools/`: lesinhoud (`inhoud-*.json` + `merge-inhoud.js`), presentaties (`lesdeck.js`, `maak-decks-*.js`), SharePoint-links (`sp.js`), koor (`koor-sync.js`), beoordeling (`beoordeling/`). Na `merge-inhoud.js --force` altijd `beoordeling/koppel-beoordeling.js` opnieuw draaien.
