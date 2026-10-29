@@ -3,11 +3,12 @@
 // De Worker stuurt alleen door naar de agenda van csgpm.zportal.nl en antwoordt alleen aan jouw Lesdag-adres.
 
 const LESDAG = 'https://lesdag-muziek.pages.dev'; // pas aan naar het adres van je Lesdag
+const TESTADRES = /^https:\/\/[a-z0-9-]+\.lesdag-muziek\.pages\.dev$/; // proefversies op een eigen branch (alleen dit Pages-project kan daar staan)
 
 export default {
   async fetch(req) {
     const origin = req.headers.get('Origin') || '';
-    const toegestaan = origin === LESDAG || /^http:\/\/localhost(:\d+)?$/.test(origin);
+    const toegestaan = origin === LESDAG || TESTADRES.test(origin) || /^http:\/\/localhost(:\d+)?$/.test(origin);
     const cors = {
       'Access-Control-Allow-Origin': toegestaan ? origin : LESDAG,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
