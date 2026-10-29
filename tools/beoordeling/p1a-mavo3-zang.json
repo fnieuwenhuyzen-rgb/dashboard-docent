@@ -1,0 +1,62 @@
+{
+  "id": "p1a-mavo3-zang",
+  "klas": "mavo 3",
+  "toets": "P1 · presentatie 1",
+  "titel": "Praktijktoets P1, presentatie 1: zang",
+  "thema": "Ritme, maat en presentatie zang",
+  "weging": 15, "herkansbaar": true,
+  "velden": ["Lied", "Begeleiding", "Groep"],
+  "vooruit": "Eén punt voor presentatie 2",
+  "leerlingTitel": "Zo beoordeel ik mijn zangpresentatie",
+  "leerlingInstructie": "Zeg je naam en de titel van je lied. Tel jezelf in of knik naar de begeleiding. Ga je de tekst kwijt? Zing door op 'la' tot je hem weer hebt.",
+  "pta": "PTA mavo 3 2026-2027, P1 muzikale presentaties: gemiddelde van minstens drie praktijkdelen (zang/melodie, akkoordinstrument, slagwerk), weging 15, 45 minuten, herkansbaar in TW3, domeinen K2, K4, K5 en K6. Presentatie 1 (zang) is in lesweek 8.",
+  "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\P1 Praktijktoets - Muzikale presentaties\\Beoordeling",
+  "lessen": [
+    { "lg": "mavo3", "w": 6, "slot": "l1", "wat": ["leerling"] },
+    { "lg": "mavo3", "w": 8, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] },
+    { "lg": "mavo3", "w": 36, "slot": "l1", "wat": ["docent", "scoreblad"] }
+  ],
+  "niveaus": [
+    { "score": 4, "naam": "Onvoldoende" },
+    { "score": 6, "naam": "Voldoende" },
+    { "score": 8, "naam": "Goed" },
+    { "score": 10, "naam": "Uitstekend" }
+  ],
+  "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 8 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3.",
+  "onderdelen": [
+    {
+      "groep": "Presentatie", "stuk": "het hele optreden",
+      "criteria": [
+        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, begin en slot, doorzingen", "weging": 1,
+          "docent": ["Kondigt niets aan; begin en slot zijn onduidelijk; stopt bij een fout.", "Noemt naam en titel; begint en eindigt aarzelend; stopt soms na een fout.", "Noemt naam en titel; duidelijk begin en slot; zingt door na een fout.", "Rustige aankondiging, zekere inzet en slot; een fout valt bijna niet op."],
+          "leerling": ["Ik zeg niets vooraf en stop als het misgaat.", "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.", "Ik zeg naam en titel, begin en eindig duidelijk en zing door na een fout.", "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."] },
+        { "id": "houding", "naam": "Houding en publiek", "uitleg": "rechtop, naar het publiek kijken", "weging": 1,
+          "docent": ["Staat onrustig of in elkaar gedoken; kijkt weg of naar de grond.", "Staat redelijk rechtop; kijkt af en toe naar het publiek.", "Staat rechtop en rustig; kijkt het grootste deel van het lied naar het publiek.", "Open houding en oogcontact; neemt het publiek mee in het lied."],
+          "leerling": ["Ik sta onrustig en kijk naar de grond.", "Ik sta redelijk rechtop en kijk soms naar het publiek.", "Ik sta rechtop en rustig en kijk meestal naar het publiek.", "Ik sta open en neem het publiek mee in mijn lied."] }
+      ]
+    },
+    {
+      "groep": "Zang", "stuk": "lied",
+      "criteria": [
+        { "id": "tekst", "naam": "Tekst en uitspraak", "uitleg": "tekst kennen, verstaanbaar zingen", "weging": 1,
+          "docent": ["Kent de tekst niet; leest steeds af of valt stil; woorden niet te verstaan.", "Kent de tekst grotendeels; kijkt soms op het blad; meestal te verstaan.", "Kent de tekst uit het hoofd; zingt goed verstaanbaar.", "Kent de tekst zeker; duidelijke uitspraak die de betekenis laat horen."],
+          "leerling": ["Ik ken mijn tekst niet en je verstaat me slecht.", "Ik ken mijn tekst bijna; soms kijk ik op het blad.", "Ik ken mijn tekst uit mijn hoofd en je verstaat me goed.", "Ik zing de tekst zo duidelijk dat je hoort waar het lied over gaat."] },
+        { "id": "toon", "naam": "Toonhoogte en klank", "uitleg": "zuiver zingen, open klank", "weging": 2,
+          "docent": ["Zingt vaak vals; de melodie is moeilijk te herkennen; klank geknepen.", "Melodie herkenbaar; overwegend zuiver, vals op hoge of lastige plekken.", "Zingt zuiver door het hele lied met een open, heldere klank.", "Zuiver en vol, ook hoog en laag; kleurt de klank bewust bij de tekst."],
+          "leerling": ["Ik zing vaak vals en je herkent de melodie moeilijk.", "Ik zing meestal zuiver, behalve op hoge of lastige plekken.", "Ik zing het hele lied zuiver met een open, heldere klank.", "Ik zing zuiver en vol, ook hoog en laag, en mijn klank past bij de tekst."] },
+        { "id": "ritme", "naam": "Ritme en maat", "uitleg": "in de maat blijven, ritmes kloppen", "weging": 2,
+          "docent": ["Raakt de maat kwijt; ritmes kloppen vaak niet; inzetten te vroeg of te laat.", "Blijft grotendeels in de maat; enkele ritmefouten of een late inzet.", "Blijft het hele lied in de maat; ritmes en inzetten kloppen.", "Strak in de maat met levendig ritme; ook de lastige ritmes klinken vanzelf."],
+          "leerling": ["Ik raak de maat kwijt en begin te vroeg of te laat.", "Ik blijf meestal in de maat, met een paar ritmefouten.", "Ik blijf het hele lied in de maat en mijn inzetten kloppen.", "Ik zing strak in de maat, ook de lastige ritmes gaan vanzelf."] }
+      ]
+    },
+    {
+      "groep": "Samenspel", "stuk": "met de begeleiding of de groep",
+      "criteria": [
+        { "id": "samenspel", "naam": "Samen met de begeleiding", "uitleg": "luisteren, gelijk blijven, balans", "weging": 1,
+          "docent": ["Zingt los van de begeleiding of groep; loopt voor of achter; te hard of te zacht.", "Luistert naar de begeleiding; blijft meestal gelijk; balans soms uit.", "Blijft gelijk met de begeleiding; stem en begeleiding zijn goed in balans.", "Reageert op de begeleiding of groep; samen beginnen, samen eindigen, één geheel."],
+          "leerling": ["Ik zing los van de begeleiding en loop voor of achter.", "Ik luister naar de begeleiding en blijf meestal gelijk.", "Ik blijf gelijk met de begeleiding en ben goed te horen.", "Ik reageer op de begeleiding; we klinken als één geheel."] }
+      ]
+    }
+  ]
+}

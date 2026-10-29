@@ -1,0 +1,61 @@
+{
+  "id": "p20-vwo6",
+  "klas": "vwo 6",
+  "toets": "P20",
+  "titel": "Praktijktoets P20: afronding speel- en zangstukken",
+  "thema": "Middeleeuwen en renaissance",
+  "weging": 1, "herkansbaar": false,
+  "velden": ["Zangstukken", "Speelstuk en instrument", "Improvisatieopdracht"],
+  "vooruit": "Eén punt om aan te werken",
+  "leerlingTitel": "Zo beoordeel ik mijn zang, mijn speelstuk en mijn improvisatie",
+  "leerlingInstructie": "Luister je opname terug of gebruik de feedback uit de doorloop. Zet per onderdeel een kruisje bij wat je hoorde en schrijf je score op. Je docent let op dezelfde onderdelen.",
+  "pta": "PTA vwo 6 2026-2027, P20: periode 3 in de les, weging 1, 45 minuten, niet herkansbaar. Afronding speel- en zangstukken: domein B1 zingen en spelen en B2 improviseren en componeren vanuit een probleemstelling, met weloverwogen gebruik van muzikale materialen en middelen.",
+  "map": "02 Keuzevak muziek\\VWO\\VWO 6\\P20 Praktijktoets - Afronding speel- en zangstukken\\Beoordeling",
+  "lessen": [
+    { "lg": "vwo6", "w": 7, "slot": "l3", "wat": ["leerling"] },
+    { "lg": "vwo6", "w": 26, "slot": "l3", "wat": ["docent", "scoreblad", "leerling"] }
+  ],
+  "niveaus": [
+    { "score": 4, "naam": "Onvoldoende" },
+    { "score": 6, "naam": "Voldoende" },
+    { "score": 8, "naam": "Goed" },
+    { "score": 10, "naam": "Uitstekend" }
+  ],
+  "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
+  "onderdelen": [
+    {
+      "groep": "Zingen", "stuk": "zangstukken: gregoriaans en meerstemmig",
+      "criteria": [
+        { "id": "stem", "naam": "Zuiverheid en eigen stem", "uitleg": "zuiver, eigen stem vasthouden in de meerstemmigheid", "weging": 2,
+          "docent": ["Vaak onzuiver; verliest de eigen stem zodra de andere stemmen erbij komen.", "Overwegend zuiver; houdt de eigen stem meestal vast, met wiebels bij de inzetten.", "Zuiver en zeker in de eigen stem, ook bij imitatie en tegen de andere stemmen in.", "Mengt met de groep tot één klank; zuivere samenklank, ook in de slotakkoorden."],
+          "leerling": ["Ik zing vaak onzuiver en raak mijn stem kwijt als de anderen erbij komen.", "Ik zing meestal zuiver en houd mijn stem vast, behalve bij de inzetten.", "Ik zing zuiver en zeker in mijn eigen stem, ook als de anderen iets anders zingen.", "Mijn stem mengt met de groep; de akkoorden klinken zuiver."] },
+        { "id": "tekst", "naam": "Tekst, frasering en stijl", "uitleg": "uitspraak, vrije ritmiek in het gregoriaans, karakter", "weging": 2,
+          "docent": ["Tekst onduidelijk; het gregoriaans klinkt in een strakke maat, frasen vallen in stukken.", "Tekst meestal verstaanbaar; frasen hoorbaar, het gregoriaans is nog wat stijf.", "Heldere uitspraak; het gregoriaans vloeit op de tekst, frasen lopen door tot het eind.", "Stijlvast: vrije ritmiek op het woord, en het karakter van elk lied (feestelijk of ingetogen) klinkt."],
+          "leerling": ["Mijn tekst is onduidelijk en het gregoriaans klinkt als in een strakke maat.", "Mijn tekst is meestal verstaanbaar, maar het gregoriaans is nog wat stijf.", "Ik spreek de tekst helder uit en het gregoriaans vloeit op de woorden.", "Ik zing in stijl: vrij op het woord, en je hoort het karakter van elk lied."] }
+      ]
+    },
+    {
+      "groep": "Spelen", "stuk": "speelstuk",
+      "criteria": [
+        { "id": "partij", "naam": "Eigen partij en tempo", "uitleg": "zeker, in een stabiel tempo", "weging": 1,
+          "docent": ["De partij valt vaak weg of loopt vast; het tempo is niet stabiel.", "De partij is grotendeels gespeeld, met stops op lastige plekken.", "De partij klinkt zeker en in een stabiel tempo.", "De partij is beheerst en sluit hoorbaar aan bij de andere stemmen."],
+          "leerling": ["Mijn partij valt vaak weg en mijn tempo is niet stabiel.", "Ik speel mijn partij grotendeels, met stops op lastige plekken.", "Ik speel mijn partij zeker en in een stabiel tempo.", "Ik speel mijn partij beheerst en luister naar de andere stemmen."] },
+        { "id": "articulatie", "naam": "Articulatie en frasering", "uitleg": "kort en gebonden, frasen, karakter van het stuk", "weging": 2,
+          "docent": ["Alle noten klinken hetzelfde; geen frasen te horen.", "Enkele verschillen in articulatie; frasen soms hoorbaar.", "Duidelijke articulatie en frasen met een begin en een eind.", "Articulatie en frasering geven het stuk karakter, bv. de statige pas van een pavane."],
+          "leerling": ["Al mijn noten klinken hetzelfde en je hoort geen frasen.", "Je hoort soms verschil tussen kort en gebonden, en soms een frase.", "Je hoort duidelijk kort en gebonden, en frasen met een begin en een eind.", "Mijn articulatie en frasering geven het stuk zijn eigen karakter."] }
+      ]
+    },
+    {
+      "groep": "Improviseren", "stuk": "improvisatie vanuit een opdracht",
+      "criteria": [
+        { "id": "opdracht", "naam": "Opdracht en keuzes", "uitleg": "past het bij de probleemstelling; materiaal bewust gekozen?", "weging": 2,
+          "docent": ["Past niet bij de opdracht; geen keuze voor toonmateriaal of vorm te horen.", "Volgt de opdracht in grote lijnen, bv. blijft in de modus; keuzes nog toevallig.", "Lost de opdracht hoorbaar op met gekozen materiaal, zoals een modus, bordun of vormschema.", "Weloverwogen keuzes die de opdracht op een eigen manier oplossen; licht ze kort toe."],
+          "leerling": ["Mijn improvisatie past niet bij de opdracht.", "Ik volg de opdracht in grote lijnen, maar mijn keuzes zijn nog toevallig.", "Ik los de opdracht op met materiaal dat ik bewust kies, zoals een modus of bordun.", "Ik los de opdracht op mijn eigen manier op en kan mijn keuzes uitleggen."] },
+        { "id": "samenhang", "naam": "Samenhang en uitvoering", "uitleg": "motief, opbouw, slot, durf", "weging": 1,
+          "docent": ["Losse noten zonder samenhang; stopt halverwege.", "Een kort motief komt terug; begin en slot zijn er, de opbouw is nog vlak.", "Motieven worden herhaald en gevarieerd; de improvisatie heeft een duidelijk slot.", "Samenhangend geheel met opbouw en slot, met durf en een eigen klank."],
+          "leerling": ["Ik speel of zing losse noten en stop halverwege.", "Ik herhaal een kort motief en heb een begin en een slot.", "Ik herhaal en varieer mijn motieven en eindig duidelijk.", "Mijn improvisatie heeft een opbouw en een slot, en ik durf iets eigens."] }
+      ]
+    }
+  ]
+}

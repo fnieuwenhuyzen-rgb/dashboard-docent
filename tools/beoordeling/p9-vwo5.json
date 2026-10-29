@@ -4,9 +4,13 @@
   "toets": "P9",
   "titel": "Praktijktoets P9: solowerk en samenspel",
   "thema": "Classicisme",
+  "weging": 6, "herkansbaar": false,
+  "velden": ["Solowerk", "Samenspelstuk", "Bezetting samenspel"],
+  "vooruit": "Eén punt voor P10",
+  "leerlingTitel": "Zo beoordeel ik mijn solowerk en samenspel",
   "pta": "PTA vwo 5 2026-2027, P9: periode 1 in de les, weging 6, 45 minuten, niet herkansbaar. Domein B1 zingen en spelen. Beoordeling op presentatie, muzikaliteit en samenspel.",
-  "map": "02 Keuzevak muziek/VWO/VWO 5/P9 Praktijktoets - Solowerk en samenspel classicisme/Beoordeling",
-  "lessen": ["vwo5 w7 l2 (zelfscore met het format)", "vwo5 w8 l1", "vwo5 w8 l2 (format eigen uitvoering)", "vwo5 w8 l3"],
+  "map": "02 Keuzevak muziek\\VWO\\VWO 5\\P9 Praktijktoets - Solowerk en samenspel classicisme\\Beoordeling",
+  "lessen": [{ "lg": "vwo5", "w": 7, "slot": "l2", "wat": ["leerling"] }, { "lg": "vwo5", "w": 8, "slot": "l1", "wat": ["docent", "scoreblad", "leerling"] }, { "lg": "vwo5", "w": 8, "slot": "l2", "wat": ["leerling"] }, { "lg": "vwo5", "w": 8, "slot": "l3", "wat": ["docent", "scoreblad"] }],
   "niveaus": [
     { "score": 4, "naam": "Onvoldoende" },
     { "score": 6, "naam": "Voldoende" },
@@ -17,7 +21,7 @@
   "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
   "onderdelen": [
     {
-      "groep": "Presentatie", "stuk": "beide",
+      "groep": "Presentatie", "stuk": "solowerk en samenspelstuk",
       "criteria": [
         { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondigen, begin en slot, doorspelen", "weging": 1,
           "docent": ["Geen aankondiging; begin en slot onduidelijk; stopt bij een fout.", "Kondigt het stuk aan; begint en eindigt, maar aarzelend; stopt soms na een fout.", "Noemt stuk, componist en bezetting; duidelijk begin en slot; speelt door na een fout.", "Presenteert als op een concert: rustige aankondiging, overtuigende inzet en slot; fouten vallen nauwelijks op."],

@@ -1,0 +1,71 @@
+{
+  "id": "p4-havo5",
+  "klas": "havo 5",
+  "toets": "P4",
+  "titel": "Praktijktoets P4: muzikale productie",
+  "thema": "Productie voor publiek",
+  "weging": 15, "herkansbaar": false,
+  "velden": ["Mijn programmaonderdelen", "Eigen werk", "Rol in de organisatie"],
+  "vooruit": "Wat neem je mee",
+  "leerlingTitel": "Zo beoordeel ik mijn bijdrage aan de productie",
+  "leerlingInstructie": "Vul dit in na de generale en na de productie. Zet per onderdeel een kruisje bij wat past en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.",
+  "pta": "PTA havo 5 2026-2027, P4: weging 15, 180 minuten, niet herkansbaar, domein B1 en B2; met de klas een productie voor publiek met vocaal en instrumentaal werk en minstens één eigen compositie, arrangement of improvisatie, een zelfstandige rol in minstens twee onderdelen, en de organisatie (planning, begroting, locatie, techniek, publiciteit, programmaboekje, aankleding) in eigen hand.",
+  "map": "02 Keuzevak muziek\\Havo\\Havo 5\\P4 Praktijktoets - Muzikale productie (examenconcert)\\Beoordeling",
+  "lessen": [
+    { "lg": "havo5", "w": 12, "slot": "l2", "wat": ["leerling"] },
+    { "lg": "havo5", "w": 21, "slot": "l2", "wat": ["leerling"] },
+    { "lg": "havo5", "w": 21, "slot": "l3", "wat": ["docent", "scoreblad"] },
+    { "lg": "havo5", "w": 22, "slot": "l3", "wat": ["docent", "scoreblad", "leerling"] }
+  ],
+  "niveaus": [
+    { "score": 4, "naam": "Onvoldoende" },
+    { "score": 6, "naam": "Voldoende" },
+    { "score": 8, "naam": "Goed" },
+    { "score": 10, "naam": "Uitstekend" }
+  ],
+  "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 12 (de som van de wegingen).",
+  "onderdelen": [
+    {
+      "groep": "Uitvoering", "stuk": "alle onderdelen waarin je zingt of speelt",
+      "criteria": [
+        { "id": "beheersing", "naam": "Beheersing", "uitleg": "zuiver, in de maat, stem of instrument onder controle", "weging": 2,
+          "docent": ["Vaak onzuiver of uit de maat; de partij loopt regelmatig vast.", "Overwegend zuiver en in de maat; op lastige plekken wankelt de partij.", "Zuiver en ritmisch zeker in alle onderdelen; stem of instrument goed onder controle.", "Volledig beheerst, ook in moeilijke passages; de techniek staat in dienst van de muziek."],
+          "leerling": ["Ik zing of speel vaak onzuiver of uit de maat en loop vast.", "Ik ben meestal zuiver en in de maat, maar wankel op lastige plekken.", "Ik ben zuiver en zeker in de maat en heb mijn stem of instrument onder controle.", "Ik beheers mijn partij helemaal, ook de moeilijke stukken."] },
+        { "id": "muzikaliteit", "naam": "Muzikaliteit", "uitleg": "dynamiek, frasering, karakter, eigen versie", "weging": 2,
+          "docent": ["Vlak: geen dynamiek of frasering; noten zonder karakter.", "Hier en daar dynamiek en frasering; het karakter komt nog weinig over.", "Dynamiek en frasering duidelijk hoorbaar; het karakter van elk stuk komt over.", "Een eigen, overtuigende versie met bewuste keuzes in dynamiek, tempo en klank."],
+          "leerling": ["Je hoort bij mij geen dynamiek of frasering.", "Je hoort af en toe dynamiek en frasering.", "Je hoort dynamiek en frasering, en het karakter van elk stuk komt over.", "Ik breng mijn eigen versie, met bewuste keuzes in dynamiek, tempo en klank."] },
+        { "id": "samenspel", "naam": "Samenspel en eigen rol", "uitleg": "luisteren naar elkaar; zelfstandige rol in minstens twee onderdelen", "weging": 2,
+          "docent": ["Speelt los van de groep; geen hoorbare zelfstandige rol.", "Volgt de groep; zelfstandige rol in maar één onderdeel of nog onzeker.", "Past balans en tempo aan; hoorbare, zelfstandige rol in minstens twee onderdelen.", "Draagt het samenspel en reageert op anderen; sterke eigen rol in twee of meer onderdelen."],
+          "leerling": ["Ik speel los van de groep en heb geen eigen rol die je hoort.", "Ik volg de groep; mijn eigen rol is klein of nog onzeker.", "Ik luister naar de anderen en heb in minstens twee onderdelen een eigen rol.", "Ik draag het samenspel en heb in twee of meer onderdelen een sterke eigen rol."] }
+      ]
+    },
+    {
+      "groep": "Eigen werk", "stuk": "compositie, arrangement of improvisatie uit de klas",
+      "criteria": [
+        { "id": "eigenwerk", "naam": "Eigen werk", "uitleg": "jouw bijdrage aan compositie, arrangement of improvisatie", "weging": 1,
+          "docent": ["Geen eigen bijdrage aan het eigen werk in het programma.", "Kleine bijdrage; voert het eigen werk uit zoals afgesproken.", "Duidelijke bijdrage aan compositie, arrangement of improvisatie die past in het programma.", "Het eigen werk is een hoogtepunt: sterk uitgewerkt en overtuigend uitgevoerd."],
+          "leerling": ["Ik heb niet meegewerkt aan het eigen werk.", "Ik heb een kleine bijdrage geleverd aan het eigen werk.", "Ik heb duidelijk bijgedragen aan een compositie, arrangement of improvisatie.", "Mijn eigen werk is sterk uitgewerkt en klinkt overtuigend."] }
+      ]
+    },
+    {
+      "groep": "Presentatie", "stuk": "op het podium",
+      "criteria": [
+        { "id": "presentatie", "naam": "Presentatie", "uitleg": "aankondiging en toelichting, houding, contact met publiek", "weging": 1,
+          "docent": ["Geen aankondiging; onrustig op het podium; stopt bij een fout.", "Kondigt aan, maar aarzelend; weinig contact met het publiek.", "Duidelijke aankondiging of toelichting; rustige houding; speelt door na een fout.", "Presenteert als een professional: boeiende toelichting, contact met publiek, sterk begin en slot."],
+          "leerling": ["Ik kondig niets aan en ben onrustig op het podium.", "Ik kondig aan, maar aarzelend, en kijk weinig naar het publiek.", "Ik kondig duidelijk aan, sta rustig en speel door na een fout.", "Ik presenteer als een professional en maak echt contact met het publiek."] }
+      ]
+    },
+    {
+      "groep": "Organisatie", "stuk": "de hele productie",
+      "criteria": [
+        { "id": "programma", "naam": "Programma", "uitleg": "samenhang en opbouw, en kunnen uitleggen waarom", "weging": 1,
+          "docent": ["Losse nummers zonder opbouw; de keuze wordt niet uitgelegd.", "Het programma heeft enige opbouw; de uitleg blijft algemeen.", "Samenhangend programma met vocaal, instrumentaal en eigen werk; de opbouw wordt uitgelegd.", "Sterke rode draad of thema; elke keuze in de volgorde is doordacht en verantwoord."],
+          "leerling": ["Ons programma is een rij losse nummers en ik kan niet uitleggen waarom.", "Ons programma heeft wat opbouw; ik kan het een beetje uitleggen.", "Ons programma hangt samen en ik kan uitleggen waarom deze volgorde.", "Ons programma heeft een sterke rode draad en elke keuze is doordacht."] },
+        { "id": "organisatie", "naam": "Organisatietaak", "uitleg": "planning, begroting, locatie, techniek, publiciteit, programmaboekje of aankleding", "weging": 3,
+          "docent": ["Taak niet of te laat uitgevoerd; anderen moeten het overnemen.", "Taak uitgevoerd, maar pas na aansporing; afspraken soms niet nagekomen.", "Taak zelfstandig en op tijd uitgevoerd; houdt zich aan planning en afspraken.", "Neemt verantwoordelijkheid: taak uitstekend uitgevoerd, denkt vooruit en helpt anderen."],
+          "leerling": ["Ik heb mijn taak niet of te laat gedaan.", "Ik heb mijn taak gedaan, maar pas toen iemand me eraan herinnerde.", "Ik heb mijn taak zelfstandig en op tijd gedaan en me aan afspraken gehouden.", "Ik heb verantwoordelijkheid genomen, vooruitgedacht en anderen geholpen."] }
+      ]
+    }
+  ]
+}
