@@ -605,7 +605,8 @@ async function preview(i) {
 
 /* ---------- gebeurtenissen ---------- */
 document.addEventListener('click', async e => {
-  const b = e.target.closest('button,[data-dag],[data-week]'); if (!b) return;
+  // alleen knoppen: het planformulier en de vinkjes hebben ook data-dag, maar een klik daarin mag de pagina niet opnieuw tekenen
+  const b = e.target.closest('button,[data-week]'); if (!b) return;
   const D = b.dataset;
   if (e.target.closest('#les')) {
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
