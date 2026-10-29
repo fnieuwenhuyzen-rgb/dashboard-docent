@@ -52,5 +52,6 @@ Ronde 2 (29-10, na "aan de UI en UX is toch niets veranderd?"): nieuwe schil. Zi
 ## E. Klein en technisch
 
 - Na elke wijziging van de koorplanning in de Koorapp: `/lesdag-koor`.
+- Roosterproxy `lesdag-rooster` laat sinds 29-10 ook testadressen `*.lesdag-muziek.pages.dev` toe (live, versie bd2545cf; code in `worker/rooster-proxy.js` op branch `proef-nu`, mee naar `main` bij het samenvoegen). Andere sites krijgen 403.
 - `merge-inhoud.js --force` kan materiaal overschrijven: daarna `koppel-beoordeling.js`.
 - `koppel-week8.js` voegt de P9-bijlagen nog apart toe; dubbel met het P9-model is onschuldig (zelfde URL), maar kan weg.
