@@ -1,82 +1,51 @@
-# Lesdag: overdracht voor Claude Code
+# Lesdag
 
-Eigenaar: Frans Nieuwenhuyzen, muziekdocent en sectievoorzitter muziek op CSG Prins Maurits (Middelharnis). Communiceert in het Nederlands: korte zinnen, informeel, weinig gedachtestreepjes.
+Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins Maurits). Vanilla JS-PWA zonder build: Vandaag en Week als agenda, Lesmodus (digibord), Groepen, Rooster, Sectie, Instellingen, Beoordelen. Frans schrijft Nederlands: korte zinnen, informeel.
 
-## Wat dit is
+**Lees na dit bestand:** `OPEN-PUNTEN.md` (werkvoorraad). Lange achtergrond en geschiedenis: `handboek/overdracht-tot-2026-10-29.md`. Zoek daar eerst de koppen (`grep -n "^## "`) en lees alleen de sectie die je nodig hebt.
 
-Lesdag is een webapp (vanilla JS, geen build-stap) om muzieklessen voor te bereiden en te geven:
-Vandaag (voorbereiding per lesuur, klaarzetten per lokaal), Lesmodus (volledig scherm voor het digibord, fasen met timer, afronden met gegeven/half/niet), Week, Groepen (voortgang per groep), Rooster, Sectie (taken sectievoorzitter), Instellingen.
+## Waar alles staat
 
-## Stand op 20 oktober 2026
+- Live: https://lesdag-muziek.pages.dev (Cloudflare Pages, Git-gekoppeld). **Elke push naar `main` staat binnen een minuut live.** Achter Cloudflare Access: alleen nwn@csgpm.nl (One-time PIN, sessie een maand, ook `*.lesdag-muziek.pages.dev`).
+- Repo: deze map, GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). De app staat in `public/`; `tools/`, `bron/`, `worker/`, `handboek/` gaan niet online.
+- Worker `lesdag-rooster` (Zermelo-iCal-doorgeefluik, `worker/rooster-proxy.js`), bewust niet achter Access.
+- Gegevens: `public/data/basis.json` (leergangen, kalender, sectie, koor), `public/data/beoordeling.json` (beoordelingsmodellen). Dashboard-artifact "Leergang muziek": https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2 (bron `bron/`).
+- Eigen staat van Frans: localStorage `lesdag-staat` en, na Microsoft-login, OneDrive `Apps/Lesdag/lesdag.json`. Les-id's zijn `leergang:lesweek.lesnummer`; weekindeling niet wijzigen zonder migratie.
 
-- Online gezet in Cloudflare (account van Frans):
-  - Worker `lesdag-rooster` op https://lesdag-rooster.f-nieuwenhuyzen.workers.dev, live met de code uit `worker/rooster-proxy.js` (`LESDAG = 'https://lesdag-muziek.pages.dev'`). Doorgeefluik voor de Zermelo-agenda (CORS).
-  - Pages-project `lesdag-muziek` (Direct Upload). Eerste deployment op 20 oktober 2026 (avond) via `npx wrangler pages deploy`: https://lesdag-muziek.pages.dev is live, zonder Microsoft-koppeling (clientId leeg). Uitgerold werden alleen de appbestanden (index, app.js/css, auth.html, config.js, m365.js, sw.js, manifest, data/, icons/, vendor/); `bron/`, `tools/`, `worker/` en de notities niet. De oude losse kopie van de app staat in `Dashboard Docent\oud\` (niet meer bijwerken); deze repository is leidend.
-- `public/config.js`: `roosterProxy` is ingevuld; `clientId`/`tenantId` (Microsoft Entra-app-registratie) nog leeg, aanvraag bij de ICT loopt (tekst in LEESMIJ.md).
-- Rooster komt uit Zermelo (csgpm.zportal.nl, iCal). De link van Frans bevat een access_token: behandel als wachtwoord, nooit in code of repository zetten. Frans plakt hem zelf in Instellingen.
-- Niet getest met echte data: de herkenning van muzieklessen en groepen in de Zermelo-SUMMARY (`zMuziek`, `zGroep` in app.js) is gebaseerd op een aanname ("mu - h3a"). Controleer met het echte rooster.
-- Microsoft 365-koppeling (MSAL 5.23.0 met redirect bridge `auth.html`, opslag in OneDrive-appmap, zoeken via /search/query, preview in lesmodus) is gebouwd maar nog niet getest tegen een echte tenant.
+## Vaste afspraken
 
-## Online zetten
+- **Privacy:** nooit leerlingnamen of -gegevens in de repo, `basis.json`, `beoordeling.json` of andere openbare plekken. Klassenlijsten en scores alleen in `S.beoord` (apparaat en eigen OneDrive). Ingevulde formulieren met namen in de sectiemap niet openen of citeren.
+- **Zermelo-link** is een wachtwoord: nooit in code, commit of chat. Frans plakt hem zelf in Instellingen.
+- **Lesmateriaal en presentaties:** geen AI-gevoel (geen meta-tekst, geen generieke foto's), passend bij de les, echte rechtenvrije foto's met bron in `beeld/bronnen.txt`. Ontwerptaal van de didactische kaarten; per leerjaar een eigen accent. Klaar vóór de eerstvolgende maandag.
+- Christelijke school: liedkeuze en voorbeelden daarop afstemmen. Geen songteksten overnemen.
+- Lokaal 009 met digibord; laptop staat altijd klaar.
+- Feiten uit de bronnen (PTA, studiewijzer, leergang); tegenstrijdigheden melden, niet zelf oplossen.
 
-De repository is gekoppeld aan GitHub; Cloudflare Pages bouwt vanzelf uit de map `public/` bij elke push naar `main` (build command leeg, output directory `public`). Handmatig uitrollen kan ook, vanuit deze map, met Node.js en een eenmalige `npx wrangler login` door Frans zelf:
+## Werkwijze (zuinig)
 
-    npx wrangler pages deploy public --project-name lesdag-muziek --commit-dirty=true
+- Begin een werkblok met dit bestand en `OPEN-PUNTEN.md`; geen oude sessies wekenlang doorzetten. Sluit af door `OPEN-PUNTEN.md` bij te werken (afgevinkt, nieuw, beslissingen van Frans).
+- Verzamel vragen aan Frans in `OPEN-PUNTEN.md` onder A, niet verspreid door de chat.
+- Testen: meten met `javascript_tool` en `get_page_text`, geen schermafdrukken tenzij de opmaak zelf de vraag is. Testgegevens zijn verzonnen namen; ruim ze op.
+- Grote zoek- of schrijfklussen (meerdere klassen tegelijk) aan helpers met een strakke opdracht; zij schrijven alleen hun bestanden, jij controleert en publiceert.
+- Model per klus: zwaar model voor ontwerp en onderzoek, lichter model voor bouwen volgens een goedgekeurd plan of mechanisch werk.
 
-Sinds 20 oktober staan de appbestanden in `public/`; `bron/`, `tools/`, `worker/` en de notities staan ernaast en gaan niet mee. Worker bijwerken: `npx wrangler deploy worker/rooster-proxy.js --name lesdag-rooster`.
+## Skills (in `Sectie Muziek/.claude/skills/`)
 
-GitHub-koppeling klaar op 20 oktober 2026 (avond): repository https://github.com/fnieuwenhuyzen-rgb/dashboard-docent (privé, branch `main`). Het Direct Upload-project is verwijderd en vervangen door een Pages-project met Git-koppeling onder dezelfde naam `lesdag-muziek` (build command leeg, output `public`). Elke push naar `main` komt vanzelf online; het adres en de Worker-CORS zijn ongewijzigd.
+- `/lesdag-online`: committen, pushen (= live) en live controleren achter Access.
+- `/lesdag-lokaal`: de app lokaal testen op `lesdag-proef` (`tools/serve-lokaal.js`), met testrooster en opruimen.
+- `/lesdag-beoordeling`: een beoordelingsmodel toevoegen of wijzigen, formulieren en scorebladen maken, koppelen in de lessen.
+- `/lesdag-koor`: de koorplanning uit de Koorapp opnieuw ophalen na een wijziging in Beheer.
 
-## Gegevens
+## Laptop (geen beheerdersrechten)
 
-- `public/data/basis.json`: leergangen (11: bb1, havo3, kmu3, vwo3, mavo3, mavo4, havo4, havo5, vwo4, vwo5, vwo6), kalender 2026-2027 (lesweken 1-38, vakanties), vrije dagen, groepen per leergang, sectie-items. Gegenereerd uit het dashboard.
-- Eigen staat van Frans (rooster, voortgang, aanpassingen per les, sectie-afvinkingen) staat los daarvan in localStorage (`lesdag-staat`) en, na inloggen, in OneDrive (`Apps/Lesdag/lesdag.json`). Een nieuwe basis.json overschrijft die niet. Les-id's zijn `leergang:lesweek.lesnummer`; verander de weekindeling van een leergang dus niet zonder migratie.
-- `bron/leergang-dashboard.html` is het claude.ai-artifact "Leergang muziek" (https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2), versie 11. `bron/leergang-data.json` is de data daaruit. `tools/newdata.py` + `tools/build.py` + `tools/sectie.js` bouwden die data en het dashboard (paden in de scripts verwijzen naar de oude werkmap; pas aan voor gebruik).
+- Node: `C:\Users\nwn\AppData\Local\Programs\node\node.exe` (niet op PATH in bash). Git: `%LOCALAPPDATA%\Programs\Git\cmd\git.exe`.
+- `git push` alleen via `run_in_terminal` (Credential Manager), met als cwd deze map.
+- In PowerShell is `R` een alias (Invoke-History): geen eigen functie zo noemen. `$c` en `$C` zijn dezelfde variabele.
+- Word en Excel via COM: paden boven 255 tekens weigert Word; test in een korte map (`%LOCALAPPDATA%\Temp\bq`).
+- Cloudflare Access beheren kan via de dashboard-API vanuit een ingelogde tab op dash.cloudflare.com (fetch met `X-Cross-Site-Security: dash`); Access-app "Lesdag" id `c47af1f4-8d7b-48ef-9910-d740ccc58ea0`.
 
-## Lesmodus (digibord)
+## Opbouw van de code (kort)
 
-`public/lesmodus.js` bouwt de presentatie (20 oktober 2026, na kritiek van Frans op de tekst-only versie). Vaste boog: jouw kaart (klaarzetten, vorige notitie; niet voor het bord) → welkom met lesvraag en agenda-balk → doel met aanvinkbare succescriteria → per fase een slide met soort (start, luisteren, uitleg, doen, gesprek, check, afsluiten; eigen kleur en icoon), kop voor de leerlingen, genummerde stappen, "Klaar?"-verlenging, beeld en een timerring die vanzelf start → check → rode draad (citaatstijl) → thuis en materiaal → afronden. Docentnotities per fase staan in een witte strook (toets n of knop "notities"). Fasen zijn tekst ("10 min · uitleg: …", soort wordt herkend) of objecten `{min, soort, kop, stappen[], klaar, docent, beeld}`. Beeldsoorten: `akkoorden` (gitaardiagrammen + tonen), `vorm` (vormschema), `opbouw` (dynamiek), `orkest` (opstelling), `kaarten`, `tabel`, `cijfer`, `tekst`. In de bewerk-lade worden fasen als tekst getoond: regel "10 min · soort · kop", daaronder "- stap", "? klaar", "> notitie"; `beeld` blijft bewaard op dezelfde positie. Het dashboard-artifact leest objectfasen als tekst (`FT`, patch in `tools/dashboard-fasen-patch.js`).
-
-## Lespresentaties (PowerPoint in de lesmap)
-
-Frans wil per les een echte presentatie als bestand in de lesmap, in de ontwerptaal van de didactische kaarten (`02 Keuzevak muziek\Algemeen\Didactische kaarten\*.pdf`: wit blad, zware condensed koppen, oranje eyebrow in kapitalen, zandkleurige kaarten met ronde hoeken, zwarte pil-labels, fasekleuren oranje/oker/groen/paars), met rechtenvrij beeld (niet zelf tekenen; foto's zoeken). `tools/lesdeck.js` is de generator (pptxgenjs 3.12 in `%LOCALAPPDATA%\Temp\claude\pptx-tools\node_modules`; vormnamen in kleine letters: `roundRect`, `ellipse`, `rect`, `line`, anders is het bestand corrupt), `tools/maak-decks-klas3.js` bouwt de decks uit `inhoud-klas3.json`. Opbouw: titel met foto, agenda, doel met succescriteria, per fase een dia (foto rechts of beeld: akkoorddiagrammen, vormschema breed onder de stappen, tabel, kaarten), check (paars), rode draad (foto links), thuis. Docentnotities en fotobron in de notities van de dia. Map: `01 Onderbouw muziek\Klas 3\Lessen 2026-2027\` met submap `beeld\` (foto's 1920 px, `bronnen.txt` met licentie en maker). Foto's zoeken: `%LOCALAPPDATA%\Temp\claude\pptx-tools\zoek-commons.js` (Wikimedia Commons, alleen CC0/PD/CC BY/CC BY-SA); voorvertoningen eerst bekijken, dan via thumb.php op 1920 px halen. QA zonder LibreOffice: PowerPoint via COM in PowerShell openen en `Slide.Export(...,"PNG",1600,900)`. Gedaan (20 oktober 2026): les 8 en les 11; de app linkt ze als materiaal (`tools/koppel-presentaties.js`). Nog te doen: de overige 32 lessen van klas 3, en SharePoint-links in plaats van mappaden zodat "presentatie" in de lesmodus online opent.
-
-Week 8 (21 oktober 2026, 17 decks voor 26-30 oktober, alle klassen met lesinhoud): inhoud in `tools/inhoud-week8.json` (per klas thema, map, thuis, lessen met fasen als objecten, `extra` per fase als kaarten/tabel/akkoorden/vorm, `kort` als korte titel), bouw met `node tools/maak-decks-week8.js [klas]` (fotomapping `FOTOS` per klas+bestandsnummer). Elk leerjaar eigen accentkleur (`meta.accent`, in lesdeck.js via `K.accent`): klas 4 indigo 2B4C8C met historische blues/jazz-foto's, klas 5 bordeaux 8C2332 met prenten en manuscripten, klas 6 groen 2F6B4F met middeleeuwse en renaissancebronnen, mavo teal 1F7A8C met podium en repetitie; klas 3 blijft oranje. Mappen: `02 Keuzevak muziek\{VWO\VWO 4|5|6, Havo\Havo 4|5, Mavo\Mavo 3|4}\Lessen 2026-2027\` met `beeld\` en `bronnen.txt` (download via scratchpad `beeld-week8.js`). lesdeck.js past tekst nu automatisch: titellettergrootte op het langste woord, doeltekst kleiner bij lange doelen, stappen op regels berekend en bij overloop kleiner, "Klaar?"-kaart boven de voettekst, tabelkolommen via `kol`. App-koppeling: `node tools/koppel-week8.js` maakt `inhoud-wk8app.json` (presentatie als materiaal, Musicbox-link), daarna `merge-inhoud.js wk8app vwo4 vwo5 havo4 havo5 vwo6 mavo3 mavo4 --force`; merge vult nu ook lessen van type `toets`. BB1 en keuzeuur h3 hebben geen presentatie: die lessen staan nog op "Nog in te vullen". QA: PowerPoint COM-export, dan contactsheets met System.Drawing (scratch `pptx-tools\qa\`).
-
-## Lesinhoud invullen
-
-Lesinhoud per klas staat in `tools/inhoud-<naam>.json` (gekoppeld op lestitel; velden vraag, doel, criteria, fasen, formatief, identiteit, materiaal, benodigd; materiaal via sleutels in `_mat`). `node tools/merge-inhoud.js <naam> <klas> [<klas>...] [--force]` zet het in `public/data/basis.json` én `bron/leergang-data.json`; bestaande velden blijven staan tenzij `--force`. Daarna de data in `bron/leergang-dashboard.html` verversen (data-blok `<script id="data">` vervangen door `bron/leergang-data.json`, met `</` als `<\/`) en het artifact publiceren via zijn URL. Het lesverloop als objectfasen staat apart in `tools/fasen-<naam>.json`; `node tools/zet-fasen.js <naam>` zet dat in `inhoud-<naam>.json` (daarna merge met `--force`). Gedaan: klas 3 (`inhoud-klas3.json` + `fasen-klas3.json`, havo 3 en vwo 3, 20 oktober 2026). Nog leeg: BB1, keuzeuur h3, mavo 3, mavo 4.
-
-## Werkdag van Frans (21 oktober 2026)
-
-Lokaal is vrijwel altijd 009 met digibord: geen beamer of digibord in de klaarzetlijsten; laptop staat altijd klaar. Standaardlokaal in de app is 009. Frans is elke werkdag om 8:00 op school (koffie), werkt vanaf 8:30, ook op dagen zonder les (dinsdagmorgen) en in tussenuren; dan wil hij gericht taken doen: sectievoorzitterschap, schoolkoor, mail, SLC (zie de conferentie in de sectiedata). Vandaag toont daarom "Je dag" (werkblokken uit het rooster: 8:00 koffie, voor de eerste les, tussenuren, na de lessen tot 16:30) en "Taken voor je werkblokken": automatisch "presentatie doorlopen" per les met presentatie (afvinken in `S.dagTaken[datum]`), open sectietaken van twee weken, en eigen taken (`S.taken`: titel, bron sectie/koor/SLC/mail/lessen/overig, deadline). Lespresentaties moeten goed bij de les passen en leerlingen geen AI-gevoel geven: geen meta-tekst over kleuren of navigatie, foto's die echt over de les gaan, geen vulling. Frans wil presentaties vóór de eerstvolgende maandag.
-
-## Agenda (26 oktober 2026)
-
-Frans vond de lijst met lessen onder elkaar verwarrend voor zijn agendabeheer en wil een normale agenda. Vandaag en Week zijn daarom tijdlijnen (8:00–17:00): lessen, sectieafspraken met tijd en geplande taken staan op hun tijd; overlap komt naast elkaar te staan. Tussen 8:30 en 16:30 worden vrije blokken (15 minuten of meer) berekend; klikken opent rechts een planformulier ("In de agenda zetten"). Afspraken zonder tijd of na 17:00 en deadlines van die dag staan als labels boven de tijdlijn. Vandaag: links de agenda, rechts het gekozen item (les = de oude lesvoorbereidingskaart; telefoon: details onder de agenda). Code in `public/app.js`: `dagItems`, `agendaRaster`, `agPaneel`, `planKaart`, `heleDagRij`, `kiesSel`; stijlen onder "agenda" in `app.css`.
-Datamodel: een eigen taak (`S.taken`) krijgt `plan: {dag, van, tot}`. Een ingeplande sectietaak wordt een eigen taak met `sectieId` (afvinken zet ook `S.sectieAf`), "presentatie doorlopen" met `dagTaak: {dag, key}` (afvinken zet `S.dagTaken`). Testen kan via een eigen branch: Cloudflare maakt dan `https://<branch>.lesdag-muziek.pages.dev` met eigen opslag (testrooster daar zetten met localStorage, alleen groepscodes).
-
-## Schoolkoor (27 oktober 2026)
-
-Frans heeft elke dinsdag schoolkoor (lunchpauze). De gegevens komen uit de Koorapp (`04 Koor/Koorapp`, https://pmkoor.f-nieuwenhuyzen.workers.dev, achter Cloudflare Access; Lesdag kan er dus niet live bij). `node tools/koor-sync.js` leest de nieuwste rij van `inhoud_versies` (D1 `pmkoor-leden`, alleen lezen, via wrangler met de Koorapp-map als werkmap) en zet `koor` in `public/data/basis.json`: agenda vanaf een week geleden (datum, soort rep/extra/concert/vrij, titel, van/tot, plaats, concert, repetitieplan) en taken voor de dirigent die uit de koordata volgen ("tijden volgen" → tijden invullen, 3 weken vooraf; "repertoire volgt" → repertoire kiezen, 12 weken vooraf; een bus in de notitie zonder vervoer bij Praktisch → vervoer regelen, 4 weken vooraf; "datum volgt" bij het voorjaar → datum vastleggen). Concerttijden zonder tijd in de agenda komen uit Praktisch (zelfde regel als de .ics van de Koorapp). Bewust niet overgenomen omdat basis.json openbaar is: notities voor koorleden, thuis oefenen, Praktisch-teksten, WhatsApp, leden. Daarna committen en pushen. **Opnieuw draaien na elke wijziging van de koorplanning in Beheer.**
-In de app: `koorOp(s)` (Koorapp-item, anders op dinsdag de vaste repetitie 12:45–14:00 als het een schooldag is, geen toetsweek en na de laatste datum in de Koorapp), rood blok in de agenda, `koorKaart` (repetitieplan, vinkje "Repetitie voorbereid" = `S.dagTaken[dag].koor`, knop naar de Koorapp), koortaken in de takenlijst (`S.koorAf`) en in het planformulier, concerten in het weekend onder de week.
-
-## Inhoudelijke afspraken
-
-- Klas 3 (havo 3, vwo 3): periode 2 is een eigen songbox op basis van **Way Maker** (Sinach), basis voor PTO P1. Gebouwd op 21 oktober 2026 als eigen Musicbox-box "Way Maker" (verborgen, id `71df1713-b814-4ddf-ae6d-85c300843784`; Frans beoordeelt eerst). Echte Musicbox-songboxen bestaan uit intro + musicsheets met audio; een eigen box kan geen musicsheets bevatten, daarom: zeven blokken (lied, zang, gitaar/ukelele, keyboard, bas, drums, samen spelen/P1) met theorie-intro (doel/nodig/tijd/wist je dat), eigen diagrammen (akkoorden G D Em C, vormschema, baslijn, grooves, opbouwplan; bron `public/beeld/waymaker/`, gemaakt met scratchpad `waymaker-plaatjes.ps1`), YouTube-video's (officiële live-opname Sinach, instrumentale oefentrack in G, gitaarles Acoustic Selection, eenvoudige drums In-Sync), opdrachten met meerkeuzevragen en zelfcheck. Boxpagina: ondertitel, omslag (CC BY-foto), leerlingintro, blok "Voor de docent" (lesplanning 8 lessen, tips, bronnen/licenties), learnsheet "Way Maker: begrippen en akkoorden" (begrippentabel + alle diagrammen). Geen songtekst in de box (auteursrecht; docent deelt uit). Editor-automatisering: knoppen via React-props aanklikken, TipTap via `.ProseMirror.editor.chain().setContent()`, afbeeldingen via `input[type=file]` met een File uit fetch van lesdag-muziek.pages.dev (CORS in `public/_headers`); lange scripts fire-and-forget en `LOG` pollen (javascript_tool stopt na 45 s).
-- PTO-richtlijnen: vóór elke PTO-toets een formatieve toets.
-- Mavo 4: twee lessen per week tot de meivakantie (aanname bevestigd door Frans). Mavo 3, havo 3, vwo 3, BB1, keuzeuur h3: één les per week.
-- Cijferinvoer-deadlines in de sectiedata zijn aannames (een week vóór de rapportvergadering); echte data nog onbekend.
-- Lesmateriaal voor leerlingen: niet in de schoolhuisstijl, printvriendelijk. De app zelf gebruikt paars #5B247F en rood #C5002E, Encode Sans Condensed en Neuton.
-
-## Beoordelingsmodellen (29-10)
-
-Frans wil per speel-/zangbeoordeling een formulier dat past bij niveau en stuk, in de les (Lesdag) en in de map `Beoordeling` van het PTA-onderdeel. Eén bron per model: `tools/beoordeling/<id>.json` (criteria, weging, niveaus 4/6/8/10 met docent- en leerlingtekst). Daaruit:
-- `node tools/beoordeling/maak-formulieren.js <model> <htmlmap>` + `powershell -File tools/beoordeling/naar-word.ps1 <htmlmap> <doelmap>`: docentformulier en leerlingformat (.docx + .pdf, A4 liggend, één pagina).
-- `powershell -File tools/beoordeling/maak-scoreblad.ps1 <model> <doel.xlsx>`: leeg scoreblad met cijferformule (som score × weging ÷ som wegingen) en rubric. Nooit leerlingnamen in deze bestanden.
-- Koppelen in Lesdag: `bijlagen: [{ t, pad }]` bij de les in `tools/inhoud-week8.json`, dan `koppel-week8.js` + merge.
-Alles in één keer: `powershell -ExecutionPolicy Bypass -File tools/beoordeling/maak-alles.ps1 [-Ids a,b] [-Doelwortel <testmap>]` (testmap kort houden: Word weigert paden boven 255 tekens), daarna `node tools/beoordeling/koppel-beoordeling.js` (veld "lessen" in elk model; draai het na merge-inhoud.js). Klaar (29-10): 19 modellen voor alle speel-, zang- en concertbeoordelingen (vwo 4 PT1/PT2, vwo 5 P9, vwo 6 P19/P20, havo 4 P1/P2, havo 5 P4, mavo 3 P1 presentatie 1-3, mavo 4 P2, klas 3 Way Maker, BB1 gitaar). Wegingen per criterium zijn voorstellen (bronnen noemen ze niet) en wachten op Frans. Daarna ook mavo 4 P1 (herkansing/losse praktijkbeoordeling, geen lessen), vwo 5 P10, havo 5 P3, havo 4 P3 (mondeling), mavo 4 P3. Voorstel beoordelingsmodus: https://claude.ai/artifact/HYmdo2WccDnYrBJvWdL51W Later mogelijk een beoordelingsmodus in Lesdag die hetzelfde model leest (scores alleen lokaal/OneDrive).
-
-## Beoordelingsmodus (29-10, stap 1)
-
-Route `#beoordelen/<model-id>/<groep>` (niet in het menu). Knop "Beoordelen <toets>" op de lesuurkaart bij lessen die in een model als `docent` staan, en een kaart Beoordelen in Groepen (ook voor inhalen). Modellen komen uit `public/data/beoordeling.json` (gemaakt door `koppel-beoordeling.js`, zonder `map` en `pta`). Klassenlijsten (`S.beoord.lijsten[groep]`, geplakt uit Magister, nummers/klascodes eruit) en scores (`S.beoord.toetsen['<model>|<groep>'].ll[leerling]` met s, v, opm, zelf, af, vooruit) staan alleen in localStorage en de eigen OneDrive, nooit in basis.json. Zelfbeoordeling telt mee met `model.zelfbeoordeling` procent (10, Way Maker 0: daar zit reflectie al in de rubric); Frans scoort hoe eerlijk en concreet de leerling zichzelf beoordeelt. Export: CSV (puntkomma, decimale komma, BOM) met dezelfde kolommen als het Excel-scoreblad. Lokaal testen: launch-entry `lesdag-proef` (scratchpad `serve-lesdag.js`, luistert op PORT). Volgende stappen staan in het voorstel https://claude.ai/artifact/HYmdo2WccDnYrBJvWdL51W (stap 2: groepjes in één keer, feedback-pdf per leerling, tussenstand, cijferkolom Magister).
+- `public/app.js`: alles behalve de lesmodus. Agenda: `dagItems`, `agendaRaster`, `agPaneel`, `planKaart`. Koor: `koorOp`, `koorKaart`. Beoordelen: `viewBeoordelen`, `bmExport` (route `#beoordelen/<model>/<groep>`). Service worker `public/sw.js`: verhoog `CACHE` bij elke wijziging in de vaste bestandenlijst.
+- `public/lesmodus.js`: digibordpresentatie (fasen als objecten `{min, soort, kop, stappen, klaar, docent, beeld}`).
+- `tools/`: lesinhoud (`inhoud-*.json` + `merge-inhoud.js`), presentaties (`lesdeck.js`, `maak-decks-*.js`), SharePoint-links (`sp.js`), koor (`koor-sync.js`), beoordeling (`beoordeling/`). Na `merge-inhoud.js --force` altijd `beoordeling/koppel-beoordeling.js` opnieuw draaien.
