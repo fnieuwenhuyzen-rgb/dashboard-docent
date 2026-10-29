@@ -21,10 +21,12 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
   - Pauzes komen uit het Zermelo-rooster (Frans: "de roostermaker plant ze"). Lesdag neemt afspraken met "pauze" over, anders de vaste gaten van 10 tot 40 minuten tussen lesuren; pauzedienst of surveillance telt als werk. Nagaan met het echte rooster of de goede tijden eruit komen (Instellingen, Pauzes, laat ze zien).
   - Klopt "meer dan 5,5 uur werk = 30 minuten pauze" voor jou, of zegt de cao VO iets anders? Nu staat 30 minuten in `RUST.nodig`.
   - Werkt het tweede venster voor het bord op de schoollaptop (pop-up toestaan), en de pijltjes van je presenter in de regie?
+- [ ] **Groepen wordt Jaar?** Het tabblad Groepen (voortgang per groep, als lijst) zou plaatsmaken voor Jaar: elke klas een notenbalk over 38 lesweken met de toetsmomenten. Frans begreep de vraag niet (29-10); uitgelegd, antwoord nog nodig.
+- [ ] **Mail markeren:** Frans markeert nu geen mails ("ik vergeet dat"). Voorstel: in het mailblok toont Lesdag de inbox (alleen onderwerp en afzender) en één tik maakt er een taak van, wat de mail ook in Outlook markeert. Akkoord?
 
 ## B. Wacht op anderen
 
-- [ ] ICT: Microsoft Entra-app (clientId, tenantId) voor OneDrive-opslag en -export. Tot dan staan scores alleen in de browser; scoreblad als CSV-download.
+- [ ] ICT: Microsoft Entra-app (clientId, tenantId) voor OneDrive-opslag en -export. Tot dan staan scores alleen in de browser; scoreblad als CSV-download. Voor het ontwerp van ronde 3 komen er gedelegeerde rechten bij (nu in `m365.js`: User.Read, Files.ReadWrite.AppFolder, Files.Read.All, Sites.Read.All): **Mail.ReadBasic** (onderwerp, afzender en datum, zonder inhoud of bijlagen), **Tasks.ReadWrite** (gemarkeerde mail in To Do en taken), **Calendars.Read** (Outlook-agenda) en voor het markeren vanuit Lesdag **Mail.ReadWrite** (alleen als Frans dat wil; anders markeren in Outlook zelf). De tekst voor ICT in LEESMIJ.md bijwerken als het zover is.
 - [ ] Examensecretaris: pdf per leerling als dossierstuk (Frans: "dat denk ik wel").
 - [ ] SLC-taken na de conferentie.
 
@@ -42,6 +44,18 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 4. Beoordelingsmodus stap 3, vóór 19-3-2027: overzicht per leerling over het jaar, vergelijking met de zelfbeoordeling.
 5. Dashboard-artifact verversen met de nieuwe data (lesinhoud, beoordelingen).
 6. Na de proef Nu-scherm: de tablet als afstandsbediening van het bord (klein doorgeefluik in Cloudflare; alleen fase en klok, geen leerlinggegevens). Nu werken bord en regie alleen op hetzelfde apparaat (BroadcastChannel).
+
+## Ontwerp ronde 3: besluiten van Frans (29-10)
+
+Ontwerp: https://claude.ai/artifact/VVTZ9edRM9XZM1DBEE9weP ("Lesdag Partituur 3", versie 2). Eerdere rondes: Partituur (ronde 1), Rond (ronde 2, rondjes afgewezen als minder fraai).
+- **Oriëntatie:** tijd van boven naar beneden, dagen van links naar rechts, zoals een agenda. "Elke dag is een akkoord." Nu krijgt de dag als kolom links. In Jaar lopen de lesweken van links naar rechts.
+- **Fundament:** Atkinson Hyperlegible Next voor alle tekst en getallen (even brede cijfers), Encode Sans Condensed alleen voor koppen vanaf 28 px, Neuton vervalt. Maten per kijkafstand (laptop 16 px tekst, tablet 18 px, bord minstens 1/25 schermhoogte). Eén kleur per moment plus Magister-blauw en Outlook-teal; contrast minstens 4,5:1 (nagerekend: laagste 5,1). Vaste plekken: klok rechtsboven, dag links, hoofdknop linksonder. Reactie binnen 100 ms, ongedaan maken (8 s) in plaats van bevestigen, niets verspringt.
+- **Presentie:** binnen een kwartier na het begin van de les in Magister. Knop Open: https://csgpm.magister.net/op/#/vandaag (of Frans de app of de website gebruikt, is niet gezegd).
+- **Jarigen leerlingen:** ja, geboortedatum mag in de eigen klassenlijst op het apparaat (geplakt uit Magister).
+- **Jarigen collega's:** ja. De verjaardagen staan op het intranet https://web.csgpm.nl/home/index.php (achter inlog). Lesdag haalt daar niet zelf iets op: Frans plakt de lijst, alleen op het apparaat. Op de dag zelf staat de collega bij Opstarten, met een knop om een felicitatiemail in Outlook te openen.
+- **Pen:** de Android-tablet heeft een pen. Pen bij beoordelen en notities hoort erbij.
+- **AI:** route A (Claude via het doorgeefluik, sleutel in Cloudflare achter Access) voor alles zonder leerlinggegevens; route B (op het apparaat) voor alles met namen. AI-logboek vanaf het begin, AI beslist nooit over cijfers.
+- **Bouwvolgorde:** (1) fundament door de hele app, (2) Magister zonder koppeling: stippen op lessen, presentie binnen 15 minuten met een trilling als het vergeten is, huiswerk uit "thuis" bij de bel, kompasvenster, jarigen, (3) Nu met de dag als kolom en bord en regie in het nieuwe ontwerp, (4) beoordelen in concertstand met pen (samen met stap 2 van de beoordelingsmodus, vóór 8-1-2027), (5) Outlook na de Entra-app, (6) AI-laag met logboek, (7) Dag, Week, Jaar, Les voorbereiden, Sectie.
 
 ## Proef Nu-scherm (branch `proef-nu`, 29-10)
 
