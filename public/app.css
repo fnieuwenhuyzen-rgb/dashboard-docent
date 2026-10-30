@@ -586,3 +586,6 @@ body.kompasvenster .top{display:none}
 .pk-rij .sub{display:block;font-size:var(--t-klein);color:var(--muted)}
 .pk-anders{margin-top:.4rem}
 .dag-links .ens-zin{font-size:clamp(20px,1.9vw,24px)}
+/* taken: waar je ze doet, met een knop */
+.pk-info{display:block;font-size:var(--t-klein);color:var(--muted);margin-top:.15rem}
+.pk-knop{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end;align-items:center}

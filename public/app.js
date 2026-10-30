@@ -492,7 +492,7 @@ function agPaneel(s, p, A, sel) {
   if (it.koor) return koorKaart(s, it.koor);
   if (it.k) { const k = it.k; return `<div class="kaart"><p class="eyebrow">${k.plan ? 'Gepland · ' + esc(fmtD(k.plan.dag)) + ' ' + esc(k.plan.van) + '–' + esc(k.plan.tot) : 'Eigen taak'}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
     <label class="chk" style="margin:.6rem 0"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label>
-    <div class="knoppen">${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
+    <div class="knoppen">${openKnop(waarK(k), 'hoofd')}${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
   if (it.z || it.tz) { const tz = it.tz;
     return `<div class="kaart"><p class="eyebrow">${it.z ? 'Uit je Zermelo-rooster' + (tijd ? ' · ' + tijd : '') + (it.lokaal ? ' · ' + esc(it.lokaal) : '') : esc(tz.tw.titel)}</p><h2>${esc(it.z ? it.titel : `${(B.groepen[tz.lg] || []).join(', ')} ${tz.t.id} ${tz.t.naam}`)}</h2>
       ${tz ? `<p class="lead">${esc(tz.t.naam)} · ${esc(String(tz.t.duur || '?'))} min${tz.t.waar ? ' · ' + esc(tz.t.waar) : ''}</p>` : ''}
@@ -524,13 +524,15 @@ function planKaart(s, p, it) {
   const K = kandidaten(s); let used = 0; const hier = [];
   for (const k of K) { if (hier.length >= 3) break; if (used + k.min > ruimte || (k.voor != null && k.d === s && it.van + used + k.min > k.voor)) continue; hier.push({ k, van: it.van + used }); used += k.min; }
   const blok = vrijeBlokken(s, it.tot, 6); const elders = K.filter(k => !hier.some(x => x.k === k)).slice(0, 3).map(k => ({ k, sl: slotVoor(blok, k.min, k.d && k.d >= s ? k.d : null, k.voor) })); // een verlopen deadline: dan gewoon het eerste blok waar het past
-  const rij = (k, rechts) => `<div class="pk-rij"><span>${esc(kort(k.titel))}<span class="sub">${k.min} min${k.d ? ' · ' + (k.v.startsWith('pres:') ? 'les ' : 'deadline ') + esc(fmtD(k.d)) : ''}</span></span>${rechts}</div>`;
+  const rij = (k, rechts) => { const w = waarV(k.v);
+    return `<div class="pk-rij"><span>${esc(kort(k.titel))}<span class="sub">${k.min} min${k.d ? ' · ' + (k.v.startsWith('pres:') ? 'les ' : 'deadline ') + esc(fmtD(k.d)) : ''}</span>${w && w.info ? `<span class="pk-info">${esc(w.info)}</span>` : ''}</span><span class="pk-knop">${openKnop(w)}${rechts}</span></div>`; };
   return `<div class="kaart plankaart"><p class="eyebrow">Werkblok · ${hm(it.van)}–${hm(it.tot)} · ${it.tot - it.van} minuten</p><h2>Hier past ongeveer ${ruimte} minuten werk. De rest is lucht.</h2>
   ${hier.map((x, i) => rij(x.k, `<button class="btn${i ? '' : ' hoofd'}" data-slot="${esc(x.k.v)}|${s}|${hm(x.van)}|${hm(x.van + x.k.min)}">Zet erin</button>`)).join('')}
   <details class="meer pk-anders"${hier.length ? '' : ' open'}><summary>Iets anders</summary>
   <form id="planForm" class="planform" data-dag="${s}">
     <label>Wat ga je doen?<select id="pK"><option value="">Nieuwe taak…</option>${opties.map(([v, n]) => `<option value="${esc(v)}">${esc(n)}</option>`).join('')}</select></label>
     <div id="pNieuw" class="rij"><input id="pT" placeholder="Bijvoorbeeld: mail beantwoorden"><select id="pB">${Object.entries(BRON).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></div>
+    <label>Waar doe je het? Plak een link (mag leeg)<input id="pU" type="url" placeholder="https://… (bestand, map, mail of website)"></label>
     <div class="rij"><label>Van<input id="pVan" type="time" value="${hm(it.van).padStart(5, '0')}" min="07:00" max="22:00"></label><label>Tot<input id="pTot" type="time" value="${hm(it.van + duur).padStart(5, '0')}" min="07:00" max="22:00"></label></div>
     <button class="btn${hier.length ? '' : ' hoofd'}" type="submit">In de agenda zetten</button>
   </form></details>
@@ -809,10 +811,40 @@ function rustKaart(s, it, A, live) {
 function taakKaart(s, it) {
   const k = it.k;
   return `<div class="kaart"><p class="eyebrow">Nu gepland · ${esc(k.plan.van)}–${esc(k.plan.tot)}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
-    <!--dok-->${k.af ? '' : k.start ? `<span class="chip">bezig sinds ${esc(new Date(k.start).toTimeString().slice(0, 5))}</span>` : `<button class="btn" data-taakstart="${esc(k.id)}">Begin</button>`}
+    <!--dok-->${openKnop(waarK(k), 'hoofd')}${k.af ? '' : k.start ? `<span class="chip">bezig sinds ${esc(new Date(k.start).toTimeString().slice(0, 5))}</span>` : `<button class="btn" data-taakstart="${esc(k.id)}">Begin</button>`}
     <label class="chk"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label><!--/dok-->
     <p class="sub" style="margin-top:.6rem">Met Begin en Klaar leert Lesdag hoe lang zulke taken bij jou duren. Dat blijft in je eigen opslag.</p></div>`;
 }
+/* ---------- waar doe je een taak ----------
+   Elke taak krijgt een plek met een knop, zodat Frans niets hoeft op te zoeken: {label, url, info}. Eerst wat bij de taak zelf staat
+   (url of waar in de sectieplanning, of een zelf geplakte link), dan de bron: de juiste map in de sectiemap, de koorapp, de presentatie
+   van de les, Magister. De sectiemap is de SharePoint-bibliotheek "Sectie Muziek" (zelfde adres als tools/sp.js). */
+const SPBIB = 'https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/';
+const spMap = pad => SPBIB + pad.split('/').map(encodeURIComponent).join('/');
+const WAAR = [ // [patroon in de titel, label, adres]
+  [/magister|resultaten toetsweek/i, 'Magister', () => MAGURL()],
+  [/web\.csgpm\.nl/i, 'intranet', () => 'https://web.csgpm.nl/'],
+  [/agenda sectievergadering|verslag|besluiten|actielijst|terugkoppeling|urentabel/i, 'Overleg en beleid', () => spMap('00 Sectie/Overleg en beleid')],
+  [/lokaal|lokalen|instrument/i, 'Vaklokaal en instrumenten', () => spMap('00 Sectie/Vaklokaal en instrumenten')],
+  [/budget|bestel/i, 'Bestellingen en financiën', () => spMap('00 Sectie/Bestellingen en financiën/2026-2027')],
+  [/leerlijn|\bpto\b|vakwerkplan|curriculum/i, 'Vakwerkplan en curriculum', () => spMap('00 Sectie/Vakwerkplan en curriculum')],
+  [/jaarverslag|jaarplanning|ontwikkeldag|open dag/i, 'Jaarplanning', () => spMap('00 Sectie/Jaarplanning')],
+  [/profielkeuze|keuzevak/i, 'Keuzevak muziek', () => spMap('02 Keuzevak muziek')],
+  [/songbox|musicbox/i, 'MusicBox', () => 'https://digitaal.musicboxmethode.nl'],
+];
+function waarV(v) { // v zoals in kandidaten: sec:<id> | koor:<id> | koorrep | pres:<lesid>@<dag> | eigen:<id>
+  v = v || '';
+  if (v.startsWith('eigen:')) { const k = (S.taken || []).find(x => x.id === v.slice(6)); return k && k.url ? { label: 'link', url: k.url } : null; }
+  if (v.startsWith('sec:')) { const i = sectieItems().find(x => x.id === v.slice(4)); if (!i) return null;
+    if (i.url) return { label: i.waar || 'link', url: i.url, info: i.info };
+    const r = WAAR.find(([re]) => re.test(i.titel)); return r ? { label: r[1], url: r[2](), info: i.info } : { label: 'sectiemap', url: spMap('00 Sectie'), info: i.info }; }
+  if (v === 'koorrep' || v.startsWith('koor:')) { const kt = v === 'koorrep' ? null : ((B.koor || {}).taken || []).find(x => x.id === v.slice(5)); return { label: 'koorapp', url: (B.koor || {}).url || '', info: kt ? kt.sub : '' }; }
+  if (v.startsWith('pres:')) { const [lid, ld] = v.slice(5).split('@'); const d = ld || vandaag(); const x = (planning(d, d)[d].uren || []).find(y => y.item && y.item.id === lid);
+    const m = x && (les(x.item).materiaal || []).find(y => /presentatie|\.pptx/i.test((y.t || '') + ' ' + (y.u || '')) && /^https?:/i.test(y.u || '')); return m ? { label: 'presentatie', url: m.u } : null; }
+  return null;
+}
+const waarK = k => k.url ? { label: 'link', url: k.url } : waarV(k.sectieId ? 'sec:' + k.sectieId : k.koorId ? 'koor:' + k.koorId : k.dagTaak ? (k.dagTaak.key === 'koor' ? 'koorrep' : k.dagTaak.key + '@' + k.dagTaak.dag) : '');
+const openKnop = (w, cls) => w && w.url ? `<a class="btn${cls ? ' ' + cls : ''}" href="${esc(w.url)}" target="_blank" rel="noopener">Open ${esc(w.label)} ↗</a>` : '';
 /* wat er nog moet en nog niet in de agenda staat: [{v, titel, min, d, sub}] */
 function kandidaten(s) {
   const G = geplandeSleutels(); const out = []; const dt = d => S.dagTaken[d] || {};
@@ -840,7 +872,7 @@ function werkblokKaart(s, p, A, it, nu, live) {
   const af = s === vandaag() ? teAfronden(s, p, nu) : [];
   let used = 0; const rijen = [];
   for (const k of kandidaten(s)) { if (used + k.min > ruimte || (k.voor != null && k.d === s && van + used + k.min > k.voor)) continue; const a = van + used; used += k.min;
-    rijen.push(`<div class="nu-rij"><span>${esc(k.titel)}${k.sub ? `<div class="sub">${esc(k.sub)}</div>` : ''}</span><span class="tb"><span class="chip">${k.min} min${k.d ? ' · ' + esc(fmtD(k.d)) : ''}</span><button class="btn klein" data-slot="${esc(k.v)}|${s}|${hm(a)}|${hm(a + k.min)}">In dit blok</button></span></div>`); if (rijen.length >= 4) break; }
+    const w = waarV(k.v); rijen.push(`<div class="nu-rij"><span>${esc(kort(k.titel))}${k.sub || (w && w.info) ? `<div class="sub">${esc(k.sub || w.info)}</div>` : ''}</span><span class="tb"><span class="chip">${k.min} min${k.d ? ' · ' + esc(fmtD(k.d)) : ''}</span>${openKnop(w, 'klein')}<button class="btn klein" data-slot="${esc(k.v)}|${s}|${hm(a)}|${hm(a + k.min)}">In dit blok</button></span></div>`); if (rijen.length >= 4) break; }
   const tt = tempoTekst(); const M = live && s === vandaag() ? magOpen(s) : []; // wat in Magister nog openstaat, komt terug in het volgende werkblok
   return `<div class="kaart"><p class="eyebrow">Werkblok · ${hm(it.van)}–${hm(it.tot)}${live ? ' · nog ' + len + ' min' : ''}</p><h2>${used ? `${used} minuten werk, ${len - used} lucht` : M.length ? 'Eerst Magister' : 'Niets dat nu moet'}</h2>
     ${M.length ? `<h3>Eerst in Magister</h3>${magLijst(M, 5)}` : ''}
@@ -1515,6 +1547,7 @@ document.addEventListener('submit', e => {
     if (!van || !tot || minuten(tot) <= minuten(van)) { toast('Kies een eindtijd na de begintijd'); return; }
     if (!v && !$('#pT').value.trim()) { toast('Geef de taak een naam'); return; }
     const k = maakTaak(v, { dag, van, tot }, $('#pT').value.trim(), $('#pB').value);
+    const link = ($('#pU') || {}).value; if (k && link && /^https?:\/\//i.test(link.trim())) k.url = link.trim(); // waar je de taak doet: zelf geplakt
     if (k) { agSel[dag] = 'taak:' + k.id; bewaar(); toast(`${k.titel} staat op ${fmtD(dag)} om ${van}`); }
     return;
   }
