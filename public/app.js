@@ -1606,6 +1606,18 @@ document.addEventListener('input', e => { if (e.target.id === 'palQ' && PAL) { P
 document.addEventListener('visibilitychange', () => { if (!document.hidden && (LES || route.naam === 'regie')) waak(true); });
 document.addEventListener('visibilitychange', () => { if (document.hidden || LES) return; if (M365.account) syncNu(false); if (S.zermeloToken && zProxy() && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000)) zOphalen(false); });
 
+/* ?diag in het adres: een samenvatting in de console om tekenproblemen op te sporen. Alleen maten, soorten blokken en tijden:
+   geen namen, titels of de Zermelo-link. */
+function diag() {
+  const els = [...document.querySelectorAll('body *')].map(e => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e);
+    return { el: e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/).slice(0, 3).join('.') : ''), w: Math.round(r.width), h: Math.round(r.height), x: Math.round(r.left), y: Math.round(r.top),
+      laag: [cs.position === 'static' ? '' : cs.position, cs.transform !== 'none' ? 'transform' : '', cs.filter !== 'none' ? 'filter' : '', (cs.backdropFilter || cs.webkitBackdropFilter || 'none') !== 'none' ? 'backdrop' : '', cs.opacity !== '1' ? 'opacity ' + cs.opacity : ''].filter(Boolean).join(' ') }; });
+  const s = vandaag(); const p = planning(s, s)[s]; const A = dagItems(s, p); const m = moment(s, p, A, nuMin());
+  console.log('Lesdag diag ' + JSON.stringify({ venster: [innerWidth, innerHeight, devicePixelRatio], pagina: [document.documentElement.scrollWidth, document.documentElement.scrollHeight], route: route.naam, moment: m.m,
+    items: A.items.map(it => [it.soort, hm(it.van), hm(it.tot), it.baan || 0, it.banen || 1]), rooster: S.rooster.length, zermelo: !!ZC, pauzes: (S.pauzes || []).length, taken: (S.taken || []).length,
+    vreemd: els.filter(e => e.w > 3000 || e.h > 3000 || Math.abs(e.x) > 3000 || Math.abs(e.y) > 20000).slice(0, 10), groot: els.slice().sort((a, b) => b.w * b.h - a.w * a.h).slice(0, 8), lagen: els.filter(e => /fixed|sticky|transform|filter|backdrop/.test(e.laag)).slice(0, 12) }));
+}
+
 /* ---------- start ---------- */
 (async function start() {
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
@@ -1618,6 +1630,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden || LES
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
   render();
+  if (/diag/.test(location.search)) setTimeout(diag, 800);
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
   if (S.zermeloToken && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
