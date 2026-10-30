@@ -564,3 +564,7 @@ body.kompasvenster .top{display:none}
 @media (max-width:600px){.nu-rij{grid-template-columns:minmax(0,1fr)}.nu-rij .tb{justify-content:flex-start}} /* smalle kaart: knoppen onder de tekst */
 .nl-r[data-s=toets]{color:var(--rood)}
 .nl-hd{cursor:default}
+/* Instellingen: wat Lesdag uit Zermelo haalt */
+.z-ov{display:block;overflow-x:auto;border-collapse:collapse;font-size:.92rem;margin-top:.6rem;max-width:100%}
+.z-ov th,.z-ov td{text-align:left;vertical-align:top;padding:.35rem .6rem;border-bottom:1px solid var(--line)}
+.z-ov th{font-size:var(--t-klein);color:var(--muted);font-weight:700}
