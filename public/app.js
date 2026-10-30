@@ -154,7 +154,11 @@ const zLes = e => zMuziek(e) && !zDienst(e) && !(zToets(e) && toetsweekOp(e.d));
 function zAnders(s) { // [{van, tot, titel, lokaal, groep, toets, dienst}] voor één dag, zonder lessen en gewone pauzes
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return [];
   return ZC.events.filter(e => e.d === s && !e.vervallen && !zLes(e) && !(/\bpauze\b/i.test(zTekst(e)) && !zDienst(e)))
-    .map(e => ({ van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: e.summary || 'Afspraak', lokaal: e.loc, groep: zMuziek(e) ? zGroep(e) : '', toets: zToets(e), dienst: zDienst(e) }));
+    .map(e => { const n = zNaam(e); return { van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: n.titel, lokaal: e.loc || n.lokaal, groep: zMuziek(e) ? zGroep(e) : '', toets: zToets(e), dienst: zDienst(e) }; });
+}
+function zNaam(e) { // Zermelo schrijft "[o] [toets] 215 entl h4b": status en soort tussen haken, dan lokaal, vak en groep
+  const t = String(e.summary || '').replace(/\[[^\]]*\]\s*/g, '').trim(); const m = t.match(/^(\d{2,4}[a-z]?)\s+(.+)$/i);
+  return { titel: (m ? m[2] : t) || 'Afspraak', lokaal: m ? m[1] : '' };
 }
 function zOverzicht() { // in Instellingen: alles uit Zermelo behalve gewone muzieklessen, en wat Lesdag ermee doet (zonder de link)
   if (!ZC || !ZC.events) return '';
