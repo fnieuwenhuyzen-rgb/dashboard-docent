@@ -27,7 +27,6 @@ Bijgewerkt: 30 oktober 2026 (op branch `proef-nu`; de versie op `main` heeft eig
   - Klopt de lijst van het intranet als je hem plakt? Lesdag leest regels als "12 november Jan Jansen", "Jan Jansen 12-11" en een datumregel met namen eronder. Staan er mailadressen bij, dan vult Lesdag die in; anders kies je de collega zelf in Outlook.
   - Felicitatiemail: onderwerp "Gefeliciteerd!", tekst "Beste <voornaam>, Van harte gefeliciteerd met je verjaardag! Een fijne dag gewenst. Groet, Frans". Aanpassen?
   - Gebruik je Magister op de tablet als website of als app? De knop Open gaat naar de website; de app opent Lesdag niet vanzelf.
-- [ ] **Groepen wordt Jaar?** Het tabblad Groepen (voortgang per groep, als lijst) zou plaatsmaken voor Jaar: elke klas een notenbalk over 38 lesweken met de toetsmomenten. Frans begreep de vraag niet (29-10); uitgelegd, antwoord nog nodig.
 - [ ] **Mail markeren:** Frans markeert nu geen mails ("ik vergeet dat"). Voorstel: in het mailblok toont Lesdag de inbox (alleen onderwerp en afzender) en één tik maakt er een taak van, wat de mail ook in Outlook markeert. Akkoord?
 
 ## B. Wacht op anderen
@@ -59,6 +58,7 @@ Ontwerp: https://claude.ai/artifact/VVTZ9edRM9XZM1DBEE9weP ("Lesdag Partituur 3"
 - **Presentie:** binnen een kwartier na het begin van de les in Magister. Knop Open: https://csgpm.magister.net/op/#/vandaag (of Frans de app of de website gebruikt, is niet gezegd).
 - **Jarigen leerlingen:** ja, geboortedatum mag in de eigen klassenlijst op het apparaat (geplakt uit Magister).
 - **Jarigen collega's:** ja. De verjaardagen staan op het intranet https://web.csgpm.nl/home/index.php (achter inlog). Lesdag haalt daar niet zelf iets op: Frans plakt de lijst, alleen op het apparaat. Op de dag zelf staat de collega bij Opstarten, met een knop om een felicitatiemail in Outlook te openen.
+- **Groepen wordt Jaar (30-10):** Frans: "Ja, wordt Jaar". Het tabblad Groepen maakt plaats voor het scherm Jaar: elke klas een notenbalk over 38 lesweken met de toetsmomenten, zoals in het ontwerp. Bouwen bij stap 7 van de bouwvolgorde, niet in de huidige ronde. Let op: sinds 30-10 staat het plakken van de klassenlijst (met verjaardagen) bij Groepen; dat moet bij de bouw van Jaar een nieuwe plek krijgen (bijvoorbeeld onder de notenbalk van de klas, of bij Instellingen).
 - **Pen:** de Android-tablet heeft een pen. Pen bij beoordelen en notities hoort erbij.
 - **AI:** route A (Claude via het doorgeefluik, sleutel in Cloudflare achter Access) voor alles zonder leerlinggegevens; route B (op het apparaat) voor alles met namen. AI-logboek vanaf het begin, AI beslist nooit over cijfers.
 - **Bouwvolgorde:** (1) fundament door de hele app, (2) Magister zonder koppeling: stippen op lessen, presentie binnen 15 minuten met een trilling als het vergeten is, huiswerk uit "thuis" bij de bel, kompasvenster, jarigen, (3) Nu met de dag als kolom en bord en regie in het nieuwe ontwerp, (4) beoordelen in concertstand met pen (samen met stap 2 van de beoordelingsmodus, vóór 8-1-2027), (5) Outlook na de Entra-app, (6) AI-laag met logboek, (7) Dag, Week, Jaar, Les voorbereiden, Sectie.
