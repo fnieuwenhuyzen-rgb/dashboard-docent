@@ -216,7 +216,8 @@ function render() {
   $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k || (k === 'nu' && route.naam === 'regie') ? 'aria-current="page"' : ''}><span class="ico" aria-hidden="true">${ICO[k] || ''}</span><span class="nl">${n}</span></a>`).join('');
   if (route.naam !== 'regie' && !LES) waak(false);
   const f = { nu: viewNu, regie: viewRegie, vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen, beoordelen: viewBeoordelen, kompas: viewKompas }[route.naam] || viewNu;
-  $('#main').innerHTML = f();
+  try { $('#main').innerHTML = f(); }
+  catch (e) { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Dit scherm lukt nu niet</h2><p class="lead">Er ging iets mis bij het tekenen: ${esc(e && e.message)}. De andere onderdelen in het menu werken nog.</p></div>`; } // nooit een leeg scherm
 }
 /* meldingen onderaan. Na een handeling staat er acht seconden lang Ongedaan maken, in plaats van vooraf "Weet je het zeker?" */
 let TERUG = null;
@@ -1607,6 +1608,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden || LES
 
 /* ---------- start ---------- */
 (async function start() {
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
   try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
@@ -1619,6 +1621,5 @@ document.addEventListener('visibilitychange', () => { if (document.hidden || LES
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
   if (S.zermeloToken && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
-})();
+})().catch(e => { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Lesdag start niet</h2><p class="lead">${esc(e && e.message)}</p></div>`; });
 })();

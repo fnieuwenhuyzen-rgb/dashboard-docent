@@ -593,3 +593,4 @@ body.kompasvenster .top{display:none}
 /* smalle schermen: chips mogen afbreken, de tijd van een lesuur staat boven de les */
 .chip{max-width:100%;white-space:normal}
 @media (max-width:640px){.agpaneel .uur{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.nu-rij{grid-template-columns:minmax(0,1fr)}.nu-rij .tb{justify-content:flex-start}} /* smalle kaart: knoppen onder de tekst */

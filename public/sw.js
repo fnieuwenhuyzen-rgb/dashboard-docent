@@ -1,5 +1,5 @@
 // Offline: de app, de leergangen en de lettertypen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v10';
+const CACHE = 'lesdag-v11';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 // precies dezelfde link als in index.html; daarbij de lettertypebestanden voor Latijnse tekst (latin en latin-ext)
