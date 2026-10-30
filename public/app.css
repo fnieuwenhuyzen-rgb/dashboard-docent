@@ -568,3 +568,21 @@ body.kompasvenster .top{display:none}
 .z-ov{display:block;overflow-x:auto;border-collapse:collapse;font-size:.92rem;margin-top:.6rem;max-width:100%}
 .z-ov th,.z-ov td{text-align:left;vertical-align:top;padding:.35rem .6rem;border-bottom:1px solid var(--line)}
 .z-ov th{font-size:var(--t-klein);color:var(--muted);font-weight:700}
+/* dag als Ensemble B (30-10): links de zin en het gekozen blok, rechts de dag van boven naar beneden, zoals op Nu */
+.dag-kop{margin-bottom:-.4rem}
+.dag-lab{flex:1;min-width:0;color:var(--paars)}
+.dag-b{display:grid;grid-template-columns:minmax(0,1fr) 25rem;gap:1.2rem 2.5rem;align-items:start;margin-bottom:1rem}
+@media (max-width:1000px){.dag-b{grid-template-columns:minmax(0,1fr)}}
+.dag-links{display:grid;gap:.8rem;min-width:0;align-content:start}
+.dag-links .agpaneel{position:static;margin-top:.4rem}
+.dag-rechts{min-width:0}
+.dag-uitval{justify-self:start;max-width:100%}
+.dag-uitval summary{cursor:pointer;font-family:var(--lees);font-size:var(--t-klein);color:var(--muted);background:var(--uit-zacht);border-radius:6px;padding:.25rem .65rem;list-style-position:inside}
+.dag-uit-r{display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:transparent;padding:.45rem .3rem;font-family:var(--lees);font-size:var(--t-klein);color:var(--muted);cursor:pointer}
+.dag-uit-r b{font-weight:400;font-variant-numeric:tabular-nums;margin-right:.4rem}
+.plankaart{border:0;border-radius:16px;padding:1.1rem 1.3rem}
+.plankaart h2{font-family:var(--lees);font-size:clamp(19px,1.8vw,22px);font-weight:600;line-height:1.3;margin:.2rem 0 .3rem}
+.pk-rij{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.8rem;align-items:center;padding:.6rem 0;border-top:1px solid var(--line);font-family:var(--lees)}
+.pk-rij .sub{display:block;font-size:var(--t-klein);color:var(--muted)}
+.pk-anders{margin-top:.4rem}
+.dag-links .ens-zin{font-size:clamp(20px,1.9vw,24px)}
