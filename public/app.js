@@ -514,10 +514,10 @@ function uurKaart(s, x, nu) {
 }
 
 /* ---------- nu: één scherm dat je dag volgt ----------
-   Bovenaan de nu-balk (wat, klok rechtsboven, hoeveel tijd nog). Links de dag als kolom, van boven naar beneden zoals de Dag-agenda:
-   elke dag is een akkoord. In het midden de nu-kaart, die per moment van vorm wisselt: opstarten, voor de les, presentie in de eerste
-   15 minuten, in de les, na de bel, pauze, rustblok, koor, werkblok, dag afsluiten, stil. Rechts wat er straks komt en wat er nog
-   openstaat (Magister, voorstellen waar Frans zelf ja of later op zegt). In een pauze en een rustblok laat het scherm niets over werk zien.
+   Ontwerp Ensemble (30-10): bovenaan één zin die zegt wat nu telt (nuZin), met de knoppen van dat moment eronder en de nu-kaart als
+   verdieping. De kaart wisselt per moment: opstarten, voor de les, presentie in de eerste 15 minuten, in de les, na de bel, pauze,
+   rustblok, koor, werkblok, dag afsluiten, stil. Rechts de dag als rustige lijst en wat er nog openstaat (Magister, voorstellen waar
+   Frans zelf ja of later op zegt). In een pauze staat er alleen de tijd; in een rustblok niets over werk.
    Lestijd ligt vast: Lesdag stelt nooit voor om iets uit een les te halen of een les korter te maken. */
 let nuKijk = null; // gekozen blok in de partituur; anders volgt het scherm de klok
 const cap = t => String(t).charAt(0).toUpperCase() + String(t).slice(1);
@@ -555,31 +555,94 @@ function viewNu() {
   const [kaart, acties] = dokUit(kijk ? kijkKaart(s, p, A, kijk, nu) : nuKaart(s, p, A, m, nu));
   const kIt = kijk && kijk !== 'afsluiten' ? A.items.find(it => it.key === kijk) : null;
   const mom = kijk ? (kIt ? MOMSOORT[kIt.soort] || 'werkblok' : 'afsluiten') : m.m;
-  let h = `<div class="nu-scherm" data-moment="${mom}">` + nuBalk(s, p, A, m, nu, kijk, kIt);
+  const Z = nuZin(s, p, A, m, nu, kijk, kIt); const live = (m.it && m.it.key) || (m.x && 'les:' + m.x.u.id) || (m.m === 'afsluiten' ? 'afsluiten' : '');
+  let h = `<div class="nu-scherm nu-ens" data-moment="${mom}"><div class="ens-kop"><span class="ens-dag">${esc(cap(fmtLang(s)))}${lesweekVan(s) ? ' · lesweek ' + lesweekVan(s) : ''}</span>
+    ${A.items.length && m.m !== 'pauze' ? `<span class="nb-stap"><button class="nb-knop" data-stap="-1" aria-label="Vorig moment">‹</button><button class="nb-knop nb-nu${kijk ? '' : ' verborgen'}" data-kijk=""${kijk ? '' : ' tabindex="-1" aria-hidden="true"'}>Nu</button><button class="nb-knop" data-stap="1" aria-label="Volgend moment">›</button></span>` : ''}<span class="ens-klok">${hm(nu)}</span></div>`;
+  if (m.m === 'pauze' && !kijk) return h + `<div class="ens-pauze"><p class="ens-zin">${esc(Z.zin)}</p><p class="ens-sub">${esc(Z.sub)}</p><a class="ens-stil" href="#vandaag">Toch iets opzoeken</a></div></div>`; // in de pauze: alleen de tijd
   if (!rustig && A.werkdag && A.pz && A.pz.onbekend) h += pauzeVraag();
-  const kol = A.werkdag || A.items.length;
-  h += `<div class="nu-drie${kol ? '' : ' zonder'}">${kol ? dagKolom(s, A, nu, kijk || (m.it && m.it.key) || (m.x && 'les:' + m.x.u.id) || (m.m === 'afsluiten' ? 'afsluiten' : '')) : ''}<div class="nu-kaart">${kaart}</div>${stil ? '' : `<aside class="nu-zij">
-    <div class="kaart"><p class="eyebrow">Straks</p>${straks(s, A, m, nu, rustig)}</div>
-    ${geenVoorstel ? '' : `<div class="kaart">${nogOpen(s, p, A, m, nu)}</div>`}</aside>`}</div>`;
-  if (!rustig && (acties || !stil)) h += `<div class="dok"><div class="dok-in"><div class="dok-acties">${acties}</div>${stil ? '' : `<button class="dok-zoek" data-palet="" aria-label="Zoek of typ een taak">${ICO.zoek}<span>Zoek, of typ een taak</span><kbd>Ctrl K</kbd></button>`}</div></div>`;
+  const twijfel = rustig || stil ? '' : zinTwijfel(A);
+  h += `<div class="ens${rustig ? ' zonder' : ''}"><div class="ens-links">${Z.lab ? `<p class="ens-lab">${kijk ? 'Ander moment · ' : ''}${esc(Z.lab)}</p>` : ''}<h1 class="ens-zin">${esc(Z.zin)}</h1>${twijfel ? `<p class="ens-twijfel">${esc(twijfel)}</p>` : ''}
+    ${acties || Z.knop ? `<div class="ens-acties">${acties || Z.knop}</div>` : ''}<div class="nu-kaart">${kaart}</div></div>`;
+  if (!rustig) h += `<aside class="ens-rechts"><p class="eyebrow">Vandaag</p>${vandaagLijst(s, A, nu, kijk || live)}${stil || geenVoorstel ? '' : `<div class="ens-open">${nogOpen(s, p, A, m, nu)}</div>`}</aside>`;
+  h += '</div>';
+  if (!rustig && !stil) h += `<div class="dok"><div class="dok-in"><button class="dok-zoek" data-palet="" aria-label="Vraag of zoek iets, of typ een taak">${ICO.zoek}<span>Vraag of zoek iets, of typ een taak</span><kbd>Ctrl K</kbd></button></div></div>`;
   return h + '</div>';
 }
-/* de hoofdknoppen van een nu-kaart staan tussen <!--dok--> en <!--/dok-->; op Nu gaan ze naar de actiebalk onderaan, in duimbereik */
+/* ---------- de zin: wat nu telt, in één zin (regels: handboek/nu-zinnen.md) ----------
+   Gemaakt uit rooster, leergang en open punten, zonder AI. Hoogstens twee dingen, eerst wat je het snelst vergeet (Magister).
+   Nooit iets over werk in een pauze. Weet Lesdag iets niet zeker, dan staat dat eronder (zinTwijfel). */
+const minTxt = n => n + (n === 1 ? ' minuut' : ' minuten');
+const lijstTxt = a => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' en ' + a[a.length - 1];
+const klein1 = t => String(t).charAt(0).toLowerCase() + String(t).slice(1);
+const titel = t => String(t || 'les').replace(/[.\s]+$/, ''); // de zin zet zelf de punt
+const magWat = o => (o.soort === 'pres' ? 'de absenten van ' : o.soort === 'hw' ? 'het huiswerk van ' : 'het logboek van ') + o.x.u.groep + ' in Magister';
+function nuZin(s, p, A, m, nu, kijk, kIt) {
+  if (kijk === 'afsluiten') return afsluitZin(s, p, A, nu);
+  if (kIt) return kijkZin(s, kIt, nu);
+  const it = m.it; const x = m.x;
+  switch (m.m) {
+    case 'vrijedag': return { lab: '', zin: `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
+    case 'stil': return { lab: '', zin: S.afgesloten[s] ? 'Je dag is afgesloten. Morgen staat klaar.' : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
+    case 'start': { const L = lesUren(p); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s);
+      return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan),
+        zin: `Goedemorgen. ${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${L[0].u.start} (${L[0].u.groep})` : 'Geen lessen vandaag'}${kr ? `, koor om ${hm(kr.van)}` : ''}.${C.length ? ` ${C[0].c.naam} ${wanneerJarig(C[0].d, s)}.` : ''}` }; }
+    case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
+      return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
+    case 'les': { const y = it.x; const l = les(y.item); const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
+      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.` }; }
+      const v = magTelt(s, y) ? magVakken(s, y) : {};
+      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}` }; }
+    case 'naLes': { const v = magTelt(s, x) ? magVakken(s, x) : {};
+      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, deels of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
+    case 'pauze': return { lab: '', zin: 'Pauze.', sub: `Tot ${hm(it.tot)}.` };
+    case 'rust': return { lab: 'Rustblok', zin: `Tot ${hm(it.tot)} is van jou.${A.pz && A.pz.weg.length ? ' Je pauze viel weg door ' + lijstTxt([...new Set(A.pz.weg.map(q => q.door))]) + '.' : ''}` };
+    case 'koor': return { lab: 'Schoolkoor · tot ' + hm(it.tot), zin: `${titel(it.titel)}.` };
+    case 'taak': return { lab: `Gepland · ${hm(it.van)}–${hm(it.tot)}`, zin: `Nu: ${klein1(it.k.titel)}.${it.k.d ? ' Deadline ' + fmtD(it.k.d) + '.' : ''}` };
+    case 'afspraak': return { lab: `${hm(it.van)}–${hm(it.tot)}`, zin: `${titel(it.titel)}.` };
+    case 'tussen': return { lab: 'Tussendoor', zin: `Om ${hm(it.van)} ${it.soort === 'vrij' ? 'een werkblok' : it.soort === 'pauze' ? 'je pauze' : it.soort === 'rust' ? 'een rustblok' : it.titel}. Nog ${minTxt(it.van - nu)}, even niets.` };
+    case 'werkblok': return werkblokZin(s, p, it, nu);
+  }
+  return afsluitZin(s, p, A, nu);
+}
+function werkblokZin(s, p, it, nu) { // dezelfde volgorde als de werkblokkaart: Magister, afronden, dan wat in het blok past
+  const van = Math.max(it.van, Math.ceil(nu / 5) * 5); const len = it.tot - van; const ruimte = werkRuimte(len); const lab = `Werkblok · nog ${minTxt(len)}`;
+  const E = []; const M = magOpen(s); if (M.length) E.push(magWat(M[0])); const knop = M.length ? magOpenKnop(magKey(M[0].s, M[0].x)) : '';
+  const af = teAfronden(s, p, nu); if (af.length) E.push('het afronden van ' + af[0].u.groep);
+  let used = 0;
+  for (const k of kandidaten(s)) { if (E.length >= 2) break; if (used + k.min > ruimte || (k.voor != null && k.d === s && van + used + k.min > k.voor)) continue; used += k.min; E.push(klein1(k.titel)); }
+  return { lab, knop, zin: E.length ? `Je hebt ${minTxt(len)}. Eerst ${E[0]}${E[1] ? ', daarna ' + E[1] : ''}.` : `Je hebt ${minTxt(len)} en er hoeft niets. Dit blok mag rustig blijven.` };
+}
+function afsluitZin(s, p, A, nu) {
+  const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
+  const n = teAfronden(s, p, nu).length + A.items.filter(y => y.soort === 'taak' && !y.k.af).length + deadl.length + (s === vandaag() ? magOpen(s).length : 0);
+  return { lab: 'Dag afsluiten · een paar minuten', zin: n ? `Tijd om af te sluiten. ${n === 1 ? 'Eén ding staat' : n + ' dingen staan'} nog open; elk krijgt een moment.` : 'Niets staat open. Sluit de dag af, dan is het stil.' };
+}
+function kijkZin(s, it, nu) { // een ander moment van de dag, gekozen met ‹ › of in de lijst
+  const t = `${hm(it.van)}–${hm(it.tot)}`;
+  if (it.x) { const y = it.x; const l = y.item ? les(y.item) : {}; const voorbij = s < vandaag() || minuten(y.u.eind) <= nu;
+    return { lab: `${t} · ${y.u.groep}`, zin: y.uitval ? `${y.u.groep} valt uit.` : `${y.u.groep}: ${titel(l.titel)}.${voorbij ? (y.klaar ? ' Afgerond.' : ' Nog niet afgerond.') : ''}` }; }
+  if (it.soort === 'pauze' || it.soort === 'rust') return { lab: t, zin: `${it.soort === 'pauze' ? 'Pauze' : 'Rustblok'}. Daar plant Lesdag niets in.` };
+  if (it.soort === 'vrij') return { lab: t, zin: `Werkblok van ${minTxt(it.tot - it.van)}.` };
+  if (it.soort === 'start') return { lab: t, zin: 'Koffie en opstarten.' };
+  return { lab: t, zin: `${titel(it.titel)}.` };
+}
+function zinTwijfel(A) { // de zin raadt niet: wat Lesdag niet zeker weet, staat eronder
+  if (!A.werkdag) return '';
+  if (!S.zermeloToken) return 'Zonder Zermelo-link ziet Lesdag geen uitval of roosterwijziging.';
+  if (!ZC || Date.now() - ZC.opgehaald > 3 * 3600e3) return `Het rooster is ${ZC ? 'van ' + tijdVan(ZC.opgehaald) : 'nog niet opgehaald'}; uitval van daarna ziet Lesdag niet.`;
+  return '';
+}
+function vandaagLijst(s, A, nu, sel) { // de dag als rustige lijst; tik een regel om dat moment te bekijken
+  const t = vandaag(); const its = A.items.filter(it => it.soort !== 'uitval' && it.soort !== 'start' && !(it.soort === 'vrij' && it.tot - it.van < 15));
+  if (A.werkdag) its.push({ key: 'afsluiten', van: AG.werkTot - 15, tot: AG.werkTot, soort: 'afsluiten', titel: 'dag afsluiten' });
+  if (!its.length) return '<p class="lead">Niets vandaag.</p>';
+  return '<ol class="nu-lijst">' + its.sort((a, b) => a.van - b.van).map(it => { const voorbij = s < t || (s === t && it.tot <= nu); const nuIn = s === t && it.van <= nu && nu < it.tot; const st = it.x ? magStip(s, it.x) : '';
+    const naam = it.x ? `${it.titel}${it.sub ? ' · ' + it.sub : ''}` : it.soort === 'vrij' ? 'werkblok' : it.soort === 'rust' ? 'rustblok' : it.titel;
+    return `<li><button class="nl-r${voorbij ? ' nl-voorbij' : ''}${nuIn ? ' nl-nuin' : ''}${sel === it.key ? ' nl-sel' : ''}" data-s="${it.soort}" data-kijk="${esc(it.key)}"><b>${hm(it.van)}</b><span>${esc(naam)}</span>${st ? `<i class="nl-stip ${st}" aria-label="${st === 'ok' ? 'Magister rond' : 'Magister nog open'}"></i>` : nuIn ? '<em>nu</em>' : ''}</button></li>`; }).join('') + '</ol>';
+}
+/* de hoofdknoppen van een nu-kaart staan tussen <!--dok--> en <!--/dok-->; op Nu staan ze direct onder de zin */
 function dokUit(h) { const r = h.match(/<!--dok-->([\s\S]*?)<!--\/dok-->/); return r ? [h.replace(r[0], ''), r[1]] : [h, '']; }
 const MOMSOORT = { les: 'les', klaar: 'les', uitval: 'les', vrij: 'werkblok', taak: 'taak', taakaf: 'taak', sectie: 'afspraak', koor: 'koor', pauze: 'pauze', rust: 'rust', start: 'start' };
-const MOMNAAM = { start: 'Opstarten', tussen: 'Tussendoor', pauze: 'Pauze', rust: 'Rustblok', koor: 'Schoolkoor', werkblok: 'Werkblok', afsluiten: 'Dag afsluiten' };
-function nuBalk(s, p, A, m, nu, kijk, kIt) {
-  const it = kIt || m.it || (m.x ? A.items.find(x => x.key === 'les:' + m.x.u.id) : null);
-  const wat = kijk === 'afsluiten' ? 'Dag afsluiten' : kIt ? (kIt.x ? kIt.x.u.groep + (kIt.x.item ? ' · ' + (les(kIt.x.item).titel || '') : '') : ptLabel(kIt) || 'Vrij blok')
-    : m.m === 'les' ? 'Les · ' + m.it.x.u.groep : m.m === 'voorLes' ? 'Zo meteen: ' + m.x.u.groep : m.m === 'naLes' ? 'Na de bel · ' + m.x.u.groep
-    : m.m === 'taak' || m.m === 'afspraak' ? m.it.titel : m.m === 'stil' ? (S.afgesloten[s] ? 'Morgen staat klaar' : 'Je dag zit erop') : m.m === 'vrijedag' ? cap(p.reden || 'Vrij') : MOMNAAM[m.m] || '';
-  let nog = '', v = null;
-  if (it && it.van != null && m.m !== 'stil') { if (it.van <= nu && nu < it.tot) { nog = `nog ${it.tot - nu} min · tot ${hm(it.tot)}`; v = (nu - it.van) / (it.tot - it.van); } else if (it.van > nu) nog = `over ${it.van - nu} min · ${hm(it.van)}–${hm(it.tot)}`; else nog = `${hm(it.van)}–${hm(it.tot)} · voorbij`; }
-  const pz = A.pz && !A.pz.onbekend ? ` · <span class="${A.pz.tekort ? 'nb-let' : ''}">${A.pz.vrijMin} min pauze</span>` : '';
-  return `<div class="nu-balk"><div class="nb-links"><p class="nb-dag">${kijk ? 'Ander moment · ' : ''}${esc(cap(fmtLang(s)))}${lesweekVan(s) ? ' · lesweek ' + lesweekVan(s) : ''}${pz}</p><h1 class="nb-wat">${esc(wat)}</h1>${nog ? `<p class="nb-nog">${esc(nog)}</p>` : ''}</div>
-    <div class="nb-rechts"><div class="nb-klok">${hm(nu)}</div><div class="nb-stap"><button class="nb-knop" data-stap="-1" aria-label="Vorig moment">‹</button><button class="nb-knop nb-nu${kijk ? '' : ' verborgen'}" data-kijk=""${kijk ? '' : ' tabindex="-1" aria-hidden="true"'}>Nu</button><button class="nb-knop" data-stap="1" aria-label="Volgend moment">›</button></div></div>
-    ${v != null ? `<i class="nb-voort" style="width:${Math.round(v * 100)}%"></i>` : ''}</div>`;
-}
 function nuStap(d) { // door je dag bladeren: pijltjes op de laptop, vegen op de tablet
   const s = vandaag(); const p = planning(s, s)[s]; const A = dagItems(s, p); const nu = nuMin(); const m = moment(s, p, A, nu);
   const L = A.items.filter(it => it.soort !== 'uitval').map(it => ({ key: it.key, van: it.van })).concat(A.werkdag ? [{ key: 'afsluiten', van: AG.werkTot - 15 }] : []).sort((x, y) => x.van - y.van);
@@ -613,31 +676,6 @@ function kijkKaart(s, p, A, key, nu) {
   if (it.soort === 'vrij') return werkblokKaart(s, p, A, it, nu, nuIn);
   if (it.soort === 'start') return startKaart(s, p, A, nu);
   return agPaneel(s, p, A, key);
-}
-const ptLabel = it => it.soort === 'vrij' ? (it.tot - it.van >= 40 ? 'werkblok' : '') : it.soort === 'start' ? 'koffie' : it.soort === 'pauze' ? 'pauze' : it.soort === 'rust' ? 'rust' : it.titel;
-/* de dag als kolom, van 8 tot 17 uur van boven naar beneden, zoals de Dag-agenda: elke dag is een akkoord. Wat voorbij is vervaagt, de rode
-   lijn is nu. Een stip op een les: oker als er nog iets in Magister moet, groen als de les rond is. Afsluiten krijgt het laatste kwartier. */
-function dagKolom(s, A, nu, sel) {
-  const L = AG.tot - AG.van; const pc = m => (Math.max(0, Math.min(L, m - AG.van)) / L * 100); const t = vandaag(); const afT = AG.werkTot - 15;
-  const its = A.items.map(it => A.werkdag && it.soort === 'vrij' && it.tot > afT ? Object.assign({}, it, { tot: afT }) : it).filter(it => it.tot - it.van >= 5);
-  if (A.werkdag && !its.some(it => it.soort !== 'vrij' && it.van < AG.werkTot && it.tot > afT)) its.push({ key: 'afsluiten', van: afT, tot: AG.werkTot, soort: 'afsluiten', titel: 'afsluiten' });
-  let h = '';
-  for (let m = AG.van; m <= AG.tot; m += 60) h += `<i class="k-lijn" style="top:${pc(m).toFixed(2)}%"></i><span class="k-uur${(m / 60) % 2 ? ' oneven' : ''}" style="top:${pc(m).toFixed(2)}%">${hm(m)}</span>`;
-  h += its.map(it => {
-    const d = it.tot - it.van; const k = d >= 40 ? 'k2' : d >= 20 ? 'k1' : 'k0'; const w = 100 / (it.banen || 1);
-    const st = it.x ? magStip(s, it.x) : ''; const lab = ptLabel(it); const tijd = hm(it.van) + '–' + hm(it.tot);
-    const voorbij = s < t || (s === t && it.tot <= nu);
-    return `<button class="kb kb-${it.soort} ${k}${sel === it.key ? ' sel' : ''}${voorbij ? ' voorbij' : ''}" style="top:${pc(it.van).toFixed(2)}%;height:calc(${(pc(it.tot) - pc(it.van)).toFixed(2)}% - 2px);left:calc(${((it.baan || 0) * w).toFixed(2)}% + 1px);width:calc(${w.toFixed(2)}% - 2px)" data-kijk="${esc(it.key)}" aria-label="${esc(tijd + ' ' + (lab || 'vrij') + (st ? (st === 'ok' ? ', Magister rond' : ', nog iets in Magister') : ''))}"><b>${esc(lab)}</b><span class="kt">${tijd}</span>${st ? `<i class="st${st === 'ok' ? ' ok' : ''}" aria-hidden="true"></i>` : ''}</button>`;
-  }).join('');
-  if (s === t && nu >= AG.van && nu <= AG.tot) h += `<i class="k-nu" style="top:${pc(nu).toFixed(2)}%"></i>`;
-  return `<div class="nu-kolwrap"><div class="nu-kol" role="group" aria-label="Je dag, van 8 tot 17 uur">${h}</div></div>`;
-}
-function straks(s, A, m, nu, rustig) {
-  if (m.m === 'stil' || m.m === 'vrijedag') return '<p class="leeg">Niets.</p>';
-  const its = A.items.filter(it => it.van > nu && it.soort !== 'start' && it.soort !== 'uitval' && !(it.soort === 'vrij' && it.tot - it.van < 15)).slice(0, rustig ? 1 : 4);
-  if (!its.length) return '<p class="leeg">Niets meer vandaag.</p>';
-  const nm = it => it.soort === 'les' ? `${it.titel} · ${it.sub}` : it.soort === 'vrij' ? `werkblok, ${it.tot - it.van} min` : it.soort === 'pauze' ? 'pauze' : it.soort === 'rust' ? 'rustblok' : it.titel;
-  return its.map(it => `<button class="nu-straks" data-s="${it.soort}" data-kijk="${esc(it.key)}"><b>${hm(it.van)}</b><span>${esc(nm(it))}</span></button>`).join('');
 }
 function klaarLijst(s, l) { const b = benodigd(l).slice(); if (b.includes('Drums / percussie')) b.push('Oordoppen voor jezelf'); (S.klaarExtra[s] || []).forEach(x => { if (!b.includes(x)) b.push(x); }); return b; }
 function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">deels</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
@@ -791,8 +829,8 @@ function nogOpen(s, p, A, m, nu) {
 /* ---------- Magister zonder koppeling ----------
    Er is geen open koppeling: Lesdag kijkt niet in Magister en tikt er niets in. Per les houdt Lesdag drie vakken bij: presentie,
    huiswerk en logboek. S.mag['datum|uur'] = {p: tijdstip gemeld, l: tijdstip logboek erin, tril: 1}; het huiswerk per groep en lesweek
-   in S.magHw (twee lessen in één lesweek delen hetzelfde "thuis"). Lessen van vóór S.magVanaf tellen niet mee. Wie er absent is (AP.weg)
-   en de logboeknotities (AP.log) staan alleen op dit apparaat, tot ze in Magister staan. */
+   in S.magHw (twee lessen in één lesweek delen hetzelfde "thuis"). Lessen van vóór S.magVanaf tellen niet mee. Absenten meldt Frans in
+   Magister zelf; Lesdag herinnert alleen. De logboeknotities (AP.log) staan alleen op dit apparaat, tot ze in Magister staan. */
 const MAGURL = () => (window.LESDAG_CONFIG || {}).magister || 'https://csgpm.magister.net/op/#/vandaag';
 const magKey = (s, x) => s + '|' + x.u.id;
 const magVan = (s, x) => (S.mag || {})[magKey(s, x)] || {};
@@ -822,26 +860,18 @@ function magOpen(s0) { // alles wat nog in Magister moet, van de afgelopen week 
 }
 function volgendeLesVan(g, s) { let d = s; for (let i = 0; i < 21; i++) { d = addD(d, 1); const p = planning(d, d)[d]; if (!p.reden && p.uren.some(y => y.u.groep === g && !y.uitval)) return d; } return null; }
 const presVoorop = (s, x, nu) => s === vandaag() && magTelt(s, x) && !magVan(s, x).p && nu - minuten(x.u.start) < 15;
-const wegNamen = (s, x) => { const L = S.beoord.lijsten[x.u.groep] || []; return (AP.weg[magKey(s, x)] || []).map(id => (L.find(ll => ll.id === id) || {}).naam).filter(Boolean); };
-function presRaster(s, x) { // tik wie er niet is; de namen komen uit je eigen klassenlijst
-  const g = x.u.groep; const L = S.beoord.lijsten[g] || []; const k = magKey(s, x); const weg = AP.weg[k] || []; const J = jarigInKlas(s, g).map(j => j.ll.id);
-  if (!L.length) return `<p class="lead" style="margin-top:.5rem">Nog geen klassenlijst van ${esc(g)}. Plak hem één keer uit Magister; daarna tik je hier wie er niet is.</p><div class="knoppen" style="margin-top:.6rem"><button class="btn" data-klasopen="${esc(g)}">Klassenlijst plakken</button></div>`;
-  return `<div class="pres" role="group" aria-label="Tik wie er niet is">${L.map(ll => `<button class="pres-ll${J.includes(ll.id) ? ' jarig' : ''}" data-afw="${esc(k)}|${esc(ll.id)}" aria-pressed="${weg.includes(ll.id)}">${esc(ll.naam)}${J.includes(ll.id) ? ' · jarig' : ''}</button>`).join('')}</div>`;
-}
-const magOpenKnop = (k, klein) => { const n = (AP.weg[k] || []).length; return `<a class="btn mag${klein ? ' klein' : ''}" href="${esc(MAGURL())}" target="magister" rel="noopener" data-magopen="${esc(k)}">Open Magister<span data-presn="${esc(k)}">${n ? ' · ' + n + ' absent' : ''}</span></a>`; };
+const magOpenKnop = (k, klein) => `<a class="btn mag${klein ? ' klein' : ''}" href="${esc(MAGURL())}" target="magister" rel="noopener" data-magopen="${esc(k)}">Open Magister</a>`;
 function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de presentie voorop
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
   return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Absenten melden · ${esc(x.u.groep)}</h2>
-    <p class="lead">Tik wie er niet is en zet het daarna in Magister. Lesdag kijkt daar zelf niet in.</p>${presRaster(s, x)}${jarigMelding(s, x.u.groep)}
+    <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is. Lesdag kijkt daar zelf niet in.</p>${jarigMelding(s, x.u.groep)}
     <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Gemeld</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok--></div>`;
 }
-function magBlok(s, x, opt) { // Magister in het oog, tijdens en na de les: presentie, huiswerk bij de bel, logboek
-  if (!magTelt(s, x)) return ''; opt = opt || {}; const k = magKey(s, x); const v = magVakken(s, x); const R = [];
+function magBlok(s, x) { // Magister in het oog, tijdens en na de les: presentie, huiswerk bij de bel, logboek
+  if (!magTelt(s, x)) return ''; const k = magKey(s, x); const v = magVakken(s, x); const R = [];
   const hw = hwTekst(x);
   if (hw && v.hw === false) R.push(hwRij(s, x));
-  if (v.pres === false) { const namen = wegNamen(s, x);
-    R.push(`<div class="nu-rij"><span><b>Presentie</b> · nog niet gemeld${namen.length ? `<div class="sub">Absent: ${esc(namen.join(', '))}</div>` : ''}</span><span class="tb">${magOpenKnop(k, true)}<button class="btn klein${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Gemeld</button></span></div>`
-      + (opt.raster ? presRaster(s, x) : `<details class="meer"><summary>Wie is er niet? Tik aan</summary>${presRaster(s, x)}</details>`)); }
+  if (v.pres === false) R.push(`<div class="nu-rij"><span><b>Presentie</b> · nog niet gemeld</span><span class="tb">${magOpenKnop(k, true)}<button class="btn klein${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Gemeld</button></span></div>`);
   else if (v.pres) R.push(`<div class="nu-rij"><span><b>Presentie</b> · gemeld om ${tijdVan(v.pres)}</span><span class="ok">✓ <span class="sub">rond</span></span></div>`);
   if (hw && v.hw === null) R.push(`<div class="nu-rij"><span><b>Huiswerk</b> · klaar voor bij de bel<div class="sub">uit "thuis" in je leergang</div></span><span></span></div>`);
   else if (hw && v.hw) R.push(`<div class="nu-rij"><span><b>Huiswerk</b> · staat erin</span><span class="ok">✓ <span class="sub">rond</span></span></div>`);
@@ -856,8 +886,7 @@ function logForm(s, x) { const L = S.beoord.lijsten[x.u.groep] || []; if (!L.len
   return `<details class="meer" style="margin-top:.6rem"><summary>Logboek: notitie over een leerling</summary><div class="logform"><select id="lgLl" aria-label="Leerling">${L.map(ll => `<option value="${esc(ll.id)}">${esc(ll.naam)}</option>`).join('')}</select><input id="lgT" placeholder="Bijvoorbeeld: had zijn gitaar niet bij zich" aria-label="Notitie"><button class="btn" data-log="add|${esc(k)}">Bewaar</button></div><p class="sub" style="margin-top:.3rem">Blijft op dit apparaat tot het in Magister staat.</p></details>`; }
 function magRij(o, kompas) { // één regel in werkblok, afsluiten, Nog open en het kompas
   const { s, x } = o; const k = magKey(s, x); const wanneer = (s === vandaag() ? '' : fmtD(s) + ' ') + x.u.start; const chip = kompas ? '' : '<span class="chip mag">Magister</span> ';
-  if (o.soort === 'pres') { const namen = wegNamen(s, x);
-    return `<div class="nu-rij"><span>${chip}Presentie ${esc(x.u.groep)} van ${esc(wanneer)}${namen.length ? `<div class="sub">Absent: ${esc(namen.join(', '))}</div>` : ''}</span><span class="tb">${kompas ? '' : magOpenKnop(k, true)}<button class="btn klein" data-mag="p|${esc(k)}">Gemeld</button></span></div>`; }
+  if (o.soort === 'pres') return `<div class="nu-rij"><span>${chip}Presentie ${esc(x.u.groep)} van ${esc(wanneer)}</span><span class="tb">${kompas ? '' : magOpenKnop(k, true)}<button class="btn klein" data-mag="p|${esc(k)}">Gemeld</button></span></div>`;
   if (o.soort === 'hw') { const vl = volgendeLesVan(x.u.groep, s);
     return `<div class="nu-rij"><span>${chip}Huiswerk ${esc(x.u.groep)}${vl ? ' voor ' + esc(fmtD(vl)) : ''}<div class="sub">${kompas ? esc(hwTekst(x)) : 'tekst staat klaar'}</div></span><span class="tb"><button class="btn klein mag" data-magcopy="${kompas ? 'hwk' : 'hw'}|${s}|${esc(x.u.id)}">${kompas ? 'Kopieer' : 'Kopieer en open'}</button><button class="btn klein" data-mag="h|${esc(hwKey(x))}">Staat erin</button></span></div>`; }
   const n = (AP.log[k] || []).length;
@@ -913,8 +942,7 @@ function viewKompas() {
   if (!L.length) return h + `<div class="kaart kp-leeg"><p class="eyebrow" style="color:var(--ok)">Nu in Magister</p><p class="kp-groot">Niets</p><p class="lead">Alles wat je in Lesdag afvinkte, staat erin. Lesdag kijkt zelf niet in Magister.</p></div></div>`;
   const [o, ...rest] = L; const { x } = o; const k = magKey(o.s, x); const wanneer = (o.s === s ? 'vandaag ' : fmtD(o.s) + ' ') + x.u.start + '–' + x.u.eind;
   h += `<div class="kaart kp-nu"><p class="eyebrow mag">Nu in Magister · ${esc(wanneer)}</p>`;
-  if (o.soort === 'pres') { const namen = wegNamen(o.s, x);
-    h += `<p class="kp-groot">Absenten ${esc(x.u.groep)}</p><div class="mag-tekst">${namen.length ? esc(namen.join('\n')) : 'Nog niemand afwezig getikt.'}</div>${presRaster(o.s, x)}<div class="knoppen"><button class="btn mag" data-mag="p|${esc(k)}">Gemeld</button></div>`; }
+  if (o.soort === 'pres') h += `<p class="kp-groot">Absenten ${esc(x.u.groep)}</p><p class="lead">Zet ze in Magister en tik daarna op Gemeld.</p><div class="knoppen" style="margin-top:.8rem"><button class="btn mag" data-mag="p|${esc(k)}">Gemeld</button></div>`;
   else if (o.soort === 'hw') { const vl = volgendeLesVan(x.u.groep, o.s);
     h += `<p class="kp-groot">Huiswerk ${esc(x.u.groep)}${vl ? ' voor ' + esc(fmtD(vl)) : ''}</p><div class="mag-tekst">${esc(hwTekst(x))}</div><div class="knoppen" style="margin-top:.8rem"><button class="btn" data-magcopy="hwk|${o.s}|${esc(x.u.id)}">Kopieer</button><button class="btn mag" data-mag="h|${esc(hwKey(x))}">Staat erin</button></div>`; }
   else h += `<p class="kp-groot">Logboek ${esc(x.u.groep)}</p>${logRijen(o.s, x, true)}`;
@@ -980,7 +1008,7 @@ function viewRegie() {
     ${sl.docent ? `<div class="rg-notitie"><b>Alleen jij ziet dit</b>${esc(sl.docent)}</div>` : ''}
     <div class="rg-knoppen"><button class="btn" data-rg="vorige">‹ Vorige</button><button class="btn hoofd" data-rg="volgende">Volgende ›</button>${sl.min ? `<button class="btn" data-rg="timer">${RG.loopt ? 'Klok stil' : 'Klok aan'}</button><button class="btn" data-rg="plus">+1 min</button>` : ''}</div>
     <p class="sub" style="margin-top:.6rem">Pijltjes en de presenter werken ook als dit venster voorop staat · t = klok</p></div>
-  <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x, { raster: presVoorop(s, x, nuMin()) })}</div>` : ''}
+  <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
   <div class="kaart"><p class="eyebrow">De les</p><ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min</small>` : ''}</button></li>`).join('')}</ol></div></div>
   <div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
     <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Deels, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
@@ -1326,10 +1354,6 @@ document.addEventListener('click', async e => {
       if (P[0] === 'hw') window.open(MAGURL(), 'magister'); render(); k.then(ok => toast(ok ? 'Huiswerk gekopieerd. Plak het in Magister, daarna Staat erin.' : 'Kopiëren lukte niet. De tekst staat hier in Lesdag.')); }
     else { const n = (AP.log[P.slice(1, -1).join('|')] || [])[+P[P.length - 1]]; if (n) kopieer(n.t).then(ok => toast(ok ? 'Notitie gekopieerd' : 'Kopiëren lukte niet')); }
     return; }
-  if (D.afw) { const i = D.afw.lastIndexOf('|'); const k = D.afw.slice(0, i), id = D.afw.slice(i + 1); const L = AP.weg[k] = AP.weg[k] || []; const j = L.indexOf(id);
-    if (j < 0) L.push(id); else L.splice(j, 1); apBewaar(); // meteen zichtbaar, zonder het scherm opnieuw te tekenen
-    if (route.naam === 'kompas') { render(); return; }
-    b.setAttribute('aria-pressed', j < 0); document.querySelectorAll('[data-presn]').forEach(el => { if (el.dataset.presn === k) el.textContent = L.length ? ' · ' + L.length + ' absent' : ''; }); return; }
   if (D.log) { const P = D.log.split('|');
     if (P[0] === 'add') { const k = P.slice(1).join('|'); const ll = ($('#lgLl') || {}).value; const t = (($('#lgT') || {}).value || '').trim(); if (!ll || !t) { toast('Kies een leerling en schrijf de notitie'); return; }
       (AP.log[k] = AP.log[k] || []).push({ ll, t, op: Date.now() }); apBewaar(); render(); toast('Notitie bewaard op dit apparaat'); }
