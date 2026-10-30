@@ -555,7 +555,7 @@ function viewNu() {
   const [kaart, acties] = dokUit(kijk ? kijkKaart(s, p, A, kijk, nu) : nuKaart(s, p, A, m, nu));
   const kIt = kijk && kijk !== 'afsluiten' ? A.items.find(it => it.key === kijk) : null;
   const mom = kijk ? (kIt ? MOMSOORT[kIt.soort] || 'werkblok' : 'afsluiten') : m.m;
-  let h = `<div class="nu" data-moment="${mom}">` + nuBalk(s, p, A, m, nu, kijk, kIt);
+  let h = `<div class="nu-scherm" data-moment="${mom}">` + nuBalk(s, p, A, m, nu, kijk, kIt);
   if (!rustig && A.werkdag && A.pz && A.pz.onbekend) h += pauzeVraag();
   const kol = A.werkdag || A.items.length;
   h += `<div class="nu-drie${kol ? '' : ' zonder'}">${kol ? dagKolom(s, A, nu, kijk || (m.it && m.it.key) || (m.x && 'les:' + m.x.u.id) || (m.m === 'afsluiten' ? 'afsluiten' : '')) : ''}<div class="nu-kaart">${kaart}</div>${stil ? '' : `<aside class="nu-zij">
@@ -778,7 +778,7 @@ function voorstellen(s, p, A, m, nu) {
   for (const dd of [s, volgendeLesdag(s, 1)]) { if (V.length >= 3) break; const pd = planning(dd, dd)[dd]; if (pd.reden) continue; const key = 'stem:' + dd; if (weg(key) || (S.klaarExtra[dd] || []).length) continue;
     const zang = lesUren(pd).filter(x => benodigd(les(x.item)).includes('Zangbladen')).length; const kr = koorOp(dd); const koor = kr && kr.type !== 'vrij' ? 1 : 0;
     if (zang + koor >= 3) V.push({ key, t: `${dd === s ? 'Vandaag' : cap(fmtD(dd))} een zware stemdag: ${zang} ${zang === 1 ? 'zangles' : 'zanglessen'}${koor ? ' en het koor' : ''}. Water bij de piano op je klaarzetlijst?`, ja: `data-klaarextra="${dd}|Water bij de piano"` }); }
-  return V.map(v => `<div class="vs"><p><span class="chip les">Lesdag</span> ${esc(v.t)}</p><div class="knoppen"><button class="btn klein hoofd" ${v.ja}>${v.jaT || 'Ja'}</button><button class="btn klein" data-later="${esc(v.key)}|${s}">Later</button></div></div>`).join('');
+  return V.map(v => `<div class="vs"><p><span class="chip lesdag">Lesdag</span> ${esc(v.t)}</p><div class="knoppen"><button class="btn klein hoofd" ${v.ja}>${v.jaT || 'Ja'}</button><button class="btn klein" data-later="${esc(v.key)}|${s}">Later</button></div></div>`).join('');
 }
 /* nog open, per systeem: Magister (presentie, huiswerk, logboek), Outlook (een jarige collega feliciteren) en Lesdag (voorstellen) */
 function nogOpen(s, p, A, m, nu) {
@@ -1622,7 +1622,6 @@ function diag() {
 (async function start() {
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
-  (new URLSearchParams(location.search).get('zonder') || '').split(',').filter(Boolean).forEach(z => document.body.classList.add('zonder-' + z.trim())); // ?zonder=dok,zij,kolom,kaart,balk: onderdelen uitzetten om een tekenfout te vinden
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
   try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }

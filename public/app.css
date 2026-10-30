@@ -513,12 +513,12 @@ body.bordvenster .top{display:none}
 body.bordvenster{padding:0}
 
 /* nu: het scherm kleurt mee met het moment (--m), groot leesbaar vanaf een paar meter */
-.nu{--m:var(--paars);--mz:var(--paars-zacht);display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;padding-bottom:5.5rem}
-.nu[data-moment=pauze],.nu[data-moment=rust]{--m:var(--ok);--mz:var(--ok-zacht)}
-.nu[data-moment=werkblok],.nu[data-moment=taak]{--m:var(--let);--mz:var(--let-zacht)}
-.nu[data-moment=koor]{--m:var(--rood);--mz:var(--rood-zacht)}
-.nu[data-moment=afspraak]{--m:var(--theorie-ink);--mz:var(--theorie)}
-.nu[data-moment=start],.nu[data-moment=tussen],.nu[data-moment=afsluiten],.nu[data-moment=stil],.nu[data-moment=vrijedag]{--m:var(--muted);--mz:var(--uit-zacht)}
+.nu-scherm{--m:var(--paars);--mz:var(--paars-zacht);display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;padding-bottom:5.5rem}
+.nu-scherm[data-moment=pauze],.nu-scherm[data-moment=rust]{--m:var(--ok);--mz:var(--ok-zacht)}
+.nu-scherm[data-moment=werkblok],.nu-scherm[data-moment=taak]{--m:var(--let);--mz:var(--let-zacht)}
+.nu-scherm[data-moment=koor]{--m:var(--rood);--mz:var(--rood-zacht)}
+.nu-scherm[data-moment=afspraak]{--m:var(--theorie-ink);--mz:var(--theorie)}
+.nu-scherm[data-moment=start],.nu-scherm[data-moment=tussen],.nu-scherm[data-moment=afsluiten],.nu-scherm[data-moment=stil],.nu-scherm[data-moment=vrijedag]{--m:var(--muted);--mz:var(--uit-zacht)}
 .nu-balk{position:sticky;top:0;z-index:15;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.4rem 1.2rem;align-items:start;background:var(--mz);border-radius:16px;padding:1rem 1.3rem 1.15rem;overflow:hidden;transition:background-color .2s}
 @media (max-width:899.98px){.nu-balk{top:env(safe-area-inset-top,0px)}}
 .nb-dag{margin:0 0 .3rem;font-size:var(--t-klein);font-weight:600;color:var(--m)}
@@ -548,9 +548,9 @@ body.bordvenster{padding:0}
 .nu-straks[data-s=koor]::before{background:var(--rood)}
 .nu-straks[data-s=sectie]::before{background:var(--theorie-ink)}
 /* actiebalk onderaan: de hoofdknoppen van dit moment, groot en in duimbereik */
-.dok{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);box-shadow:0 -6px 16px rgba(20,10,30,.06);border-top:1px solid var(--line);padding:.6rem max(16px,env(safe-area-inset-right,0px)) calc(.6rem + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.dok{position:fixed;left:0;right:0;bottom:0;z-index:25;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:.6rem max(16px,env(safe-area-inset-right,0px)) calc(.6rem + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 @media (min-width:900px){.dok{left:88px}}
-@media (max-width:899.98px){.dok{bottom:calc(62px + env(safe-area-inset-bottom,0px));padding-bottom:.6rem}.nu{padding-bottom:9rem}}
+@media (max-width:899.98px){.dok{bottom:calc(62px + env(safe-area-inset-bottom,0px));padding-bottom:.6rem}.nu-scherm{padding-bottom:9rem}}
 .dok-in{max-width:1180px;margin:0 auto;display:flex;gap:.6rem;align-items:center}
 .dok-acties{display:flex;gap:.5rem;flex-wrap:wrap;flex:1;min-width:0;align-items:center}
 .dok .btn{min-height:50px;font-size:1.02rem;padding:.55rem 1.15rem;border-radius:12px}
@@ -587,15 +587,13 @@ body.kompasvenster .top{display:none}
 .kp-leeg{border-left:6px solid var(--ok);border-radius:6px 16px 16px 6px}
 /* smalle telefoon: de tabbalk schuift opzij, zodat elke naam leesbaar blijft */
 @media (max-width:520px){.nav{overflow-x:auto;justify-content:flex-start}.nav a{flex:1 0 auto;min-width:4.6rem;padding-inline:.4rem}}
-.chip.les{background:var(--paars-zacht);color:var(--paars)}
+.chip.lesdag{background:var(--paars-zacht);color:var(--paars)} /* niet .les: dat is de lesmodus over het hele scherm */
 .nu-drie.zonder{grid-template-columns:minmax(0,1fr)}
 .rg-rechts{display:grid;gap:1rem;align-content:start;min-width:0}
 /* smalle schermen: chips mogen afbreken, de tijd van een lesuur staat boven de les */
 .chip{max-width:100%;white-space:normal}
 @media (max-width:640px){.agpaneel .uur{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:600px){.nu-rij{grid-template-columns:minmax(0,1fr)}.nu-rij .tb{justify-content:flex-start}} /* smalle kaart: knoppen onder de tekst */
-/* actiebalk zonder matglas (backdrop-filter): Edge op de schoollaptop tekende Nu dan niet meer (30-10) */
 /* heel smal: dag en klok bovenaan, wat er nu is over de volle breedte, daaronder nog-zoveel en de pijltjes */
 @media (max-width:480px){.nb-links,.nb-rechts{display:contents}.nu-balk{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"dag klok" "wat wat" "nog stap";align-items:center}.nb-dag{grid-area:dag;margin:0}.nb-wat{grid-area:wat}.nb-nog{grid-area:nog;margin:0}.nb-klok{grid-area:klok}.nb-stap{grid-area:stap;justify-content:flex-end}}
-/* ?zonder=… in het adres: onderdelen van Nu uitzetten om een tekenfout in Edge te vinden */
-body.zonder-dok .dok,body.zonder-zij .nu-zij,body.zonder-kolom .nu-kolwrap,body.zonder-kaart .nu-kaart,body.zonder-balk .nu-balk,body.zonder-zijbalk .top{display:none!important}
+.nu-zij .nu-rij{grid-template-columns:minmax(0,1fr)}.nu-zij .nu-rij .tb{justify-content:flex-start} /* smalle kolom: knoppen onder de tekst */
