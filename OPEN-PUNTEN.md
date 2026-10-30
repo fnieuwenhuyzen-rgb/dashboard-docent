@@ -39,6 +39,7 @@ Bijgewerkt: 30 oktober 2026 (op branch `proef-nu`; de versie op `main` heeft eig
 
 - [ ] Beoordelingsmodus in een echte les: vwo 3 Songbox 1 (29-10), vwo 4 PT1 (9-11). Vragen: past het scherm op zijn laptop/tablet, gaat plakken uit Magister goed, mist er iets.
 - [ ] Zermelo-herkenning (`zMuziek`, `zGroep`) met het echte rooster.
+- [ ] **Proef in Edge op de laptop:** op 30-10 om 10:15 toonde Edge alleen "Lesdag" op een paarse achtergrond: de pagina tekende niets. In de ingebouwde browser werkte dezelfde versie online wel (service worker, lettertypen, Nu). Oorzaak niet gevonden; wel robuuster gemaakt (`093270e`): lettertypen houden het tekenen niet op, "Lesdag laden…" staat er meteen, een fout geeft een melding. Nakijken in Edge na Ctrl+F5; staat er een melding, dan die tekst noteren.
 - [ ] Microsoft-login en OneDrive-opslag tegen de echte tenant (na B).
 
 ## D. Bouwen (volgorde)
