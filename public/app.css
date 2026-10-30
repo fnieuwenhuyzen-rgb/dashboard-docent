@@ -597,3 +597,5 @@ body.kompasvenster .top{display:none}
 /* actiebalk zonder matglas (backdrop-filter): Edge op de schoollaptop tekende Nu dan niet meer (30-10) */
 /* heel smal: dag en klok bovenaan, wat er nu is over de volle breedte, daaronder nog-zoveel en de pijltjes */
 @media (max-width:480px){.nb-links,.nb-rechts{display:contents}.nu-balk{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"dag klok" "wat wat" "nog stap";align-items:center}.nb-dag{grid-area:dag;margin:0}.nb-wat{grid-area:wat}.nb-nog{grid-area:nog;margin:0}.nb-klok{grid-area:klok}.nb-stap{grid-area:stap;justify-content:flex-end}}
+/* ?zonder=… in het adres: onderdelen van Nu uitzetten om een tekenfout in Edge te vinden */
+body.zonder-dok .dok,body.zonder-zij .nu-zij,body.zonder-kolom .nu-kolwrap,body.zonder-kaart .nu-kaart,body.zonder-balk .nu-balk,body.zonder-zijbalk .top{display:none!important}

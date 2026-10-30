@@ -1622,6 +1622,7 @@ function diag() {
 (async function start() {
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
+  (new URLSearchParams(location.search).get('zonder') || '').split(',').filter(Boolean).forEach(z => document.body.classList.add('zonder-' + z.trim())); // ?zonder=dok,zij,kolom,kaart,balk: onderdelen uitzetten om een tekenfout te vinden
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
   try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
