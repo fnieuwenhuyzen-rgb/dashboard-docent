@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 30 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
@@ -28,6 +28,7 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 
 - [ ] Beoordelingsmodus in een echte les: vwo 3 Songbox 1 (29-10), vwo 4 PT1 (9-11). Vragen: past het scherm op zijn laptop/tablet, gaat plakken uit Magister goed, mist er iets.
 - [ ] Zermelo-herkenning (`zMuziek`, `zGroep`) met het echte rooster.
+- [ ] Toetsweek 1 (2-10 nov): komen surveillances en toetsen uit Zermelo goed in Dag en Week (`zAnders`, `zDienst`, `zToets`)? Muziektoets met "toets" in Zermelo telt in een toetsweek als toets, niet als les. Staat een toetsweektoets uit de leergang niet in Zermelo, dan een melding op de eerste dag en op maandag (nu: v6 T9).
 - [ ] Microsoft-login en OneDrive-opslag tegen de echte tenant (na B).
 
 ## D. Bouwen (volgorde)
@@ -39,6 +40,8 @@ Bijgewerkt: 29 oktober 2026. Werk dit bij aan het eind van elk werkblok. A = bes
 5. Dashboard-artifact verversen met de nieuwe data (lesinhoud, beoordelingen).
 
 ## E. Klein en technisch
+
+- **Samenvoegen `proef-nu` met `main`:** `main` heeft sinds 30-10 eigen `zTekst` en `zDienst` (bij de Zermelo-functies). `proef-nu` definieert die ook bij de pauzes: één van beide weghalen, anders een SyntaxError. In `dagItems` ook `toets` en `rooster` bij de bezette soorten houden.
 
 - Na elke wijziging van de koorplanning in de Koorapp: `/lesdag-koor`.
 - `merge-inhoud.js --force` kan materiaal overschrijven: daarna `koppel-beoordeling.js`.

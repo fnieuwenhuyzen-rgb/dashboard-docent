@@ -136,10 +136,21 @@ function zGroep(e) {
   if (m) { const g = m[2]; if (keuze && /^h3/.test(g)) return 'kmu h3'; return g === 'bb1' ? 'BB1' : g; }
   return '';
 }
+/* Alles in de iCal is van Frans: muzieklessen worden lessen, de rest (surveillance, toetsen, afspraken) komt als blok in de agenda.
+   Een muziekafspraak met "toets" erin telt in een toetsweek als toets, niet als les. */
+const zTekst = e => e.summary + ' ' + e.desc;
+const zDienst = e => /surveillance|surveilleren|pauzedienst|toezicht|\bdienst\b/i.test(zTekst(e));
+const zToets = e => /toets|tentamen|examen|\bse\b|\bpta\b/i.test(zTekst(e));
+const zLes = e => zMuziek(e) && !zDienst(e) && !(zToets(e) && toetsweekOp(e.d));
+function zAnders(s) { // [{van, tot, titel, lokaal, groep, toets, dienst}] voor één dag, zonder lessen en gewone pauzes
+  if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return [];
+  return ZC.events.filter(e => e.d === s && !e.vervallen && !zLes(e) && !(/\bpauze\b/i.test(zTekst(e)) && !zDienst(e)))
+    .map(e => ({ van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: e.summary || 'Afspraak', lokaal: e.loc, groep: zMuziek(e) ? zGroep(e) : '', toets: zToets(e), dienst: zDienst(e) }));
+}
 function zUren(s) {
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return null;
   const dag = dOf(s).getDay();
-  return ZC.events.filter(e => e.d === s && zMuziek(e)).map(e => {
+  return ZC.events.filter(e => e.d === s && zLes(e)).map(e => {
     const g = zGroep(e) || e.summary;
     const vast = S.rooster.find(u => +u.dag === dag && u.start === e.start && u.groep === g);
     return { id: vast ? vast.id : `z-${e.start}-${g}`, dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc || (vast && vast.lokaal) || '', zermelo: true, vervallen: e.vervallen, anderLokaal: !!(vast && e.loc && vast.lokaal && e.loc !== vast.lokaal) };
@@ -154,7 +165,7 @@ async function zOphalen(melden) {
     const events = icsParse(await r.text()); const van = maandagVan(vandaag());
     ZC = { opgehaald: Date.now(), van, tot: addD(van, 20), events };
     try { localStorage.setItem('lesdag-zermelo', JSON.stringify(ZC)); } catch (e) {}
-    if (melden) toast(`Rooster opgehaald: ${events.filter(zMuziek).length} muzieklessen in drie weken`);
+    if (melden) toast(`Rooster opgehaald: ${events.filter(zLes).length} muzieklessen en ${events.filter(e => !zLes(e) && !e.vervallen && (zDienst(e) || zToets(e))).length} toetsen of surveillances in drie weken`);
     if (!LES) render();
   } catch (e) { console.warn(e); if (melden) toast('Rooster ophalen lukt niet: ' + e.message); }
 }
@@ -162,7 +173,7 @@ function zVastRooster() { // muzieklessen van één week als vast rooster
   if (!ZC) return [];
   const seen = {}; const out = [];
   for (let i = 0; i < 21; i++) { const s = addD(ZC.van, i); const dag = dOf(s).getDay(); if (dag === 0 || dag === 6) continue;
-    for (const e of ZC.events.filter(x => x.d === s && zMuziek(x) && !x.vervallen)) { const g = zGroep(e); if (!g) continue; const k = dag + '|' + e.start + '|' + g; if (seen[k]) continue; seen[k] = 1; out.push({ dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc }); } }
+    for (const e of ZC.events.filter(x => x.d === s && zLes(x) && !zToets(x) && !x.vervallen)) { const g = zGroep(e); if (!g) continue; const k = dag + '|' + e.start + '|' + g; if (seen[k]) continue; seen[k] = 1; out.push({ dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc }); } }
   return out.sort((a, b) => a.dag - b.dag || minuten(a.start) - minuten(b.start));
 }
 // Voorspel de lessen voor een reeks dagen vanaf 'van' (inclusief), uitgaande van de huidige voortgang.
@@ -238,6 +249,20 @@ const hm = m => Math.floor(m / 60) + ':' + ('0' + m % 60).slice(-2);
 function sectieTijd(i) { const m = String(i.tijd || '').match(/(\d{1,2})[:.](\d{2})\s*[–-]\s*(\d{1,2})[:.](\d{2})/); return m ? { van: +m[1] * 60 + +m[2], tot: +m[3] * 60 + +m[4] } : null; }
 /* schoolkoor: agenda uit de Koorapp (B.koor, via tools/koor-sync.js); op dinsdag anders de vaste repetitie */
 function toetsweekOp(s) { return (B.sectie || []).some(i => /^toetsweek/i.test(i.titel || '') && s >= i.d && s <= (i.tot || i.d)); }
+let TWT = null;
+function toetsweekToetsen() { // muziektoetsen die de leergang in een toetsweek zet: [{lg, t, tw}]
+  if (TWT) return TWT; TWT = [];
+  const tws = (B.sectie || []).filter(i => /^toetsweek/i.test(i.titel || ''));
+  for (const [lg, L] of Object.entries(B.leergangen)) for (const w of L.weken) { if (!w.toetsweek) continue;
+    const ma = (B.kalender.weken.find(k => k.w === w.w) || {}).datum; const tw = ma && tws.find(i => addD(ma, 4) >= i.d && ma <= (i.tot || i.d)); if (!tw) continue;
+    for (const i of [1, 2, 3]) { const l = w['l' + i]; const t = l && l.type === 'toets' && toetsVan(lg, l.toets); if (t && !TWT.some(x => x.lg === lg && x.t.id === t.id)) TWT.push({ lg, t, tw }); } }
+  return TWT;
+}
+function toetsweekToetsVoor(groep, s) { const lg = groep && leergangVan(groep); return lg ? toetsweekToetsen().find(x => x.lg === lg && s >= x.tw.d && s <= (x.tw.tot || x.tw.d)) : null; }
+function toetsInZermelo(x) { // staat deze toetsweektoets met tijd in het opgehaalde rooster?
+  const gs = B.groepen[x.lg] || [];
+  return !!(ZC && ZC.events || []).find(e => !e.vervallen && e.start && e.d >= x.tw.d && e.d <= (x.tw.tot || x.tw.d) && zMuziek(e) && zToets(e) && gs.includes(zGroep(e)));
+}
 function koorOp(s) {
   const K = B.koor; if (!K) return null;
   const a = (K.agenda || []).find(x => x.d === s); if (a) return a;
@@ -258,6 +283,17 @@ function dagItems(s, p) {
     items.push({ key: 'les:' + x.u.id, van: minuten(x.u.start), tot: minuten(x.u.eind), soort: x.uitval ? 'uitval' : x.klaar ? 'klaar' : 'les', titel: x.u.groep,
       sub: x.uitval ? (x.u.vervallen ? 'vervallen' : 'valt uit') : x.fout ? x.fout : verleden ? '' : l ? (l.titel || '') : 'alles gegeven', lokaal: x.u.lokaal || '009', x });
   }
+  zAnders(s).forEach((a, n) => { // surveillance, toetsen en andere afspraken uit Zermelo
+    const tz = a.toets ? toetsweekToetsVoor(a.groep, s) : null;
+    const it = { key: 'z:' + s + ':' + n, soort: a.toets || a.dienst ? 'toets' : 'rooster', titel: tz ? a.groep + ' ' + tz.t.id + ' ' + tz.t.naam : a.titel,
+      sub: tz ? tz.t.duur + ' min · ' + (tz.t.waar || '') : a.dienst ? 'surveillance' : a.toets ? 'toets' : 'uit Zermelo', lokaal: a.lokaal || '', z: a, tz };
+    if (a.van != null && a.tot != null && a.tot > a.van && a.van < AG.tot) items.push(Object.assign(it, { van: Math.max(a.van, AG.van), tot: Math.min(a.tot, AG.tot) }));
+    else heleDag.push(it);
+  });
+  for (const x of toetsweekToetsen()) { // toets in de toetsweek waarvan de tijd niet in het rooster staat
+    const eerste = s === x.tw.d || (dOf(s).getDay() === 1 && s > x.tw.d && s <= (x.tw.tot || x.tw.d)); if (!eerste || toetsInZermelo(x)) continue;
+    heleDag.push({ key: 'tw:' + x.lg + ':' + x.t.id, soort: 'toets', titel: `Toets ${(B.groepen[x.lg] || [x.lg]).join(', ')} ${x.t.id}: tijd niet in rooster`, tz: x });
+  }
   const kr = koorOp(s);
   if (kr) { const van = kr.van ? minuten(kr.van) : null, tot = kr.tot ? minuten(kr.tot) : null;
     if (kr.type === 'vrij') heleDag.push({ key: 'koor:' + s, soort: 'koorvrij', titel: kr.titel, koor: kr });
@@ -275,7 +311,7 @@ function dagItems(s, p) {
     else if (!k.plan && !k.af && k.d === s) heleDag.push({ key: 'taak:' + k.id, soort: 'deadline', titel: k.titel, k });
   }
   if (werkdag) { // vrije blokken tussen 8:30 en 16:30
-    const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'koor'].includes(it.soort)).map(it => [it.van, it.tot]).sort((a, b) => a[0] - b[0]);
+    const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'koor', 'toets', 'rooster'].includes(it.soort)).map(it => [it.van, it.tot]).sort((a, b) => a[0] - b[0]);
     let cur = AG.werkVan;
     for (const [a, b] of bezet.concat([[AG.werkTot, AG.werkTot]])) { const eind = Math.min(a, AG.werkTot); if (eind - cur >= 15) items.push({ key: 'vrij:' + hm(cur), van: cur, tot: eind, soort: 'vrij', titel: 'Vrij', sub: (eind - cur) + ' min' }); cur = Math.max(cur, b); if (cur >= AG.werkTot) break; }
   }
@@ -329,6 +365,10 @@ function agPaneel(s, p, A, sel) {
   if (it.k) { const k = it.k; return `<div class="kaart"><p class="eyebrow">${k.plan ? 'Gepland · ' + esc(fmtD(k.plan.dag)) + ' ' + esc(k.plan.van) + '–' + esc(k.plan.tot) : 'Eigen taak'}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
     <label class="chk" style="margin:.6rem 0"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label>
     <div class="knoppen">${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
+  if (it.z || it.tz) { const tz = it.tz;
+    return `<div class="kaart"><p class="eyebrow">${it.z ? 'Uit je Zermelo-rooster' + (tijd ? ' · ' + tijd : '') + (it.lokaal ? ' · ' + esc(it.lokaal) : '') : esc(tz.tw.titel)}</p><h2>${esc(it.z ? it.titel : `${(B.groepen[tz.lg] || []).join(', ')} ${tz.t.id} ${tz.t.naam}`)}</h2>
+      ${tz ? `<p class="lead">${esc(tz.t.naam)} · ${esc(String(tz.t.duur || '?'))} min${tz.t.waar ? ' · ' + esc(tz.t.waar) : ''}</p>` : ''}
+      ${it.z ? (it.z.titel !== it.titel ? `<p class="lead">In Zermelo: ${esc(it.z.titel)}</p>` : '') : '<p class="lead">De tijd van deze toets staat niet in je opgehaalde rooster. Kijk in Zermelo wanneer en waar; zodra hij erin staat, komt hij hier met tijd en lokaal.</p>'}</div>`; }
   if (it.i) return `<div class="kaart"><p class="eyebrow">${it.soort === 'deadline' ? 'Sectietaak · deadline vandaag' : 'Agenda sectie'}</p>${sRij(it.i)}</div>`;
   return '';
 }

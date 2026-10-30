@@ -328,6 +328,10 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .ag-koor{background:var(--rood-zacht);color:var(--rood);border-color:color-mix(in srgb,var(--rood) 30%,transparent)}
 .ag-chip.ag-koor{background:var(--rood-zacht);color:var(--rood)}
 .ag-chip.ag-koorvrij{background:var(--uit-zacht);color:var(--uit)}
+.ag-toets{background:var(--toets);color:var(--toets-ink);border-color:color-mix(in srgb,var(--toets-ink) 30%,transparent)}
+.ag-chip.ag-toets{background:var(--toets);color:var(--toets-ink)}
+.ag-rooster{background:var(--paars-zacht);color:var(--paars);border-color:color-mix(in srgb,var(--paars) 25%,transparent)}
+.ag-chip.ag-rooster{background:var(--paars-zacht);color:var(--paars)}
 .koorkaart{border-top:4px solid var(--rood)}
 .koorkaart .eyebrow{color:var(--rood)}
 .koorkaart .fasen li{margin-bottom:.25rem}
