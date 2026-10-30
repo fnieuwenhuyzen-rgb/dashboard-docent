@@ -27,6 +27,7 @@ Bijgewerkt: 30 oktober 2026 (op branch `proef-nu`; de versie op `main` heeft eig
   - Klopt de lijst van het intranet als je hem plakt? Lesdag leest regels als "12 november Jan Jansen", "Jan Jansen 12-11" en een datumregel met namen eronder. Staan er mailadressen bij, dan vult Lesdag die in; anders kies je de collega zelf in Outlook.
   - Felicitatiemail: onderwerp "Gefeliciteerd!", tekst "Beste <voornaam>, Van harte gefeliciteerd met je verjaardag! Een fijne dag gewenst. Groet, Frans". Aanpassen?
   - Gebruik je Magister op de tablet als website of als app? De knop Open gaat naar de website; de app opent Lesdag niet vanzelf.
+- [ ] **Nu als Ensemble (30-10):** één zin bovenaan die zegt wat nu telt, knoppen eronder, rechts de dag als lijst, navigatie als tekst bovenaan (geen zijbalk), geen tikraster voor absenten. Zinregels: `handboek/nu-zinnen.md`. Een paar dagen gebruiken op https://proef-nu.lesdag-muziek.pages.dev. Vragen: klopt de zin op elk moment, is hij te lang, mis je iets uit de oude dagkolom, stoort de regel onder de zin ("Zonder Zermelo-link…")?
 - [ ] **Mail markeren:** Frans markeert nu geen mails ("ik vergeet dat"). Voorstel: in het mailblok toont Lesdag de inbox (alleen onderwerp en afzender) en één tik maakt er een taak van, wat de mail ook in Outlook markeert. Akkoord?
 
 ## B. Wacht op anderen
@@ -63,6 +64,12 @@ Ontwerp: https://claude.ai/artifact/VVTZ9edRM9XZM1DBEE9weP ("Lesdag Partituur 3"
 - **Pen:** de Android-tablet heeft een pen. Pen bij beoordelen en notities hoort erbij.
 - **AI:** route A (Claude via het doorgeefluik, sleutel in Cloudflare achter Access) voor alles zonder leerlinggegevens; route B (op het apparaat) voor alles met namen. AI-logboek vanaf het begin, AI beslist nooit over cijfers.
 - **Bouwvolgorde:** (1) fundament door de hele app, (2) Magister zonder koppeling: stippen op lessen, presentie binnen 15 minuten met een trilling als het vergeten is, huiswerk uit "thuis" bij de bel, kompasvenster, jarigen, (3) Nu met de dag als kolom en bord en regie in het nieuwe ontwerp, (4) beoordelen in concertstand met pen (samen met stap 2 van de beoordelingsmodus, vóór 8-1-2027), (5) Outlook na de Entra-app, (6) AI-laag met logboek, (7) Dag, Week, Jaar, Les voorbereiden, Sectie.
+
+## Proef Nu als Ensemble (branch `proef-nu`, 30-10)
+
+Na de ontwerpronde "MAESTRO ontwerprichtingen" (https://claude.ai/artifact/RciLau67JGh4DAUmxarzS3) koos Frans richting 3 (één zin), zonder rolbanen en verbindingslijnen. Besluiten: Lesdag wordt MAESTRO stap voor stap in deze app (geen tweede app); navigatie als tekst bovenaan, geen zijbalk; absenten doet Frans in Magister zelf, Lesdag herinnert en opent Magister ernaast; AI streng (externe acties altijd na een tik, nooit cijfers); leerlinggegevens alleen op het apparaat.
+Gebouwd: `nuZin()` met regels per moment (`handboek/nu-zinnen.md`), `zinTwijfel()` (geen Zermelo-link of rooster ouder dan 3 uur), `vandaagLijst()` vervangt de dagkolom, pauze toont alleen "Pauze. Tot …", werkblok krijgt Open Magister als eerste knop als daar iets openstaat. Weg: `nuBalk`, `dagKolom`, `straks`, `presRaster` en het tikken van absenten (ook in regie en kompas). Navigatie: tekst bovenaan vanaf 900 px, tabbalk onderaan daaronder. Service worker `lesdag-v14`.
+Getest met `/lesdag-lokaal` (verzonnen rooster op di 17 november, nagebootste klok 7:50 tot 17:30, eigen pauzes): zinnen per moment, pauze zonder lijst en zoekbalk, geen consolefouten, 375 px zonder zijwaarts scrollen. Niet getest: echte tablet, echt Zermelo-rooster, echte service worker.
 
 ## Proef Nu-scherm (branch `proef-nu`, 29-10)
 
