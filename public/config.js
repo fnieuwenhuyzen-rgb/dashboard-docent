@@ -4,5 +4,7 @@
 window.LESDAG_CONFIG = {
   clientId: '',          // "Application (client) ID" uit de app-registratie
   tenantId: 'organizations', // "Directory (tenant) ID" van CSG Prins Maurits, of 'organizations'
-  roosterProxy: 'https://lesdag-rooster.f-nieuwenhuyzen.workers.dev' // Cloudflare Worker voor Zermelo
+  roosterProxy: 'https://lesdag-rooster.f-nieuwenhuyzen.workers.dev', // Cloudflare Worker voor Zermelo
+  magister: 'https://csgpm.magister.net/op/#/vandaag', // knop Open: Lesdag kijkt niet in Magister en tikt er niets in
+  outlookNieuw: 'https://outlook.office.com/mail/deeplink/compose' // nieuwe mail in Outlook op het web (felicitatie aan een collega)
 };
