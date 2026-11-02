@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lesdag-proef-nu",
+      "runtimeExecutable": "C:/Users/nwn/AppData/Local/Programs/node/node.exe",
+      "runtimeArgs": [
+        "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag-proef-nu/tools/serve-lokaal.js",
+        "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag-proef-nu/public",
+        "8733"
+      ],
+      "port": 8733
+    },
+    {
+      "name": "lesdag-proef",
+      "runtimeExecutable": "C:/Users/nwn/AppData/Local/Programs/node/node.exe",
+      "runtimeArgs": [
+        "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag/tools/serve-lokaal.js",
+        "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag/public",
+        "8732"
+      ],
+      "port": 8732
+    }
+  ]
+}
