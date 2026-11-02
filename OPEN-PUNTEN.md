@@ -8,6 +8,17 @@ Besluiten Frans (2-11):
 - Zelfbeoordeling 10% klopt (Way Maker en Songbox 1 blijven 0%, de reflectie zit daar in de rubric). De modellen staan al goed.
 - Songbox 1 klas 3 telt als voortgangscijfer. In model `songbox1-klas3` staat nog "Geen PTO-toets: cijfer voor het speelstuk": aanvullen met "voortgangscijfer".
 - Way Maker-box in Musicbox is beoordeeld en zichtbaar (id `71df1713-b814-4ddf-ae6d-85c300843784`).
+- Way Maker komt helemaal niet meer voor de kerstvakantie: alles verschuift naar erna.
+- Examenconcerten: beoordeling door klasgenoten telt 15%. Nog te bevestigen: gaat het van het docentdeel af (docent 75, zelf 10, klasgenoten 15)?
+- Uitval en inhalen: mag gebouwd worden.
+- Presentaties: stijl is goed, maar de foto's zijn vervormd en in de notities moet alles staan wat Frans moet vertellen. Oorzaak foto's vrijwel zeker `sizing: cover` in `tools/lesdeck.js`: pptxgenjs rekt de foto dan uit tot het kader.
+- Beoordelingsmodus stap 2: voorstel is goed, meenemen in Lesdag. Eerst uitzoeken: is het haalbaar, en welke manier van beoordelen werkt prettig en betrouwbaar?
+- Zermelo-koppeling werkt met de echte code (Frans). Vakcodes en groepscodes kunnen nu worden nagekeken.
+- BB1: kennismaken met alle instrumenten via de tutorials. Ukelele is geweest, ze spelen nu gitaar, daarna drums en keyboard.
+- Keuzeuur havo 3 is nieuw voor Frans: er moet een volledig lespakket komen.
+- Mavo 3 en 4: het programma staat er (titels per les). Wat ontbreekt is de uitwerking voor de lesmodus: mavo 3 heeft 2 van de 36 lessen met fasen, mavo 4 2 van de 58. Vraag aan Frans: uitwerken of niet?
+
+Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen botst altijd. Daarom werkt steeds één sessie tegelijk aan dat bestand. Volgorde: presentaties, dan lesinhoud (Way Maker, BB1, mavo, keuzeuur), dan dashboard-artifact. Los daarvan: uitval en inhalen in `public/app.js`, daarna beoordelingsmodus stap 2 in hetzelfde bestand.
 
 - [ ] **Tegenstrijdige bronnen in de beoordelingsmodellen** (2-11 nagekeken in de PTA-pdf's, studiewijzers en leergang):
   - mavo 4 P2: PTA en leergang weging 40, studiewijzer 30%.
@@ -70,6 +81,8 @@ Nog te doen:
 - [ ] Data met `bevestigen` nog vastzetten: `hd1`, `or1`, `ww7`, `im16`, `im17`.
 
 ## E. Klein en technisch
+
+- [ ] **Teruggevallen gegevens (2-11):** om 14:56 stonden `public/data/basis.json` en `bron/leergang-data.json` ineens op een oudere tussenstand (37 sectietaken weg, Mary's Boy Child in E in plaats van F, formulieren en presentaties weg). Oorzaak niet bewezen, waarschijnlijk OneDrive. Teruggezet naar `251d2c0`, live was goed gebleven. Komen deze twee bestanden onverwacht als gewijzigd terug: niet committen, eerst vergelijken met HEAD, want `git add -A` neemt ze mee.
 
 - **Zermelo-API toekomst:** de koppeling gebruikt `/api/v3` met een persoonlijke koppelcode. Zermelo documenteert sinds 13-4-2026 alleen nog partnerkoppelingen (`/api`, aan te maken door een beheerder, met verplicht `schoolInSchoolYear`), zonder einddatum voor v3 te noemen. Op 2-11 antwoordde `/api/v3` op csgpm nog. Stopt het: agendalink als reserve, en ICT vragen om een partner.
 - **Samenvoegen `proef-nu` met `main`:** `main` heeft sinds 30-10 eigen `zTekst` en `zDienst` (bij de Zermelo-functies). `proef-nu` definieert die ook bij de pauzes: één van beide weghalen, anders een SyntaxError. In `dagItems` ook `toets` en `rooster` bij de bezette soorten houden.

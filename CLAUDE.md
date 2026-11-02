@@ -29,7 +29,7 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 - Grote zoek- of schrijfklussen (meerdere klassen tegelijk) aan helpers met een strakke opdracht; zij schrijven alleen hun bestanden, jij controleert en publiceert.
 - Model per klus: zwaar model voor ontwerp en onderzoek, lichter model voor bouwen volgens een goedgekeurd plan of mechanisch werk.
 
-## Skills (in `Sectie Muziek/.claude/skills/`)
+## Skills (in `.claude/skills/` van dit project)
 
 - `/lesdag-online`: committen, pushen (= live) en live controleren achter Access.
 - `/lesdag-lokaal`: de app lokaal testen op `lesdag-proef` (`tools/serve-lokaal.js`), met testrooster en opruimen.
