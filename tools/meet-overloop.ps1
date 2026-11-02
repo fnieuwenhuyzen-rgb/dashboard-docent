@@ -5,7 +5,8 @@ param([string]$Beeld = '', [Parameter(ValueFromRemainingArguments = $true)][stri
 $app = New-Object -ComObject PowerPoint.Application
 $totaal = 0
 foreach ($d in $Decks) {
-  $p = $app.Presentations.Open((Resolve-Path -LiteralPath $d).Path, -1, 0, 0)
+  $kopie = Join-Path $env:TEMP ("meet-" + [guid]::NewGuid() + ".pptx"); Copy-Item -LiteralPath $d $kopie # kopie: PowerPoint voegt anders bij OneDrive-bestanden soms een oude versie uit zijn cache in
+  $p = $app.Presentations.Open($kopie, -1, 0, 0)
   $W = $p.PageSetup.SlideWidth; $H = $p.PageSetup.SlideHeight; $n = 0
   foreach ($s in $p.Slides) {
     $kaders = @()
@@ -26,6 +27,6 @@ foreach ($d in $Decks) {
     if ($Beeld) { $naam = [IO.Path]::GetFileNameWithoutExtension($d) -replace '[^\w.-]', '_'; $s.Export((Join-Path $Beeld ("$naam-{0:00}.png" -f $s.SlideIndex)), 'PNG', 1280, 720) }
   }
   "{0}: {1} dia's, {2} meldingen" -f (Split-Path $d -Leaf), $p.Slides.Count, $n
-  $totaal += $n; $p.Close()
+  $totaal += $n; $p.Close(); Remove-Item $kopie
 }
 $app.Quit(); "Totaal meldingen: $totaal"
