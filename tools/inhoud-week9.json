@@ -1,0 +1,140 @@
+{
+  "klas3": {
+    "klas": "havo 3 en vwo 3",
+    "thema": "klas3",
+    "map": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027",
+    "blok": "Periode 1 · Samenspelen in bandbezetting",
+    "blokKort": "profielkeuze",
+    "klassen": ["havo3", "vwo3"],
+    "lessen": [
+      {
+        "titel": "Kiezen voor muziek in de bovenbouw",
+        "kort": "Kiezen voor muziek",
+        "code": "P1 · les 9",
+        "bestand": "09 Kiezen voor muziek in de bovenbouw.pptx",
+        "fotos": { "titel": "messiah-koor.jpg", "doel": "bandles-leerlingen.jpg", "fase": [null, null, null, "doelen.jpg", null], "rodeDraad": "pieterskerk.jpg" },
+        "vraag": "Wat doe je bij muziek in de bovenbouw, en is dat iets voor jou?",
+        "doel": "Je weet wat muziek in havo 4 en 5 of vwo 4 tot 6 inhoudt en kunt een bewuste keuze maken.",
+        "criteria": [
+          "Ik noem wat je doet: luisteren, spelen, maken en erop uit",
+          "Ik weet wat het examen vraagt",
+          "Ik heb voor mezelf opgeschreven of muziek bij mijn keuze past"
+        ],
+        "fasen": [
+          {
+            "min": 5, "soort": "start", "kop": "Wat denk je dat muziek in de bovenbouw is?",
+            "stappen": ["Schrijf in één zin op wat je denkt.", "Drie leerlingen lezen voor."]
+          },
+          {
+            "min": 15, "soort": "uitleg", "kop": "Muziek in havo 4 en 5, vwo 4 tot 6",
+            "stappen": [
+              "Luisteren: muziek herkennen en begrijpen, van middeleeuwen tot pop.",
+              "Spelen: ongeveer de helft van de lessen speel of zing je, alleen en samen.",
+              "Maken: je componeert en arrangeert zelf.",
+              "Erop uit: concerten in De Doelen en de Messiah in de Pieterskerk in Leiden.",
+              "Examen: schoolexamen met praktijk- en theorietoetsen, een examenconcert en een centraal examen."
+            ],
+            "beeld": { "soort": "kaarten", "items": [
+              { "k": "Luisteren", "t": "muziek herkennen en begrijpen" },
+              { "k": "Spelen", "t": "alleen, samen, examenconcert" },
+              { "k": "Maken", "t": "componeren en arrangeren" },
+              { "k": "Erop uit", "t": "De Doelen, Messiah in Leiden" }
+            ] },
+            "docent": "Vertel iets persoonlijks over de Messiah; dat blijft hangen. Havo: 3 lessen per week in havo 4 en 5. Vwo: 2 lessen per week in vwo 4, 3 in vwo 5 en 6. Er is geen methodeboek en weinig huiswerk, wel verplichte activiteiten (handelingsdelen)."
+          },
+          {
+            "min": 10, "soort": "doen", "kop": "Proefopdracht: luisteren als in het examen",
+            "stappen": [
+              "Luister naar het begin van het Hallelujah uit de Messiah.",
+              "Vraag 1: welke bezetting hoor je? A solist met piano, B koor met orkest, C popband.",
+              "Vraag 2: hoeveel tellen heeft één maat: 3 of 4?",
+              "Schrijf je antwoorden op en vergelijk ze met je buur."
+            ],
+            "beeld": { "soort": "fragment", "k": "Het fragment", "t": "Händel, Hallelujah uit de Messiah. Luister de eerste 40 seconden, twee keer.", "link": "Fragment openen", "u": "https://commons.wikimedia.org/wiki/File:Handel_-_Messiah,_Part_2_(Scherchen)_-_45._Hallelujah.ogg" },
+            "docent": "Antwoorden: 1 = B, 2 = 4 (4/4-maat). In het centraal examen luister je ook naar fragmenten en beantwoord je daar vragen over; laat zien dat het te doen is. Opname: Hermann Scherchen, publiek domein, Wikimedia Commons."
+          },
+          {
+            "min": 10, "soort": "gesprek", "kop": "Jouw vragen",
+            "stappen": ["Wat wil je weten over muziek in de bovenbouw?", "Rooster, profiel, examen, concerten: alles mag."]
+          },
+          {
+            "min": 5, "soort": "afsluiten", "kop": "Exit ticket: past muziek bij mij?",
+            "stappen": ["Twee dingen die je niet wist.", "Eén vraag die je nog hebt.", "Past muziek bij jouw keuze: ja, misschien of nee?"]
+          }
+        ],
+        "formatief": { "soort": "exit ticket", "tekst": "Twee dingen die je niet wist, één vraag die je nog hebt, en: past muziek bij jouw keuze?" },
+        "identiteit": "Je talent inzetten voor anderen: in de bovenbouw speel je op de open dag of in een viering, zing je in het schoolkoor of coach je een medeleerling.",
+        "benodigd": ["Exit-ticketbriefjes", "Blaadjes voor de proefopdracht"]
+      }
+    ]
+  },
+  "mavo3": {
+    "klas": "mavo 3",
+    "thema": "mavo",
+    "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\Lessen 2026-2027",
+    "blok": "Periode 1 · Ritme, maat en presentatie zang",
+    "blokKort": "ritme en maat",
+    "klassen": ["mavo3"],
+    "thuis": { "mb": "Trainerz: ritme en maat", "learn": "Ritme en maat herhalen" },
+    "lessen": [
+      {
+        "titel": "Terugblik presentatie 1 · herhaling ritme en maat",
+        "kort": "Terugblik en ritme",
+        "code": "P1 · les 9",
+        "bestand": "09 Terugblik presentatie 1 - ritme en maat.pptx",
+        "fotos": { "titel": "zangeres-podium.jpg", "doel": "microfoon-studio.jpg", "fase": [null, null, "metronoom.jpg", null, null] },
+        "vraag": "Wat neem ik mee naar presentatie 2?",
+        "doel": "Je weet wat goed ging bij presentatie 1 en wat je de volgende keer anders doet. Je kunt ritme en maat weer uitleggen en klappen.",
+        "criteria": [
+          "Ik noem één ding dat goed ging en één tip voor presentatie 2",
+          "Ik klap de afterbeat in de maat",
+          "Ik leg het verschil uit tussen een break en een fill"
+        ],
+        "fasen": [
+          {
+            "min": 10, "soort": "start", "kop": "Terugblik: wat ging goed?",
+            "stappen": ["Je krijgt je cijfer en je feedback.", "Schrijf op: één ding dat goed ging en één tip voor presentatie 2.", "Wie wil, vertelt wat er is blijven hangen."],
+            "docent": "Cijfer per leerling geven, niet hardop. Opname van presentatie 1 alleen laten horen als de leerling dat wil. Presentatie 2 (akkoordinstrument) komt in periode 2."
+          },
+          {
+            "min": 10, "soort": "uitleg", "kop": "Ritme en maat: wat weet je nog?",
+            "stappen": [
+              "Notenwaarden: hele tot zestiende noten en rusten, punt en boog.",
+              "Maatsoorten: 2/4, 3/4, 4/4 en 6/8.",
+              "Ritmische figuren: syncope, achtstentriool, break, fill en ostinato."
+            ],
+            "beeld": { "soort": "kaarten", "items": [
+              { "k": "Opmaat", "t": "de melodie begint vóór de eerste volle maat" },
+              { "k": "Afterbeat", "t": "de nadruk ligt op tel 2 en 4" },
+              { "k": "Syncope", "t": "de nadruk valt op een licht maatdeel" },
+              { "k": "Break", "t": "de band stopt even, de muziek loopt door" },
+              { "k": "Fill", "t": "korte opvulling, vaak op drums" },
+              { "k": "Ostinato", "t": "een figuur die steeds terugkomt" }
+            ] },
+            "docent": "Vraag eerst de klas; vul pas daarna aan. Begrippen uit de lessen 3, 5 en 7."
+          },
+          {
+            "min": 10, "soort": "doen", "kop": "Klappen in de maat",
+            "stappen": [
+              "Tel samen hardop in 4/4: 1 2 3 4.",
+              "De ene helft tikt op tel 1 en 3, de andere helft klapt op tel 2 en 4.",
+              "Wissel, en zet het tempo steeds wat hoger.",
+              "Nu in 3/4: stamp op de 1 en klap op 2 en 3."
+            ],
+            "docent": "Metronoom of een eenvoudige beat erbij. Vraag leerlingen die het goed doen om voor te doen."
+          },
+          {
+            "min": 10, "soort": "doen", "kop": "Trainerz: ritme en maat",
+            "stappen": ["Open Musicbox en ga naar Trainerz.", "Oefen ritme en maat; begin met wat jij lastig vindt.", "Noteer welk onderdeel je thuis nog oefent."]
+          },
+          {
+            "min": 5, "soort": "afsluiten", "kop": "Wat neem je mee?",
+            "stappen": ["Lees je tip voor presentatie 2 nog eens.", "Volgende week valt de les uit: activiteitenweek.", "Daarna begint periode 2 met toonhoogte."]
+          }
+        ],
+        "formatief": { "soort": "exit ticket", "tekst": "Wat is het verschil tussen een break en een fill?" },
+        "benodigd": ["Cijfers en feedback presentatie 1", "Laptop of telefoon voor Trainerz", "Metronoom of beat"]
+      }
+    ]
+  }
+}
