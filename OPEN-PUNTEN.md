@@ -9,7 +9,7 @@ Besluiten Frans (2-11):
 - Songbox 1 klas 3 telt als voortgangscijfer. In model `songbox1-klas3` staat nog "Geen PTO-toets: cijfer voor het speelstuk": aanvullen met "voortgangscijfer".
 - Way Maker-box in Musicbox is beoordeeld en zichtbaar (id `71df1713-b814-4ddf-ae6d-85c300843784`).
 - Way Maker komt helemaal niet meer voor de kerstvakantie: alles verschuift naar erna.
-- Examenconcerten: docent 75%, zelf 10%, klasgenoten 15%. Het zelfdeel is het eigen cijfer van de leerling (aanname: het overall-cijfer van het oude formulier). Modellen en app nog aanpassen. Nog navragen bij de examensecretaris of dit bij het PTA past, vóór P19 in lesweek 16-17.
+- Examenconcerten: docent 75%, zelf 10%, klasgenoten 15%. Het zelfdeel is het eigen cijfer van de leerling (aanname: het overall-cijfer van het oude formulier). Modellen en app nog aanpassen. Geen navraag bij de examensecretaris nodig: Frans beslist hier zelf over, ook over de pdf als dossierstuk.
 - Uitval en inhalen: mag gebouwd worden.
 - Presentaties: stijl is goed, maar de foto's zijn vervormd en in de notities moet alles staan wat Frans moet vertellen. Oorzaak foto's vrijwel zeker `sizing: cover` in `tools/lesdeck.js`: pptxgenjs rekt de foto dan uit tot het kader.
 - Beoordelingsmodus stap 2: voorstel is goed, meenemen in Lesdag. Eerst uitzoeken: is het haalbaar, en welke manier van beoordelen werkt prettig en betrouwbaar?
@@ -39,7 +39,6 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 ## B. Wacht op anderen
 
 - [ ] ICT: Microsoft Entra-app (clientId, tenantId) voor OneDrive-opslag en -export. Tot dan staan scores alleen in de browser; scoreblad als CSV-download.
-- [ ] Examensecretaris: pdf per leerling als dossierstuk (Frans: "dat denk ik wel").
 - [ ] SLC-taken na de conferentie.
 
 ## C. Te testen in het echt
