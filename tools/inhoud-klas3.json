@@ -699,7 +699,7 @@
             "Luisteren: muziek herkennen en begrijpen, van barok tot pop.",
             "Spelen: alleen en samen, met een examenconcert.",
             "Maken: eigen muziek en arrangementen.",
-            "Erop uit: De Doelen in Rotterdam en de Messiah in Leiden met honderden jongeren."
+            "Erop uit: De Doelen in Rotterdam en de Messiah in Leiden."
           ],
           "beeld": {
             "soort": "kaarten",
@@ -2878,6 +2878,1182 @@
       "benodigd": [
         "Alle instrumenten",
         "Opbergplan voor de zomer"
+      ]
+    },
+    "Kerstbox: Mary's Boy Child leren kennen": {
+      "vraag": "Waarom klinkt dit kerstlied zo vrolijk?",
+      "doel": "Je kent de herkomst, de vorm en de betekenis van Mary's Boy Child en weet welke rol je in de band wilt spelen.",
+      "criteria": [
+        "Ik vertel in twee zinnen waar Mary's Boy Child vandaan komt",
+        "Ik teken het vormschema van Mary's Boy Child",
+        "Ik weet dat dit lied ook mijn lied voor P1 is"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: Mary's Boy Child",
+          "stappen": [
+            "Luister naar Mary's Boy Child van Boney M.",
+            "Let op: hoe begint het, en waar komt het refrein?"
+          ],
+          "docent": "Opname klaarzetten. Geen tekst op het bord; die bespreken we mondeling."
+        },
+        {
+          "min": 15,
+          "soort": "uitleg",
+          "kop": "Waar komt Mary's Boy Child vandaan?",
+          "stappen": [
+            "Jester Hairston schreef het lied in 1956; Harry Belafonte maakte er een hit van.",
+            "Boney M. nam het in 1978 op als medley met 'Oh My Lord'. Die versie gebruiken we.",
+            "Het ritme is calypso, een dansmuziek uit Trinidad.",
+            "De tekst vertelt het kerstverhaal uit Lucas 2: Bethlehem, de herders, geen plek in de herberg."
+          ],
+          "beeld": {
+            "soort": "vorm",
+            "items": [
+              {
+                "d": "Intro",
+                "m": 4
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Slot",
+                "m": 4
+              }
+            ]
+          },
+          "docent": "Vormschema is een voorstel; pas het aan op de versie in de kerstbox."
+        },
+        {
+          "min": 10,
+          "soort": "doen",
+          "kop": "Zing het refrein mee",
+          "stappen": [
+            "Zing het refrein mee met de opname.",
+            "Zing daarna op 'oe' de grondtonen van de akkoorden mee met het bord."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "F",
+              "B♭",
+              "C7"
+            ]
+          }
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "De kerstbox en P1",
+          "stappen": [
+            "In Musicbox staat de kerstbox met drie niveaus: refrein, couplet en refrein, het hele lied.",
+            "Je oefent tot de kerst en daarna nog drie lessen.",
+            "In lesweek 19 speel je dit lied voor P1, in je groep, voor de docent."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Niveau 1",
+                "t": "alleen het refrein"
+              },
+              {
+                "k": "Niveau 2",
+                "t": "couplet en refrein"
+              },
+              {
+                "k": "Niveau 3",
+                "t": "het hele lied"
+              }
+            ]
+          }
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Welk instrument wil je bij dit lied spelen?",
+          "stappen": [
+            "Schrijf je eerste en tweede keus op het wisbordje.",
+            "Volgende week: akkoorden en partijen, niveau 1."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "wisbordje",
+        "tekst": "Vormschema van Mary's Boy Child en je eerste en tweede keus voor een instrument op je wisbordje."
+      },
+      "identiteit": "Jezus wordt geboren in een stal, omdat er geen plek is in de herberg. Toch klinkt het lied vrolijk. Waarom past blijdschap bij dit verhaal?",
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        },
+        {
+          "t": "Kerst: Mary's Boy Child, bladmuziek van vorig jaar (leadsheet, gitaartab, piano, trompet)",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20Havo/Kerst"
+        }
+      ],
+      "benodigd": [
+        "Opname van Boney M. en een karaokevideo klaargezet",
+        "Wisbordjes en stiften"
+      ]
+    },
+    "Mary's Boy Child: akkoorden en partijen, niveau 1": {
+      "vraag": "Hoe speel je het refrein van Mary's Boy Child?",
+      "doel": "Je speelt het refrein van Mary's Boy Child op jouw instrument: akkoorden, melodie, grondtonen of groove.",
+      "criteria": [
+        "Akkoorden: ik pak F, B♭ en C7 en wissel op de tel",
+        "Zang, bas, drums: ik speel of zing mijn partij van het refrein",
+        "Ik weet waar ik in de kerstbox mijn partij vind"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: de akkoorden van het refrein",
+          "stappen": [
+            "Pak de akkoorden één voor één.",
+            "Wissel op mijn teken."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "F",
+              "B♭",
+              "C7"
+            ]
+          }
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Ieder een eigen taak",
+          "stappen": [
+            "Gitaar: capo op fret 3, grepen D, G en A7. Ukelele zonder capo: F, B♭ (0211) en C7. Alles klinkt als F, B♭ en C7.",
+            "Zang: de melodie van het refrein.",
+            "Bas: grondtonen F, B♭ en C op de 1 en de 3.",
+            "Drums of cajon: een eenvoudig calypsopatroon, de bas op 1 en de 'en' van 2."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Akkoorden",
+                "t": "F, B♭ en C7"
+              },
+              {
+                "k": "Zang",
+                "t": "melodie van het refrein"
+              },
+              {
+                "k": "Bas",
+                "t": "grondtonen"
+              },
+              {
+                "k": "Drums",
+                "t": "calypso"
+              }
+            ]
+          },
+          "docent": "Hoeken in het lokaal: akkoorden, zang, bas en drums. Tutorials staan in de kerstbox, niveau 1."
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Oefen in je hoek, met de kerstbox",
+          "stappen": [
+            "Gebruik de tutorial van jouw instrument in niveau 1.",
+            "Eerst langzaam, dan met de meespeeltrack.",
+            "Lukt het? Doe de niveaucheck van niveau 1."
+          ],
+          "klaar": "Kijk alvast naar het couplet in niveau 2."
+        },
+        {
+          "min": 5,
+          "soort": "check",
+          "kop": "Eén keer samen het refrein",
+          "stappen": [
+            "Alle hoeken tegelijk, met de meespeeltrack.",
+            "Duimen: lukt mijn partij op tempo?"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "duimen",
+        "tekst": "Lukt mijn partij van het refrein op tempo? Duim omhoog, opzij, omlaag."
+      },
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Akkoordenschema op het bord",
+        "Gitaren, ukeleles, keyboards, basgitaar, drums of cajon",
+        "Hoeken in het lokaal klaargezet"
+      ]
+    },
+    "Mary's Boy Child: groepen maken en samenspelen": {
+      "vraag": "Klinken onze partijen samen als één lied?",
+      "doel": "Je zit in een vaste groep voor de kerstbox en P1 en speelt het refrein van Mary's Boy Child samen door.",
+      "criteria": [
+        "Ik ken mijn groep en mijn partij",
+        "Wij beginnen en eindigen het refrein samen",
+        "Wij weten wat we volgende les oefenen"
+      ],
+      "fasen": [
+        {
+          "min": 10,
+          "soort": "gesprek",
+          "kop": "Vaste groepen",
+          "stappen": [
+            "Groepen van vier of vijf, alle partijen bezet.",
+            "Deze groep blijft ook voor P1.",
+            "Spreek af wie aftelt."
+          ],
+          "docent": "Zorg dat elke groep een drummer of percussionist heeft."
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Slim oefenen",
+          "stappen": [
+            "Eerst langzaam, dan op tempo.",
+            "Eerst zonder zang, dan met.",
+            "Gaat het mis? Speel dat stukje opnieuw, niet het hele lied."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "1 · Langzaam",
+                "t": "dan op tempo"
+              },
+              {
+                "k": "2 · Zonder zang",
+                "t": "dan met zang"
+              },
+              {
+                "k": "3 · Stukje opnieuw",
+                "t": "niet het hele lied"
+              }
+            ]
+          }
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Samenspelen in je groep",
+          "stappen": [
+            "Verdeel je over het lokaal en de ruimtes ernaast.",
+            "Speel het refrein tot het samen klinkt.",
+            "Klaar? Begin aan het couplet uit niveau 2."
+          ],
+          "klaar": "Doe de niveaucheck van niveau 2.",
+          "docent": "Langs elke groep: samen beginnen, samen eindigen. Noteer welke groep naar niveau 2 kan."
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Waar staat je groep?",
+          "stappen": [
+            "Niveau 1 af? Niveau 2 begonnen?",
+            "Schrijf op wat jullie volgende les eerst oefenen."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "observatie",
+        "tekst": "Docent noteert per groep: refrein samen, begin en einde, klaar voor niveau 2."
+      },
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        },
+        {
+          "t": "De speelles: afspraken voor werken in groepjes",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20Havo/De%20speelles%20algemeen%20document.docx?web=1"
+        }
+      ],
+      "benodigd": [
+        "Groepsindeling op het bord",
+        "Oefenruimtes afspreken"
+      ]
+    },
+    "Mary's Boy Child: opbouw en dynamiek": {
+      "vraag": "Hoe bouw je samen een lied op van rustig naar vol?",
+      "doel": "Je groep speelt couplet en refrein met een hoorbaar verschil tussen rustig en vol.",
+      "criteria": [
+        "Wij spelen het couplet rustiger dan het refrein",
+        "Onze drummer en bassist dragen de opbouw",
+        "Wij spelen couplet en refrein zonder te stoppen"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: waar wordt het voller?",
+          "stappen": [
+            "Luister naar de opname.",
+            "Steek je hand op waar het voller wordt, en laat hem zakken waar het terugvalt."
+          ]
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Opbouwen doe je samen",
+          "stappen": [
+            "Drums: van cajon alleen naar het volle calypsopatroon.",
+            "Gitaar en keyboard: van losse tonen naar volle akkoorden.",
+            "Zang: van één stem naar meer stemmen.",
+            "Het laatste refrein is het volst."
+          ],
+          "beeld": {
+            "soort": "opbouw",
+            "items": [
+              {
+                "d": "intro",
+                "v": 1
+              },
+              {
+                "d": "couplet",
+                "v": 2
+              },
+              {
+                "d": "refrein",
+                "v": 3
+              },
+              {
+                "d": "couplet",
+                "v": 2
+              },
+              {
+                "d": "refrein",
+                "v": 4
+              },
+              {
+                "d": "slot",
+                "v": 2
+              }
+            ]
+          }
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Maak een opbouwplan en oefen het",
+          "stappen": [
+            "Teken op het vormschema per deel: rustig, half, vol.",
+            "Spreek per instrument af wat je doet.",
+            "Oefen de overgangen apart, daarna het geheel."
+          ],
+          "klaar": "Aan niveau 3 beginnen: het hele lied met intro en slot."
+        },
+        {
+          "min": 5,
+          "soort": "check",
+          "kop": "Twee groepen spelen hun opbouw voor",
+          "stappen": [
+            "Luisteraars: waar hoorde je de opbouw?",
+            "Was het verschil tussen couplet en refrein duidelijk?"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "peerfeedback",
+        "tekst": "Luisteraars benoemen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?"
+      },
+      "identiteit": "Opbouwen betekent wachten op elkaar. Niet iedereen hoeft meteen vol te spelen; samen kom je verder dan alleen.",
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Opname klaargezet",
+        "Vormschema per groep om het opbouwplan in te tekenen"
+      ]
+    },
+    "Mary's Boy Child: doorspelen en opnemen": {
+      "vraag": "Hoe klinkt onze versie, van begin tot eind?",
+      "doel": "Je groep speelt het lied helemaal door en neemt het op als tussenstand.",
+      "criteria": [
+        "Wij spelen het lied zonder te stoppen",
+        "Wij hebben een opname van onze versie"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: één keer met de hele klas",
+          "stappen": [
+            "Het refrein met alle groepen tegelijk."
+          ]
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Doorspelen in je groep",
+          "stappen": [
+            "Speel jullie versie twee keer helemaal door.",
+            "Let op begin, opbouw en slot."
+          ],
+          "docent": "Activiteitenweek B: les kan uitvallen. Zo ja, deze les overslaan; lesweek 16 pakt de draad weer op."
+        },
+        {
+          "min": 10,
+          "soort": "doen",
+          "kop": "Opname als tussenstand",
+          "stappen": [
+            "Neem jullie versie op, één keer.",
+            "Bewaar de opname; na de kerst luisteren we hem terug."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Na de kerst",
+          "stappen": [
+            "Na de kerst pakken we het lied weer op en werken we naar P1 in lesweek 19.",
+            "Schrijf op wat je groep na de kerst eerst oefent."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "opname",
+        "tekst": "Opname per groep als tussenstand; na de kerst terugluisteren."
+      },
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Telefoon of recorder per groep",
+        "Oefenruimtes afspreken"
+      ]
+    },
+    "Mary's Boy Child weer oppakken en de beoordeling P1 bespreken": {
+      "vraag": "Hoe word ik beoordeeld bij P1, en wat heeft mijn groep nog nodig?",
+      "doel": "Je kent de zes beoordelingsonderdelen van P1 en hebt één persoonlijk leerdoel.",
+      "criteria": [
+        "Ik benoem de zes onderdelen en wat spelen en reflectie wegen",
+        "Ik heb één persoonlijk leerdoel voor P1 opgeschreven",
+        "Wij hebben het lied weer één keer doorgespeeld"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Terugluisteren",
+          "stappen": [
+            "Luister naar jullie opname van voor de kerst.",
+            "Wat ging goed, wat moet beter?"
+          ]
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Zo gaat P1",
+          "stappen": [
+            "Je speelt met je groep voor de docent, zonder klas.",
+            "Iedereen krijgt een eigen cijfer.",
+            "Spelen telt dubbel: samenspel, ritme, toon, techniek.",
+            "Reflectie telt één keer: eigen reflectie en feedback op groepsgenoten."
+          ],
+          "beeld": {
+            "soort": "tabel",
+            "rijen": [
+              [
+                "Onderdeel",
+                "Soort",
+                "Telt"
+              ],
+              [
+                "Samenspel",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Ritme",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Toon",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Techniek",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Eigen reflectie",
+                "reflectie",
+                "× 1"
+              ],
+              [
+                "Feedback op groepsgenoten",
+                "reflectie",
+                "× 1"
+              ]
+            ]
+          },
+          "docent": "Leerlingblad uitdelen; het rekenvoorbeeld samen doorlopen."
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Weer samenspelen",
+          "stappen": [
+            "Eerst langzaam, dan op tempo.",
+            "Speel het lied twee keer door."
+          ],
+          "klaar": "Werk aan niveau 3: intro en slot."
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Jouw leerdoel voor P1",
+          "stappen": [
+            "Kijk naar de vier speelonderdelen: waar sta je nu?",
+            "Schrijf één persoonlijk leerdoel op je leerlingblad."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "zelfinschatting",
+        "tekst": "Per onderdeel (samenspel, ritme, toon, techniek) omcirkelen waar je nu staat; dit is het begin van je reflectie."
+      },
+      "identiteit": "Ook in een groep krijgt iedereen een eigen cijfer, maar je kunt alleen goed scoren als de groep klinkt. Je hebt elkaar nodig.",
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        },
+        {
+          "t": "Speelstuk afronden: leerlingblad met beoordeling",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20VWO/Speelstuk%20afronden%20-%20leerlingblad%20havo%203.docx?web=1"
+        },
+        {
+          "t": "Reflectieformulier speelstuk",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20VWO/Speelstuk%20-%20reflectieformulier%20vwo%203.docx?web=1"
+        }
+      ],
+      "benodigd": [
+        "Opnames van voor de kerst",
+        "Leerlingblad speelstuk afronden (per leerling)"
+      ]
+    },
+    "Kerstbox: God Rest Ye Merry Gentlemen leren kennen": {
+      "vraag": "Hoe kan een lied in mineur over blijdschap gaan?",
+      "doel": "Je kent de herkomst, de vorm en de betekenis van God Rest Ye Merry Gentlemen en weet welke rol je in de band wilt spelen.",
+      "criteria": [
+        "Ik vertel in twee zinnen waar God Rest Ye Merry Gentlemen vandaan komt",
+        "Ik teken het vormschema van God Rest Ye",
+        "Ik weet dat dit lied ook mijn lied voor P1 is"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: God Rest Ye Merry Gentlemen",
+          "stappen": [
+            "Luister naar een traditionele koorversie en daarna naar een bandversie.",
+            "Let op: hoe begint het, en waar komt het refrein?"
+          ],
+          "docent": "Opname klaarzetten. Geen tekst op het bord; die bespreken we mondeling."
+        },
+        {
+          "min": 15,
+          "soort": "uitleg",
+          "kop": "Waar komt God Rest Ye vandaan?",
+          "stappen": [
+            "Een van de oudste Engelse kerstliederen, met een traditionele melodie.",
+            "De komma hoort na 'merry': God houde u vrolijk, heren. Het is een zegen, geen groet aan vrolijke heren.",
+            "De tekst volgt Lucas 2: de engel, de herders, Bethlehem.",
+            "Dickens laat het lied zingen in A Christmas Carol (1843), vlak voordat Scrooge de zanger wegjaagt."
+          ],
+          "beeld": {
+            "soort": "vorm",
+            "items": [
+              {
+                "d": "Intro",
+                "m": 4
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 4
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 4
+              },
+              {
+                "d": "Slot",
+                "m": 4
+              }
+            ]
+          },
+          "docent": "Vormschema is een voorstel; pas het aan op de versie in de kerstbox."
+        },
+        {
+          "min": 10,
+          "soort": "doen",
+          "kop": "Zing het refrein mee",
+          "stappen": [
+            "Zing het refrein mee met de opname.",
+            "Zing daarna op 'oe' de grondtonen van de akkoorden mee met het bord."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "G",
+              "D",
+              "Em",
+              "C",
+              "B7"
+            ]
+          }
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "De kerstbox en P1",
+          "stappen": [
+            "In Musicbox staat de kerstbox met drie niveaus: refrein, couplet en refrein, het hele lied.",
+            "Je oefent tot de kerst en daarna nog drie lessen.",
+            "In lesweek 19 speel je dit lied voor P1, in je groep, voor de docent."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Niveau 1",
+                "t": "alleen het refrein"
+              },
+              {
+                "k": "Niveau 2",
+                "t": "couplet en refrein"
+              },
+              {
+                "k": "Niveau 3",
+                "t": "het hele lied"
+              }
+            ]
+          }
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Welk instrument wil je bij dit lied spelen?",
+          "stappen": [
+            "Schrijf je eerste en tweede keus op het wisbordje.",
+            "Volgende week: akkoorden en partijen, niveau 1."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "wisbordje",
+        "tekst": "Vormschema van God Rest Ye en je eerste en tweede keus voor een instrument op je wisbordje."
+      },
+      "identiteit": "Het refrein gaat over troost en vreugde: 'comfort and joy'. Het lied staat in mineur en buigt in het refrein naar majeur. Waar vind jij troost als het donker is?",
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Een koorversie en een bandversie klaargezet",
+        "Wisbordjes en stiften"
+      ]
+    },
+    "God Rest Ye: akkoorden en partijen, niveau 1": {
+      "vraag": "Hoe speel je het refrein van God Rest Ye?",
+      "doel": "Je speelt het refrein van God Rest Ye op jouw instrument: akkoorden, melodie, grondtonen of groove.",
+      "criteria": [
+        "Akkoorden: ik pak G, D, Em, C en B7 en wissel op de tel",
+        "Zang, bas, drums: ik speel of zing mijn partij van het refrein",
+        "Ik weet waar ik in de kerstbox mijn partij vind"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: de akkoorden van het refrein",
+          "stappen": [
+            "Pak de akkoorden één voor één.",
+            "Wissel op mijn teken."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "G",
+              "D",
+              "Em",
+              "C",
+              "B7"
+            ]
+          }
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Ieder een eigen taak",
+          "stappen": [
+            "Gitaar, ukelele, keyboard: de akkoorden, wisselen op de 1.",
+            "Zang: de melodie van het refrein.",
+            "Bas: grondtonen in achtsten, stevig op de tel: E, C, B in het couplet.",
+            "Drums: een rechte rockbeat, bassdrum op 1 en 3, snare op 2 en 4."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Akkoorden",
+                "t": "G, D, Em, C en B7"
+              },
+              {
+                "k": "Zang",
+                "t": "melodie van het refrein"
+              },
+              {
+                "k": "Bas",
+                "t": "grondtonen"
+              },
+              {
+                "k": "Drums",
+                "t": "carol als stevige bandversie"
+              }
+            ]
+          },
+          "docent": "Hoeken in het lokaal: akkoorden, zang, bas en drums. Tutorials staan in de kerstbox, niveau 1."
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Oefen in je hoek, met de kerstbox",
+          "stappen": [
+            "Gebruik de tutorial van jouw instrument in niveau 1.",
+            "Eerst langzaam, dan met de meespeeltrack.",
+            "Lukt het? Doe de niveaucheck van niveau 1."
+          ],
+          "klaar": "Kijk alvast naar het couplet in niveau 2."
+        },
+        {
+          "min": 5,
+          "soort": "check",
+          "kop": "Eén keer samen het refrein",
+          "stappen": [
+            "Alle hoeken tegelijk, met de meespeeltrack.",
+            "Duimen: lukt mijn partij op tempo?"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "duimen",
+        "tekst": "Lukt mijn partij van het refrein op tempo? Duim omhoog, opzij, omlaag."
+      },
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Akkoordenschema op het bord",
+        "Gitaren, ukeleles, keyboards, basgitaar, drums of cajon",
+        "Hoeken in het lokaal klaargezet"
+      ]
+    },
+    "God Rest Ye: groepen maken en samenspelen": {
+      "vraag": "Klinken onze partijen samen als één lied?",
+      "doel": "Je zit in een vaste groep voor de kerstbox en P1 en speelt het refrein van God Rest Ye samen door.",
+      "criteria": [
+        "Ik ken mijn groep en mijn partij",
+        "Wij beginnen en eindigen het refrein samen",
+        "Wij weten wat we volgende les oefenen"
+      ],
+      "fasen": [
+        {
+          "min": 10,
+          "soort": "gesprek",
+          "kop": "Vaste groepen",
+          "stappen": [
+            "Groepen van vier of vijf, alle partijen bezet.",
+            "Deze groep blijft ook voor P1.",
+            "Spreek af wie aftelt."
+          ],
+          "docent": "Zorg dat elke groep een drummer of percussionist heeft."
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Slim oefenen",
+          "stappen": [
+            "Eerst langzaam, dan op tempo.",
+            "Eerst zonder zang, dan met.",
+            "Gaat het mis? Speel dat stukje opnieuw, niet het hele lied."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "1 · Langzaam",
+                "t": "dan op tempo"
+              },
+              {
+                "k": "2 · Zonder zang",
+                "t": "dan met zang"
+              },
+              {
+                "k": "3 · Stukje opnieuw",
+                "t": "niet het hele lied"
+              }
+            ]
+          }
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Samenspelen in je groep",
+          "stappen": [
+            "Verdeel je over het lokaal en de ruimtes ernaast.",
+            "Speel het refrein tot het samen klinkt.",
+            "Klaar? Begin aan het couplet uit niveau 2."
+          ],
+          "klaar": "Doe de niveaucheck van niveau 2.",
+          "docent": "Langs elke groep: samen beginnen, samen eindigen. Noteer welke groep naar niveau 2 kan."
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Waar staat je groep?",
+          "stappen": [
+            "Niveau 1 af? Niveau 2 begonnen?",
+            "Schrijf op wat jullie volgende les eerst oefenen."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "observatie",
+        "tekst": "Docent noteert per groep: refrein samen, begin en einde, klaar voor niveau 2."
+      },
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        },
+        {
+          "t": "De speelles: afspraken voor werken in groepjes",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20Havo/De%20speelles%20algemeen%20document.docx?web=1"
+        }
+      ],
+      "benodigd": [
+        "Groepsindeling op het bord",
+        "Oefenruimtes afspreken"
+      ]
+    },
+    "God Rest Ye: opbouw en dynamiek": {
+      "vraag": "Hoe bouw je samen een lied op van rustig naar vol?",
+      "doel": "Je groep speelt couplet en refrein met een hoorbaar verschil tussen rustig en vol.",
+      "criteria": [
+        "Wij spelen het couplet rustiger dan het refrein",
+        "Onze drummer en bassist dragen de opbouw",
+        "Wij spelen couplet en refrein zonder te stoppen"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: waar wordt het voller?",
+          "stappen": [
+            "Luister naar de opname.",
+            "Steek je hand op waar het voller wordt, en laat hem zakken waar het terugvalt."
+          ]
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Opbouwen doe je samen",
+          "stappen": [
+            "Drums: van toms en bekkens in het couplet naar de volle rockbeat in het refrein.",
+            "Gitaar en keyboard: van losse tonen naar volle akkoorden.",
+            "Zang: van één stem naar meer stemmen.",
+            "Het laatste refrein is het volst."
+          ],
+          "beeld": {
+            "soort": "opbouw",
+            "items": [
+              {
+                "d": "intro",
+                "v": 1
+              },
+              {
+                "d": "couplet",
+                "v": 2
+              },
+              {
+                "d": "refrein",
+                "v": 3
+              },
+              {
+                "d": "couplet",
+                "v": 2
+              },
+              {
+                "d": "refrein",
+                "v": 4
+              },
+              {
+                "d": "slot",
+                "v": 2
+              }
+            ]
+          }
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Maak een opbouwplan en oefen het",
+          "stappen": [
+            "Teken op het vormschema per deel: rustig, half, vol.",
+            "Spreek per instrument af wat je doet.",
+            "Oefen de overgangen apart, daarna het geheel."
+          ],
+          "klaar": "Aan niveau 3 beginnen: het hele lied met intro en slot."
+        },
+        {
+          "min": 5,
+          "soort": "check",
+          "kop": "Twee groepen spelen hun opbouw voor",
+          "stappen": [
+            "Luisteraars: waar hoorde je de opbouw?",
+            "Was het verschil tussen couplet en refrein duidelijk?"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "peerfeedback",
+        "tekst": "Luisteraars benoemen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?"
+      },
+      "identiteit": "Opbouwen betekent wachten op elkaar. Niet iedereen hoeft meteen vol te spelen; samen kom je verder dan alleen.",
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Opname klaargezet",
+        "Vormschema per groep om het opbouwplan in te tekenen"
+      ]
+    },
+    "God Rest Ye: doorspelen en opnemen": {
+      "vraag": "Hoe klinkt onze versie, van begin tot eind?",
+      "doel": "Je groep speelt het lied helemaal door en neemt het op als tussenstand.",
+      "criteria": [
+        "Wij spelen het lied zonder te stoppen",
+        "Wij hebben een opname van onze versie"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: één keer met de hele klas",
+          "stappen": [
+            "Het refrein met alle groepen tegelijk."
+          ]
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Doorspelen in je groep",
+          "stappen": [
+            "Speel jullie versie twee keer helemaal door.",
+            "Let op begin, opbouw en slot.",
+            "De groep die op de kerstviering speelt, doet nu de generale voor de klas."
+          ],
+          "docent": "Activiteitenweek B: les kan uitvallen. Zo ja, deze les overslaan; lesweek 16 pakt de draad weer op."
+        },
+        {
+          "min": 10,
+          "soort": "doen",
+          "kop": "Opname als tussenstand",
+          "stappen": [
+            "Neem jullie versie op, één keer.",
+            "Bewaar de opname; na de kerst luisteren we hem terug."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Na de kerst",
+          "stappen": [
+            "Na de kerst pakken we het lied weer op en werken we naar P1 in lesweek 19.",
+            "Schrijf op wat je groep na de kerst eerst oefent."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "opname",
+        "tekst": "Opname per groep als tussenstand; na de kerst terugluisteren."
+      },
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        }
+      ],
+      "benodigd": [
+        "Telefoon of recorder per groep",
+        "Oefenruimtes afspreken",
+        "Opstelling voor de generale kerstviering"
+      ]
+    },
+    "God Rest Ye weer oppakken en de beoordeling P1 bespreken": {
+      "vraag": "Hoe word ik beoordeeld bij P1, en wat heeft mijn groep nog nodig?",
+      "doel": "Je kent de zes beoordelingsonderdelen van P1 en hebt één persoonlijk leerdoel.",
+      "criteria": [
+        "Ik benoem de zes onderdelen en wat spelen en reflectie wegen",
+        "Ik heb één persoonlijk leerdoel voor P1 opgeschreven",
+        "Wij hebben het lied weer één keer doorgespeeld"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Terugluisteren",
+          "stappen": [
+            "Luister naar jullie opname van voor de kerst.",
+            "Wat ging goed, wat moet beter?"
+          ]
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Zo gaat P1",
+          "stappen": [
+            "Je speelt met je groep voor de docent, zonder klas.",
+            "Iedereen krijgt een eigen cijfer.",
+            "Spelen telt dubbel: samenspel, ritme, toon, techniek.",
+            "Reflectie telt één keer: eigen reflectie en feedback op groepsgenoten."
+          ],
+          "beeld": {
+            "soort": "tabel",
+            "rijen": [
+              [
+                "Onderdeel",
+                "Soort",
+                "Telt"
+              ],
+              [
+                "Samenspel",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Ritme",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Toon",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Techniek",
+                "spelen",
+                "× 2"
+              ],
+              [
+                "Eigen reflectie",
+                "reflectie",
+                "× 1"
+              ],
+              [
+                "Feedback op groepsgenoten",
+                "reflectie",
+                "× 1"
+              ]
+            ]
+          },
+          "docent": "Leerlingblad uitdelen; het rekenvoorbeeld samen doorlopen."
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Weer samenspelen",
+          "stappen": [
+            "Eerst langzaam, dan op tempo.",
+            "Speel het lied twee keer door."
+          ],
+          "klaar": "Werk aan niveau 3: intro en slot."
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Jouw leerdoel voor P1",
+          "stappen": [
+            "Kijk naar de vier speelonderdelen: waar sta je nu?",
+            "Schrijf één persoonlijk leerdoel op je leerlingblad."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "zelfinschatting",
+        "tekst": "Per onderdeel (samenspel, ritme, toon, techniek) omcirkelen waar je nu staat; dit is het begin van je reflectie."
+      },
+      "identiteit": "Ook in een groep krijgt iedereen een eigen cijfer, maar je kunt alleen goed scoren als de groep klinkt. Je hebt elkaar nodig.",
+      "materiaal": [
+        {
+          "t": "Musicbox (digitaal.musicboxmethode.nl)",
+          "u": "https://digitaal.musicboxmethode.nl"
+        },
+        {
+          "t": "Speelstuk afronden: leerlingblad met beoordeling",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20VWO/Speelstuk%20afronden%20-%20leerlingblad%20havo%203.docx?web=1"
+        },
+        {
+          "t": "Reflectieformulier speelstuk",
+          "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/Klas%203%20VWO/Speelstuk%20-%20reflectieformulier%20vwo%203.docx?web=1"
+        }
+      ],
+      "benodigd": [
+        "Opnames van voor de kerst",
+        "Leerlingblad speelstuk afronden (per leerling)"
       ]
     }
   }
