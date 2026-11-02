@@ -86,7 +86,8 @@
             "Ik zeg mijn naam en titel, maar ons begin of slot is rommelig.",
             "Ik zeg naam, titel en instrument, we tellen af, eindigen samen en ik speel door.",
             "We beginnen zeker en eindigen strak; een fout merkt bijna niemand."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },
@@ -188,7 +189,8 @@
             "Ik luister naar de groep en blijf meestal gelijk.",
             "Ik blijf gelijk met de groep en we klinken in balans.",
             "Ik reageer op de anderen; samen klinken we als één groove."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     }

@@ -11,8 +11,8 @@ try {
   $s.Cells.Item(1,1) = "$($M.titel) · $($M.klas)"; $s.Cells.Item(1,1).Font.Bold = $true; $s.Cells.Item(1,1).Font.Size = 14
   $s.Cells.Item(2,1) = "Score per onderdeel: 4, 6, 8 of 10 (tussenscores 5, 7, 9 mogen). $($M.cijfer)"
   $velden = @($M.velden | Where-Object { $_ }); $vooruit = if ($M.vooruit) { $M.vooruit } else { 'Punt om aan te werken' }
-  $kop = @('Leerling') + $velden; foreach ($k in $C) { $kop += "$($k.c.naam) ($($k.c.weging)x)" }; $zb = [int]$M.zelfbeoordeling; $extra = if ($zb) { 2 } else { 0 }
-  $kop += @($(if ($zb) { 'Cijfer docent' } else { 'Cijfer' })); if ($zb) { $kop += @("Zelfbeoordeling ($zb%)", 'Eindcijfer') }; $kop += @('Opmerking per onderdeel', $vooruit)
+  $kop = @('Leerling') + $velden; foreach ($k in $C) { $kop += "$($k.c.naam) ($($k.c.weging)x)" }; $zb = [int]$M.zelfbeoordeling; $kg = [int]$M.delen.klasgenoten; $extra = if ($kg) { 4 } elseif ($zb) { 2 } else { 0 }
+  $kop += @($(if ($zb) { 'Cijfer docent' } else { 'Cijfer' })); if ($kg) { $kop += @("Eigen cijfer ($zb%)", "Klasgenoten gemiddeld ($kg%)", 'Inzendingen klasgenoten', 'Eindcijfer') } elseif ($zb) { $kop += @("Zelfbeoordeling ($zb%)", 'Eindcijfer') }; $kop += @('Opmerking per onderdeel', $vooruit)
   for ($i = 0; $i -lt $kop.Count; $i++) { $s.Cells.Item(4, $i + 1) = $kop[$i] }
   for ($i = 0; $i -lt $C.Count; $i++) { $s.Cells.Item(3, $i + 2 + $velden.Count) = $C[$i].groep }
   $eerste = 2 + $velden.Count; $laatste = $eerste - 1 + $C.Count; $cijferKol = $laatste + 1
@@ -21,7 +21,7 @@ try {
     $delen = @(); for ($i = 0; $i -lt $C.Count; $i++) { $delen += "$(& $kolL ($eerste + $i))$r*$($C[$i].c.weging)" }
     $bereik = "$(& $kolL $eerste)${r}:$(& $kolL $laatste)$r"
     $s.Cells.Item($r, $cijferKol).Formula = "=IF(COUNT($bereik)=$($C.Count),ROUND(($($delen -join '+'))/$somW,1),`"`")"
-    if ($zb) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $s.Cells.Item($r, $cijferKol + 2).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk)),ROUND($ck*$((100 - $zb) / 100)+$zk*$($zb / 100),1),`"`")" }
+    if ($kg) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $gk = "$(& $kolL ($cijferKol + 2))$r"; $nk = "$(& $kolL ($cijferKol + 3))$r"; $min = [int]$M.klasgenotenMin; $s.Cells.Item($r, $cijferKol + 4).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk),ISNUMBER($gk),N($nk)>=$min),ROUND($ck*$($M.delen.docent / 100)+$zk*$($zb / 100)+$gk*$($kg / 100),1),`"`")" } elseif ($zb) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $s.Cells.Item($r, $cijferKol + 2).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk)),ROUND($ck*$((100 - $zb) / 100)+$zk*$($zb / 100),1),`"`")" }
   }
   $v = $s.Range("$(& $kolL $eerste)5:$(& $kolL $laatste)40").Validation; $v.Delete()
   $v.Add(2, 1, 1, '4', '10'); $v.ErrorMessage = 'Vul een score van 4 tot en met 10 in.'

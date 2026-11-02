@@ -155,7 +155,8 @@
             "Ik pas soms mijn volume aan, begin en eindig meestal samen en kom na een fout met hulp terug.",
             "Ik pas mijn volume aan de anderen aan, begin en eindig samen en stap na een fout zelf weer in.",
             "Ik luister steeds naar het geheel, geef of volg inzetten en herstel een fout zonder dat je het merkt."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },

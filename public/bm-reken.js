@@ -31,7 +31,7 @@ function klasgenoten(r, min) { // gemiddelde pas vanaf het minimum aantal inzend
 }
 // alle delen van het eindcijfer. Ontbreekt een deel, dan is er geen eindcijfer.
 function eind(m, L, T, id) {
-  const r = L.ll[id]; const D = delenVan(m, T);
+  const r = L.ll[id]; const D = L === T ? delenVan(m, T) : { docent: 100 }; // een tussenstand kent alleen het docentdeel
   if (L === T && r && r.vast) { const v = r.vast; return { d: v.d, z: v.z == null ? null : v.z, k: v.k == null ? null : v.k, kn: v.kn || 0, e: v.e, delen: D, mist: [], vast: true }; }
   const d = docentCijfer(m, L, T, id); const mist = []; if (d == null) mist.push('docent');
   const z = r && r.zelf != null ? r.zelf : null; if (D.zelf && z == null) mist.push('zelf');

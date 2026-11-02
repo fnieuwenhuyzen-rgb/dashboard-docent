@@ -86,7 +86,8 @@
             "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.",
             "Ik zeg naam en titel, begin en eindig duidelijk en zing door na een fout.",
             "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "houding",
@@ -188,7 +189,8 @@
             "Ik luister naar de begeleiding en blijf meestal gelijk.",
             "Ik blijf gelijk met de begeleiding en ben goed te horen.",
             "Ik reageer op de begeleiding; we klinken als één geheel."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     }

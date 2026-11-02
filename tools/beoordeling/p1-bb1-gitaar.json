@@ -147,7 +147,8 @@
             "Ik luister naar de groep en we beginnen en eindigen meestal samen.",
             "Ik blijf gelijk met de groep en we beginnen en eindigen samen.",
             "Ik pas me aan de anderen aan; we klinken als één geheel."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "inzet",

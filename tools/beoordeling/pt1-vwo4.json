@@ -85,7 +85,8 @@
             "We tellen af en komen tot het eind, maar begin of slot is aarzelend.",
             "We beginnen en eindigen strak en ik speel door na een fout.",
             "Het klinkt als een optreden: zeker begin en een afgesproken slot."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },
@@ -169,7 +170,8 @@
             "Ons tempo is meestal stabiel, maar de groove is nog niet overal te horen.",
             "We houden het tempo vast en je hoort de backbeat en de swing.",
             "Onze groove swingt en blijft staan, ook tijdens de solo's."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "luisteren",
@@ -187,7 +189,8 @@
             "Ik let op de anderen; we beginnen en eindigen samen.",
             "Ik speel zachter onder zang en solo, zodat je ze steeds hoort.",
             "Ik reageer op de anderen en geef ruimte; we klinken als één band."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     }

@@ -9,10 +9,10 @@
     "Groep",
     "Mijn partij"
   ],
-  "vooruit": "Eén punt voor Way Maker",
+  "vooruit": "Eén punt voor de kerstbox",
   "leerlingTitel": "Zo beoordeel ik mijn spel in songbox 1",
   "leerlingInstructie": "Zet per onderdeel een kruisje bij wat je nu laat zien. Dit zijn dezelfde zes onderdelen als op je leerlingblad. Spelen telt dubbel, reflectie één keer.",
-  "pta": "Geen PTO-toets: cijfer voor het speelstuk van songbox 1 (leergang klas 3, lesweek 8: opnemen en terugluisteren), met dezelfde zes onderdelen en weging als het leerlingblad speelstuk.",
+  "pta": "Geen PTO-toets: voortgangscijfer voor het speelstuk van songbox 1 (leergang klas 3, lesweek 8: opnemen en terugluisteren), met dezelfde zes onderdelen en weging als het leerlingblad speelstuk. Voortgangscijfer in Magister met weging 1 (besluit Frans 2-11-2026).",
   "map": "01 Onderbouw muziek\\Klas 3\\Songbox 1 periode 1\\Beoordeling",
   "lessen": [
     {
@@ -77,7 +77,8 @@
             "Ik let op de anderen tijdens het spelen; we beginnen en eindigen samen.",
             "Ik pas me aan de anderen aan en speel de opbouw en terugval soepel mee.",
             "Ik voel aan wat de anderen doen en help het lied groeien van rustig naar vol."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "ritme",
@@ -178,5 +179,6 @@
       ]
     }
   ],
-  "zelfbeoordeling": 0
+  "zelfbeoordeling": 0,
+  "weging": 1
 }

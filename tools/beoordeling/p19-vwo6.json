@@ -78,7 +78,7 @@
     }
   ],
   "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Eindcijfer = 75% docent + 10% eigen cijfer van de leerling + 15% gemiddelde van minstens 3 klasgenoten. Ontbreekt een deel, dan is er geen eindcijfer.",
   "onderdelen": [
     {
       "groep": "Presentatie",
@@ -100,7 +100,8 @@
             "Ik kondig aan, maar aarzelend, en kijk weinig naar het publiek.",
             "Ik kondig helder aan, begin en eindig duidelijk en speel door na een fout.",
             "Ik presenteer als op een echt concert, met contact met het publiek."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },
@@ -184,7 +185,8 @@
             "Ik let op de anderen; we beginnen en eindigen meestal samen.",
             "Ik pas tempo en volume aan; de melodie blijft hoorbaar.",
             "Ik reageer op de anderen; we klinken als één ensemble."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },
@@ -213,5 +215,12 @@
       ]
     }
   ],
-  "zelfbeoordeling": 10
+  "zelfbeoordeling": 10,
+  "delen": {
+    "docent": 75,
+    "zelf": 10,
+    "klasgenoten": 15
+  },
+  "zelfSoort": "cijfer",
+  "klasgenotenMin": 3
 }
