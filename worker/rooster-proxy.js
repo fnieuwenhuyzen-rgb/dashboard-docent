@@ -4,6 +4,7 @@
 // Hij antwoordt alleen aan jouw Lesdag-adres, bewaart niets en logt niets.
 
 const LESDAG = 'https://lesdag-muziek.pages.dev'; // pas aan naar het adres van je Lesdag
+const TESTADRES = /^https:\/\/[a-z0-9-]+\.lesdag-muziek\.pages\.dev$/; // proefversies op een eigen branch (alleen dit Pages-project kan daar staan)
 const API = 'https://csgpm.zportal.nl/api/v3';
 // Bewust zonder students: Lesdag heeft geen leerlingen uit Zermelo nodig.
 const VELDEN = 'id,appointmentInstance,start,end,subjects,groups,locations,type,cancelled,valid,hidden,changeDescription,remark';
@@ -12,7 +13,7 @@ const MAX_BEREIK = 6 * 7 * 86400; // seconden
 export default {
   async fetch(req) {
     const origin = req.headers.get('Origin') || '';
-    const toegestaan = origin === LESDAG || /^http:\/\/localhost(:\d+)?$/.test(origin);
+    const toegestaan = origin === LESDAG || TESTADRES.test(origin) || /^http:\/\/localhost(:\d+)?$/.test(origin);
     const cors = {
       'Access-Control-Allow-Origin': toegestaan ? origin : LESDAG,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',

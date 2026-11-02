@@ -8,7 +8,7 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 
 - Live: https://lesdag-muziek.pages.dev (Cloudflare Pages, Git-gekoppeld). **Elke push naar `main` staat binnen een minuut live.** Achter Cloudflare Access: alleen nwn@csgpm.nl (One-time PIN, sessie een maand, ook `*.lesdag-muziek.pages.dev`).
 - Repo: deze map, GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). De app staat in `public/`; `tools/`, `bron/`, `worker/`, `handboek/` gaan niet online.
-- Worker `lesdag-rooster` (Zermelo-doorgeefluik voor koppelcode, afspraken en iCal, `worker/rooster-proxy.js`), bewust niet achter Access. Staat los van Pages: na een wijziging zelf online zetten in Cloudflare. Hij bewaart geen token: die staat in de browser en gaat per verzoek mee.
+- Worker `lesdag-rooster` (Zermelo-doorgeefluik voor koppelcode, afspraken en iCal, `worker/rooster-proxy.js`), bewust niet achter Access. Staat los van Pages: na een wijziging online zetten met `wrangler deploy worker/rooster-proxy.js --name lesdag-rooster --compatibility-date 2026-01-01` (uploaden via de dashboard-API blokkeert Cloudflare). Hij bewaart geen token: die staat in de browser en gaat per verzoek mee.
 - Gegevens: `public/data/basis.json` (leergangen, kalender, sectie, koor), `public/data/beoordeling.json` (beoordelingsmodellen). Dashboard-artifact "Leergang muziek": https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2 (bron `bron/`).
 - Eigen staat van Frans: localStorage `lesdag-staat` en, na Microsoft-login, OneDrive `Apps/Lesdag/lesdag.json`. Les-id's zijn `leergang:lesweek.lesnummer`; weekindeling niet wijzigen zonder migratie.
 
