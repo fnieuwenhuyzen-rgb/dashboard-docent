@@ -41,7 +41,7 @@ function vrijReden(s) {
 const maandagVan = s => { const d = dOf(s); const w = (d.getDay() + 6) % 7; return addD(s, -w); };
 
 /* ---------- staat ---------- */
-function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, beoord: { lijsten: {}, toetsen: {} } }; }
+function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, uitgesteld: {}, beoord: { lijsten: {}, toetsen: {} } }; }
 function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 function bewaar(stil) {
   S.updated = Date.now();
@@ -250,7 +250,8 @@ function benodigd(l) {
 /* ---------- weergave: algemeen ---------- */
 const ROUTES = [['vandaag', 'Vandaag'], ['week', 'Week'], ['groepen', 'Groepen'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['instellingen', 'Instellingen']];
 function render() {
-  $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k ? 'aria-current="page"' : ''}>${n}</a>`).join('');
+  const liggen = blijftLiggen().length;
+  $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k ? 'aria-current="page"' : ''}>${n}${k === 'vandaag' && liggen ? ` <span class="nav-tel" title="${liggen} ${liggen === 1 ? 'taak blijft' : 'taken blijven'} liggen">${liggen}</span>` : ''}</a>`).join('');
   const f = { vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen, beoordelen: viewBeoordelen }[route.naam] || viewVandaag;
   $('#main').innerHTML = f();
 }
@@ -277,6 +278,7 @@ function viewVandaag() {
   if (achter.length) h += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
   const A = dagItems(s, p);
   const sel = kiesSel(s, A);
+  if (s >= t) h += liggenBlok();
   h += `<div class="dagagenda"><div class="kaart agkaart">${heleDagRij(s, A.heleDag)}${agendaRaster([{ s, items: A.items }], { ppm: 1.25, sel })}</div><div class="agpaneel">${agPaneel(s, p, A, sel)}</div></div>`;
   // klaarzetten per lokaal
   const perLokaal = {};
@@ -348,11 +350,11 @@ function dagItems(s, p) {
     else heleDag.push({ key: 'sectie:' + i.id, soort: 'sectie', titel: (tm ? hm(tm.van) + ' ' : '') + i.titel, i });
   }
   for (const k of S.taken || []) {
-    if (k.plan && k.plan.dag === s) items.push({ key: 'taak:' + k.id, van: minuten(k.plan.van), tot: minuten(k.plan.tot), soort: k.af ? 'taakaf' : 'taak', titel: k.titel, sub: BRON[k.bron] || '', k });
+    if (k.plan && k.plan.dag === s) items.push({ key: 'taak:' + k.id, van: minuten(k.plan.van), tot: minuten(k.plan.tot), soort: k.af ? 'taakaf' : planVoorbij(k) ? 'taakgemist' : 'taak', titel: k.titel, sub: planVoorbij(k) ? 'gemist' : BRON[k.bron] || '', k });
     else if (!k.plan && !k.af && k.d === s) heleDag.push({ key: 'taak:' + k.id, soort: 'deadline', titel: k.titel, k });
   }
   if (werkdag) { // vrije blokken tussen 8:30 en 16:30
-    const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'koor', 'toets', 'rooster'].includes(it.soort)).map(it => [it.van, it.tot]).sort((a, b) => a[0] - b[0]);
+    const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'taakgemist', 'koor', 'toets', 'rooster'].includes(it.soort)).map(it => [it.van, it.tot]).sort((a, b) => a[0] - b[0]);
     let cur = AG.werkVan;
     for (const [a, b] of bezet.concat([[AG.werkTot, AG.werkTot]])) { const eind = Math.min(a, AG.werkTot); if (eind - cur >= 15) items.push({ key: 'vrij:' + hm(cur), van: cur, tot: eind, soort: 'vrij', titel: 'Vrij', sub: (eind - cur) + ' min' }); cur = Math.max(cur, b); if (cur >= AG.werkTot) break; }
   }
@@ -403,9 +405,9 @@ function agPaneel(s, p, A, sel) {
   if (it.soort === 'start') { const eerste = A.items.find(x => x.soort === 'les'); return `<div class="kaart"><p class="eyebrow">${tijd}</p><h2>Koffie en opstarten</h2><p class="lead">${eerste ? `Eerste les om ${hm(eerste.van)}: ${esc(eerste.titel)}.` : 'Geen lessen vandaag.'} Om 8:30 begint je eerste werkblok.</p></div>`; }
   if (it.soort === 'vrij') return planKaart(s, p, it);
   if (it.koor) return koorKaart(s, it.koor);
-  if (it.k) { const k = it.k; return `<div class="kaart"><p class="eyebrow">${k.plan ? 'Gepland · ' + esc(fmtD(k.plan.dag)) + ' ' + esc(k.plan.van) + '–' + esc(k.plan.tot) : 'Eigen taak'}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
+  if (it.k) { const k = it.k; return `<div class="kaart"><p class="eyebrow">${k.plan ? (planVoorbij(k) ? 'Gemist · ' : 'Gepland · ') + esc(fmtD(k.plan.dag)) + ' ' + esc(k.plan.van) + '–' + esc(k.plan.tot) : 'Eigen taak'}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
     <label class="chk" style="margin:.6rem 0"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label>
-    <div class="knoppen">${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
+    <div class="knoppen">${planVoorbij(k) && !k.dagTaak ? `<button class="btn hoofd" data-liggenplan="eigen:${esc(k.id)}">Opnieuw plannen</button>` : ''}${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
   if (it.z || it.tz) { const tz = it.tz;
     return `<div class="kaart"><p class="eyebrow">${it.z ? 'Uit je Zermelo-rooster' + (tijd ? ' · ' + tijd : '') + (it.lokaal ? ' · ' + esc(it.lokaal) : '') : esc(tz.tw.titel)}</p><h2>${esc(it.z ? it.titel : `${(B.groepen[tz.lg] || []).join(', ')} ${tz.t.id} ${tz.t.naam}`)}</h2>
       ${tz ? `<p class="lead">${esc(tz.t.naam)} · ${esc(String(tz.t.duur || '?'))} min${tz.t.waar ? ' · ' + esc(tz.t.waar) : ''}</p>` : ''}
@@ -427,20 +429,57 @@ function koorKaart(s, k) {
 }
 function planKaart(s, p, it) {
   const { sec, pres } = geplandeSleutels(); const opties = [];
-  (S.taken || []).filter(k => !k.af && !k.plan).forEach(k => opties.push([`eigen:${k.id}`, k.titel + (k.d ? ' (deadline ' + fmtD(k.d) + ')' : '')]));
+  (S.taken || []).filter(k => !k.af && (!k.plan || (planVoorbij(k) && !k.dagTaak))).forEach(k => opties.push([`eigen:${k.id}`, k.titel + (k.d ? ' (deadline ' + fmtD(k.d) + ')' : planVoorbij(k) ? ' (gemist ' + fmtD(k.plan.dag) + ')' : '')]));
   sectieItems().filter(i => i.taak && !S.sectieAf[i.id] && !sec[i.id] && i.d <= addD(s, 14)).forEach(i => opties.push([`sec:${i.id}`, 'Sectie: ' + i.titel + ' (' + fmtD(i.d) + ')']));
   const kr = koorOp(s); if (kr && (kr.type === 'rep' || kr.type === 'extra') && !(S.dagTaken[s] || {}).koor && !pres[s + '|koor']) opties.push(['koorrep', 'Koorrepetitie voorbereiden: ' + kr.titel]);
   koorTakenOpen(s).forEach(t => opties.push(['koor:' + t.id, 'Koor: ' + t.titel + (t.d ? ' (' + fmtD(t.d) + ')' : '')]));
   for (const x of p.uren || []) { if (!x.item || x.uitval || x.klaar) continue; const l = les(x.item); const key = 'pres:' + x.item.id; if ((l.materiaal || []).some(m => /presentatie|\.pptx/i.test((m.t || '') + ' ' + (m.u || ''))) && !(S.dagTaken[s] || {})[key] && !pres[s + '|' + key]) opties.push([`pres:${x.item.id}`, `Presentatie doorlopen: ${x.u.groep} ${l.titel}`]); }
-  const duur = Math.min(it.tot - it.van, 50);
+  const van = s === vandaag() ? Math.max(it.van, Math.ceil(nuMin() / 5) * 5) : it.van; // niet beginnen in het verleden
+  const duur = Math.min(it.tot - van, 50); const voork = planVoorkeur; planVoorkeur = '';
   return `<div class="kaart"><p class="eyebrow">Vrij · ${hm(it.van)}–${hm(it.tot)} · ${it.tot - it.van} minuten</p><h2>Taak plannen</h2>
   <form id="planForm" class="planform" data-dag="${s}">
-    <label>Wat ga je doen?<select id="pK"><option value="">Nieuwe taak…</option>${opties.map(([v, n]) => `<option value="${esc(v)}">${esc(n)}</option>`).join('')}</select></label>
-    <div id="pNieuw" class="rij"><input id="pT" placeholder="Bijvoorbeeld: mail beantwoorden"><select id="pB">${Object.entries(BRON).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></div>
-    <div class="rij"><label>Van<input id="pVan" type="time" value="${hm(it.van).padStart(5, '0')}" min="07:00" max="22:00"></label><label>Tot<input id="pTot" type="time" value="${hm(it.van + duur).padStart(5, '0')}" min="07:00" max="22:00"></label></div>
+    <label>Wat ga je doen?<select id="pK"><option value="">Nieuwe taak…</option>${opties.map(([v, n]) => `<option value="${esc(v)}"${v === voork ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select></label>
+    <div id="pNieuw" class="rij"${voork ? ' hidden' : ''}><input id="pT" placeholder="Bijvoorbeeld: mail beantwoorden"><select id="pB">${Object.entries(BRON).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></div>
+    <div class="rij"><label>Van<input id="pVan" type="time" value="${hm(van).padStart(5, '0')}" min="07:00" max="22:00"></label><label>Tot<input id="pTot" type="time" value="${hm(van + duur).padStart(5, '0')}" min="07:00" max="22:00"></label></div>
     <button class="btn hoofd" type="submit">In de agenda zetten</button>
   </form></div>`;
 }
+/* blijft liggen: gemiste geplande taken en voorbije deadlines, tot ze klaar, opnieuw gepland of uitgesteld zijn */
+let planVoorkeur = ''; // taak die alvast klaarstaat in de keuzelijst van planKaart
+const planVoorbij = k => !k.af && !!k.plan && k.plan.dag < vandaag();
+function blijftLiggen() {
+  if (!B || !S) return [];
+  const t = vandaag(); const G = geplandeSleutels(); const op = key => (S.uitgesteld || {})[key] > t; const out = [];
+  (S.taken || []).forEach(k => {
+    if (k.af || op('eigen:' + k.id)) return;
+    if (planVoorbij(k)) { if (!k.dagTaak) out.push({ key: 'eigen:' + k.id, titel: k.titel, bron: k.bron, dag: k.plan.dag, gemist: true, vink: `data-taakaf="${esc(k.id)}"` }); }
+    else if (!k.plan && k.d && k.d < t) out.push({ key: 'eigen:' + k.id, titel: k.titel, bron: k.bron, dag: k.d, vink: `data-taakaf="${esc(k.id)}"` });
+  });
+  sectieItems().forEach(i => { if (i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && (i.tot || i.d) < t && !op('sec:' + i.id)) out.push({ key: 'sec:' + i.id, titel: i.titel, bron: 'sectie', dag: i.tot || i.d, vink: `data-sdone="${esc(i.id)}"` }); });
+  koorTakenOpen(t).forEach(k => { if (k.d && k.d < t && !op('koor:' + k.id)) out.push({ key: 'koor:' + k.id, titel: k.titel, bron: 'koor', dag: k.d, vink: `data-koorvink="${esc(k.id)}"` }); });
+  return out.sort((a, b) => a.dag < b.dag ? -1 : a.dag > b.dag ? 1 : 0);
+}
+function liggenBlok() {
+  const L = blijftLiggen(); if (!L.length) return '';
+  const t = vandaag(); const morgen = volgendeLesdag(t, 1);
+  const rij = x => `<div class="taak laat"><label class="chk"><input type="checkbox" ${x.vink}><span>${esc(x.titel)}</span></label><span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
+  const rest = L.slice(3);
+  return `<div class="kaart liggen"><h2>Blijft liggen · ${L.length}</h2>${L.slice(0, 3).map(rij).join('')}${rest.length ? `<details class="meer"><summary>Nog ${rest.length} ${rest.length === 1 ? 'taak' : 'taken'}</summary>${rest.map(rij).join('')}</details>` : ''}</div>`;
+}
+function liggenInPlannen(v) { // opent het eerste vrije blok vanaf de getoonde dag, met deze taak al gekozen
+  const t = vandaag(); let d = dagKeuze && dagKeuze > t ? dagKeuze : t;
+  for (let i = 0; i < 10; i++, d = volgendeLesdag(d, 1)) {
+    const p = planning(d, d)[d]; if (vrijReden(d) === 'weekend') continue;
+    const blok = dagItems(d, p).items.find(it => it.soort === 'vrij' && (d > t || it.tot - nuMin() >= 15));
+    if (!blok) continue;
+    agSel[d] = blok.key; dagKeuze = d === t && nuMin() < 16 * 60 ? null : d; planVoorkeur = v; render(); // vandaag: geen vaste dag, anders blijft de app daar morgen op staan
+    const pn = $('.agpaneel'); if (pn) pn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  toast('Geen vrij blok gevonden in de komende twee weken');
+}
+function stelUit(key, tot) { S.uitgesteld = S.uitgesteld || {}; const t = vandaag(); for (const k of Object.keys(S.uitgesteld)) if (S.uitgesteld[k] <= t) delete S.uitgesteld[k]; S.uitgesteld[key] = tot; bewaar(); toast('Komt terug op ' + fmtD(tot)); }
+
 /* taken en sectieafspraken zonder tijd staan in de agenda; hieronder de takenlijst */
 const BRON = { sectie: 'sectie', koor: 'koor', slc: 'SLC', mail: 'mail', les: 'lessen', overig: 'overig' };
 function dagExtra(s, p) { return takenBlok(s, p); }
@@ -451,7 +490,7 @@ function takenBlok(s, p) {
   (p.uren || []).forEach(x => { if (!x.item || x.uitval || x.klaar) return; const l = les(x.item); const pres = (l.materiaal || []).filter(m => /presentatie|\.pptx/i.test((m.t || '') + ' ' + (m.u || ''))); if (pres.length && !G.pres[s + '|pres:' + x.item.id]) auto.push({ key: 'pres:' + x.item.id, titel: `Presentatie doorlopen: ${l.titel}`, sub: `${x.u.start} ${x.u.groep} · let op onhandige dia's, volgorde en wat je zelf wilt zeggen`, af: !!dt['pres:' + x.item.id] }); });
   const eigen = (S.taken || []).filter(k => !k.af || k.afOp === s).sort((a, b) => (a.d || '9') < (b.d || '9') ? -1 : 1);
   const sect = sectieItems().filter(i => i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && i.d <= addD(s, 14));
-  const rij = (k, chk, extra) => `<div class="taak ${k.af ? 'af' : ''} ${k.d && k.d < t && !k.af ? 'laat' : ''}"><label class="chk">${chk}<span>${esc(k.titel)}</span></label><span class="tb">${k.bron ? `<span class="chip">${esc(BRON[k.bron] || k.bron)}</span>` : ''}${k.plan ? `<button class="chip ok" data-ag="${esc(k.plan.dag)}|taak:${esc(k.id)}">${esc(fmtD(k.plan.dag))} ${esc(k.plan.van)}</button>` : ''}${k.d ? `<span class="chip ${k.d < t && !k.af ? 'rood' : ''}">deadline ${esc(fmtD(k.d))}</span>` : ''}${extra || ''}</span>${k.sub ? `<div class="sub">${esc(k.sub)}</div>` : ''}</div>`;
+  const rij = (k, chk, extra) => `<div class="taak ${k.af ? 'af' : ''} ${(k.d && k.d < t && !k.af) || (k.plan && planVoorbij(k)) ? 'laat' : ''}"><label class="chk">${chk}<span>${esc(k.titel)}</span></label><span class="tb">${k.bron ? `<span class="chip">${esc(BRON[k.bron] || k.bron)}</span>` : ''}${k.plan ? `<button class="chip ${planVoorbij(k) ? 'rood' : 'ok'}" data-ag="${esc(k.plan.dag)}|taak:${esc(k.id)}">${planVoorbij(k) ? 'gemist ' : ''}${esc(fmtD(k.plan.dag))} ${esc(k.plan.van)}</button>` : ''}${k.d ? `<span class="chip ${k.d < t && !k.af ? 'rood' : ''}">deadline ${esc(fmtD(k.d))}</span>` : ''}${extra || ''}</span>${k.sub ? `<div class="sub">${esc(k.sub)}</div>` : ''}</div>`;
   let h = `<div class="kaart"><h2 style="margin-bottom:.3rem">Taken</h2><p class="lead" style="margin-bottom:.4rem">Klik in de agenda op een vrij blok om een taak op een vast moment te zetten.</p>`;
   if (auto.length) h += `<h3>Lessen van ${s === t ? 'vandaag' : 'deze dag'}</h3>` + auto.map(k => rij(k, `<input type="checkbox" data-dagtaak="${esc(k.key)}" data-dag="${s}" ${k.af ? 'checked' : ''}>`)).join('');
   const kr = koorOp(s); const krRep = kr && (kr.type === 'rep' || kr.type === 'extra') && !G.pres[s + '|koor'] ? kr : null; const kt = koorTakenOpen(s);
@@ -706,6 +745,8 @@ document.addEventListener('click', async e => {
     return;
   }
   if (D.ag) { const i = D.ag.indexOf('|'); const d = D.ag.slice(0, i); agSel[d] = D.ag.slice(i + 1); dagKeuze = d; if (route.naam !== 'vandaag') location.hash = 'vandaag'; else { render(); if (innerWidth < 820) { const pn = $('.agpaneel'); if (pn) pn.scrollIntoView({ behavior: 'smooth', block: 'start' }); } } return; }
+  if (D.liggenplan) { liggenInPlannen(D.liggenplan); return; }
+  if (D.liggenlater) { const i = D.liggenlater.lastIndexOf('|'); stelUit(D.liggenlater.slice(0, i), D.liggenlater.slice(i + 1)); return; }
   if (D.ontplan) { const k = (S.taken || []).find(k => k.id === D.ontplan); if (k) { agSel[k.plan.dag] = ''; delete k.plan; } bewaar(); toast('Uit de agenda gehaald; de taak staat nog in je lijst'); return; }
   if (D.dag != null && route.naam !== 'vandaag') { dagKeuze = D.dag; location.hash = 'vandaag'; return; }
   if (D.dag != null) { dagKeuze = D.dag; render(); return; }
@@ -738,6 +779,7 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
+  if (t.dataset.liggentot) { if (t.value > vandaag()) stelUit(t.dataset.liggentot, t.value); return; }
   if (t.dataset.sdone) { if (t.checked) S.sectieAf[t.dataset.sdone] = true; else delete S.sectieAf[t.dataset.sdone]; bewaar(); }
   if (t.dataset.taakaf) { const k = (S.taken || []).find(k => k.id === t.dataset.taakaf); if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.dagTaak) { const dd = S.dagTaken[k.dagTaak.dag] = S.dagTaken[k.dagTaak.dag] || {}; if (t.checked) dd[k.dagTaak.key] = true; else delete dd[k.dagTaak.key]; } } bewaar(); }
   if (t.dataset.koorvink) { if (t.checked) S.koorAf[t.dataset.koorvink] = true; else delete S.koorAf[t.dataset.koorvink]; bewaar(); }

@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 2 november 2026 (Zermelo-API gebouwd, wacht op proef met echte code; toetsweek 1 in Dag en Week bevestigd; besluiten Frans over A). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 2 november 2026 (blok Blijft liggen gebouwd en online; Zermelo-API gebouwd, wacht op proef met echte code; toetsweek 1 in Dag en Week bevestigd; besluiten Frans over A). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
@@ -37,6 +37,8 @@ Besluiten Frans (2-11):
 - [ ] **Zermelo-koppeling met een echte koppelcode.** De nieuwe Worker staat online sinds 2-11. Frans maakt de code aan en plakt die zelf in Instellingen. Controleren: staat er "via de koppeling"; kloppen vakcode (`mu`, `kmu`?) en groepscodes (`h3a` of `h3.mu`?); weigert `/api/v3` geen veld uit `VELDEN`; hoe zien surveillances eruit (nu: `exam` van een ander vak op Frans' naam, of de tekst "surveillance"). Nog na te gaan: hoe lang de token geldig is, en of `students` voor een docent leesbaar is (Lesdag vraagt het bewust niet op).
 - [x] Toetsweek 1 (2-10 nov): surveillances en toetsen uit Zermelo staan goed in Dag en Week (Frans, 2-11, met het echte rooster). Nog niet apart bevestigd: de melding "tijd niet in rooster" als een toetsweektoets uit de leergang (h5 T3, v6 T9) niet in Zermelo staat.
 - [ ] Microsoft-login en OneDrive-opslag tegen de echte tenant (na B).
+
+- [ ] **Blok Blijft liggen (2-11):** boven de agenda op Vandaag, met teller in het menu. Gemiste geplande taken en voorbije deadlines (eigen, sectie, koor) tot ze klaar, opnieuw gepland of uitgesteld zijn (`S.uitgesteld`). Lokaal getest met nagebootste klok; online sinds 2-11, nog niet in het echt gebruikt. Taken zonder datum en geplande koor- of presentatietaken van een voorbije dag blijven bewust buiten het blok. `proef-nu` heeft dit niet.
 
 ## D. Bouwen (volgorde)
 

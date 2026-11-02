@@ -267,6 +267,13 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .taak .sub{grid-column:1/-1;font-size:.85rem;color:var(--muted);margin-left:1.6rem}
 .taak.af span{text-decoration:line-through;color:var(--muted)}
 .taak.laat .chk span{color:var(--rood)}
+.nav-tel{display:inline-block;min-width:1.2em;padding:0 .3em;border-radius:1em;background:var(--rood);color:#fff;font-size:.72rem;line-height:1.35;text-align:center}
+.liggen{margin-bottom:1rem;border-left:4px solid var(--rood)}
+.liggen h2{margin-bottom:.3rem}
+.liggen .tb{flex-wrap:wrap;justify-content:flex-end}
+.liggen .later{display:inline-flex;align-items:center;gap:.25rem;font-size:.8rem;color:var(--muted)}
+.liggen .later input{font-size:.8rem;padding:.1rem .2rem;width:8.2rem}
+@media (max-width:640px){.liggen .taak{grid-template-columns:minmax(0,1fr)}.liggen .tb{justify-content:flex-start}}
 .taakform{margin-top:.6rem;flex-wrap:wrap}
 .taakform input#tT{flex:1 1 14rem}
 .kaart h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:.8rem 0 .2rem}
@@ -302,6 +309,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .ag-sectie{background:var(--theorie);color:var(--theorie-ink)}
 .ag-taak{background:var(--paars);color:#fff}
 .ag-taakaf{background:var(--paars-zacht);color:var(--paars);text-decoration:line-through}
+.ag-taakgemist{background:var(--rood-zacht);color:var(--rood);border:1px dashed var(--rood)}
 .ag-start{background:transparent;color:var(--muted);border:1px dashed var(--line)}
 .ag-vrij{background:transparent;color:var(--paars);border:1px dashed color-mix(in srgb,var(--paars) 40%,transparent)}
 .ag-vrij b{font-weight:600}
