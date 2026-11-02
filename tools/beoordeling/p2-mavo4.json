@@ -78,7 +78,7 @@
     }
   ],
   "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen).",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Eindcijfer = 75% docent + 10% eigen cijfer van de leerling + 15% gemiddelde van minstens 3 klasgenoten. Ontbreekt een deel, dan is er geen eindcijfer.",
   "onderdelen": [
     {
       "groep": "Muzikale vaardigheden",
@@ -160,7 +160,8 @@
             "Ik let op de groep; we beginnen en eindigen meestal samen.",
             "Ik luister naar de anderen en speel niet te hard.",
             "Ik reageer op de anderen en help als er iets misgaat; we klinken als één band."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "samenwerking",
@@ -202,7 +203,8 @@
             "Ik sta er, maar aarzelend, en kijk weinig naar het publiek.",
             "Ik kondig duidelijk aan, sta rustig en speel door na een fout.",
             "Ik straal plezier en zekerheid uit en maak contact met het publiek."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "organisatie",
@@ -225,5 +227,12 @@
       ]
     }
   ],
-  "zelfbeoordeling": 10
+  "zelfbeoordeling": 10,
+  "delen": {
+    "docent": 75,
+    "zelf": 10,
+    "klasgenoten": 15
+  },
+  "zelfSoort": "cijfer",
+  "klasgenotenMin": 3
 }

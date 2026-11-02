@@ -147,7 +147,8 @@
             "Ik let op de anderen tijdens het spelen; we beginnen en eindigen samen.",
             "Ik pas me aan de anderen aan en speel de opbouw en terugval soepel mee.",
             "Ik voel aan wat de anderen doen en help het lied groeien van rustig naar vol."
-          ]
+          ],
+          "groepsscore": true
         },
         {
           "id": "ritme",

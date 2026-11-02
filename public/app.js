@@ -1104,7 +1104,7 @@ window.addEventListener('hashchange', () => { leesRoute(); sluit(); render(); wi
    Klassenlijsten en scores staan alleen in S.beoord: op dit apparaat en in de eigen OneDrive, nooit op de server.
    Logboek en gekozen map staan in IndexedDB, los van de staat: een overschreven staat of volle localStorage raakt ze niet. */
 let BM = [];
-let bmSel = null, bmPaneel = null, bmKoppel = null, bmKlok = null, bmLaagId = null;
+let bmSel = null, bmSelG = null, bmActiefG = null, bmPaneel = null, bmKoppel = null, bmKlasRes = null, bmKlok = null, bmLaagId = null;
 let bmMap = null, bmMapStaat = 'geen', bmLaatste = null, bmVuil = false, bmSinds = 0, bmSchrijfT = null, bmVast = null, bmLogFout = false;
 const bmVoor = item => BM.filter(m => (m.lessen || []).some(k => k.lg === item.lg && k.w === item.w && k.slot === 'l' + item.li && (k.wat || []).includes('docent')));
 const komma = x => x == null ? '' : String(x).replace('.', ',');
@@ -1196,6 +1196,43 @@ function bmKolomKaart(m, g, T, lijst) {
     <textarea id="bmKolom" readonly hidden rows="4">${esc(BMR.kolom(T, lijst).join('\n'))}</textarea>
     <table class="bm-kolom"><thead><tr><th>Leerling</th><th>Cijfer</th><th></th></tr></thead><tbody>${rij.map(x => `<tr><td>${esc(x.naam)}</td><td class="c">${esc(x.c)}</td><td>${x.c ? '' : x.r && x.r.af ? 'inhalen' : x.u.e != null ? 'nog afronden' : 'geen cijfer'}</td></tr>`).join('')}</tbody></table></div>`;
 }
+function bmGroepjesKaart(m, T, lijst) {
+  const G = T.groepjes || []; const naam = id => (lijst.find(x => x.id === id) || {}).naam || ''; const los = lijst.filter(x => !BMR.groepVan(T, x.id));
+  if (!G.some(x => x.id === bmActiefG)) bmActiefG = G.length ? G[G.length - 1].id : null;
+  const groepC = BMR.critVan(m, T).filter(c => c.groepsscore).map(c => c.naam + (c.groepsscore === 'start' ? ' (startpunt)' : ''));
+  return `<div class="kaart bm"><h2>Groepjes</h2><p class="lead">Eén keer scoren voor de groep: ${esc(groepC.join(', '))}. De rest per leerling. Kies een groepje en tik op de namen. Tik op een naam in een groepje om die eruit te halen.</p>
+    ${G.map(x => `<div class="bm-gkaart ${x.id === bmActiefG ? 'actief' : ''}"><div class="regel"><button class="btn klein ${x.id === bmActiefG ? 'hoofd' : ''}" data-bmgactief="${x.id}">${x.id === bmActiefG ? 'Actief' : 'Kies'}</button><input data-bmgnaam="${x.id}" value="${esc(x.naam)}" aria-label="Naam groepje"><button class="btn klein" data-bmgweg="${x.id}">Verwijder</button></div><div class="bm-chips">${x.leden.map(id => `<button class="bm-chip in" data-bmgruit="${id}">${esc(naam(id))}</button>`).join('') || '<small>Nog leeg</small>'}</div></div>`).join('')}
+    <div class="knoppen" style="margin:.5rem 0"><button class="btn" data-bm="gnieuw">Nieuw groepje</button><button class="btn hoofd" data-bm="dicht">Klaar</button></div>
+    <h3 class="bm-groep">Nog niet ingedeeld (${los.length})</h3><div class="bm-chips">${los.map(x => `<button class="bm-chip" data-bmgin="${x.id}" ${bmActiefG ? '' : 'disabled'}>${esc(x.naam)}</button>`).join('')}</div></div>`;
+}
+function bmKlasKaart(m, T, lijst) {
+  const R = bmKlasRes; const min = +m.klasgenotenMin || 3;
+  let h = `<div class="kaart bm"><h2>Klasgenoten</h2><p class="lead">Open de antwoorden van Forms in Excel, selecteer de hele tabel met de kolomkoppen, kopieer en plak hier. Een nieuwe plak vervangt de vorige; papieren cijfers blijven staan. Minimaal ${min} inzendingen per leerling, anders geen eindcijfer.</p>
+    <textarea id="bmKlasPlak" rows="6" style="width:100%;margin:.6rem 0"></textarea><div class="knoppen"><button class="btn hoofd" data-bm="klaslees">Lezen</button><button class="btn" data-bm="dicht">Terug</button></div>`;
+  if (R && R.fout) h += `<p class="bm-waarsch">${esc(R.fout)}</p>`;
+  else if (R) { h += `<h3 class="bm-groep">Gelezen: ${esc(R.vorm)}, ${R.rijen} regels</h3>${R.ongeldig ? `<p class="bm-waarsch">${R.ongeldig} ${R.ongeldig === 1 ? 'antwoord is' : 'antwoorden zijn'} geen cijfer van 1 tot 10 en ${R.ongeldig === 1 ? 'telt' : 'tellen'} niet mee.</p>` : ''}${R.zelf ? `<p class="lead">${R.zelf} ${R.zelf === 1 ? 'beoordeling' : 'beoordelingen'} van de eigen uitvoering overgeslagen.</p>` : ''}
+      ${R.onbekend.map((o, i) => { const v = BMR.besteMatch(o.label, lijst); return `<label class="bm-koppel"><span>${esc(o.label)} (${o.w.length})</span><select data-bmklask="${i}"><option value="">Niet meetellen</option>${lijst.map(x => `<option value="${x.id}" ${v && v.id === x.id ? 'selected' : ''}>${esc(x.naam)}</option>`).join('')}</select></label>`; }).join('')}
+      <table class="bm-kolom"><thead><tr><th>Leerling</th><th>Inzendingen</th><th>Gemiddelde</th></tr></thead><tbody>${lijst.map(x => { const w = R.per[x.id] || []; const p = ((T.ll[x.id] || {}).klas || {}).papier || []; const n = w.length + p.length; const g = BMR.klasgenoten({ klas: { forms: w, papier: p } }, min).gem; return `<tr><td>${esc(x.naam)}</td><td>${w.length}${p.length ? ' + ' + p.length + ' papier' : ''}</td><td class="c">${g != null ? BMR.fmt(g) : n ? 'te weinig' : ''}</td></tr>`; }).join('')}</tbody></table>
+      <div class="knoppen" style="margin-top:.6rem"><button class="btn hoofd" data-bm="klasover">Overnemen</button></div>`; }
+  return h + '</div>';
+}
+function bmGroepKaart(m, T, L, G, lijst) {
+  const naam = id => (lijst.find(x => x.id === id) || {}).naam || ''; const gs = (L.gs || {})[G.id] || {};
+  let h = `<div class="kaart bm-scoor"><div class="kop"><h2>${esc(G.naam)}</h2><div class="knoppen"><button class="btn klein" data-bm="klok"><span id="bmKlok">${bmKlok ? pad(Math.floor((Date.now() - bmKlok) / 1000)) : '0:00'}</span>&nbsp;${bmKlok ? 'stop' : 'start'}</button></div></div><p class="lead">${esc(G.leden.map(naam).join(', ') || 'Nog geen leden')}</p>`;
+  for (const c of BMR.critVan(m, T).filter(x => x.groepsscore)) { const v = gs[c.id] == null ? null : gs[c.id];
+    h += `<div class="bm-crit grp"><div class="bm-cnaam"><b>${esc(c.naam)}</b><small>${esc(c.uitleg || '')} · weegt ${c.weging}×${c.groepsscore === 'start' ? ' · startpunt: telt pas na bevestiging per leerling' : ''}</small></div>
+      <div class="bm-rij">${bmKnoppen(esc(c.id) + '|', 'data-bmgs', v, false)}${v != null ? `<button type="button" class="bm-wis" data-bmgswis="${esc(c.id)}" aria-label="Score wissen" title="Score wissen">×</button>` : ''}</div><p class="bm-niv">${esc(bmNiveauTekst(c, v))}</p></div>`; }
+  return h + `<div class="bm-voet"><div><span>Geldt voor iedereen zonder eigen score</span></div><div class="knoppen"><button class="btn hoofd" data-bm="gverder">Naar de leerlingen</button></div></div></div>`;
+}
+function bmBladInfo(m, g, T, L, id, naam) { // alles wat op het feedbackblad komt
+  const r = L.ll[id] || { s: {}, v: {}, opm: {} }; const u = BMR.eind(m, L, T, id); const D = u.delen; const tus = L !== T; const dicht = !tus && !!r.vast;
+  const tekst = (c, v) => { if (v == null) return ''; const i = [4, 6, 8, 10].indexOf(v); return i >= 0 ? ((c.leerling || c.docent || [])[i] || '') : `Tussen ${v - 1} en ${v + 1}.`; };
+  const onderdelen = bmOnderdelen(m, T).map(o => ({ groep: o.groep, opm: (r.opm || {})[o.groep] || '', crit: o.criteria.map(c => { const q = dicht ? (r.vast.s[c.id] || {}) : BMR.scoreVan(L, T, id, c); const v = q.v == null ? null : q.v; return { naam: c.naam, score: v, tekst: tekst(c, v), bron: q.b === 'groep' ? 'groepsscore' : '' }; }) }));
+  const cijfers = tus ? [['Tussenstand', u.d == null ? '' : BMR.fmt(u.d), true]] : D.docent < 100 ? [[`Cijfer docent (${D.docent}%)`, BMR.fmt(u.d)], ...(D.zelf ? [[(m.zelfSoort === 'cijfer' ? 'Eigen cijfer' : 'Zelfbeoordeling') + ` (${D.zelf}%)`, BMR.fmt(u.z)]] : []), ...(D.klasgenoten ? [[`Klasgenoten (${D.klasgenoten}%, ${u.kn} inzendingen)`, BMR.fmt(u.k)]] : []), ['Eindcijfer', BMR.fmt(u.e), true]] : [['Cijfer', BMR.fmt(u.d), true]];
+  const velden = (m.velden || []).map(v => (r.v || {})[v] ? `${v}: ${r.v[v]}` : '').filter(Boolean).join(' · ');
+  return { eyebrow: `${m.klas} · ${m.toets}${m.weging ? ' · weging ' + m.weging : ''}`, titel: m.titel, docTitel: `Feedback ${m.toets}`, naam, regel: [`Groep ${g}`, velden].filter(Boolean).join(' · '), banner: tus ? `Tussenstand ${L.naam} (${fmtD(L.op)}): telt niet mee voor het cijfer` : '',
+    onderdelen, vooruitKop: m.vooruit || 'Eén punt om aan te werken', vooruit: r.vooruit || '', cijfers, voet: `${tus ? 'Tussenstand' : dicht ? 'Afgerond op ' + new Date(r.vast.op).toLocaleString('nl-NL') : 'Nog niet afgerond'} · CSG Prins Maurits, muziek` };
+}
 function bmNiveauTekst(c, v) {
   if (v == null) return '';
   const i = [4, 6, 8, 10].indexOf(v); if (i >= 0) return (c.docent || [])[i] || '';
@@ -1218,20 +1255,27 @@ function viewBeoordelen() {
   if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
   const lijst = S.beoord.lijsten[g] || []; const heeft = lijst.length > 0;
   let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
-    <div class="knoppen"><button class="btn" data-bm="lijst">Klassenlijst</button>${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="#vandaag">Klaar</a></div></div>
+    <div class="knoppen"><button class="btn" data-bm="lijst">Klassenlijst</button>${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="#vandaag">Klaar</a></div></div>
     <div class="bm-status" id="bmStatus">${bmStatusHtml()}</div>`;
   if (bmPaneel === 'koppel' && bmKoppel) return h + bmKoppelKaart(g);
   if (!heeft || bmPaneel === 'lijst') return h + bmLijstKaart(g, lijst);
   const T = bmToets(m.id, g);
   if (bmPaneel === 'kolom') return h + bmKolomKaart(m, g, T, lijst);
+  if (bmPaneel === 'groepjes') return h + bmGroepjesKaart(m, T, lijst);
+  if (bmPaneel === 'klasgenoten') return h + bmKlasKaart(m, T, lijst);
   const L = bmLaag(T); const vol = bmVolgorde(T, lijst); const naam = id => (lijst.find(x => x.id === id) || {}).naam || '';
   const uitk = id => BMR.eind(m, L, T, id); const klaar = id => { const r = L.ll[id]; return (r && r.af) || uitk(id).e != null; };
   const cur = vol.includes(bmSel) ? bmSel : (vol.find(id => !klaar(id)) || vol[0]); bmSel = cur;
   const cijfers = vol.map(id => uitk(id).e).filter(x => x != null); const nVast = vol.filter(id => T.ll[id] && T.ll[id].vast).length; const nOpen = vol.filter(id => !(T.ll[id] && (T.ll[id].vast || T.ll[id].af)) && BMR.eind(m, T, T, id).e != null).length;
+  h += `<div class="bm-lagen"><button class="btn klein ${L === T ? 'hoofd' : ''}" data-bmlaag="">Toets</button>${(T.tussen || []).map(x => `<button class="btn klein ${L === x ? 'hoofd' : ''}" data-bmlaag="${x.id}">${esc(x.naam)}</button>`).join('')}<button class="btn klein" data-bm="tussennieuw">+ Tussenstand</button>${L !== T ? '<button class="btn klein" data-bm="tussenweg">Verwijder deze</button>' : ''}</div>
+    ${L !== T ? `<p class="bm-vast"><b>Tussenstand ${esc(L.naam)}.</b> Telt niet mee voor het cijfer en krijgt geen kolom in Magister.</p>` : ''}`;
+  const gKop = (T.groepjes || []).length; const G = gKop && bmSelG ? T.groepjes.find(x => x.id === bmSelG) : null; if (!G) bmSelG = null;
+  const rijHtml = id => { const r = L.ll[id]; const u = uitk(id); return `<li class="${!G && id === cur ? 'nu' : ''} ${klaar(id) ? 'klaar' : ''}"><button class="bm-naam" data-bmkies="${id}">${esc(naam(id))}</button><span class="bm-c">${L === T && r && r.vast ? BMR.fmt(u.e) + ' ✓' : r && r.af ? 'inhalen' : u.e != null ? komma(u.e) : u.d != null ? u.mist.join(', ') + '?' : ''}</span><span class="bm-pijl"><button class="btn klein" data-bmop="${id}|-1" aria-label="eerder">▲</button><button class="btn klein" data-bmop="${id}|1" aria-label="later">▼</button></span></li>`; };
   h += `<div class="bm-raster"><div class="kaart bm-lijst"><div class="regel"><b>${vol.filter(klaar).length} van ${vol.length} klaar</b>${cijfers.length ? `<span class="chip">gemiddeld ${komma(BMR.rond1(cijfers.reduce((a, b) => a + b, 0) / cijfers.length))}</span>` : ''}<button class="btn klein" data-bm="loten">Volgorde loten</button></div>
-    ${T.vast || nOpen ? `<div class="regel">${T.vast ? `<span class="chip">${nVast} afgerond · ${esc(bmTijd(T.vast.laatst))}</span>` : ''}${nOpen ? `<button class="btn klein hoofd" data-bm="afronden">Afronden (${nOpen})</button>` : ''}</div>` : ''}
-    <ol>${vol.map(id => { const r = L.ll[id]; const u = uitk(id); return `<li class="${id === cur ? 'nu' : ''} ${klaar(id) ? 'klaar' : ''}"><button class="bm-naam" data-bmkies="${id}">${esc(naam(id))}</button><span class="bm-c">${r && r.vast ? BMR.fmt(u.e) + ' ✓' : r && r.af ? 'inhalen' : u.e != null ? komma(u.e) : u.d != null ? u.mist.join(', ') + '?' : ''}</span><span class="bm-pijl"><button class="btn klein" data-bmop="${id}|-1" aria-label="eerder">▲</button><button class="btn klein" data-bmop="${id}|1" aria-label="later">▼</button></span></li>`; }).join('')}</ol></div>`;
-  return h + bmScoorKaart(m, T, L, cur, naam(cur)) + '</div>';
+    ${L === T && (T.vast || nOpen) ? `<div class="regel">${T.vast ? `<span class="chip">${nVast} afgerond · ${esc(bmTijd(T.vast.laatst))}</span>` : ''}${nOpen ? `<button class="btn klein hoofd" data-bm="afronden">Afronden (${nOpen})</button>` : ''}</div>` : ''}
+    <div class="regel"><button class="btn klein" data-bm="pdfalle">Alle feedbackbladen</button></div>
+    <ol>${gKop ? [...T.groepjes.map(x => `<li class="bm-gkop ${G === x ? 'nu' : ''}"><button class="bm-naam" data-bmgkies="${x.id}">${esc(x.naam)}${(L.gs || {})[x.id] && Object.keys(L.gs[x.id]).length ? ' ✓' : ''}</button></li>${vol.filter(id => x.leden.includes(id)).map(rijHtml).join('')}`), vol.some(id => !BMR.groepVan(T, id)) ? '<li class="bm-gkop"><span class="bm-naam">Geen groepje</span></li>' + vol.filter(id => !BMR.groepVan(T, id)).map(rijHtml).join('') : ''].join('') : vol.map(rijHtml).join('')}</ol></div>`;
+  return h + (G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur))) + '</div>';
 }
 function bmScoorKaart(m, T, L, cur, naam) {
   const r = bmRij(L, cur); const dicht = L === T && !!r.vast; const u = BMR.eind(m, L, T, cur); const D = u.delen; const zb = D.zelf || 0;
@@ -1244,11 +1288,16 @@ function bmScoorKaart(m, T, L, cur, naam) {
     h += `<label class="bm-opm">Opmerking ${esc(o.groep.toLowerCase())}<textarea rows="2" data-bmopm="${esc(o.groep)}">${esc(r.opm[o.groep] || '')}</textarea></label>`;
   }
   const zv = dicht ? r.vast.z : (r.zelf == null ? null : r.zelf);
-  if (zb) h += `<h3 class="bm-groep">Zelfbeoordeling <small>${zb}% van het eindcijfer: hoe eerlijk en concreet beoordeelt de leerling de eigen uitvoering?</small></h3>
+  if (zb && m.zelfSoort === 'cijfer') h += `<h3 class="bm-groep">Eigen cijfer <small>${zb}% van het eindcijfer: het overall-cijfer dat de leerling zichzelf geeft</small></h3>
+    <label class="bm-cijfer">Cijfer van de leerling<input data-bmzelfc inputmode="decimal" value="${zv == null ? '' : komma(zv)}" ${dicht ? 'disabled' : ''}></label>`;
+  else if (zb) h += `<h3 class="bm-groep">Zelfbeoordeling <small>${zb}% van het eindcijfer: hoe eerlijk en concreet beoordeelt de leerling de eigen uitvoering?</small></h3>
     <div class="bm-rij">${bmKnoppen('', 'data-bmzelf', zv, dicht)}${!dicht && zv != null ? '<button type="button" class="bm-wis" data-bmwis="" aria-label="Score wissen" title="Score wissen">×</button>' : ''}</div>`;
+  if (D.klasgenoten) { const k = (r.klas || {}); const min = +m.klasgenotenMin || 3; h += `<h3 class="bm-groep">Klasgenoten <small>${D.klasgenoten}% van het eindcijfer, minimaal ${min} inzendingen</small></h3>
+    <p class="bm-niv"><b>${u.k != null ? 'Gemiddeld ' + komma(u.k) : 'Nog geen gemiddelde'}</b> uit ${u.kn} ${u.kn === 1 ? 'inzending' : 'inzendingen'}${(k.forms || []).length ? ` (${k.forms.length} uit Forms)` : ''}.${!dicht && u.k == null ? ' Geen eindcijfer zolang dit deel ontbreekt.' : ''}</p>
+    <label class="bm-cijfer">Papieren cijfers, met spaties ertussen<input data-bmpapier inputmode="decimal" value="${esc((k.papier || []).map(komma).join(' '))}" ${dicht ? 'disabled' : ''}></label>`; }
   h += `<label class="bm-opm">${esc(m.vooruit || 'Eén punt om aan te werken')}<textarea rows="2" data-bmvooruit>${esc(r.vooruit || '')}</textarea></label>
-    <div class="bm-voet"><div><span>Cijfer docent <b>${u.d != null ? komma(u.d) : '–'}</b></span>${D.docent < 100 ? `<span>Eindcijfer <b>${u.e != null ? komma(u.e) : '–'}</b></span>` : ''}</div>
-    <div class="knoppen"><button class="btn" data-bm="vorige">Vorige</button><button class="btn hoofd" data-bm="volgende">Volgende</button></div></div></div>`;
+    <div class="bm-voet"><div><span>${L === T ? 'Cijfer docent' : 'Tussenstand'} <b>${u.d != null ? komma(u.d) : '–'}</b></span>${D.docent < 100 ? `<span>Eindcijfer <b>${u.e != null ? komma(u.e) : '–'}</b></span>${u.mist.length && u.d != null ? `<small>mist: ${esc(u.mist.join(', '))}</small>` : ''}` : ''}</div>
+    <div class="knoppen"><button class="btn" data-bm="pdf">Feedbackblad</button><button class="btn" data-bm="vorige">Vorige</button><button class="btn hoofd" data-bm="volgende">Volgende</button></div></div></div>`;
   return h;
 }
 function bmCsv(m, g) {
@@ -1271,13 +1320,34 @@ function bmLijstOpslaan(g, rij) { S.beoord.weg = S.beoord.weg || {}; const gekoz
   S.beoord.lijsten[g] = rij.map((u, i) => ({ id: u.id || 'l' + Date.now().toString(36) + i, naam: u.naam })); S.beoord.weg[g] = alle.filter(x => !gekozen.has(x.id));
   bmPaneel = null; bmKoppel = null; bewaar(); toast(rij.length + ' leerlingen opgeslagen'); }
 document.addEventListener('click', async e => {
-  const b = e.target.closest('[data-beoordeel],[data-bm],[data-bmkies],[data-bmop],[data-bmscore],[data-bmzelf],[data-bmwis]'); if (!b) return;
+  const b = e.target.closest('[data-beoordeel],[data-bm],[data-bmkies],[data-bmop],[data-bmscore],[data-bmzelf],[data-bmwis],[data-bmgs],[data-bmgswis],[data-bmgkies],[data-bmgactief],[data-bmgin],[data-bmgruit],[data-bmgweg],[data-bmlaag]'); if (!b) return;
   const D = b.dataset;
   if (D.beoordeel) { const [mid, g] = D.beoordeel.split('|'); bmSel = null; bmPaneel = null; bmLaagId = null; location.hash = 'beoordelen/' + encodeURIComponent(mid) + '/' + encodeURIComponent(g); return; }
   const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); const g = decodeURIComponent(route.arg[1] || ''); if (!m) return;
   const k = m.id + '|' + g; const T = bmToets(m.id, g); const lijst = S.beoord.lijsten[g] || []; const vol = bmVolgorde(T, lijst);
   if (D.bm === 'lijst') { bmPaneel = 'lijst'; bmKoppel = null; render(); return; }
   if (D.bm === 'kolom') { bmPaneel = 'kolom'; render(); return; }
+  if (D.bm === 'groepjes') { bmPaneel = 'groepjes'; render(); return; }
+  if (D.bm === 'klasgenoten') { bmPaneel = 'klasgenoten'; bmKlasRes = null; render(); return; }
+  if (D.bm === 'gnieuw') { T.groepjes = T.groepjes || []; const id = 'g' + Date.now().toString(36); T.groepjes.push({ id, naam: 'Groep ' + (T.groepjes.length + 1), leden: [] }); bmActiefG = id; bewaar(); return; }
+  if (D.bmgactief) { bmActiefG = D.bmgactief; render(); return; }
+  if (D.bmgin) { const x = T.groepjes.find(y => y.id === bmActiefG); if (x) { x.leden.push(D.bmgin); if ((m.velden || []).includes('Groep')) bmRij(T, D.bmgin).v.Groep = x.naam; bewaar(); } return; }
+  if (D.bmgruit) { const x = BMR.groepVan(T, D.bmgruit); if (x) { x.leden = x.leden.filter(id => id !== D.bmgruit); bewaar(); } return; }
+  if (D.bmgweg) { if (!confirm('Dit groepje verwijderen? De eigen scores blijven; de groepsscores van dit groepje vervallen.')) return; T.groepjes = T.groepjes.filter(x => x.id !== D.bmgweg); [T, ...(T.tussen || [])].forEach(L => { if (L.gs) delete L.gs[D.bmgweg]; }); bmLog(k, { a: 'groepweg', id: D.bmgweg }); bewaar(); return; }
+  if (D.bmgkies) { bmSelG = D.bmgkies; bmKlok = null; render(); window.scrollTo(0, 0); return; }
+  if (D.bmgs) { const [cid, x] = D.bmgs.split('|'); const G = (bmLaag(T).gs || {})[bmSelG] || {}; if (G[cid] !== +x) bmZet(k, T, 'gs', bmSelG, cid, +x); return; }
+  if (D.bmgswis) { bmZet(k, T, 'gs', bmSelG, D.bmgswis, null); return; }
+  if (D.bm === 'gverder') { const x = T.groepjes.find(y => y.id === bmSelG); const eerste = x && vol.find(id => x.leden.includes(id)); bmSelG = null; if (eerste) bmSel = eerste; render(); window.scrollTo(0, 0); return; }
+  if (D.bmlaag != null) { bmLaagId = D.bmlaag || null; bmSel = null; bmSelG = null; render(); return; }
+  if (D.bm === 'tussennieuw') { const naam = prompt('Naam van de tussenstand', 'Generale'); if (!naam || !naam.trim()) return; T.tussen = T.tussen || []; const id = 't' + Date.now().toString(36); T.tussen.push({ id, naam: naam.trim(), op: vandaag(), ll: {}, gs: {} }); bmLaagId = id; bmSel = null; bmSelG = null; bewaar(); return; }
+  if (D.bm === 'tussenweg') { const L = bmLaag(T); if (L === T || !confirm(`Tussenstand ${L.naam} verwijderen? Op de toets heeft dit geen invloed.`)) return; bmLog(k, { a: 'tussenweg', w: L.naam }); T.tussen = T.tussen.filter(x => x !== L); bmLaagId = null; bmSel = null; bewaar(); return; }
+  if (D.bm === 'klaslees') { bmKlasRes = BMR.leesKlasgenoten($('#bmKlasPlak').value, lijst); render(); return; }
+  if (D.bm === 'klasover') { const R = bmKlasRes; for (const s of document.querySelectorAll('[data-bmklask]')) if (s.value) R.per[s.value].push(...R.onbekend[+s.dataset.bmklask].w);
+    bmLaagId = null; for (const x of lijst) bmZet(k, T, 'forms', x.id, null, R.per[x.id] || [], true); bmKlasRes = null; bmPaneel = null; bewaar(); toast('Klasgenoten overgenomen'); return; }
+  if (D.bm === 'pdf' || D.bm === 'pdfalle') { const L = bmLaag(T); const nm = id => (lijst.find(x => x.id === id) || {}).naam || ''; const bestand = id => `Feedback ${m.toets}${L === T ? '' : ' tussenstand ' + L.naam} ${nm(id)}.pdf`.replace(/[\\/:*?"<>|]/g, ' ').replace(/\s+/g, ' ');
+    try { if (D.bm === 'pdf') { bmDownload(bestand(bmSel), await BMPDF.blad(bmBladInfo(m, g, T, L, bmSel, nm(bmSel)))); return; }
+      const wie = vol.filter(id => BMR.eind(m, L, T, id).d != null); if (!wie.length) { toast('Er is nog niemand met een cijfer'); return; } toast('Bladen maken…'); const f = []; for (const id of wie) f.push({ naam: bestand(id), blob: await BMPDF.blad(bmBladInfo(m, g, T, L, id, nm(id))) });
+      bmDownload(bmBestand(m, g, `feedbackbladen${L === T ? '' : ' ' + L.naam}.zip`), await BMPDF.zip(f)); toast(wie.length + ' feedbackbladen gedownload'); } catch (err) { console.warn(err); toast('Het feedbackblad maken lukt niet'); } return; }
   if (D.bm === 'dicht') { bmPaneel = null; render(); return; }
   if (D.bm === 'lijstopslaan') { const namen = bmParse($('#bmLijst').value); if (!namen.length) { toast('Er staan geen namen in het veld'); return; }
     S.beoord.weg = S.beoord.weg || {}; const v = BMR.vergelijkLijst(namen, [...lijst, ...S.beoord.weg[g] || []]);
@@ -1296,8 +1366,8 @@ document.addEventListener('click', async e => {
     const af = BMR.afronden(m, T, lijst, Date.now()); bmLog(k, { a: 'afronden', w: af.map(id => id + '=' + T.ll[id].vast.e).join(' ') }); bmVuil = true; bewaar(); toast(af.length + ' cijfers vastgelegd'); await bmReserveNu(m, g); return; }
   if (D.bm === 'heropen') { if (!confirm('Dit cijfer openzetten om te wijzigen? Het oude cijfer staat in het logboek. Rond daarna opnieuw af en zet het nieuwe cijfer zelf in Magister.')) return; bmLog(k, { a: 'heropen', id: bmSel, w: T.ll[bmSel].vast.e }); BMR.heropen(T, bmSel); bewaar(); return; }
   if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
-  if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { const oud = bmSel; bmSel = vol[i]; bmKlok = null; render(); window.scrollTo(0, 0); if (D.bm === 'volgende') bmNaVolgende(m, g, T, oud, bmSel); } return; }
-  if (D.bmkies) { bmSel = D.bmkies; bmKlok = null; render(); return; }
+  if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { const oud = bmSel; bmSel = vol[i]; bmKlok = null; const G = BMR.groepVan(T, bmSel); if (D.bm === 'volgende' && G && G !== BMR.groepVan(T, oud) && !Object.keys((bmLaag(T).gs || {})[G.id] || {}).length) bmSelG = G.id; render(); window.scrollTo(0, 0); if (D.bm === 'volgende') bmNaVolgende(m, g, T, oud, bmSel); } return; } // een nieuwe groep zonder groepsscore begint op de groepskaart
+  if (D.bmkies) { bmSel = D.bmkies; bmSelG = null; bmKlok = null; render(); return; }
   if (D.bmop) { const [id, st] = D.bmop.split('|'); const i = vol.indexOf(id), j = i + +st; if (j >= 0 && j < vol.length) { [vol[i], vol[j]] = [vol[j], vol[i]]; T.volgorde = vol; bewaar(); } return; }
   if (D.bmscore) { const [cid, x] = D.bmscore.split('|'); const w = +x; if (bmRij(bmLaag(T), bmSel).s[cid] !== w) bmZet(k, T, 's', bmSel, cid, w); return; } // nog een keer tikken wist niet: dubbel tikken mag nooit een score weghalen
   if (D.bmzelf) { const w = +D.bmzelf; if (bmRij(bmLaag(T), bmSel).zelf !== w) bmZet(k, T, 'zelf', bmSel, null, w); return; }
@@ -1314,11 +1384,14 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', async e => {
   const t = e.target; const c = bmHuidig(); if (!c) return; const T = bmToets(c.m.id, c.g);
+  if (t.dataset.bmgnaam) { const x = (T.groepjes || []).find(y => y.id === t.dataset.bmgnaam); if (x && t.value.trim()) { x.naam = t.value.trim(); bewaar(true); } return; }
   if (t.dataset.bmherstel != null && t.files[0]) { try { const d = JSON.parse(await t.files[0].text()); if (d.soort !== 'lesdag-beoordeling-reserve' || d.model !== c.m.id || d.groep !== c.g || !d.toets) { toast('Dit bestand hoort niet bij deze toets en groep'); return; }
       if (!confirm(`Reserve van ${new Date(d.gemaakt).toLocaleString('nl-NL')} terugzetten? De scores op dit apparaat voor deze toets worden vervangen.`)) return;
       await bmDownloadReserve(c.m, c.g); S.beoord.toetsen[c.k] = d.toets; if (d.lijst && d.lijst.length) S.beoord.lijsten[c.g] = d.lijst; S.beoord.weg = S.beoord.weg || {}; if (d.weg) S.beoord.weg[c.g] = d.weg; bmLog(c.k, { a: 'teruggezet', w: d.gemaakt }); bewaar(); toast('Reserve teruggezet; de oude stand staat in je downloads'); } catch (err) { console.warn(err); toast('Dit bestand kan niet worden gelezen'); } return; }
   if (!bmSel || !t.closest('.bm-scoor')) return;
   if (t.dataset.bmaf != null) { bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
+  if (t.dataset.bmzelfc != null) { const w = t.value.trim() === '' ? null : BMR.leesCijfer(t.value); if (t.value.trim() && w == null) { toast('Vul een cijfer van 1 tot en met 10 in, bijvoorbeeld 7,5'); t.value = ''; } bmZet(c.k, T, 'zelf', bmSel, null, w); return; }
+  if (t.dataset.bmpapier != null) { const stuk = t.value.trim().split(/\s+/).filter(Boolean); const w = stuk.map(BMR.leesCijfer); if (w.includes(null)) toast('Niet alles is een cijfer van 1 tot en met 10: alleen de goede cijfers tellen mee'); bmZet(c.k, T, 'papier', bmSel, null, w.filter(x => x != null)); return; }
   const soort = t.dataset.bmveld ? ['v', t.dataset.bmveld] : t.dataset.bmopm ? ['opm', t.dataset.bmopm] : t.dataset.bmvooruit != null ? ['vooruit', null] : null;
   if (soort) bmZet(c.k, T, soort[0], bmSel, soort[1], t.value, true);
 });

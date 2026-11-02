@@ -9,8 +9,10 @@ Repo: `...\Dashboard Docent\lesdag project\lesdag`. Eén model per toets in `too
 
 ## 1. Model schrijven of aanpassen
 
-- Bronnen eerst: PTA/PTO (muziekpagina's in de PTA-pdf), studiewijzer, leergang (`public/data/basis.json` → `leergangen[<lg>].toetsen` en `.weken`), bestaande sectiemodellen in `Documenten - Sectie Muziek\00 Sectie\Vakwerkplan en curriculum\Beoordelingsmodellen\`. Tegenstrijdigheden niet zelf oplossen: in `OPEN-PUNTEN.md` onder A.
-- Velden: `id, klas, toets, titel, thema, weging, herkansbaar, velden (2-4 labels), vooruit, leerlingTitel, leerlingInstructie?, pta, map (vanaf "Documenten - Sectie Muziek", eindigt op Beoordeling), lessen [{lg, w, slot:"l1", wat:["docent","scoreblad","leerling"]}], niveaus 4/6/8/10, tussenscores, cijfer, zelfbeoordeling (procent, standaard 10; 0 als reflectie al een criterium is), onderdelen [{groep, stuk, criteria [{id, naam, uitleg, weging, docent[4], leerling[4]}]}]`.
+- Bronnen eerst: PTA/PTO (muziekpagina's in de PTA-pdf), studiewijzer, leergang (`public/data/basis.json` → `leergangen[<lg>].toetsen` en `.weken`), bestaande sectiemodellen in `Documenten - Sectie Muziek\00 Sectie\03 Curriculum en toetsing\Beoordelingsmodellen\`. Tegenstrijdigheden niet zelf oplossen: in `OPEN-PUNTEN.md` onder A.
+- Velden: `id, klas, toets, titel, thema, weging, herkansbaar, velden (2-4 labels), vooruit, leerlingTitel, leerlingInstructie?, pta, map (vanaf "Documenten - Sectie Muziek", eindigt op Beoordeling), lessen [{lg, w, slot:"l1", wat:["docent","scoreblad","leerling"]}], niveaus 4/6/8/10, tussenscores, cijfer, zelfbeoordeling (procent, standaard 10; 0 als reflectie al een criterium is), onderdelen [{groep, stuk, criteria [{id, naam, uitleg, weging, groepsscore?, docent[4], leerling[4]}]}]`.
+- `groepsscore`: alleen bij spel in een groep, voor samenspel en presentatie. `true` = één score voor de groep, een eigen score gaat voor. `"start"` = startpunt dat per leerling bevestigd moet worden (havo 5 P4 "Samenspel en eigen rol").
+- Examenconcerten (vwo 6 P19, mavo 4 P2, havo 5 P4): `delen {docent 75, zelf 10, klasgenoten 15}`, `zelfSoort "cijfer"` (eigen overall-cijfer van de leerling, geen docentscore) en `klasgenotenMin 3`. Zonder `delen` geldt docent + `zelfbeoordeling`. Rekenregel en test: `public/bm-reken.js`, `node tools/beoordeling/test-reken.js`. Deze modellen krijgen ook `<toets> Beoordeling klasgenoten` als papieren reserve.
 - 5 tot 7 criteria, teksten ≤110 tekens, gewone woorden, geen leerlingnamen. `toets` + `klas` bepalen de bestandsnamen: moeten uniek zijn per map.
 - Meerdere klassen tegelijk: helpers met een strakke opdracht (alleen hun JSON schrijven, geen scripts draaien), daarna zelf controleren.
 
@@ -23,7 +25,7 @@ Eerst in de korte testmap (Word weigert paden boven 255 tekens). Controleer: elk
 
 ## 3. Koppelen in Lesdag
 
-`node tools/beoordeling/koppel-beoordeling.js`: zet de formulieren als materiaal in de lessen uit `lessen` en schrijft `public/data/beoordeling.json` (de app leest daaruit de knop Beoordelen). Dan `/lesdag-online`.
+`node tools/beoordeling/koppel-beoordeling.js`: zet de formulieren als materiaal in de lessen uit `lessen` en schrijft `public/data/beoordeling.json` (de app leest daaruit de knop Beoordelen). Dan `/lesdag-online`. Werkt een andere sessie aan `basis.json`, of veranderen lessen en bestandsnamen niet: alleen `node tools/beoordeling/maak-modellen-json.js`, dat schrijft alleen `beoordeling.json`.
 
 ## 4. Melden
 

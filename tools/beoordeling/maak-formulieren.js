@@ -48,6 +48,7 @@ function rubriek(soort) {
 const veldRijen = (namen) => { let h = '<table class="velden">'; for (let i = 0; i < namen.length; i += 3) { const r = namen.slice(i, i + 3); h += '<tr>' + r.map(n => `<td style="width:33%">${esc(n)}: ${'_'.repeat(Math.max(12, 40 - n.length))}</td>`).join('') + '<td></td>'.repeat(3 - r.length) + '</tr>'; } return h + '</table>'; };
 const vooruit = M.vooruit || 'Eén punt om aan te werken';
 const zb = +M.zelfbeoordeling || 0;
+const kg = M.delen && M.delen.klasgenoten ? M.delen : null; // examenconcerten: docent, eigen cijfer van de leerling en klasgenoten
 const groepen = M.onderdelen.map(o => o.groep.toLowerCase()).join(' · ');
 
 // docentformulier
@@ -56,7 +57,7 @@ d += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)}${M
 d += veldRijen(['Naam', 'Datum', ...(M.velden || [])]);
 d += `<p style="margin:3pt 0 4pt 0">Omcirkel per onderdeel het niveau dat het best past en schrijf de score op. ${esc(M.tussenscores)}</p>`;
 d += rubriek('docent');
-d += `<table style="margin-top:5pt"><tr><td style="width:60%;height:52pt"><b>Opmerking per onderdeel</b><br><span class="klein">${esc(groepen)}</span></td><td><b>Totaal</b> ______ punten ÷ ${somW} = <b>cijfer docent</b> ______<br><span class="klein">${esc(M.cijfer)}</span>${zb ? `<br><b>Eindcijfer</b> = ${String((100 - zb) / 100).replace('.', ',')} × cijfer docent + ${String(zb / 100).replace('.', ',')} × zelfbeoordeling ______ = <b>______</b><br><span class="klein">Zelfbeoordeling (${zb}%): hoe eerlijk en concreet de leerling de eigen uitvoering beoordeelt, 4 tot 10.</span>` : ''}<br><b>${esc(vooruit)}:</b></td></tr></table>`;
+d += `<table style="margin-top:5pt"><tr><td style="width:60%;height:52pt"><b>Opmerking per onderdeel</b><br><span class="klein">${esc(groepen)}</span></td><td><b>Totaal</b> ______ punten ÷ ${somW} = <b>cijfer docent</b> ______<br><span class="klein">${esc(M.cijfer)}</span>${kg ? `<br><b>Eindcijfer</b> = ${kg.docent}% docent + ${kg.zelf}% eigen cijfer ______ + ${kg.klasgenoten}% klasgenoten ______ = <b>______</b><br><span class="klein">Eigen cijfer: het overall-cijfer dat de leerling zichzelf geeft. Klasgenoten: gemiddelde van minstens ${M.klasgenotenMin || 3} inzendingen. Ontbreekt een deel, dan geen eindcijfer.</span>` : zb ? `<br><b>Eindcijfer</b> = ${String((100 - zb) / 100).replace('.', ',')} × cijfer docent + ${String(zb / 100).replace('.', ',')} × zelfbeoordeling ______ = <b>______</b><br><span class="klein">Zelfbeoordeling (${zb}%): hoe eerlijk en concreet de leerling de eigen uitvoering beoordeelt, 4 tot 10.</span>` : ''}<br><b>${esc(vooruit)}:</b></td></tr></table>`;
 d += '</div></body></html>';
 fs.writeFileSync(path.join(uit, `${M.toets} Beoordelingsformulier docent.html`), d, 'utf8');
 
@@ -66,8 +67,18 @@ l += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)} ·
 l += veldRijen(['Naam', ...(M.velden || [])]);
 l += `<p style="margin:3pt 0 4pt 0">${esc(M.leerlingInstructie || 'Luister je opname terug. Zet per onderdeel een kruisje bij wat je hoort en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.')}</p>`;
 l += rubriek('leerling');
-if (zb) l += `<p class="klein" style="margin-top:3pt">Je zelfbeoordeling telt voor ${zb}% mee. Je docent kijkt of je eerlijk en concreet bent, niet hoe hoog je jezelf scoort.</p>`;
+if (kg) l += `<p style="margin-top:3pt"><b>Mijn eigen cijfer (overall): ______</b> <span class="klein">Dit cijfer telt voor ${kg.zelf}% mee in je eindcijfer. Je docent telt ${kg.docent}%, je klasgenoten ${kg.klasgenoten}%.</span></p>`;
+else if (zb) l += `<p class="klein" style="margin-top:3pt">Je zelfbeoordeling telt voor ${zb}% mee. Je docent kijkt of je eerlijk en concreet bent, niet hoe hoog je jezelf scoort.</p>`;
 l += `<table style="margin-top:5pt"><tr><td style="width:33%;height:58pt"><b>Wat ging goed?</b></td><td style="width:34%"><b>${esc(vooruit)}</b><br><span class="klein">Welke maat of welk moment, welk probleem, hoe ga je het oefenen?</span></td><td><b>Tip van een klasgenoot</b></td></tr></table>`;
 l += '</div></body></html>';
 fs.writeFileSync(path.join(uit, `${M.toets} Format zelfbeoordeling leerling.html`), l, 'utf8');
+// papieren reserve voor de klasgenoten (hoofdroute is Microsoft Forms)
+if (kg) {
+  let p = kop(`${M.toets} beoordeling klasgenoten`);
+  p += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)} · reserve als Forms niet lukt</p><h1>Beoordeling klasgenoten</h1>`;
+  p += veldRijen(['Mijn naam']);
+  p += `<p style="margin:3pt 0 4pt 0">Geef iedere klasgenoot één cijfer van 1 tot en met 10 voor de hele uitvoering, plus een korte toelichting. Jezelf beoordeel je hier niet. Dit telt samen voor ${kg.klasgenoten}% mee.</p>`;
+  p += `<table><tr><th style="width:34%">Klasgenoot</th><th style="width:10%">Cijfer</th><th>Toelichting</th></tr>${'<tr><td style="height:22pt"></td><td></td><td></td></tr>'.repeat(15)}</table></div></body></html>`;
+  fs.writeFileSync(path.join(uit, `${M.toets} Beoordeling klasgenoten.html`), p, 'utf8');
+}
 console.log('ok', uit);

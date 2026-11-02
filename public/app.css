@@ -413,3 +413,16 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .bm-kolom td.c{font-variant-numeric:tabular-nums;font-weight:700;min-width:3rem}
 .bm-kolom td:last-child{color:var(--muted);font-size:.85rem}
 @media (max-width:560px){.bm-koppel{grid-template-columns:1fr}}
+.bm-lagen{display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0 0}
+.bm-gkop{font-weight:700;border-top:1px solid var(--line);margin-top:.2rem}
+.bm-gkaart{border:1px solid var(--line);border-radius:8px;padding:.5rem;margin:.4rem 0}
+.bm-gkaart.actief{border-color:var(--paars);background:var(--paars-zacht)}
+.bm-gkaart .regel{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.bm-gkaart input{flex:1;min-width:8rem}
+.bm-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.4rem}
+.bm-chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:.4rem .7rem;font-family:var(--kop);cursor:pointer;touch-action:manipulation}
+.bm-chip.in{background:var(--paars);border-color:var(--paars);color:#fff}
+.bm-chip:disabled{opacity:.5;cursor:default}
+.bm-crit.grp{border-left:3px solid var(--paars);padding-left:.5rem}
+.bm-cijfer{display:flex;flex-direction:column;gap:.2rem;font-family:var(--kop);font-size:.85rem;color:var(--muted);max-width:22rem}
+.bm-voet small{color:var(--muted);font-family:var(--kop)}

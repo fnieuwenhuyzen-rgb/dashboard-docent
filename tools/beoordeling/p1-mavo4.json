@@ -136,7 +136,8 @@
             "Ik let op de begeleiding; we beginnen en eindigen meestal samen.",
             "Ik luister, blijf gelijk en speel of zing niet te hard.",
             "Ik reageer op de anderen en help als er iets misgaat."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },
@@ -160,7 +161,8 @@
             "Ik kondig aan, maar aarzel en kijk weinig naar het publiek.",
             "Ik noem naam, titel en instrument, sta rustig en ga door na een fout.",
             "Ik sta er zeker en maak contact met het publiek."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     }

@@ -1,7 +1,7 @@
 // Statische server voor Lesdag (public/) om lokaal te testen; launch-entry `lesdag-proef` (poort uit PORT, anders 8732).
 const http = require('http'), fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..', 'public');
-const T = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
+const T = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.ttf': 'font/ttf', '.webmanifest': 'application/manifest+json' };
 http.createServer((q, r) => {
   let p = decodeURIComponent(q.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html';
   const f = path.join(root, p);

@@ -86,7 +86,8 @@
             "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.",
             "Ik zeg naam, titel en instrument, begin en eindig duidelijk en speel door.",
             "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     },
@@ -188,7 +189,8 @@
             "Ik luister naar mijn partner en blijf meestal gelijk.",
             "Ik blijf gelijk met mijn partner en mijn begeleiding helpt de zang.",
             "Ik reageer op mijn partner; je kunt makkelijk op mijn begeleiding zingen."
-          ]
+          ],
+          "groepsscore": true
         }
       ]
     }
