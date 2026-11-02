@@ -268,6 +268,21 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--kop)}
 .taak.af span{text-decoration:line-through;color:var(--muted)}
 .taak.laat .chk span{color:var(--rood)}
 .nav-tel{display:inline-block;min-width:1.2em;padding:0 .3em;border-radius:1em;background:var(--rood);color:#fff;font-size:.72rem;line-height:1.35;text-align:center}
+/* uitval: melding, inhaalvoorstel, bericht aan de klas */
+.uitvalblok{display:grid;gap:.6rem;margin-bottom:1rem}
+.uitvalrij{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem .8rem}
+.uitvalrij b{color:var(--ink)}
+.uitvalmeer{display:grid;gap:.6rem}
+.afwezigrij{margin-bottom:1rem}
+.afwezigform,.ankerform{margin-bottom:1rem}
+.krap .opties{display:grid;gap:.5rem;margin:.6rem 0}
+.optie{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.15rem .8rem;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;cursor:pointer;min-height:44px}
+.optie:hover{border-color:var(--paars)}
+.optie[aria-pressed="true"]{border-color:var(--paars);box-shadow:inset 0 0 0 2px var(--paars)}
+.optie .sub{grid-column:1/-1}
+.krap .gevolg{background:var(--bg);border-radius:8px;padding:.5rem .7rem;margin:.4rem 0 .6rem}
+.bericht textarea{width:100%;font:inherit;margin:.3rem 0 .5rem;padding:.5rem;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.toast button{margin-left:.6rem;font:inherit;font-weight:700;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;min-height:32px}
 /* Instellingen: wat Lesdag uit Zermelo haalt */
 .z-ov{display:block;overflow-x:auto;border-collapse:collapse;font-size:.92rem;margin-top:.4rem;max-width:100%}
 .z-ov th,.z-ov td{text-align:left;vertical-align:top;padding:.35rem .6rem;border-bottom:1px solid var(--line)}
