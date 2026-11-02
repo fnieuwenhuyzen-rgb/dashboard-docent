@@ -41,7 +41,7 @@ function vrijReden(s) {
 const maandagVan = s => { const d = dOf(s); const w = (d.getDay() + 6) % 7; return addD(s, -w); };
 
 /* ---------- staat ---------- */
-function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, uitgesteld: {}, beoord: { lijsten: {}, toetsen: {} } }; }
+function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, uitgesteld: {}, afwezig: {}, ankers: {}, afwijkingen: [], beoord: { lijsten: {}, toetsen: {} } }; }
 function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 function bewaar(stil) {
   S.updated = Date.now();
@@ -81,7 +81,7 @@ function les(item) { // basisles met eigen aanpassingen
 const toetsVan = (lg, id) => ((B.leergangen[lg] || {}).toetsen || []).find(t => t.id === id);
 function status(g, id) { return ((S.voortgang[g] || {})[id] || {}); }
 const afgerond = st => st.st === 'gegeven' || st.st === 'overgeslagen';
-function volgendeIndex(g) { const r = reeks(leergangVan(g)); const i = r.findIndex(x => !afgerond(status(g, x.id))); return i < 0 ? r.length : i; }
+function volgendeIndex(g) { const r = reeks(leergangVan(g)); const i = r.findIndex(x => !afgerond(status(g, x.id)) && !isVastAnker(g, x.id)); return i < 0 ? r.length : i; }
 function vorigeNotitie(g, vanaf) {
   const r = reeks(leergangVan(g)); for (let i = vanaf - 1; i >= 0; i--) { const st = status(g, r[i].id); if (st.n) return { les: r[i], st }; if (st.st) return { les: r[i], st }; }
   return null;
@@ -90,7 +90,7 @@ function vorigeNotitie(g, vanaf) {
 function opPlanning(g) { // alle lessen vóór de huidige lesweek op 'gegeven'
   const lw = lesweekVan(vandaag()) || nextLesweek(); const r = reeks(leergangVan(g)); let n = 0;
   S.voortgang[g] = S.voortgang[g] || {};
-  for (const x of r) if (x.w < lw && !S.voortgang[g][x.id]) { S.voortgang[g][x.id] = { st: 'gegeven', auto: true }; n++; }
+  for (const x of r) if (x.w < lw && !S.voortgang[g][x.id]) { const y = (planBasis().slots[g] || []).find(y => y.w === x.w && y.li === x.li); if (y && isUitval(y.s, y.u)) continue; S.voortgang[g][x.id] = { st: 'gegeven', auto: true }; n++; }
   return n;
 }
 function nextLesweek() { const t = vandaag(); const k = B.kalender.weken.find(k => k.datum >= t); return k ? k.w : 99; }
@@ -98,7 +98,7 @@ const rooGroepen = () => [...new Set(S.rooster.map(u => u.groep))];
 /* ---------- planning: welke les in welk lesuur ---------- */
 function uurId(u) { return u.id; }
 function urenOp(s) { const z = zUren(s); const d = dOf(s).getDay(); return (z || S.rooster.filter(u => +u.dag === d)).sort((a, b) => minuten(a.start) - minuten(b.start)); }
-function isUitval(s, u) { return !!u.vervallen || (S.uitval[s] || []).includes(u.id); }
+function isUitval(s, u) { return !!u.vervallen || !!(S.afwezig || {})[s] || (S.uitval[s] || []).includes(u.id); }
 
 /* ---------- Zermelo: rooster ophalen via de eigen roosterproxy ---------- */
 let ZC = (() => { try { return JSON.parse(localStorage.getItem('lesdag-zermelo') || 'null'); } catch (e) { return null; } })();
@@ -139,7 +139,7 @@ function zVanApi(a) {
   const vakken = a.subjects || [], groepen = a.groups || [];
   const kop = vakken.concat(groepen).join(' - ');
   return { uid: String(a.appointmentInstance || a.id), d: b.d, start: b.t, eind: c.t, summary: kop || a.remark || Z_SOORT[a.type] || 'Afspraak', loc: (a.locations || []).join(', '), desc: a.remark || '', vervallen: !!a.cancelled,
-    api: true, vakken, soort: a.type || '', reden: a.changeDescription || '' };
+    api: true, vakken, groepen, soort: a.type || '', reden: a.changeDescription || '' };
 }
 async function zVraag(body) {
   const r = await fetch(zProxy(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -180,6 +180,37 @@ function zAnders(s) { // [{van, tot, titel, lokaal, groep, toets, dienst}] voor 
   return ZC.events.filter(e => e.d === s && !e.vervallen && !zLes(e) && !((e.soort === 'interlude' || /\bpauze\b/i.test(zTekst(e))) && !zDienst(e)))
     .map(e => ({ van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: e.summary || 'Afspraak', lokaal: e.loc, groep: zMuziek(e) ? zGroep(e) : '', toets: zToets(e), dienst: zDienst(e) }));
 }
+function zWat(e) { return e.vervallen ? 'vervallen' : (e.soort === 'interlude' || /\bpauze\b/i.test(zTekst(e))) && !zDienst(e) ? 'pauze' : zDienst(e) ? 'surveillance' : zLes(e) ? 'muziekles' : zToets(e) ? 'toets' : 'afspraak'; }
+function zCodes() { // vak- en groepscodes uit het opgehaalde rooster, met wat Lesdag ervan maakt
+  const vak = {}, groep = {};
+  for (const e of ZC.events) {
+    (e.vakken || []).forEach(v => { vak[v] = (vak[v] || 0) + 1; });
+    if (!zMuziek(e)) continue;
+    const code = (e.groepen || []).join(', ') || e.summary; const g = groep[code] = groep[code] || { n: 0, g: zGroep(e) }; g.n++;
+  }
+  return { vak: Object.entries(vak).sort().map(([code, n]) => ({ code, n, muziek: zMuziek({ api: true, vakken: [code] }) })),
+    groep: Object.entries(groep).sort().map(([code, x]) => ({ code, n: x.n, g: x.g, lg: x.g ? leergangVan(x.g) : null })) };
+}
+const zRest = () => ZC.events.filter(e => !zLes(e) || e.vervallen).sort((a, b) => (a.d + a.start < b.d + b.start ? -1 : 1));
+function zOverzichtTekst() { // om te plakken bij het nakijken: alleen codes, tijden en lokalen, geen opmerkingen uit Zermelo en geen koppeling
+  const C = zCodes(); const r = ['Zermelo in Lesdag, ' + fmtD(ZC.van) + ' t/m ' + fmtD(ZC.tot) + ', via ' + (ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'), '', 'Vakcodes (code, aantal, muziek?)'];
+  C.vak.forEach(v => r.push([v.code, v.n, v.muziek ? 'muziek' : 'ander vak'].join('\t')));
+  r.push('', 'Groepscodes bij muziek (code, aantal, groep in Lesdag, leergang)');
+  C.groep.forEach(g => r.push([g.code, g.n, g.g || 'niet herkend', g.lg || 'geen leergang'].join('\t')));
+  r.push('', 'Behalve muzieklessen (dag, tijd, soort in Zermelo, vak en groep, lokaal, Lesdag ziet)');
+  zRest().forEach(e => r.push([e.d, (e.start || 'hele dag') + (e.eind ? '-' + e.eind : ''), e.soort || '', (e.vakken || e.groepen) ? (e.vakken || []).concat(e.groepen || []).join(' ') : e.summary, e.loc, zWat(e)].join('\t')));
+  return r.join('\n');
+}
+function zOverzicht() { // in Instellingen: vak- en groepscodes, en alles uit Zermelo behalve gewone muzieklessen (zonder de koppeling)
+  if (!ZC || !ZC.events) return '';
+  const C = zCodes(); const L = zRest();
+  const tabel = (kop, rijen) => `<table class="z-ov"><thead><tr>${kop.map(k => `<th>${k}</th>`).join('')}</tr></thead><tbody>${rijen.join('')}</tbody></table>`;
+  return `<details class="meer" style="margin-top:.6rem"><summary>Wat Lesdag uit Zermelo haalt (${C.vak.length} vakcodes, ${C.groep.length} groepscodes, ${L.length} andere afspraken)</summary>
+    <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" type="button" data-zkopie="">Kopieer als tekst</button></div>
+    ${C.vak.length ? '<h3>Vakcodes</h3>' + tabel(['Code', 'Aantal', 'Lesdag ziet'], C.vak.map(v => `<tr><td><code>${esc(v.code)}</code></td><td class="num">${v.n}</td><td>${v.muziek ? 'muziek' : 'ander vak'}</td></tr>`)) : '<p class="lead">Vakcodes staan alleen los in de koppeling, niet in de agendalink.</p>'}
+    <h3>Groepscodes bij muziek</h3>${tabel(['In Zermelo', 'Aantal', 'Groep in Lesdag', 'Leergang'], C.groep.map(g => `<tr><td><code>${esc(g.code)}</code></td><td class="num">${g.n}</td><td>${g.g ? esc(g.g) : '<span class="chip let">niet herkend</span>'}</td><td>${g.lg ? esc(lgNaam(g.lg)) : '<span class="chip let">geen leergang</span>'}</td></tr>`))}
+    <h3>Surveillances, toetsen en andere afspraken</h3>${tabel(['Dag', 'Tijd', 'In Zermelo', 'Lokaal', 'Lesdag ziet'], L.map(e => `<tr><td>${esc(fmtD(e.d))}</td><td class="num">${esc(e.start || 'hele dag')}${e.eind ? '–' + esc(e.eind) : ''}</td><td>${esc(e.summary)}${e.desc ? `<div class="sub">${esc(e.desc.replace(/\s+/g, ' ').slice(0, 80))}</div>` : ''}</td><td>${esc(e.loc)}</td><td>${zWat(e)}</td></tr>`))}</details>`;
+}
 function zUren(s) {
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return null;
   const dag = dOf(s).getDay();
@@ -217,24 +248,132 @@ function zVastRooster() { // muzieklessen van één week als vast rooster
     for (const e of ZC.events.filter(x => x.d === s && zLes(x) && !zToets(x) && !x.vervallen)) { const g = zGroep(e); if (!g) continue; const k = dag + '|' + e.start + '|' + g; if (seen[k]) continue; seen[k] = 1; out.push({ dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc }); } }
   return out.sort((a, b) => a.dag - b.dag || minuten(a.start) - minuten(b.start));
 }
-// Voorspel de lessen voor een reeks dagen vanaf 'van' (inclusief), uitgaande van de huidige voortgang.
+/* ---------- uitval en ankers: lessen schuiven door, toetsen blijven staan ---------- */
+const ONDERBOUW = /^(bb1|havo3|vwo3|kmu3)$/; // toetsen uit het PTO schuiven mee binnen hun periode; de rest staat in een PTA en verplaatst alleen Frans
+const INHAALBAAR = /generale|afrond|herhal|oefen/i;
+const KRAP_DAGEN = 21; // verder weg zie je het alleen bij Groepen: de leergangen zitten vol, dus één les achter is daar geen reden voor een melding
+let PLAN = null;
+function planBasis() { // alle lesuren per groep over het hele jaar, met de les uit de leergang die erbij hoort
+  const sl = [S.updated, ZC ? ZC.opgehaald : 0, vandaag()].join('|');
+  if (PLAN && PLAN.sl === sl) return PLAN;
+  const slots = {};
+  for (const k of B.kalender.weken) for (let i = 0; i < 5; i++) { const s = addD(k.datum, i); if (vrijReden(s)) continue;
+    for (const u of urenOp(s)) (slots[u.groep] = slots[u.groep] || []).push({ s, u, w: k.w }); }
+  PLAN = { sl, slots, ank: {}, idx: {} };
+  for (const [g, lijst] of Object.entries(slots)) {
+    PLAN.idx[g] = {}; lijst.forEach(y => { PLAN.idx[g][y.s + '|' + y.u.id] = y; });
+    const L = B.leergangen[leergangVan(g)]; if (!L) continue; const n = L.meta.lessenPerWeek;
+    for (const wk of L.weken) { const inWeek = lijst.filter(y => y.w === wk.w);
+      const doel = inWeek.length >= n ? Array.from({ length: n }, (_, i) => i + 1) : [1, 2, 3].slice(0, n).filter(i => wk['l' + i] && wk['l' + i].type !== 'uitval'); // te weinig uren: de uitval uit de leergang is het uur dat ontbreekt
+      inWeek.forEach((y, i) => { y.li = doel[i] || null; const l = y.li ? wk['l' + y.li] : null; y.planLes = l;
+        y.planUit = !!l && (l.type === 'uitval' || l.type === 'toetsweek' || (l.type === 'toets' && !!wk.toetsweek));
+        y.geplandUit = y.planUit && !y.u.zermelo; }); } // staat de les wel in Zermelo, dan gaat hij door
+  }
+  return PLAN;
+}
+const lesId = (lg, y) => `${lg}:${y.w}.${y.li}`;
+const periodeEind = (lg, a) => { const b = (B.leergangen[lg].blokken || []).find(b => b.id === a.t.blok); return b && b.weken ? b.weken[1] : a.item.w; };
+function ankersVan(g) { // de toetsen van een groep met hun lesuur. a.vast: staat op zijn uur; anders schuift hij mee tot a.grens, het laatste uur in zijn periode
+  const P = planBasis(); if (P.ank[g]) return P.ank[g];
+  const lg = leergangVan(g); const slots = P.slots[g] || []; const verpl = (S.ankers || {})[g] || {};
+  const lijst = reeks(lg).filter(x => les(x).type === 'toets').map(x => { const l = les(x); const verplaatst = verpl[x.id] || null;
+    return { id: x.id, item: x, t: toetsVan(lg, l.toets) || { id: l.toets || 'toets', naam: l.titel || '' }, verplaatst, vast: !ONDERBOUW.test(lg) || !!verplaatst, klaar: afgerond(status(g, x.id)), slot: null, grens: null }; });
+  const zet = (a, y) => { if (y) { a.slot = y; y.anker = a; } };
+  lijst.filter(a => a.verplaatst && !a.klaar).forEach(a => zet(a, slots.find(y => y.s === a.verplaatst.s && y.u.id === a.verplaatst.uur && !y.anker) || slots.find(y => y.s === a.verplaatst.s && !y.anker)));
+  lijst.filter(a => a.vast && !a.verplaatst && !a.klaar).forEach(a => zet(a, slots.find(y => y.w === a.item.w && y.li === a.item.li && !y.anker) || slots.find(y => y.w >= a.item.w && !y.anker && !y.geplandUit)));
+  lijst.filter(a => !a.vast && !a.klaar).reverse().forEach(a => { const eind = periodeEind(lg, a); if (!slots.some(y => y.w >= eind)) return; // einde periode nog niet in het bekende rooster: nog geen grens
+    const y = slots.filter(y => y.w <= eind && !y.anker && !y.grens && !y.geplandUit && !isUitval(y.s, y.u)).pop(); if (y) { a.grens = y; y.grens = a; } });
+  return (P.ank[g] = lijst);
+}
+const isVastAnker = (g, id) => ankersVan(g).some(a => a.id === id && a.vast);
+// Toets die niet op zijn uur door kan: uur voorbij en niet afgevinkt, uur vervallen, of (onderbouw) geen uur meer in de periode.
+function ankersGemist(g) { const t = vandaag(); const voorbij = a => a.verplaatst || ((B.kalender.weken.find(k => k.w === a.item.w) || {}).datum || t) < t; // geen uur en de week komt nog: het rooster is daar nog niet bekend
+  return ankersVan(g).filter(a => !a.klaar && (a.vast ? (a.slot ? a.slot.s < t || isUitval(a.slot.s, a.slot.u) : voorbij(a)) : (a.grens ? a.grens.s < t : voorbij(a)))); }
+const planGroepen = () => Object.keys(planBasis().slots).filter(g => leergangVan(g));
+function ruimte(g) { // per komende toets: hoeveel lessen moeten er nog vóór, en hoeveel lesuren zijn daarvoor over
+  const lg = leergangVan(g); const r = reeks(lg); const t = vandaag(); const nu = nuMin(); const ank = ankersVan(g); const doelen = [];
+  const uren = (planBasis().slots[g] || []).filter(y => (y.s > t || (y.s === t && minuten(y.u.eind) > nu)) && !isUitval(y.s, y.u) && !y.geplandUit && !y.anker);
+  for (const a of ank) { const y = a.vast ? a.slot : a.grens; if (a.klaar || !y || y.s < t || isUitval(y.s, y.u)) continue; doelen.push({ id: a.id, a, t: a.t, s: y.s, y, idx: r.indexOf(a.item) }); }
+  for (const w of B.leergangen[lg].weken) { if (!w.toetsweek) continue; // toetsweektoetsen staan niet in de reeks, maar de stof moet er wel vóór af zijn
+    for (const i of [1, 2, 3]) { const l = w['l' + i]; const T = l && l.type === 'toets' && toetsVan(lg, l.toets); if (!T) continue;
+      const x = toetsweekToetsen().find(x => x.lg === lg && x.t.id === T.id); const s = x ? x.tw.d : w.datum; if (s <= t) continue;
+      const idx = r.findIndex(z => z.w >= w.w); doelen.push({ id: 'tw:' + T.id, t: T, s, tw: true, idx: idx < 0 ? r.length : idx }); } }
+  return doelen.sort((a, b) => a.s < b.s ? -1 : a.s > b.s ? 1 : 0).map(d => {
+    const nog = r.slice(0, d.idx).filter(x => !afgerond(status(g, x.id)) && !isVastAnker(g, x.id));
+    const n = uren.filter(y => y.s < d.s || (d.y && y.s === d.s && minuten(y.u.start) < minuten(d.y.u.start))).length;
+    return Object.assign(d, { g, nog, uren: n, tekort: Math.max(0, nog.length - n), inhaal: nog.filter(x => les(x).type !== 'toets' && INHAALBAAR.test(les(x).titel || '')), dagen: Math.round((dOf(d.s) - dOf(t)) / 864e5) });
+  });
+}
+const uitgesteld = key => (S.uitgesteld || {})[key] > vandaag();
+function krapVoor(g) { // alleen als een toets in gevaar komt en je er nu iets mee moet; een groep die nog nooit is afgevinkt krijgt eerst de melding bovenaan Vandaag
+  if (!Object.keys(S.voortgang[g] || {}).length) return null;
+  const bekend = d => S.rooster.some(u => u.groep === g) || (ZC && d.s <= ZC.tot); // zonder vast rooster kent Lesdag alleen de opgehaalde weken
+  return ruimte(g).find(d => d.tekort > 0 && d.dagen <= KRAP_DAGEN && bekend(d) && !uitgesteld(`krap:${g}:${d.id}`)) || null;
+}
+function dagenTekst(L) { // di 27 en wo 28 okt
+  if (L.length > 2) return `${fmtD(L[0])} t/m ${fmtD(L[L.length - 1])}`;
+  const a = L.map(fmtD); if (a.length === 2 && a[0].split(' ')[2] === a[1].split(' ')[2]) a[0] = a[0].split(' ').slice(0, 2).join(' ');
+  return a.join(' en ');
+}
+function uitvalReden(g) { // waarom een klas achterloopt, voor de lijst met afwijkingen
+  const t = vandaag(); const y = (planBasis().slots[g] || []).filter(y => y.s < t && isUitval(y.s, y.u)).pop(); if (!y) return { kort: 'minder lessen dan gepland', s: null };
+  if (!S.afwezig[y.s]) return { kort: 'les uitgevallen ' + fmtD(y.s), s: y.s };
+  const L = [y.s]; for (let d = addD(y.s, -1); S.afwezig[d] || dOf(d).getDay() % 6 === 0; d = addD(d, -1)) if (S.afwezig[d]) L.unshift(d);
+  return { kort: 'afwezig ' + dagenTekst(L), s: y.s };
+}
+function zetAfwezig(van, tot) {
+  const P = planBasis(); const dagen = [];
+  for (let s = van; s <= tot && dagen.length < 40; s = addD(s, 1)) { if (dOf(s).getDay() % 6 === 0) continue; dagen.push(s); const rec = S.afwezig[s] = S.afwezig[s] || { herstel: {} };
+    for (const g of Object.keys(P.slots)) { const lg = leergangVan(g); if (!lg) continue; // "op de planning" gezette lessen van deze dag zijn dus niet gegeven
+      for (const y of P.slots[g]) { if (y.s !== s || !y.li) continue; const id = lesId(lg, y); const st = status(g, id); if (st.auto) { (rec.herstel[g] = rec.herstel[g] || {})[id] = st; delete S.voortgang[g][id]; } } } }
+  afwezigOpen = false; bewaar();
+  if (dagen.length) toast(`Afwezig ${dagenTekst(dagen)} · lessen schuiven door`, () => afwezigTerug(dagen));
+}
+function afwezigTerug(dagen) {
+  for (const s of dagen) { const rec = S.afwezig[s]; if (!rec) continue; for (const [g, m] of Object.entries(rec.herstel || {})) Object.assign(S.voortgang[g] = S.voortgang[g] || {}, m); delete S.afwezig[s]; }
+  bewaar();
+}
+function verplaatsUren(g, a) { // uren waar een toets heen kan; een PTO-toets blijft in zijn periode
+  const t = vandaag(); const lg = leergangVan(g); const eind = ONDERBOUW.test(lg) ? periodeEind(lg, a) : 99;
+  return (planBasis().slots[g] || []).filter(y => y.s > t && y.w <= eind && !y.anker && !y.geplandUit && !isUitval(y.s, y.u));
+}
+function verplaatsAnker(g, a, sleutel, reden) { // lessen van dezelfde toets (P2, P2 vervolg) gaan samen mee
+  const [s, uur] = sleutel.split('|'); const lg = leergangVan(g); const oud = a.slot || a.grens;
+  const uren = verplaatsUren(g, a); const vanaf = uren.findIndex(y => y.s === s && y.u.id === uur); if (vanaf < 0) return null;
+  const samen = ankersVan(g).filter(x => x.t.id === a.t.id && !x.klaar); const ids = [];
+  S.ankers[g] = S.ankers[g] || {};
+  samen.forEach((x, i) => { const y = uren[vanaf + i]; if (y) { S.ankers[g][x.id] = { s: y.s, uur: y.u.id, reden, d: vandaag() }; ids.push(x.id); } });
+  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden,
+    bericht: `${a.t.id} is verplaatst${oud ? ` van ${fmtLang(oud.s)}` : ''} naar ${fmtLang(s)}.` });
+}
+function afwijkingErbij(a) { a.id = 'af' + Date.now().toString(36); a.d = vandaag(); (S.afwijkingen = S.afwijkingen || []).push(a); return a.id; }
+function maakOngedaan(id) {
+  const a = (S.afwijkingen || []).find(x => x.id === id); if (!a) return;
+  (a.lesIds || []).forEach(l => { if (S.ankers[a.g]) delete S.ankers[a.g][l]; });
+  if (a.lesId) { if (a.was) S.voortgang[a.g][a.lesId] = a.was; else delete S.voortgang[a.g][a.lesId]; }
+  S.afwijkingen = S.afwijkingen.filter(x => x.id !== id); bewaar();
+}
+// Voorspel de lessen voor een reeks dagen vanaf 'van' (inclusief), uitgaande van de huidige voortgang. Altijd vanaf vandaag gerekend, zodat een latere week klopt.
 function planning(van, tot) {
-  const ptr = {}; const res = {}; const t = vandaag();
-  for (let s = van; s <= tot; s = addD(s, 1)) {
-    const reden = vrijReden(s); res[s] = { reden, uren: [] };
+  const gedaan = {}; const res = {}; const t = vandaag(); const P = planBasis();
+  for (let s = van < t ? van : t; s <= tot; s = addD(s, 1)) {
+    const reden = vrijReden(s); const dag = { reden, uren: [] }; if (s >= van) res[s] = dag;
     if (reden) continue;
     for (const u of urenOp(s)) {
-      const lg = leergangVan(u.groep); if (!lg) { res[s].uren.push({ u, fout: 'Groep zonder leergang' }); continue; }
-      if (ptr[u.groep] == null) ptr[u.groep] = volgendeIndex(u.groep);
+      const lg = leergangVan(u.groep); if (!lg) { dag.uren.push({ u, fout: 'Groep zonder leergang' }); continue; }
+      const klaarSet = gedaan[u.groep] = gedaan[u.groep] || {}; const y = (P.idx[u.groep] || {})[s + '|' + u.id] || {};
       // al afgeronde lessen van vandaag: laat zien wat er gegeven is
       const gegeven = Object.entries(S.voortgang[u.groep] || {}).find(([id, st]) => st.d === s && st.uur === u.id);
-      if (gegeven) { const it = reeks(lg).find(x => x.id === gegeven[0]); res[s].uren.push({ u, item: it, st: gegeven[1], klaar: true }); continue; }
-      if (isUitval(s, u)) { res[s].uren.push({ u, uitval: true }); continue; }
-      const r = reeks(lg); const it = r[ptr[u.groep]] || null;
-      const lw = lesweekVan(s); const plan = B.leergangen[lg].weken.find(w => w.w === lw);
-      const planUit = plan && [1, 2, 3].map(i => plan['l' + i]).filter(Boolean).find(l => l.type === 'uitval' || l.type === 'toetsweek');
-      res[s].uren.push({ u, item: it, lw, plan, planUit, half: it && status(u.groep, it.id).st === 'half' });
-      if (it && s >= t) ptr[u.groep]++;
+      if (gegeven) { const it = reeks(lg).find(x => x.id === gegeven[0]); dag.uren.push({ u, item: it, st: gegeven[1], klaar: true }); continue; }
+      if (isUitval(s, u)) { dag.uren.push({ u, uitval: true, afwezig: !!S.afwezig[s] }); continue; }
+      if (y.geplandUit) { dag.uren.push({ u, uitval: true, planLes: y.planLes }); continue; }
+      const lw = lesweekVan(s); const plan = B.leergangen[lg].weken.find(w => w.w === lw); const planUit = y.planUit ? y.planLes : null;
+      ankersVan(u.groep); // zet y.anker en y.grens
+      const a = [y.anker, y.grens].find(a => a && !afgerond(status(u.groep, a.id)) && !klaarSet[a.id]);
+      if (a) { klaarSet[a.id] = true; dag.uren.push({ u, item: a.item, lw, plan, planUit, anker: a, half: status(u.groep, a.id).st === 'half' }); continue; }
+      const it = reeks(lg).find(x => !afgerond(status(u.groep, x.id)) && !klaarSet[x.id] && !isVastAnker(u.groep, x.id)) || null;
+      dag.uren.push({ u, item: it, lw, plan, planUit, half: it && status(u.groep, it.id).st === 'half' });
+      if (it && s >= t) klaarSet[it.id] = true;
     }
   }
   return res;
@@ -255,7 +394,11 @@ function render() {
   const f = { vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen, beoordelen: viewBeoordelen }[route.naam] || viewVandaag;
   $('#main').innerHTML = f();
 }
-function toast(t) { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => { el.hidden = true; }, 3500); }
+function toast(t, terug) { // met terug: 8 seconden een knop om het ongedaan te maken
+  const el = $('#toast'); el.textContent = t; toast.terug = terug || null;
+  if (terug) { const k = document.createElement('button'); k.type = 'button'; k.dataset.toastterug = ''; k.textContent = 'Ongedaan maken'; el.append(' ', k); }
+  el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => { el.hidden = true; toast.terug = null; }, terug ? 8000 : 3500);
+}
 function chipType(l) { return `<span class="chip ${l.type}">${esc(TYPE[l.type] || l.type)}</span>`; }
 function matLinks(l, klein) {
   const m = l.materiaal || []; if (!m.length) return '';
@@ -272,13 +415,15 @@ function viewVandaag() {
   const p = planning(s, s)[s]; const lw = lesweekVan(s);
   let h = `<div class="kop"><div><h1>${s === t ? 'Vandaag' : 'Voorbereiden'}: ${esc(fmtLang(s))}</h1><div class="sub">${lw ? 'lesweek ' + lw : ''}${p.reden ? ' · ' + esc(p.reden) : ''}</div></div>
     <div class="knoppen"><button class="btn" data-dag="${volgendeLesdag(s, -1)}">‹ vorige</button><button class="btn" data-dag="${t}">vandaag</button><button class="btn" data-dag="${volgendeLesdag(s, 1)}">volgende ›</button>
-    ${s === t && !p.reden && p.uren.length ? '<button class="btn hoofd" data-start="">▶ Lesmodus</button>' : ''}</div></div>`;
+    <button class="btn" data-afwezigopen="" aria-pressed="${afwezigOpen}">Ik ben er niet</button>${s === t && !p.reden && p.uren.length ? '<button class="btn hoofd" data-start="">▶ Lesmodus</button>' : ''}</div></div>`;
+  if (afwezigOpen) h += afwezigForm(s);
+  if (S.afwezig[s]) h += `<div class="melding info afwezigrij">Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door. <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig</button></div>`;
   if (!S.rooster.length) h += `<div class="kaart" style="margin-bottom:1rem"><h2>Eerst je rooster</h2><p class="lead">Vul één keer je weekrooster in: per lesuur de groep en het lokaal. Daarna staan je lessen hier in de agenda, met wat er klaar moet staan.</p><p><a class="btn hoofd" href="#rooster">Rooster invullen</a></p></div>`;
   const achter = rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
   if (achter.length) h += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
   const A = dagItems(s, p);
   const sel = kiesSel(s, A);
-  if (s >= t) h += liggenBlok();
+  if (s >= t) h += uitvalBlok(s) + liggenBlok();
   h += `<div class="dagagenda"><div class="kaart agkaart">${heleDagRij(s, A.heleDag)}${agendaRaster([{ s, items: A.items }], { ppm: 1.25, sel })}</div><div class="agpaneel">${agPaneel(s, p, A, sel)}</div></div>`;
   // klaarzetten per lokaal
   const perLokaal = {};
@@ -319,12 +464,12 @@ function koorTakenOpen(s) { const G = geplandeSleutels(); return ((B.koor || {})
 function geplandeSleutels() { const sec = {}, pres = {}, koor = {}; (S.taken || []).forEach(k => { if (k.sectieId) sec[k.sectieId] = k; if (k.koorId) koor[k.koorId] = k; if (k.dagTaak) pres[k.dagTaak.dag + '|' + k.dagTaak.key] = k; }); return { sec, pres, koor }; }
 function dagItems(s, p) {
   const t = vandaag(); const items = []; const heleDag = []; const G = geplandeSleutels();
-  const werkdag = !(p.reden && /vakantie|weekend/i.test(p.reden));
+  const werkdag = !(p.reden && /vakantie|weekend/i.test(p.reden)) && !S.afwezig[s]; // afwezig: geen koffie en geen werkblokken
   if (werkdag) items.push({ key: 'start', van: AG.van, tot: AG.werkVan, soort: 'start', titel: 'Koffie en opstarten' });
   for (const x of p.uren || []) {
     const l = x.item ? les(x.item) : null; const verleden = s < t && !x.klaar;
     items.push({ key: 'les:' + x.u.id, van: minuten(x.u.start), tot: minuten(x.u.eind), soort: x.uitval ? 'uitval' : x.klaar ? 'klaar' : 'les', titel: x.u.groep,
-      sub: x.uitval ? (x.u.vervallen ? 'vervallen' : 'valt uit') : x.fout ? x.fout : verleden ? '' : l ? (l.titel || '') : 'alles gegeven', lokaal: x.u.lokaal || '009', x });
+      sub: x.uitval ? (x.afwezig ? 'afwezig' : x.u.vervallen ? 'vervallen' : x.planLes ? (x.planLes.titel || 'valt uit') : 'valt uit') : x.fout ? x.fout : verleden ? '' : l ? (l.titel || '') : 'alles gegeven', lokaal: x.u.lokaal || '009', x });
   }
   zAnders(s).forEach((a, n) => { // surveillance, toetsen en andere afspraken uit Zermelo
     const tz = a.toets ? toetsweekToetsVoor(a.groep, s) : null;
@@ -354,7 +499,7 @@ function dagItems(s, p) {
     else if (!k.plan && !k.af && k.d === s) heleDag.push({ key: 'taak:' + k.id, soort: 'deadline', titel: k.titel, k });
   }
   if (werkdag) { // vrije blokken tussen 8:30 en 16:30
-    const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'taakgemist', 'koor', 'toets', 'rooster'].includes(it.soort)).map(it => [it.van, it.tot]).sort((a, b) => a[0] - b[0]);
+    const bezet = items.filter(it => ['les', 'klaar', 'sectie', 'taak', 'taakaf', 'taakgemist', 'koor', 'toets', 'rooster'].includes(it.soort) || (it.soort === 'uitval' && !it.x.planLes)).map(it => [it.van, it.tot]).sort((a, b) => a[0] - b[0]);
     let cur = AG.werkVan;
     for (const [a, b] of bezet.concat([[AG.werkTot, AG.werkTot]])) { const eind = Math.min(a, AG.werkTot); if (eind - cur >= 15) items.push({ key: 'vrij:' + hm(cur), van: cur, tot: eind, soort: 'vrij', titel: 'Vrij', sub: (eind - cur) + ' min' }); cur = Math.max(cur, b); if (cur >= AG.werkTot) break; }
   }
@@ -505,16 +650,20 @@ function uurKaart(s, x, nu) {
   const u = x.u;
   const kop = `<div class="tijd">${esc(u.start)}<small>${esc(u.eind)}</small><span class="lokaal">${esc(u.lokaal || '009')}</span></div>`;
   if (x.fout) return `<div class="uur">${kop}<div class="in"><div class="regel"><span class="groep">${esc(u.groep)}</span><span class="chip rood">${esc(x.fout)}</span></div></div></div>`;
-  if (x.uitval) return `<div class="uur klaar">${kop}<div class="in"><div class="regel"><span class="groep">${esc(u.groep)}</span><span class="chip">${u.vervallen ? 'vervallen in Zermelo' : 'valt uit'}</span>${u.vervallen && u.reden ? `<span class="chip">${esc(u.reden)}</span>` : ''}</div>${u.vervallen ? '' : `<div><button class="btn klein" data-uitvalterug="${s}|${u.id}">toch les</button></div>`}</div></div>`;
+  if (x.uitval) return `<div class="uur klaar">${kop}<div class="in"><div class="regel"><span class="groep">${esc(u.groep)}</span><span class="chip">${x.afwezig ? 'afwezig' : u.vervallen ? 'vervallen in Zermelo' : x.planLes ? esc(x.planLes.titel || 'valt uit') : 'valt uit'}</span>${u.vervallen && u.reden ? `<span class="chip">${esc(u.reden)}</span>` : ''}</div>${u.vervallen || x.afwezig || x.planLes ? '' : `<div><button class="btn klein" data-uitvalterug="${s}|${u.id}">toch les</button></div>`}</div></div>`;
   if (!x.item) return `<div class="uur">${kop}<div class="in"><div class="regel"><span class="groep">${esc(u.groep)}</span><span class="leeg">alle lessen van ${esc(lgNaam(leergangVan(u.groep)))} zijn gegeven</span></div></div></div>`;
   const l = les(x.item); const lg = x.item.lg;
   const t = l.type === 'toets' ? toetsVan(lg, l.toets) : null;
-  const diff = x.lw ? x.lw - x.item.w : 0;
+  const diff = x.lw && !x.anker ? x.lw - x.item.w : 0;
+  const inToets = Object.entries(S.voortgang[u.groep] || {}).find(([id, st]) => st.inToets === x.item.id);
+  const ankChip = !x.anker ? '' : x.anker.verplaatst ? `<span class="chip let" title="${esc(x.anker.verplaatst.reden || '')}">verplaatst</span>` : x.anker.vast ? '<span class="chip rood">toets staat vast</span>' : x.anker.grens && x.anker.grens.s === s ? '<span class="chip let">laatste lesuur in de periode</span>' : '';
+  const voorToets = inToets ? reeks(lg).find(y => y.id === inToets[0]) : null;
   const vor = vorigeNotitie(u.groep, reeks(lg).indexOf(x.item));
   const plan = x.planUit ? `<span class="chip let" title="${esc(x.planUit.titel || '')}">planning: ${esc((x.planUit.titel || 'valt uit').replace(/^Valt uit: /, 'uitval: '))}</span>` : '';
   const ev = x.plan && x.plan.event ? `<span class="chip">${esc(x.plan.event)}</span>` : '';
   return `<div class="uur ${nu ? 'nu' : ''} ${x.klaar ? 'klaar' : ''}">${kop}<div class="in">
-    <div class="regel"><span class="groep">${esc(u.groep)}</span>${chipType(l)}<span class="titel">${esc(l.titel || '')}${t ? ' – ' + esc(t.naam) : ''}</span>${x.half ? '<span class="chip let">vervolg</span>' : ''}${x.klaar ? `<span class="chip ok">${esc(x.st.st)}</span>` : ''}</div>
+    <div class="regel"><span class="groep">${esc(u.groep)}</span>${chipType(l)}<span class="titel">${esc(l.titel || '')}${t ? ' – ' + esc(t.naam) : ''}</span>${x.half ? '<span class="chip let">vervolg</span>' : ''}${ankChip}${x.klaar ? `<span class="chip ok">${esc(x.st.st)}</span>` : ''}</div>
+    ${voorToets ? `<div class="vorige">Eerst: ${esc(les(voorToets).titel || '')}. Past dat nog naast de toets?</div>` : ''}
     <div class="regel"><span class="chip">${esc(lgNaam(lg))} · les uit lesweek ${x.item.w}</span>${diff > 0 ? `<span class="chip let">${diff} ${diff === 1 ? 'week' : 'weken'} achter op de planning</span>` : diff < 0 ? `<span class="chip ok">${-diff} week voor</span>` : ''}${plan}${ev}${u.anderLokaal ? `<span class="chip rood">ander lokaal: ${esc(u.lokaal)}</span>` : ''}${u.reden ? `<span class="chip let">${esc(u.reden)}</span>` : ''}${u.zermelo ? '<span class="chip">Zermelo</span>' : ''}</div>
     ${l.doel ? `<p class="doel">${esc(l.doel)}</p>` : l.detail ? `<p class="doel">${esc(l.detail)}</p>` : ''}
     ${vor && vor.st.n ? `<div class="vorige">Vorige keer${vor.st.d ? ' (' + esc(fmtD(vor.st.d)) + (vor.st.st ? ', ' + esc(vor.st.st) : '') + ')' : ''}: ${esc(vor.st.n)}</div>` : ''}
@@ -522,6 +671,89 @@ function uurKaart(s, x, nu) {
     ${matLinks(l)}
     <div class="knoppen">${x.klaar ? '' : `<button class="btn hoofd" data-start="${esc(u.id)}|${s}">▶ Geef les</button>`}${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button>${x.klaar ? '' : `<button class="btn" data-uitval="${s}|${u.id}">valt uit</button>`}</div>
   </div></div>`;
+}
+
+/* ---------- uitval: melding, inhaalvoorstel en bericht aan de klas ---------- */
+let afwezigOpen = false, krapOpen = '', krapKeuze = '', ankerOpen = '';
+function afwezigForm(s) {
+  return `<form class="kaart form afwezigform" id="afwezigForm"><h2>Ik ben er niet</h2><p class="lead">Al je lessen van deze dagen vervallen en schuiven door. Lesdag vraagt niets per les.</p><div class="rij"><label>Van <input id="afVan" type="date" required value="${s}"></label><label>Tot en met <input id="afTot" type="date" required value="${s}"></label><button class="btn hoofd" type="submit">Afwezig</button><button class="btn" type="button" data-afwezigopen="">Annuleren</button></div></form>`;
+}
+function ankerForm(g, a) { // een toets verplaatsen: Frans beslist, met een reden voor de lijst met afwijkingen
+  const lg = leergangVan(g); const uren = verplaatsUren(g, a);
+  return `<form class="kaart form ankerform" id="ankerForm" data-g="${esc(g)}" data-id="${esc(a.id)}"><p class="eyebrow">${esc(g)} · ${ONDERBOUW.test(lg) ? 'toets uit het PTO' : 'wijkt af van het PTA'}</p><h2>${esc(a.t.id)} verplaatsen</h2>${verplaatsVelden(g, a, uren)}<div class="knoppen"><button class="btn hoofd" type="submit"${uren.length ? '' : ' disabled'}>Verplaatsen</button><button class="btn" type="button" data-ankeropen="">Annuleren</button></div></form>`;
+}
+function verplaatsVelden(g, a, uren) {
+  const lg = leergangVan(g);
+  if (!uren.length) return `<p class="lead">${ONDERBOUW.test(lg) ? `Er is geen lesuur meer vrij in deze periode (tot en met lesweek ${periodeEind(lg, a)}).` : 'Er is geen lesuur meer vrij.'}</p>`;
+  return `<div class="rij"><label>Naar <select id="avUur">${uren.slice(0, 10).map(y => `<option value="${esc(y.s + '|' + y.u.id)}">${esc(fmtD(y.s))} ${esc(y.u.start)}</option>`).join('')}</select></label><label style="flex:3 1 16rem">Reden (voor de lijst met afwijkingen) <input id="avReden" required placeholder="Bijvoorbeeld: twee lessen uitgevallen"></label></div>`;
+}
+function krapOpties(R) {
+  const naam = x => les(x).titel || 'Les'; const blijft = R.a && ONDERBOUW.test(leergangVan(R.g)) ? 'toets blijft' : 'PTA blijft';
+  const O = R.inhaal.slice(-3).reverse().map(x => ({ k: 'skip:' + x.id, titel: `${naam(x)} vervalt`, chip: ['ok', blijft], sub: 'Leerlingen oefenen thuis. Het bericht voor de klas staat daarna klaar.',
+    gevolg: `"${naam(x)}" krijgt de status overgeslagen. ${R.t.id} blijft op ${fmtD(R.s)}. In de lijst met afwijkingen komt: ${naam(x)} vervallen.` }));
+  if (R.a && R.inhaal.length) { const x = R.inhaal[R.inhaal.length - 1]; const duur = B.leergangen[leergangVan(R.g)].meta.lesduurMin;
+    O.push({ k: 'begin:' + x.id, titel: `${naam(x)} aan het begin van de toetsles`, chip: ['let', 'minder toetstijd'], sub: `De les duurt ${duur} minuten, ${R.t.id} staat op ${R.t.duur || '?'} minuten. Jij beslist of dat kan.`,
+      gevolg: `De les van ${fmtD(R.s)} begint met "${naam(x)}" en daarna ${R.t.id}. Dat staat er als vraag bij in je voorbereiding. In de lijst met afwijkingen komt: samengevoegd met de toetsles.` }); }
+  if (R.a) O.push({ k: 'move', titel: `${R.t.id} een les later`, chip: ONDERBOUW.test(leergangVan(R.g)) ? ['let', 'binnen de periode'] : ['rood', 'wijkt af van PTA'], sub: 'Jij beslist. Lesdag vraagt een korte reden en de beoordeling gaat mee met de les.',
+    gevolg: `${R.t.id} verhuist naar het lesuur dat je hieronder kiest. De les die er nog voor moet, komt op ${fmtD(R.s)}. Je reden komt in de lijst met afwijkingen.` });
+  return O;
+}
+function krapKaart(R) {
+  const O = krapOpties(R); const kies = O.find(o => o.k === krapKeuze); const uren = R.a ? verplaatsUren(R.g, R.a) : [];
+  return `<form class="kaart krap" id="krapForm" data-g="${esc(R.g)}" data-id="${esc(R.id)}"><p class="eyebrow">${esc(R.g)} · krap voor ${esc(R.t.id)}</p><h2>${R.nog.length} ${R.nog.length === 1 ? 'les' : 'lessen'}, ${R.uren} ${R.uren === 1 ? 'lesuur' : 'lesuren'}</h2>
+    <p class="lead">Lesuren tot ${esc(R.t.id)} (${esc(fmtD(R.s))}): <span class="chip let">${R.tekort} tekort</span>. Nog te geven: ${R.nog.slice(0, 4).map(x => esc(les(x).titel || '')).join(', ')}${R.nog.length > 4 ? ' en meer' : ''}.</p>
+    ${R.inhaal.length ? '' : '<p class="lead">Geen les die Lesdag herkent als inhaalbaar (generale, afronden, herhaling, oefenen).</p>'}
+    ${R.tw ? '<p class="lead">De toetsweek ligt vast, dus deze toets verplaats je niet hier.</p>' : ''}
+    <div class="opties">${O.map(o => `<button type="button" class="optie" data-krapoptie="${esc(o.k)}" aria-pressed="${o.k === krapKeuze}"><b>${esc(o.titel)}</b><span class="chip ${o.chip[0]}">${esc(o.chip[1])}</span><span class="sub">${esc(o.sub)}</span></button>`).join('')}</div>
+    <p class="gevolg">${kies ? esc(kies.gevolg) : 'Kies een optie. Er verandert pas iets als je op Doen tikt, en dat kun je ongedaan maken.'}</p>
+    ${krapKeuze === 'move' ? verplaatsVelden(R.g, R.a, uren) : ''}
+    <p class="sub">Toch gegeven maar niet afgevinkt? <button class="btn klein" type="button" data-naargroep="${esc(R.g)}">Bekijk de lessen van ${esc(R.g)}</button></p>
+    <div class="knoppen"><button class="btn hoofd" type="submit"${kies && !(krapKeuze === 'move' && !uren.length) ? '' : ' disabled'}>Doen</button><button class="btn" type="button" data-kraplater="${esc(R.g + '|' + R.id)}">Later beslissen</button></div></form>`;
+}
+function voerKrapUit(R, k) {
+  const van = uitvalReden(R.g).s; const uit = van ? `De les van ${fmtLang(van)} is uitgevallen. ` : ''; let id;
+  if (k === 'move') { const reden = ($('#avReden') || {}).value || ''; const uur = ($('#avUur') || {}).value; if (!reden.trim()) { toast('Geef een korte reden'); return; }
+    id = verplaatsAnker(R.g, R.a, uur, reden.trim()); if (!id) return; const af = S.afwijkingen.find(x => x.id === id); af.bericht = uit + af.bericht; }
+  else { const soort = k.slice(0, k.indexOf(':')); const x = R.nog.find(z => z.id === k.slice(k.indexOf(':') + 1)); if (!x) return; const naam = les(x).titel || 'de les'; const was = status(R.g, x.id);
+    S.voortgang[R.g] = S.voortgang[R.g] || {}; S.voortgang[R.g][x.id] = Object.assign({}, was, { st: 'overgeslagen', inhaal: true }, soort === 'begin' ? { inToets: R.id } : {}); delete S.voortgang[R.g][x.id].auto;
+    id = afwijkingErbij({ g: R.g, lesId: x.id, was: Object.keys(was).length ? was : undefined, soort: 'les', studiewijzer: `lesweek ${x.w}, les ${x.li}`, wat: soort === 'begin' ? `${naam} samengevoegd met ${R.t.id}` : `${naam} vervallen`, waarom: uitvalReden(R.g).kort,
+      bericht: soort === 'begin' ? `${uit}We doen "${naam}" aan het begin van de les van ${fmtLang(R.s)}. ${R.t.id} blijft op die dag.` : `${uit}"${naam}" komt niet meer. ${R.t.id} blijft op ${fmtLang(R.s)}. Oefen thuis.` }); }
+  krapOpen = ''; krapKeuze = ''; bewaar();
+  toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id));
+}
+function uitvalBlok(s) {
+  let h = '';
+  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
+  const rijen = [];
+  for (const g of planGroepen()) {
+    if (!Object.keys(S.voortgang[g] || {}).length) continue;
+    for (const a of ankersGemist(g)) { const key = `gemist:${g}:${a.id}`; if (uitgesteld(key)) continue; const y = a.vast ? a.slot : a.grens;
+      if (ankerOpen === g + '|' + a.id) { rijen.push(ankerForm(g, a)); continue; }
+      const tekst = !a.vast ? `past niet meer in zijn periode.` : !y ? 'heeft geen lesuur.' : y.s >= vandaag() ? `stond op ${esc(fmtD(y.s))}, maar dat uur vervalt.` : `stond op ${esc(fmtD(y.s))} en is nog niet afgevinkt.`;
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+    const R = krapVoor(g); if (!R) continue;
+    if (krapOpen === g + '|' + R.id) { rijen.push(krapKaart(R)); continue; }
+    const x = R.inhaal[R.inhaal.length - 1] || R.nog[R.nog.length - 1];
+    rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)} raakt krap.</b> ${esc(R.t.id)} blijft op ${esc(fmtD(R.s))}. ${R.tekort === 1 && x ? `"${esc(les(x).titel || '')}" past er niet meer voor.` : `${R.tekort} lessen passen er niet meer voor.`}</span><span class="knoppen"><button class="btn klein hoofd" data-krapopen="${esc(g + '|' + R.id)}">Bekijk inhaalvoorstel</button><button class="btn klein" data-kraplater="${esc(g + '|' + R.id)}">Later</button></span></div>`);
+  }
+  const rest = rijen.slice(4);
+  h += rijen.slice(0, 4).join('') + (rest.length ? `<details class="meer uitvalmeer"><summary>Nog ${rest.length} ${rest.length === 1 ? 'melding' : 'meldingen'}</summary>${rest.join('')}</details>` : '');
+  return h ? `<div class="uitvalblok">${h}</div>` : '';
+}
+function ruimteKaart(lijst) { // per klas de volgende toets en hoeveel ruimte er tot daar is
+  const rijen = lijst.filter(g => leergangVan(g)).map(g => { const d = ruimte(g)[0]; if (!d) return `<tr><td><button class="btn klein" data-groep="${esc(g)}">${esc(g)}</button></td><td colspan="3" class="leeg">geen toets meer dit jaar</td></tr>`;
+    return `<tr><td><button class="btn klein" data-groep="${esc(g)}">${esc(g)}</button></td><td><span class="chip rood">${esc(d.t.id)}</span> ${d.a && !d.a.vast ? 'uiterlijk ' : ''}${esc(fmtD(d.s))}${d.tw ? ' · toetsweek' : ''}</td><td class="num">${d.nog.length} ${d.nog.length === 1 ? 'les' : 'lessen'}, ${d.uren} ${d.uren === 1 ? 'lesuur' : 'lesuren'}</td><td>${d.tekort ? `<span class="chip let">${d.tekort} tekort</span>` : '<span class="chip ok">past</span>'}${d.inhaal.length ? ` <span class="chip">${d.inhaal.length} inhaalbaar</span>` : ''}</td></tr>`; });
+  return rijen.length ? `<div class="kaart"><h2>Ruimte tot de volgende toets</h2><div class="scroll"><table><tr><th>Groep</th><th>Toets</th><th>Nog te geven</th><th></th></tr>${rijen.join('')}</table></div></div>` : '';
+}
+function toetsenKaart(g) {
+  const lg = leergangVan(g); const L = ankersVan(g); if (!L.length) return '';
+  const rij = a => { const y = a.vast ? a.slot : a.grens; return `<div class="taak"><span><b>${esc(a.t.id)}</b> ${esc(a.t.naam || '')}</span><span class="tb">${a.klaar ? '<span class="chip ok">klaar</span>' : y ? `<span class="chip rood">${esc(fmtD(y.s))}</span>` : `<span class="chip let">geen lesuur</span>`}${a.verplaatst ? '<span class="chip let">verplaatst</span>' : a.vast ? '' : `<span class="chip">schuift mee, tot lesweek ${periodeEind(lg, a)}</span>`}${a.klaar ? '' : `<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">verplaats</button>`}</span></div>`; };
+  const open = L.find(a => ankerOpen === g + '|' + a.id);
+  return `<div class="kaart"><h2>Toetsen</h2>${L.map(rij).join('')}</div>${open ? ankerForm(g, open) : ''}`;
+}
+function afwijkingenKaart(g) {
+  const L = (S.afwijkingen || []).filter(a => a.g === g); if (!L.length) return '';
+  return `<div class="kaart"><h2>Anders dan de studiewijzer</h2><div class="scroll"><table><tr><th>Stond</th><th>Wat er gebeurde</th><th>Waarom</th><th></th><th></th></tr>${L.map(a => `<tr><td class="num">${esc(a.studiewijzer || '')}</td><td>${esc(a.wat)}</td><td>${esc(a.waarom || '')}</td><td><span class="chip ${a.soort === 'pta' ? 'rood' : ''}">${a.soort === 'pta' ? 'afwijking PTA' : a.soort === 'pto' ? 'afwijking PTO' : 'alleen jij'}</span></td><td><button class="btn klein" data-afwijkingterug="${esc(a.id)}">ongedaan</button></td></tr>`).join('')}</table></div></div>`;
 }
 
 /* ---------- week ---------- */
@@ -547,6 +779,7 @@ function viewGroepen() {
   const lijst = gs.length ? gs : alleGroepen().map(x => x.g);
   const g = groepKeuze && lijst.includes(groepKeuze) ? groepKeuze : lijst[0];
   let h = `<div class="kop"><div><h1>Groepen</h1><div class="sub">Voortgang per groep. Parallelklassen delen een leergang, maar elke groep houdt zijn eigen plek bij.</div></div></div>`;
+  h += ruimteKaart(gs);
   h += `<div class="knoppen">${lijst.map(x => `<button class="btn" data-groep="${esc(x)}" aria-pressed="${x === g}">${esc(x)}</button>`).join('')}</div>`;
   if (!g) return h;
   const lg = leergangVan(g); const r = reeks(lg); const vi = volgendeIndex(g); const lw = lesweekVan(vandaag());
@@ -556,6 +789,7 @@ function viewGroepen() {
     <label style="font-family:var(--kop);font-size:.85rem;color:var(--muted)">Leergang <select id="gLg" data-g="${esc(g)}">${Object.keys(B.leergangen).map(k => `<option value="${k}" ${k === lg ? 'selected' : ''}>${esc(lgNaam(k))}</option>`).join('')}</select></label></div>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" data-opplan="${esc(g)}">Op de planning zetten</button><span class="sub" style="font-family:var(--kop);font-size:.85rem;color:var(--muted)">alle lessen vóór deze lesweek gelden dan als gegeven</span></div>
     <div class="voortgang" style="margin-top:.6rem"><i style="width:${r.length ? Math.round(gegeven / r.length * 100) : 0}%"></i></div></div>`;
+  h += toetsenKaart(g) + afwijkingenKaart(g);
   const bms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg));
   if (bms.length) h += `<div class="kaart"><h2>Beoordelen</h2><p class="lead">Ook om in te halen of na te kijken buiten de toetsles.</p><div class="knoppen" style="margin-top:.5rem">${bms.map(m => { const T = S.beoord.toetsen[m.id + '|' + g]; const n = T ? Object.values(T.ll).filter(r => r.af || bmEind(m, r) != null).length : 0; return `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(g)}">${esc(m.toets)} ${esc(m.titel.replace(/^[^:]*:\s*/, ''))}${n ? ` (${n} klaar)` : ''}</button>`; }).join('')}</div></div>`;
   h += `<div class="kaart">${r.map((x, i) => { const l = les(x); const st = status(g, x.id); return `<div class="lesrij ${i === vi ? 'volgende' : ''}"><span class="wk">${i + 1}<br>wk ${x.w}</span><div><div class="regel" style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:baseline">${chipType(l)}<b style="font-family:var(--kop)">${esc(l.titel || '')}</b>${st.st ? `<span class="chip ${st.st === 'gegeven' ? 'ok' : st.st === 'half' ? 'let' : ''}">${esc(st.st)}${st.d ? ' ' + esc(fmtD(st.d)) : ''}</span>` : ''}</div>${st.n ? `<div class="vorige">${esc(st.n)}</div>` : ''}</div>
@@ -609,7 +843,7 @@ function viewInstellingen() {
     <form class="form" id="zKoppelForm"><div class="rij"><label style="flex:3 1 18rem">Koppelcode <input id="zCode" type="password" autocomplete="off" placeholder="${zApiToken() ? 'gekoppeld op dit apparaat' : '12 cijfers'}"></label><button class="btn hoofd" type="submit">Koppelen</button>${zApiToken() ? '<button class="btn rood" type="button" data-zapiweg="">Koppeling verwijderen</button>' : ''}</div></form>
     <p class="lead">Reserve: als de koppeling niet werkt, gebruikt Lesdag je agendalink. Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
     <form class="form" id="zForm"><div class="rij"><label style="flex:3 1 18rem">Zermelo-link <input id="zLink" type="password" autocomplete="off" placeholder="${S.zermeloToken ? 'opgeslagen (••••' + esc(S.zermeloToken.slice(-4)) + ')' : 'https://csgpm.zportal.nl/api/v3/ical?access_token=…'}"></label><button class="btn hoofd" type="submit">Opslaan en ophalen</button>${zGekoppeld() ? '<button class="btn" type="button" data-zophalen="">Nu ophalen</button>' : ''}${S.zermeloToken ? '<button class="btn rood" type="button" data-zweg="">Link verwijderen</button>' : ''}</div></form>
-    <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}, via ${ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'}.` : 'Nog niet opgehaald.'}</p>` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div>
+    <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}, via ${ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'}.` : 'Nog niet opgehaald.'}</p>${zOverzicht()}` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
@@ -730,6 +964,7 @@ document.addEventListener('click', async e => {
   // alleen knoppen: het planformulier en de vinkjes hebben ook data-dag, maar een klik daarin mag de pagina niet opnieuw tekenen
   const b = e.target.closest('button,[data-week]'); if (!b) return;
   const D = b.dataset;
+  if (D.toastterug != null) { const f = toast.terug; $('#toast').hidden = true; toast.terug = null; if (f) f(); return; }
   if (e.target.closest('#les')) {
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
     else if (D.l === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
@@ -745,6 +980,16 @@ document.addEventListener('click', async e => {
     return;
   }
   if (D.ag) { const i = D.ag.indexOf('|'); const d = D.ag.slice(0, i); agSel[d] = D.ag.slice(i + 1); dagKeuze = d; if (route.naam !== 'vandaag') location.hash = 'vandaag'; else { render(); if (innerWidth < 820) { const pn = $('.agpaneel'); if (pn) pn.scrollIntoView({ behavior: 'smooth', block: 'start' }); } } return; }
+  if (D.afwezigopen != null) { afwezigOpen = !afwezigOpen; render(); return; }
+  if (D.afwezigterug) { afwezigTerug([D.afwezigterug]); toast('Je bent er weer; de lessen staan terug'); return; }
+  if (D.krapopen) { krapOpen = D.krapopen; krapKeuze = ''; render(); return; }
+  if (D.krapoptie) { krapKeuze = D.krapoptie; render(); return; }
+  if (D.kraplater) { const i = D.kraplater.indexOf('|'); krapOpen = ''; krapKeuze = ''; stelUit(`krap:${D.kraplater.slice(0, i)}:${D.kraplater.slice(i + 1)}`, addD(vandaag(), 1)); return; }
+  if (D.ankeropen != null) { ankerOpen = D.ankeropen; render(); return; }
+  if (D.naargroep) { groepKeuze = D.naargroep; location.hash = 'groepen'; return; }
+  if (D.berichtkopie) { const ta = document.querySelector(`[data-bericht="${D.berichtkopie}"]`); try { await navigator.clipboard.writeText(ta.value); toast('Gekopieerd'); } catch (err) { ta.select(); toast('Kopiëren lukt niet: selecteer en kopieer zelf'); } return; }
+  if (D.berichtklaar) { const a = (S.afwijkingen || []).find(x => x.id === D.berichtklaar); if (a) a.berichtKlaar = true; bewaar(); return; }
+  if (D.afwijkingterug) { maakOngedaan(D.afwijkingterug); toast('Teruggezet'); return; }
   if (D.liggenplan) { liggenInPlannen(D.liggenplan); return; }
   if (D.liggenlater) { const i = D.liggenlater.lastIndexOf('|'); stelUit(D.liggenlater.slice(0, i), D.liggenlater.slice(i + 1)); return; }
   if (D.ontplan) { const k = (S.taken || []).find(k => k.id === D.ontplan); if (k) { agSel[k.plan.dag] = ''; delete k.plan; } bewaar(); toast('Uit de agenda gehaald; de taak staat nog in je lijst'); return; }
@@ -752,7 +997,7 @@ document.addEventListener('click', async e => {
   if (D.dag != null) { dagKeuze = D.dag; render(); return; }
   if (D.week != null) { weekKeuze = D.week; render(); return; }
   if (D.start != null) { const [u, s] = D.start.split('|'); startLes(u || null, s || vandaag()); return; }
-  if (D.uitval) { const [s, u] = D.uitval.split('|'); (S.uitval[s] = S.uitval[s] || []).push(u); bewaar(); toast('Les valt uit; de volgende les schuift door'); return; }
+  if (D.uitval) { const [s, u] = D.uitval.split('|'); (S.uitval[s] = S.uitval[s] || []).push(u); bewaar(); toast('Les valt uit; de volgende les schuift door', () => { S.uitval[s] = (S.uitval[s] || []).filter(x => x !== u); bewaar(); }); return; }
   if (D.uitvalterug) { const [s, u] = D.uitvalterug.split('|'); S.uitval[s] = (S.uitval[s] || []).filter(x => x !== u); bewaar(); return; }
   if (D.bewerk) { openBewerk(D.bewerk); return; }
   if (D.sluit != null) { sluit(); return; }
@@ -769,6 +1014,7 @@ document.addEventListener('click', async e => {
   if (D.logout != null) { M365.logout(); return; }
   if (D.sync != null) { await syncNu(true); return; }
   if (D.zophalen != null) { await zOphalen(true); return; }
+  if (D.zkopie != null) { try { await navigator.clipboard.writeText(zOverzichtTekst()); toast('Gekopieerd. Plak het in de chat bij het nakijken.'); } catch (err) { toast('Kopiëren lukt niet in deze browser'); } return; }
   if (D.zweg != null) { delete S.zermeloToken; if (!zApiToken()) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); return; }
   if (D.zapiweg != null) { try { localStorage.removeItem(Z_API); } catch (e) {} if (!S.zermeloToken) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); if (S.zermeloToken) await zOphalen(false); return; }
   if (D.zovernemen != null) { if (!zOverArmed) { zOverArmed = true; render(); setTimeout(() => { zOverArmed = false; if (route.naam === 'rooster') render(); }, 5000); return; }
@@ -779,6 +1025,7 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
+  if (t.dataset.bericht) { const a = (S.afwijkingen || []).find(x => x.id === t.dataset.bericht); if (a) { a.bericht = t.value; bewaar(true); } return; }
   if (t.dataset.liggentot) { if (t.value > vandaag()) stelUit(t.dataset.liggentot, t.value); return; }
   if (t.dataset.sdone) { if (t.checked) S.sectieAf[t.dataset.sdone] = true; else delete S.sectieAf[t.dataset.sdone]; bewaar(); }
   if (t.dataset.taakaf) { const k = (S.taken || []).find(k => k.id === t.dataset.taakaf); if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.dagTaak) { const dd = S.dagTaken[k.dagTaak.dag] = S.dagTaken[k.dagTaak.dag] || {}; if (t.checked) dd[k.dagTaak.key] = true; else delete dd[k.dagTaak.key]; } } bewaar(); }
@@ -790,6 +1037,10 @@ document.addEventListener('change', e => {
 });
 document.addEventListener('submit', e => {
   e.preventDefault();
+  if (e.target.id === 'afwezigForm') { const v = $('#afVan').value, w = $('#afTot').value; if (v && w && w >= v) zetAfwezig(v, w); else toast('Kies een einddatum op of na de begindatum'); return; }
+  if (e.target.id === 'krapForm') { const g = e.target.dataset.g; const R = ruimte(g).find(d => d.id === e.target.dataset.id); if (R && krapKeuze) voerKrapUit(R, krapKeuze); return; }
+  if (e.target.id === 'ankerForm') { const g = e.target.dataset.g; const a = ankersVan(g).find(x => x.id === e.target.dataset.id); const reden = ($('#avReden') || {}).value || ''; if (!a || !$('#avUur') || !reden.trim()) { toast('Geef een korte reden'); return; }
+    const id = verplaatsAnker(g, a, $('#avUur').value, reden.trim()); if (id) { ankerOpen = ''; bewaar(); toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id)); } return; }
   if (e.target.id === 'zKoppelForm') { const v = $('#zCode').value.trim(); if (v) zKoppel(v); return; }
   if (e.target.id === 'zForm') { const v = $('#zLink').value; if (v.trim()) { S.zermeloToken = zToken(v); bewaar(true); } zOphalen(true).then(() => render()); return; }
   if (e.target.id === 'rForm') {
