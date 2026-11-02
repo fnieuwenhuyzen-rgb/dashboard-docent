@@ -1,0 +1,1341 @@
+{
+  "_uitleg": "Lesinhoud lesweek 10 (9-13 november 2026): vwo 5 les 10.1 en 10.2, vwo 4 PT1, vwo 6 les 10.2 en 10.3. Te bouwen met tools/maak-decks.js. Schema: tools/inhoud-decks-LEESMIJ.md.",
+  "vwo5": {
+    "klas": "vwo 5",
+    "thema": "klas5",
+    "map": "02 Keuzevak muziek\\VWO\\VWO 5\\Lessen 2026-2027",
+    "blok": "Periode 1 · Het classicisme",
+    "blokKort": "romantiek",
+    "thuis": {
+      "mb": "Romantiek N2 b1 Herhaling theorie N1 (1.1)",
+      "info": "Romantiek › Algemeen",
+      "learn": "chromatiek, instrumentatie",
+      "extra": "Luister Brahms pianoconcert 1, Beethoven 9 finale; Messiah dagelijks"
+    },
+    "lessen": [
+      {
+        "bestand": "10.1 Samenspel romantiek - Brahms Wiegenlied.pptx",
+        "kort": "Samenspel romantiek: Wiegenlied",
+        "code": "P1 · les 10.1",
+        "week": 10,
+        "bronLes": {
+          "lg": "vwo5",
+          "w": 10,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "vwo5",
+            "w": 10,
+            "slot": "l1"
+          }
+        ],
+        "identiteit": "Een wiegenlied met 'morgen früh, wenn Gott will': een avondgebed in de romantiek.",
+        "fotos": {
+          "titel": "brahms.jpg",
+          "fase": [
+            "messiah-koor.jpg",
+            "mozart-lange-1782.jpg",
+            null,
+            null
+          ]
+        },
+        "benodigd": [
+          "Bladmuziek Wiegenlied voor twee stemmen met akkoorden",
+          "Keyboard, en eventueel een tweede voor wie wil wisselen",
+          "Oefensite open op And He shall purify en And the glory of the Lord",
+          "Messiah-partijen"
+        ],
+        "voorbereiding": [
+          "Zoek een zetting van het Wiegenlied voor twee stemmen en kopieer die. In de sectiemap staat er geen.",
+          "Kies de toonsoort. Brahms schreef het lied in Es groot. F groot zingt prettig en past bij de omkeringen van les 10.2: F, Bb en C zijn I, IV en V.",
+          "Luister nr. 7 op de oefensite een keer door, zodat je de inzetten paraat hebt: sopraan maat 1, bas maat 5, alt maat 9, tenor maat 10."
+        ],
+        "notitieTitel": [
+          "Vandaag begint de romantiek in de praktijk. P9 is geweest, de toetsweek is voorbij. We zingen een lied dat iedereen kent zonder dat ze weten van wie het is.",
+          "De les heeft drie stukken: Messiah met het nieuwe nr. 7, een korte terugblik op de hoofdvorm, en dan het Wiegenlied van Brahms in twee stemmen met keyboard.",
+          "Donderdag 12 november valt de les uit voor het LOB-bezoek aan de Universiteit Utrecht. De tweede les is zelfstandig: omkeringen op het keyboard."
+        ],
+        "notitieAgenda": [
+          "Het zwaartepunt ligt op het Wiegenlied: 25 minuten. De terugblik is echt maar vijf minuten. Volgende week gaan we door met rubato in hetzelfde lied, dus het hoeft vandaag niet af."
+        ],
+        "notitieDoel": [
+          "Het doel is samen klinken. Twee stemmen die elk hun eigen lijn houden, en een klas die samen ademt als het tempo even rekt.",
+          "Rubato betekent letterlijk gestolen tijd. Je rekt een noot of frase een beetje en haalt die tijd er daarna weer in. Het tempo buigt, maar de maat blijft bestaan. Alleen lukt dat makkelijk. Met een hele groep moet je het afspreken en naar elkaar luisteren."
+        ],
+        "notitieRodeDraad": [
+          "Guten Abend, gut' Nacht lijkt alleen een lief slaapliedje. Maar in de eerste strofe staat 'morgen früh, wenn Gott will': morgen vroeg, als God wil, word je weer gewekt.",
+          "Een moeder legt de nacht en de ochtend van haar kind in Gods hand. In een tijd waarin kinderen veel vaker jong stierven dan nu was dat geen loze zin. Zo wordt een wiegenlied bijna een avondgebed.",
+          "Brahms werkte in dezelfde jaren aan Ein deutsches Requiem, waarin hij Bijbelteksten over troost op muziek zet. Dat komt in deze periode terug: 'Wie lieblich sind deine Wohnungen', Psalm 84. De vraag van het blok is: hoe klinkt troost?",
+          "Je hoort de woorden 'als God wil' ook in de Bijbel, in Jacobus 4:15: 'Als de Heere wil.' En Psalm 4 eindigt met iemand die in vrede gaat slapen omdat de Heere hem veilig laat wonen."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Wat zegt 'wenn Gott will' over hoe je naar morgen kijkt?",
+            "a": "Morgen is niet vanzelfsprekend. Je vertrouwt het toe aan God. Dat kan rustig maken en het kan ook schuren: alles open antwoorden zijn goed."
+          },
+          {
+            "v": "Waarom zou een componist zo'n zin zo eenvoudig op muziek zetten?",
+            "a": "Een moeder zingt het zacht bij de wieg. De eenvoud maakt het vertrouwd en de troost direct. Geen groot gebaar nodig."
+          },
+          {
+            "v": "Ken je zelf een lied of gebed dat bij het slapengaan hoort?",
+            "a": "Persoonlijk antwoord. Laat vrijwillig reageren, niemand hoeft."
+          }
+        ],
+        "notitieThuis": [
+          "Thuis start de romantiek in Musicbox: niveau 2, blok 1, herhaling theorie. Lees de Infosheet Romantiek, onderdeel Algemeen, en leer chromatiek en instrumentatie.",
+          "Chromatiek is het gebruik van tonen buiten de toonladder, vaak in halve stappen. Daarmee zet de romantiek de harmonie onder spanning. Luister daarom Brahms' Pianoconcert nr. 1 (de opening) en de finale van Beethovens Negende. Brahms kennen ze nog uit De Doelen op 15 oktober.",
+          "Messiah: elke dag tien minuten met de oefentrack, nu nr. 7 erbij."
+        ],
+        "fasen": [
+          {
+            "min": 10,
+            "soort": "start",
+            "kop": "Messiah: And He shall purify (nr. 7), dan nr. 4",
+            "stappen": [
+              "Nr. 7 is nieuw. Luister naar het begin en volg je partij: sopraan, dan bas, alt en tenor.",
+              "Zing je eigen inzet. Sopraan maat 1, bas maat 5, alt maat 9, tenor maat 10.",
+              "Het loopje op 'purify': langzaam, licht, met een klein accent op de eerste noot van elk groepje van vier.",
+              "Herhaal nr. 4 vanaf de inzet van de alten (maat 11)."
+            ],
+            "docent": "Oefensite erbij. Niet langer dan tien minuten, ook al is nr. 7 lastig: thuis oefenen ze met de track.",
+            "notitie": {
+              "vertel": [
+                "And He shall purify is nr. 7 in onze nummering, die van Novello. Het staat in g mineur, 4/4. De tekst komt uit Maleachi 3:3: Hij zal de zonen van Levi reinigen, zodat ze de Heere een offer in gerechtigheid brengen.",
+                "De zonen van Levi zijn de priesters in de tempel. Zoals goud in het vuur gezuiverd wordt, zo reinigt God zijn volk. Vlak hiervoor klinkt in de alt-aria But who may abide de vraag: wie kan het aan als Hij komt? Dit koor is het antwoord.",
+                "Muzikaal gebeuren er drie dingen. Eerst een lange coloratuur op 'purify': tientallen snelle zestienden op één lettergreep. Dat is woordschildering: reinigen is lang en intensief werk. Dan imitatie: de stemmen zetten na elkaar in. En in maat 21 tot 25 zingt iedereen hetzelfde ritme op 'that they may offer': homofoon, recht en helder na alle onrust.",
+                "Händel haalde de muziek uit zijn eigen Italiaanse liefdesduet Quel fior che all'alba ride. Daarom klinkt het zo licht en virtuoos.",
+                "Daarna kort nr. 4, And the glory of the Lord: A groot, 3/4. Dit kennen ze sinds week 8. De alten beginnen helemaal alleen in maat 11."
+              ],
+              "voorbeelden": [
+                "De coloratuur is een sequens: groepjes die steeds een toon lager herhaald worden. Bij de sopranen staan in maat 44 zelfs 41 noten achter elkaar.",
+                "Oefentip van de oefensite: eerst op 60 tot 70 procent van het tempo (het stuk staat op 92). Adem voor de coloratuur, niet erin. Zing op een heldere klinker, zonder h-klanken tussen de noten."
+              ],
+              "vragen": [
+                {
+                  "v": "Waarom schrijft Händel juist op 'purify' zo'n lang loopje?",
+                  "a": "Woordschildering: reinigen is lang en intensief, net als goud dat steeds weer de smeltkroes in moet."
+                },
+                {
+                  "v": "Wat verandert er in maat 21 ('that they may offer')?",
+                  "a": "Alle stemmen zingen hetzelfde ritme: homofoon in plaats van imitatie. Het klinkt rechter en rustiger."
+                }
+              ],
+              "letop": [
+                "Het loopje gaat mis als ze het hard en snel willen. Laat een stemgroep één maat alleen doen op laag tempo in plaats van alles over te doen.",
+                "Herhaal alleen het stukje van nr. 4 dat zwak is. Je hebt hier maar een paar minuten voor."
+              ]
+            }
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Terugblik: de delen van een hoofdvorm",
+            "stappen": [
+              "Noem de delen van een hoofdvorm in de goede volgorde.",
+              "Wat gebeurt er in elk deel? Eén zin per deel.",
+              "Waar staat het tweede thema in de expositie, en waar in de reprise?"
+            ],
+            "docent": "Telkens een andere leerling één deel laten noemen. Antwoorden kort op het bord: deze vier woorden blijven even staan.",
+            "notitie": {
+              "vertel": [
+                "De periode van het classicisme loopt af. De hoofdvorm komt terug in T5 in toetsweek 2, met de grote analyse-opdracht.",
+                "De vier delen. Expositie: de thema's worden voorgesteld, het eerste in de hoofdtoonsoort, het tweede in een contrasterende toonsoort, in majeur meestal de dominant. Doorwerking: de thema's worden bewerkt en uit elkaar gehaald, er wordt gemoduleerd, de spanning loopt op. Reprise: de thema's komen terug, nu allebei in de hoofdtoonsoort. Coda: het slot, dat de hoofdtoonsoort bevestigt.",
+                "De brug naar vandaag: de romantiek laat de klassieke vormen los om expressie ruimte te geven, maar het classicisme blijft het referentiekader. Brahms kende die vormen door en door en schreef ze in zijn pianoconcerten nog gewoon. In een lied als het Wiegenlied kiest hij voor iets heel anders: een eenvoudig coupletlied."
+              ],
+              "vragen": [
+                {
+                  "v": "Noem de delen van een hoofdvorm in de goede volgorde.",
+                  "a": "Expositie, doorwerking, reprise, coda."
+                },
+                {
+                  "v": "Waar staat het tweede thema in de expositie en in de reprise?",
+                  "a": "In de expositie in een andere toonsoort, in majeur meestal de dominant. In de reprise in de hoofdtoonsoort."
+                },
+                {
+                  "v": "Waar zit de meeste spanning?",
+                  "a": "In de doorwerking: thema's bewerkt, modulaties, de hoofdtoonsoort is weg."
+                }
+              ],
+              "letop": [
+                "Niet uitbreiden naar een uitleg over de hele symfonie. Weten ze de vier delen niet, schrijf ze op, noem kaart CL 1-2 en ga door."
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Wiegenlied in twee stemmen: samen ademen",
+            "stappen": [
+              "Zing de melodie samen, eerst op 'no', dan met de tekst.",
+              "Tweede stem erbij. Keyboard begeleidt rustig wiegend in drie.",
+              "Zing een frase strak in de maat, dan met rubato: rek de hoogste noot en haal de tijd daarna weer in.",
+              "Wie geeft het tempo aan? Kijk op, adem samen, begin samen."
+            ],
+            "klaar": "Wissel: zangers worden keyboard. Lukt het rubato ook zonder dat iemand aangeeft?",
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Lied",
+                  "t": "Brahms, op. 49 nr. 4"
+                },
+                {
+                  "k": "Rubato",
+                  "t": "tijd lenen en teruggeven"
+                },
+                {
+                  "k": "Twee stemmen",
+                  "t": "elk een eigen lijn"
+                },
+                {
+                  "k": "Samen",
+                  "t": "op dezelfde adem beginnen"
+                }
+              ]
+            },
+            "docent": "Eerst de noten, dan pas rubato. Het doel van vandaag is dat ze het verschil horen, niet dat het af is: volgende week gaan we daarmee door.",
+            "notitie": {
+              "vertel": [
+                "Johannes Brahms leefde van 1833 tot 1897. Hij is de componist die jullie op 15 oktober in De Doelen hoorden, met zijn pianoconcerten. Vandaag de andere kant van dezelfde man: een klein lied van een paar minuten.",
+                "Het Wiegenlied is opus 49 nummer 4, uitgegeven in 1868. Brahms schreef het voor Bertha Faber, een vriendin uit Wenen, toen haar tweede zoon was geboren. Ze had hem ooit een Weens liedje voorgezongen. Dat liedje verstopte hij in de begeleiding: het klinkt mee in de wiegende pianopartij, onder de melodie die zij voor haar kind kon zingen.",
+                "De eerste strofe komt uit Des Knaben Wunderhorn, een Duitse verzameling volksliedteksten. Dat past bij de toon: het lied klinkt als een volkslied, maar is gecomponeerd.",
+                "Vormtechnisch is het een kunstlied en een coupletlied: elk couplet krijgt dezelfde muziek. Dat is het eenvoudigste van de drie liedvormen die jullie in deze periode leren, naast het gevarieerd coupletlied en het doorgecomponeerde lied.",
+                "Hoe romantisch is dit? De melodie blijft binnen de toonladder, dus hier hoor je nauwelijks chromatiek. Die spanning van tonen buiten de toonladder hoort bij veel romantische muziek, en daar leer je thuis over. Het romantische zit hier ergens anders: de directe, persoonlijke uiting en de vrijheid in de tijd. Die vrijheid is rubato.",
+                "Rubato betekent gestolen tijd. Je rekt een noot en haalt de tijd daarna weer in. Bij een solist gebeurt dat vanzelf. Bij een groep moet er iemand zijn die het aangeeft, en moet iedereen op dezelfde plek ademen. Daarom is de vraag van vandaag: hoe klinkt rubato als je het samen doet?"
+              ],
+              "voorbeelden": [
+                "In F groot begint de melodie op a a c, a a c, in een 3/4-maat met opmaat. Tweede stem: start in tertsen eronder, f f a.",
+                "Akkoorden in F: F (I), Bb (IV), C of C7 (V). Het lied loopt vooral op I en V. IV komt rond 'morgen früh'.",
+                "Keyboard: linkerhand grondtoon op de één, rechterhand akkoord op twee en drie. Zo wiegt het en houdt het de maat. In week 12 begeleiden ze het lied met omkeringen.",
+                "Rubato-oefening: zing de frase 'morgen früh, wenn Gott will' drie keer. Eerst strak. Dan rekt iedereen de hoogste noot en wacht op jouw hand. Dan zonder jouw hand: één leerling geeft het aan met de adem."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is het verschil tussen rubato en gewoon langzamer worden?",
+                  "a": "Bij rubato haal je de tijd weer in en blijft het grondtempo staan. Langzamer worden (ritenuto) gaat alleen de ene kant op."
+                },
+                {
+                  "v": "Wat moet je doen om samen rubato te maken?",
+                  "a": "Kijken, op dezelfde plek ademen, afspreken wie het tempo aangeeft. Het keyboard volgt de zangers."
+                },
+                {
+                  "v": "Welke liedvorm is dit?",
+                  "a": "Coupletlied: elk couplet dezelfde muziek."
+                }
+              ],
+              "letop": [
+                "De tweede stem verdwijnt als die de melodie hoort. Zet de stemmen eerst tegenover elkaar, laat beide stemmen een frase alleen zingen en pas dan samen.",
+                "Het keyboard loopt vaak door als de zangers rekken. Zet de keyboardspeler zo dat die de zangers ziet.",
+                "Rondlopen: luister of de stemmen los van elkaar klinken en of de hele groep op dezelfde plek ademt. Dat zijn de twee succescriteria."
+              ]
+            }
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Afsluiting: één keer door, één zin terug",
+            "stappen": [
+              "Zing het eerste couplet één keer door, met rubato.",
+              "Eén zin: waar ging het samen ademen goed, waar niet?",
+              "Daarna: de zelfstandige les met omkeringen."
+            ],
+            "docent": "Telefoon erbij om het eerste couplet op te nemen: fijn startpunt voor volgende week.",
+            "notitie": {
+              "vertel": [
+                "Goed, dit is een eerste keer. Volgende week gaan we verder met rubato in hetzelfde lied. De week daarna begeleiden jullie het zelf met omkeringen, en dat leren jullie in de volgende les.",
+                "Noem de plek waar het mis ging: dat is meteen de oefenplek voor volgende week."
+              ],
+              "letop": [
+                "Heb je nog niet met de hele klas doorgezongen, sla de vraag dan over en zing. Zingen gaat voor."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Zet de vraag van de terugblik nog één keer neer. Wie het aan het begin niet wist, noemt de vier delen nu. Het antwoord: expositie, doorwerking, reprise, coda."
+            ],
+            "vragen": [
+              {
+                "v": "Noem de delen van een hoofdvorm in de goede volgorde.",
+                "a": "Expositie, doorwerking, reprise, coda."
+              }
+            ],
+            "letop": [
+              "Wie het niet weet, herhaalt thuis kaart CL 1-2: dit komt terug in T5."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "10.2 Omkeringen op het keyboard.pptx",
+        "kort": "Omkeringen op het keyboard",
+        "code": "P1 · les 10.2",
+        "week": 10,
+        "bronLes": {
+          "lg": "vwo5",
+          "w": 10,
+          "slot": "l2"
+        },
+        "koppel": [
+          {
+            "lg": "vwo5",
+            "w": 10,
+            "slot": "l2"
+          }
+        ],
+        "fotos": {
+          "titel": "fortepiano-walter.jpg",
+          "fase": [
+            "messiah-koor.jpg",
+            null,
+            null
+          ]
+        },
+        "formatief": {
+          "tekst": "Opname C, F/C, G/B, C in drie toonsoorten.",
+          "notitie": {
+            "vertel": [
+              "De opname is het bewijs van de les. Je beluistert hem na afloop en kijkt naar drie dingen: speelt de leerling de juiste tonen in alle drie de toonsoorten, zakt de bas telkens een halve toon op V, en loopt de wissel zonder hapering door."
+            ],
+            "letop": [
+              "Geen opname of niet in alle drie de toonsoorten? Dan maakt de leerling hem thuis of bij de volgende les af."
+            ]
+          }
+        },
+        "benodigd": [
+          "Keyboards, koptelefoons",
+          "Kaart KC 4a (Kwintencirkel bladen: blad 3, Omkeringen van drieklanken)",
+          "Telefoon of tablet per tweetal voor de opname"
+        ],
+        "voorbereiding": [
+          "Regel waar de leerlingen zitten als het lokaal te weinig keyboards heeft: om en om per tweetal.",
+          "Bepaal waar de opname binnenkomt en zet dat op het bord. De studiewijzer noemt alleen dat de opname gemaakt wordt."
+        ],
+        "notitieTitel": [
+          "Zelfstandige les: jij staat bij een andere klas. Dit zeg je vooraf, in maximaal drie minuten, voor je weggaat.",
+          "Eén: de les heeft drie stappen en die staan op het scherm. Eerst Messiah met de oefentrack, dan omkeringen met kaart KC 4a, dan opnemen.",
+          "Twee: de opdracht is I, IV en V spelen met zo weinig mogelijk beweging. In C is dat C, F/C, G/B, C. Doe het een keer voor op het keyboard, en laat horen dat de bas c, c, b, c speelt.",
+          "Drie: je bent klaar als je in alle drie de toonsoorten wisselt zonder te kijken en de opname hebt gemaakt. Zeg waar de opname moet komen te staan.",
+          "Vier: wie vastloopt, vraagt eerst de buur en kijkt dan op de kaart. Daarna pas naar jou."
+        ],
+        "notitieAgenda": [
+          "De leerlingen werken de drie blokken zelf af. Zet de klok op het bord, of noem de eindtijd van elk blok. Na 35 minuten moet iedereen aan het opnemen zijn."
+        ],
+        "notitieDoel": [
+          "De kaart met omkeringen staat op naam van vwo 4. Nu gaat het om de hand: wisselen zonder te springen. Dit is de techniek om straks het Wiegenlied te begeleiden en om in P10 een eigen begeleiding te spelen.",
+          "De regel van het blad: alleen de bas telt voor de omkering. Welke toon bovenin ligt, maakt niet uit. C/E is C met e in de bas."
+        ],
+        "notitieThuis": [
+          "Dezelfde thuisopdracht als na de vorige les: Musicbox romantiek, Infosheet, begrippen chromatiek en instrumentatie, luisteren naar Brahms en Beethoven, Messiah elke dag.",
+          "Wie de opname niet af heeft, maakt die thuis of voor de volgende praktijkles."
+        ],
+        "fasen": [
+          {
+            "min": 10,
+            "soort": "start",
+            "kop": "Messiah met de oefentrack: nr. 7, dan nr. 4",
+            "stappen": [
+              "Oefensite open, koptelefoon op, kies je stem.",
+              "Nr. 7 And He shall purify: oefen de plekken uit les 10.1. Eerst op 70 procent van het tempo.",
+              "Eén loopje op 'purify': net zo lang tot het zonder fout gaat, dan pas sneller.",
+              "Nr. 4 And the glory of the Lord: één keer helemaal mee."
+            ],
+            "klaar": "Na tien minuten stop je, ook als het nog niet af is. Noteer welk loopje je thuis oefent.",
+            "docent": "Jij bent niet in het lokaal. Bij aanvang kort zeggen dat dit blok tien minuten duurt en dat de koptelefoon op blijft.",
+            "notitie": {
+              "vertel": [
+                "Dit is wat je vooraf zegt over het Messiah-blok: tien minuten, zelf, met de track. Nr. 7 is pas nieuw. Pak dus niet het hele stuk, maar de plek waar je het kwijtraakte.",
+                "De oefensite heeft bij elk koor een stappenplan voor loopjes: langzaam, dan iets sneller. Gebruik dat in plaats van steeds het hele stuk te zingen."
+              ],
+              "letop": [
+                "Wie geen koptelefoon heeft, gaat bij de buur meeluisteren of pakt er een van het klaslokaal.",
+                "Bij de volgende koorrepetitie merk je of ze het gedaan hebben: laat dan het loopje op 'purify' per stemgroep horen."
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "KC 4a: I, IV en V met zo weinig mogelijk beweging",
+            "stappen": [
+              "Begin in C: C, F/C, G/B, C. De bas speelt c, c, b, c.",
+              "Wat kan blijven liggen, blijft liggen. De rest zet een klein stapje.",
+              "Doe dan hetzelfde in G en in F. Zelfde patroon, andere tonen.",
+              "Eerst langzaam kijkend. Dan in tempo en zonder te kijken."
+            ],
+            "klaar": "Je wisselt in alle drie de toonsoorten zonder te kijken. Klaar? Speel de akkoorden in een wals: grondnoot op één, akkoord op twee en drie.",
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "",
+                  "I",
+                  "IV",
+                  "V"
+                ],
+                [
+                  "C",
+                  "C: c e g",
+                  "F/C: c f a",
+                  "G/B: b d g"
+                ],
+                [
+                  "G",
+                  "G: g b d",
+                  "C/G: g c e",
+                  "D/F#: fis a d"
+                ],
+                [
+                  "F",
+                  "F: f a c",
+                  "Bb/F: f bes d",
+                  "C/E: e g c"
+                ]
+              ],
+              "kol": [
+                0.13,
+                0.27,
+                0.3,
+                0.3
+              ]
+            },
+            "docent": "Bij terugkomst rondlopen en één keer per leerling meekijken. Bas blijft en zakt: daar zie je of het goed gaat.",
+            "notitie": {
+              "vertel": [
+                "De uitleg voor vooraf. Speel I, IV, V, I zonder omkeringen en je hand springt heen en weer. Met omkeringen blijft de hand op zijn plek. In C: bij C, F/C blijft de c liggen, de e gaat naar f, de g naar a. Daarna, van F/C naar G/B, gaat de bas een halve toon omlaag van c naar b, de f naar d en de a naar g. Terug naar C: de g blijft liggen, de b gaat naar c, de d naar e.",
+                "F/C is IV in de tweede omkering: de kwint ligt onderin. In de klassieke becijfering is dat 6/4, kwartsextakkoord. G/B is V in de eerste omkering: de terts ligt onderin. Dat is 6, sextakkoord. In popnotatie zeg je: F met c in de bas, G met b in de bas.",
+                "Op de kwintencirkel zijn IV en V de buren van I. Omkeringen zorgen dat je die buren ook onder je hand naast elkaar vindt. Dat heet goede stemvoering: de bovenstemmen bewegen nauwelijks.",
+                "Hetzelfde patroon past in elke toonsoort. Zoek I. Blijf met je duim op de grondtoon voor IV. Zak voor V een halve toon met de bas."
+              ],
+              "voorbeelden": [
+                "C groot. C = c e g. F/C = c f a. G/B = b d g. Terug naar C = c e g. Bas: c, c, b, c.",
+                "G groot. G = g b d. C/G = g c e. D/F# = fis a d. Terug naar G = g b d. Bas: g, g, fis, g.",
+                "F groot. F = f a c. Bb/F = f bes d. C/E = e g c. Terug naar F = f a c. Bas: f, f, e, f.",
+                "Vingerzetting rechterhand in C: 1-3-5 op C, 1-4-5 op F/C, 1-2-5 op G/B. Dezelfde vingers passen in G en F.",
+                "Zwarte toetsen: in G de fis in D/F#, in F de bes in Bb/F."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke toon bepaalt de omkering?",
+                  "a": "Alleen de bas. De volgorde van de tonen erboven maakt niet uit."
+                },
+                {
+                  "v": "Welke toon blijft liggen tussen C en F/C?",
+                  "a": "De c. In G is dat de g, in F de f."
+                },
+                {
+                  "v": "Hoe ver beweegt de bas bij I naar V6?",
+                  "a": "Een halve toon omlaag: c naar b, g naar fis, f naar e."
+                }
+              ],
+              "letop": [
+                "Veel gaat mis in F: leerlingen spelen b in plaats van bes. Laat ze de toonladder van F een keer spelen.",
+                "Het tweede akkoord wordt vaak als grondligging gegrepen (f a c). Dan springt de hand weer. Kijk naar de duim: die blijft liggen.",
+                "Wie het in alle toonsoorten kan, begeleidt het Wiegenlied alvast in F. Dat komt in week 12."
+              ]
+            }
+          },
+          {
+            "min": 10,
+            "soort": "doen",
+            "kop": "Opnemen: drie toonsoorten, vier akkoorden",
+            "stappen": [
+              "Telefoon op tafel, handen in beeld. Eén take per toonsoort mag.",
+              "Zeg de toonsoort. Speel I, IV, V, I: C, F/C, G/B, C.",
+              "Doe hetzelfde in G (G, C/G, D/F#, G) en F (F, Bb/F, C/E, F).",
+              "Luister terug: hoor je de bas telkens een halve toon zakken en terugkomen?",
+              "Zet je opname op de afgesproken plek."
+            ],
+            "klaar": "Opname gemaakt in alle drie de toonsoorten.",
+            "docent": "Zeg vooraf waar de opname terechtkomt. Luister de opnames na de les; schrijf per leerling een woord terug.",
+            "notitie": {
+              "vertel": [
+                "Vooraf zeggen: het gaat om de wissel, niet om een uitvoering. Fout? Gewoon nog een keer opnemen, zolang de tijd loopt. Tien minuten is genoeg.",
+                "Bij P9 hebben ze hun eigen opname ook teruggeluisterd. Dat is een vast onderdeel van zelfstandig oefenen."
+              ],
+              "letop": [
+                "Met meerdere keyboards tegelijk hoor je op de opname vooral de buren. Laat ze om de beurt opnemen, of de telefoon vlak bij het keyboard leggen.",
+                "Wie vroeg klaar is, kan de reeks een keer als wals in de opname zetten."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "vwo4": {
+    "klas": "vwo 4",
+    "thema": "klas4",
+    "map": "02 Keuzevak muziek\\VWO\\VWO 4\\Lessen 2026-2027",
+    "blok": "Periode 1 · De voorlopers van de jazz",
+    "blokKort": "voorlopers van de jazz",
+    "lessen": [
+      {
+        "bestand": "10.1 Praktijktoets PT1 - samenspel en zang.pptx",
+        "kort": "Praktijktoets PT1",
+        "code": "P1 · les 10.1",
+        "week": 10,
+        "bronLes": {
+          "lg": "vwo4",
+          "w": 10,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "vwo4",
+            "w": 10,
+            "slot": "l1"
+          }
+        ],
+        "vraag": "Wat laten we vandaag horen?",
+        "doel": "Je voert met je groep je stuk uit, met je vaste partij, zang en vier maten improvisatie op de bluestoonladder.",
+        "criteria": [
+          "We tellen af en eindigen samen",
+          "Ik speel door na een fout",
+          "Ik improviseer vier maten in het schema",
+          "Ik speel zachter onder zang en solo"
+        ],
+        "fotos": {
+          "titel": "juke-joint-1939.jpg",
+          "doel": "leadbelly.jpg"
+        },
+        "benodigd": [
+          "Beoordelingsformulier docent: één per leerling, met naam, stuk, partij en groep vooraf ingevuld",
+          "Scoreblad vwo 4 open op de laptop",
+          "Format zelfbeoordeling: één per leerling",
+          "Keyboards, gitaren en ukeleles, drumstel, versterkers",
+          "Bladmuziek en BL schema (twaalf maten) op de standaards",
+          "Volgorde van de groepen op het bord",
+          "Telefoon op statief voor een opname van elke groep"
+        ],
+        "voorbereiding": [
+          "Tel de groepen en kies het schema hieronder. Zet de wisseltijden op het bord.",
+          "Schema: 5 minuten opstellen en instructie, 35 minuten voor de groepen, 5 minuten afsluiting. 2 groepen: 17,5 minuut per groep. Wissels op minuut 5, 22,5 en 40. Speeltijd ruim 15 minuten per groep. 3 groepen: 11 minuten 40 per groep. Wissels op minuut 5, 16:40, 28:20 en 40. Speeltijd 9:40 per groep. 4 groepen: 8 minuten 45 per groep. Wissels op minuut 5, 13:45, 22:30, 31:15 en 40. Speeltijd 6:45 per groep. In elke speeltijd is al 2 minuten wissel afgetrokken.",
+          "Past dat? Bij tempo 70 duurt één ronde van twaalf maten 41 seconden. Een soloruil van vier spelers (16 maten) duurt 55 seconden. Dus 6:45 is genoeg om het stuk een paar keer door te spelen met de solo's erin.",
+          "De generale en de improvisatie-uitleg van woensdag 28 oktober zijn vervallen. Kijk daarom welke groepen hun afspraken nog niet hebben: wie telt af, in welke volgorde de solo's gaan, hoe het slot gaat.",
+          "Controleer per groep het stuk en de toonsoort. De bluestoonladder C, Es, F, Fis, G, Bes past bij een blues in C. When I walk hand in hand staat in de versie uit de Havo 4-map in drie mollen.",
+          "Beslis vooraf waar de zang op beoordeeld wordt: This old hammer met call-and-response, of de zang in het eigen stuk. Dat hangt af van het stuk."
+        ],
+        "notitieTitel": [
+          "Vandaag is PT1. Jullie laten horen wat jullie de afgelopen weken hebben opgebouwd: je partij, je zang, je groep. Daar hoef je niets nieuws voor te kunnen.",
+          "Ik neem vandaag de hele toets af in deze les van 45 minuten. Elke groep komt één keer aan de beurt. De volgorde staat op het bord.",
+          "Fout gemaakt? Doorspelen en instappen op de volgende maat, zoals we in week 8 hebben geoefend. Dat telt juist mee als iets goeds.",
+          "Als iemand vraagt naar het PTA: daar staat 90 minuten, ik neem hem in 45 af. Dat is mijn besluit."
+        ],
+        "notitieAgenda": [
+          "De volgorde is voor iedereen hetzelfde: opstellen, korte uitleg over de improvisatie, groep voor groep, zelfbeoordeling.",
+          "De tijd per groep hangt af van het aantal groepen. 2 groepen: 17,5 minuut (minuut 5, 22,5, 40). 3 groepen: 11:40 (minuut 5, 16:40, 28:20, 40). 4 groepen: 8:45 (minuut 5, 13:45, 22:30, 31:15, 40). Per groep gaat daar 2 minuten af voor wisselen en afspraken."
+        ],
+        "notitieDoel": [
+          "PT1 telt met weging 3 en is niet herkansbaar. Zeg dat rustig, één keer, en ga door. Het gaat vandaag om zes onderdelen: presentatie, je eigen partij, zang, improvisatie, groove en luisteren.",
+          "De wegingen: presentatie 1, eigen partij 2, zang 2, improvisatie 2, groove 1, luisteren 2. Samen 10. Het cijfer is de som van score keer weging, gedeeld door 10.",
+          "Elk onderdeel krijgt 4 (onvoldoende), 6 (voldoende), 8 (goed) of 10 (uitstekend). Zit iets ertussen, dan geef je 5, 7 of 9.",
+          "De zelfbeoordeling telt voor 10 procent mee in het eindcijfer. Rekenvoorbeeld: scores 8, 8, 7, 6, 8, 8 geven 8 + 16 + 14 + 12 + 8 + 16 = 74, gedeeld door 10 = 7,4. Met een zelfbeoordeling van 8 wordt het eindcijfer 0,9 keer 7,4 plus 0,1 keer 8 = 7,5."
+        ],
+        "fasen": [
+          {
+            "min": 3,
+            "soort": "start",
+            "kop": "Opstellen: zo werkt het vandaag",
+            "stappen": [
+              "Zet je instrument neer en stem. De volgorde van de groepen staat op het bord.",
+              "Telefoon weg. Publiek luistert zoals op een concert: stil, applaus na afloop.",
+              "Wie aan de beurt is, zegt kort: stuk en wie wat speelt. Dan aftellen."
+            ],
+            "docent": "Rustig houden. Zelf al bij het bord staan met de formulieren per groep op volgorde.",
+            "notitie": {
+              "vertel": [
+                "Dit zeg je terwijl ze opstellen. We doen het zoals op een concert. Je zegt kort wat je gaat spelen en wie wat doet. Dan telt iemand af en je gaat.",
+                "Eerlijk erbij: de generale van vorige keer is er niet geweest, omdat ik afwezig was. Daarom krijgt elke groep twee minuten aan het begin om de laatste afspraken te maken: wie telt af, wie begint met de solo, hoe eindigen we.",
+                "Als je niet speelt, ben je publiek. Geen instrumenten aanraken, geen telefoon. Stil inspelen kan: vingers op de toetsen, geen geluid."
+              ],
+              "letop": [
+                "Geef zelf het tempo niet aan: aftellen hoort bij presentatie.",
+                "Drie minuten is krap. Staat het drumstel er al als ze binnenkomen, dan scheelt dat."
+              ]
+            }
+          },
+          {
+            "min": 2,
+            "soort": "uitleg",
+            "kop": "De improvisatie: vier maten, zes tonen",
+            "stappen": [
+              "De bluestoonladder in C: C, Es, F, Fis, G, Bes. Drie tonen is al genoeg: C, Es, G.",
+              "Speel een kort motief, wacht even en speel het nog eens iets anders.",
+              "Om de vier maten is de volgende aan de beurt. De rest speelt zachter.",
+              "Geen idee? Speel de grondtoon in het ritme van de call. Stoppen doe je niet."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "C",
+                  "t": "grondtoon"
+                },
+                {
+                  "k": "Es",
+                  "t": "blue note"
+                },
+                {
+                  "k": "F",
+                  "t": "op het IV-akkoord"
+                },
+                {
+                  "k": "Fis",
+                  "t": "blue note, doorgang"
+                },
+                {
+                  "k": "G",
+                  "t": "kwint, rustpunt"
+                },
+                {
+                  "k": "Bes",
+                  "t": "septiem"
+                }
+              ]
+            },
+            "docent": "Twee minuten: de uitleg van 28 oktober is vervallen, dit is de enige die ze krijgen. Voordoen op het keyboard.",
+            "notitie": {
+              "vertel": [
+                "De les over improviseren is er niet geweest. Dat weet ik. Daarom kort en concreet. Dit staat ook op kaart TL 1a. Wie Musicbox blok 5 heeft gedaan, kent het al.",
+                "Zes tonen: C, Es, F, Fis, G, Bes. De Es en de Fis zijn de blue notes: die schuren tegen het akkoord aan. Dat mag, dat is de blues.",
+                "Je hebt niet alle zes nodig. Met C, Es en G kun je al een solo spelen. Speel een klein motief, twee of drie noten. Laat dan rust. Speel het nog eens, iets anders.",
+                "Iedereen krijgt vier maten. De groep blijft in het schema doorspelen, gewoon zachter. Geen inspiratie? Dan speel je de grondtoon in het ritme van de call. Dan ben je nog steeds aan het spelen en in de maat."
+              ],
+              "voorbeelden": [
+                "Voordoen in acht tellen: C-Es-G, rust, C-Es-G iets later ingezet. Zo klinkt een motief dat terugkomt. Dat is al niveau goed in de rubriek.",
+                "Niet de toonladder op en neer spelen. Dat klinkt als oefenen.",
+                "Volgorde van de solo's: met de klok mee, zodat niemand hoeft te zoeken."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke drie tonen zijn genoeg?",
+                  "a": "C, Es en G."
+                },
+                {
+                  "v": "Wat doe je als je niets weet?",
+                  "a": "De grondtoon spelen in het ritme van de call en doorgaan."
+                }
+              ],
+              "letop": [
+                "Blijf bij twee minuten. Vragen over de solo's beantwoord je per groep in hun twee minuten.",
+                "Drummer: spreek af dat de solo op keyboard of gezongen mag, omdat het onderdeel de bluestoonladder vraagt.",
+                "Speelt een groep in een andere toonsoort, dan zegt de bluestoonladder in C niet genoeg. Zeg dan per groep welke tonen het zijn."
+              ]
+            }
+          },
+          {
+            "min": 35,
+            "soort": "doen",
+            "kop": "De uitvoeringen: groep voor groep",
+            "stappen": [
+              "Twee minuten: opstellen en de laatste afspraken maken.",
+              "Zeg wat je speelt, tel af, speel het stuk met zang en call-and-response.",
+              "Soloruil: iedereen vier maten in het schema. De rest speelt zachter.",
+              "Sluit het stuk af zoals afgesproken. Applaus. Volgende groep."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Onderdeel",
+                  "Waar gaat het om",
+                  "Weging"
+                ],
+                [
+                  "Presentatie",
+                  "aftellen, begin en slot, doorspelen",
+                  "1"
+                ],
+                [
+                  "Eigen partij",
+                  "twaalf maten, I-IV-V op tijd",
+                  "2"
+                ],
+                [
+                  "Zang",
+                  "zuiver, op de tel, verstaanbaar",
+                  "2"
+                ],
+                [
+                  "Improvisatie",
+                  "bluestoonladder, in het schema, motief",
+                  "2"
+                ],
+                [
+                  "Groove en tempo",
+                  "backbeat, swing, samen in tempo",
+                  "1"
+                ],
+                [
+                  "Luisteren en balans",
+                  "samen, ruimte voor zang en solo",
+                  "2"
+                ]
+              ],
+              "kol": [
+                0.56,
+                0.22,
+                0.22
+              ]
+            },
+            "docent": "Per groep de klok in de gaten houden. Niet onderbreken, niet repareren: dit is de toets. Stokt een groep op de eerste maat, laat dan opnieuw aftellen. De rubriek scoort dat onder presentatie.",
+            "notitie": {
+              "vertel": [
+                "Zo gebruik je het formulier. Eén beoordelingsformulier per leerling, A4 liggend. Bovenaan staan naam, datum, stuk, partij en groep. Omcirkel per onderdeel het niveau dat het best past en schrijf de score op. Past een uitvoering tussen twee niveaus, dan geef je 5, 7 of 9. Onderaan schrijf je een opmerking per onderdeel en het totaal.",
+                "Presentatie en groove geef je vaak als groep. Maar partij, zang, improvisatie en luisteren zijn van de leerling zelf. Scoor die tijdens de speeltijd per leerling, en schrijf op de wissel de groepsscores op.",
+                "Na de les zet je de scores in het Excel-scoreblad vwo 4. Daar rekent het blad het cijfer docent, de zelfbeoordeling (10 procent) en het eindcijfer uit. Eindcijfer = 0,9 keer cijfer docent + 0,1 keer zelfbeoordeling.",
+                "Tijd: 2 groepen 17,5 minuut, 3 groepen 11:40, 4 groepen 8:45, elk inclusief 2 minuten voor opstellen en afspraken. Bij tempo 70 duurt één ronde twaalf maten 41 seconden. Dan kun je dus in de kortste variant nog ruim genoeg horen.",
+                "Heb je het van een leerling nog niet goed gehoord? Laat de groep nog een ronde spelen. Beslis dat voordat de tijd van de volgende groep ingaat."
+              ],
+              "voorbeelden": [
+                "PRESENTATIE (weging 1). Let op aftellen, begin, slot, doorspelen. 4: geen duidelijke start, de groep stopt bij een fout. 6: er wordt afgeteld, stuk komt rond, begin of slot aarzelt. 8: strak afgeteld, duidelijk begin en slot, iedereen speelt door na een fout. 10: klinkt als een optreden, afgesproken slot, fouten vallen nauwelijks op.",
+                "EIGEN PARTIJ IN HET SCHEMA (weging 2). Let op de wissel in maat 5, 7, 9 en 11, en vooral maat 9-10 (V-IV). 4: partij valt vaak weg, plek in het schema kwijt. 6: grotendeels gespeeld, maat 9-10 of invallen na een fout wiebelt. 8: zeker en op tijd, wisselt op de één, valt na een fout direct in. 10: beheerst en muzikaal, geeft houvast aan de groep.",
+                "ZANG, CALL-AND-RESPONSE (weging 2). Let op zuiverheid, de tel en verstaanbaarheid. 4: vaak onzuiver of te zacht, response te laat. 6: overwegend zuiver, response meestal op de tel, tekst soms onduidelijk. 8: zuiver en verstaanbaar, call en response sluiten strak aan. 10: expressie in de stijl van de blues, drive.",
+                "IMPROVISATIE (weging 2). Let op tonen, schema en motief. 4: geen improvisatie of noten passen niet. 6: vier maten op de bluestoonladder (bv. C-Es-G), in de maat, nog weinig vorm. 8: blijft in het schema, herkenbaar motief komt terug, rust tussen frasen. 10: varieert het motief, blue notes bewust, opbouw en slot.",
+                "GROOVE EN TEMPO (weging 1). Let op backbeat, swing en samen in tempo. 4: tempo zakt of jaagt, groep valt uit elkaar. 6: grotendeels stabiel, backbeat of triolenfeel niet overal hoorbaar. 8: stabiel met backbeat, swing hoorbaar in de groep. 10: strakke groove die swingt, ook in de soloruil.",
+                "LUISTEREN EN BALANS (weging 2). Let op samen beginnen en eindigen en ruimte geven. 4: speelt los van de anderen, zang en solo overstemd. 6: let op de anderen, samen beginnen en eindigen lukt, balans nog niet altijd. 8: speelt zachter onder zang en solo, die blijven hoorbaar. 10: reageert op de anderen, klinkt als één band."
+              ],
+              "letop": [
+                "Generale is er niet geweest, dus dit is voor iedereen de eerste keer in toetssituatie. Sommige groepen zullen meer haperen. Scoor wat je hoort. Twijfel je of dat anders moet? Dat beslis je na afloop, niet tijdens de les.",
+                "Bij een fout: wachten. Doorspelen is onderdeel van presentatie. Grijp pas in als een groep helemaal stilvalt.",
+                "Filmt de telefoon mee, dan kun je twijfelscores na de les nalopen. Noteer de groep aan het begin van de opname.",
+                "Zangers die alleen zingen: hun 'eigen partij' is dan de zang in het schema. Spreek dat af voor je gaat scoren."
+              ]
+            }
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Klaar: vul je zelfbeoordeling in",
+            "stappen": [
+              "Pak het format. Per onderdeel een kruisje bij wat je hoorde, dan je score.",
+              "Schrijf één concreet punt op voor PT2.",
+              "Vul naam, stuk, partij en groep in en lever in.",
+              "Instrumenten terug en lokaal netjes."
+            ],
+            "docent": "Formats per groep verzamelen. Het format is bedoeld voor na de generale en na de toets; de generale is vervallen, dus ze vullen het alleen nu in.",
+            "notitie": {
+              "vertel": [
+                "Goed gedaan, allemaal. Het spannende deel is klaar. Nu kijk je zelf terug met dezelfde onderdelen als ik gebruik.",
+                "De zelfbeoordeling telt voor 10 procent mee. Ik kijk of je eerlijk en concreet bent, niet hoe hoog je jezelf scoort. Een 6 met een goede onderbouwing telt mee als sterk.",
+                "Schrijf onderaan één punt op dat je meeneemt naar PT2: solowerk en een eigen compositie rond de barok, in lesweek 35.",
+                "Je krijgt je cijfer met een opmerking per onderdeel."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is voor jou de ene plek in het stuk die je anders zou doen?",
+                  "a": "Concreet: maat, partij of solo. 'Beter spelen' is geen antwoord."
+                }
+              ],
+              "letop": [
+                "Vijf minuten is krap met opruimen. Lopen de groepen uit, laat de zelfbeoordeling dan inleveren aan het begin van de volgende les. Woensdag 11 november valt uit, dus dat wordt maandag 16 november.",
+                "Bewaar de formats bij de docentformulieren: het cijfer op het scoreblad gaat pas kloppen als beide er zijn."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "zelfbeoordeling",
+          "tekst": "Je zelfbeoordeling telt voor 10% mee. Eerlijk en concreet telt, niet hoe hoog.",
+          "notitie": {
+            "vertel": [
+              "Scoor de zelfbeoordeling op eerlijkheid en concreetheid, niet op hoe hoog de leerling zichzelf heeft ingeschaald. Zet dat cijfer in de kolom Zelfbeoordeling op het scoreblad.",
+              "Het cijfer docent telt 90 procent, de zelfbeoordeling 10 procent."
+            ],
+            "letop": [
+              "PT1 is niet herkansbaar. Zeg dat niet hier nog een keer: de toets is klaar."
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vwo6": {
+    "klas": "vwo 6",
+    "thema": "klas6",
+    "map": "02 Keuzevak muziek\\VWO\\VWO 6\\Lessen 2026-2027",
+    "blok": "Module 2 · Moderne jazz, pop 3, hiphop, musical en examenconcert",
+    "blokKort": "moderne jazz en pop",
+    "thuis": {
+      "extra": "Voorstel persoonlijk project examenconcert"
+    },
+    "lessen": [
+      {
+        "bestand": "10.2 Overzicht moderne muziekstijlen.pptx",
+        "kort": "Overzicht moderne muziekstijlen",
+        "code": "M2 · les 10.2",
+        "week": 10,
+        "bronLes": {
+          "lg": "vwo6",
+          "w": 10,
+          "slot": "l2"
+        },
+        "koppel": [
+          {
+            "lg": "vwo6",
+            "w": 10,
+            "slot": "l2"
+          }
+        ],
+        "vraag": "Welke gemeenschappelijke wortels hebben moderne genres?",
+        "fotos": {
+          "titel": "mengtafel-leerlingen.jpg",
+          "doel": "juke-joint-1939.jpg"
+        },
+        "benodigd": [
+          "Vier fragmenten klaar: Ramones, Bob Marley, Dan Hartman, Grandmaster Flash",
+          "Reservefragmenten: Alicia Keys, Tiësto",
+          "Papier voor de luisteropdracht"
+        ],
+        "voorbereiding": [
+          "Zet de fragmenten vooraf klaar en luister of ze laden. De links in het oude document 'muziekstijlen vanaf impressionisme met links' zijn deels dood: Hartman en het fusion-voorbeeld geven geen resultaat meer, en de Ramones-link is een ander nummer dan je hier nodig hebt.",
+          "Kaart SW P3 bestaat nog niet. De tabel op het scherm vervangt die voor nu."
+        ],
+        "notitieTitel": [
+          "T9 is klaar. We beginnen module 2: moderne jazz, pop, hiphop, musical en het examenconcert. Dat loopt tot lesweek 19 en werkt toe naar P19, het examenconcert.",
+          "Vandaag geen nieuwe feiten om te leren, maar overzicht. Punk, disco, reggae, hiphop, R&B en dance stonden in de stof van T9. Nu leggen we de lijnen ertussen. De volgende les verder met jazz na 1960, en volgende week hiphop."
+        ],
+        "notitieAgenda": [
+          "Eerst vijftien minuten overzicht, dan het gesprek van vandaag: twintig minuten. Daarna tien minuten luisteren, in dezelfde vorm als het centraal examen: stijl en kenmerken."
+        ],
+        "notitieDoel": [
+          "Aan het eind kun je vier fragmenten aan een stijl koppelen met twee kenmerken die je hoort. En je kunt uitleggen waarom die stijlen familie van elkaar zijn.",
+          "Het inzicht van deze module: moderne pop is een web van hybriden. Technologie, globalisering en identiteit sturen de ontwikkeling."
+        ],
+        "notitieThuis": [
+          "Thuis: een eerste voorstel voor je persoonlijke project voor het examenconcert. Een eigen compositie of arrangement, of iets anders dat bij je past. Schrijf op wat je wilt maken, in welke stijl en wat je daarvoor nodig hebt.",
+          "Het examenconcert (P19, weging 15) staat op 11 januari in de planning. Voorstellen bespreken we in de praktijkles."
+        ],
+        "fasen": [
+          {
+            "min": 15,
+            "soort": "uitleg",
+            "kop": "Overzicht: de stijlen sinds de jaren 60",
+            "stappen": [
+              "Twee lijnen lopen door elkaar: de jazzlijn en de poplijn.",
+              "Elke stijl komt ergens vandaan. Let op wat er meegaat.",
+              "Twee vragen per stijl: wat hoor je, en waar komt het vandaan?",
+              "R&B van na 1995 is iets anders dan rhythm & blues van 1945."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Stijl",
+                  "Vanaf",
+                  "Komt uit"
+                ],
+                [
+                  "Soul",
+                  "ca. 1960",
+                  "gospel, rhythm & blues"
+                ],
+                [
+                  "Reggae",
+                  "ca. 1968",
+                  "rhythm & blues, Jamaica"
+                ],
+                [
+                  "Jazz-rock",
+                  "ca. 1970",
+                  "jazz, soul, rock"
+                ],
+                [
+                  "Disco",
+                  "ca. 1975",
+                  "soul, funk"
+                ],
+                [
+                  "Hiphop",
+                  "ca. 1975",
+                  "funk, disco, deejay"
+                ],
+                [
+                  "Punk",
+                  "1976",
+                  "rock, sociale onrust"
+                ],
+                [
+                  "Dance",
+                  "ca. 1985",
+                  "synthesizer, samples"
+                ],
+                [
+                  "R&B",
+                  "ca. 1995",
+                  "soul, funk, hiphop"
+                ]
+              ],
+              "kol": [
+                0.28,
+                0.24,
+                0.48
+              ]
+            },
+            "docent": "Bij elke stijl één kenmerk en één wortel. Deze tabel is een geheugensteun, niet iets om over te schrijven.",
+            "notitie": {
+              "vertel": [
+                "Begin met de grote lijn. Tot ongeveer 1960 kun je stijlen nog als een rij zien: blues, jazz, rhythm & blues, rock-'n-roll. Vanaf dan gaat het vertakken en mengen. Bijna elke nieuwe stijl is een mengvorm van twee oudere.",
+                "Soul, vanaf 1960, is opzwepende dansmuziek met blazerriffs. Achtergrondzangers geven antwoord in call-and-response, en vaak hoor je een Hammondorgel uit de gospel. Aretha Franklin groeide op in de kerk van haar vader, die predikant was, en je hoort die kerk terug in Respect. Funk, vanaf 1965, maakt alles korter: stotende blazerriffs, gedempte gitaar, een sterke ritmesectie met de bas op de eerste tel. James Brown is de naam.",
+                "Reggae, vanaf ca. 1968, ontstaat op Jamaica als mengvorm van rhythm & blues en eigen Jamaicaanse muziek. Het ritme benadrukt de tweede helft van de tel, tempo rustig, en het is gekoppeld aan de Rastafari-beweging.",
+                "Disco, ca. 1975 tot 1985, bouwt door op soul en funk en wordt speciaal in de studio geproduceerd om op te dansen. Kenmerk: four on the floor, dus de nadruk op elke tel, een gepolijste sound, blazers, strijkers en de opkomst van de synthesizer.",
+                "Punk, vanaf 1976, is de tegenreactie: kleine bezetting met drums, bas, elektrische gitaar en zang, eenvoudige melodie, powerchords en schreeuwerige zang. Het thema is sociale onrust, en je maakt je eigen opnames: do it yourself. De gitaarrock van na 1980 reageert daar weer op.",
+                "Hiphop, vanaf ca. 1975, is een jongerencultuur van breakdance, graffiti, deejay en rap. Rap in plaats van zang, breakbeat, hergebruik van drumgrooves uit funk en disco, turntablism, en de muziek is vaak gebaseerd op samples en loops. Eigen ervaring en maatschappelijke problemen staan centraal.",
+                "Dance en EDM, vanaf ca. 1985, is de verzamelnaam voor house, techno en trance: kickbeat, vanaf 120 bpm, lagen en loops, opgebouwd met build-up, drop en riser. De deejay is producent en uitvoerend artiest. R&B, vanaf ca. 1995, komt uit soul, funk en hiphop: gestileerde achtergrondzang, uitgebreide harmonie, zware bas en samples.",
+                "En nu? Verspreiding via streaming en sociale media, de luisteraar als producent, korte hypes en mengvormen met reggaeton en Afrikaanse muziek. Dat is de globalisering van de syllabus. De jazzlijn komt in de volgende les."
+              ],
+              "voorbeelden": [
+                "Soul: Aretha Franklin, Respect. Funk: James Brown, Make It Funky. Reggae: Bob Marley, One Love. Disco: Dan Hartman, Relight My Fire. Punk: The Ramones. Dance: Tiësto, Traffic. R&B: Alicia Keys, Fallin'.",
+                "Jazz-rock volgt in de volgende les. Fusion is daar de latere naam van."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is het verschil tussen rhythm & blues en R&B?",
+                  "a": "Rhythm & blues (1945-1965) is de voorloper van rock-'n-roll, met elektrische gitaar, bas, drums en saxofoon. R&B (vanaf ca. 1995) komt uit soul, funk en hiphop."
+                },
+                {
+                  "v": "Waarom hoort 'do it yourself' bij punk?",
+                  "a": "Bands maken hun eigen opnames en hebben geen grote studio nodig. De eenvoud van de muziek past daarbij."
+                }
+              ],
+              "letop": [
+                "Dit is stof uit T9. Ga niet alles opnieuw uitleggen: houd per stijl een minuut aan. Leerlingen die het net hebben geleerd, kunnen zelf het kenmerk noemen.",
+                "Fragmenten pas in de laatste fase, anders heb je geen tijd meer voor het gesprek."
+              ]
+            }
+          },
+          {
+            "min": 20,
+            "soort": "gesprek",
+            "kop": "Gesprek: welke wortels delen deze stijlen?",
+            "stappen": [
+              "Kies met je buur twee stijlen die ver uit elkaar lijken: punk en hiphop, of reggae en dance.",
+              "Loop terug in de tijd: via welke stijlen komen ze bij elkaar uit?",
+              "Noem één muzikaal kenmerk dat is blijven leven.",
+              "Deel met de klas: welke wortel komt overal terug?"
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Worksong en spiritual",
+                  "t": "call-and-response, samen zingen"
+                },
+                {
+                  "k": "Blues",
+                  "t": "blue note, twaalf maten, riff"
+                },
+                {
+                  "k": "Gospel",
+                  "t": "stem, orgel, antwoord van de groep"
+                },
+                {
+                  "k": "Rhythm & blues, soul, funk",
+                  "t": "backbeat, groove, de break"
+                }
+              ]
+            },
+            "docent": "Vijf minuten in tweetallen, dan het klasgesprek. Teken op het bord de lijnen die ze noemen. Zo ontstaat vanzelf het web.",
+            "notitie": {
+              "vertel": [
+                "De stelling om mee te beginnen: bijna alle moderne populaire muziek heeft dezelfde overgrootouders. Jullie kennen ze uit vwo 4: worksong, spiritual, blues. Jazz ontstond uit de samensmelting van Afrikaanse en Europese tradities, en die wortels zitten nog in de muziek van nu.",
+                "Volg een paar lijnen. Blues en gospel geven samen rhythm & blues, dat wordt rock-'n-roll en rock, en punk is de uitgeklede versie daarvan. Gospel en rhythm & blues geven soul, soul wordt funk, funk en soul worden disco, disco gaat met de drumcomputer verder als dance. Rhythm & blues krijgt op Jamaica een eigen ritme: reggae.",
+                "Hiphop komt uit al die lijnen tegelijk. In de Bronx begon rond 1973 deejay Kool Herc, geboren op Jamaica, op feesten de drumbreak uit een funkplaat steeds opnieuw te draaien. Daar kwam de Jamaicaanse traditie van het soundsystem en de praatzang erbij. De drumpartij van James Browns Funky Drummer (1970) is een van de meest gesamplede stukken muziek ooit.",
+                "Wat er bewaard blijft: call-and-response, van werkploeg naar kerk, naar soul en naar de rapper met zijn publiek. De riff, van blues naar funk en naar de loop in hiphop. De nadruk op de tweede en vierde tel, en het gevoel voor groove.",
+                "Wat er verandert: de techniek. Elke stap wordt ook gedragen door nieuwe apparaten: elektrische gitaar, synthesizer, draaitafel, sampler, laptop. En de identiteit: wie maakt dit, voor wie en waarover? Muziek is sociaal commentaar én persoonlijke expressie.",
+                "Op een christelijke school hoort deze vraag erbij: gospel is een van de wortels. Geloof zit dus in het DNA van popmuziek, ook als je dat niet meer hoort. Volgende week bij holy hiphop en christian rap kijken we wat er gebeurt als die lijn bewust wordt opgepakt."
+              ],
+              "voorbeelden": [
+                "Punk en hiphop: allebei halverwege de jaren 70, allebei do it yourself, allebei sociale onrust vanuit jongeren. Maar punk komt via rock, hiphop via funk en disco. Samen komen ze uit bij rhythm & blues.",
+                "Reggae en dance: reggae heeft de soundsystems, dance de deejay als artiest. Disco en funk zijn de tussenstap. Bas en ritme staan bij allebei voorop.",
+                "Aretha Franklin als knooppunt: kerkkoor, gospelzang, dan soul, en Respect zelf is call-and-response met de achtergrondzangers."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke gemeenschappelijke wortels hebben moderne genres?",
+                  "a": "Blues, gospel, spiritual en worksong, doorgegeven via rhythm & blues, soul en funk. Afrikaanse en Europese tradities zijn daarin versmolten."
+                },
+                {
+                  "v": "Welk kenmerk uit de worksong hoor je nog steeds?",
+                  "a": "Call-and-response: van de werkploeg naar soul, naar hiphop en naar een festivalpubliek."
+                },
+                {
+                  "v": "Waarom ontstaan zoveel mengvormen vanaf de jaren 60?",
+                  "a": "Techniek (opname, synthesizer, sampler), globalisering (muziek reist) en identiteit (groepen maken hun eigen geluid)."
+                },
+                {
+                  "v": "Gospel is een wortel van veel popmuziek. Wat doet dat met hoe je naar die muziek kijkt?",
+                  "a": "Open vraag. Mogelijke antwoorden: je hoort de kerk terug in soul, sommige artiesten bleven gelovig, andere gingen er juist tegenin. Laat meningen naast elkaar staan."
+                }
+              ],
+              "letop": [
+                "Het gesprek zakt in als het over smaak gaat. Breng het terug: 'welke twee kenmerken hoor je, en waar komen die vandaan?'",
+                "Pop is geen stamboom met één lijn. Corrigeer niet als ze een andere route noemen, vraag wel om een muzikaal bewijs.",
+                "Dance uit disco klopt als grove lijn; de syllabus noemt dat niet letterlijk. Formuleer het als: de four on the floor gaat mee."
+              ]
+            }
+          },
+          {
+            "min": 10,
+            "soort": "luisteren",
+            "kop": "Luisteropdracht: stijl en twee kenmerken",
+            "stappen": [
+              "Vier fragmenten, elk ongeveer een minuut.",
+              "Schrijf per fragment op: de stijl en twee kenmerken die je hoort.",
+              "Na fragment vier: vergelijk met je buur.",
+              "We bespreken ze kort. Welke was het lastigst?"
+            ],
+            "docent": "Noem uitvoerenden pas bij de bespreking. Neem de antwoorden in als je wilt zien wie wat al hoort.",
+            "notitie": {
+              "vertel": [
+                "Dit is de vorm van het centraal examen: je hoort iets en benoemt wat je hoort. 'Het klinkt vrolijk' telt niet. Je noemt kenmerken: bezetting, ritme, zang, structuur.",
+                "Elk fragment een minuut, dan dertig seconden schrijven. Dat is zes minuten. Vier minuten om te bespreken."
+              ],
+              "voorbeelden": [
+                "Fragment 1. The Ramones, Blitzkrieg Bop (1976). Punk. Verwacht: kleine bezetting met drums, bas, elektrische gitaar en zang; powerchords; schreeuwerige zang; snel tempo.",
+                "Fragment 2. Bob Marley, One Love. Reggae. Verwacht: nadruk op de tweede helft van de tel; rustig tempo; strakke basriff; achtergrondkoortje.",
+                "Fragment 3. Dan Hartman, Relight My Fire. Disco. Verwacht: four on the floor; gepolijste sound; blazers en strijkers met synthesizer; melodie makkelijk in het gehoor.",
+                "Fragment 4. Grandmaster Flash & The Furious Five, The Message (1982). Hiphop. Verwacht: rap in plaats van zang; zware bas met een herkenbare loop; herhaald ritme; tekst over eigen ervaring en maatschappelijke problemen.",
+                "Reserve. Alicia Keys, Fallin': R&B (gestileerde achtergrondzang, zware bas, melismen). Tiësto, Traffic: dance (kickbeat, minstens 120 bpm, lagen, build-up en drop)."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke twee kenmerken maken fragment 3 disco en geen funk?",
+                  "a": "De four on the floor (elke tel benadrukt) en de gepolijste sound met strijkers."
+                },
+                {
+                  "v": "Welke wortel hoor je nog in fragment 2?",
+                  "a": "Rhythm & blues in de begeleiding, en call-and-response met het koortje."
+                }
+              ],
+              "letop": [
+                "Controleer de tekst van wat je laat horen: The Message heeft een ruwe tekst. Gebruik dan alleen de intro, of kies een ander hiphopfragment.",
+                "Hiphop stond in T9 en komt volgende week uitgebreid terug. Wie het niet herkent, hoort het daar opnieuw."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Dit is de meting van vandaag: vier fragmenten, per fragment de stijl en twee kenmerken. Wie drie of vier stijlen goed heeft met kenmerken, zit op koers voor het CE.",
+              "Bespreek de antwoorden per fragment en laat een leerling die het goed had vertellen waarop die het hoorde."
+            ],
+            "letop": [
+              "Telt alleen formatief. Zeg dat, anders schrijven ze af bij elkaar."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "10.3 Moderne jazz en fusion.pptx",
+        "kort": "Moderne jazz en fusion",
+        "code": "M2 · les 10.3",
+        "week": 10,
+        "bronLes": {
+          "lg": "vwo6",
+          "w": 10,
+          "slot": "l3"
+        },
+        "koppel": [
+          {
+            "lg": "vwo6",
+            "w": 10,
+            "slot": "l3"
+          }
+        ],
+        "vraag": "Wat verandert er aan jazz als het schema loslaat en de rock binnenkomt?",
+        "fotos": {
+          "titel": "microfoon-studio.jpg",
+          "doel": "bandles-leerlingen.jpg"
+        },
+        "benodigd": [
+          "Fragmenten klaar: Miles Davis (So What), Ornette Coleman of Cecil Taylor, John Coltrane (A Love Supreme), Miles Davis (Bitches Brew), Herbie Hancock (Chameleon), Weather Report (Birdland)",
+          "Keyboard voor de voorbeelden van improvisatietechnieken",
+          "Exit-ticketbriefjes"
+        ],
+        "voorbereiding": [
+          "Kaart SW MJ bestaat nog niet (de routekaart zet hem onder 'nog te maken'). De stof staat in de syllabus, bijlage 3 jazzlijn, en in Leerstof.docx bij T6 van vwo 5. De tabellen op het scherm zijn nu de samenvatting.",
+          "Volgens de routekaart zien de huidige vwo 5-leerlingen moderne jazz in P3. Voor deze vwo 6-klas kan het deels herhaling zijn: vraag aan het begin wat ze nog weten."
+        ],
+        "notitieTitel": [
+          "Vandaag de jazzlijn na 1960. Eén vraag voor de hele les: wat gebeurt er als de vaste akkoordenschema's loslaten, en daarna de rock binnenkomt?",
+          "Dit is ook praktisch voor het examenconcert: daar speel je een jazzstandard en improviseer je. De technieken van vandaag kun je dus zo gebruiken."
+        ],
+        "notitieAgenda": [
+          "Drie blokken van een kwartier: jazz na 1960, improvisatietechnieken, fusion en crossover. Elk blok heeft een fragment. Afsluiten met het exit ticket: wat is fusion?"
+        ],
+        "notitieDoel": [
+          "Aan het eind beschrijf je hoe jazz zich vanaf 1960 ontwikkelde, noem je twee improvisatietechnieken en leg je uit wat fusion is.",
+          "De twee technieken zijn het succescriterium. Vraag er aan het eind naar."
+        ],
+        "notitieThuis": [
+          "Blijft: voorstel voor je persoonlijke project voor het examenconcert. Tip: een eigen improvisatie op een modale vamp kan daar een onderdeel van zijn."
+        ],
+        "fasen": [
+          {
+            "min": 15,
+            "soort": "uitleg",
+            "kop": "Jazz na 1960: de schema's gaan open",
+            "stappen": [
+              "Startpunt: bebop (ca. 1940) en cool jazz (ca. 1950).",
+              "Eind jaren 50: modale jazz. Improviseren op een toonladder, niet op snelle akkoordwisselingen.",
+              "Ca. 1960: free jazz. Geen vast schema, metrum, tempo of vorm.",
+              "Luister: wat is er nog over van thema, solo, thema?"
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Stijl",
+                  "Wanneer",
+                  "Luister"
+                ],
+                [
+                  "Modale jazz",
+                  "eind jaren 50",
+                  "Miles Davis, Kind of Blue (1959)"
+                ],
+                [
+                  "Free jazz",
+                  "ca. 1960",
+                  "Ornette Coleman, Free Jazz (1961)"
+                ],
+                [
+                  "",
+                  "",
+                  "Cecil Taylor, Air (1960)"
+                ],
+                [
+                  "",
+                  "",
+                  "John Coltrane, Ascension (1965)"
+                ]
+              ],
+              "kol": [
+                0.26,
+                0.22,
+                0.52
+              ]
+            },
+            "docent": "Twee fragmenten: So What, dan Free Jazz of Air. Elk niet langer dan een minuut.",
+            "notitie": {
+              "vertel": [
+                "Even terug. Bebop maakte jazz tot kunstmuziek voor kleine combo's: thema unisono, improvisatie, thema, op hoog tempo met veel chromatiek. De solist rijgt noten aan elkaar over snel wisselende akkoorden. Cool jazz, ca. 1950, is de reactie: lange lijnen, ingehouden spel, brushes en dempers.",
+                "Eind jaren 50 komt een nieuwe gedachte. Wat als je niet meer over snel wisselende akkoorden improviseert, maar lang op één toonladder blijft? Dat is modale jazz. Miles Davis nam in 1959 Kind of Blue op, nog steeds een van de bekendste jazzalbums. In So What blijft de harmonie zestien maten in D dorisch, gaat dan acht maten naar Es dorisch en acht maten terug. De solist heeft ineens ruimte, en moet zelf zorgen voor spanning.",
+                "John Coltrane speelde mee op dat album. Hij werkte het modale verder uit, bijvoorbeeld in My Favorite Things (1961) op de sopraansax. A Love Supreme (1965) gebruikt een basmotief van vier noten als zaadje voor het hele werk. Coltrane schreef het als een dankgebed aan God; hij groeide op in een kerkelijk gezin. Datzelfde jaar nam hij Ascension op, en dat is al vrijwel free jazz.",
+                "Free jazz, ca. 1960. De akkoordenschema's vervallen, de melodie beweegt vrij. Syllabus: vrije improvisatie zonder afspraken over tempo, toonsoort en ritme; onafhankelijkheid van schema, metrum, tempo, ritme en vorm; melodische fragmenten die associatief aan elkaar geregen worden; experimentele klanken uit het instrument halen. Ornette Coleman gaf er de naam aan met zijn album Free Jazz (1961), met twee kwartetten tegelijk. Cecil Taylor deed het op de piano: luister naar Air (1960).",
+                "Dat gebeurt niet los van de tijd. In de jaren 60 groeit het culturele zelfbewustzijn van Afro-Amerikanen in de strijd om burgerrechten. Vrijheid in de muziek wordt voor veel musici ook een uitspraak over vrijheid in het leven. Maar niet iedereen volgde: voor veel luisteraars was dit het einde van de jazz."
+              ],
+              "voorbeelden": [
+                "So What (Miles Davis, Kind of Blue, 1959). Laat de eerste solo horen: je hoort weinig harmonische wisselingen en veel ruimte. Vorm: 32 maten, AABA, D dorisch en Es dorisch.",
+                "Free Jazz (Ornette Coleman, 1961) of Air (Cecil Taylor, 1960). Geen duidelijke beat, geen schema, melodische fragmenten, experimentele klanken.",
+                "A Love Supreme, deel 1 Acknowledgement: basmotief van vier noten. Als je tijd hebt: hoor hoe de bas het neerzet en het thema aan het eind wordt gezongen."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is het verschil tussen bebop en modale jazz, kijkend naar akkoorden?",
+                  "a": "Bebop: veel snelle wisselingen, II-V-I. Modaal: lang op één modus, weinig wisselingen."
+                },
+                {
+                  "v": "Wat is er bij free jazz niet meer?",
+                  "a": "Vast akkoordenschema, vast metrum, vast tempo en vaste vorm. Soms ook de afspraak over toonsoort."
+                },
+                {
+                  "v": "Is free jazz nog muziek als er geen afspraken zijn?",
+                  "a": "Open vraag. Goed antwoord: er blijft luisteren, reageren en opbouw. Vrijheid betekent niet dat alles hetzelfde klinkt."
+                }
+              ],
+              "letop": [
+                "Leerstof.docx (vwo 5) zet 'improviseren op modi' bij hardbop (ca. 1955). De syllabus noemt hardbop niet als apart item. Maak daar geen strijdpunt van: hardbop mag je kort noemen als de bluesachtige tegenhanger van cool jazz.",
+                "Free jazz roept lachen op. Laat dat even. Vraag dan: wat hoor je precies?"
+              ]
+            }
+          },
+          {
+            "min": 15,
+            "soort": "uitleg",
+            "kop": "Improvisatietechnieken: waarop improviseer je?",
+            "stappen": [
+              "Op akkoorden: je volgt het schema, zoals II, V, I.",
+              "Op een modus: één toonladder over een vamp of orgelpunt.",
+              "Op een motief: herhalen, verplaatsen, in een sequens zetten.",
+              "Op een riff: kort patroon boven een straight beat.",
+              "Vrij: zonder afspraak, op wat je hoort."
+            ],
+            "klaar": "Speel vier maten in D dorisch op de witte toetsen boven een orgelpunt d. Wie durft?",
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "II, V, I",
+                  "t": "bebop, standards"
+                },
+                {
+                  "k": "Modus",
+                  "t": "modale jazz, vamp"
+                },
+                {
+                  "k": "Motief",
+                  "t": "herhalen, sequens"
+                },
+                {
+                  "k": "Riff",
+                  "t": "jazz-rock"
+                },
+                {
+                  "k": "Vrij",
+                  "t": "free jazz"
+                }
+              ]
+            },
+            "docent": "Bij elke techniek zelf een paar maten voordoen op het keyboard. Daarna één of twee leerlingen laten proberen boven de orgelpunt d.",
+            "notitie": {
+              "vertel": [
+                "De vraag bij elke solo is: waarop improviseert iemand? Dat bepaalt welke techniek je hoort. Noem er aan het eind van de les twee en je hebt het succescriterium.",
+                "Eén, op akkoorden. De solist volgt het schema en kiest noten die bij elk akkoord passen. De kern is de II, V, I. In C: Dm7, G7, C. Dat is het hart van de jazzstandard en van de bebop. Bebop voegt chromatiek toe en speelt solo's in double time: dubbel zo snel als de begeleiding.",
+                "Twee, op een modus. Je kiest een toonladder en blijft daar. De modi ken je van kaart TL 1a. D dorisch zijn de witte toetsen vanaf d: d e f g a b c. Eronder ligt een vamp, een klein herhaald patroon, of een orgelpunt: een lang aangehouden basnoot. Omdat de harmonie stilstaat, moet jij de spanning maken met ritme, register en dynamiek.",
+                "Drie, op een motief. Een klein idee herhalen, verplaatsen, verlengen, in een sequens zetten. Dat is de oudste techniek en het is wat ook de vwo 4-rubriek van een goede solo vraagt: een motief dat terugkomt en rust ertussen.",
+                "Vier, op een riff. In jazz-rock is de melodie gebaseerd op motieven en riffs, bluesachtig, boven een straight beat. Je speelt kort, ritmisch, vol syncopen en accenten.",
+                "Vijf, vrij. In free jazz zijn er geen afspraken. Melodische fragmenten worden associatief aan elkaar geregen en je reageert op de anderen. Er horen ook experimentele klanken bij: je haalt iets uit je instrument wat er niet voor bedoeld was.",
+                "De basisvorm blijft bij de eerste vier meestal hetzelfde als in de bebop: thema, solo's, thema. Alleen bij free jazz valt ook die weg."
+              ],
+              "voorbeelden": [
+                "II, V, I in C: Dm7 (d f a c), G7 (g b d f), C (c e g). Speel een lijntje dat op de c landt.",
+                "Modaal: linkerhand orgelpunt d, rechterhand op de witte toetsen. Lang op d, a, c blijven hangen en pas later de b, die de dorische kleur geeft. Zo werkt So What.",
+                "Motief: speel d, f, a. Dan e, g, b. Dan f, a, c. Dat is dezelfde figuur in een sequens omhoog.",
+                "Riff: Chameleon van Herbie Hancock is daar het schoolvoorbeeld van, in de bas."
+              ],
+              "vragen": [
+                {
+                  "v": "Waarom heb je bij modaal spelen minder aan 'de juiste noot' en meer aan ritme?",
+                  "a": "Bijna alle tonen passen. De spanning komt dus uit ritme, register, dynamiek en opbouw."
+                },
+                {
+                  "v": "Wat is een vamp?",
+                  "a": "Een kort herhaald begeleidingspatroon waar de solist overheen speelt."
+                },
+                {
+                  "v": "Noem twee improvisatietechnieken met een stijl erbij.",
+                  "a": "Bijvoorbeeld akkoordimprovisatie op II-V-I (bebop) en modaal over een vamp (modale jazz, Kind of Blue)."
+                }
+              ],
+              "letop": [
+                "Voorspelen kost tijd. Maximaal tien minuten voor de vijf technieken, dan vijf minuten proberen.",
+                "Niemand wil als eerste. Speel zelf de orgelpunt en begin met 'iedereen klapt een ritme', dan één leerling met twee noten.",
+                "De routekaart koppelt improviseren over II, V, I en over een modale vamp aan KC 5 en TL 1a. Die mogen ze erbij pakken."
+              ]
+            }
+          },
+          {
+            "min": 15,
+            "soort": "gesprek",
+            "kop": "Fusion en crossover: is dit nog jazz?",
+            "stappen": [
+              "Fusion: jazz smelt samen met rock, soul en funk.",
+              "Je hoort: een straight beat, riffs, syncopen en elektrische instrumenten.",
+              "Crossover: muziek steekt de grens van een stijl over, vaak ook naar een nieuw publiek.",
+              "Luister: wat is hier nog jazz, wat is nieuw?"
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Wie",
+                  "Wat",
+                  "Jaar"
+                ],
+                [
+                  "Miles Davis",
+                  "Bitches Brew",
+                  "1970"
+                ],
+                [
+                  "Herbie Hancock",
+                  "Head Hunters",
+                  "1973"
+                ],
+                [
+                  "Weather Report",
+                  "Birdland",
+                  "1977"
+                ],
+                [
+                  "Herbie Hancock",
+                  "Rockit (crossover)",
+                  "1983"
+                ]
+              ],
+              "kol": [
+                0.42,
+                0.42,
+                0.16
+              ]
+            },
+            "docent": "Twee fragmenten: Bitches Brew of Chameleon, en daarna Rockit als het kan. Syllabus-woord: jazz-rock (ca. 1970); vanaf 1980 heet dat fusion.",
+            "notitie": {
+              "vertel": [
+                "Eind jaren 60 luisteren jongeren naar rock en soul. Veel jazzmusici zien dat en willen die energie. Dat is de jazz-rock. De syllabus zegt: samensmelting van jazz, soul en rock. Vanaf 1980 heet het fusion, met invloeden van latin jazz, funk en soul. In de praktijk worden beide woorden door elkaar gebruikt. Op het CE: noem de kenmerken, dan zit je goed.",
+                "De kenmerken. Melodie gebaseerd op motieven en riffs, bluesachtig. De swing beat wordt vervangen door een straight beat, dus rechte achtsten. Syncopen en accenten. Popinstrumentarium naast jazzinstrumenten: elektrische gitaar, elektrische piano, basgitaar, synthesizer.",
+                "Miles Davis is weer de sleutel: Bitches Brew verscheen in 1970. Een grote band met twee drummers en elektrische piano's, lange groeven en een producer die de opnames achteraf knipt en plakt. Op dat album speelden onder anderen Wayne Shorter, Joe Zawinul, Chick Corea en John McLaughlin. Veel van hen begonnen daarna hun eigen fusionband.",
+                "Zawinul en Shorter richtten Weather Report op. Birdland (1977) is hun bekendste stuk, met de basgitaar van Jaco Pastorius. Herbie Hancock, die ook bij Miles speelde, ging met Head Hunters (1973) richting funk: Chameleon draait om een basriff op synthesizer. Het werd een van de best verkochte jazzalbums tot dan toe.",
+                "Crossover is ruimer. Dat is muziek die de grens van een stijl oversteekt en vaak een nieuw publiek bereikt. Hancock deed dat zelf met Rockit (1983): elektronische beats en scratchen. Dat is meteen de brug naar hiphop van volgende week. Het kan ook de andere kant op: Jacques Loussier speelde vanaf 1959 Bach als jazztrio.",
+                "Eind jaren 90 komt nu-jazz: jazzritmes met elektronische muziek, jazzinstrumenten naast draaitafels, samplers en laptops, en improvisatie die daarmee meegaat. De jazzlijn blijft dus doormengen. Dat was ook de conclusie van vorige les: een web van hybriden."
+              ],
+              "voorbeelden": [
+                "Miles Davis, Bitches Brew (1970): luister naar de eerste minuut van het titelstuk of van Spanish Key. Elektrische piano's, geen swing, lange groove.",
+                "Herbie Hancock, Chameleon (Head Hunters, 1973): basriff, funkbeat, en toch een echte jazzsolo eroverheen.",
+                "Weather Report, Birdland (1977): een thema dat als een popsong blijft hangen, met basgitaar vooraan.",
+                "Herbie Hancock, Rockit (1983): scratchen van een deejay, elektronisch. Dit is crossover."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is er in Chameleon nog jazz, en wat niet?",
+                  "a": "Jazz: de improvisatie, de harmonische taal, de vorm thema-solo-thema. Niet: de straight funkbeat, de basriff, de synthesizers."
+                },
+                {
+                  "v": "Is fusion verraad of vernieuwing?",
+                  "a": "Open vraag. Sommige critici vonden het uitverkoop. Anderen zagen de voortzetting van de jazz: die heeft altijd de muziek van de eigen tijd opgenomen. Vraag om een muzikaal argument."
+                },
+                {
+                  "v": "Wat is het verschil tussen fusion en crossover?",
+                  "a": "Fusion is een stijl met kenmerken (jazz met rock, soul, funk). Crossover is een bredere term voor muziek die de grens van een stijl oversteekt."
+                }
+              ],
+              "letop": [
+                "Pas op met 'fusion is hetzelfde als jazz-rock': de syllabus maakt dat onderscheid in de tijd. Noem het één keer.",
+                "Houd de discussie op vijf minuten, zodat het exit ticket erin past."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Briefje: wat is fusion? Eén of twee zinnen, met minstens twee kenmerken en één naam. Zet er ook twee improvisatietechnieken bij: dat is het succescriterium van vandaag.",
+              "Goed antwoord: fusion is een samensmelting van jazz met rock, soul en funk: straight beat, riffs en elektrische instrumenten, zoals Miles Davis op Bitches Brew."
+            ],
+            "vragen": [
+              {
+                "v": "Wat is fusion?",
+                "a": "Samensmelting van jazz met rock, soul en funk, met een straight beat, riffs en popinstrumentarium. Voorbeeld: Miles Davis, Herbie Hancock, Weather Report."
+              },
+              {
+                "v": "Noem twee improvisatietechnieken.",
+                "a": "Twee uit: op akkoorden (II-V-I), modaal, op een motief, op een riff, vrij."
+              }
+            ],
+            "letop": [
+              "Wie alleen 'jazz met rock' schrijft, zit goed maar geeft geen kenmerk. Dat is de plek om bij de praktijkles even op terug te komen."
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

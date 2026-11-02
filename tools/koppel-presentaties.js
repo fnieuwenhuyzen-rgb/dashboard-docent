@@ -1,16 +1,19 @@
-// Koppelt de PowerPoint-lespresentaties uit de lesmap als materiaal in inhoud-klas3.json.
-// Gebruik: node tools/koppel-presentaties.js   (daarna merge-inhoud --force)
+// Zet de presentatielinks uit tools/presentaties-links.json (geschreven door maak-decks.js) als eerste materiaal bij de les,
+// in public/data/basis.json en bron/leergang-data.json. Verder verandert er niets aan die bestanden.
+// Gebruik: node tools/koppel-presentaties.js
 const fs = require('fs'), path = require('path');
-const { spUrl } = require('./sp');
-const p = path.join(__dirname, 'inhoud-klas3.json'); const j = JSON.parse(fs.readFileSync(p, 'utf8'));
-const MAP = '01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027\\';
-const KOPPEL = {
-  'Songbox 1: opnemen en terugluisteren': ['pres08', 'Presentatie: Songbox 1 opnemen en terugluisteren (PowerPoint)', '08 Songbox 1 - opnemen en terugluisteren.pptx'],
-  'Nieuwe songbox: Way Maker (Sinach)': ['pres11', 'Presentatie: Way Maker kennismaken (PowerPoint)', '11 Way Maker - kennismaken.pptx']
-};
-for (const [titel, [key, t, bestand]] of Object.entries(KOPPEL)) {
-  j._mat[key] = { t, u: spUrl(MAP + bestand) };
-  const l = j.lessen[titel]; l.materiaal = l.materiaal || []; if (!l.materiaal.includes(key)) l.materiaal.unshift(key);
-  console.log(titel, '→', l.materiaal.join(', '));
+const root = path.join(__dirname, '..');
+const links = JSON.parse(fs.readFileSync(path.join(__dirname, 'presentaties-links.json'), 'utf8'));
+function doe(bestand, pak) {
+  const p = path.join(root, bestand); const data = JSON.parse(fs.readFileSync(p, 'utf8')); let nieuw = 0, bijgewerkt = 0;
+  for (const k of links) {
+    const lg = pak(data)[k.lg]; const w = lg && lg.weken.find(x => x.w === k.w); const l = w && w[k.slot];
+    if (!l) { console.warn(`${bestand}: geen les ${k.lg} week ${k.w} ${k.slot}`); continue; }
+    l.materiaal = l.materiaal || []; const bestaat = l.materiaal.find(m => m.u === k.u);
+    if (bestaat) { if (bestaat.t !== k.t) { bestaat.t = k.t; bijgewerkt++; } } else { l.materiaal.unshift({ t: k.t, u: k.u }); nieuw++; }
+  }
+  fs.writeFileSync(p, JSON.stringify(data), 'utf8');
+  console.log(`${bestand}: ${nieuw} links erbij, ${bijgewerkt} bijgewerkt`);
 }
-fs.writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
+doe('public/data/basis.json', d => d.leergangen);
+doe('bron/leergang-data.json', d => d.klassen);

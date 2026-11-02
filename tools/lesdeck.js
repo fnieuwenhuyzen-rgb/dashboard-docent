@@ -122,9 +122,9 @@ function slideCheck(p, les, meta) {
 }
 function slideRodeDraad(p, les, meta, img) {
   const s = p.addSlide(); s.background = { color: K.wit };
-  fotoRond(s, img, 0, 0, 6.2, H); bron(s, img); notities(s, notitieRodeDraad(les)); s._voetX = 6.9;
-  eyebrow(s, 'Rode draad', 6.9, 1.2, 6);
-  s.addText(les.identiteit, { x: 6.9, y: 1.7, w: W - 6.9 - M, h: 4.5, fontFace: KOP, fontSize: 30, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top', lineSpacingMultiple: 1.05 });
+  const heeft = !!(img && img.pad); const x0 = heeft ? 6.9 : M; if (heeft) { fotoRond(s, img, 0, 0, 6.2, H); bron(s, img); s._voetX = 6.9; } notities(s, notitieRodeDraad(les));
+  eyebrow(s, 'Rode draad', x0, 1.2, 6);
+  s.addText(les.identiteit, { x: x0, y: 1.7, w: W - x0 - M, h: 4.5, fontFace: KOP, fontSize: 30, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top', lineSpacingMultiple: 1.05 });
   return s;
 }
 function slideThuis(p, les, meta, thuis) {
