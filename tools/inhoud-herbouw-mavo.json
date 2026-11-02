@@ -1,0 +1,1330 @@
+{
+  "_uitleg": "Herbouw songbox 1 (klas 3), kiezen voor muziek (klas 3), terugblik mavo 3 en de twee kerstboxlessen Go Tell It (mavo 3). Een klasblok heeft één blok en één blokKort, daarom staan er vier klasblokken: klas3 (les 8), klas3profielkeuze (les 9), mavo3 (les 9) en mavo3kerst (les 12 en 14).",
+  "klas3": {
+    "klas": "havo 3 en vwo 3",
+    "thema": "klas3",
+    "map": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027",
+    "blok": "Periode 1 · Samenspelen in bandbezetting",
+    "blokKort": "periode 1",
+    "thuis": {
+      "mb": "Luister thuis nog een keer naar jullie opname"
+    },
+    "lessen": [
+      {
+        "week": 8,
+        "code": "P1 · les 8",
+        "bestand": "08 Songbox 1 - opnemen en terugluisteren.pptx",
+        "kort": "Songbox 1: opnemen",
+        "bronLes": {
+          "lg": "havo3",
+          "w": 8,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 8,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 8,
+            "slot": "l1"
+          }
+        ],
+        "fotos": {
+          "titel": "bandles-leerlingen.jpg",
+          "doel": "microfoon-studio.jpg",
+          "fase": [
+            null,
+            "telefoon-opnemen.jpg",
+            "mengtafel-leerlingen.jpg",
+            null
+          ],
+          "rodeDraad": "mengtafel-leerlingen.jpg"
+        },
+        "voorbereiding": [
+          "Zoek vooraf een stille plek per groep: een hoek, de gang of een klein lokaal. Zet drums en cajon zo ver mogelijk van de zang vandaan.",
+          "Zet de vier luistervragen op het bord: Samenspel, Ritme, Toon, Techniek.",
+          "Leg het beoordelingsformulier songbox 1 (docent) en het scoreblad klaar. Je beoordeelt de opname die de groep deelt.",
+          "Test vooraf of delen via Magister werkt, en reserveer een extra telefoon voor als er een leerling met een volle telefoon zit."
+        ],
+        "notitieTitel": [
+          "Vandaag nemen jullie de song op waar je sinds de eerste lessen aan werkt, en luisteren jullie terug.",
+          "Vertel meteen dat songbox 1 meetelt als voortgangscijfer. Het is geen PTO-toets, maar je krijgt er wel een cijfer voor. Dan snappen ze waarom de opname ertoe doet.",
+          "Het cijfer komt uit zes onderdelen. Vier gaan over spelen en tellen dubbel: samenspel, ritme, toon en techniek. Twee gaan over reflectie en tellen één keer: eigen reflectie en feedback op groepsgenoten. Samen is dat 10 punten: je telt score maal weging op en deelt door 10.",
+          "Elk onderdeel krijgt een niveau: onvoldoende (4), voldoende (6), goed (8) of uitstekend (10). Zit het ertussen, dan geef je een 5, 7 of 9."
+        ],
+        "notitieAgenda": [
+          "Drie delen: eerst opnemen, dan terugluisteren met de vier vragen, dan vooruitkijken naar periode 2.",
+          "Benadruk de volgorde bij het opnemen: eerst één keer repeteren, dan pas opnemen. Anders neem je de eerste, zenuwachtige poging op."
+        ],
+        "notitieDoel": [
+          "Lees het doel voor: je groep neemt de song op, luistert terug en benoemt twee sterke punten en één verbeterpunt.",
+          "Leg de drie criteria uit. Compleet en gedeeld: de hele song staat erop en ik heb hem. Iets wat goed ging, met een voorbeeld: niet 'het ging goed', maar 'het refrein klonk vol omdat we allemaal tegelijk invielen'. Iets wat beter kan en hoe: niet 'de drums waren te hard', maar 'de drummer speelt in het couplet zachter'."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Vandaag nemen jullie op. Eén telefoon per groep. Leg hem liggend neer, horizontaal, en zo ver van de drums als kan. Ligt de telefoon vlak bij de drums, dan hoor je op de opname alleen drums.",
+                "Daarna luisteren jullie terug met vier vragen. Dat zijn dezelfde vier dingen waar ik op let bij het cijfer: samenspel, ritme, toon en techniek.",
+                "Samenspel: luisteren we naar elkaar? Beginnen en eindigen we samen? Groeit de song samen van een rustig couplet naar een vol refrein?",
+                "Ritme: houden we het tempo vast? Hoor je de groove? Wisselen we akkoorden op de tel?",
+                "Toon: klinkt het zuiver en zijn het de juiste noten? Klinken de akkoorden schoon, en zijn de melodie en de grondtonen zuiver?",
+                "Techniek: beheersen we ons instrument of onze stem? Spelen we onze partij netjes: de akkoorden, de grondtonen, de groove of de melodie, zonder haperen bij de wissels?"
+              ],
+              "voorbeelden": [
+                "Samenspel hoor je aan: begint iedereen op dezelfde tel, stoppen we op hetzelfde moment?",
+                "Ritme hoor je aan: versnelt de song in het refrein? Klinkt een akkoordwissel als een haperinkje?",
+                "Toon hoor je aan: een akkoord dat dof klinkt omdat een snaar wordt gedempt of een vinger verkeerd staat.",
+                "Techniek hoor je aan: een partij die steeds vastloopt bij dezelfde wissel."
+              ],
+              "vragen": [
+                {
+                  "v": "Waarom leg je de telefoon niet naast de drums?",
+                  "a": "Dan klinken de drums zo hard dat je de rest niet meer hoort."
+                },
+                {
+                  "v": "Wat doen we met de opname?",
+                  "a": "Terugluisteren met de vier vragen en daarna twee sterke punten en één verbeterpunt noemen."
+                },
+                {
+                  "v": "Telt dit mee voor een cijfer?",
+                  "a": "Ja, songbox 1 telt als voortgangscijfer. Het is geen PTO-toets."
+                }
+              ],
+              "letop": [
+                "Houd de uitleg bij vijf minuten. De tijd is voor spelen en opnemen.",
+                "Leerlingen die zenuwachtig zijn over het cijfer: zeg dat het om wat je hoort gaat en wat je ermee doet, niet om een perfecte opname."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Eerst één keer de song helemaal doorspelen als repetitie. Dan opnemen. Die repetitie is bedoeld om de zenuwen eruit te halen.",
+                "Spreek vooraf af: wie telt af, wie geeft het teken voor het slot? Mis je een akkoord, speel dan door op de tel en pak het volgende.",
+                "Controleer na de opname even tien seconden: is iedereen te horen en klinkt het niet vervormd? Deel de opname daarna via Magister met mij.",
+                "Verdeel de tijd zo: 3 minuten opstellen en telefoon klaarzetten, 4 minuten repetitie, 5 minuten opnemen, 3 minuten delen."
+              ],
+              "vragen": [
+                {
+                  "v": "Wie telt af, en wat doen jullie als er iemand misgaat?",
+                  "a": "Een vaste afteller. We spelen door en pakken het volgende akkoord op de tel."
+                },
+                {
+                  "v": "Hoe weet je dat de opname gelukt is?",
+                  "a": "Even tien seconden terugluisteren: is iedereen te horen en klinkt het schoon?"
+                }
+              ],
+              "letop": [
+                "Loop langs elke groep: staat de telefoon goed en doet iedereen mee? Zachte partijen zoals zang verdrinken snel. Laat de groep zelf horen of de zang hoorbaar blijft.",
+                "Gaat de opname mis (telefoon vol, geluid vervormd), laat ze opnieuw opnemen als er tijd is.",
+                "Is een groep nog niet klaar met de song, laat ze toch opnemen wat ze hebben. De opname laat zien waar ze staan en daar gaat de les over.",
+                "Lukt delen via Magister niet in de les, spreek met de groep af wanneer ze het alsnog doen."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Luister de opname eerst één keer helemaal. Niemand praat. Kijk naar de vier vragen op het bord.",
+                "Daarna is iedereen aan de beurt. Eerst twee sterke punten, elk met een voorbeeld: 'Het refrein klonk vol, want we vielen allemaal tegelijk in.' Daarna één verbeterpunt met hoe je dat aanpakt: 'De overgang naar het refrein was rommelig. Volgende keer tellen we de laatste maat hardop mee.'",
+                "Dit is meteen oefening voor de twee reflectieonderdelen van het cijfer. Eigen reflectie: weten wat goed gaat en wat beter kan, met concrete voorbeelden uit het lied. Feedback op groepsgenoten: een compliment en een bruikbare tip, met wat en waar in het lied.",
+                "Elke leerling schrijft zijn twee sterke punten en zijn verbeterpunt ook op een briefje. Dat briefje is de formatieve check van deze les."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat hoor je?",
+                  "a": "Iets concreets: wie je hoort, wat je hoort en waar in het lied."
+                },
+                {
+                  "v": "Wat kan beter, en hoe?",
+                  "a": "Een verbeterpunt met een aanpak: wat doen we de volgende keer anders?"
+                },
+                {
+                  "v": "Hoe hoor je of het tempo gelijk blijft?",
+                  "a": "Tik mee met je voet. Loopt je voet de hele song mee met de muziek, of raak je hem kwijt in het refrein?"
+                },
+                {
+                  "v": "Wat is het verschil tussen 'het was goed' en een sterk punt met voorbeeld?",
+                  "a": "Een voorbeeld noemt wat je hoorde en waar in het lied."
+                }
+              ],
+              "letop": [
+                "Sommige leerlingen vinden zichzelf horen vervelend. Laat ze eerst een compliment vinden en dan pas de tip.",
+                "Veel leerlingen zeggen 'het ging wel goed'. Vraag door: waar in het lied?",
+                "Laat de stille leerling niet als eerste beginnen.",
+                "Je hoeft niet bij elke groep te zijn. Luister bij twee of drie groepen mee en noteer wat je opvalt, dat helpt bij het cijfer."
+              ]
+            }
+          },
+          "3": {
+            "stappen": [
+              "Elke groep deelt één verbeterpunt met de klas.",
+              "Op 16 november begint periode 2 met een eigen kerstlied. Dat wordt ook het lied voor P1."
+            ],
+            "docent": "",
+            "notitie": {
+              "vertel": [
+                "Elke groep zegt één verbeterpunt tegen de klas, in één zin. Kort houden: daar gaat het om, niet om een discussie.",
+                "Vooruitblik: op 16 november begint periode 2 met een eigen kerstlied. Dat lied wordt ook het lied voor P1, het speelstuk dat in periode 2 beoordeeld wordt.",
+                "Volgende les gaat over kiezen voor muziek in de bovenbouw. De les daarna valt uit: dat is activiteitenweek A, de profielkeuzeweek.",
+                "Rond af met de opname: die deel je met mij en hij telt mee in je beoordeling van songbox 1."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is jouw belangrijkste verbeterpunt, in één zin?",
+                  "a": "Eén concreet punt uit de opname, bijvoorbeeld 'we beginnen niet samen'."
+                },
+                {
+                  "v": "Wat gebeurt er met de opname?",
+                  "a": "Ik krijg hem via Magister en gebruik hem voor de beoordeling van songbox 1."
+                },
+                {
+                  "v": "Welk lied wordt het in periode 2?",
+                  "a": "Een eigen kerstlied dat ook het lied voor P1 wordt. De titel hoor je daarna."
+                }
+              ],
+              "letop": [
+                "Noem de titel van het kerstlied alleen als jij hem al hebt vastgelegd. Zeg anders alleen dat het een eigen kerstlied wordt.",
+                "Heeft een groep nog niet gedeeld, spreek nu af wanneer."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Dit is het formatieve moment van de les. De leerling levert twee dingen: de opname via Magister en een briefje met twee sterke punten en één verbeterpunt.",
+              "Het briefje laat zien of de leerling echt luistert. Een goed briefje noemt wat en waar in het lied.",
+              "Het sluit aan op de twee reflectieonderdelen van het cijfer: eigen reflectie en feedback op groepsgenoten."
+            ],
+            "vragen": [
+              {
+                "v": "Hoeveel sterke punten en hoeveel verbeterpunten staan op je briefje?",
+                "a": "Twee sterke punten en één verbeterpunt."
+              },
+              {
+                "v": "Wat maakt een punt goed?",
+                "a": "Het noemt wat je hoorde en waar in het lied, en bij een verbeterpunt ook hoe je het aanpakt."
+              }
+            ],
+            "letop": [
+              "Lees de briefjes na de les en let op wie alleen algemene opmerkingen schrijft. Die leerlingen help je in de volgende les met een concreet voorbeeld."
+            ]
+          }
+        },
+        "notitieRodeDraad": [
+          "Een band klinkt alleen goed als je durft te zeggen wat beter kan en dat vriendelijk doet. Dat vraagt eerlijk luisteren naar jezelf.",
+          "Paulus vergelijkt in 1 Korintiërs 12 een gemeente met één lichaam met veel delen. Het oog kan niet tegen de hand zeggen dat het hem niet nodig heeft. In een band is dat hetzelfde: de drummer heeft de zanger nodig en andersom.",
+          "Opbouwende feedback begint bij wat goed ging, is concreet en zegt erbij hoe het beter kan."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Wat maakt feedback opbouwend in plaats van afbrekend?",
+            "a": "Je begint met wat goed ging, je bent concreet en je zegt erbij hoe het beter kan."
+          },
+          {
+            "v": "Waarom heeft een band iedereen nodig?",
+            "a": "Elke partij hoort bij het geheel. Valt er één weg, dan hoor je dat."
+          }
+        ]
+      }
+    ]
+  },
+  "klas3profielkeuze": {
+    "klas": "havo 3 en vwo 3",
+    "thema": "klas3",
+    "map": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027",
+    "blok": "Periode 1 · Samenspelen in bandbezetting",
+    "blokKort": "profielkeuze",
+    "lessen": [
+      {
+        "week": 9,
+        "code": "P1 · les 9",
+        "bestand": "09 Kiezen voor muziek in de bovenbouw - nieuw.pptx",
+        "kort": "Kiezen voor muziek",
+        "bronLes": {
+          "lg": "havo3",
+          "w": 9,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 9,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 9,
+            "slot": "l1"
+          }
+        ],
+        "fotos": {
+          "titel": "messiah-koor.jpg",
+          "doel": "bandles-leerlingen.jpg",
+          "fase": [
+            null,
+            null,
+            null,
+            "doelen.jpg",
+            null
+          ],
+          "rodeDraad": "pieterskerk.jpg"
+        },
+        "voorbereiding": [
+          "Zet het Hallelujah-fragment klaar en test het geluid. Het fragment is van Hermann Scherchen, publiek domein, Wikimedia Commons.",
+          "Maak blaadjes voor de proefopdracht en exit-ticketbriefjes.",
+          "Bedenk vooraf je eigen haakje bij de Messiah (zie fase 2): één concreet moment dat jij zelf meemaakte, in drie of vier zinnen.",
+          "Lees de studiewijzers van havo 4 en vwo 4 nog eens door. De cijfers en datums in de notities komen daaruit en gelden voor dit schooljaar."
+        ],
+        "notitieTitel": [
+          "Deze les helpt de leerlingen kiezen. De profielkeuze komt eraan en ze moeten kunnen inschatten of muziek bij hen past.",
+          "Muziek in de bovenbouw heeft drie onderdelen, zo heten ze ook in het examenprogramma: vaktheorie (domein A), praktijk (domein B) en oriëntatie op studie en beroep (domein C). Je doet dus niet alleen spelen en niet alleen theorie.",
+          "Havo heeft drie lessen per week in havo 4 en 5. Vwo heeft twee lessen in vwo 4 en drie in vwo 5 en 6. Er is geen leerboek, wel de digitale methode MusicBox. Thuis is er weinig huiswerk: ongeveer 20 minuten MusicBox per week en tot maart 10 minuten per dag Messiah."
+        ],
+        "notitieAgenda": [
+          "Vijf stappen: eigen beeld opschrijven, uitleg, proefopdracht, jullie vragen, exit ticket.",
+          "Zeg dat de proefopdracht een echte examenvraag nabootst: dan weten ze dat ze het kunnen."
+        ],
+        "notitieDoel": [
+          "Doel: de leerling weet wat muziek in havo 4 en 5 of vwo 4 tot 6 inhoudt en kan een bewuste keuze maken.",
+          "Leg de criteria uit. Wat je doet: luisteren, spelen, maken en erop uit. Wat het examen vraagt: een schoolexamen met praktijk en theorie en een centraal examen over luisteren en theorie. En: ik heb voor mezelf opgeschreven of muziek bij mijn keuze past, dat doen ze op het exit ticket."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Jullie kiezen binnenkort een profiel. Muziek is een keuzevak in de bovenbouw. Voordat ik iets vertel, wil ik weten wat jullie denken dat het is.",
+                "Schrijf één zin op. Er is geen goed of fout.",
+                "Drie leerlingen lezen voor. Zet de woorden die vaak terugkomen op het bord, bijvoorbeeld zingen, een instrument spelen of theorie. Aan het eind van de uitleg kijken we of het klopte."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat denk je dat je doet bij muziek in havo 4 of vwo 4?",
+                  "a": "Alles wat ze noemen is goed. De meeste leerlingen denken aan alleen spelen of alleen theorie. Jij laat zien dat het luisteren, spelen, maken en erop uit is."
+                }
+              ],
+              "letop": [
+                "Houd het bij vijf minuten. Dwing niemand om voor te lezen."
+              ]
+            }
+          },
+          "1": {
+            "stappen": [
+              "Luisteren: muziek herkennen en begrijpen, van jazz en barok tot romantiek en pop.",
+              "Spelen: je zingt en speelt, alleen en samen.",
+              "Maken: je improviseert, componeert en arrangeert zelf.",
+              "Erop uit: concerten in De Doelen en de Messiah in Leiden.",
+              "Examen: schoolexamen, een concert voor publiek en een centraal examen."
+            ],
+            "docent": "Havo: 3 lessen per week in havo 4 en 5. Vwo: 2 lessen per week in vwo 4, 3 in vwo 5 en 6. Geen leerboek, wel de digitale methode MusicBox, en weinig huiswerk. Verplichte activiteiten (handelingsdelen) krijgen geen cijfer, maar moet je wel voldoende afronden.",
+            "notitie": {
+              "vertel": [
+                "Haakje bij de Messiah (dit vul jij in, ik verzin geen anekdote voor je): kies één moment dat jij zelf meemaakte en vertel het in drie of vier zinnen. Waar was het, wat hoorde of voelde je toen het koor voor het eerst inzette, wat vond je lastig aan jouw partij, wat is je bijgebleven? Heb je geen eigen verhaal, gebruik dan dit: de leerlingen zingen zelf mee. Een hele dag repeteren en 's avonds het concert, in een groot koor met orkest en met professionele musici, en daarvoor oefen je thuis tot maart elke dag tien minuten met de opname van jouw stem.",
+                "Verdeel de tijd ongeveer zo: luisteren 3 minuten, spelen 3, maken 2, erop uit 3, examen 4.",
+                "Luisteren (domein A). In havo 4 loop je door de stijlen: jazz en blues, barok en classicisme, romantiek en 20e eeuw, pop en luistertraining. In vwo 4 begin je bij de voorlopers van de jazz en vroege pop en leer je de barok kennen. In vwo 5 gaat het over classicisme, romantiek, moderne jazz en de gouden popjaren. Elke les begint met drie fragmenten uit eerdere weken. Je leert ritme, maat, tempo, toonsoort, samenklank, dynamiek, klankkleur en vorm te benoemen. Dit onderdeel komt terug in het centraal examen, op de computer met een koptelefoon.",
+                "Spelen (domein B). Je zingt en speelt, alleen en samen, op keyboard, gitaar, ukelele, bas, drums of zang. Je wisselt regelmatig van instrument. Van oktober tot maart begint de speelles met de Messiah. Hier hoort ook het samenspel bij: eigen partij zelfstandig spelen, in de maat blijven, luisteren naar de anderen en samen beginnen en eindigen. Dit telt alleen in het schoolexamen.",
+                "Maken (domein B). Je improviseert, componeert, arrangeert en neemt op. In havo 4 improviseer je minstens een minuut over een akkoordenschema dat je kent. In havo 5 schrijf je een eigen stuk van minstens twee minuten met minstens drie partijen dat een muzikale vraag oplost, bijvoorbeeld hoe je spanning opbouwt zonder harder te spelen.",
+                "Erop uit. Twee avonden naar een concert in De Doelen in Rotterdam, dit schooljaar donderdag 15 oktober en donderdag 18 februari. En de Messiah van Händel in Leiden, dit schooljaar vrijdag 12 maart. Je schrijft na elk concert kort op wat je hoorde en wat je opviel. Deze activiteiten heten handelingsdelen: ze krijgen geen cijfer, maar je moet ze wel voldoende afronden. Een vierde handelingsdeel is een muzikale bijdrage aan school: schoolkoor of band, muziek op de open dag of bij een viering, een onderbouwleerling helpen (minstens vier keer) of het muzieklokaal beheren.",
+                "Examen. Het schoolexamen telt in havo 4 voor 30 procent en in havo 5 voor 70 procent. In havo 4 zijn dat vijf toetsen: samenspel en improvisatie, notatie lezen en schrijven, een onbekende melodie treffen en zingen of spelen, een mondeling over de concerten en de Messiah, en een luistertoets zoals het centraal examen. In havo 5 zijn er een analysetoets, een eigen compositie, een muzikale productie voor publiek en een proefexamen. Voor vwo is de verdeling 20 procent in vwo 4, 60 procent samen na vwo 5 en 40 procent in vwo 6. In vwo 6 sluit je af met een examenconcert.",
+                "Centraal examen. Het gaat alleen over theorie en luisteren (domein A): je luistert op de computer naar fragmenten en beantwoordt vragen. Dit jaar begint het centraal examen voor havo 5 op vrijdag 14 mei, en het schoolexamen moet uiterlijk 16 april af zijn. Je eindcijfer is het gemiddelde van schoolexamen en centraal examen. Praktijk telt alleen in het schoolexamen."
+              ],
+              "voorbeelden": [
+                "De kaarten op de dia zijn de vier sleutelwoorden: luisteren, spelen, maken, erop uit. Loop ze één voor één langs.",
+                "Het examenconcert: bij vwo 6 verzorgt de groep zelf begroting, uitnodiging, publiciteit, locatie, aankleding, programmaboekje en presentatie. Bij havo 5 heet het een muzikale productie voor publiek, met minstens één eigen compositie, arrangement of improvisatie."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk onderdeel van muziek komt terug in het centraal examen?",
+                  "a": "Theorie en luisteren (domein A). Praktijk telt alleen in het schoolexamen."
+                },
+                {
+                  "v": "Hoeveel lessen per week?",
+                  "a": "Havo: drie lessen in havo 4 en 5. Vwo: twee in vwo 4, drie in vwo 5 en 6."
+                },
+                {
+                  "v": "Wat doet de Messiah met de lessen?",
+                  "a": "Tot maart zing je elke speelles de koren. In de theorieles leer je begrippen als oratorium, aria, recitatief, fuga, imitatie, homofonie en polyfonie aan muziek die je zelf zingt."
+                },
+                {
+                  "v": "Krijg je een cijfer voor het concert in De Doelen?",
+                  "a": "Nee, het is een handelingsdeel: je moet het voldoende afronden, maar het krijgt geen cijfer. Je gebruikt het wel bij het mondeling in havo 4."
+                }
+              ],
+              "letop": [
+                "Het is veel. Zeg dat ze niets hoeven te onthouden: het staat in de studiewijzer. Het gaat erom dat ze zien wat het is.",
+                "De datums zijn van dit schooljaar (2026-2027). Deze leerlingen zitten volgend schooljaar in de bovenbouw. Zeg erbij dat de data dan anders liggen.",
+                "Beloof geen rooster of profielafspraken die je niet zeker weet."
+              ]
+            }
+          },
+          "2": {
+            "beeld": {
+              "soort": "fragment",
+              "k": "Het fragment",
+              "t": "Händel, Hallelujah uit de Messiah. Luister de eerste 40 seconden, twee keer.",
+              "link": "Fragment openen",
+              "u": "https://commons.wikimedia.org/wiki/File:Handel_-_Messiah,_Part_2_(Scherchen)_-_45._Hallelujah.ogg"
+            },
+            "docent": "Antwoorden: 1 = B, 2 = 4 (4/4-maat). In het centraal examen luister je ook naar fragmenten en beantwoord je daar vragen over; laat zien dat het te doen is. Opname: Hermann Scherchen, publiek domein, Wikimedia Commons.",
+            "notitie": {
+              "vertel": [
+                "We doen nu een proef, zoals in het examen: ik laat het begin van het Hallelujah uit de Messiah horen en jullie beantwoorden twee vragen.",
+                "Vraag 1: welke bezetting hoor je? A een solist met piano, B een koor met orkest, C een popband. Vraag 2: hoeveel tellen heeft één maat, 3 of 4? Schrijf je antwoorden op en vergelijk ze met je buurman of buurvrouw.",
+                "Tip bij vraag 2: tel rustig mee met de muziek, 1 2 3 4. Voel je een wals (1 2 3, 1 2 3), dan is het 3. Voel je vier gelijke tellen, dan is het 4.",
+                "Verdeel de tijd: 2 minuten uitleg van de vragen, 1 minuut eerste keer luisteren, 1 minuut noteren, tweede keer luisteren, 2 minuten vergelijken met de buur, 3 minuten nabespreken.",
+                "Nabespreking. Vraag 1 is B. Je hoort veel stemmen tegelijk en eronder een orkest, met trompetten en pauken. Een solist met piano is één stem met alleen piano, en een popband heeft drums en gitaren. Vraag 2 is 4: het is een 4/4-maat.",
+                "Koppel het aan het examen: in het centraal examen beantwoord je ook vragen bij fragmenten. Je hoeft niet te weten van wie het is. In havo 4 hoor je bij het mondeling zelfs een onbekend fragment en leg je uit waar het volgens jou vandaan komt, op grond van wat je hoort: de bezetting, de klank, de vorm, het ritme."
+              ],
+              "voorbeelden": [
+                "Het Hallelujah komt uit het tweede deel van de Messiah van Händel. De studiewijzer noemt het: unisono, homofonie en polyfonie wisselen elkaar af, met trompetten en pauken.",
+                "Deze leerlingen zingen het zelf mee als ze in de bovenbouw muziek kiezen: het Hallelujah staat op het schema van de Messiah-koren."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke bezetting hoor je: solist met piano, koor met orkest of popband?",
+                  "a": "B, koor met orkest. Veel stemmen, strijkers en daarbij trompetten en pauken."
+                },
+                {
+                  "v": "Hoeveel tellen heeft één maat, 3 of 4?",
+                  "a": "4, een 4/4-maat."
+                },
+                {
+                  "v": "Hoe hoor je dat het geen popband is?",
+                  "a": "Geen drumstel en geen gitaren, wel een koor en een orkest met trompetten en pauken."
+                }
+              ],
+              "letop": [
+                "Test het fragment vóór de les. Zet het op 40 seconden en speel het twee keer.",
+                "Leerlingen die 3 antwoorden: laat ze op hun knie meetikken op 1 2 3 4 terwijl je het fragment nog een keer speelt.",
+                "Zeg expliciet dat de vraag lastig is als je nog niets weet. Het is een proef, geen toets."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Nu zijn de leerlingen aan de beurt. Alles mag. Gebruik de antwoorden hieronder en zeg eerlijk als je iets niet weet.",
+                "Zet de vier thema's op het bord: rooster, profiel, examen, concerten. Dan komen alle vragen vanzelf in een van die vakjes."
+              ],
+              "vragen": [
+                {
+                  "v": "Hoeveel huiswerk is het?",
+                  "a": "Weinig. In de studiewijzer: ongeveer 20 minuten MusicBox per week, en tot maart 10 minuten per dag de Messiah-koren oefenen."
+                },
+                {
+                  "v": "Moet je een instrument kunnen spelen?",
+                  "a": "In de studiewijzer staat: je eigen instrument, als je er een bespeelt. In de les speel je op keyboard, gitaar, ukelele, bas, drums of zang. Of er een vooropleiding nodig is, staat er niet; zeg dat je het nakijkt."
+                },
+                {
+                  "v": "Moet je noten kunnen lezen?",
+                  "a": "Dat leer je in havo 4. Er is een toets over notatie lezen en schrijven: ontbrekende noten invullen, een ritme noteren, intervallen tot en met het octaaf, toonladders tot en met drie voortekens en drieklanken."
+                },
+                {
+                  "v": "Moet ik alleen optreden?",
+                  "a": "Je speelt of zingt je eigen partij in een ensemble met klasgenoten, en je improviseert een minuut over een akkoordenschema dat je kent. Daarbij krijg je begeleiding."
+                },
+                {
+                  "v": "Zijn de concerten verplicht?",
+                  "a": "Ja, het zijn handelingsdelen. Je moet ze voldoende afronden, maar ze krijgen geen cijfer."
+                },
+                {
+                  "v": "Welke muziek komt aan bod?",
+                  "a": "In havo 4 jazz en blues, barok en classicisme, romantiek en 20e eeuw, pop en luistertraining. Vwo gaat dieper op elke stijl in."
+                },
+                {
+                  "v": "Past muziek in elk profiel, en hoe zit het met het rooster?",
+                  "a": "Dat staat niet in de bronnen. Zeg dat je het uitzoekt en kom er volgende les op terug."
+                }
+              ],
+              "letop": [
+                "Noteer vragen die je niet kunt beantwoorden op het bord. Beantwoord ze volgende les of via de studiewijzer.",
+                "Stilte is normaal. Zeg dat de exit ticket ook een plek is voor vragen."
+              ]
+            }
+          },
+          "4": {
+            "notitie": {
+              "vertel": [
+                "Deel de briefjes uit. Drie dingen: twee dingen die je niet wist, één vraag die je nog hebt, en past muziek bij jouw keuze: ja, misschien of nee.",
+                "Kijk terug naar het begin. Sluit af met de woorden op het bord: kwamen luisteren, spelen, maken en erop uit al voor?",
+                "Zeg dat een 'misschien' prima is. Ze hoeven nu niet te kiezen."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke twee dingen wist je niet?",
+                  "a": "Bijvoorbeeld: je zingt zelf mee in de Messiah, het centraal examen is op de computer, praktijk telt alleen in het schoolexamen."
+                },
+                {
+                  "v": "Past muziek bij jouw keuze?",
+                  "a": "Ja, misschien of nee. Elk antwoord is goed, als ze het kunnen uitleggen."
+                }
+              ],
+              "letop": [
+                "Lees de briefjes na de les. Leerlingen die 'misschien' zeggen, kun je in een volgende les even aanspreken.",
+                "Beantwoord de vragen die op de briefjes staan in de volgende les."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Dit is het exit ticket. Het levert je drie dingen op: wat de leerling nieuw vond, welke vragen er nog zijn en een eerste richting voor de keuze.",
+              "Het antwoord op 'past muziek bij mij' is een eerste inschatting en geen besluit."
+            ],
+            "vragen": [
+              {
+                "v": "Welke twee dingen wist je niet?",
+                "a": "Voorbeelden: je zingt zelf mee in de Messiah; het centraal examen is op de computer; praktijk telt alleen in het schoolexamen."
+              },
+              {
+                "v": "Past muziek bij jouw keuze?",
+                "a": "Ja, misschien of nee, met een korte reden."
+              }
+            ],
+            "letop": [
+              "Lees alle briefjes en maak een lijstje van de vragen die vaker terugkomen. Beantwoord die in de volgende les."
+            ]
+          }
+        },
+        "notitieRodeDraad": [
+          "Bij muziek in de bovenbouw gebruik je je gave niet alleen voor jezelf. Handelingsdeel H4 is daar een voorbeeld van: je levert een muzikale bijdrage aan de school. Dat kan in het schoolkoor of een band, met muziek op de open dag of bij een viering, door een onderbouwleerling te helpen (minstens vier keer) of door het muzieklokaal te beheren.",
+          "Dit schooljaar zijn er kansen bij de kerstviering (17 december), de open dag (zaterdag 16 januari), de Sing-Ins in de aula, PMZingt! (4 maart) en de paasviering (25 maart).",
+          "In de gelijkenis van de talenten in Matteüs 25 krijgt iedereen iets mee om mee te werken. De vraag is wat je ermee doet. Dat past bij deze vakkeuze: je talent inzetten voor anderen."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Wat doe jij met wat je kunt?",
+            "a": "Ieder antwoord is goed. Je zoekt een voorbeeld waarbij de leerling zijn talent voor een ander inzet."
+          },
+          {
+            "v": "Noem een manier om als bovenbouwleerling iets voor de school te doen met muziek.",
+            "a": "Schoolkoor of band, muziek bij de open dag of een viering, een onderbouwleerling helpen, of het muzieklokaal beheren."
+          }
+        ]
+      }
+    ]
+  },
+  "mavo3": {
+    "klas": "mavo 3",
+    "thema": "mavo",
+    "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\Lessen 2026-2027",
+    "blok": "Periode 1 · Ritme, maat en presentatie zang",
+    "blokKort": "terugblik",
+    "thuis": {
+      "mb": "Trainerz: ritme en maat",
+      "learn": "Ritme en maat herhalen"
+    },
+    "lessen": [
+      {
+        "week": 9,
+        "code": "P1 · les 9",
+        "bestand": "09 Terugblik presentatie 1 - ritme en maat - nieuw.pptx",
+        "kort": "Terugblik en ritme",
+        "bronLes": {
+          "lg": "mavo3",
+          "w": 9,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "mavo3",
+            "w": 9,
+            "slot": "l1"
+          }
+        ],
+        "fotos": {
+          "titel": "zangeres-podium.jpg",
+          "doel": "microfoon-studio.jpg",
+          "fase": [
+            null,
+            null,
+            "metronoom.jpg",
+            null,
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Cijfers en feedback van presentatie 1 klaar per leerling, op papier of in een bericht. Niet hardop voorlezen.",
+          "Metronoom of een eenvoudige beat klaar voor het klappen.",
+          "Laptop of telefoon voor Trainerz: laat leerlingen vooraf inloggen op Musicbox.",
+          "Exit-ticketbriefjes of het bord klaar voor de laatste vraag."
+        ],
+        "notitieTitel": [
+          "Vandaag kijk je terug op presentatie 1 en haal je ritme en maat weer op. Dat heb je nodig voor presentatie 2 (akkoordinstrument, periode 2) en voor de luistertoets T1 later dit jaar.",
+          "Presentatie 1 was zang. P1 is het gemiddelde van drie presentaties: zang, akkoordinstrument en slagwerk. Het P1-cijfer wordt aan het eind van het jaar vastgesteld.",
+          "De zangpresentatie werd beoordeeld op zes onderdelen: presentatie (aankondigen, begin en slot, doorzingen), houding en publiek, tekst en uitspraak, toonhoogte en klank, ritme en maat, en samen met de begeleiding. Toonhoogte en ritme telden dubbel. Het cijfer is de som van score maal weging, gedeeld door 8."
+        ],
+        "notitieAgenda": [
+          "Vijf stappen: terugblik, begrippen ophalen, klappen in de maat, Trainerz, afsluiten.",
+          "Zeg dat de les na deze valt uit (activiteitenweek A), en dat periode 2 daarna begint met toonhoogte."
+        ],
+        "notitieDoel": [
+          "Doel: je weet wat goed ging en wat je de volgende keer anders doet, en je kunt ritme en maat weer uitleggen en klappen.",
+          "Criteria: één ding dat goed ging en één tip voor presentatie 2; de afterbeat klappen in de maat; het verschil uitleggen tussen een break en een fill."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Geef iedereen vooraf het cijfer en de feedback voor presentatie 1. Zeg het cijfer niet hardop, dat is van de leerling.",
+                "Schrijf op: één ding dat goed ging en één tip voor jezelf bij presentatie 2. Kijk daarvoor naar de zes onderdelen: presentatie, houding en publiek, tekst en uitspraak, toonhoogte en klank, ritme en maat, samen met de begeleiding.",
+                "Wie wil, vertelt wat er is blijven hangen. Niemand hoeft. De opname van presentatie 1 laat je alleen horen als de leerling dat zelf wil.",
+                "Vooruitblik: presentatie 2 is het akkoordinstrument. Dat is in lesweek 19. In periode 2 leer je daarvoor de kerstbox Go Tell It on the Mountain op gitaar, ukelele of keyboard."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat ging goed bij presentatie 1?",
+                  "a": "Een eigen antwoord, liefst met een voorbeeld: 'ik kende mijn tekst' of 'ik bleef in de maat'."
+                },
+                {
+                  "v": "Wat doe je de volgende keer anders?",
+                  "a": "Eén concrete tip, bijvoorbeeld 'ik tel vooraf zacht mee' of 'ik kijk vaker naar het publiek'."
+                }
+              ],
+              "letop": [
+                "Leerlingen met een tegenvallend cijfer: laat ze eerst iets noemen wat goed ging. Een tip is nuttiger dan nog een oordeel.",
+                "De opname van presentatie 1 alleen laten horen als de leerling dat wil."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Vraag eerst de klas wat ze nog weten. Vul pas daarna aan. Begrippen komen uit de lessen 3, 5 en 7. Neem er ongeveer 10 minuten voor: de kaarten (opmaat, afterbeat, syncope, break, fill, ostinato) en dan de rest.",
+                "Notenwaarden. In een 4/4-maat duurt een hele noot 4 tellen, een halve noot 2, een kwartnoot 1, een achtste noot een halve tel en een zestiende een kwart tel. Een rust is stilte met dezelfde duur. Een punt achter een noot maakt de noot de helft langer: een halve noot met punt duurt 3 tellen. Een boog verbindt twee noten van dezelfde toonhoogte tot één lange noot: een kwartnoot en een halve noot met een boog erover samen 3 tellen.",
+                "Maatsoorten. Het bovenste cijfer zegt hoeveel tellen er in een maat zitten, het onderste welke notenwaarde een tel is (4 is een kwartnoot, 8 is een achtste). 2/4: twee tellen, een marsgevoel. 3/4: drie tellen, een wals. 4/4: vier tellen, de meeste popmuziek. 6/8: zes achtsten in een maat, die je voelt als twee grote tellen van drie.",
+                "Opmaat. De melodie begint vóór de eerste volle maat. Een bekend voorbeeld is Happy Birthday: 'happy' is de opmaat en 'birthday' valt op de eerste tel van de maat.",
+                "Beat en afterbeat. De beat is de gelijkmatige puls waarop je meetikt. De afterbeat is de nadruk op tel 2 en 4, vaak met de snaredrum of een klap.",
+                "Syncope. De nadruk valt op een lichte tel of tussen twee tellen. Een noot begint bijvoorbeeld op de 'en' van 2 en klinkt door over tel 3. Hierdoor springt het ritme.",
+                "Achtstentriool. Drie even lange noten in de tijd van één tel, in plaats van twee achtsten. Je telt: een-en-de, twee-en-de.",
+                "Break. De hele band stopt even, er is stilte, en dan komt iedereen weer samen in. De tellen lopen in je hoofd door.",
+                "Fill. Een korte opvulling, meestal op de drums, aan het eind van een frase. Die vult de ruimte en leidt naar het volgende deel, bijvoorbeeld van couplet naar refrein.",
+                "Ostinato. Een korte ritmische of melodische figuur die steeds terugkomt, bijvoorbeeld een basloopje dat de hele song door herhaald wordt."
+              ],
+              "voorbeelden": [
+                "Verschil break en fill: bij een break hoor je stilte, bij een fill hoor je juist iets erbij.",
+                "Op de dia staan de zes kaarten met korte uitleg. Gebruik ze als geheugensteun, de volledige uitleg staat hierboven."
+              ],
+              "vragen": [
+                {
+                  "v": "Hoeveel tellen duurt een halve noot in 4/4?",
+                  "a": "Twee."
+                },
+                {
+                  "v": "Wat betekent de 3 in 3/4?",
+                  "a": "Drie tellen in de maat. De 4 zegt dat een tel een kwartnoot is."
+                },
+                {
+                  "v": "Waar ligt de afterbeat in 4/4?",
+                  "a": "Op tel 2 en 4."
+                },
+                {
+                  "v": "Wat doet een punt achter een noot?",
+                  "a": "De noot wordt de helft langer. Een halve noot met punt duurt 3 tellen."
+                },
+                {
+                  "v": "Wat is 6/8 voor een maatsoort?",
+                  "a": "Zes achtsten per maat, in twee groepen van drie. Je voelt twee grote tellen."
+                },
+                {
+                  "v": "Wat is het verschil tussen een break en een fill?",
+                  "a": "Bij een break stopt de band even (stilte). Bij een fill wordt de ruimte opgevuld, meestal op de drums."
+                },
+                {
+                  "v": "Wat is een ostinato?",
+                  "a": "Een korte figuur die steeds terugkomt."
+                }
+              ],
+              "letop": [
+                "Leerlingen mengen break en fill graag door elkaar. Gebruik 'stilte' tegenover 'opvulling'.",
+                "Hou het tempo hoog: tien minuten voor al deze begrippen is krap. Wat niet lukt, komt terug in Trainerz."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "We gaan klappen. Eerst samen hardop tellen in 4/4: 1 2 3 4. Doe dat twee maten.",
+                "Verdeel de klas in twee helften. Helft A tikt op tel 1 en 3 op de knie of de tafel. Helft B klapt op tel 2 en 4, de afterbeat. Houd dat acht maten vol en wissel dan van rol.",
+                "Zet het tempo steeds wat hoger, met de metronoom of een beat. Pas op dat het tempo niet te hard oploopt.",
+                "Dan 3/4. Stamp op de 1 en klap op 2 en 3. Het voelt als een wals: stamp, klap, klap.",
+                "Verdeel de tijd: 2 minuten samen tellen, 3 minuten twee helften en wisselen, 2 minuten tempo hoger, 3 minuten 3/4."
+              ],
+              "voorbeelden": [
+                "4/4: tik - klap - tik - klap, steeds in een maat van vier tellen.",
+                "3/4: stamp - klap - klap, een maat van drie tellen."
+              ],
+              "vragen": [
+                {
+                  "v": "Op welke tellen klap je in 4/4?",
+                  "a": "Op 2 en 4."
+                },
+                {
+                  "v": "Waarom voelt 3/4 anders dan 4/4?",
+                  "a": "Er zijn drie tellen in de maat: één zware en twee lichte. Dat geeft een walsgevoel."
+                }
+              ],
+              "letop": [
+                "Zet bij het tempo hoger geen grote sprongen: elke ronde een klein beetje.",
+                "Vraag leerlingen die het goed doen om voor te doen. Laat zwakke groepen een maat langer meetellen.",
+                "Gaat de klas uit de maat, ga terug naar samen hardop tellen."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Open Musicbox en ga naar Trainerz. Begin met ritme en maat. Kies eerst wat jij lastig vindt, niet wat je al kunt.",
+                "Noteer op een briefje of in je schrift welk onderdeel je thuis nog oefent. Dat is je tip voor het huiswerk.",
+                "Loop rond en kijk welke begrippen blijven hangen: dat zie je aan de fouten op het scherm."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk onderdeel vind jij het lastigst?",
+                  "a": "Een eigen antwoord. Vaak syncope, achtstentriool of 6/8."
+                },
+                {
+                  "v": "Wat oefen je thuis?",
+                  "a": "Het onderdeel dat hij heeft genoteerd."
+                }
+              ],
+              "letop": [
+                "Zorg dat iedereen is ingelogd voor je begint, anders gaat de tijd op aan inloggen.",
+                "Leerlingen die snel klaar zijn: laat ze een moeilijker onderdeel kiezen."
+              ]
+            }
+          },
+          "4": {
+            "notitie": {
+              "vertel": [
+                "Lees je tip voor presentatie 2 nog eens. Dat is de tip die je aan het begin van de les hebt opgeschreven.",
+                "Volgende week valt de les uit: het is activiteitenweek A, de profielkeuzeweek. Daarna begint periode 2 met toonhoogte: notennamen en de g-sleutel.",
+                "Sluit af met het exit ticket: wat is het verschil tussen een break en een fill?"
+              ],
+              "vragen": [
+                {
+                  "v": "Wanneer is de volgende les?",
+                  "a": "Over twee weken. Volgende week valt de les uit."
+                },
+                {
+                  "v": "Waar begint periode 2 mee?",
+                  "a": "Met toonhoogte: notennamen en de g-sleutel."
+                }
+              ],
+              "letop": [
+                "Gebruik de laatste minuut voor het exit ticket, anders verdwijnt het."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Eén vraag, op een briefje: wat is het verschil tussen een break en een fill?",
+              "Verwacht antwoord: bij een break stopt de band even, je hoort stilte en daarna komt iedereen weer samen in. Bij een fill wordt de ruimte opgevuld, meestal met een korte drumfiguur aan het eind van een frase."
+            ],
+            "vragen": [
+              {
+                "v": "Wat is het verschil tussen een break en een fill?",
+                "a": "Break: de band stopt even, stilte. Fill: korte opvulling, vaak op drums, die naar het volgende deel leidt."
+              }
+            ],
+            "letop": [
+              "Kijk wie 'stilte' en 'opvulling' door elkaar haalt. Herhaal het volgende keer in de luisterstart."
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "mavo3kerst": {
+    "klas": "mavo 3",
+    "thema": "mavo",
+    "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\Lessen 2026-2027",
+    "blok": "Periode 2 · Toonhoogte, tempo en presentatie akkoordinstrument",
+    "blokKort": "kerstbox",
+    "lessen": [
+      {
+        "week": 12,
+        "code": "P2 · les 12",
+        "bestand": "12 Kerstbox Go Tell It - eerste grepen.pptx",
+        "kort": "Go Tell It: eerste grepen",
+        "bronLes": {
+          "lg": "mavo3",
+          "w": 12,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "mavo3",
+            "w": 12,
+            "slot": "l1"
+          }
+        ],
+        "thuis": {
+          "mb": "Kerstbox Go Tell It: niveau 1, het hoofdstuk van jouw instrument",
+          "extra": "Pak G, C en D7 en wissel ze tien keer. Heb je thuis geen instrument, zing dan het refrein mee met de opname."
+        },
+        "fotos": {
+          "titel": "gitaar-akkoord.jpg",
+          "doel": "bandles-leerlingen.jpg",
+          "fase": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "rodeDraad": "handen-zonsondergang.jpg"
+        },
+        "vraag": "Hoe begeleid je het refrein van Go Tell It on the Mountain?",
+        "doel": "Je speelt het refrein van Go Tell It on the Mountain met G, C en D7 op gitaar, ukelele of keyboard. Of je zingt het refrein, speelt de grondtonen op bas of de beat op drums of cajon.",
+        "criteria": [
+          "Ik pak G, C en D7, of ik speel mijn partij van het refrein",
+          "Ik wissel op de tel",
+          "Ik speel het refrein mee met de oefentrack"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "luisteren",
+            "kop": "Luister: waar komt dit lied vandaan?",
+            "stappen": [
+              "Luister naar het refrein van de opname. Klap mee op 2 en 4.",
+              "Steek je hand op als het refrein begint.",
+              "Het lied is een spiritual, meer dan honderd jaar oud. Waar gaat het over?"
+            ],
+            "beeld": {
+              "soort": "vorm",
+              "items": [
+                {
+                  "d": "Refrein",
+                  "m": 8
+                },
+                {
+                  "d": "Couplet 1",
+                  "m": 8
+                },
+                {
+                  "d": "Refrein",
+                  "m": 8
+                },
+                {
+                  "d": "Couplet 2",
+                  "m": 8
+                },
+                {
+                  "d": "Refrein",
+                  "m": 8
+                },
+                {
+                  "d": "Couplet 3",
+                  "m": 8
+                },
+                {
+                  "d": "Refrein",
+                  "m": 8
+                }
+              ]
+            },
+            "notitie": {
+              "vertel": [
+                "Deze periode werken we met een eigen kerstbox: Go Tell It on the Mountain. Het is een spiritual: een lied van Afro-Amerikanen, vooral van tot slaaf gemaakte mensen en hun nakomelingen. Het is meer dan honderd jaar oud en rond 1900 opgeschreven.",
+                "Het refrein zegt wat het lied wil: vertel het verder, Jezus is geboren. Dat is ook het kerstverhaal zelf: de herders vertelden door wat ze gehoord hadden.",
+                "We luisteren naar de opname van Zach Williams uit 2022. Een vrolijke bandversie met handgeklap. Hij klapt op 2 en 4, dat is de afterbeat die je eerder in de terugblik hebt geoefend. Wij klappen ook op 2 en 4.",
+                "Zijn tempo ligt hoger dan onze oefentrack. Wij spelen rond 88 slagen per minuut: rustiger, zodat je akkoorden kunt wisselen.",
+                "De vorm: het lied begint met het refrein, dus iedereen kan meteen meedoen. Refrein, couplet 1, refrein, couplet 2, refrein, couplet 3, refrein. Refrein en couplet zijn elk acht maten. Het lied staat in G-majeur, in 4/4.",
+                "Vandaag oefenen we alleen het refrein. Het couplet komt in les 14."
+              ],
+              "voorbeelden": [
+                "Luister vijf of zes maten van het refrein en klap mee. Daarna de eerste maten van een couplet, zodat ze het verschil horen: het couplet vertelt, het refrein roept.",
+                "Op de dia zie je de zeven blokken: vier keer het refrein, drie keer het couplet, elk acht maten."
+              ],
+              "vragen": [
+                {
+                  "v": "Op welke tellen klap je?",
+                  "a": "Op 2 en 4. Dat is de afterbeat."
+                },
+                {
+                  "v": "Hoe vaak komt het refrein in het lied voor?",
+                  "a": "Vier keer: aan het begin en na elk couplet. Op niveau 3 komt er een langzaam slotrefrein bij."
+                },
+                {
+                  "v": "Waar gaat het lied over?",
+                  "a": "Vertel het verder: Jezus is geboren."
+                }
+              ],
+              "letop": [
+                "Maximaal vijf minuten luisteren. De rest van de les is voor spelen.",
+                "Is de opname niet te vinden, gebruik de oefentrack uit de kerstbox (88 slagen per minuut)."
+              ]
+            }
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Kies je instrument en pak de grepen",
+            "stappen": [
+              "Kies gitaar, ukelele of keyboard. Zang, bas en drums mogen ook, als extra rol.",
+              "Pak G, C en D7 los. Klinkt elke snaar of toets?",
+              "Het refrein is acht maten: G, G, C, G, G, G, C en D7, G.",
+              "Elk akkoord duurt een hele maat. Alleen in maat 7 wissel je twee keer."
+            ],
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "G",
+                "C",
+                "D7"
+              ],
+              "onder": "Refrein: acht maten, een akkoord per maat"
+            },
+            "notitie": {
+              "vertel": [
+                "Kies je instrument: gitaar, ukelele of keyboard. Zang, bas en drums mogen ook, als extra rol. Wie nog nooit een akkoordinstrument speelde, begint op ukelele: C is één vinger en A7 later ook.",
+                "Het refrein heeft drie akkoorden: G, C en D7. Acht maten, elk akkoord een hele maat, alleen in maat 7 spelen we C en D7 in één maat. Het schema: maat 1 G, maat 2 G, maat 3 C, maat 4 G, maat 5 G, maat 6 G, maat 7 C en D7, maat 8 G.",
+                "Gitaar. G: lage E-snaar 3e fret, A-snaar 2e fret, hoge e-snaar 3e fret, de D-, G- en B-snaar los (320003, van laag naar hoog). Tonen: G B D G B G. C: A-snaar 3e fret, D-snaar 2e fret, B-snaar 1e fret, G en e los, de lage E-snaar niet aanslaan (x32010). Tonen: C E G C E. D7: D-snaar los, G-snaar 2e fret, B-snaar 1e fret, e-snaar 2e fret, alleen de vier dunste snaren aanslaan (xx0212). Tonen: D A C F♯.",
+                "Ukelele (snaren G, C, E, A, de cijfers zijn de frets). G is 0232, tonen G D G B. C is 0003, tonen G C E C. D7 is 2020, tonen A C F♯ A. Begin met C: één vinger. Dan D7: twee vingers. Dan G: drie vingers.",
+                "Keyboard, rechterhand. G = B D G. C = C E G. D7 = C D F♯. Van G naar C verschuift alleen B naar C en D naar E, de G blijft liggen. De duim blijft bijna op dezelfde plek.",
+                "Zang: de melodie van het refrein, mee met de opname. Bas: G op de lage E-snaar fret 3, C op de A-snaar fret 3, D op de A-snaar fret 5, op de 1. Drums of cajon: bassdrum op 1 en 3, snare op 2 en 4.",
+                "Zo deel je de klas in: gitaar, ukelele, keyboard (met koptelefoon), zang, en bas en drums elk in een eigen hoek. Zet drums en cajon het verst van de zang."
+              ],
+              "voorbeelden": [
+                "Klap het schema voor: 'G, G, C, G | G, G, C-D7, G'. Laat de klas meetellen: vier tellen per maat.",
+                "Laat een leerling die gitaar speelt G, C en D7 voordoen als voorbeeld."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke drie akkoorden speel je in het refrein?",
+                  "a": "G, C en D7."
+                },
+                {
+                  "v": "In welke maat wissel je twee keer?",
+                  "a": "In maat 7: C en D7."
+                },
+                {
+                  "v": "Hoe lang duurt een akkoord?",
+                  "a": "Een hele maat, vier tellen, behalve in maat 7."
+                },
+                {
+                  "v": "Welk akkoord is het makkelijkst op ukelele?",
+                  "a": "C, met één vinger."
+                }
+              ],
+              "letop": [
+                "Eerste doel: iedereen weet in welke hoek hij hoort. Loop de hoeken langs voor je laat oefenen.",
+                "Op gitaar klinkt G vaak dof als een snaar wordt gedempt, en bij C klinkt de lage E-snaar mee. Laat ze één keer aanslaan en luisteren.",
+                "Geen instrument bij de hand: zang is geen strafhoek, laat ze het refrein meezingen met de opname."
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Oefen met de kerstbox",
+            "stappen": [
+              "Open de kerstbox, niveau 1. Kies het hoofdstuk van jouw instrument.",
+              "Pak elk akkoord los. Wissel G naar C en C naar D7, tien keer.",
+              "Speel het refrein met één slag op de 1. Tel hardop.",
+              "Speel mee met de oefentrack."
+            ],
+            "klaar": "Klaar? Doe de check van niveau 1 en kijk naar het couplet.",
+            "notitie": {
+              "vertel": [
+                "Verdeel de tijd: 3 minuten akkoorden los pakken, 7 minuten wissels oefenen, 8 minuten het refrein met één slag op de 1, 7 minuten meespelen met de oefentrack.",
+                "Gitaar en ukelele: hoofdstuk 1.2 of 1.3. Pak elk akkoord los, sla één keer aan. Klinken alle snaren? Dan G naar C en C naar D7, tien keer per wissel. Daarna het refrein met één slag op de 1, hardop tellend.",
+                "Keyboard: hoofdstuk 1.4, de pianotutorial. Zet het scherm naast je keyboard. Druk elk akkoord in als de balken vallen, zeg de naam hardop. Daarna meespelen met de tutorial en met de oefentrack.",
+                "Zang: hoofdstuk 1.5. Zing het refrein mee met de opname en daarna met de oefentrack. Lukt het, speel dan één slag per maat en zing erbij.",
+                "Bas en drums: hoofdstuk 1.6. Bas speelt de grondtonen op de 1. Drums of cajon spelen bassdrum op 1 en 3 en snare op 2 en 4.",
+                "Mis je een akkoord, speel dan door op de tel en pak het volgende akkoord. Stoppen mag niet: dat is wat je bij presentatie 2 ook moet doen.",
+                "De check van niveau 1 heeft drie vragen: welke drie akkoorden speel je in het refrein (G, C en D7), op welke tellen klap je (2 en 4), en je mist een akkoord, wat doe je (doorspelen op de tel en het volgende akkoord pakken)."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke drie akkoorden speel je in het refrein?",
+                  "a": "G, C en D7."
+                },
+                {
+                  "v": "Op welke tellen klap je mee?",
+                  "a": "Op 2 en 4."
+                },
+                {
+                  "v": "Je mist een akkoord. Wat doe je?",
+                  "a": "Doorspelen op de tel en het volgende akkoord pakken."
+                }
+              ],
+              "letop": [
+                "Begin met een rondje langs de beginners, meestal ukelele en keyboard. Gitaar volgt als ze hun akkoorden hebben.",
+                "Gaat het wisselen te langzaam, laat de leerling eerst stilstaan op de wissel en tellen: pak, zeg de naam, speel.",
+                "Leerlingen die al klaar zijn, laat je het couplet bekijken of een duo vormen met een klasgenoot.",
+                "Let op het volume bij drums en cajon: te hard en niemand hoort zichzelf."
+              ]
+            }
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Eén keer samen het refrein",
+            "stappen": [
+              "Alle hoeken tegelijk, met de oefentrack.",
+              "Duimen: lukt mijn partij op tempo?"
+            ],
+            "notitie": {
+              "vertel": [
+                "Alle hoeken tegelijk, met de oefentrack. Eén keer het refrein, acht maten. Bij 88 slagen per minuut duurt dat ongeveer 22 seconden, dus je kunt het twee of drie keer doen.",
+                "Tel zelf af: één, twee, drie, vier. Daarna duimen: omhoog als het lukt op tempo, opzij als het bijna lukt, omlaag als het nog niet lukt.",
+                "Vooruitblik: in les 13 lees je de melodie van het refrein in de g-sleutel. In les 14 komt het couplet erbij met Em en A7, en een slagpatroon."
+              ],
+              "vragen": [
+                {
+                  "v": "Lukt jouw partij op tempo?",
+                  "a": "Duim omhoog, opzij of omlaag. Bij omlaag: volgende keer met de tutorial langzamer beginnen."
+                }
+              ],
+              "letop": [
+                "Tel de duimen omlaag. Die leerlingen zoek je als eerste op in de volgende les."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "duimen",
+          "tekst": "Lukt mijn partij van het refrein op tempo? Duim omhoog, opzij, omlaag.",
+          "notitie": {
+            "vertel": [
+              "Duimen over het hele refrein. Je ziet in één oogopslag wie op tempo meespeelt.",
+              "Het is formatief: het levert je niets op voor een cijfer, maar het vertelt je wie extra aandacht nodig heeft voor niveau 2."
+            ],
+            "vragen": [
+              {
+                "v": "Wat doe je met een duim omlaag?",
+                "a": "Volgende les eerst met de tutorial langzamer oefenen, en in een duo met iemand die het al kan."
+              }
+            ],
+            "letop": [
+              "Noteer wie duim omlaag gaf. Bij niveau 2 gaat het sneller, dus deze leerlingen hebben eerst extra oefentijd nodig."
+            ]
+          }
+        },
+        "identiteit": "Vertel het verder. Wat jij kunt, geef je door: wie een greep al kent, helpt een ander.",
+        "notitieRodeDraad": [
+          "Dit lied zegt: vertel het verder. De herders vertelden door wat ze hadden gehoord. Zo ging het kerstverhaal van mond tot mond.",
+          "In de klas kan dat ook. Wie een greep al kent, laat hem aan zijn buurman zien. Je hoeft niet de beste te zijn om iets door te geven.",
+          "Dat past bij een spiritual: dat zijn liederen die mensen samen zongen en doorgaven, ook toen er geen bladmuziek was."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Wat betekent 'vertel het verder' voor jouw groepje vandaag?",
+            "a": "Een greep of trucje laten zien aan iemand die er moeite mee heeft."
+          },
+          {
+            "v": "Waarom is een lied doorgeven meer dan er alleen een goed cijfer voor halen?",
+            "a": "Omdat het lied juist samen gezongen en gespeeld wordt, niet alleen."
+          }
+        ],
+        "benodigd": [
+          "Gitaren, ukeleles en keyboards met koptelefoon",
+          "Bas en drumstel of cajon",
+          "De kerstbox met tutorials en oefentrack op laptop of telefoon",
+          "Akkoordenschema van het refrein op het bord",
+          "Hoeken in het lokaal klaargezet"
+        ],
+        "voorbereiding": [
+          "Zet het refrein op het bord: G, G, C, G | G, G, C D7, G.",
+          "Zet de hoeken klaar en bepaal wie waar zit.",
+          "Zorg dat de oefentrack (88 slagen per minuut) werkt op de laptop of luidspreker."
+        ],
+        "notitieTitel": [
+          "Vandaag begint de kerstbox. Het is het lied voor presentatie 2 (akkoordinstrument, lesweek 19), dus wat ze nu leren komt terug.",
+          "Planning van de box: les 12 eerste grepen (niveau 1), les 13 melodie van het refrein lezen in de g-sleutel, les 14 begeleidingspatroon (niveau 2), les 15 tempo met dit lied, les 16 en 17 oefenen en voorspelen, presentatie 2 in les 19.",
+          "Voor presentatie 2 geldt minimaal niveau 2: couplet en refrein. Een ander lied met dezelfde grepen mag ook."
+        ],
+        "notitieAgenda": [
+          "Vier stappen: luisteren, instrument kiezen en grepen pakken, oefenen, samen het refrein.",
+          "Zeg dat bijna de hele les praktijk is: 25 minuten oefenen."
+        ],
+        "notitieDoel": [
+          "Doel: het refrein spelen of zingen, met akkoorden die op de tel wisselen. Dat is de basis voor presentatie 2.",
+          "Criteria: ik pak G, C en D7 (of speel mijn partij van het refrein); ik wissel op de tel; ik speel het refrein mee met de oefentrack."
+        ]
+      },
+      {
+        "week": 14,
+        "code": "P2 · les 14",
+        "bestand": "14 Kerstbox Go Tell It - begeleidingspatroon.pptx",
+        "kort": "Go Tell It: begeleidingspatroon",
+        "bronLes": {
+          "lg": "mavo3",
+          "w": 14,
+          "slot": "l1"
+        },
+        "koppel": [
+          {
+            "lg": "mavo3",
+            "w": 14,
+            "slot": "l1"
+          }
+        ],
+        "thuis": {
+          "mb": "Kerstbox Go Tell It: niveau 2, het hoofdstuk van jouw instrument",
+          "extra": "Oefen Em en A7 en het slagpatroon op één akkoord. Neem jezelf op en luister terug."
+        },
+        "fotos": {
+          "titel": "worship-podium.jpg",
+          "doel": "gitaar-akkoord.jpg",
+          "fase": [
+            null,
+            null,
+            null,
+            "bandles-leerlingen.jpg"
+          ]
+        },
+        "vraag": "Hoe begeleid je couplet en refrein met een patroon?",
+        "doel": "Je speelt couplet en refrein van Go Tell It on the Mountain met een slagpatroon of je eigen partij.",
+        "criteria": [
+          "Ik pak Em en A7 en wissel op de tel",
+          "Ik speel het slagpatroon met accent op 2 en 4, of mijn partij",
+          "Ik speel couplet en refrein door, ook na een fout"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Opwarmen: de vijf grepen",
+            "stappen": [
+              "Pak de grepen van niveau 1: G, C en D7.",
+              "Pak Em en A7 los.",
+              "Wissel op mijn teken."
+            ],
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "G",
+                "C",
+                "D7",
+                "Em",
+                "A7"
+              ],
+              "onder": "Niveau 2: Em en A7 erbij"
+            },
+            "notitie": {
+              "vertel": [
+                "Begin zoals vorige keer: pak de grepen een voor een. Eerst G, C en D7, die kennen ze. Daarna Em en A7, de twee nieuwe.",
+                "Gitaar. Em: A-snaar 2e fret, D-snaar 2e fret, alles los (022000), alle zes snaren aanslaan. Tonen: E B E G B E. A7: A-snaar los, D-snaar 2e fret, G los, B-snaar 2e fret, e los (x02020), vijf snaren vanaf de A. Tonen: A E G C♯ E.",
+                "Ukelele. Em is 0432, tonen G E G B. A7 is 0100, tonen G C♯ E A. A7 is de makkelijkste greep van het lied: één vinger.",
+                "Keyboard, rechterhand. Em = B E G. A7 = C♯ E G. Bas: Em op de lege E-snaar, A7 op de lege A-snaar.",
+                "Wissel op jouw teken. Tel hardop, vier tellen per akkoord, en wissel op de één."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke twee akkoorden komen er op niveau 2 bij?",
+                  "a": "Em en A7."
+                },
+                {
+                  "v": "Welk akkoord komt na A7 in het couplet?",
+                  "a": "D7."
+                }
+              ],
+              "letop": [
+                "Laat de klas langzaam beginnen. Wie Em of A7 niet kan, krijgt hulp van een buurman.",
+                "Houd het bij vijf minuten."
+              ]
+            }
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Het couplet en het slagpatroon",
+            "stappen": [
+              "Het couplet: Em, D7, G, G, Em, Em, A7, D7.",
+              "Slagpatroon: neer, neer-op, op-neer-op.",
+              "Het accent ligt op 2 en 4, waar de klas klapt.",
+              "Het patroon past op elk akkoord."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Tel 1",
+                  "t": "neer"
+                },
+                {
+                  "k": "Tel 2 en",
+                  "t": "neer-op, accent op 2"
+                },
+                {
+                  "k": "Tel 3 en",
+                  "t": "alleen op"
+                },
+                {
+                  "k": "Tel 4 en",
+                  "t": "neer-op, accent op 4"
+                }
+              ]
+            },
+            "notitie": {
+              "vertel": [
+                "Het couplet heeft acht maten: maat 1 Em, maat 2 D7, maat 3 G, maat 4 G, maat 5 Em, maat 6 Em, maat 7 A7, maat 8 D7. Let op maat 7 en 8: A7, dan D7. Het couplet vertelt, het refrein roept.",
+                "Het refrein krijgt op niveau 2 het volledige schema: G, G, C, G | G, Em, C-D7, G. In maat 6 komt Em in plaats van G.",
+                "Het slagpatroon: neer, neer-op, op-neer-op. Tel 1 2 en 3 en 4 en. Op 1 een neerslag. Op 2 een neerslag en op de 'en' erachter een opslag. Op tel 3 geen slag, maar op de 'en' erachter een opslag. Op 4 een neerslag en op de 'en' een opslag. Het accent ligt op 2 en 4, waar de klas klapt.",
+                "Tip voor gitaar en ukelele: laat je hand altijd doorzwaaien, neer-op-neer-op, en raak de snaren alleen aan op de plekken van het patroon. Dan blijft het patroon strak.",
+                "Keyboard: speel links de grondtoon en rechts het akkoord op 2 en 4, waar de klas klapt. Linkerhand: G, C, D, E en A.",
+                "Bas: grondtoon op 1 en 3. Erbij komen de lege E-snaar (E) en de lege A-snaar (A). Drums: zoals niveau 1, met een fill aan het eind van het couplet. Zang: leer het eerste couplet met de opname.",
+                "Dit is het niveau dat je minimaal nodig hebt voor presentatie 2 in lesweek 19. Het tempo blijft 88 slagen per minuut."
+              ],
+              "voorbeelden": [
+                "Klap het patroon voor met één hand op je knie: neer = hand omlaag, op = hand omhoog. Tel 1 2 en (3) en 4 en.",
+                "Laat een leerling het couplet voor de klas voorlezen: Em, D7, G, G, Em, Em, A7, D7."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke akkoorden heeft het couplet?",
+                  "a": "Em, D7, G, G, Em, Em, A7, D7."
+                },
+                {
+                  "v": "Op welke tellen ligt het accent in het slagpatroon?",
+                  "a": "Op 2 en 4."
+                },
+                {
+                  "v": "Wat is het verschil tussen een neerslag en een opslag?",
+                  "a": "Een neerslag haal je naar beneden, de opslag naar boven. Samen vormen ze het patroon."
+                },
+                {
+                  "v": "Welke maten van het couplet zijn het lastigst?",
+                  "a": "Maat 7 en 8: A7 en dan D7."
+                }
+              ],
+              "letop": [
+                "Het patroon is voor veel leerlingen het lastigste. Laat het eerst met de hand op de knie klappen voor je instrumenten pakt.",
+                "Laat het patroon eerst op één akkoord oefenen en pas daarna wisselen."
+              ]
+            }
+          },
+          {
+            "min": 20,
+            "soort": "doen",
+            "kop": "Oefen couplet en patroon",
+            "stappen": [
+              "Pak Em en A7 los.",
+              "Oefen het patroon op één akkoord tot het vanzelf gaat.",
+              "Speel het couplet. Let op maat 7 en 8: A7, dan D7.",
+              "Speel couplet en refrein mee met de oefentrack."
+            ],
+            "klaar": "Klaar? Doe de check van niveau 2, of probeer niveau 3: het hele lied.",
+            "notitie": {
+              "vertel": [
+                "Verdeel de tijd: 3 minuten Em en A7 los, 5 minuten patroon op één akkoord, 6 minuten het couplet, 6 minuten couplet en refrein met de oefentrack.",
+                "Gitaar: oefen het patroon op G. Ukelele: oefen het patroon op C. Keyboard: links grondtonen van het couplet, rechts het akkoord op 2 en 4, daarna beide handen. Zang: het eerste couplet en het refrein. Bas en drums: de groove onder couplet en refrein, met een fill aan het eind van het couplet.",
+                "De check van niveau 2 heeft drie vragen: welke twee akkoorden komen erbij (Em en A7), welk akkoord komt na A7 (D7), op welke tellen ligt het accent (2 en 4).",
+                "Klaar? Dan niveau 3: het hele lied met klapintro van vier maten, vraag en antwoord en een slot dat langzamer wordt."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk akkoord komt na A7?",
+                  "a": "D7."
+                },
+                {
+                  "v": "Wat doe je als je een akkoord mist?",
+                  "a": "Doorspelen op de tel en het volgende akkoord pakken."
+                }
+              ],
+              "letop": [
+                "Eerst het patroon, dan pas wisselen. Wisselt iemand te langzaam, laat hem tellen en op de één wisselen.",
+                "Loop rond bij de keyboards: linkerhand en rechterhand tegelijk is lastig, laat ze langzaam beginnen.",
+                "Let op de houding en de aanslag, die tellen later mee bij presentatie 2: rustige, gelijke aanslag."
+              ]
+            }
+          },
+          {
+            "min": 10,
+            "soort": "check",
+            "kop": "Speel in een duo",
+            "stappen": [
+              "Zoek een duo: twee akkoordinstrumenten, of een akkoordinstrument en zang.",
+              "Spreek af: wie telt af, wie speelt het couplet?",
+              "Speel couplet en refrein door. Fout? Speel door op de tel.",
+              "Neem op en luister terug. Kies één werkpunt."
+            ],
+            "notitie": {
+              "vertel": [
+                "Zoek een duo. Twee akkoordinstrumenten gaan prima, of een akkoordinstrument met zang. Spreek af wie aftelt en wie het couplet speelt.",
+                "Speel couplet en refrein zonder te stoppen. Mis je een akkoord, speel dan door op de tel en pak het volgende. Neem op en luister terug. Kies één werkpunt voor de volgende keer.",
+                "Dit is de oefening voor presentatie 2. Daar kijk ik naar: presentatie (naam, titel en instrument noemen, duidelijk beginnen en eindigen, doorspelen na een fout), akkoorden (de juiste grepen, helder), akkoordwisselingen (op tijd en in tempo), slag- of begeleidingspatroon (vasthouden in een stabiel tempo), houding en techniek (houding, vingerzetting, aanslag), en samenspel (luisteren, gelijk blijven, de zang dragen).",
+                "Het cijfer voor presentatie 2 komt uit zes onderdelen met een weging van 2, 2, 2, 1, 1 en 1. Je deelt door 9. Het telt mee in P1, samen met presentatie 1 en 3."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat doe je als je een akkoord mist?",
+                  "a": "Doorspelen op de tel en het volgende akkoord pakken."
+                },
+                {
+                  "v": "Wat is jouw werkpunt voor de volgende keer?",
+                  "a": "Eén concreet punt uit de opname, bijvoorbeeld 'de wissel van A7 naar D7'."
+                },
+                {
+                  "v": "Wat moet je minimaal kunnen voor presentatie 2?",
+                  "a": "Couplet en refrein spelen: niveau 2."
+                }
+              ],
+              "letop": [
+                "Duo's gaan vaak mis op wie telt af. Laat dat eerst afspreken.",
+                "Leerlingen die geen duopartner vinden: zet ze bij elkaar of speel zelf mee.",
+                "Presentatie 2 is lesweek 19. Les 15 gaat over tempo met dit lied, les 16 en 17 zijn oefenen en voorspelen."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "duo voorspelen",
+          "tekst": "Speel met je duo couplet en refrein zonder te stoppen. Noem één werkpunt.",
+          "notitie": {
+            "vertel": [
+              "Het duo speelt couplet en refrein zonder te stoppen. Dat is precies wat bij presentatie 2 van ze gevraagd wordt.",
+              "Wat je hoort: spelen ze door na een fout, houden ze het tempo, begint en eindigt het duo samen? Zo ja, dan zijn ze klaar voor presentatie 2."
+            ],
+            "vragen": [
+              {
+                "v": "Welk werkpunt kies je?",
+                "a": "Eén concreet punt, bijvoorbeeld 'de wissel in maat 7 en 8' of 'samen beginnen'."
+              }
+            ],
+            "letop": [
+              "Noteer welke duo's nog niet zonder te stoppen kunnen spelen. Die krijgen in les 16 extra oefentijd."
+            ]
+          }
+        },
+        "benodigd": [
+          "Gitaren, ukeleles en keyboards met koptelefoon",
+          "Bas en drumstel of cajon",
+          "De kerstbox met tutorials en oefentrack (88 slagen per minuut)",
+          "Het couplet en het slagpatroon op het bord",
+          "Telefoon of tablet per duo om op te nemen"
+        ],
+        "voorbereiding": [
+          "Zet het couplet op het bord: Em, D7, G, G | Em, Em, A7, D7.",
+          "Zet het slagpatroon op het bord: tel 1 2 en 3 en 4 en, slag neer, neer-op, op-neer-op.",
+          "Zorg dat de oefentrack werkt en dat er telefoons zijn om op te nemen."
+        ],
+        "notitieTitel": [
+          "Vandaag niveau 2 van de kerstbox: het couplet komt erbij, met Em en A7, en een begeleidingspatroon. Dit is het minimale niveau voor presentatie 2 in lesweek 19.",
+          "Presentatie 2 is een praktijkdeel van P1. Je speelt Go Tell It on the Mountain of een ander lied met dezelfde grepen.",
+          "Het tempo blijft 88 slagen per minuut. Dat is bewust langzamer dan de opname van Zach Williams, zodat de wissels lukken."
+        ],
+        "notitieAgenda": [
+          "Vier stappen: opwarmen met vijf grepen, het couplet en het patroon, oefenen, spelen in een duo.",
+          "Zeg dat het duo aan het eind een voorproefje is van presentatie 2."
+        ],
+        "notitieDoel": [
+          "Doel: couplet en refrein spelen met een patroon of je eigen partij. Niveau 2 is wat je minimaal nodig hebt voor presentatie 2.",
+          "Criteria: ik pak Em en A7 en wissel op de tel; ik speel het slagpatroon met accent op 2 en 4 (of mijn partij); ik speel couplet en refrein door, ook na een fout.",
+          "Couplet en refrein samen, dus niveau 2, is het minimale niveau voor presentatie 2."
+        ]
+      }
+    ]
+  }
+}

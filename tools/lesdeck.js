@@ -1,8 +1,9 @@
 // Lespresentaties in de ontwerptaal van de didactische kaarten:
-// wit blad, zware condensed koppen, oranje eyebrow in kapitalen, zandkleurige kaarten met ronde hoeken,
+// wit blad, zware koppen in Encode Sans, oranje eyebrow in kapitalen, zandkleurige kaarten met ronde hoeken,
 // zwarte pil-labels, per lesfase een vaste kleur. Gebruik: const D = require('./lesdeck'); D.maak(les, opties)
 const path = require('path');
-const pptxgen = require(path.join(process.env.LOCALAPPDATA, 'Temp', 'claude', 'pptx-tools', 'node_modules', 'pptxgenjs'));
+const NM = path.join(process.env.LOCALAPPDATA, 'Temp', 'claude', 'pptx-tools', 'node_modules');
+const pptxgen = require(path.join(NM, 'pptxgenjs')); const JSZip = require(path.join(NM, 'jszip')); const { imageSize } = require(path.join(NM, 'image-size'));
 
 const K = { // kleuren uit de kaarten
   inkt: '1B1B1B', tekst: '2A2A2A', grijs: '6B6B6B', lijn: 'D9D2C3', wit: 'FFFFFF',
@@ -10,7 +11,7 @@ const K = { // kleuren uit de kaarten
   fase: { start: 'E8542A', luisteren: 'E8542A', uitleg: 'C9962A', doen: '2E8B7A', gesprek: 'C9962A', check: '6B4FB3', afsluiten: '4A2E8F' },
   faseNaam: { start: 'Horen en doen', luisteren: 'Horen en doen', uitleg: 'Benoemen', doen: 'Doen', gesprek: 'Gesprek', check: 'Check', afsluiten: 'Afsluiten' }
 };
-const KOP = 'Encode Sans Compressed', KOPB = 'Encode Sans', BODY = 'Encode Sans';
+const KOP = 'Encode Sans', KOPB = 'Encode Sans', BODY = 'Encode Sans';
 const W = 13.333, H = 7.5, M = 0.6;
 const regels = (tekst, fs, w, f) => Math.max(1, Math.ceil(String(tekst || "").length / Math.max(8, Math.floor(w / (fs * (f || 0.0075)))))); const regelH = fs => fs * 1.18 / 72;
 
@@ -22,24 +23,35 @@ function eyebrow(s, tekst, x, y, w, kleur) { s.addText(tekst.toUpperCase(), { x,
 function titel(s, tekst, x, y, w, h, size) { s.addText(tekst, { x, y, w, h, fontFace: KOP, fontSize: size || 44, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top', lineSpacingMultiple: 0.95 }); }
 function pil(s, tekst, x, y, w, opt) { opt = opt || {}; s.addShape('roundRect', { x, y, w, h: 0.34, fill: { color: opt.fill || K.inkt }, line: { color: opt.fill || K.inkt, width: 0 }, rectRadius: 0.17 }); s.addText(tekst, { x, y, w, h: 0.34, fontFace: KOPB, fontSize: 10.5, bold: true, color: opt.color || K.wit, align: 'center', valign: 'middle', margin: 0, isTextBox: true }); }
 function kaart(s, x, y, w, h) { s.addShape('roundRect', { x, y, w, h, fill: { color: K.zand }, line: { color: K.zandrand, width: 0.75 }, rectRadius: 0.12 }); }
-function foto(s, bestand, x, y, w, h) { if (!bestand) return; s.addImage({ path: bestand, x, y, w, h, sizing: { type: 'cover', w, h }, rounding: false }); }
-function fotoRond(s, bestand, x, y, w, h) { // foto met afgeronde hoeken: zand-kader eronder, foto erin
-  if (!bestand) { kaart(s, x, y, w, h); return; }
-  s.addImage({ path: bestand, x, y, w, h, sizing: { type: 'cover', w, h } });
-}
+// Plaatst een foto zonder uit te rekken: schaalt tot het kader gevuld is en snijdt de rest weg (cover met echte fotomaat).
+// img: { pad, bron, focus: [fx, fy] }; focus 0-1 kiest welk deel blijft staan, standaard het midden.
+function foto(s, img, x, y, w, h) { const d = imageSize(img.pad); const schaal = Math.max(w / d.width, h / d.height); const sw = d.width * schaal, sh = d.height * schaal; const [fx, fy] = img.focus || [0.5, 0.5]; s.addImage({ path: img.pad, x, y, w: sw, h: sh, sizing: { type: 'crop', x: (sw - w) * fx, y: (sh - h) * fy, w, h }, altText: img.bron || '' }); }
+function fotoRond(s, img, x, y, w, h) { if (!img || !img.pad) { kaart(s, x, y, w, h); return; } foto(s, img, x, y, w, h); }
 function voet(s, meta, nr, tot) { const kl = s._voetKleur || K.grijs; const x0 = s._voetX || M; s.addText(`${meta.klas} · ${meta.kort || meta.titel}`, { x: x0, y: H - 0.45, w: W - x0 - M - 1.2, h: 0.3, fontFace: BODY, fontSize: 9, color: kl, margin: 0, isTextBox: true }); s.addText(`${nr} / ${tot}`, { x: W - M - 1, y: H - 0.45, w: 1, h: 0.3, fontFace: BODY, fontSize: 9, color: kl, align: 'right', margin: 0, isTextBox: true }); }
-function bron(s, b) { if (b && b.bron) s.addNotes('Foto: ' + b.bron); }
-function notities(s, tekst) { if (tekst) { const cur = s._notesTekst || ''; s._notesTekst = (cur ? cur + '\n' : '') + tekst; s.addNotes(s._notesTekst); } }
+function bron(s, b) { if (b && b.bron) s._bron = 'Foto: ' + b.bron; }
+function notities(s, tekst) { if (tekst) (s._n = s._n || []).push(tekst); }
+// Notities: per dia alles wat de docent vertelt, in vaste blokken. Bronnen: de les zelf en het veld notitie.
+function blok(kop, regels) { const r = (Array.isArray(regels) ? regels : [regels]).filter(Boolean); return r.length ? kop + '\n' + r.join('\n') : ''; }
+function vragenBlok(v) { return blok('VRAGEN EN VERWACHTE ANTWOORDEN', (v || []).map(q => '• ' + q.v + (q.a ? '\n  Verwacht: ' + q.a : ''))); }
+function tijdsplan(les) { let t0 = 0; return les.fasen.map(f => { const r = `${t0}-${t0 + f.min} min · ${f.kop}`; t0 += f.min; return r; }); }
+function notitieFase(les, f, i) { const n = f.notitie || {}; const t0 = les.fasen.slice(0, i).reduce((a, x) => a + x.min, 0);
+  return [`TIJD\n${f.min} minuten (minuut ${t0} tot ${t0 + f.min} van ${les.fasen.reduce((a, x) => a + x.min, 0)})`, blok('VERTEL', n.vertel), blok('VOORBEELDEN', n.voorbeelden), vragenBlok(n.vragen), blok('LEERLINGEN DOEN', n.leerlingen || (f.stappen || []).map((st, j) => (j + 1) + '. ' + st)), f.klaar ? 'KLAAR?\n' + f.klaar : '', blok('LET OP', [f.docent].concat(n.letop || []))].filter(Boolean).join('\n\n'); }
+function notitieTitel(les) { return [les.vraag ? 'LESVRAAG\n' + les.vraag : '', les.doel ? 'DOEL\n' + les.doel : '', blok('TIJDSPLAN', tijdsplan(les)), blok('KLAARZETTEN', les.benodigd), blok('VOOR DE LES', les.voorbereiding), blok('VERTEL', les.notitieTitel)].filter(Boolean).join('\n\n'); }
+function notitieAgenda(les) { return [blok('TIJDSPLAN', tijdsplan(les)), blok('VERTEL', les.notitieAgenda)].filter(Boolean).join('\n\n'); }
+function notitieDoel(les) { return [blok('VERTEL', les.notitieDoel), blok('SUCCESCRITERIA', (les.criteria || []).map(c => '• ' + c))].filter(Boolean).join('\n\n'); }
+function notitieCheck(les) { const fm = les.formatief, n = fm.notitie || {}; return [`WERKVORM\n${fm.soort}`, 'OPDRACHT\n' + fm.tekst, blok('VERTEL', n.vertel), vragenBlok(n.vragen), blok('LET OP', n.letop)].filter(Boolean).join('\n\n'); }
+function notitieRodeDraad(les) { return ['RODE DRAAD\n' + les.identiteit, blok('VERTEL', les.notitieRodeDraad), vragenBlok(les.vragenRodeDraad)].filter(Boolean).join('\n\n'); }
+function notitieThuis(les, th) { return [blok('THUIS', [th.mb && 'Musicbox: ' + th.mb, th.learn && 'Leren: ' + th.learn, th.info && 'Lezen: ' + th.info, th.extra && 'Opdracht: ' + th.extra]), blok('VERTEL', les.notitieThuis)].filter(Boolean).join('\n\n'); }
 
 function slideTitel(p, les, meta, img) {
   const s = p.addSlide(); s.background = { color: K.wit };
   eyebrow(s, `${meta.klas} · lesweek ${meta.week} · ${meta.blokKort || meta.blok}`, M, 0.9, 6.4);
-  const kort = les.kort || les.titel; const lw = Math.max(...kort.split(/s+/).map(w => w.length)); let tfs = kort.length > 45 ? 40 : 54; tfs = Math.min(tfs, Math.floor(6.6 / (lw * 0.0092))); titel(s, kort, M, 1.3, 6.6, 2.6, tfs);
+  const kort = les.kort || les.titel; const lw = Math.max(...kort.split(/\s+/).map(w => w.length)); let tfs = kort.length > 45 ? 40 : 54; tfs = Math.min(tfs, Math.floor(6.4 / (lw * 0.0092))); while (tfs > 28 && regels(kort, tfs, 6.4) * regelH(tfs) > 2.5) tfs -= 2; titel(s, kort, M, 1.3, 6.6, 2.6, tfs);
   if (les.vraag) s.addText(les.vraag, { x: M, y: 4.0, w: 6.2, h: 1.2, fontFace: BODY, fontSize: 22, italic: true, color: K.accent, margin: 0, isTextBox: true, valign: 'top' });
   pil(s, `${les.fasen.reduce((a, f) => a + f.min, 0)} minuten`, M, 5.6, 1.5);
   pil(s, meta.code || 'les', M + 1.65, 5.6, 1.1, { fill: K.zand, color: K.inkt });
-  fotoRond(s, img && img.pad, 7.4, 0, W - 7.4, H);
-  bron(s, img); notities(s, les.docentTitel || '');
+  fotoRond(s, img, 7.4, 0, W - 7.4, H);
+  bron(s, img); notities(s, les.docentTitel || ''); notities(s, notitieTitel(les));
   return s;
 }
 function slideAgenda(p, les, meta, img) {
@@ -47,6 +59,7 @@ function slideAgenda(p, les, meta, img) {
   eyebrow(s, 'Zo ziet de les eruit', M, 0.55, 8);
   titel(s, 'Vandaag in ' + les.fasen.reduce((a, f) => a + f.min, 0) + ' minuten', M, 0.85, 8, 0.9, 40);
   const n = les.fasen.length; const gap = 0.2; const bw = (W - 2 * M - gap * (n - 1)) / n; const y = 2.2;
+  notities(s, notitieAgenda(les));
   les.fasen.forEach((f, i) => {
     const x = M + i * (bw + gap); kaart(s, x, y, bw, 2.7);
     s.addShape('ellipse', { x: x + 0.25, y: y + 0.25, w: 0.5, h: 0.5, fill: { color: K.fase[f.soort] }, line: { color: K.fase[f.soort], width: 0 } });
@@ -67,7 +80,8 @@ function slideDoel(p, les, meta, img) {
     s.addShape('rect', { x: M + 0.3, y: y + 0.1, w: 0.3, h: 0.3, fill: { color: K.wit }, line: { color: K.inkt, width: 1.25 } });
     s.addText(c, { x: M + 0.75, y, w: 6.2, h: 0.5, fontFace: BODY, fontSize: 15, color: K.tekst, margin: 0, isTextBox: true, valign: 'middle' });
   });
-  if (img && img.pad) { fotoRond(s, img.pad, 8.3, 0.9, W - 8.3 - M, H - 1.8); bron(s, img); }
+  if (img && img.pad) { fotoRond(s, img, 8.3, 0.9, W - 8.3 - M, H - 1.8); bron(s, img); }
+  notities(s, notitieDoel(les));
   return s;
 }
 function slideFase(p, les, meta, f, i, img, extra) {
@@ -93,28 +107,29 @@ function slideFase(p, les, meta, f, i, img, extra) {
     y += m.h[j] - 0.1 + (groot ? 0.3 : breed ? 0.18 : 0.22);
   });
   if (f.klaar) { const ky = breed ? H - 1.55 : Math.min(Math.max(y + 0.2, 5.4), H - 1.6); kaart(s, M, ky, tw, 0.95); s.addText([{ text: 'Klaar? ', options: { bold: true, color: K.accent, fontFace: KOPB } }, { text: f.klaar, options: { color: K.tekst } }], { x: M + 0.25, y: ky + 0.1, w: tw - 0.5, h: 0.75, fontFace: BODY, fontSize: 13, margin: 0, isTextBox: true, valign: 'middle' }); }
-  if (heeftFoto) { fotoRond(s, img.pad, 8.0, 1.3, W - 8.0 - M, H - 2.3); bron(s, img); }
+  if (heeftFoto) { fotoRond(s, img, 8.0, 1.3, W - 8.0 - M, H - 2.3); bron(s, img); }
   if (extra && !breed) extra(s, { x: 8.0, y: 1.3, w: W - 8.0 - M, h: H - 2.3 });
   if (extra && breed) extra(s, { x: M, y: Math.max(y, 4.4), w: W - 2 * M, h: 1.8 });
-  notities(s, f.docent || '');
+  notities(s, notitieFase(les, f, i));
   return s;
 }
 function slideCheck(p, les, meta) {
   const s = p.addSlide(); s.background = { color: K.fase.check }; s._voetKleur = 'D9CCF5';
   eyebrow(s, 'Check · ' + les.formatief.soort, M, 0.9, 10, 'E5D9FF');
   s.addText(les.formatief.tekst, { x: M, y: 1.4, w: W - 2 * M, h: 4.5, fontFace: KOP, fontSize: 44, bold: true, color: K.wit, margin: 0, isTextBox: true, valign: 'middle' });
+  notities(s, notitieCheck(les));
   return s;
 }
 function slideRodeDraad(p, les, meta, img) {
   const s = p.addSlide(); s.background = { color: K.wit };
-  fotoRond(s, img && img.pad, 0, 0, 6.2, H); bron(s, img); s._voetX = 6.9;
-  eyebrow(s, 'Rode draad', 6.9, 1.2, 6);
-  s.addText(les.identiteit, { x: 6.9, y: 1.7, w: W - 6.9 - M, h: 4.5, fontFace: KOP, fontSize: 30, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top', lineSpacingMultiple: 1.05 });
+  const heeft = !!(img && img.pad); const x0 = heeft ? 6.9 : M; if (heeft) { fotoRond(s, img, 0, 0, 6.2, H); bron(s, img); s._voetX = 6.9; } notities(s, notitieRodeDraad(les));
+  eyebrow(s, 'Rode draad', x0, 1.2, 6);
+  s.addText(les.identiteit, { x: x0, y: 1.7, w: W - x0 - M, h: 4.5, fontFace: KOP, fontSize: 30, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top', lineSpacingMultiple: 1.05 });
   return s;
 }
 function slideThuis(p, les, meta, thuis) {
   const s = p.addSlide(); s.background = { color: K.wit };
-  eyebrow(s, 'Thuis', M, 0.55, 8); titel(s, 'Voor de volgende les', M, 0.9, 10, 0.9, 40);
+  notities(s, notitieThuis(les, thuis)); eyebrow(s, 'Thuis', M, 0.55, 8); titel(s, 'Voor de volgende les', M, 0.9, 10, 0.9, 40);
   const items = []; if (thuis.mb) items.push(['Musicbox', thuis.mb]); if (thuis.learn) items.push(['Leren', thuis.learn]); if (thuis.info) items.push(['Lezen', thuis.info]); if (thuis.extra) items.push(['Opdracht', thuis.extra]);
   const n = Math.max(items.length, 1); const gap = 0.25; const bw = Math.min(4, (W - 2 * M - gap * (n - 1)) / n);
   items.forEach(([k, v], i) => { const x = M + i * (bw + gap); kaart(s, x, 2.3, bw, 2.4); s.addText(k.toUpperCase(), { x: x + 0.3, y: 2.5, w: bw - 0.6, h: 0.35, fontFace: KOPB, fontSize: 11, bold: true, color: K.accent, charSpacing: 2, margin: 0, isTextBox: true }); s.addText(v, { x: x + 0.3, y: 2.95, w: bw - 0.6, h: 1.6, fontFace: KOPB, fontSize: 16, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top' }); });
@@ -123,7 +138,7 @@ function slideThuis(p, les, meta, thuis) {
 }
 // beeldelementen binnen een vak {x,y,w,h}
 function akkoordDiagram(s, naam, x, y, w) { // gitaardiagram; w = breedte, hoogte ≈ 1.3 w
-  const GIT = { G: '320003', C: 'x32010', D: 'xx0232', Em: '022000', Am: 'x02210', E: '022100', A: 'x02220', Dm: 'xx0231', F: '133211', Bm: 'x24432', D7: 'xx0212', G7: '320001', A7: 'x02020', E7: '020100' };
+  const GIT = { G: '320003', C: 'x32010', D: 'xx0232', Em: '022000', Am: 'x02210', E: '022100', A: 'x02220', Dm: 'xx0231', F: '133211', Bm: 'x24432', D7: 'xx0212', G7: '320001', A7: 'x02020', E7: '020100', Bm7: 'x20202', B7: 'x21202', Dsus4: 'xx0233' };
   const g = GIT[naam]; const kol = w / 5; const fr = (w * 1.0) / 4; const top = y + 0.32;
   kaart(s, x - 0.15, y - 0.1, w + 0.3, w * 1.0 + 0.95);
   for (let i = 0; i < 6; i++) s.addShape('line', { x: x + i * kol, y: top, w: 0, h: fr * 4, line: { color: K.inkt, width: 0.75 } });
@@ -134,7 +149,12 @@ function akkoordDiagram(s, naam, x, y, w) { // gitaardiagram; w = breedte, hoogt
     else { const f = +c; s.addShape('ellipse', { x: cx - 0.1, y: top + (f - 0.5) * fr - 0.1, w: 0.2, h: 0.2, fill: { color: K.accent }, line: { color: K.accent, width: 0 } }); } });
   s.addText(naam, { x: x - 0.15, y: top + fr * 4 + 0.12, w: w + 0.3, h: 0.45, fontFace: KOP, fontSize: 24, bold: true, color: K.inkt, align: 'center', margin: 0, isTextBox: true });
 }
-function beeldAkkoorden(items) { return (s, vak) => { const n = items.length; const w = Math.min(1.1, (vak.w - 0.3 * (n - 1)) / n - 0.3); items.forEach((a, i) => akkoordDiagram(s, a, vak.x + 0.15 + i * (w + 0.6), vak.y + 0.8, w)); }; }
+function beeldAkkoorden(items, onder) { return (s, vak) => { const n = items.length; const w = 1.05, kol = 3, stapX = (vak.w - 0.3) / Math.min(n, kol), stapY = w + 1.15; const y0 = vak.y + (n > 3 ? 0.05 : 0.5); items.forEach((a, i) => akkoordDiagram(s, a, vak.x + 0.2 + (i % kol) * stapX, y0 + Math.floor(i / kol) * stapY, w)); if (onder) s.addText(onder, { x: vak.x, y: y0 + Math.ceil(n / kol) * stapY, w: vak.w, h: 0.5, fontFace: BODY, fontSize: 12, color: K.grijs, margin: 0, isTextBox: true, valign: 'top' }); }; }
+// opbouw: staafjes per deel van het lied, van rustig (1) naar vol (4)
+function beeldOpbouw(items) { return (s, vak) => { const n = items.length, gap = 0.1, bw = (vak.w - gap * (n - 1)) / n, hmax = 3.2, y1 = vak.y + 0.4 + hmax; items.forEach((it, i) => { const h = hmax * it.v / 4, x = vak.x + i * (bw + gap); s.addShape('roundRect', { x, y: y1 - h, w: bw, h, fill: { color: K.accent, transparency: 75 - it.v * 18 }, line: { color: K.accent, width: 0 }, rectRadius: 0.06 }); s.addText(it.d, { x: x - 0.05, y: y1 + 0.06, w: bw + 0.1, h: 0.3, fontFace: BODY, fontSize: 10, color: K.tekst, align: 'center', margin: 0, isTextBox: true }); }); s.addText('Hoe hoger, hoe voller de band speelt', { x: vak.x, y: y1 + 0.42, w: vak.w, h: 0.3, fontFace: BODY, fontSize: 11, color: K.grijs, margin: 0, isTextBox: true }); }; }
+// fragment: kaart met link naar de opname
+function beeldFragment(e) { return (s, vak) => { kaart(s, vak.x, vak.y + 0.4, vak.w, 2.9); s.addText(e.k, { x: vak.x + 0.25, y: vak.y + 0.6, w: vak.w - 0.5, h: 0.4, fontFace: BODY, fontSize: 16, bold: true, color: K.inkt, margin: 0, isTextBox: true }); s.addText(e.t, { x: vak.x + 0.25, y: vak.y + 1.05, w: vak.w - 0.5, h: 1.3, fontFace: BODY, fontSize: 14, color: K.tekst, margin: 0, isTextBox: true, valign: 'top' }); s.addText(e.link, { x: vak.x + 0.25, y: vak.y + 2.5, w: vak.w - 0.5, h: 0.5, fontFace: BODY, fontSize: 16, bold: true, color: K.accent, hyperlink: { url: e.u }, margin: 0, isTextBox: true }); }; }
+function extraUit(e) { if (!e) return null; if (e.soort === 'kaarten') return beeldKaarten(e.items); if (e.soort === 'tabel') return beeldTabel(e.rijen, e.kol); if (e.soort === 'akkoorden') return beeldAkkoorden(e.items, e.onder); if (e.soort === 'vorm') return beeldVorm(e.items); if (e.soort === 'opbouw') return beeldOpbouw(e.items); if (e.soort === 'fragment') return beeldFragment(e); return null; }
 function beeldVorm(items) { const fn = (s, vak) => { const VK = { intro: 'B8C1CC', couplet: '8FC1F5', refrein: 'F2A6A0', bridge: 'F2D38A', outro: 'B8C1CC' }; const tot = items.reduce((a, x) => a + (x.m || 4), 0);
   const minW = 0.85; const isVast = it => (it.m || 4) / tot * vak.w < minW; const vast = items.filter(isVast).length; const rest = vak.w - vast * minW; const flexTot = items.filter(it => !isVast(it)).reduce((a, x) => a + (x.m || 4), 0) || 1;
   const breedte = it => isVast(it) ? minW : (it.m || 4) / flexTot * rest; let x = vak.x; const y = vak.y + 0.25; const h = 1.0;
@@ -146,6 +166,12 @@ function beeldTabel(rijen, kol) { return (s, vak) => { const fr = kol || [0.55, 
 function beeldKaarten(items) { return (s, vak) => { const n = items.length; const kol = n > 3 ? 2 : 1; const rijen = Math.ceil(n / kol); const gap = 0.18; const bw = (vak.w - gap * (kol - 1)) / kol; const bh = Math.min(1.5, (vak.h - 0.4 - gap * (rijen - 1)) / rijen);
   items.forEach((it, i) => { const x = vak.x + (i % kol) * (bw + gap); const y = vak.y + 0.4 + Math.floor(i / kol) * (bh + gap); kaart(s, x, y, bw, bh); s.addText([{ text: it.k, options: { bold: true, fontFace: KOPB, fontSize: it.k.length > 14 && kol > 1 ? 12 : 14, breakLine: true } }, { text: it.t || '', options: { fontSize: 11, color: K.grijs } }], { x: x + 0.2, y: y + 0.12, w: bw - 0.4, h: bh - 0.24, fontFace: BODY, color: K.inkt, margin: 0, isTextBox: true, valign: 'top' }); }); }; }
 
+// pptxgenjs zet notities in één tekstregel; elke regel wordt hier een eigen alinea, zodat PowerPoint de opmaak toont.
+async function schrijf(p, bestand) { const zip = await JSZip.loadAsync(await p.write({ outputType: 'nodebuffer' }));
+  for (const k of Object.keys(zip.files).filter(k => /notesSlides\/notesSlide\d+\.xml$/.test(k))) { let x = await zip.file(k).async('string');
+    x = x.replace(/<a:p>((?:(?!<\/a:p>)[\s\S])*?)<a:t>([^<]*[\r\n][^<]*)<\/a:t>((?:(?!<\/a:p>)[\s\S])*?)<\/a:p>/, (m, voor, tekst, na) => tekst.split(/\r?\n/).map(r => `<a:p>${voor}<a:t xml:space="preserve">${r}</a:t>${na}</a:p>`).join(''));
+    zip.file(k, x); }
+  require('fs').writeFileSync(bestand, await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' })); }
 async function maak(les, meta, opt) {
   // les: {titel, vraag, doel, criteria, fasen[{min,soort,kop,stappen,klaar,docent}], formatief, identiteit}
   // opt: {bestand, thuis, fotos:{titel,doel,fase:[...],rodeDraad}, extra:{faseIndex: fn}}
@@ -158,8 +184,8 @@ async function maak(les, meta, opt) {
   if (les.identiteit) slideRodeDraad(p, les, meta, F.rodeDraad);
   if (opt.thuis && Object.keys(opt.thuis).length) slideThuis(p, les, meta, opt.thuis);
   // voettekst en nummering
-  p.slides.forEach((s, i) => { if (i > 0) voet(s, meta, i + 1, p.slides.length); });
-  await p.writeFile({ fileName: opt.bestand });
+  p.slides.forEach((s, i) => { if (i > 0) voet(s, meta, i + 1, p.slides.length); const n = (s._n || []).concat(s._bron || []).join('\n\n'); if (n) s.addNotes(n); });
+  await schrijf(p, opt.bestand);
   return opt.bestand;
 }
-module.exports = { maak, beeldAkkoorden, beeldVorm, beeldTabel, beeldKaarten, K, nieuw, slideTitel, slideAgenda, slideDoel, slideFase, slideCheck, slideRodeDraad, slideThuis, voet };
+module.exports = { maak, extraUit, beeldOpbouw, beeldFragment, beeldAkkoorden, beeldVorm, beeldTabel, beeldKaarten, K, nieuw, slideTitel, slideAgenda, slideDoel, slideFase, slideCheck, slideRodeDraad, slideThuis, voet };

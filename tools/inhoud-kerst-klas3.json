@@ -1,0 +1,2334 @@
+{
+  "_uitleg": "Kerstbox klas 3: Mary's Boy Child (havo 3) en God Rest Ye Merry Gentlemen (vwo 3), lessen 11 t/m 16. Gemaakt met tools/maak-decks.js.",
+  "havo3": {
+    "klas": "havo 3",
+    "thema": "klas3",
+    "map": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027",
+    "blok": "Periode 2 · Kerstbox Mary's Boy Child",
+    "blokKort": "kerstbox",
+    "lessen": [
+      {
+        "bestand": "11 Mary's Boy Child - leren kennen.pptx",
+        "kort": "Mary's Boy Child leren kennen",
+        "code": "P2 · les 11",
+        "week": 11,
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 11,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "havo3",
+          "w": 11,
+          "slot": "l1"
+        },
+        "thuis": {
+          "mb": "eigen kerstbox Mary's Boy Child"
+        },
+        "fotos": {
+          "titel": "pieterskerk.jpg",
+          "doel": "bandles-leerlingen.jpg",
+          "fase": [
+            "microfoon-studio.jpg",
+            null,
+            null,
+            null,
+            "gitaar-akkoord.jpg"
+          ],
+          "rodeDraad": "handen-zonsondergang.jpg"
+        },
+        "voorbereiding": [
+          "Zet de opname van Boney M. klaar en luister hem zelf één keer. Let op hoe de intro loopt en waar het couplet overgaat in het refrein. Het ontwerp van de kerstbox zegt dat je dat met de opname moet nagaan.",
+          "De opname heeft een tweede lied erachter, 'Oh My Lord'. Dat spelen wij niet. Laat dat deel weg of zeg erbij dat het niet bij ons lied hoort.",
+          "Schrijf de akkoorden van het refrein op het bord: F, B♭, C7. Zet er klein onder wat de gitaar met capo speelt: D, G, A7.",
+          "Wisbordjes en stiften klaar. Leg ook alvast capo's klaar; vanaf volgende week hebben de gitaristen ze nodig.",
+          "Kijk zelf in Musicbox naar de kerstbox Mary's Boy Child, niveau 1, hoofdstuk 1.1."
+        ],
+        "notitieTitel": [
+          "Welkom bij periode 2. De komende weken werken we aan één lied: Mary's Boy Child. Het is een kerstlied met een dansritme, en het is ook je lied voor P1 in januari. Daarom leren we het nu goed kennen.",
+          "Vandaag luisteren we, vertel ik waar het lied vandaan komt en wat het verhaal is, zingen we het refrein mee en leg ik uit hoe de kerstbox in Musicbox werkt. Aan het eind schrijf je op welk instrument je wilt spelen.",
+          "Het lied in het kort: Mary's Boy Child, geschreven door Jester Hairston in 1956, een wereldhit voor Boney M. in 1978. Het ritme is calypso, dansmuziek uit Trinidad. Wij spelen het in F, in 4/4, tempo rond 112 slagen per minuut. Het verhaal komt uit Lucas 2: Bethlehem, geen plek in de herberg, de herders in het veld, de engelen.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil."
+        ],
+        "notitieAgenda": [
+          "We doen vier dingen. Eerst luisteren. Dan het verhaal van het lied. Dan zingen we het refrein mee. Tot slot de kerstbox en je instrumentkeuze."
+        ],
+        "notitieDoel": [
+          "Na deze les vertel je in twee zinnen waar Mary's Boy Child vandaan komt: Jester Hairston schreef het, Boney M. maakte het wereldberoemd, en het ritme is calypso.",
+          "Je tekent het vormschema: wat komt waarna? Dat zijn couplet en refrein.",
+          "En je weet dat dit ook je lied voor P1 is, in lesweek 19."
+        ],
+        "notitieRodeDraad": [
+          "Het kerstverhaal staat in Lucas 2. De keizer laat alle mensen tellen, dus Jozef en Maria reizen van Nazareth naar Bethlehem. Daar is geen plek in de herberg en Jezus wordt geboren in een stal. Hij ligt in een kribbe.",
+          "In de velden zijn herders. Een engel zegt dat ze niet bang hoeven te zijn: er is grote vreugde voor alle mensen, er is een Redder geboren. Daarna zingen de engelen. De herders gaan kijken en vertellen wat ze gezien hebben.",
+          "Het lied vertelt dit verhaal. Het is vrolijk, niet omdat de omstandigheden mooi zijn, maar vanwege wie er geboren wordt. Daarom kan een lied over een stal toch dansen."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Waarom past blijdschap bij een kind dat in een stal wordt geboren?",
+            "a": "Omdat de engelen en de herders het goede nieuws brengen: dit kind is de Redder voor alle mensen. De vreugde zit in wie er geboren wordt, niet in de plek (Lucas 2:10-11)."
+          },
+          {
+            "v": "Wat zegt het dansritme over de stemming van het lied?",
+            "a": "Het is een feest. Het couplet vertelt rustig het verhaal en het refrein viert het."
+          }
+        ],
+        "notitieThuis": [
+          "Open thuis de kerstbox Mary's Boy Child in Musicbox. Kijk bij niveau 1 naar hoofdstuk 1.1, het lied leren kennen.",
+          "Luister het lied nog een keer en bedenk welk instrument je het liefst wilt spelen, en welk als tweede."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Zeg alleen: luister naar hoe het lied begint en let op waar je denkt 'dit is het refrein'. Niet meezingen, niet meelezen. De tekst bespreken we straks mondeling.",
+                "Je draait Boney M., een opname uit 1978. Je hoort een lichte, wiegende beat en een melodie die blijft hangen."
+              ],
+              "vragen": [
+                {
+                  "v": "Hoe begint het lied?",
+                  "a": "Met een intro van de band, voordat er gezongen wordt. Controleer vooraf op de opname hoe de intro precies loopt."
+                },
+                {
+                  "v": "Waar komt het refrein?",
+                  "a": "Na het couplet. Het refrein herken je aan de melodie die blijft hangen en waar de hele band volop meespeelt."
+                }
+              ],
+              "letop": [
+                "Laat ze een streepje zetten elke keer dat het refrein begint; zo tellen ze het mee.",
+                "Wordt het tijdgebrek, zet de opname dan stil na het eerste couplet en refrein. De rest van de les is nodig voor het verhaal."
+              ]
+            }
+          },
+          "1": {
+            "docent": "Het vormschema op de dia is een overzicht: twee coupletten en twee refreinen, met intro en slot. De volledige vorm in de kerstbox is langer, zie de notitie. De opname van Boney M. heeft nog een tweede lied erachter ('Oh My Lord'); in de kerstbox laten we dat deel weg.",
+            "notitie": {
+              "vertel": [
+                "Jester Hairston schreef het lied in 1956. Harry Belafonte maakte er een hit van. In 1978 werd het een wereldhit voor Boney M. Dat is de opname die we net hoorden. Boney M. zingt het in F, en wij spelen het ook in F.",
+                "Boney M. plakt er een tweede lied achteraan, 'Oh My Lord'. Dat laten we weg. Wij spelen alleen Mary's Boy Child.",
+                "Het ritme is calypso. Dat is dansmuziek uit Trinidad, een eiland in het Caribisch gebied. Je hoort calypso aan het wiegende ritme: het accent valt net na de tel, op de 'en' van 2. Daar zit de calypso. Dat gaan we klappen.",
+                "Het verhaal is het kerstverhaal uit Lucas 2. Het couplet vertelt: Maria en Jozef zijn in Bethlehem, er is geen plek, en het kind wordt geboren in een stal. Het refrein is het feest: de engelen zingen dat er een nieuwe koning geboren is, en dat mensen daardoor altijd mogen leven.",
+                "Is het een calypso of een carol? Een carol is een traditioneel kerstlied. Mary's Boy Child is een nieuw lied uit 1956 met een kerstverhaal, in een Caribische dansstijl. Dus: calypso, met een kerstverhaal.",
+                "Couplet en refrein zijn elk acht maten, in 4/4, tempo rond 112 slagen per minuut."
+              ],
+              "voorbeelden": [
+                "Klap het basritme van de calypso met de klas. Tel hardop 1, 2 en, 3, 4 en klap op 1, op de 'en' van 2 en op 4. Doe het eerst langzaam.",
+                "Volledige vorm in de kerstbox: intro van vier maten (refrein, alleen de band), couplet 1, refrein, couplet 2, refrein, couplet 3, refrein, nog een refrein, slot op Fsus en F. Niveau 1 is alleen het refrein, niveau 2 couplet en refrein, niveau 3 het hele lied."
+              ],
+              "vragen": [
+                {
+                  "v": "Wie schreef het lied en wanneer?",
+                  "a": "Jester Hairston, in 1956."
+                },
+                {
+                  "v": "Welk ritme heeft het lied en waar komt het vandaan?",
+                  "a": "Calypso, uit Trinidad."
+                },
+                {
+                  "v": "Wat vertelt het couplet en wat het refrein?",
+                  "a": "Het couplet vertelt het kerstverhaal, het refrein is het feest."
+                },
+                {
+                  "v": "Teken het vormschema.",
+                  "a": "Intro, couplet, refrein, couplet, refrein, slot. In de kerstbox staat het hele lied met drie coupletten."
+                }
+              ],
+              "letop": [
+                "Leerlingen noemen vaak Boney M. als schrijver. Zeg: zij hebben het gezongen, Hairston heeft het geschreven.",
+                "Geen tekst op het bord. Vertel het verhaal in je eigen woorden.",
+                "Het ontwerp meldt dat het akkoordschema nog tegen de opname gecheckt moet worden, vooral maat 3 van het refrein (Dm Gm) en het slot."
+              ]
+            }
+          },
+          "2": {
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "D",
+                "G",
+                "A7"
+              ],
+              "onder": "Gitaar met capo op fret 3: klinkt als F, B♭, C7. Ukelele en keyboard spelen F, B♭, C7."
+            },
+            "notitie": {
+              "vertel": [
+                "Laat ze eerst het refrein meezingen met de opname. Zing daarna op 'oe' de grondtoon van elk akkoord: bij F zing je F, bij B♭ zing je B♭, bij C7 zing je C. Zo hoor je al hoe de akkoorden lopen.",
+                "Het refrein is acht maten. Twee akkoorden in een maat zijn elk twee tellen. Refrein niveau 1, klinkend: F B♭ | C7 F | F B♭ | C7 | F | B♭ | F C7 | F. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Op het bord staat wat de gitaar speelt: D, G en A7. Met de capo op fret 3 klinken die als F, B♭ en C7. Daarom lees je het bord anders dan een gitarist."
+              ],
+              "voorbeelden": [
+                "Dezelfde maten voor de gitaar met capo op fret 3: D G | A7 D | D G | A7 | D | G | D A7 | D.",
+                "Grondtonen om te zingen: F B♭ | C F | F B♭ | C | F | B♭ | F C | F.",
+                "Gitaar met capo op fret 3: D (xx0232), G (320003), A7 (x02020); klinken als F, B♭, C7. Ukelele zonder capo: F (2010), B♭ in de makkelijke vorm (0211), C7 (0001). Keyboard: F = F A C, B♭ = F B♭ D, C7 = E G B♭."
+              ],
+              "vragen": [
+                {
+                  "v": "Waarom staan er D, G en A7 op het bord?",
+                  "a": "Dat zijn de grepen van de gitaar met capo op fret 3. Ze klinken als F, B♭ en C7."
+                },
+                {
+                  "v": "Hoeveel maten heeft het refrein?",
+                  "a": "Acht."
+                }
+              ],
+              "letop": [
+                "Zingen op 'oe' is lastig als ze het refrein nog niet kennen. Zing het eerst twee keer gewoon mee en pak dan de grondtonen.",
+                "F is voor sommigen laag of hoog. Het ontwerp meldt dat jongens een octaaf lager meezingen; laat dat gerust toe.",
+                "Wijs de gitaar-ondertitel aan, zodat niemand denkt dat F, B♭ en C7 op het bord verkeerd staan."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "De kerstbox staat in Musicbox. Hij heeft drie niveaus. Niveau 1 is het refrein: acht maten met drie akkoorden, F, B♭ en C7. Niveau 2 is couplet en refrein, met twee nieuwe akkoorden, Gm en Dm, en het echte calypsoritme. Niveau 3 is het hele lied: drie coupletten, refreinen, intro en slot, en je band bouwt op.",
+                "Elk niveau heeft acht hoofdstukken: het lied leren kennen, zang, gitaar en ukelele, keyboard, bas, drums en cajon, samen spelen met je band, en een check. Je kiest je partij: zang, gitaar of ukelele, keyboard, bas of drums.",
+                "Je mag altijd een niveau hoger proberen. Ik zeg welk niveau je minimaal haalt. Wie op niveau 1 zit, speelt in de band mee in het refrein.",
+                "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil.",
+                "Je oefent tot de kerst en daarna nog drie lessen: lesweek 16, 17 en 18. In lesweek 19 speel je dit lied voor P1, in je groep, voor mij en niet voor de klas."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke drie niveaus zijn er?",
+                  "a": "Niveau 1 het refrein, niveau 2 couplet en refrein, niveau 3 het hele lied."
+                },
+                {
+                  "v": "Wat is het minimale niveau voor P1?",
+                  "a": "Niveau 2."
+                },
+                {
+                  "v": "Wanneer speel je P1 en voor wie?",
+                  "a": "In lesweek 19, met je groep, voor de docent."
+                }
+              ],
+              "letop": [
+                "Open indien mogelijk de kerstbox op het bord en laat de homepage met de knoppen Niveau 1, 2 en 3 zien.",
+                "Zeg dat P1 niet herkansbaar is en dat iedereen een eigen cijfer krijgt, ook in een groep."
+              ]
+            }
+          },
+          "4": {
+            "notitie": {
+              "vertel": [
+                "Laat ze op het wisbordje hun eerste en tweede keus voor een instrument opschrijven: zang, gitaar, ukelele, keyboard, bas of drums (of cajon).",
+                "Zeg wat nodig is: elke groep heeft iemand voor de bas en iemand op drums of percussie nodig. Dat helpt bij het maken van de groepen in lesweek 13.",
+                "Volgende week beginnen we met de akkoorden en partijen van niveau 1, in hoeken in het lokaal."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke instrumenten zijn er in de band?",
+                  "a": "Zang, gitaar, ukelele, keyboard, bas, drums of cajon."
+                }
+              ],
+              "letop": [
+                "Noteer de keuzes; ze zijn de basis voor de hoeken van volgende week en voor de groepen van lesweek 13.",
+                "Kiest niemand bas of drums? Zoek nu al vrijwilligers en vertel dat een band niet zonder die twee kan."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Op het wisbordje staan twee dingen: het vormschema van Mary's Boy Child en je eerste en tweede keus voor een instrument.",
+              "Laat ze het bordje tegelijk omhoog houden. Zo zie je in één oogopslag wie het vormschema heeft en welke instrumenten gekozen worden."
+            ],
+            "vragen": [
+              {
+                "v": "Wat is de vorm van het lied?",
+                "a": "Intro, couplet, refrein, couplet, refrein, slot; in de kerstbox komt er een derde couplet en een extra refrein bij."
+              }
+            ],
+            "letop": [
+              "Noteer de instrumentkeuzes meteen op een lijst. Verwacht te weinig basgitaristen en drummers."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "12 Mary's Boy Child - akkoorden en partijen.pptx",
+        "kort": "Mary's Boy Child: akkoorden en partijen",
+        "code": "P2 · les 12",
+        "week": 12,
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 12,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "havo3",
+          "w": 12,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "gitaar-akkoord.jpg",
+          "doel": "mengtafel-leerlingen.jpg",
+          "fase": [
+            null,
+            null,
+            "bandles-leerlingen.jpg",
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Zet vier hoeken klaar: akkoorden (gitaar, ukelele, keyboard), zang, bas, drums of cajon.",
+          "Leg een capo klaar voor elke gitaar. Zonder capo kloppen de grepen niet.",
+          "Zet het akkoordenschema op het bord: F, B♭, C7, met eronder D, G, A7 voor de gitaar.",
+          "Controleer of de meespeeltrack en de karaokevideo van niveau 1 werken en dat koptelefoons klaarliggen.",
+          "Bekijk zelf de tutorials van niveau 1, zodat je weet wat ze zien."
+        ],
+        "notitieTitel": [
+          "Vandaag leer je je partij van het refrein, niveau 1 van de kerstbox. Je werkt in een hoek, met de tutorial van je eigen instrument.",
+          "Het lied in het kort: Mary's Boy Child, geschreven door Jester Hairston in 1956, een wereldhit voor Boney M. in 1978. Het ritme is calypso, dansmuziek uit Trinidad. Wij spelen het in F, in 4/4, tempo rond 112 slagen per minuut. Het verhaal komt uit Lucas 2: Bethlehem, geen plek in de herberg, de herders in het veld, de engelen.",
+          "Refrein niveau 1, klinkend: F B♭ | C7 F | F B♭ | C7 | F | B♭ | F C7 | F. Twee akkoorden in een maat zijn elk twee tellen.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil."
+        ],
+        "notitieAgenda": [
+          "Eerst pakken we samen de akkoorden. Dan leg ik uit wat ieder doet. Dan oefenen jullie 25 minuten in je hoek. Aan het eind spelen we het refrein één keer samen."
+        ],
+        "notitieDoel": [
+          "Aan het eind van de les speel of zing je het refrein op jouw instrument.",
+          "Op de akkoordinstrumenten: F, B♭ en C7 pakken en wisselen op de tel.",
+          "Zang, bas en drums: je partij van het refrein spelen of zingen.",
+          "Je weet waar in de kerstbox je partij staat."
+        ],
+        "fasenExtra": {
+          "0": {
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "D",
+                "G",
+                "A7"
+              ],
+              "onder": "Gitaar met capo op fret 3: klinkt als F, B♭, C7. Ukelele en keyboard spelen F, B♭, C7."
+            },
+            "notitie": {
+              "vertel": [
+                "Iedereen met een akkoordinstrument pakt de akkoorden van het refrein één voor één. Gitaristen zetten eerst de capo op fret 3. Jij geeft het teken: tel hardop 1, 2, 3, 4 en wissel op de 1.",
+                "Op het bord staan de grepen van de gitaar: D, G en A7. Die klinken met de capo als F, B♭ en C7. Ukelele en keyboard spelen de akkoorden zoals ze klinken."
+              ],
+              "voorbeelden": [
+                "Gitaar met capo op fret 3: D (xx0232), G (320003), A7 (x02020); klinken als F, B♭, C7. Ukelele zonder capo: F (2010), B♭ in de makkelijke vorm (0211), C7 (0001). Keyboard: F = F A C, B♭ = F B♭ D, C7 = E G B♭.",
+                "Gitaargrepen: D = xx0232, G = 320003, A7 = x02020."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke grepen speelt de gitaar met capo op fret 3, en welke akkoorden klinken dan?",
+                  "a": "D, G en A7; die klinken als F, B♭ en C7."
+                },
+                {
+                  "v": "Waarom speelt de ukelele zonder capo?",
+                  "a": "Met een capo wordt D op de ukelele te krap. De ukelele speelt gewoon in F, zonder barrégrepen."
+                }
+              ],
+              "letop": [
+                "Een gitarist zonder capo klinkt een kleine terts te laag. Je hoort het meteen als het keyboard meespeelt.",
+                "Kijk naar de linkerhand: klinken alle snaren? Dempt een vinger de snaar ernaast, zeg dan: vingers wat steiler.",
+                "Ukelele B♭ in de makkelijke vorm 0211 klinkt bijna als B♭; dat is bedoeld."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Iedereen heeft een eigen taak. Zo klinkt het straks als een band.",
+                "Gitaar: capo op fret 3, grepen D, G en A7, één aanslag per akkoord. Ukelele zonder capo: F, B♭ en C7. Keyboard: de akkoorden met rechts, F A C, F B♭ D en E G B♭. De F blijft liggen tussen F en B♭, dus je hand hoeft nauwelijks te verspringen.",
+                "Zang: de melodie van het refrein, met de karaokevideo. Bas: de grondtonen F, B♭ en C. F speel je op de E-snaar, fret 1; B♭ op de A-snaar, fret 1; C op de A-snaar, fret 3. Speel elke toon op de 1 en op de 3.",
+                "Drums of cajon: de dia volgt de leergang, een eenvoudig calypsopatroon met de bas op 1 en de 'en' van 2. In de kerstbox staat op niveau 1 een rustigere beat: hihat of zachte cajon in achtsten, bassdrum op 1 en 3, snare op 2 en 4. Het echte calypsoritme komt op niveau 2."
+              ],
+              "voorbeelden": [
+                "Refrein niveau 1, klinkend: F B♭ | C7 F | F B♭ | C7 | F | B♭ | F C7 | F. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Dezelfde maten voor de gitaar met capo op fret 3: D G | A7 D | D G | A7 | D | G | D A7 | D.",
+                "Bas: F (E-snaar fret 1), B♭ (A-snaar fret 1) en C (A-snaar fret 3), op de 1 en de 3 van de maat.",
+                "Drums niveau 1 in de kerstbox: hihat in achtsten (1 en 2 en 3 en 4 en), bassdrum op 1 en 3, snare op 2 en 4, afgeteld in tempo 112."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat speelt de bas in het refrein?",
+                  "a": "De grondtonen F, B♭ en C, op de 1 en de 3."
+                },
+                {
+                  "v": "Wat doet de drummer op niveau 1?",
+                  "a": "Hihat in achtsten, bassdrum op 1 en 3, snare op 2 en 4, en aftellen."
+                }
+              ],
+              "letop": [
+                "Leergang en kerstbox verschillen bij de drums. Laat de drummers beginnen met de rustige beat uit de tutorial; het calypsoritme (bassdrum op 1, op de 'en' van 2 en op 4) komt op niveau 2. Wie dat al kan, mag het gewoon spelen.",
+                "Bij twijfel is de tutorial in de kerstbox leidend.",
+                "Leerlingen die niet weten waar hun partij staat: verwijs naar de hoofdstukken 1.2 tot en met 1.6 in niveau 1."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Per hoek geldt: eerst langzaam, dan met de meespeeltrack. Loop rond en help per instrument met de echte tonen en grepen.",
+                "Gitaar: klopt de capo op fret 3? Dan speelt D als F. Wissels oefenen ze tien keer: D naar G, G naar A7, A7 naar D. Eén aanslag per akkoord, op de tel.",
+                "Ukelele: F naar B♭, B♭ naar C7, C7 naar F. Ook tien keer per wissel.",
+                "Keyboard: kijk of de F blijft liggen. B♭ is de enige zwarte toets. De tutorial laat zien welke toetsen je indrukt.",
+                "Zang: drie keer luisteren, dan zacht meezingen, dan mee met de karaokevideo. Waar zet je in?",
+                "Bas: zoek F, B♭ en C op de hals en speel op de 1 en de 3. Samen met de drummer: jullie raken allebei de 1.",
+                "Drums en cajon: tel hardop af, 1 2 3 4. Houd hihat of zachte cajon gelijk."
+              ],
+              "voorbeelden": [
+                "Niveaucheck 1 doen zodra het lukt: de drie vragen staan in de kerstbox."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke drie akkoorden speel je in het refrein?",
+                  "a": "F, B♭ en C7."
+                },
+                {
+                  "v": "Uit welk land komt de calypso?",
+                  "a": "Trinidad."
+                },
+                {
+                  "v": "Wat doe je als je een fout maakt in de band?",
+                  "a": "Doorspelen en weer instappen."
+                }
+              ],
+              "letop": [
+                "Bas: de 3 wordt vaker gemist dan de 1. Laat bas en drummer samen de 1 raken en daarna de 3.",
+                "Gitaar: de wissel van A7 naar D duurt vaak te lang. Laat ze langzaam wisselen.",
+                "Is een leerling al klaar, wijs dan naar het couplet van niveau 2 (Gm en Dm erbij).",
+                "Wie de capo vergeten is, hoor je meteen: het klinkt vals bij het keyboard."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Alle hoeken tegelijk, met de meespeeltrack, het refrein één keer. Daarna duimen: omhoog als je partij op tempo lukt, opzij als het bijna lukt, omlaag als het nog niet gaat.",
+                "Zeg na afloop welke hoeken nog meer tijd nodig hebben."
+              ],
+              "vragen": [
+                {
+                  "v": "Op welk tempo speel je het refrein?",
+                  "a": "Rond 112 slagen per minuut, in 4/4."
+                }
+              ],
+              "letop": [
+                "Klinkt het niet samen: laat de drummer opnieuw aftellen en begin nog een keer, langzaam.",
+                "Noteer wie duim omlaag heeft; zij krijgen volgende week hulp."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Duimen. Omhoog: mijn partij van het refrein lukt op tempo. Opzij: bijna. Omlaag: nog niet.",
+              "Zeg erbij dat omlaag niet erg is. Dan weet je waar je moet helpen."
+            ],
+            "vragen": [
+              {
+                "v": "Welke drie akkoorden speel je in het refrein?",
+                "a": "F, B♭ en C7."
+              },
+              {
+                "v": "Uit welk land komt de calypso?",
+                "a": "Trinidad."
+              },
+              {
+                "v": "Wat doe je als je een fout maakt in de band?",
+                "a": "Doorspelen en weer instappen."
+              }
+            ],
+            "letop": [
+              "Is er een hoek met veel duimen omlaag? Loop volgende week langer bij die hoek."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "13 Mary's Boy Child - groepen en samenspelen.pptx",
+        "kort": "Mary's Boy Child: groepen en samenspelen",
+        "code": "P2 · les 13",
+        "week": 13,
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 13,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "havo3",
+          "w": 13,
+          "slot": "l1"
+        },
+        "detail": "Vaste groepen, ook voor P1. Het refrein samen spelen; wie klaar is, gaat door naar niveau 2 (couplet en refrein, erbij: Gm en Dm).",
+        "fotos": {
+          "titel": "worship-podium.jpg",
+          "doel": "mengtafel-leerlingen.jpg",
+          "fase": [
+            "bandles-leerlingen.jpg",
+            null,
+            null,
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Maak voor de les een voorlopige groepsindeling uit de wisbordjes van les 11 (eerste en tweede keus) en wat je in les 12 zag. Zet hem op het bord.",
+          "Elke groep: vier of vijf leerlingen, alle partijen bezet (zang, akkoorden, bas, drums of percussie).",
+          "Leg vast welke ruimtes beschikbaar zijn en welke groep waar oefent.",
+          "Leg capo's, cajons en eventueel een shaker, tamboerijn of cowbell klaar.",
+          "Bekijk de speelles-afspraken voor werken in groepjes (document in de sectiemap)."
+        ],
+        "notitieTitel": [
+          "Vandaag worden de groepen vast. Deze groep blijft ook voor P1.",
+          "In de band doet iedereen mee. Vandaag spelen jullie het refrein samen, en wie klaar is, begint aan het couplet van niveau 2.",
+          "Het lied in het kort: Mary's Boy Child, geschreven door Jester Hairston in 1956, een wereldhit voor Boney M. in 1978. Het ritme is calypso, dansmuziek uit Trinidad. Wij spelen het in F, in 4/4, tempo rond 112 slagen per minuut. Het verhaal komt uit Lucas 2: Bethlehem, geen plek in de herberg, de herders in het veld, de engelen.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil."
+        ],
+        "notitieAgenda": [
+          "Eerst de groepen. Dan vijf minuten over slim oefenen. Dan 25 minuten samenspelen. Aan het eind kijken we waar je groep staat."
+        ],
+        "notitieDoel": [
+          "Je weet in welke groep je zit en wat jouw partij is.",
+          "Jullie beginnen en eindigen het refrein samen.",
+          "Jullie weten wat jullie volgende les eerst oefenen."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Groepen van vier of vijf. Alle partijen moeten bezet zijn: zang, een akkoordinstrument (gitaar, ukelele of keyboard), bas, drums of cajon. Twee akkoordspelers kan ook.",
+                "Ik heb de groepen gemaakt op basis van jullie eerste en tweede keus. Past jouw keuze niet, dan zeg ik waarom en wat je wel kunt doen.",
+                "Deze groep blijft ook voor P1 in lesweek 19. Je krijgt een eigen cijfer, maar je hebt de groep nodig.",
+                "Spreek in de groep af wie aftelt. Dat is meestal de drummer."
+              ],
+              "voorbeelden": [
+                "Mogelijke groep: 1 zang, 1 gitaar met capo, 1 ukelele of keyboard, 1 bas, 1 drums of cajon.",
+                "Te veel drummers? Zet er een op cajon, shaker of tamboerijn. Geen bassist? Het keyboard kan op niveau 2 de grondtonen links spelen."
+              ],
+              "vragen": [
+                {
+                  "v": "Wie telt af in jullie groep?",
+                  "a": "Meestal de drummer, maar de groep spreekt het zelf af."
+                },
+                {
+                  "v": "Wat betekent 'vaste groep'?",
+                  "a": "Je blijft in deze groep tot en met P1 in lesweek 19."
+                }
+              ],
+              "letop": [
+                "Zorg dat elke groep een drummer of percussionist heeft; zonder dat valt het samenspel uit elkaar.",
+                "Een groep met drie gitaristen en geen bas is geen band; schuif iemand door.",
+                "Laat de partijen leidend zijn, niet de vriendengroepen."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Drie tips voor slim oefenen. Eén: eerst langzaam, dan op tempo. Twee: eerst zonder zang, dan met zang. Drie: gaat het mis, speel dan dat stukje opnieuw, niet het hele lied.",
+                "Waarom? Een fout in maat 3 oefen je niet door het hele refrein nog tien keer te spelen. Pak alleen die maat en herhaal hem."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat doe je als het in één maat steeds misgaat?",
+                  "a": "Dat stukje opnieuw spelen, langzamer, en daarna weer in het geheel."
+                }
+              ],
+              "letop": [
+                "Het ontwerp zegt: laat de hele klas het ritme eerst klappen voordat iemand een instrument pakt. Doe dat als bas en drums niet samen komen: 1, de 'en' van 2 en 4."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Verdeel je over het lokaal en de ruimtes ernaast. Speel het refrein tot het samen klinkt. Klaar? Begin aan het couplet uit niveau 2.",
+                "Refrein niveau 1, klinkend: F B♭ | C7 F | F B♭ | C7 | F | B♭ | F C7 | F. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Niveau 2 voegt het couplet toe en twee akkoorden: Gm en Dm. Gitaar met capo: Em (022000, klinkt als Gm) en Bm7 in de makkelijke vorm x20202 (klinkt als Dm7, dat staat voor Dm). Ukelele: Gm (0231) en Dm (2210). Keyboard: Gm = G B♭ D, Dm = F A D, met links de grondtonen F, G, B♭, C, D.",
+                "Op niveau 2 komt de calypsoslag voor gitaar en ukelele: neer · neer-op · op-neer-op, met het accent net na de tel. Bas: 1, de 'en' van 2 en 4, bijvoorbeeld F op de 1, C op de 'en' van 2 en F op de 4. Drums: bassdrum op dezelfde plekken, snare of rimshot op 2 en 4."
+              ],
+              "voorbeelden": [
+                "Couplet, klinkend: F | Gm | C7 | F | F | B♭ | F C7 | F (acht maten).",
+                "Refrein op niveau 2, klinkend: F B♭ | C7 F | Dm Gm | C7 | F | B♭ | F C7 | F. Alleen maat 3 is anders dan op niveau 1.",
+                "Gitaar met capo op fret 3, couplet: D | Em | A7 | D | D | G | D A7 | D.",
+                "Bas bij Gm en Dm: G (E-snaar fret 3) en D (A-snaar fret 5)."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke twee akkoorden komen er op niveau 2 bij?",
+                  "a": "Gm en Dm."
+                },
+                {
+                  "v": "Op welke tellen speelt de bas het calypsoritme?",
+                  "a": "Op 1, op de 'en' van 2 en op 4."
+                },
+                {
+                  "v": "Wat vertelt het couplet en wat doet het refrein?",
+                  "a": "Het couplet vertelt het verhaal, het refrein is het feest."
+                }
+              ],
+              "letop": [
+                "Noteer welke groepen klaar zijn voor niveau 2. Dat is het minimum voor P1.",
+                "Samen beginnen is het lastigst: laat de drummer hardop aftellen en kijk of iedereen op de 1 inzet.",
+                "Waar het niet klinkt, helpt meestal de bas of de drums eerst.",
+                "Bm7 x20202 met capo klinkt als Dm7; dat is een prima vervanger voor Dm."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Kijk met je groep: is niveau 1 af? Is niveau 2 begonnen? Schrijf op wat jullie volgende les eerst oefenen. Dat mag klein zijn: maat 3 van het refrein, de wissel C7 naar F."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat gaan jullie volgende les eerst oefenen?",
+                  "a": "Het eigen antwoord van de groep; het moet concreet zijn, bijvoorbeeld een wissel of een maat."
+                }
+              ],
+              "letop": [
+                "Neem de lijst van groepen met hun status mee naar volgende les (opbouw en dynamiek).",
+                "Lessen 14 en 15 zijn de laatste voor de kerst; zorg dat elke groep nu minstens het refrein aankan."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Ik loop langs de groepen en noteer: speelt de groep het refrein samen, beginnen en eindigen ze samen, en zijn ze klaar voor niveau 2?"
+            ],
+            "vragen": [
+              {
+                "v": "Welke twee akkoorden komen er op niveau 2 bij?",
+                "a": "Gm en Dm."
+              },
+              {
+                "v": "Op welke tellen speelt de bas het calypsoritme?",
+                "a": "Op 1, op de 'en' van 2 en op 4."
+              },
+              {
+                "v": "Wat vertelt het couplet en wat doet het refrein?",
+                "a": "Het couplet vertelt het verhaal, het refrein is het feest."
+              }
+            ],
+            "letop": [
+              "Eén kolom per groep op de lijst: refrein samen, begin en eind, klaar voor niveau 2."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "14 Mary's Boy Child - opbouw en dynamiek.pptx",
+        "kort": "Mary's Boy Child: opbouw en dynamiek",
+        "code": "P2 · les 14",
+        "week": 14,
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 14,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "havo3",
+          "w": 14,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "messiah-koor.jpg",
+          "doel": "zangeres-podium.jpg",
+          "fase": [
+            "microfoon-studio.jpg",
+            null,
+            null,
+            "worship-podium.jpg"
+          ],
+          "rodeDraad": "bandles-leerlingen.jpg"
+        },
+        "voorbereiding": [
+          "Zet de opname van Boney M. klaar en bedenk zelf waar het voller wordt en waar het terugvalt.",
+          "Leg het vormschema per groep klaar, zodat ze rustig, half en vol kunnen intekenen.",
+          "Zet de status van de groepen van vorige week bij de hand.",
+          "Leg capo's en cajons klaar."
+        ],
+        "notitieTitel": [
+          "Een lied wordt mooi als het groeit: rustig in het couplet, vol in het refrein. Vandaag maken jullie met je groep een opbouwplan.",
+          "Het lied in het kort: Mary's Boy Child, geschreven door Jester Hairston in 1956, een wereldhit voor Boney M. in 1978. Het ritme is calypso, dansmuziek uit Trinidad. Wij spelen het in F, in 4/4, tempo rond 112 slagen per minuut. Het verhaal komt uit Lucas 2: Bethlehem, geen plek in de herberg, de herders in het veld, de engelen.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil."
+        ],
+        "notitieAgenda": [
+          "Eerst luisteren naar de opname: waar wordt het voller? Dan uitleg over opbouwen. Dan maken jullie een plan en oefenen het. Aan het eind spelen twee groepen voor."
+        ],
+        "notitieDoel": [
+          "Je groep speelt couplet en refrein met een hoorbaar verschil tussen rustig en vol.",
+          "Drummer en bassist dragen de opbouw.",
+          "Jullie spelen couplet en refrein zonder te stoppen."
+        ],
+        "notitieRodeDraad": [
+          "Opbouwen betekent wachten op elkaar. Niet iedereen hoeft meteen vol te spelen. Een band groeit samen: de drummer begint zacht, de anderen komen erbij, en in het laatste refrein is iedereen er.",
+          "Zo groeit ook het nieuws in het kerstverhaal: eerst vertelt één engel het aan de herders, dan zingt een hele schare mee."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Wat gebeurt er als iedereen vanaf het begin vol speelt?",
+            "a": "Er is niets meer om naartoe te groeien en het wordt plat. Rust maakt het volle deel groter."
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Luister naar de opname. Steek je hand op waar het voller wordt, en laat hem zakken waar het terugvalt.",
+                "Let op wat er verandert: komen er instrumenten bij, wordt de zang sterker, speelt de drummer meer?"
+              ],
+              "vragen": [
+                {
+                  "v": "Waar wordt het voller?",
+                  "a": "Bij het refrein, en het laatste refrein is het volst. Controleer dit zelf vooraf met de opname."
+                },
+                {
+                  "v": "Wat verandert er in de band?",
+                  "a": "Er komt meer bij: voller akkoordenspel, meer drums, meer stemmen."
+                }
+              ],
+              "letop": [
+                "Laat de klas het samen doen. Gaan de handen op hetzelfde moment omhoog, dan hebben ze het gehoord."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Opbouwen doe je samen. Iedereen heeft een eigen taak.",
+                "Drums en cajon: van cajon alleen, of hihat met bassdrum, in het couplet naar de volle calypsogroove in het refrein, met cowbell of tamboerijn als je die hebt. Voor elk refrein een fill van twee tellen, en een crash op de 1 erna.",
+                "Gitaar en ukelele: in het couplet halve kracht, alleen neerslagen op de tel. In het refrein de volle calypsoslag.",
+                "Keyboard: coupletten zoals op niveau 2, refreinen met octaven links.",
+                "Bas: calypsoritme met grondtoon en kwint; op niveau 3 de loopjes.",
+                "Zang: van één stem naar meer stemmen. Op niveau 3 zingt wie wil in het laatste refrein een bovenstem.",
+                "Het laatste refrein is het volst. In de kerstbox wordt het laatste refrein twee keer gespeeld, de tweede keer met de bovenstem."
+              ],
+              "voorbeelden": [
+                "Opbouwplan, zoals op de dia: intro rustig (1), couplet 2, refrein 3, couplet 2, laatste refrein 4, slot 2.",
+                "Volledige vorm: intro van vier maten (refrein, alleen de band), couplet 1, refrein, couplet 2, refrein, couplet 3, refrein, refrein, slot op Fsus en F. Het slot: samen stoppen op de 1 van de laatste maat; spreek af wie het teken geeft."
+              ],
+              "vragen": [
+                {
+                  "v": "Hoe maak je het voller zonder harder te spelen?",
+                  "a": "Meer elementen erbij: hihat open, cowbell, een fill, meer stemmen of volle akkoorden."
+                },
+                {
+                  "v": "Waar zit het volste moment?",
+                  "a": "In het laatste refrein."
+                }
+              ],
+              "letop": [
+                "De dia toont twee coupletten, de volledige vorm heeft er drie. Het plan van de groep is leidend, zolang couplet en refrein erin zitten.",
+                "Niveau 3 is geen verplichting. Voor P1 is niveau 2 het minimum."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Teken op het vormschema per deel: rustig, half, vol. Spreek per instrument af wat je doet. Oefen de overgangen apart, daarna het geheel.",
+                "Wie op niveau 2 zit, werkt aan couplet en refrein. Wie klaar is, begint aan niveau 3: het hele lied met intro en slot.",
+                "Niveau 3 is het hele lied met intro en slot. Maat 6: B♭ en G7. Gitaar met capo: G en E7 (020100). Ukelele: B♭ en G7 (0212). Keyboard: B♭ en G7 = G B D F. Slot op Fsus en F: gitaar Dsus4 (xx0233) en D, ukelele Fsus4 (3011) en F, keyboard F B♭ C en F. Bas: loopje F, A, B♭ (de A is de open A-snaar), daarna B♭ en G (E-snaar fret 3), slot een lange F."
+              ],
+              "voorbeelden": [
+                "Couplet, klinkend: F | Gm | C7 | F | F | B♭ | F C7 | F (acht maten).",
+                "Refrein op niveau 3, klinkend: F B♭ | C7 F | Dm Gm | C7 | F (F/A) | B♭ G7 | F C7 | F. Het couplet is op niveau 3 hetzelfde, met in maat 6 B♭ en G7.",
+                "Intro: vier maten refrein, alleen de band."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk akkoord klinkt in maat 6 na B♭?",
+                  "a": "G7."
+                },
+                {
+                  "v": "Waarmee eindigt het lied?",
+                  "a": "Met Fsus, dan F."
+                },
+                {
+                  "v": "Welke vier speelonderdelen tellen bij P1?",
+                  "a": "Samenspel, ritme, toon en techniek."
+                }
+              ],
+              "letop": [
+                "Laat de groepen eerst hun plan op papier zetten voordat ze spelen.",
+                "De overgang van couplet naar refrein is waar het misgaat: oefen alleen de laatste maat van het couplet plus de eerste van het refrein.",
+                "Check bij de groepen dat de bas en de drummer samen de volle delen dragen."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Twee groepen spelen hun opbouw voor. De rest luistert en antwoordt op twee vragen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
+                "Peerfeedback in twee stappen: eerst wat goed ging, dan één tip."
+              ],
+              "vragen": [
+                {
+                  "v": "Waar hoorde je de opbouw?",
+                  "a": "Een concreet moment, bijvoorbeeld: bij het tweede refrein kwam de cowbell erbij."
+                },
+                {
+                  "v": "Was het verschil tussen couplet en refrein duidelijk?",
+                  "a": "Eigen antwoord; laat ze concrete momenten noemen."
+                }
+              ],
+              "letop": [
+                "Kies twee groepen die het aandurven. Vraag eerst of ze dat willen.",
+                "Feedback is niet alleen 'goed' of 'slecht'. Dit is ook een oefening voor de feedback die bij P1 meetelt."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Peerfeedback: de luisteraars benoemen waar ze de opbouw hoorden en of het verschil tussen couplet en refrein duidelijk was."
+            ],
+            "vragen": [
+              {
+                "v": "Waar hoorde je de opbouw?",
+                "a": "Een concreet moment noemen."
+              }
+            ],
+            "letop": [
+              "Dit oefent de feedback die bij P1 meetelt: een compliment en een tip met een plek in het lied."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "15 Mary's Boy Child - doorspelen en opnemen.pptx",
+        "kort": "Mary's Boy Child: doorspelen en opnemen",
+        "code": "P2 · les 15",
+        "week": 15,
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 15,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "havo3",
+          "w": 15,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "worship-podium.jpg",
+          "doel": "microfoon-studio.jpg",
+          "fase": [
+            null,
+            null,
+            "telefoon-opnemen.jpg",
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Dit is activiteitenweek B en de les kan uitvallen. Controleer in de agenda of je groep les heeft. Zo niet, sla deze les over; lesweek 16 pakt de draad weer op.",
+          "Zorg voor telefoons of recorders, één per groep.",
+          "Spreek oefenruimtes af.",
+          "Leg capo's klaar."
+        ],
+        "notitieTitel": [
+          "Dit is de laatste les voor de kerst. Jullie spelen het lied helemaal door en nemen het op als tussenstand. Na de kerst luisteren we hem terug.",
+          "Het lied in het kort: Mary's Boy Child, geschreven door Jester Hairston in 1956, een wereldhit voor Boney M. in 1978. Het ritme is calypso, dansmuziek uit Trinidad. Wij spelen het in F, in 4/4, tempo rond 112 slagen per minuut. Het verhaal komt uit Lucas 2: Bethlehem, geen plek in de herberg, de herders in het veld, de engelen.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil."
+        ],
+        "notitieAgenda": [
+          "Eerst één keer het refrein met de hele klas. Dan doorspelen in je groep. Dan een opname. Tot slot: wat oefenen we na de kerst eerst?"
+        ],
+        "notitieDoel": [
+          "Je groep speelt het lied zonder te stoppen.",
+          "Jullie hebben een opname van jullie versie.",
+          "Die opname is straks het uitgangspunt in januari."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Het refrein met alle groepen tegelijk, drummers tellen af. Dit is geen toets; het is een warming-up en een kerstmoment.",
+                "Zet de meespeeltrack aan en laat iedereen meespelen of zingen."
+              ],
+              "voorbeelden": [
+                "Refrein niveau 1, klinkend: F B♭ | C7 F | F B♭ | C7 | F | B♭ | F C7 | F. Twee akkoorden in een maat zijn elk twee tellen."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke akkoorden speel je in het refrein?",
+                  "a": "F, B♭ en C7; op niveau 2 komt Dm bij in maat 3 samen met Gm."
+                }
+              ],
+              "letop": [
+                "Houd het kort: vijf minuten."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Speel jullie versie twee keer helemaal door. Let op begin, opbouw en slot. Niveau 2 is het minimum: couplet en refrein. Wie niveau 3 speelt, doet het hele lied met intro en slot.",
+                "Gaat het mis? Speel door en stap weer in. Een fout is te horen, maar een band die stopt, is erger."
+              ],
+              "voorbeelden": [
+                "Vorm op niveau 3: intro (vier maten refrein, alleen de band), couplet 1, refrein, couplet 2, refrein, couplet 3, refrein, refrein, slot op Fsus en F.",
+                "Couplet, klinkend: F | Gm | C7 | F | F | B♭ | F C7 | F (acht maten).",
+                "Refrein op niveau 2, klinkend: F B♭ | C7 F | Dm Gm | C7 | F | B♭ | F C7 | F. Alleen maat 3 is anders dan op niveau 1."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke twee akkoorden komen er op niveau 2 bij?",
+                  "a": "Gm en Dm."
+                },
+                {
+                  "v": "Op welke tellen speelt de bas het calypsoritme?",
+                  "a": "Op 1, op de 'en' van 2 en op 4."
+                },
+                {
+                  "v": "Wat vertelt het couplet en wat doet het refrein?",
+                  "a": "Het couplet vertelt het verhaal, het refrein is het feest."
+                }
+              ],
+              "letop": [
+                "Activiteitenweek B: de les kan uitvallen. Zo ja, deze les overslaan; lesweek 16 pakt de draad weer op.",
+                "Let op samen beginnen op de 1 na het aftellen, en samen stoppen op het slot.",
+                "Een groep die het refrein nog niet aankan: laat ze het refrein goed doen in plaats van het hele lied half."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Neem jullie versie op, één keer. Zet de telefoon op een stabiele plek, niet te dicht bij de drums. Bewaar de opname goed; na de kerst luisteren we hem terug.",
+                "Beoordeel hem nu nog niet. Luister alleen kort of hij is opgenomen."
+              ],
+              "vragen": [
+                {
+                  "v": "Waar moet de telefoon staan?",
+                  "a": "Een stukje van de groep af, op een stabiele plek, zodat alle instrumenten te horen zijn."
+                }
+              ],
+              "letop": [
+                "Controleer dat de opname echt klinkt voordat de groep stopt.",
+                "Mislukt de opname? Dan doen ze het na de kerst opnieuw; dan is er geen tussenstand, en dat is geen ramp."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Na de kerst pakken we het lied weer op en werken we naar P1 in lesweek 19. Dat zijn nog drie lessen: lesweek 16, 17 en 18.",
+                "Schrijf op wat je groep na de kerst eerst oefent."
+              ],
+              "vragen": [
+                {
+                  "v": "Wanneer is P1?",
+                  "a": "In lesweek 19, maandag 25 januari 2027."
+                }
+              ],
+              "letop": [
+                "Vraag de groepen om de opname te bewaren op een plek waar ze hem na de kerst terugvinden."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Elke groep neemt een opname op als tussenstand. Na de kerst luisteren we hem terug en bepalen we een werkpunt."
+            ],
+            "vragen": [
+              {
+                "v": "Waarvoor gebruiken we de opname?",
+                "a": "Als tussenstand; na de kerst luisteren we hem terug en kiezen we een werkpunt."
+              }
+            ],
+            "letop": [
+              "Noteer welke groepen een opname hebben."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "16 Mary's Boy Child - oppakken en beoordeling P1.pptx",
+        "kort": "Mary's Boy Child: oppakken en beoordeling P1",
+        "code": "P2 · les 16",
+        "week": 16,
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 16,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "havo3",
+          "w": 16,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "bandles-leerlingen.jpg",
+          "doel": "mengtafel-leerlingen.jpg",
+          "fase": [
+            "telefoon-opnemen.jpg",
+            null,
+            null,
+            null
+          ],
+          "rodeDraad": "messiah-koor.jpg"
+        },
+        "voorbereiding": [
+          "Zet klaar: het leerlingblad met de beoordeling en het format voor zelfbeoordeling (P1 Format zelfbeoordeling leerling), één per leerling.",
+          "Zorg dat je de opnames van lesweek 15 kunt afspelen. Is die les uitgevallen, laat dan elke groep nu één keer spelen en opnemen.",
+          "Bekijk het P1-model met de beschrijvingen per onderdeel en per score (4, 6, 8 en 10), zodat je voorbeelden kunt noemen.",
+          "Het rekenvoorbeeld in de notities klopt: 6,8.",
+          "Leg capo's klaar."
+        ],
+        "notitieTitel": [
+          "Na de kerst pakken we het lied weer op. Vandaag luisteren we terug naar de opname van voor de kerst en leg ik uit hoe P1 wordt beoordeeld.",
+          "P1 is in lesweek 19: maandag 25 januari 2027, 45 minuten. Je speelt met je groep voor mij, niet voor de klas. Het is niet herkansbaar, het telt voor weging 10 en iedereen krijgt een eigen cijfer.",
+          "Lesweek 16, 17 en 18 zijn de drie lessen die nog resten. Daarna is P1.",
+          "Het lied in het kort: Mary's Boy Child, geschreven door Jester Hairston in 1956, een wereldhit voor Boney M. in 1978. Het ritme is calypso, dansmuziek uit Trinidad. Wij spelen het in F, in 4/4, tempo rond 112 slagen per minuut. Het verhaal komt uit Lucas 2: Bethlehem, geen plek in de herberg, de herders in het veld, de engelen."
+        ],
+        "notitieAgenda": [
+          "Eerst terugluisteren. Dan de beoordeling van P1. Dan weer samenspelen. Tot slot schrijf je je eigen leerdoel op."
+        ],
+        "notitieDoel": [
+          "Je kent de zes onderdelen van P1 en wat spelen en reflectie wegen.",
+          "Je hebt één persoonlijk leerdoel opgeschreven.",
+          "Jullie hebben het lied weer één keer doorgespeeld."
+        ],
+        "notitieRodeDraad": [
+          "Ook in een groep krijgt iedereen een eigen cijfer. Maar je kunt alleen goed scoren als de groep klinkt, want samenspel en ritme hangen aan elkaar. Je hebt elkaar nodig.",
+          "In het kerstverhaal is het net zo: de herders vertellen het nieuws door aan elkaar. Niemand doet het alleen."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Waarom kun je alleen goed scoren als de groep klinkt?",
+            "a": "Omdat samenspel en ritme alleen goed zijn als iedereen op elkaar let. Een zwak punt in de groep trekt iedereen mee."
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Luister naar de opname van voor de kerst. Zeg per groep wat goed ging en wat beter moet. Begin met iets dat goed ging.",
+                "Gebruik de vragen: begonnen jullie samen? Bleef het tempo gelijk? Was het couplet rustiger dan het refrein?"
+              ],
+              "vragen": [
+                {
+                  "v": "Wat ging goed in jullie opname?",
+                  "a": "Eigen antwoord; liefst concreet, met een plek in het lied."
+                },
+                {
+                  "v": "Wat moet beter?",
+                  "a": "Eigen antwoord, bijvoorbeeld de wissel in maat 3 van het refrein of samen stoppen."
+                }
+              ],
+              "letop": [
+                "Is les 15 uitgevallen of is er geen opname? Laat de groepen nu één keer spelen en opnemen en luister die terug.",
+                "Hou het positief; de opname is ook de basis voor het persoonlijke leerdoel straks."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "P1 heeft zes onderdelen. Vier gaan over spelen: samenspel, ritme, toon en techniek. Twee gaan over reflectie: je eigen reflectie en je feedback op groepsgenoten.",
+                "Spelen telt dubbel, reflectie één keer. Samen is dat 10: vier spelonderdelen keer twee is 8, twee reflectieonderdelen keer één is 2. Dus spelen is 80 procent van je cijfer.",
+                "Per onderdeel kun je vier scores halen: 4 is onvoldoende, 6 voldoende, 8 goed, 10 uitstekend. Zit je er tussenin, dan geef ik 5, 7 of 9. Dit zijn scores, geen niveaus van de kerstbox. Niveau 1, 2 en 3 gaan over wat je speelt; 4, 6, 8 en 10 gaan over hoe goed je het speelt.",
+                "Samenspel: luisteren naar de anderen en samen opbouwen. Bij 6 begin en eindig je samen. Bij 8 pas je je aan en speel je opbouw en terugval soepel mee. Bij 10 voel je de groep aan en draag je de opbouw mee.",
+                "Ritme: tempo vasthouden en wisselen op de tel. Bij 6 wissel je meestal op de tel. Bij 8 speel je strak en met groove. Bij 10 kan de groep op jouw timing bouwen, ook in de volle delen.",
+                "Toon: zuiver en de juiste noten. Bij 6 meestal zuiver. Bij 8 is je klank helder en krachtig. Bij 10 is hij mooi en verzorgd, van begin tot eind, zacht in het couplet en vol in het refrein.",
+                "Techniek: je instrument of stem beheersen. Bij 6 speel je de basis goed. Bij 8 vloeiend, zonder haperen bij de wissels. Bij 10 gebruik je technieken om het lied mooier te maken, bijvoorbeeld een vollere slag of groove.",
+                "Eigen reflectie: weten wat goed gaat en wat beter kan. Bij 8 noem je sterke en zwakke punten met voorbeelden uit het lied. Bij 10 koppel je ze ook aan je eigen leerdoel.",
+                "Feedback op groepsgenoten: een compliment en een bruikbare tip. Bij 8 noem je wat en waar in het lied. Bij 10 zijn je tips zo precies dat iemand er echt mee verder kan, bijvoorbeeld waar in het refrein het tempo versnelde en wat je dan doet.",
+                "Het cijfer: tel per onderdeel score maal weging op en deel door 10."
+              ],
+              "voorbeelden": [
+                "Rekenvoorbeeld: samenspel 8, ritme 7, toon 6, techniek 6, eigen reflectie 6, feedback 8. Spelen: 8 + 7 + 6 + 6 = 27, keer 2 is 54. Reflectie: 6 + 8 = 14, keer 1 is 14. Totaal 68, gedeeld door 10 is 6,8.",
+                "Alles 6 geeft 6,0. Alles 8 geeft 8,0.",
+                "Leerlingversie van samenspel bij 6: 'Ik let op de anderen tijdens het spelen; we beginnen en eindigen samen.'"
+              ],
+              "vragen": [
+                {
+                  "v": "Hoe is P1 opgebouwd?",
+                  "a": "Zes onderdelen: samenspel, ritme, toon en techniek (spelen) en eigen reflectie en feedback op groepsgenoten (reflectie)."
+                },
+                {
+                  "v": "Hoe zwaar telt spelen?",
+                  "a": "Twee keer per onderdeel: samen 80 procent. Reflectie telt één keer per onderdeel: samen 20 procent."
+                },
+                {
+                  "v": "Welke scores zijn er?",
+                  "a": "4 (onvoldoende), 6 (voldoende), 8 (goed) en 10 (uitstekend). Tussen twee niveaus mag 5, 7 of 9."
+                },
+                {
+                  "v": "Bereken: samenspel 8, ritme 7, toon 6, techniek 6, reflectie 6, feedback 8.",
+                  "a": "Spelen: (8 + 7 + 6 + 6) × 2 = 54. Reflectie: 6 + 8 = 14. Totaal 68, gedeeld door 10 is 6,8."
+                }
+              ],
+              "letop": [
+                "Verwar scores en niveaus niet. Zegt een leerling 'ik zit op niveau 2, dus ik krijg een 6', corrigeer dan: niveau 2 is wat je speelt, de score zegt hoe goed.",
+                "Reken het voorbeeld rustig samen door op het bord.",
+                "Deel het leerlingblad uit; de leerlingversie van het model heeft dezelfde zes onderdelen.",
+                "Zeg duidelijk dat P1 niet herkansbaar is, zonder te dreigen."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Weer samenspelen. Eerst langzaam, dan op tempo. Speel het lied twee keer door. Niveau 2 is het minimum voor P1.",
+                "Wie klaar is, werkt aan niveau 3: intro en slot. Intro: vier maten refrein, alleen de band. Slot: samen stoppen op Fsus en F; spreek af wie het teken geeft."
+              ],
+              "voorbeelden": [
+                "Couplet, klinkend: F | Gm | C7 | F | F | B♭ | F C7 | F (acht maten).",
+                "Refrein op niveau 3, klinkend: F B♭ | C7 F | Dm Gm | C7 | F (F/A) | B♭ G7 | F C7 | F. Het couplet is op niveau 3 hetzelfde, met in maat 6 B♭ en G7."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk akkoord klinkt in maat 6 na B♭?",
+                  "a": "G7."
+                },
+                {
+                  "v": "Waarmee eindigt het lied?",
+                  "a": "Met Fsus, dan F."
+                },
+                {
+                  "v": "Welke vier speelonderdelen tellen bij P1?",
+                  "a": "Samenspel, ritme, toon en techniek."
+                }
+              ],
+              "letop": [
+                "Loop langs en let op de zes onderdelen, vooral samenspel en ritme.",
+                "Zeg per groep één concreet punt dat beter kan.",
+                "Noteer wie nog op niveau 1 speelt; die groepen moeten naar niveau 2 toe."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Kijk naar de vier speelonderdelen: waar sta je nu? Omcirkel per onderdeel waar je volgens jezelf staat. Dat is het begin van je reflectie.",
+                "Schrijf daarna één persoonlijk leerdoel op je leerlingblad. Kies iets dat je in drie lessen kunt verbeteren, bijvoorbeeld 'ik wissel in maat 3 op de tel' of 'ik zing het refrein zuiver'."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is een goed leerdoel?",
+                  "a": "Klein en concreet, over één onderdeel, en haalbaar in drie lessen."
+                }
+              ],
+              "letop": [
+                "Kijk mee terwijl ze schrijven. 'Beter spelen' is te groot; vraag door.",
+                "Laat de leerlingbladen bewaren voor lesweek 17."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Per onderdeel (samenspel, ritme, toon, techniek) omcirkelen waar je nu staat. Dit is het begin van je reflectie."
+            ],
+            "vragen": [
+              {
+                "v": "Waar sta je nu bij samenspel?",
+                "a": "Eigen antwoord op de schaal 4, 6, 8, 10."
+              }
+            ],
+            "letop": [
+              "Dit is zelfinschatting, geen cijfer. Zeg dat ook."
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vwo3": {
+    "klas": "vwo 3",
+    "thema": "klas3",
+    "map": "01 Onderbouw muziek\\Klas 3\\Lessen 2026-2027",
+    "blok": "Periode 2 · Kerstbox God Rest Ye Merry Gentlemen",
+    "blokKort": "kerstbox",
+    "lessen": [
+      {
+        "bestand": "11 God Rest Ye - leren kennen.pptx",
+        "kort": "God Rest Ye leren kennen",
+        "code": "P2 · les 11",
+        "week": 11,
+        "koppel": [
+          {
+            "lg": "vwo3",
+            "w": 11,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "vwo3",
+          "w": 11,
+          "slot": "l1"
+        },
+        "thuis": {
+          "mb": "eigen kerstbox God Rest Ye Merry Gentlemen"
+        },
+        "fotos": {
+          "titel": "pieterskerk.jpg",
+          "doel": "messiah-koor.jpg",
+          "fase": [
+            "zingend-kwartet-1700.jpg",
+            null,
+            null,
+            null,
+            "gitaar-akkoord.jpg"
+          ],
+          "rodeDraad": "handen-zonsondergang.jpg"
+        },
+        "voorbereiding": [
+          "Zet een traditionele koorversie en een bandversie klaar. In het ontwerp van de kerstbox staat als bandversie: Rend Collective met We The Kingdom, 'God Rest Ye Merry Gentlemen (Hallelujah)' (een stevige bandversie in D met een eigen hallelujah-refrein), en als contrast Pentatonix a cappella. Welke twee je laat horen, kies je zelf.",
+          "Mooi om te laten horen: de Nederlandse tekst op dezelfde melodie, Sela, 'Wij trekken in een lange stoet' (album In het licht, 2014). Zelfde melodie, andere tekst.",
+          "Schrijf de akkoorden van het refrein op het bord: G, D, Em, C, B7.",
+          "Wisbordjes en stiften klaar.",
+          "Kijk zelf in Musicbox naar de kerstbox God Rest Ye Merry Gentlemen, niveau 1, hoofdstuk 1.1."
+        ],
+        "notitieTitel": [
+          "Welkom bij periode 2. De komende weken werken we aan één lied: God Rest Ye Merry Gentlemen. Het is een van de oudste Engelse kerstliederen, het staat in mineur, en het is ook je lied voor P1 in januari. In de kerstbox leer je het met je band spelen, en op niveau 3 maakt je groep er een eigen arrangement van.",
+          "Vandaag luisteren we, vertel ik waar het lied vandaan komt en wat de titel betekent, zingen we het refrein mee en leg ik uit hoe de kerstbox werkt. Aan het eind schrijf je op welk instrument je wilt spelen.",
+          "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
+        ],
+        "notitieAgenda": [
+          "We doen vier dingen. Eerst luisteren, twee versies. Dan het verhaal van het lied en de titel. Dan zingen we het refrein mee. Tot slot de kerstbox en je instrumentkeuze."
+        ],
+        "notitieDoel": [
+          "Na deze les vertel je in twee zinnen waar God Rest Ye vandaan komt: een oude Engelse carol met een traditionele melodie, en de tekst volgt het kerstverhaal uit Lucas 2.",
+          "Je tekent het vormschema: couplet en refrein, het couplet in mineur en het refrein in majeur.",
+          "En je weet dat dit ook je lied voor P1 is, in lesweek 19."
+        ],
+        "notitieRodeDraad": [
+          "Het refrein gaat over 'comfort and joy': troost en vreugde. De boodschap daarvan komt uit Lucas 2. Een engel zegt tegen de herders in het veld dat ze niet bang hoeven te zijn, want er is een Redder geboren. Dat is goed nieuws, ook in een donkere tijd.",
+          "Het lied staat in mineur en buigt in het refrein naar majeur. Dat hoor je: eerst donker, dan een lichtje. Dat is het verhaal van het lied in klank.",
+          "Stel de vraag open. Waar vind jij troost als het donker is? Niemand hoeft iets te delen. Sommigen noemen geloof, anderen een vriend, muziek of thuis. Laat elk antwoord staan."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Hoe kan een lied in mineur over blijdschap gaan?",
+            "a": "Omdat troost en vreugde vaak komen midden in het donker. Het couplet is mineur en donker, het refrein buigt naar majeur. B7 trekt steeds terug naar Em, maar het refrein brengt licht."
+          },
+          {
+            "v": "Waar vind jij troost als het donker is?",
+            "a": "Open vraag. Voorbeelden: geloof, vrienden, familie, muziek, een gebed. Laat elk eerlijk antwoord staan."
+          }
+        ],
+        "notitieThuis": [
+          "Open thuis de kerstbox God Rest Ye Merry Gentlemen in Musicbox. Kijk bij niveau 1 naar hoofdstuk 1.1, het lied leren kennen.",
+          "Luister de koorversie en de bandversie nog een keer en bedenk welk instrument je wilt spelen, en welk als tweede."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Eerst een traditionele koorversie. Zeg alleen: let op hoe het begint en waar je het refrein herkent. Daarna een bandversie. Zeg: wat is anders?",
+                "Het gaat om het contrast: een koor zingt de melodie meerstemmig, een band speelt een eigen begeleiding met gitaar, keyboard, bas en drums. Wat blijft hetzelfde? De melodie.",
+                "Niet meezingen of meelezen. De tekst bespreken we mondeling."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is anders in de bandversie dan in de koorversie?",
+                  "a": "Een band heeft een ritmesectie (bas en drums), gitaar of keyboard speelt de akkoorden, en de sfeer is stevig en ritmisch. Een koor zingt meerstemmig, vaak a cappella of met orgel."
+                },
+                {
+                  "v": "Wat blijft hetzelfde?",
+                  "a": "De melodie, en het refrein dat terugkomt."
+                }
+              ],
+              "letop": [
+                "Laat ze een streepje zetten elke keer dat het refrein begint.",
+                "Vijf minuten is genoeg; laat van elke versie een stuk horen, niet het hele nummer."
+              ]
+            }
+          },
+          "1": {
+            "beeld": {
+              "soort": "vorm",
+              "items": [
+                {
+                  "d": "Couplet",
+                  "m": 12
+                },
+                {
+                  "d": "Refrein",
+                  "m": 7
+                },
+                {
+                  "d": "Couplet",
+                  "m": 12
+                },
+                {
+                  "d": "Refrein",
+                  "m": 7
+                }
+              ]
+            },
+            "docent": "In de kerstbox heeft het couplet 12 maten en het refrein 7 maten (19 maten met opmaat); de maten op de dia komen daaruit. Het lied heeft veel coupletten, elk gevolgd door het refrein. Op niveau 3 kiest de groep zelf een intro, het aantal coupletten en een slot.",
+            "notitie": {
+              "vertel": [
+                "God Rest Ye Merry Gentlemen is een van de oudste Engelse kerstliederen. De melodie is traditioneel, dus er is geen bekende componist.",
+                "Let op de komma in de titel: die staat na 'merry'. 'God rest ye merry, gentlemen' betekent: God houde u vrolijk, heren. Het is een zegen, geen groet aan vrolijke heren. 'Rest' betekent hier houden of laten zijn. Zonder komma lees je het verkeerd.",
+                "De tekst volgt het kerstverhaal uit Lucas 2: de engel, de herders, Bethlehem. Het couplet gaat over Christus als Redder, het refrein zingt over 'tidings of comfort and joy', goed nieuws van troost en vreugde.",
+                "Dickens laat het lied zingen in zijn boek A Christmas Carol uit 1843, vlak voordat Scrooge de zanger wegjaagt. Wie wil, kan de eerste bladzijden lezen.",
+                "Een carol is een traditioneel kerstlied. Dit is er een. Anders dan de calypso van sommige andere kerstliedjes is het geen dansmuziek maar een lied met een oude melodie, nu in een bandversie.",
+                "In klank: het couplet staat in e-mineur, donker en rustig. Het refrein buigt naar G-majeur en is licht en vol, en valt dan terug in mineur. B7 trekt met zijn D♯ steeds terug naar Em.",
+                "Vorm: het couplet is 12 maten, het refrein 7. In 4/4, tempo rond 110. Het lied heeft veel coupletten, elk gevolgd door het refrein. Wij spelen er twee of drie."
+              ],
+              "voorbeelden": [
+                "Speel of zing Em en daarna G op het keyboard en laat horen: Em is donker, G is licht.",
+                "Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Sela, 'Wij trekken in een lange stoet' (album In het licht, 2014): zelfde melodie, een Nederlandse tekst. Laat een stukje horen als de tijd het toelaat."
+              ],
+              "vragen": [
+                {
+                  "v": "Waar hoort de komma in de titel en wat betekent de titel?",
+                  "a": "Na 'merry'. God houde u vrolijk, heren."
+                },
+                {
+                  "v": "Welk kerstverhaal volgt de tekst?",
+                  "a": "Lucas 2: de engel, de herders en Bethlehem."
+                },
+                {
+                  "v": "Wat is een carol?",
+                  "a": "Een traditioneel kerstlied."
+                },
+                {
+                  "v": "In welke toonsoort staat het couplet?",
+                  "a": "E-mineur."
+                },
+                {
+                  "v": "Waarom trekt B7 terug naar Em?",
+                  "a": "B7 bevat de D♯, die wil naar E (de leidtoon)."
+                }
+              ],
+              "letop": [
+                "De dia toont intro en slot van vier maten. In de kerstbox bepaalt de groep dat zelf, op niveau 3.",
+                "Zeg niet dat de tekst uitgeschreven is; geen tekst op het bord, vertel in je eigen woorden.",
+                "Theorie kort, in de klank, niet op het bord: mineur en parallelle majeur (Em en G), de leidtoon D♯ in B7.",
+                "Het ontwerp meldt dat de harmonisatie met de melodie is gecheckt; in het couplet staat in regel 5 en 6 nu Am, B7, Em, D."
+              ]
+            }
+          },
+          "2": {
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "G",
+                "D",
+                "Em",
+                "C",
+                "B7"
+              ],
+              "onder": "Gitaar en ukelele: dezelfde grepen, zonder capo. Keyboard speelt G, D, Em, C, B7."
+            },
+            "notitie": {
+              "vertel": [
+                "Laat ze eerst het refrein meezingen met de opname. Zing daarna op 'oe' de grondtoon van elk akkoord: G, D, E, C, B. Zo hoor je al hoe de akkoorden lopen.",
+                "Het refrein is maat 13 tot en met 19: G C | B7 | Em | D | G | B7 | Em. Dat zijn vijf akkoorden: G, D, Em, C en B7.",
+                "Het refrein buigt naar G-majeur. Maat 15 is Em, de mineur-terugval. B7 is het akkoord dat naar Em trekt: let op de D♯."
+              ],
+              "voorbeelden": [
+                "Grondtonen om te zingen: G C | B | E | D | G | B | E.",
+                "Gitaar, standaard open grepen: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
+                "Keyboard, rechterhand: G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A (de D♯ is een zwarte toets), Am = E A C. Links de grondtonen: E, C, B, A, D, G.",
+                "Bas, grondtonen: G op de E-snaar fret 3, D op de A-snaar fret 5, E de lege E-snaar, C op de A-snaar fret 3, B op de A-snaar fret 2, A de lege A-snaar."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk akkoord is nieuw?",
+                  "a": "B7; G, D, Em en C kennen ze al."
+                },
+                {
+                  "v": "Hoeveel maten heeft het refrein?",
+                  "a": "Zeven."
+                }
+              ],
+              "letop": [
+                "Zingen op 'oe' is lastig als ze het refrein nog niet kennen. Zing het eerst twee keer gewoon mee.",
+                "Is de melodie te hoog of te laag? Laat ze een octaaf lager zingen."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "De kerstbox staat in Musicbox. Hij heeft drie niveaus. Niveau 1 is het refrein, vijf akkoorden waarvan je er vier kent: G, D, Em, C. Nieuw is B7. Niveau 2 is couplet en refrein, in e-mineur, met het nieuwe akkoord Am. Niveau 3 is het hele lied in een eigen arrangement: je band kiest een intro, hoeveel coupletten, waar het rustig is en waar vol, en hoe het eindigt.",
+                "Elk niveau heeft acht hoofdstukken: het lied leren kennen, zang, gitaar en ukelele, keyboard, bas, drums, samen spelen en een check. Je kiest je partij: zang, gitaar of ukelele, keyboard, bas of drums.",
+                "Je mag altijd een niveau hoger proberen. Ik zeg welk niveau je minimaal haalt. Wie op niveau 1 zit, speelt in de band mee in het refrein.",
+                "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel.",
+                "Een groep speelt hun versie op de kerstviering in activiteitenweek B. Lesweek 15 is de generale. In lesweek 13 kies ik de groep."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke drie niveaus zijn er?",
+                  "a": "Niveau 1 het refrein, niveau 2 couplet en refrein, niveau 3 het hele lied in een eigen arrangement."
+                },
+                {
+                  "v": "Wat is het minimale niveau voor P1?",
+                  "a": "Niveau 2."
+                },
+                {
+                  "v": "Wanneer speel je P1?",
+                  "a": "In lesweek 19, met je groep, voor de docent."
+                }
+              ],
+              "letop": [
+                "Open indien mogelijk de kerstbox op het bord en laat de homepage met de knoppen Niveau 1, 2 en 3 zien.",
+                "Zeg dat P1 niet herkansbaar is en dat iedereen een eigen cijfer krijgt, ook in een groep."
+              ]
+            }
+          },
+          "4": {
+            "notitie": {
+              "vertel": [
+                "Laat ze op het wisbordje hun eerste en tweede keus voor een instrument opschrijven: zang, gitaar, ukelele, keyboard, bas of drums.",
+                "Zeg wat nodig is: elke groep heeft iemand voor de bas en iemand op drums nodig. Dat helpt bij het maken van de groepen in lesweek 13.",
+                "Volgende week beginnen we met de akkoorden en partijen van niveau 1, in hoeken in het lokaal."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke instrumenten zijn er in de band?",
+                  "a": "Zang, gitaar, ukelele, keyboard, bas en drums."
+                }
+              ],
+              "letop": [
+                "Noteer de keuzes; ze zijn de basis voor de hoeken van volgende week en de groepen van lesweek 13.",
+                "Kiest niemand bas of drums? Zoek nu al vrijwilligers."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Op het wisbordje staan twee dingen: het vormschema van God Rest Ye en je eerste en tweede keus voor een instrument.",
+              "Laat ze het bordje tegelijk omhoog houden."
+            ],
+            "vragen": [
+              {
+                "v": "Wat is de vorm van het lied?",
+                "a": "Couplet en refrein, steeds opnieuw: couplet 12 maten in mineur, refrein 7 maten, naar majeur."
+              }
+            ],
+            "letop": [
+              "Noteer de instrumentkeuzes meteen op een lijst."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "12 God Rest Ye - akkoorden en partijen.pptx",
+        "kort": "God Rest Ye: akkoorden en partijen",
+        "code": "P2 · les 12",
+        "week": 12,
+        "koppel": [
+          {
+            "lg": "vwo3",
+            "w": 12,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "vwo3",
+          "w": 12,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "gitaar-akkoord.jpg",
+          "doel": "bandles-leerlingen.jpg",
+          "fase": [
+            null,
+            null,
+            "mengtafel-leerlingen.jpg",
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Zet vier hoeken klaar: akkoorden (gitaar, ukelele, keyboard), zang, bas, drums.",
+          "Zet het akkoordenschema op het bord: G, D, Em, C, B7.",
+          "Controleer of de meespeeltrack (oefentrack) van niveau 1 werkt en dat koptelefoons klaarliggen.",
+          "Bekijk zelf de tutorials van niveau 1, zodat je weet wat ze zien."
+        ],
+        "notitieTitel": [
+          "Vandaag leer je je partij van het refrein, niveau 1 van de kerstbox. Je werkt in een hoek, met de tutorial van je eigen instrument.",
+          "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur.",
+          "Het refrein is maat 13 tot en met 19: G C | B7 | Em | D | G | B7 | Em. Dat zijn vijf akkoorden: G, D, Em, C en B7.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
+        ],
+        "notitieAgenda": [
+          "Eerst pakken we samen de akkoorden. Dan leg ik uit wat ieder doet. Dan oefenen jullie 25 minuten in je hoek. Aan het eind spelen we het refrein één keer samen."
+        ],
+        "notitieDoel": [
+          "Aan het eind van de les speel of zing je het refrein op jouw instrument.",
+          "Op de akkoordinstrumenten: G, D, Em, C en B7 pakken en wisselen op de tel.",
+          "Zang, bas en drums: je partij van het refrein spelen of zingen.",
+          "Je weet waar in de kerstbox je partij staat."
+        ],
+        "fasenExtra": {
+          "0": {
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "G",
+                "D",
+                "Em",
+                "C",
+                "B7"
+              ],
+              "onder": "Gitaar en ukelele: dezelfde grepen, zonder capo. Keyboard speelt G, D, Em, C, B7."
+            },
+            "notitie": {
+              "vertel": [
+                "Iedereen met een akkoordinstrument pakt de akkoorden van het refrein één voor één. Jij geeft het teken: tel hardop 1, 2, 3, 4 en wissel op de 1.",
+                "B7 is nieuw. Pak hem los: klinken alle snaren? Daarna oefenen ze de wissels C naar B7 en B7 naar Em."
+              ],
+              "voorbeelden": [
+                "Gitaar, standaard open grepen: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
+                "Keyboard, rechterhand: G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A (de D♯ is een zwarte toets), Am = E A C. Links de grondtonen: E, C, B, A, D, G."
+              ],
+              "vragen": [
+                {
+                  "v": "Welk akkoord is nieuw?",
+                  "a": "B7."
+                },
+                {
+                  "v": "Welke toon in B7 is een zwarte toets op het keyboard?",
+                  "a": "De D♯."
+                }
+              ],
+              "letop": [
+                "B7 op de gitaar is de lastigste greep (x21202): de wijsvinger ligt op fret 1 van de D-snaar. Controleer of de lege B-snaar niet gedempt wordt.",
+                "Op de ukelele is B7 2322; dat is een vlakke greep met een vinger er dwars overheen. Vraag of het klinkt."
+              ]
+            }
+          },
+          "1": {
+            "stappen": [
+              "Gitaar, ukelele, keyboard: de akkoorden, wisselen op de 1.",
+              "Zang: de melodie van het refrein.",
+              "Bas: de grondtonen G, D, E, C en B, op de 1 en de 3.",
+              "Drums: een rechte rockbeat, bassdrum op 1 en 3, snare op 2 en 4."
+            ],
+            "notitie": {
+              "vertel": [
+                "Iedereen heeft een eigen taak. Zo klinkt het straks als een band.",
+                "Gitaar, ukelele en keyboard spelen de akkoorden van het refrein, één aanslag per akkoord, wisselen op de 1. Keyboard: de liggingen G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A.",
+                "Zang: de melodie van het refrein, met de oefentrack zonder zang. Spreek af waar je adem haalt.",
+                "Bas: de grondtonen G, D, E, C en B op de 1 en de 3. G op de E-snaar fret 3, D op de A-snaar fret 5, E de lege E-snaar, C op de A-snaar fret 3, B op de A-snaar fret 2. De leergang noemt achtsten en E, C, B; dat hoort bij niveau 2, het couplet. Niveau 1 is het refrein met grondtonen op 1 en 3.",
+                "Drums: een rechte rockbeat rond 110 slagen per minuut. Hihat in achtsten, bassdrum op 1 en 3, snare op 2 en 4. Tel hardop af."
+              ],
+              "voorbeelden": [
+                "Het refrein is maat 13 tot en met 19: G C | B7 | Em | D | G | B7 | Em. Dat zijn vijf akkoorden: G, D, Em, C en B7.",
+                "Bas in het refrein: G op de 1 en C op de 3 van maat 13, daarna B, E, D, G, B, E.",
+                "Drums: hihat 1 en 2 en 3 en 4 en, bassdrum op 1 en 3, snare op 2 en 4."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat speelt de bas in het refrein?",
+                  "a": "De grondtonen G, D, E, C en B, op de 1 en de 3."
+                },
+                {
+                  "v": "Wat speelt de drummer?",
+                  "a": "Een rechte rockbeat: hihat in achtsten, bassdrum op 1 en 3, snare op 2 en 4."
+                }
+              ],
+              "letop": [
+                "De dia volgt de leergang, maar de stap voor de bas is aangepast: achtsten en E, C, B horen bij het couplet van niveau 2, niet bij het refrein van niveau 1.",
+                "Verwijs leerlingen die niet weten waar hun partij staat naar de hoofdstukken 1.2 tot en met 1.6 in niveau 1."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Per hoek geldt: eerst langzaam, dan met de oefentrack. Loop rond en help per instrument met de echte tonen en grepen.",
+                "Gitaar en ukelele: pak B7 los, oefen de wissels C naar B7 en B7 naar Em tien keer, speel het refrein zonder track en tel hardop.",
+                "Keyboard: de tutorial laat zien welke toetsen je indrukt. Let op B7: de D♯ is een zwarte toets.",
+                "Zang: drie keer luisteren, dan zacht meezingen, dan zingen met de oefentrack zonder zang. Spreek af waar je adem haalt.",
+                "Bas: zoek de vijf tonen op de hals en speel op de 1 en de 3. Samen met de drummer.",
+                "Drums: hihat in achtsten, bassdrum en snare op hun plek, tel hardop af."
+              ],
+              "voorbeelden": [
+                "Gitaar, standaard open grepen: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
+                "Keyboard, rechterhand: G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A (de D♯ is een zwarte toets), Am = E A C. Links de grondtonen: E, C, B, A, D, G.",
+                "Bas, grondtonen: G op de E-snaar fret 3, D op de A-snaar fret 5, E de lege E-snaar, C op de A-snaar fret 3, B op de A-snaar fret 2, A de lege A-snaar."
+              ],
+              "vragen": [
+                {
+                  "v": "Waar hoort de komma in de titel?",
+                  "a": "Na 'merry': God rest ye merry, gentlemen."
+                },
+                {
+                  "v": "Welk akkoord is nieuw in het refrein?",
+                  "a": "B7."
+                },
+                {
+                  "v": "Wat doe je als je een fout maakt in de band?",
+                  "a": "Doorspelen en weer instappen."
+                }
+              ],
+              "letop": [
+                "Gitaar: de wissel C naar B7 is het lastigst. Laat ze langzaam wisselen en tel hardop.",
+                "Is een leerling al klaar? Wijs naar het couplet van niveau 2 (Am erbij).",
+                "Doe de niveaucheck 1 zodra het lukt: de drie vragen staan in de kerstbox."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Alle hoeken tegelijk, met de oefentrack, het refrein één keer. Daarna duimen: omhoog als je partij op tempo lukt, opzij als het bijna lukt, omlaag als het nog niet gaat.",
+                "Zeg na afloop welke hoeken nog meer tijd nodig hebben."
+              ],
+              "vragen": [
+                {
+                  "v": "Op welk tempo speel je het refrein?",
+                  "a": "Rond 110 slagen per minuut, in 4/4."
+                }
+              ],
+              "letop": [
+                "Klinkt het niet samen: laat de drummer opnieuw aftellen en begin nog een keer, langzaam.",
+                "Noteer wie duim omlaag heeft."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Duimen. Omhoog: mijn partij van het refrein lukt op tempo. Opzij: bijna. Omlaag: nog niet.",
+              "Zeg erbij dat omlaag niet erg is. Dan weet je waar je moet helpen."
+            ],
+            "vragen": [
+              {
+                "v": "Waar hoort de komma in de titel?",
+                "a": "Na 'merry': God rest ye merry, gentlemen."
+              },
+              {
+                "v": "Welk akkoord is nieuw in het refrein?",
+                "a": "B7."
+              },
+              {
+                "v": "Wat doe je als je een fout maakt in de band?",
+                "a": "Doorspelen en weer instappen."
+              }
+            ],
+            "letop": [
+              "Is er een hoek met veel duimen omlaag? Loop volgende week langer bij die hoek."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "13 God Rest Ye - groepen en samenspelen.pptx",
+        "kort": "God Rest Ye: groepen en samenspelen",
+        "code": "P2 · les 13",
+        "week": 13,
+        "koppel": [
+          {
+            "lg": "vwo3",
+            "w": 13,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "vwo3",
+          "w": 13,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "mengtafel-leerlingen.jpg",
+          "doel": "worship-podium.jpg",
+          "fase": [
+            "bandles-leerlingen.jpg",
+            null,
+            null,
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Maak voor de les een voorlopige groepsindeling uit de wisbordjes van les 11 (eerste en tweede keus) en wat je in les 12 zag. Zet hem op het bord.",
+          "Elke groep: vier of vijf leerlingen, alle partijen bezet (zang, akkoorden, bas, drums).",
+          "Bedenk welke groep op de kerstviering in activiteitenweek B speelt. De keuze maak je deze les. Lesweek 15 is de generale.",
+          "Leg vast welke ruimtes beschikbaar zijn en welke groep waar oefent.",
+          "Bekijk de speelles-afspraken voor werken in groepjes (document in de sectiemap)."
+        ],
+        "notitieTitel": [
+          "Vandaag worden de groepen vast. Deze groep blijft ook voor P1.",
+          "In de band doet iedereen mee. Vandaag spelen jullie het refrein samen, en wie klaar is, begint aan het couplet van niveau 2.",
+          "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
+        ],
+        "notitieAgenda": [
+          "Eerst de groepen. Dan vijf minuten over slim oefenen. Dan 25 minuten samenspelen. Aan het eind kijken we waar je groep staat."
+        ],
+        "notitieDoel": [
+          "Je weet in welke groep je zit en wat jouw partij is.",
+          "Jullie beginnen en eindigen het refrein samen.",
+          "Jullie weten wat jullie volgende les eerst oefenen."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Groepen van vier of vijf. Alle partijen moeten bezet zijn: zang, een akkoordinstrument (gitaar, ukelele of keyboard), bas en drums. Twee akkoordspelers kan ook.",
+                "Ik heb de groepen gemaakt op basis van jullie eerste en tweede keus. Past jouw keuze niet, dan zeg ik waarom en wat je wel kunt doen.",
+                "Deze groep blijft ook voor P1 in lesweek 19. Je krijgt een eigen cijfer, maar je hebt de groep nodig.",
+                "Spreek in de groep af wie aftelt. Dat is meestal de drummer.",
+                "Een groep speelt hun versie op de kerstviering in activiteitenweek B. Lesweek 15 is de generale. Vandaag of aan het eind van de les kies ik die groep."
+              ],
+              "voorbeelden": [
+                "Mogelijke groep: 1 zang, 1 gitaar, 1 ukelele of keyboard, 1 bas, 1 drums."
+              ],
+              "vragen": [
+                {
+                  "v": "Wie telt af in jullie groep?",
+                  "a": "Meestal de drummer, maar de groep spreekt het zelf af."
+                },
+                {
+                  "v": "Wat betekent 'vaste groep'?",
+                  "a": "Je blijft in deze groep tot en met P1 in lesweek 19."
+                }
+              ],
+              "letop": [
+                "Zorg dat elke groep een drummer heeft; zonder dat valt het samenspel uit elkaar.",
+                "Een groep met drie gitaristen en geen bas is geen band; schuif iemand door.",
+                "Laat de partijen leidend zijn, niet de vriendengroepen.",
+                "De groep voor de kerstviering moet zin hebben om op te treden; vraag het ze."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Drie tips voor slim oefenen. Eén: eerst langzaam, dan op tempo. Twee: eerst zonder zang, dan met zang. Drie: gaat het mis, speel dan dat stukje opnieuw, niet het hele lied.",
+                "Waarom? Een fout in de wissel C naar B7 oefen je niet door het hele refrein nog tien keer te spelen. Pak alleen die wissel en herhaal hem."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat doe je als het in één maat steeds misgaat?",
+                  "a": "Dat stukje opnieuw spelen, langzamer, en daarna weer in het geheel."
+                }
+              ],
+              "letop": [
+                "Laat de hele klas bij twijfel het ritme eerst klappen voordat iemand een instrument pakt: rechte achtsten, bassdrum op 1 en 3, snare op 2 en 4."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Verdeel je over het lokaal en de ruimtes ernaast. Speel het refrein tot het samen klinkt. Klaar? Begin aan het couplet uit niveau 2.",
+                "Het refrein is maat 13 tot en met 19: G C | B7 | Em | D | G | B7 | Em. Dat zijn vijf akkoorden: G, D, Em, C en B7.",
+                "Niveau 2 voegt het couplet toe en één nieuw akkoord: Am. Gitaar x02210, ukelele 2000, keyboard E A C. Couplet in e-mineur: Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Op niveau 2 speel je het couplet anders dan het refrein. Gitaar en ukelele: in het couplet neer op elke tel, gedempt met je handpalm; in het refrein neer · neer-op · op-neer-op, open en vol. Keyboard: in het couplet lange akkoorden, in het refrein op elke tel. Bas: achtsten, E in achtsten, in het couplet E, C, B, A, D, G. Drums: in het couplet de floor tom op elke tel en snare op 2 en 4; in het refrein de rockbeat met open hihat."
+              ],
+              "voorbeelden": [
+                "Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Bas couplet in achtsten: E, E, C, B | E, E, C, B | A, B, E, D."
+              ],
+              "vragen": [
+                {
+                  "v": "In welke toonsoort staat het couplet?",
+                  "a": "E-mineur."
+                },
+                {
+                  "v": "Welke toon in B7 trekt naar E?",
+                  "a": "De D♯."
+                },
+                {
+                  "v": "Hoe speel je het couplet anders dan het refrein?",
+                  "a": "Rustiger, gedempt of zachter."
+                }
+              ],
+              "letop": [
+                "Noteer welke groepen klaar zijn voor niveau 2. Dat is het minimum voor P1.",
+                "Samen beginnen is het lastigst: laat de drummer hardop aftellen en kijk of iedereen op de 1 inzet.",
+                "Hoor je donker en licht verschil tussen couplet en refrein? Zo niet, vraag: wat doet de drummer anders?"
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Kijk met je groep: is niveau 1 af? Is niveau 2 begonnen? Schrijf op wat jullie volgende les eerst oefenen, bijvoorbeeld de wissel C naar B7."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat gaan jullie volgende les eerst oefenen?",
+                  "a": "Het eigen antwoord van de groep; het moet concreet zijn."
+                }
+              ],
+              "letop": [
+                "Neem de lijst van groepen met hun status mee naar volgende les.",
+                "Meld welke groep de generale van lesweek 15 doet voor de kerstviering."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Ik loop langs de groepen en noteer: speelt de groep het refrein samen, beginnen en eindigen ze samen, en zijn ze klaar voor niveau 2?"
+            ],
+            "vragen": [
+              {
+                "v": "In welke toonsoort staat het couplet?",
+                "a": "E-mineur."
+              },
+              {
+                "v": "Welke toon in B7 trekt naar E?",
+                "a": "De D♯."
+              },
+              {
+                "v": "Hoe speel je het couplet anders dan het refrein?",
+                "a": "Rustiger, gedempt of zachter."
+              }
+            ],
+            "letop": [
+              "Eén kolom per groep op de lijst: refrein samen, begin en eind, klaar voor niveau 2."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "14 God Rest Ye - opbouw en dynamiek.pptx",
+        "kort": "God Rest Ye: opbouw en dynamiek",
+        "code": "P2 · les 14",
+        "week": 14,
+        "koppel": [
+          {
+            "lg": "vwo3",
+            "w": 14,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "vwo3",
+          "w": 14,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "messiah-koor.jpg",
+          "doel": "zangeres-podium.jpg",
+          "fase": [
+            "microfoon-studio.jpg",
+            null,
+            null,
+            "worship-podium.jpg"
+          ],
+          "rodeDraad": "bandles-leerlingen.jpg"
+        },
+        "voorbereiding": [
+          "Zet een bandversie klaar en bedenk zelf waar het voller wordt en waar het terugvalt.",
+          "Leg het vormschema per groep klaar, zodat ze rustig, half en vol kunnen intekenen.",
+          "Zet de status van de groepen van vorige week bij de hand.",
+          "Bekijk het arrangementkaartje (niveau 3): intro, aantal coupletten, opbouw, een break, slot."
+        ],
+        "notitieTitel": [
+          "Een lied wordt mooi als het groeit: rustig in het couplet, vol in het refrein. Vandaag maken jullie met je groep een opbouwplan.",
+          "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
+        ],
+        "notitieAgenda": [
+          "Eerst luisteren naar de opname: waar wordt het voller? Dan uitleg over opbouwen. Dan maken jullie een plan en oefenen het. Aan het eind spelen twee groepen voor."
+        ],
+        "notitieDoel": [
+          "Je groep speelt couplet en refrein met een hoorbaar verschil tussen rustig en vol.",
+          "Drummer en bassist dragen de opbouw.",
+          "Jullie spelen couplet en refrein zonder te stoppen."
+        ],
+        "notitieRodeDraad": [
+          "Opbouwen betekent wachten op elkaar. Niet iedereen hoeft meteen vol te spelen. Een band groeit samen: de drummer begint zacht, de anderen komen erbij, en in het laatste refrein is iedereen er.",
+          "Het lied zelf doet hetzelfde: het begint in het donker, mineur, en het refrein brengt licht."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Wat gebeurt er als iedereen vanaf het begin vol speelt?",
+            "a": "Er is niets meer om naartoe te groeien en het wordt plat. Rust maakt het volle deel groter."
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Luister naar de opname. Steek je hand op waar het voller wordt, en laat hem zakken waar het terugvalt.",
+                "Let op wat er verandert: komen er instrumenten bij, wordt de zang sterker, speelt de drummer meer?"
+              ],
+              "vragen": [
+                {
+                  "v": "Waar wordt het voller?",
+                  "a": "Bij het refrein, en het laatste refrein is het volst. Controleer dit zelf vooraf met de opname."
+                },
+                {
+                  "v": "Wat verandert er in de band?",
+                  "a": "Er komt meer bij: voller akkoordenspel, meer drums, meer stemmen."
+                }
+              ],
+              "letop": [
+                "Laat de klas het samen doen. Gaan de handen op hetzelfde moment omhoog, dan hebben ze het gehoord."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Opbouwen doe je samen. Iedereen heeft een eigen taak.",
+                "Drums: van toms en bekkens in het couplet naar de volle rockbeat in het refrein. In het couplet de floor tom op elke tel met de snare op 2 en 4, in het refrein de rockbeat met open hihat. Aan het eind van het couplet een fill van twee tellen.",
+                "Gitaar en ukelele: in het couplet gedempt met je handpalm, neer op elke tel. In het refrein open en vol: neer · neer-op · op-neer-op.",
+                "Keyboard: in het couplet lange akkoorden, in het refrein op elke tel.",
+                "Bas: in het couplet rustig, op niveau 3 halve noten, in het refrein achtsten, harder.",
+                "Zang: van één stem naar meer stemmen. Op niveau 3 zingt wie wil een tweede stem in het refrein, en je kunt een refrein alleen met zang en drums doen: een break.",
+                "Het laatste refrein is het volst."
+              ],
+              "voorbeelden": [
+                "Opbouwplan zoals op de dia: intro rustig (1), couplet 2, refrein 3, couplet 2, laatste refrein 4, slot 2.",
+                "Arrangementkaart op niveau 3: vijf keuzes, intro, aantal coupletten, opbouw, een break en het slot."
+              ],
+              "vragen": [
+                {
+                  "v": "Hoe maak je het voller zonder harder te spelen?",
+                  "a": "Meer elementen erbij: hihat open, een fill, meer stemmen, volle akkoorden."
+                },
+                {
+                  "v": "Wat is een break?",
+                  "a": "Een stuk waar de band stilvalt of terugvalt, bijvoorbeeld alleen bassdrum op de 1 terwijl de zang doorgaat."
+                }
+              ],
+              "letop": [
+                "De dia toont een intro en slot van vier maten; de groep bepaalt dat zelf op niveau 3.",
+                "Niveau 3 is geen verplichting. Voor P1 is niveau 2 het minimum."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Teken op het vormschema per deel: rustig, half, vol. Spreek per instrument af wat je doet. Oefen de overgangen apart, daarna het geheel.",
+                "Wie op niveau 2 zit, werkt aan couplet en refrein. Wie klaar is, begint aan niveau 3: jullie eigen arrangement.",
+                "Niveau 3 per instrument. Gitaar en ukelele: de riff op Em, E, G, A, B, steeds herhaald, samen met de bas, als intro en tussen de coupletten; coupletten gedempt, refreinen open; slot Em laten uitklinken. Keyboard: kies een klank (orgel, strijkers of synth), speel de riff mee in octaven in de intro, in de coupletten lange akkoorden, in de refreinen op elke tel; wie wil, speelt in het laatste refrein de melodie een octaaf hoger. Bas: de riff E, G, A, B op de E- en A-snaar, coupletten halve noten, refreinen achtsten, slot een lange E. Drums: intro toms met de riff mee, coupletten op de toms, refreinen de volle beat, een break met alleen bassdrum op de 1 terwijl de zang doorgaat, slot samen stoppen met een afgesproken teken."
+              ],
+              "voorbeelden": [
+                "Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Riff op Em: E, G, A, B, herhaald. De bas speelt hem op de E-snaar en de A-snaar: E (leeg), G (fret 3), A (A-snaar leeg), B (A-snaar fret 2)."
+              ],
+              "vragen": [
+                {
+                  "v": "Noem twee keuzes die je maakt bij het arrangeren.",
+                  "a": "Bijvoorbeeld intro, opbouw, aantal coupletten, break of slot."
+                },
+                {
+                  "v": "Wat is een break?",
+                  "a": "Een stuk waar de band stilvalt of terugvalt."
+                },
+                {
+                  "v": "Welke vier speelonderdelen tellen bij P1?",
+                  "a": "Samenspel, ritme, toon en techniek."
+                }
+              ],
+              "letop": [
+                "Laat de groepen eerst hun plan op papier zetten voordat ze spelen.",
+                "De overgang van couplet naar refrein is waar het misgaat: oefen alleen de laatste maat van het couplet plus de eerste van het refrein.",
+                "Check bij de groepen dat de bas en de drummer samen de volle delen dragen."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Twee groepen spelen hun opbouw voor. De rest luistert en antwoordt op twee vragen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
+                "Peerfeedback in twee stappen: eerst wat goed ging, dan één tip."
+              ],
+              "vragen": [
+                {
+                  "v": "Waar hoorde je de opbouw?",
+                  "a": "Een concreet moment, bijvoorbeeld: in het tweede refrein speelde de drummer opeens volle slagen."
+                },
+                {
+                  "v": "Was het verschil tussen couplet en refrein duidelijk?",
+                  "a": "Eigen antwoord; laat ze concrete momenten noemen."
+                }
+              ],
+              "letop": [
+                "Kies twee groepen die het aandurven. Vraag eerst of ze dat willen.",
+                "Feedback is niet alleen 'goed' of 'slecht'. Dit is ook een oefening voor de feedback die bij P1 meetelt."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Peerfeedback: de luisteraars benoemen waar ze de opbouw hoorden en of het verschil tussen couplet en refrein duidelijk was."
+            ],
+            "vragen": [
+              {
+                "v": "Waar hoorde je de opbouw?",
+                "a": "Een concreet moment noemen."
+              }
+            ],
+            "letop": [
+              "Dit oefent de feedback die bij P1 meetelt: een compliment en een tip met een plek in het lied."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "15 God Rest Ye - doorspelen en opnemen.pptx",
+        "kort": "God Rest Ye: doorspelen en opnemen",
+        "code": "P2 · les 15",
+        "week": 15,
+        "koppel": [
+          {
+            "lg": "vwo3",
+            "w": 15,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "vwo3",
+          "w": 15,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "worship-podium.jpg",
+          "doel": "microfoon-studio.jpg",
+          "fase": [
+            null,
+            null,
+            "telefoon-opnemen.jpg",
+            null
+          ]
+        },
+        "voorbereiding": [
+          "Dit is activiteitenweek B en de les kan uitvallen. Controleer in de agenda of je groep les heeft: woensdag 16 december is de profielkeuzedag voor vwo 3. Zo niet, sla deze les over; lesweek 16 pakt de draad weer op.",
+          "Zorg voor telefoons of recorders, één per groep.",
+          "Zet de opstelling klaar voor de generale van de groep die op de kerstviering speelt.",
+          "Spreek oefenruimtes af."
+        ],
+        "notitieTitel": [
+          "Dit is de laatste les voor de kerst. Jullie spelen het lied helemaal door en nemen het op als tussenstand. De groep die op de kerstviering speelt, doet de generale voor de klas.",
+          "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur.",
+          "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
+        ],
+        "notitieAgenda": [
+          "Eerst één keer het refrein met de hele klas. Dan doorspelen in je groep, de kerstvieringsgroep doet de generale. Dan een opname. Tot slot: wat oefenen we na de kerst eerst?"
+        ],
+        "notitieDoel": [
+          "Je groep speelt het lied zonder te stoppen.",
+          "Jullie hebben een opname van jullie versie.",
+          "Die opname is straks het uitgangspunt in januari."
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Het refrein met alle groepen tegelijk, drummers tellen af. Dit is geen toets; het is een warming-up en een kerstmoment.",
+                "Zet de oefentrack aan en laat iedereen meespelen of zingen."
+              ],
+              "voorbeelden": [
+                "Het refrein is maat 13 tot en met 19: G C | B7 | Em | D | G | B7 | Em. Dat zijn vijf akkoorden: G, D, Em, C en B7."
+              ],
+              "vragen": [
+                {
+                  "v": "Welke akkoorden speel je in het refrein?",
+                  "a": "G, D, Em, C en B7."
+                }
+              ],
+              "letop": [
+                "Houd het kort: vijf minuten."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "Speel jullie versie twee keer helemaal door. Let op begin, opbouw en slot. Niveau 2 is het minimum: couplet en refrein. Wie niveau 3 speelt, speelt het eigen arrangement.",
+                "De groep die op de kerstviering speelt, doet nu de generale voor de klas, in de opstelling van de viering.",
+                "Gaat het mis? Speel door en stap weer in."
+              ],
+              "voorbeelden": [
+                "Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen."
+              ],
+              "vragen": [
+                {
+                  "v": "In welke toonsoort staat het couplet?",
+                  "a": "E-mineur."
+                },
+                {
+                  "v": "Welke toon in B7 trekt naar E?",
+                  "a": "De D♯."
+                },
+                {
+                  "v": "Hoe speel je het couplet anders dan het refrein?",
+                  "a": "Rustiger, gedempt of zachter."
+                }
+              ],
+              "letop": [
+                "Activiteitenweek B: de les kan uitvallen. Zo ja, deze les overslaan; lesweek 16 pakt de draad weer op.",
+                "Let op samen beginnen op de 1 na het aftellen, en samen stoppen op het slot.",
+                "Een groep die het refrein nog niet aankan: laat ze het refrein goed doen in plaats van het hele lied half.",
+                "Generale: een volledige doorloop, met aftellen, intro en slot, zonder stoppen, en geef daarna korte feedback."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Neem jullie versie op, één keer. Zet de telefoon op een stabiele plek, niet te dicht bij de drums. Bewaar de opname goed; na de kerst luisteren we hem terug.",
+                "Beoordeel hem nu nog niet. Luister alleen kort of hij is opgenomen."
+              ],
+              "vragen": [
+                {
+                  "v": "Waar moet de telefoon staan?",
+                  "a": "Een stukje van de groep af, op een stabiele plek, zodat alle instrumenten te horen zijn."
+                }
+              ],
+              "letop": [
+                "Controleer dat de opname echt klinkt voordat de groep stopt.",
+                "Mislukt de opname? Dan doen ze het na de kerst opnieuw; dan is er geen tussenstand, en dat is geen ramp."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Na de kerst pakken we het lied weer op en werken we naar P1 in lesweek 19. Dat zijn nog drie lessen: lesweek 16, 17 en 18.",
+                "Schrijf op wat je groep na de kerst eerst oefent."
+              ],
+              "vragen": [
+                {
+                  "v": "Wanneer is P1?",
+                  "a": "In lesweek 19, maandag 25 januari 2027."
+                }
+              ],
+              "letop": [
+                "Vraag de groepen om de opname te bewaren op een plek waar ze hem na de kerst terugvinden."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Elke groep neemt een opname op als tussenstand. Na de kerst luisteren we hem terug en bepalen we een werkpunt."
+            ],
+            "vragen": [
+              {
+                "v": "Waarvoor gebruiken we de opname?",
+                "a": "Als tussenstand; na de kerst luisteren we hem terug en kiezen we een werkpunt."
+              }
+            ],
+            "letop": [
+              "Noteer welke groepen een opname hebben."
+            ]
+          }
+        }
+      },
+      {
+        "bestand": "16 God Rest Ye - oppakken en beoordeling P1.pptx",
+        "kort": "God Rest Ye: oppakken en beoordeling P1",
+        "code": "P2 · les 16",
+        "week": 16,
+        "koppel": [
+          {
+            "lg": "vwo3",
+            "w": 16,
+            "slot": "l1"
+          }
+        ],
+        "bronLes": {
+          "lg": "vwo3",
+          "w": 16,
+          "slot": "l1"
+        },
+        "fotos": {
+          "titel": "bandles-leerlingen.jpg",
+          "doel": "mengtafel-leerlingen.jpg",
+          "fase": [
+            "telefoon-opnemen.jpg",
+            null,
+            null,
+            null
+          ],
+          "rodeDraad": "messiah-koor.jpg"
+        },
+        "voorbereiding": [
+          "Zet klaar: het leerlingblad met de beoordeling en het format voor zelfbeoordeling (P1 Format zelfbeoordeling leerling), één per leerling.",
+          "Zorg dat je de opnames van lesweek 15 kunt afspelen. Is die les uitgevallen, laat dan elke groep nu één keer spelen en opnemen.",
+          "Bekijk het P1-model met de beschrijvingen per onderdeel en per score (4, 6, 8 en 10), zodat je voorbeelden kunt noemen.",
+          "Het rekenvoorbeeld in de notities klopt: 6,8."
+        ],
+        "notitieTitel": [
+          "Na de kerst pakken we het lied weer op. Vandaag luisteren we terug naar de opname van voor de kerst en leg ik uit hoe P1 wordt beoordeeld.",
+          "P1 is in lesweek 19: maandag 25 januari 2027, 45 minuten. Het is een groepspresentatie van het lied: je speelt met je groep voor mij, niet voor de klas. Het is niet herkansbaar, het telt voor weging 10 en iedereen krijgt een eigen cijfer.",
+          "Lesweek 16, 17 en 18 zijn de drie lessen die nog resten. Daarna is P1.",
+          "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur."
+        ],
+        "notitieAgenda": [
+          "Eerst terugluisteren. Dan de beoordeling van P1. Dan weer samenspelen. Tot slot schrijf je je eigen leerdoel op."
+        ],
+        "notitieDoel": [
+          "Je kent de zes onderdelen van P1 en wat spelen en reflectie wegen.",
+          "Je hebt één persoonlijk leerdoel opgeschreven.",
+          "Jullie hebben het lied weer één keer doorgespeeld."
+        ],
+        "notitieRodeDraad": [
+          "Ook in een groep krijgt iedereen een eigen cijfer. Maar je kunt alleen goed scoren als de groep klinkt, want samenspel en ritme hangen aan elkaar. Je hebt elkaar nodig."
+        ],
+        "vragenRodeDraad": [
+          {
+            "v": "Waarom kun je alleen goed scoren als de groep klinkt?",
+            "a": "Omdat samenspel en ritme alleen goed zijn als iedereen op elkaar let. Een zwak punt in de groep trekt iedereen mee."
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "notitie": {
+              "vertel": [
+                "Luister naar de opname van voor de kerst. Zeg per groep wat goed ging en wat beter moet. Begin met iets dat goed ging.",
+                "Gebruik de vragen: begonnen jullie samen? Bleef het tempo gelijk? Was het couplet rustiger dan het refrein?"
+              ],
+              "vragen": [
+                {
+                  "v": "Wat ging goed in jullie opname?",
+                  "a": "Eigen antwoord; liefst concreet, met een plek in het lied."
+                },
+                {
+                  "v": "Wat moet beter?",
+                  "a": "Eigen antwoord, bijvoorbeeld de wissel C naar B7 of samen stoppen."
+                }
+              ],
+              "letop": [
+                "Is les 15 uitgevallen of is er geen opname? Laat de groepen nu één keer spelen en opnemen en luister die terug.",
+                "Hou het positief; de opname is ook de basis voor het persoonlijke leerdoel straks."
+              ]
+            }
+          },
+          "1": {
+            "notitie": {
+              "vertel": [
+                "P1 heeft zes onderdelen. Vier gaan over spelen: samenspel, ritme, toon en techniek. Twee gaan over reflectie: je eigen reflectie en je feedback op groepsgenoten.",
+                "Spelen telt dubbel, reflectie één keer. Samen is dat 10: vier spelonderdelen keer twee is 8, twee reflectieonderdelen keer één is 2. Dus spelen is 80 procent van je cijfer.",
+                "Per onderdeel kun je vier scores halen: 4 is onvoldoende, 6 voldoende, 8 goed, 10 uitstekend. Zit je er tussenin, dan geef ik 5, 7 of 9. Dit zijn scores, geen niveaus van de kerstbox. Niveau 1, 2 en 3 gaan over wat je speelt; 4, 6, 8 en 10 gaan over hoe goed je het speelt.",
+                "Samenspel: luisteren naar de anderen en samen opbouwen. Bij 6 begin en eindig je samen. Bij 8 pas je je aan en speel je opbouw en terugval soepel mee. Bij 10 voel je de groep aan en draag je de opbouw mee.",
+                "Ritme: tempo vasthouden en wisselen op de tel. Bij 6 wissel je meestal op de tel. Bij 8 speel je strak en met groove. Bij 10 kan de groep op jouw timing bouwen, ook in de volle delen.",
+                "Toon: zuiver en de juiste noten. Bij 6 meestal zuiver. Bij 8 is je klank helder en krachtig. Bij 10 is hij mooi en verzorgd, van begin tot eind, zacht in het couplet en vol in het refrein.",
+                "Techniek: je instrument of stem beheersen. Bij 6 speel je de basis goed. Bij 8 vloeiend, zonder haperen bij de wissels. Bij 10 gebruik je technieken om het lied mooier te maken, bijvoorbeeld een vollere slag of groove.",
+                "Eigen reflectie: weten wat goed gaat en wat beter kan. Bij 8 noem je sterke en zwakke punten met voorbeelden uit het lied. Bij 10 koppel je ze ook aan je eigen leerdoel.",
+                "Feedback op groepsgenoten: een compliment en een bruikbare tip. Bij 8 noem je wat en waar in het lied. Bij 10 zijn je tips zo precies dat iemand er echt mee verder kan, bijvoorbeeld waar in het refrein het tempo versnelde en wat je dan doet.",
+                "Het cijfer: tel per onderdeel score maal weging op en deel door 10."
+              ],
+              "voorbeelden": [
+                "Rekenvoorbeeld: samenspel 8, ritme 7, toon 6, techniek 6, eigen reflectie 6, feedback 8. Spelen: 8 + 7 + 6 + 6 = 27, keer 2 is 54. Reflectie: 6 + 8 = 14, keer 1 is 14. Totaal 68, gedeeld door 10 is 6,8.",
+                "Alles 6 geeft 6,0. Alles 8 geeft 8,0.",
+                "Leerlingversie van samenspel bij 6: 'Ik let op de anderen tijdens het spelen; we beginnen en eindigen samen.'"
+              ],
+              "vragen": [
+                {
+                  "v": "Hoe is P1 opgebouwd?",
+                  "a": "Zes onderdelen: samenspel, ritme, toon en techniek (spelen) en eigen reflectie en feedback op groepsgenoten (reflectie)."
+                },
+                {
+                  "v": "Hoe zwaar telt spelen?",
+                  "a": "Twee keer per onderdeel: samen 80 procent. Reflectie telt één keer per onderdeel: samen 20 procent."
+                },
+                {
+                  "v": "Welke scores zijn er?",
+                  "a": "4 (onvoldoende), 6 (voldoende), 8 (goed) en 10 (uitstekend). Tussen twee niveaus mag 5, 7 of 9."
+                },
+                {
+                  "v": "Bereken: samenspel 8, ritme 7, toon 6, techniek 6, reflectie 6, feedback 8.",
+                  "a": "Spelen: (8 + 7 + 6 + 6) × 2 = 54. Reflectie: 6 + 8 = 14. Totaal 68, gedeeld door 10 is 6,8."
+                }
+              ],
+              "letop": [
+                "Verwar scores en niveaus niet. Zegt een leerling 'ik zit op niveau 2, dus ik krijg een 6', corrigeer dan: niveau 2 is wat je speelt, de score zegt hoe goed.",
+                "Reken het voorbeeld rustig samen door op het bord.",
+                "Deel het leerlingblad uit; de leerlingversie van het model heeft dezelfde zes onderdelen.",
+                "Zeg duidelijk dat P1 niet herkansbaar is, zonder te dreigen."
+              ]
+            }
+          },
+          "2": {
+            "notitie": {
+              "vertel": [
+                "Weer samenspelen. Eerst langzaam, dan op tempo. Speel het lied twee keer door. Niveau 2 is het minimum voor P1.",
+                "Wie klaar is, werkt aan niveau 3: het arrangement, met intro en slot. Spreek af wie aftelt en wie het teken geeft voor het slot."
+              ],
+              "voorbeelden": [
+                "Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen."
+              ],
+              "vragen": [
+                {
+                  "v": "Noem twee keuzes die je maakt bij het arrangeren.",
+                  "a": "Bijvoorbeeld intro, opbouw, aantal coupletten, break of slot."
+                },
+                {
+                  "v": "Wat is een break?",
+                  "a": "Een stuk waar de band stilvalt of terugvalt."
+                },
+                {
+                  "v": "Welke vier speelonderdelen tellen bij P1?",
+                  "a": "Samenspel, ritme, toon en techniek."
+                }
+              ],
+              "letop": [
+                "Loop langs en let op de zes onderdelen, vooral samenspel en ritme.",
+                "Zeg per groep één concreet punt dat beter kan.",
+                "Noteer wie nog op niveau 1 speelt; die groepen moeten naar niveau 2 toe."
+              ]
+            }
+          },
+          "3": {
+            "notitie": {
+              "vertel": [
+                "Kijk naar de vier speelonderdelen: waar sta je nu? Omcirkel per onderdeel waar je volgens jezelf staat. Dat is het begin van je reflectie.",
+                "Schrijf daarna één persoonlijk leerdoel op je leerlingblad. Kies iets dat je in drie lessen kunt verbeteren, bijvoorbeeld 'ik wissel in maat 3 op de tel' of 'ik zing het refrein zuiver'."
+              ],
+              "vragen": [
+                {
+                  "v": "Wat is een goed leerdoel?",
+                  "a": "Klein en concreet, over één onderdeel, en haalbaar in drie lessen."
+                }
+              ],
+              "letop": [
+                "Kijk mee terwijl ze schrijven. 'Beter spelen' is te groot; vraag door.",
+                "Laat de leerlingbladen bewaren voor lesweek 17."
+              ]
+            }
+          }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [
+              "Per onderdeel (samenspel, ritme, toon, techniek) omcirkelen waar je nu staat. Dit is het begin van je reflectie."
+            ],
+            "vragen": [
+              {
+                "v": "Waar sta je nu bij samenspel?",
+                "a": "Eigen antwoord op de schaal 4, 6, 8, 10."
+              }
+            ],
+            "letop": [
+              "Dit is zelfinschatting, geen cijfer. Zeg dat ook."
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
