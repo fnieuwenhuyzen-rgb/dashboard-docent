@@ -8,14 +8,14 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 
 - Live: https://lesdag-muziek.pages.dev (Cloudflare Pages, Git-gekoppeld). **Elke push naar `main` staat binnen een minuut live.** Achter Cloudflare Access: alleen nwn@csgpm.nl (One-time PIN, sessie een maand, ook `*.lesdag-muziek.pages.dev`).
 - Repo: deze map, GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). De app staat in `public/`; `tools/`, `bron/`, `worker/`, `handboek/` gaan niet online.
-- Worker `lesdag-rooster` (Zermelo-iCal-doorgeefluik, `worker/rooster-proxy.js`), bewust niet achter Access.
+- Worker `lesdag-rooster` (Zermelo-doorgeefluik voor koppelcode, afspraken en iCal, `worker/rooster-proxy.js`), bewust niet achter Access. Staat los van Pages: na een wijziging zelf online zetten in Cloudflare. Hij bewaart geen token: die staat in de browser en gaat per verzoek mee.
 - Gegevens: `public/data/basis.json` (leergangen, kalender, sectie, koor), `public/data/beoordeling.json` (beoordelingsmodellen). Dashboard-artifact "Leergang muziek": https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2 (bron `bron/`).
 - Eigen staat van Frans: localStorage `lesdag-staat` en, na Microsoft-login, OneDrive `Apps/Lesdag/lesdag.json`. Les-id's zijn `leergang:lesweek.lesnummer`; weekindeling niet wijzigen zonder migratie.
 
 ## Vaste afspraken
 
 - **Privacy:** nooit leerlingnamen of -gegevens in de repo, `basis.json`, `beoordeling.json` of andere openbare plekken. Klassenlijsten en scores alleen in `S.beoord` (apparaat en eigen OneDrive). Ingevulde formulieren met namen in de sectiemap niet openen of citeren.
-- **Zermelo-link** is een wachtwoord: nooit in code, commit of chat. Frans plakt hem zelf in Instellingen.
+- **Zermelo-link, koppelcode en token** zijn wachtwoorden: nooit in code, commit of chat. Frans plakt ze zelf in Instellingen. De API-token staat alleen in localStorage `lesdag-zermelo-api`, niet in `S` (dus niet in OneDrive of een kopie).
 - **Lesmateriaal en presentaties:** geen AI-gevoel (geen meta-tekst, geen generieke foto's), passend bij de les, echte rechtenvrije foto's met bron in `beeld/bronnen.txt`. Ontwerptaal van de didactische kaarten; per leerjaar een eigen accent. Klaar vóór de eerstvolgende maandag.
 - Christelijke school: liedkeuze en voorbeelden daarop afstemmen. Geen songteksten overnemen.
 - Lokaal 009 met digibord; laptop staat altijd klaar.

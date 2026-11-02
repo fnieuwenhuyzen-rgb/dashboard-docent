@@ -60,12 +60,12 @@ Lesdag kan je rooster uit Zermelo halen, met roosterwijzigingen, een ander lokaa
 2. Kies **Edit code**, vervang alle code door de inhoud van `worker/rooster-proxy.js` en kies **Deploy**.
 3. Staat je Lesdag op een ander adres dan `https://lesdag-muziek.pages.dev`? Pas dan bovenaan in de Worker het adres bij `LESDAG` aan.
 4. Kopieer het adres van de Worker, bijvoorbeeld `https://lesdag-rooster.jouwnaam.workers.dev`, en zet het in `public/config.js` bij `roosterProxy`. Commit en push.
-5. Ga in Lesdag naar **Instellingen, Rooster uit Zermelo** en plak je Zermelo-agendalink.
+5. Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie). Ga in Lesdag naar **Instellingen, Rooster uit Zermelo**, plak de code en kies **Koppelen**. Een code werkt één keer. Op een ander apparaat maak je een nieuwe. Plak daar ook je Zermelo-agendalink: die gebruikt Lesdag als de koppeling niet werkt.
 6. Ga naar **Rooster** en kies **Overnemen als vast rooster**.
 
 Daarna haalt Lesdag het rooster op als je de app opent, en elk halfuur als je ernaar terugkeert. Voor de komende drie weken gebruikt Vandaag dan het echte Zermelo-rooster. Vervallen lessen schuiven vanzelf door. Een ander lokaal krijgt een rood label.
 
-De Zermelo-link werkt als een wachtwoord voor je rooster. Lesdag bewaart hem alleen in je browser en in je eigen OneDrive. De Worker geeft hem door aan Zermelo en bewaart niets. Is de link ergens terechtgekomen waar hij niet hoort, maak dan in Zermelo een nieuwe koppeling aan.
+De Zermelo-link werkt als een wachtwoord voor je rooster. Lesdag bewaart hem alleen in je browser en in je eigen OneDrive. De koppeling is strenger: daarmee kan iemand alles wat jij in Zermelo mag. Die blijft alleen in de browser van dit apparaat. De Worker geeft beide door aan Zermelo, bewaart niets en leest met de koppeling alleen je eigen afspraken. Is de link of de koppeling ergens terechtgekomen waar die niet hoort, trek hem dan in Zermelo in en maak een nieuwe aan.
 
 ## 4. Eerste keer gebruiken
 

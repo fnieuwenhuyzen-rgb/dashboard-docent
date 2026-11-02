@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 2 november 2026 (toetsweek 1 in Dag en Week bevestigd; besluiten Frans over A). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 2 november 2026 (Zermelo-API gebouwd, wacht op proef met echte code; toetsweek 1 in Dag en Week bevestigd; besluiten Frans over A). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
@@ -34,6 +34,7 @@ Besluiten Frans (2-11):
 
 - [ ] Beoordelingsmodus in een echte les: vwo 3 Songbox 1 (29-10), vwo 4 PT1 (9-11). Vragen: past het scherm op zijn laptop/tablet, gaat plakken uit Magister goed, mist er iets.
 - [ ] Zermelo-herkenning (`zMuziek`, `zGroep`) met het echte rooster.
+- [ ] **Zermelo-koppeling met een echte koppelcode.** Vooraf: de nieuwe `worker/rooster-proxy.js` online zetten (Cloudflare, Edit code, plakken, Deploy). Frans maakt de code aan en plakt die zelf in Instellingen. Controleren: staat er "via de koppeling"; kloppen vakcode (`mu`, `kmu`?) en groepscodes (`h3a` of `h3.mu`?); weigert `/api/v3` geen veld uit `VELDEN`; hoe zien surveillances eruit (nu: `exam` van een ander vak op Frans' naam, of de tekst "surveillance"). Nog na te gaan: hoe lang de token geldig is, en of `students` voor een docent leesbaar is (Lesdag vraagt het bewust niet op).
 - [x] Toetsweek 1 (2-10 nov): surveillances en toetsen uit Zermelo staan goed in Dag en Week (Frans, 2-11, met het echte rooster). Nog niet apart bevestigd: de melding "tijd niet in rooster" als een toetsweektoets uit de leergang (h5 T3, v6 T9) niet in Zermelo staat.
 - [ ] Microsoft-login en OneDrive-opslag tegen de echte tenant (na B).
 
@@ -44,7 +45,7 @@ Besluiten Frans (2-11):
 3. Lesinhoud nog leeg: BB1, keuzeuur h3 (kmu3), delen van mavo 3 en mavo 4.
 4. Beoordelingsmodus stap 3, vóór 19-3-2027: overzicht per leerling over het jaar, vergelijking met de zelfbeoordeling.
 5. Dashboard-artifact verversen met de nieuwe data (lesinhoud, beoordelingen).
-6. **Rooster via de Zermelo-API in plaats van iCal (na toetsweek 1, besluit Frans 30-10).** Eigen sessie. Zermelo, Instellingen, "Koppel externe applicatie" geeft een eenmalige koppelcode (schoolnaam `csgpm` + code). De Worker ruilt die in voor een access token (`POST https://csgpm.zportal.nl/api/v3/oauth/token`, `grant_type=authorization_code`) en haalt `appointments` op. Winst: vak, groep, lokaal en docent als aparte velden, plus soort afspraak (les, toets, activiteit, surveillance), vervallen en gewijzigd met reden. Daarmee vervallen het raden in `zMuziek`/`zGroep`/`zToets`/`zDienst`/`zAnders`. Eerst nagaan: welke velden een docent mag zien, en of leerlingen per groep beschikbaar zijn. Let op: de token kan alles wat Frans in Zermelo mag, dus strenger dan de iCal-link. Nooit in code, commit of chat; Frans maakt de code pas bij het bouwen aan en plakt die zelf in Instellingen. Uitkomst toetsweek 1 (2-11): de iCal voldeed, dus geen spoed.
+6. **Rooster via de Zermelo-API: gebouwd (2-11), nog niet getest met echte gegevens.** Worker (`koppel`, `afspraken`) en app staan klaar, de agendalink blijft als reserve. Zie C voor de proef. Daarna kan het raden in `zDienst`/`zToets` verder weg en de iCal eruit.
 
 ## Kerstboxen klas 3 (30-10, gedaan in een cloudsessie, live sinds 2-11)
 
@@ -68,6 +69,7 @@ Nog te doen:
 
 ## E. Klein en technisch
 
+- **Zermelo-API toekomst:** de koppeling gebruikt `/api/v3` met een persoonlijke koppelcode. Zermelo documenteert sinds 13-4-2026 alleen nog partnerkoppelingen (`/api`, aan te maken door een beheerder, met verplicht `schoolInSchoolYear`), zonder einddatum voor v3 te noemen. Op 2-11 antwoordde `/api/v3` op csgpm nog. Stopt het: agendalink als reserve, en ICT vragen om een partner.
 - **Samenvoegen `proef-nu` met `main`:** `main` heeft sinds 30-10 eigen `zTekst` en `zDienst` (bij de Zermelo-functies). `proef-nu` definieert die ook bij de pauzes: één van beide weghalen, anders een SyntaxError. In `dagItems` ook `toets` en `rooster` bij de bezette soorten houden.
 
 - Na elke wijziging van de koorplanning in de Koorapp: `/lesdag-koor`.
