@@ -1,24 +1,23 @@
 # Open punten Lesdag
 
-Bijgewerkt: 2 november 2026 (blok Blijft liggen gebouwd en online; Zermelo-API gebouwd, wacht op proef met echte code; toetsweek 1 in Dag en Week bevestigd; besluiten Frans over A). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 2 november 2026 (presentaties samengevoegd en live; besluiten Frans verwerkt). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
 Besluiten Frans (2-11):
+- Songbox 1 klas 3 telt als voortgangscijfer (staat in model en scoreblad).
 - Zelfbeoordeling 10% klopt (Way Maker en Songbox 1 blijven 0%, de reflectie zit daar in de rubric). De modellen staan al goed.
-- Songbox 1 klas 3 telt als voortgangscijfer. In model `songbox1-klas3` staat nog "Geen PTO-toets: cijfer voor het speelstuk": aanvullen met "voortgangscijfer".
 - Way Maker-box in Musicbox is beoordeeld en zichtbaar (id `71df1713-b814-4ddf-ae6d-85c300843784`).
 - Way Maker komt helemaal niet meer voor de kerstvakantie: alles verschuift naar erna.
-- Examenconcerten: docent 75%, zelf 10%, klasgenoten 15%. Het zelfdeel is het eigen cijfer van de leerling (aanname: het overall-cijfer van het oude formulier). Modellen en app nog aanpassen. Geen navraag bij de examensecretaris nodig: Frans beslist hier zelf over, ook over de pdf als dossierstuk.
+- Examenconcerten: docent 75%, zelf 10%, klasgenoten 15%. Het zelfdeel is het eigen cijfer van de leerling (aanname: het overall-cijfer van het oude formulier). Staat in modellen en app. Geen navraag bij de examensecretaris nodig: Frans beslist hier zelf over, ook over de pdf als dossierstuk.
 - Uitval en inhalen: mag gebouwd worden.
-- Presentaties: stijl is goed, maar de foto's zijn vervormd en in de notities moet alles staan wat Frans moet vertellen. Oorzaak foto's vrijwel zeker `sizing: cover` in `tools/lesdeck.js`: pptxgenjs rekt de foto dan uit tot het kader.
 - Beoordelingsmodus stap 2: voorstel is goed, meenemen in Lesdag. Eerst uitzoeken: is het haalbaar, en welke manier van beoordelen werkt prettig en betrouwbaar?
 - Zermelo-koppeling werkt met de echte code (Frans). Vakcodes en groepscodes kunnen nu worden nagekeken.
 - BB1: kennismaken met alle instrumenten via de tutorials. Ukelele is geweest, ze spelen nu gitaar, daarna drums en keyboard.
 - Keuzeuur havo 3 is nieuw voor Frans: er moet een volledig lespakket komen.
 - Mavo 3 en 4: het programma staat er (titels per les). Wat ontbreekt is de uitwerking voor de lesmodus: mavo 3 heeft 2 van de 36 lessen met fasen, mavo 4 2 van de 58. Vraag aan Frans: uitwerken of niet?
 
-Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen botst altijd. Daarom werkt steeds één sessie tegelijk aan dat bestand. Volgorde: presentaties, dan lesinhoud (Way Maker, BB1, mavo, keuzeuur), dan dashboard-artifact. Los daarvan: uitval en inhalen in `public/app.js`, daarna beoordelingsmodus stap 2 in hetzelfde bestand.
+Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen botst altijd. Daarom werkt steeds één sessie tegelijk aan dat bestand. Volgorde: lesinhoud (Way Maker, BB1, mavo, keuzeuur), dan dashboard-artifact. Presentaties, uitval en inhalen en beoordelingsmodus stap 2 zijn live.
 
 - [ ] **Tegenstrijdige bronnen in de beoordelingsmodellen** (2-11 nagekeken in de PTA-pdf's, studiewijzers en leergang):
   - mavo 4 P2: PTA en leergang weging 40, studiewijzer 30%.
@@ -28,13 +27,19 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
   - havo 5 P4: PTA 180 min, leergang 90 (lesweek 21: generale + productie). De studiewijzer ("uiterlijk 16 april") is de SE-grens, geen conflict met februari.
   - havo 5 P3: PTA 90 min, leergang 45 (lesweek 17 heeft wel twee lessen: uitvoering + vervolg). `Studiewijzer_Muziek_H5_2026-2027.docx` noemt geen duur.
   - vwo 4: PTA zegt P1/P2, studiewijzer en leergang PT1/PT2. Alleen de naam verschilt.
-- [ ] **Examenconcerten: beoordeling door groepsgenoten telt mee (besluit Frans 2-11).** Nog open: hoeveel procent, en gaat dat van het docentdeel af? Nu docent + 10% zelfbeoordeling. Groepscriteria (programma, eigen werk) krijgen mogelijk voor de hele klas dezelfde score. Daarna de modellen aanpassen met `/lesdag-beoordeling`.
 - [ ] **Way Maker komt in de periode na de kerst (besluit Frans 2-11).** Dat is periode 3 (lesweek 21-30), maar die lessen zijn nu theorie voor T1 (lesweek 29), met Way Maker alleen in "Rollen in een band en orkest" (havo 3 lesweek 27, vwo 3 lesweek 26). Open: blijft het bij die les, of krijgt Way Maker meer lessen, en welke vervallen dan? De lesinhoud staat nog in `tools/inhoud-klas3.json` onder de oude titels, de presentatie `11 Way Maker - kennismaken.pptx` ook. Oude verwijzingen in lesweek 1 en 8 kloppen niet meer.
-- [ ] **Presentaties klas 3:** gemaakt zijn nu les 8, 9 en 11 (`01 Onderbouw muziek\Klas 3\Lessen 2026-2027\`). Vraag aan Frans: is deze stijl goed, zodat de rest zo gemaakt kan worden? Les 11 (Way Maker) is achterhaald door de kerstbox.
 - [ ] **Vragen bij beoordelingsmodus stap 2:** (1) P4 "Samenspel en eigen rol": telt de groepsscore pas na bevestigen per leerling (nu), of tenzij Frans afwijkt? (2) Groepscriteria per model nakijken; is mavo-samenspel "met de begeleiding" spel in een groep? (3) Cijferkolom alleen met afgeronde cijfers? (4) Toelichtingen van klasgenoten bewaren en op het feedbackblad? (5) Feedbackblad in Encode Sans Light en Bold, omdat Regular niet op de laptop staat: goed? (6) Moet het eigen cijfer ook uit Forms komen (nu intypen)?
 - [ ] **Vragen bij uitval en inhalen (gebouwd, live sinds 2-11):** (1) vanaf hoeveel dagen vóór een toets een melding (nu 21); (2) Zermelo toont een les in een geplande uitvalweek: gaat die door (nu ja); (3) koor en sectieafspraken blijven staan op een afwezige dag (nu ja); (4) havo 5 `lesdagen` wo, ma, ma: klopt de volgorde, want P4 kan op een andere dag vallen.
 - [x] **Uitval en inhalen (ontwerp 30-10):** live sinds 2-11, lokaal getest met verzonnen gegevens. Nieuw in de staat: `S.afwezig`, `S.ankers`, `S.afwijkingen`; les-id's ongewijzigd. Nog niet gebouwd (voor D): notenbalk, twee lessen samenvoegen, Week afsluiten, AI-voorstellen. https://claude.ai/artifact/KaRevv4Uuw2cbCLU2nFUi4. Lessen schuiven door, toetsen worden ankers, bij krapte een inhaalvoorstel. Nu schuift een toetsles mee (`reeks`/`planning`): bij één uitgevallen les in vwo 4 lesweek 8 zakt PT1 voorbij 9-11. Echt gebeurd: Frans was di 27 en wo 28-10 afwezig (vwo 4 generale PT1 vervallen, havo 5 woensdagles ook). Besluit Frans: afwezig = alle lessen van die dagen vervallen, niet per les vragen ("Ik ben er niet" + Zermelo vervallen). Besluiten Frans (30-10): PTA-toets verplaatsen beslist Frans zelf (geen mail of akkoord, wel een reden in de afwijkingenlijst); onderbouwtoetsen schuiven vrij, maar binnen de periode uit het PTO; inhaalbare lessen herkent Lesdag aan de titel (generale, afronden, herhaling, oefenen). Nog open: akkoord om te bouwen, en:
   - PTA vwo 4 PT1 duurt 90 minuten, de leergang heeft er één les van 45 voor (lesweek 10, les 2 is themadag). Volgens Frans (2-11) een foutje in de planning, Frans maakt het vóór de kerst in orde. Besluit Frans (2-11): PT1 op ma 9-11 wordt afgenomen in 45 minuten, afwijkend van het PTA.
+- [ ] **PT1 vwo 4 (ma 9-11):** leergang (`toetsen`, duur 90), PTA (90) en het veld `pta` in `pt1-vwo4` zeggen 90 minuten; afname wordt 45 op besluit van Frans. Verwerken: `duur` en `pta`-tekst aanpassen of als afwijking noteren. Ook niet aangepast: de normering (generale en improvisatie-uitleg van 28-10 zijn vervallen) en `leerlingInstructie` ("na de generale").
+- [ ] **PT1, keuzes vooraf:** wordt de zang beoordeeld op This old hammer of op het eigen stuk? Mo' Better Blues staat niet in de sectiemap; When I walk hand in hand alleen in de Havo 4-map, in drie mollen, terwijl de improvisatie in C is. Aantal groepen staat nergens: het deck rekent 2, 3 en 4 groepen voor.
+- [ ] **Ma 9-11 valt in toetsweek 1 (2-10 nov):** vwo 6 valt daarom uit (`ma-di toetsweek`), vwo 4 en vwo 5 hebben die dag wel les. Niet nagekeken in Zermelo: klopt dat?
+- [ ] **Vwo 5 lesweek 10:** `blok` is P1 classicisme, les en thuiswerk gaan over romantiek. De dia zegt "romantiek". Geen zetting van het Wiegenlied in de sectiemap: F groot is een voorstel (origineel Es).
+- [ ] **The Message (vwo 6, 10.2/10.3):** bevat ruwe tekst (staat onder LET OP in de notities). Past dit fragment op school?
+- [ ] **Les 9 klas 3:** het Messiah-verhaal in de notities is nog een invulhaakje. Niet bekend: titel songbox 1, instrumenteis bovenbouw, inleverplek opname 10.2.
+- [ ] **Foto's kerstlessen:** alleen bestaande foto's gebruikt, niets gedownload. Akkoord om rechtenvrije foto's te zoeken? Gewenst: stal of herders, kaarsen in een kerk, steelpan of Trinidad, capo op een gitaar, band op een kerstviering, John Leech bij Dickens, hand op ukelele, handen op keyboard, cajon.
+- [ ] **Feiten in de nieuwe presentaties nalopen die niet uit een bron komen:** zie `handboek/presentaties-bronverschillen-2026-11-02.md` (Brahms, jazz en pop, grepen, definities).
 - [ ] **Besluit voor schooljaar 2027-2028 (Frans, 30-10):** praktische toetsen vwo 4 en vwo 5 niet meer vlak na de zomer (nu PT1 vwo 4 lesweek 10, P9 vwo 5 lesweek 8). Op z'n vroegst in de periode van toetsweek 2. Frans verwerkt dit vóór de kerst in het PTA 2027-2028 en de leergangen voor volgend jaar (2-11).
 
 ## B. Wacht op anderen
@@ -56,7 +61,7 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 
 ## D. Bouwen (volgorde)
 
-1. Lespresentaties lesweek 10 (9-13 nov): alleen vwo 5, vwo 4 (PT1 is een toets) en vwo 6 hebben les; de rest valt uit. Lesweek 9 is klaar (2-11-2026): klas 3 `09 Kiezen voor muziek in de bovenbouw`, mavo 3 `09 Terugblik presentatie 1` (`tools/inhoud-week9.json`, `maak-decks-week9.js`). BB1 en keuzeuur h3 hebben geen lesinhoud en dus geen presentatie (zie punt 3).
+1. Lesinhoud bijwerken naar de presentaties: de decks wijken af van `basis.json`, dat alleen links kreeg (`handboek/presentaties-bronverschillen-2026-11-02.md`). Neem `tools/inhoud-week10.json`, `inhoud-kerst-klas3.json`, `inhoud-herbouw-mavo.json` en mavo 3 lesweek 12 en 14 mee in de leergang. Way Maker staat nog bij havo 3 lesweek 1, 8, 27, 37, vwo 3 lesweek 1, 8, 26, 37 en in `songbox1-klas3` (`vooruit`). Presentaties opnieuw maken: overige `08*`-bestanden en `11 Way Maker - kennismaken.pptx` zijn nog vervormd. Klaar en live (2-11): lesweek 9 en 10, les 8.
 2. Beoordelingsmodus stap 2, klaar vóór 8-1-2027. Alles live sinds 2-11 (`d45c606`): veilig opslaan, cijferkolom, groepjes, tussenstand, feedbackblad als pdf, klasgenoten, Songbox 1. Formulieren en scorebladen van de drie examenconcerten en Songbox 1 staan vernieuwd in de sectiemap, met een nieuw formulier Beoordeling klasgenoten. Nog te doen zodra `basis.json` vrij is: bij blok P1 van havo 3 en vwo 3 in `basis.json` en `bron/leergang-data.json` "Formatief" vervangen door voortgangscijfer. Voorstel: https://claude.ai/artifact/HYmdo2WccDnYrBJvWdL51W
 3. Lesinhoud nog leeg: BB1, keuzeuur h3 (kmu3), delen van mavo 3 en mavo 4.
 4. Beoordelingsmodus stap 3, vóór 19-3-2027: overzicht per leerling over het jaar, vergelijking met de zelfbeoordeling.
@@ -75,8 +80,9 @@ Gewijzigd in de bestanden:
 Gedaan op 2-11: formulieren en scoreblad staan in `01 Onderbouw muziek\Klas 3\P1 Presentatie kerstlied\Beoordeling`, gekoppeld met `koppel-beoordeling.js` en live gezet.
 
 Nog te doen:
-1. Lespresentaties voor lesweek 11-16 havo 3 en vwo 3 (kerstlessen) en mavo 3 lesweek 12 en 14.
-2. Dashboard-artifact verversen (D5) zodat het de kerstboxen ook toont.
+1. Dashboard-artifact verversen (D5) zodat het de kerstboxen ook toont.
+
+Lespresentaties lesweek 11-16 havo 3 en vwo 3 en mavo 3 lesweek 12 en 14 zijn klaar en gekoppeld (2-11).
 
 ## Sectietaken uit de werkwijze (2-11, gedaan in een cloudsessie, live sinds 2-11)
 
@@ -87,6 +93,8 @@ Nog te doen:
 
 - [ ] **Teruggevallen gegevens (2-11):** om 14:56 stonden `public/data/basis.json` en `bron/leergang-data.json` ineens op een oudere tussenstand (37 sectietaken weg, Mary's Boy Child in E in plaats van F, formulieren en presentaties weg). Oorzaak niet bewezen, waarschijnlijk OneDrive. Teruggezet naar `251d2c0`, live was goed gebleven. Komen deze twee bestanden onverwacht als gewijzigd terug: niet committen, eerst vergelijken met HEAD, want `git add -A` neemt ze mee.
 
+- **PowerPoint en OneDrive:** overschrijf je een pptx die op deze laptop al geopend is geweest, dan kan PowerPoint een oude versie uit zijn cache erbij halen (dubbele tekstvakken, een keer een dialoog die de automatisering liet hangen). Niet bewezen, maar een nieuwe bestandsnaam loste het op. Daarom heten drie bestanden nu `09 Kiezen voor muziek in de bovenbouw - nieuw.pptx`, `09 Terugblik presentatie 1 - ritme en maat - nieuw.pptx` en `10.1 PT1 afnemen - samenspel en zang.pptx`. Maak zo'n deck opnieuw onder een nieuwe naam en meet op een kopie.
+- **Presentatiehulpmiddelen:** `tools/maak-decks.js` + `tools/inhoud-decks-LEESMIJ.md` (bouwen), `tools/meet-deck.js` (crop en notities), `tools/meet-overloop.ps1` (overloop), `tools/koppel-presentaties.js` (alleen links). Koppen zijn Encode Sans vet; terug naar Compressed is één regel in `lesdeck.js`.
 - **Beoordeling:** synchronisatie vervangt bij Entra nog de hele staat; dat moet eerst samenvoegen worden. Formulieren en scoreblad staan nog op Calibri, de afspraak is Encode Sans (op de laptop alleen Light en Bold: eerst nagaan hoe Word daarmee omgaat).
 - **Zermelo-API toekomst:** de koppeling gebruikt `/api/v3` met een persoonlijke koppelcode. Zermelo documenteert sinds 13-4-2026 alleen nog partnerkoppelingen (`/api`, aan te maken door een beheerder, met verplicht `schoolInSchoolYear`), zonder einddatum voor v3 te noemen. Op 2-11 antwoordde `/api/v3` op csgpm nog. Stopt het: agendalink als reserve, en ICT vragen om een partner.
 - **Samenvoegen `proef-nu` met `main`:** `main` heeft sinds 30-10 eigen `zTekst` en `zDienst` (bij de Zermelo-functies). `proef-nu` definieert die ook bij de pauzes: één van beide weghalen, anders een SyntaxError. In `dagItems` ook `toets` en `rooster` bij de bezette soorten houden.
