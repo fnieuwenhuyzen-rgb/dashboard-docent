@@ -139,7 +139,7 @@ function zVanApi(a) {
   const vakken = a.subjects || [], groepen = a.groups || [];
   const kop = vakken.concat(groepen).join(' - ');
   return { uid: String(a.appointmentInstance || a.id), d: b.d, start: b.t, eind: c.t, summary: kop || a.remark || Z_SOORT[a.type] || 'Afspraak', loc: (a.locations || []).join(', '), desc: a.remark || '', vervallen: !!a.cancelled,
-    api: true, vakken, soort: a.type || '', reden: a.changeDescription || '' };
+    api: true, vakken, groepen, soort: a.type || '', reden: a.changeDescription || '' };
 }
 async function zVraag(body) {
   const r = await fetch(zProxy(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -179,6 +179,37 @@ function zAnders(s) { // [{van, tot, titel, lokaal, groep, toets, dienst}] voor 
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return [];
   return ZC.events.filter(e => e.d === s && !e.vervallen && !zLes(e) && !((e.soort === 'interlude' || /\bpauze\b/i.test(zTekst(e))) && !zDienst(e)))
     .map(e => ({ van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: e.summary || 'Afspraak', lokaal: e.loc, groep: zMuziek(e) ? zGroep(e) : '', toets: zToets(e), dienst: zDienst(e) }));
+}
+function zWat(e) { return e.vervallen ? 'vervallen' : (e.soort === 'interlude' || /\bpauze\b/i.test(zTekst(e))) && !zDienst(e) ? 'pauze' : zDienst(e) ? 'surveillance' : zLes(e) ? 'muziekles' : zToets(e) ? 'toets' : 'afspraak'; }
+function zCodes() { // vak- en groepscodes uit het opgehaalde rooster, met wat Lesdag ervan maakt
+  const vak = {}, groep = {};
+  for (const e of ZC.events) {
+    (e.vakken || []).forEach(v => { vak[v] = (vak[v] || 0) + 1; });
+    if (!zMuziek(e)) continue;
+    const code = (e.groepen || []).join(', ') || e.summary; const g = groep[code] = groep[code] || { n: 0, g: zGroep(e) }; g.n++;
+  }
+  return { vak: Object.entries(vak).sort().map(([code, n]) => ({ code, n, muziek: zMuziek({ api: true, vakken: [code] }) })),
+    groep: Object.entries(groep).sort().map(([code, x]) => ({ code, n: x.n, g: x.g, lg: x.g ? leergangVan(x.g) : null })) };
+}
+const zRest = () => ZC.events.filter(e => !zLes(e) || e.vervallen).sort((a, b) => (a.d + a.start < b.d + b.start ? -1 : 1));
+function zOverzichtTekst() { // om te plakken bij het nakijken: alleen codes, tijden en lokalen, geen opmerkingen uit Zermelo en geen koppeling
+  const C = zCodes(); const r = ['Zermelo in Lesdag, ' + fmtD(ZC.van) + ' t/m ' + fmtD(ZC.tot) + ', via ' + (ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'), '', 'Vakcodes (code, aantal, muziek?)'];
+  C.vak.forEach(v => r.push([v.code, v.n, v.muziek ? 'muziek' : 'ander vak'].join('\t')));
+  r.push('', 'Groepscodes bij muziek (code, aantal, groep in Lesdag, leergang)');
+  C.groep.forEach(g => r.push([g.code, g.n, g.g || 'niet herkend', g.lg || 'geen leergang'].join('\t')));
+  r.push('', 'Behalve muzieklessen (dag, tijd, soort in Zermelo, vak en groep, lokaal, Lesdag ziet)');
+  zRest().forEach(e => r.push([e.d, (e.start || 'hele dag') + (e.eind ? '-' + e.eind : ''), e.soort || '', (e.vakken || e.groepen) ? (e.vakken || []).concat(e.groepen || []).join(' ') : e.summary, e.loc, zWat(e)].join('\t')));
+  return r.join('\n');
+}
+function zOverzicht() { // in Instellingen: vak- en groepscodes, en alles uit Zermelo behalve gewone muzieklessen (zonder de koppeling)
+  if (!ZC || !ZC.events) return '';
+  const C = zCodes(); const L = zRest();
+  const tabel = (kop, rijen) => `<table class="z-ov"><thead><tr>${kop.map(k => `<th>${k}</th>`).join('')}</tr></thead><tbody>${rijen.join('')}</tbody></table>`;
+  return `<details class="meer" style="margin-top:.6rem"><summary>Wat Lesdag uit Zermelo haalt (${C.vak.length} vakcodes, ${C.groep.length} groepscodes, ${L.length} andere afspraken)</summary>
+    <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" type="button" data-zkopie="">Kopieer als tekst</button></div>
+    ${C.vak.length ? '<h3>Vakcodes</h3>' + tabel(['Code', 'Aantal', 'Lesdag ziet'], C.vak.map(v => `<tr><td><code>${esc(v.code)}</code></td><td class="num">${v.n}</td><td>${v.muziek ? 'muziek' : 'ander vak'}</td></tr>`)) : '<p class="lead">Vakcodes staan alleen los in de koppeling, niet in de agendalink.</p>'}
+    <h3>Groepscodes bij muziek</h3>${tabel(['In Zermelo', 'Aantal', 'Groep in Lesdag', 'Leergang'], C.groep.map(g => `<tr><td><code>${esc(g.code)}</code></td><td class="num">${g.n}</td><td>${g.g ? esc(g.g) : '<span class="chip let">niet herkend</span>'}</td><td>${g.lg ? esc(lgNaam(g.lg)) : '<span class="chip let">geen leergang</span>'}</td></tr>`))}
+    <h3>Surveillances, toetsen en andere afspraken</h3>${tabel(['Dag', 'Tijd', 'In Zermelo', 'Lokaal', 'Lesdag ziet'], L.map(e => `<tr><td>${esc(fmtD(e.d))}</td><td class="num">${esc(e.start || 'hele dag')}${e.eind ? '–' + esc(e.eind) : ''}</td><td>${esc(e.summary)}${e.desc ? `<div class="sub">${esc(e.desc.replace(/\s+/g, ' ').slice(0, 80))}</div>` : ''}</td><td>${esc(e.loc)}</td><td>${zWat(e)}</td></tr>`))}</details>`;
 }
 function zUren(s) {
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return null;
@@ -609,7 +640,7 @@ function viewInstellingen() {
     <form class="form" id="zKoppelForm"><div class="rij"><label style="flex:3 1 18rem">Koppelcode <input id="zCode" type="password" autocomplete="off" placeholder="${zApiToken() ? 'gekoppeld op dit apparaat' : '12 cijfers'}"></label><button class="btn hoofd" type="submit">Koppelen</button>${zApiToken() ? '<button class="btn rood" type="button" data-zapiweg="">Koppeling verwijderen</button>' : ''}</div></form>
     <p class="lead">Reserve: als de koppeling niet werkt, gebruikt Lesdag je agendalink. Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
     <form class="form" id="zForm"><div class="rij"><label style="flex:3 1 18rem">Zermelo-link <input id="zLink" type="password" autocomplete="off" placeholder="${S.zermeloToken ? 'opgeslagen (••••' + esc(S.zermeloToken.slice(-4)) + ')' : 'https://csgpm.zportal.nl/api/v3/ical?access_token=…'}"></label><button class="btn hoofd" type="submit">Opslaan en ophalen</button>${zGekoppeld() ? '<button class="btn" type="button" data-zophalen="">Nu ophalen</button>' : ''}${S.zermeloToken ? '<button class="btn rood" type="button" data-zweg="">Link verwijderen</button>' : ''}</div></form>
-    <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}, via ${ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'}.` : 'Nog niet opgehaald.'}</p>` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div>
+    <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}, via ${ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'}.` : 'Nog niet opgehaald.'}</p>${zOverzicht()}` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
@@ -769,6 +800,7 @@ document.addEventListener('click', async e => {
   if (D.logout != null) { M365.logout(); return; }
   if (D.sync != null) { await syncNu(true); return; }
   if (D.zophalen != null) { await zOphalen(true); return; }
+  if (D.zkopie != null) { try { await navigator.clipboard.writeText(zOverzichtTekst()); toast('Gekopieerd. Plak het in de chat bij het nakijken.'); } catch (err) { toast('Kopiëren lukt niet in deze browser'); } return; }
   if (D.zweg != null) { delete S.zermeloToken; if (!zApiToken()) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); return; }
   if (D.zapiweg != null) { try { localStorage.removeItem(Z_API); } catch (e) {} if (!S.zermeloToken) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); if (S.zermeloToken) await zOphalen(false); return; }
   if (D.zovernemen != null) { if (!zOverArmed) { zOverArmed = true; render(); setTimeout(() => { zOverArmed = false; if (route.naam === 'rooster') render(); }, 5000); return; }
