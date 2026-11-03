@@ -3,7 +3,7 @@
 const fs = require('fs'), path = require('path');
 const D = require('./lesdeck');
 const inhoud = JSON.parse(fs.readFileSync(path.join(__dirname, 'inhoud-klas3.json'), 'utf8'));
-const MAP = 'C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten - Sectie Muziek/01 Onderbouw muziek/Klas 3/Lessen 2026-2027';
+const MAP = 'C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten - Sectie Muziek/01 Onderbouw muziek/03 Klas 3/Lessen 2026-2027';
 const BEELD = MAP + '/beeld';
 const bronnen = {}; for (const ln of fs.readFileSync(BEELD + '/bronnen.txt', 'utf8').split('\n')) { const d = ln.split(' | '); if (d.length >= 5) bronnen[d[0].trim()] = `${d[1].trim()} · ${d[2].trim()} · ${d[3].trim()} · ${d[4].trim()}`; }
 const F = n => n ? { pad: BEELD + '/' + n, bron: bronnen[n] || n } : null;
