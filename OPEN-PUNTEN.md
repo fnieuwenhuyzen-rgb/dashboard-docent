@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 3 november 2026 (Nu-scherm samengevoegd met de echte app, live). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 3 november 2026 (afvinken, minuten en afspraken gebouwd, nog niet online). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
@@ -80,6 +80,19 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 - [ ] Microsoft-login en OneDrive-opslag tegen de echte tenant (na B).
 
 - [ ] **Blok Blijft liggen (2-11):** boven de agenda op Vandaag, met teller in het menu. Gemiste geplande taken en voorbije deadlines (eigen, sectie, koor) tot ze klaar, opnieuw gepland of uitgesteld zijn (`S.uitgesteld`). Lokaal getest met nagebootste klok; online sinds 2-11, nog niet in het echt gebruikt. Taken zonder datum en geplande koor- of presentatietaken van een voorbije dag blijven bewust buiten het blok. `proef-nu` heeft dit niet.
+
+## Afvinken, minuten en afspraken (3-11, lokaal getest, nog niet online)
+
+Vier meldingen van Frans. Gebouwd in `public/app.js` en `app.css`:
+- **Afgevinkte taken komen terug.** Oorzaak in de code: "Presentatie doorlopen" werd per datum onthouden, dus dezelfde les kwam terug bij een parallelgroep of als hij doorschoof. Nu per les (`presAf`, `zetDagTaak`, 120 dagen terug). Verwijderen van een geplande sectie-, koor- of reclametaak haalt alleen de planning weg; de melding zegt dat nu.
+- **Niet opgelost, tweede mogelijke oorzaak:** alles staat per apparaat en per adres in localStorage (`clientId` leeg, geen OneDrive). Vinkjes op tablet, in de proef of op een test-adres staan niet op de laptop of live. Zie de vraag hieronder.
+- **Minuten:** voorstel per taak, in deze volgorde: eigen invulling, mediaan van minstens twee vergelijkbare taken, mediaan van de laatste tien van de soort (minstens drie), startwaarde. Minutenveld in de rijen, vraag na het afvinken (`duurVraag`, `S.duurLog`), overzicht en startwaarden in Instellingen (`duurKaart`). De oude `tempo` is weg. De oude meting werkte alleen met de knop Begin.
+- **Afspraken:** eigen soort (`k.afspraak`), nooit voorgesteld voor een werkblok, geen "gemist", gaat op Nu voor een geplande taak. Aanpassen via `openTaakBewerk` (ook voor taken, ook omzetten). Zermelo-, koor- en sectie-afspraken blijven alleen-lezen.
+- **Tekstherkenning:** `leesTaak` leest tijdvakken (11:00-12:00, 14.00 tot 15.30, van 13 tot 14, 10-11 uur) en herkent afspraak, gesprek, overleg, vergadering, bespreking, meeting, bellen met, of een tijdvak met "met". Ook in de formulieren Nieuwe taak en Iets anders. Bestaande taken met zo'n titel worden bij het starten eenmalig omgezet (`herstelStaat`).
+
+Vraag aan Frans: op welk apparaat en adres vinkte je gisteren af, en welke taken kwamen terug? Gebruik je meer apparaten, dan is synchroniseren de echte oplossing: Entra-app (B) of opslag achter Cloudflare Access. Let op: `S.beoord` bevat leerlingnamen, dus dat vraagt een besluit.
+
+Niet getest: het echte Zermelo-rooster en de echte gegevens van Frans.
 
 ## D. Bouwen (volgorde)
 

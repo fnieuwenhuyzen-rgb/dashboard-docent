@@ -13,11 +13,11 @@
         "criteria": ["Ik noem de onderdelen van de gitaar", "Ik ken de snaren van dik naar dun: E, A, D, G, B, E", "Ik speel partij 1 op de juiste snaren en frets"],
         "fasen": [
           { "min": 5, "soort": "start", "kop": "Gitaar pakken en goed zitten", "stappen": ["Gitaar op schoot, de dikste snaar boven.", "Rug recht, voeten plat op de grond.", "Sla elke snaar één keer aan: klinkt hij?"], "docent": "Loop rond en kijk naar de houding. Stem de gitaren vooraf, dat kost hier anders de hele start." },
-          { "min": 10, "soort": "uitleg", "kop": "De gitaar en de tab", "stappen": ["Wijs aan: klankgat, hals, fret, stemknop, kam.", "De snaren van dik naar dun: E, A, D, G, B, E.", "Een tab heeft zes lijnen, één per snaar. De dikste snaar staat onderaan.", "Het cijfer is de fret. Een 0 is de losse snaar."], "beeld": { "soort": "kaarten", "items": [{ "k": "Lijn", "t": "welke snaar" }, { "k": "Cijfer", "t": "welke fret" }, { "k": "0", "t": "losse snaar" }] }, "docent": "Onderdelen van de gitaar komen terug in T1. Gebruik de foto gitaaronderdelen.jpg." },
+          { "min": 10, "soort": "uitleg", "kop": "De gitaar en de tab", "stappen": ["Wijs aan: kop, hals, frets, klankgat, klankkast, brug.", "De snaren van dik naar dun: E, A, D, G, B, E.", "Een tab heeft zes lijnen, één per snaar. De dikste snaar staat onderaan.", "Het cijfer is de fret. Een 0 is de losse snaar."], "beeld": { "soort": "kaarten", "items": [{ "k": "Lijn", "t": "welke snaar" }, { "k": "Cijfer", "t": "welke fret" }, { "k": "0", "t": "losse snaar" }] }, "docent": "Deze zes onderdelen en de snaren komen in T1. De foto gitaaronderdelen.jpg noemt er meer: die hoeven ze niet te kennen." },
           { "min": 25, "soort": "doen", "kop": "Partij 1 van Vader ik aanbid U", "stappen": ["Lees de tab mee en zoek de eerste noten.", "Speel langzaam, elke toon even lang.", "Lukt het? Speel het hele lied door.", "Gebruik Gitaar voor beginners in Musicbox als je de houding of het plectrum wilt terugzien."], "klaar": "Ga door met partij 2.", "docent": "De partijen staan in vader ik aanbid u.pdf. Hoofdstuk 1 tot en met 4 van Gitaar voor beginners, niveau 1, sluiten hierop aan." },
           { "min": 5, "soort": "check", "kop": "Eén keer samen", "stappen": ["Tel samen af.", "Speel partij 1 zo ver als je komt.", "Benoem de snaren van dik naar dun."] }
         ],
-        "formatief": { "soort": "aanwijzen", "tekst": "Wijs op je gitaar de hals, de fret en de stemknop aan en noem de snaren van dik naar dun." },
+        "formatief": { "soort": "aanwijzen", "tekst": "Wijs op je gitaar de kop, de hals en de frets aan en noem de snaren van dik naar dun." },
         "identiteit": "Vader ik aanbid U is een lied dat je tot God zingt. Daarom kun je het ook eenvoudig spelen en toch samen zingen.",
         "benodigd": ["Gitaren, gestemd", "Plectrums", "Vader ik aanbid U (tabs) op het bord of geprint", "Foto gitaaronderdelen op het bord"],
         "materiaal": [
@@ -57,7 +57,7 @@
         "criteria": ["Ik noem bass drum, snare drum en hihat", "Ik speel bass drum op 1 en 3 en snare op 2 en 4", "Ik leg uit wat een vierkwartsmaat is", "Ik herken hele, halve, kwart- en achtste noten"],
         "fasen": [
           { "min": 5, "soort": "start", "kop": "Voel de puls", "stappen": ["Klap mee op de tel: 1, 2, 3, 4.", "Stamp op 1 en 3, klap op 2 en 4.", "Dit is al het basisritme, maar dan met je lichaam."] },
-          { "min": 10, "soort": "uitleg", "kop": "Maat en ritme", "stappen": ["De puls is de hartslag van de muziek.", "Maatstrepen delen de muziek in maten. In een vierkwartsmaat tel je vier kwarten per maat.", "Ritme is hoe lang de tonen duren: hele, halve, kwart- en achtste noot.", "Bij elke noot hoort een rust van dezelfde lengte."], "beeld": { "soort": "tabel", "rijen": [["Noot of rust", "Tellen in 4/4"], ["Hele", "4"], ["Halve", "2"], ["Kwart", "1"], ["Achtste", "een halve"]] }, "docent": "Dit komt terug in T1. Maat en ritme in Musicbox, niveau 1, heeft dezelfde onderwerpen in blok 2 tot en met 5." },
+          { "min": 10, "soort": "uitleg", "kop": "Maat en ritme", "stappen": ["De puls is de hartslag van de muziek.", "Maatstrepen delen de muziek in maten. De maatsoort staat aan het begin: in een vierkwartsmaat (4/4) tel je vier kwarten per maat.", "Ritme is hoe lang de tonen duren: hele, halve, kwart- en achtste noot.", "Bij elke noot hoort een rust van dezelfde lengte."], "beeld": { "soort": "tabel", "rijen": [["Noot of rust", "Tellen in 4/4"], ["Hele", "4"], ["Halve", "2"], ["Kwart", "1"], ["Achtste", "een halve"]] }, "docent": "Dit komt terug in T1. Laat ook de hele, halve en kwartrust zien op het bord: die moeten ze herkennen. Maat en ritme in Musicbox, niveau 1, heeft dezelfde onderwerpen in blok 2 tot en met 5." },
           { "min": 25, "soort": "doen", "kop": "Het basisritme, om de beurt", "stappen": ["Bass drum op 1 en 3, snare op 2 en 4, hihat op elke tel.", "Eerst alleen de voet, dan de snare erbij, dan de hihat.", "Wie niet achter het drumstel zit, speelt het op knieën en voet mee.", "Lukt het? Speel mee met een song uit Spelen op de drums, niveau 1."], "klaar": "Maak in Musicbox de opdrachten van Maat en ritme, niveau 1.", "docent": "Wissel elke paar minuten. Haal er een cajon bij als er te veel leerlingen wachten. De tutorials staan in Spelen op de drums: het drumstel, houding en het basisritme." },
           { "min": 5, "soort": "check", "kop": "De klas als drummer", "stappen": ["Voet op 1 en 3, klap op 2 en 4.", "Hoeveel tellen duurt een halve noot?", "Hoeveel kwarten passen in een vierkwartsmaat?"] }
         ],
@@ -158,7 +158,7 @@
         "criteria": ["Ik heb de oefentoets gemaakt en nagekeken", "Ik weet welke begrippen ik nog moet leren"],
         "fasen": [
           { "min": 5, "soort": "start", "kop": "Wat komt er in T1?", "stappen": ["Melodieën en notennamen.", "Maten en ritmes in fragmenten of op papier.", "Onderdelen van de gitaar en de snaren."] },
-          { "min": 25, "soort": "doen", "kop": "Maak de oefentoets", "stappen": ["Werk zelf, zonder boek.", "Sla over wat je niet weet en kom erop terug.", "Klaar? Pak de begrippenlijst erbij."], "docent": "Oefentoets is van een eerder jaar. Kijk vooraf na of alle vragen behandeld zijn: kruis, mol en zesachtste maat zijn in deze reeks niet aan bod geweest." },
+          { "min": 25, "soort": "doen", "kop": "Maak de oefentoets", "stappen": ["Werk zelf, zonder boek.", "Sla over wat je niet weet en kom erop terug.", "Klaar? Pak de begrippenlijst erbij."], "docent": "Oefentoets is van een eerder jaar. Kijk vooraf na of alle vragen behandeld zijn: kruis, mol en zesachtste maat zijn in deze reeks niet aan bod geweest en staan ook niet in T1." },
           { "min": 10, "soort": "gesprek", "kop": "Samen nakijken", "stappen": ["Kijk je werk na met de antwoorden.", "Zet een streep bij wat fout ging.", "Stel je vraag: welke fout zie je het vaakst?"] },
           { "min": 5, "soort": "afsluiten", "kop": "Je leerplan", "stappen": ["Schrijf drie dingen op die je nog gaat leren.", "T1 is volgende les."] }
         ],
@@ -177,9 +177,13 @@
         "criteria": ["Notennamen en melodieën", "Maten en ritmes", "Onderdelen en snaren van de gitaar"],
         "fasen": [
           { "min": 5, "soort": "start", "kop": "Klaarzitten", "stappen": ["Tas weg, pen op tafel.", "Naam op je toets.", "Lees eerst de vragen."] },
-          { "min": 40, "soort": "doen", "kop": "T1", "stappen": ["Werk zelf en in stilte.", "Klaar? Controleer je antwoorden en lever in."], "docent": "De toets voor dit jaar is nog niet gekozen. Er liggen toetsen uit 2023-2024 in de sectiemap: neem alleen vragen over wat is behandeld." }
+          { "min": 40, "soort": "doen", "kop": "T1", "stappen": ["Werk zelf en in stilte.", "Klaar? Controleer je antwoorden en lever in."], "docent": "Vraag 7 en 12 zijn luistervragen: speel melodie A en klap ritme B, elk twee keer. Doe ze als de klas zover is, en houd de rest stil. Antwoorden en cijfer staan in het antwoordmodel." }
         ],
-        "benodigd": ["Toets T1 geprint"]
+        "benodigd": ["Toets T1 geprint", "Piano of keyboard voor vraag 7", "Antwoordmodel"],
+        "materiaal": [
+          { "t": "T1 BB1 2026-2027 (Word)", "sp": "01 Onderbouw muziek\Klas 1\2. theorie toets\T1 BB1 2026-2027.docx" },
+          { "t": "T1 BB1 antwoordmodel (Word)", "sp": "01 Onderbouw muziek\Klas 1\2. theorie toets\T1 BB1 2026-2027 antwoordmodel.docx" }
+        ]
       },
       {
         "koppel": [{ "lg": "bb1", "w": 20, "slot": "l1" }],
