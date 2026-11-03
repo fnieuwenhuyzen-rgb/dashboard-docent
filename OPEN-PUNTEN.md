@@ -4,7 +4,7 @@ Bijgewerkt: 3 november 2026 (Nu-scherm samengevoegd met de echte app, live). Wer
 
 ## A. Wacht op Frans
 
-- [ ] **Nu-scherm samengevoegd (live sinds 3-11, nog niet in het echt gebruikt):** alles van `main` en `proef-nu` samen op https://nu-samen.lesdag-muziek.pages.dev (eigen opslag). Nieuw op Nu: meldingen (uitval en inhalen, Blijft liggen, reclame), niet in een pauze of na de werkdag. Vanaf 1300 pixels gebruiken Nu, Dag en Week de breedte (maximaal 94% van het scherm), vanaf 1700 pixels drie kolommen. Nog te doen na akkoord van Frans: `proef-nu`, `nu-samen` en de map `lesdag-proef-nu` opruimen (daar staat nog het niet in Git opgenomen `bron/rapport ChatGPT.docx`). Alleen in de proef ingevulde gegevens (klassenlijsten, pauzes, jarigen) gaan niet vanzelf mee.
+- [ ] **Nu-scherm samengevoegd (live sinds 3-11, nog niet in het echt gebruikt):** alles van de oude `main` en `proef-nu` samen. Nieuw op Nu: meldingen (uitval en inhalen, Blijft liggen, reclame), niet in een pauze of na de werkdag. Vanaf 1300 pixels gebruiken Nu, Dag en Week de breedte (maximaal 94% van het scherm), vanaf 1700 pixels drie kolommen. Controleren met het echte rooster op het grote scherm. Proefmap en lokale branch zijn opgeruimd (3-11); `bron/rapport ChatGPT.docx` staat nu in `bron/`, bewust niet in Git (lokaal uitgesloten).
 
 Besluiten Frans (2-11):
 - Songbox 1 klas 3 telt als voortgangscijfer (staat in model en scoreblad).
@@ -48,17 +48,17 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 - [ ] **Foto's kerstlessen:** alleen bestaande foto's gebruikt, niets gedownload. Akkoord om rechtenvrije foto's te zoeken? Gewenst: stal of herders, kaarsen in een kerk, steelpan of Trinidad, capo op een gitaar, band op een kerstviering, John Leech bij Dickens, hand op ukelele, handen op keyboard, cajon.
 - [ ] **Feiten in de nieuwe presentaties nalopen die niet uit een bron komen:** zie `handboek/presentaties-bronverschillen-2026-11-02.md` (Brahms, jazz en pop, grepen, definities).
 - [ ] **Besluit voor schooljaar 2027-2028 (Frans, 30-10):** praktische toetsen vwo 4 en vwo 5 niet meer vlak na de zomer (nu PT1 vwo 4 lesweek 10, P9 vwo 5 lesweek 8). Op z'n vroegst in de periode van toetsweek 2. Frans verwerkt dit vóór de kerst in het PTA 2027-2028 en de leergangen voor volgend jaar (2-11).
-- [ ] **Proef Nu-scherm (branch `proef-nu`):** een paar dagen gebruiken op https://proef-nu.lesdag-muziek.pages.dev (eigen opslag, dus eerst rooster en pauzes daar invullen). Daarna kiezen: naar `main`, bijschaven of laten. Vragen:
+- [ ] **Nu-scherm (live sinds 3-11):** een paar dagen gebruiken. Vragen:
   - Pauzes komen uit het Zermelo-rooster (Frans: "de roostermaker plant ze"). Lesdag neemt afspraken met "pauze" over, anders de vaste gaten van 10 tot 40 minuten tussen lesuren; pauzedienst of surveillance telt als werk. Nagaan met het echte rooster of de goede tijden eruit komen (Instellingen, Pauzes, laat ze zien).
   - Klopt "meer dan 5,5 uur werk = 30 minuten pauze" voor jou, of zegt de cao VO iets anders? Nu staat 30 minuten in `RUST.nodig`.
   - Werkt het tweede venster voor het bord op de schoollaptop (pop-up toestaan), en de pijltjes van je presenter in de regie?
-- [ ] **Proef ronde 3, stap 1 (30-10):** fundament, Magister zonder koppeling en Nu met de dag als kolom staan op https://proef-nu.lesdag-muziek.pages.dev. Eerst de klassenlijsten plakken bij Groepen (met de kolom geboortedatum) en de verjaardagen van collega's bij Instellingen. Vragen:
+- [ ] **Proef ronde 3, stap 1 (30-10):** fundament, Magister zonder koppeling en Nu met de dag als kolom staan in de app. Eerst de klassenlijsten plakken bij Groepen (met de kolom geboortedatum) en de verjaardagen van collega's bij Instellingen. Vragen:
   - Huiswerk "bij de bel": na de les is het vaak pauze, en die is van jou. Nu staat het huiswerk de laatste 5 minuten van de les klaar en komt het daarna terug in het volgende werkblok. Goed zo?
   - "Thuis" staat in de leergang per lesweek, niet per les. Lesdag vraagt het huiswerk bij elke les van die week, tot je één keer "Staat erin" tikt; dan is het rond voor de hele lesweek van die groep. Of hoort het bij één vaste les (de eerste of de laatste van de week)?
   - Klopt de lijst van het intranet als je hem plakt? Lesdag leest regels als "12 november Jan Jansen", "Jan Jansen 12-11" en een datumregel met namen eronder. Staan er mailadressen bij, dan vult Lesdag die in; anders kies je de collega zelf in Outlook.
   - Felicitatiemail: onderwerp "Gefeliciteerd!", tekst "Beste <voornaam>, Van harte gefeliciteerd met je verjaardag! Een fijne dag gewenst. Groet, Frans". Aanpassen?
   - Gebruik je Magister op de tablet als website of als app? De knop Open gaat naar de website; de app opent Lesdag niet vanzelf.
-- [ ] **Nu als Ensemble (30-10):** één zin bovenaan die zegt wat nu telt, knoppen eronder, rechts de dag als lijst, navigatie als tekst bovenaan (geen zijbalk), geen tikraster voor absenten. Zinregels: `handboek/nu-zinnen.md`. Een paar dagen gebruiken op https://proef-nu.lesdag-muziek.pages.dev. Vragen: klopt de zin op elk moment, is hij te lang, mis je iets uit de oude dagkolom, stoort de regel onder de zin ("Zonder Zermelo-link…")?
+- [ ] **Nu als Ensemble (30-10):** één zin bovenaan die zegt wat nu telt, knoppen eronder, rechts de dag als lijst, navigatie als tekst bovenaan (geen zijbalk), geen tikraster voor absenten. Zinregels: `handboek/nu-zinnen.md`. Een paar dagen gebruiken in de app. Vragen: klopt de zin op elk moment, is hij te lang, mis je iets uit de oude dagkolom, stoort de regel onder de zin ("Zonder Zermelo-link…")?
 - [ ] **Mail markeren:** Frans markeert nu geen mails ("ik vergeet dat"). Voorstel: in het mailblok toont Lesdag de inbox (alleen onderwerp en afzender) en één tik maakt er een taak van, wat de mail ook in Outlook markeert. Akkoord?
 
 ## B. Wacht op anderen
@@ -163,7 +163,6 @@ Ronde 2 (29-10, na "aan de UI en UX is toch niets veranderd?"): nieuwe schil. Zi
 - **Beoordeling:** synchronisatie vervangt bij Entra nog de hele staat; dat moet eerst samenvoegen worden. Formulieren en scoreblad staan nog op Calibri, de afspraak is Encode Sans (op de laptop alleen Light en Bold: eerst nagaan hoe Word daarmee omgaat).
 - **Zermelo-API toekomst:** de koppeling gebruikt `/api/v3` met een persoonlijke koppelcode. Zermelo documenteert sinds 13-4-2026 alleen nog partnerkoppelingen (`/api`, aan te maken door een beheerder, met verplicht `schoolInSchoolYear`), zonder einddatum voor v3 te noemen. Op 2-11 antwoordde `/api/v3` op csgpm nog. Stopt het: agendalink als reserve, en ICT vragen om een partner.
 
-- **Werkmap voor `proef-nu`:** `lesdag project\lesdag-proef-nu` (git worktree, 30-10), zodat de gewone map op `main` blijft voor andere sessies. Lokaal testen: startregel `lesdag-proef-nu` (poort 8733); `tools/serve-lokaal.js` neemt nu map en poort uit de argumenten. Pushen met `git -C "<pad naar lesdag-proef-nu>" push origin proef-nu`.
 - Na elke wijziging van de koorplanning in de Koorapp: `/lesdag-koor`.
 - Roosterproxy `lesdag-rooster` laat sinds 29-10 ook testadressen `*.lesdag-muziek.pages.dev` toe (live, versie bd2545cf; code in `worker/rooster-proxy.js` op branch `proef-nu`, mee naar `main` bij het samenvoegen). Andere sites krijgen 403.
 - `merge-inhoud.js --force` kan materiaal overschrijven: daarna `koppel-beoordeling.js`.
