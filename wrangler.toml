@@ -1,0 +1,16 @@
+# Cloudflare Pages: public/ is de app, functions/ de API. De database hangt alleen aan productie:
+# branch-previews krijgen geen DB, de API geeft daar 503 en de app blijft daar op het apparaat.
+name = "lesdag-muziek"
+pages_build_output_dir = "public"
+compatibility_date = "2026-01-01"
+
+[env.production.vars]
+ACCESS_TEAM = "https://pmkoor.cloudflareaccess.com"
+ACCESS_AUD = "fb2ce6c637f7f83d822fbcb1763bb39969ac19d289a54a96c29aa57c894e9e79"
+EIGENAAR = "nwn@csgpm.nl"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "lesdag-sync"
+database_id = "771e21c8-c23f-404e-b70a-a0b304005a23"
+migrations_dir = "migrations"

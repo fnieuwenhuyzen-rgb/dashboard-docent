@@ -1,6 +1,6 @@
 // Offline: de app, de leergangen en de lettertypen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v25';
-const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js',
+const CACHE = 'lesdag-v26';
+const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'sync.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'vendor/fonts/EncodeSans-Light.ttf', 'vendor/fonts/EncodeSans-Bold.ttf', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 // precies dezelfde link als in index.html; daarbij de lettertypebestanden voor Latijnse tekst (latin en latin-ext)
 const LETTERS = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,600;0,700;1,400&family=Encode+Sans+Condensed:wght@700;800;900&display=swap';
@@ -16,6 +16,7 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   // Microsoft-login en Graph nooit uit de cache
   if (/login\.microsoftonline\.com|graph\.microsoft\.com/.test(u.host)) return;
+  if (u.origin === location.origin && u.pathname.includes('/api/')) return; // de staat nooit in de cache
   if (u.origin === location.origin) {
     // eerst netwerk (nieuwste versie), anders cache. Doorsturen naar de Cloudflare Access-inlog wordt nooit bewaard.
     e.respondWith(fetch(e.request).then(r => { if (r.ok && r.type === 'basic' && !r.redirected) { const c = r.clone(); caches.open(CACHE).then(x => x.put(e.request, c)); } return r; }).catch(() => caches.match(e.request, { ignoreSearch: true })));
