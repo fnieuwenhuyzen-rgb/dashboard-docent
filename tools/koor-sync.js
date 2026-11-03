@@ -68,8 +68,8 @@ const VOORBEREIDING = [
   ['solisten', 14, 'Vervangers voor solisten aanwijzen', ''],
   ['aanspreekpunt', 14, 'Aanspreekpunt voor de dag aanwijzen', 'Spreek ook af wie welkom heet en wie bedankt.'],
   ['opstelling', 14, 'Opstelling per partij maken', ''],
-  ['mappen', 7, 'Mappen controleren', 'Compleet en op programmavolgorde, vóór de laatste repetitie.'],
-  ['kopieen', 7, 'Extra muziek kopiëren', ''],
+  ['mappen', 7, 'Mappen controleren', 'Compleet en op programmavolgorde, vóór de laatste repetitie. Klaar als elke map klopt met het programma in de koorapp. Op de concertdag loop je ze nog één keer na (papieren checklist).'],
+  ['kopieen', 7, 'Extra muziek kopiëren', 'De extra kopieën gaan mee naar het concert (papieren checklist), voor als iemand muziek mist. Klaar als ze klaarliggen. Het kopieerrecht is een aparte taak.'],
   ['blaadje', 3, 'Blaadje met alle afspraken en de checklist printen', 'Na de laatste repetitie, dan klopt het nog.']
 ];
 const ZICHT = 7, TE_LAAT = 7; // een taak komt een week voor de deadline in beeld; nieuwe taken met een deadline langer dan een week geleden worden niet meer aangemaakt
