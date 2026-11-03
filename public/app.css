@@ -867,3 +867,21 @@ a.jr-naam:hover{color:var(--paars)}
 .jr-blok>summary{padding:.5rem 0;cursor:pointer}
 .jr-blok>summary .sub{color:var(--muted);font-size:var(--t-klein)}
 @media (max-width:640px){.jr-regel{grid-template-columns:minmax(0,1fr)}.jr-regel .tb{justify-content:flex-start}}
+
+/* rooster */
+.ro-raster{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:4px;margin:0}
+.ro-raster th,.ro-raster td{padding:0;border:0;background:none;vertical-align:middle}
+.ro-raster thead th{padding:.2rem .5rem;text-align:left;font-size:var(--t-klein);font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted)}
+.ro-raster thead th:first-child{width:3.4rem}
+.ro-raster tbody th{font-weight:400;font-size:var(--t-klein);color:var(--muted);text-align:left}
+.ro-raster td{height:2.3rem;background:var(--bg);border-radius:6px}
+.ro-les{display:flex;justify-content:space-between;align-items:baseline;gap:.3rem;height:100%;box-sizing:border-box;padding:.45rem .55rem;border-radius:6px;background:var(--paars-zacht);color:var(--paars);font-weight:600;text-decoration:none}
+.ro-les:hover{outline:2px solid var(--paars)}
+.ro-les small{font-weight:400;font-size:.75rem}
+.ro-noot{margin:.7rem 0 0}
+.ro-wijk{display:grid;grid-template-columns:minmax(6rem,max-content) minmax(0,1fr);gap:.3rem 1rem}
+.ro-wijk>span:nth-child(odd){color:var(--muted)}
+.ro-zelf>summary{cursor:pointer;color:var(--paars)}
+.ro-zelf[open]>summary{margin-bottom:.7rem}
+.ro-zelf .form{margin-top:.8rem}
+@media (max-width:640px){.ro-raster{border-spacing:2px}.ro-raster thead th{padding:.2rem .2rem;font-size:.75rem;overflow:hidden;text-overflow:ellipsis}.ro-raster thead th:first-child{width:2.6rem}.ro-raster tbody th{font-size:.75rem}.ro-les{padding:.45rem .3rem;font-size:.85rem;flex-wrap:wrap}}

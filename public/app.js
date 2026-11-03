@@ -109,6 +109,8 @@ function opPlanning(g) { // alle lessen vóór de huidige lesweek op 'gegeven'
 }
 function nextLesweek() { const t = vandaag(); const k = B.kalender.weken.find(k => k.datum >= t); return k ? k.w : 99; }
 const rooGroepen = () => [...new Set(S.rooster.map(u => u.groep))];
+const MEE_MET = { v6: 'v5' }; // v6 draait mee met het programma van v5 (besluit Frans 3-11): geen eigen lessen, wel de eigen toetsen
+const klasLabel = g => { const m = Object.keys(MEE_MET).find(k => MEE_MET[k] === g); return m ? g + ' + ' + m : g; };
 /* ---------- planning: welke les in welk lesuur ---------- */
 function uurId(u) { return u.id; }
 function urenOp(s) { const z = zUren(s); const d = dOf(s).getDay(); return (z || S.rooster.filter(u => +u.dag === d)).sort((a, b) => minuten(a.start) - minuten(b.start)); }
@@ -256,16 +258,36 @@ async function zOphalen(melden) {
     ZPZ = null;
     ZC = { opgehaald: Date.now(), van, tot: addD(van, 20), events, bron };
     try { localStorage.setItem('lesdag-zermelo', JSON.stringify(ZC)); } catch (e) {}
+    if (zVastBij()) bewaar(true);
     if (melden) toast(`Rooster opgehaald: ${events.filter(zLes).length} muzieklessen en ${events.filter(e => !zLes(e) && !e.vervallen && (zDienst(e) || zToets(e))).length} toetsen of surveillances in drie weken`);
     if (!LES) render();
   } catch (e) { console.warn(e); if (melden) toast('Rooster ophalen lukt niet: ' + e.message); }
 }
-function zVastRooster() { // muzieklessen van één week als vast rooster
-  if (!ZC) return [];
-  const seen = {}; const out = [];
-  for (let i = 0; i < 21; i++) { const s = addD(ZC.van, i); const dag = dOf(s).getDay(); if (dag === 0 || dag === 6) continue;
-    for (const e of ZC.events.filter(x => x.d === s && zLes(x) && !zToets(x) && !x.vervallen)) { const g = zGroep(e); if (!g) continue; const k = dag + '|' + e.start + '|' + g; if (seen[k]) continue; seen[k] = 1; out.push({ dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc }); } }
-  return out.sort((a, b) => a.dag - b.dag || minuten(a.start) - minuten(b.start));
+function zVastRooster() { // de vaste week: wat in minstens twee opgehaalde weken terugkomt. Vervallen lessen tellen mee (toetsweek), een eenmalige verplaatsing niet
+  if (!ZC || !ZC.events) return [];
+  const per = {}; const weken = new Set();
+  for (const e of ZC.events) { if (!e.start || !zLes(e) || zToets(e)) continue; const g = zGroep(e); const dag = dOf(e.d).getDay(); if (!g || dag === 0 || dag === 6) continue;
+    const wk = maandagVan(e.d); weken.add(wk); const x = per[dag + '|' + e.start + '|' + g] = per[dag + '|' + e.start + '|' + g] || { dag, start: e.start, eind: e.eind, groep: g, lokaal: '', wk: new Set() };
+    x.wk.add(wk); x.lokaal = x.lokaal || e.loc || ''; }
+  if (weken.size < 2) return []; // vakantie: te weinig om iets over de vaste week te zeggen
+  return Object.values(per).filter(x => x.wk.size > 1).map(({ wk, ...u }) => u).sort((a, b) => a.dag - b.dag || minuten(a.start) - minuten(b.start));
+}
+function roosterUitZermelo() { const oud = S.rooster; S.rooster = zVastRooster().map(u => { const o = oud.find(x => +x.dag === u.dag && x.start === u.start && x.groep === u.groep); return Object.assign({ id: o ? o.id : 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) }, u); }); }
+function zVastBij() { // leeg rooster: neem de vaste week over. Anders alleen ontbrekende lokalen aanvullen; een echte wijziging vraagt het scherm Rooster
+  const z = zVastRooster(); if (!z.length) return false;
+  if (!S.rooster.length) { roosterUitZermelo(); return true; }
+  let anders = false;
+  z.forEach(u => { const x = S.rooster.find(y => +y.dag === u.dag && y.start === u.start && y.groep === u.groep); if (x && !x.lokaal && u.lokaal) { x.lokaal = u.lokaal; anders = true; } });
+  return anders;
+}
+function roosterOpruimen() { // dezelfde dag, tijd en klas telt één keer. Elk apparaat houdt het kleinste id, anders haalt samenvoegen ze allebei weg; verwijzingen naar het oude id (voortgang, uitval, ankers) gaan mee
+  const per = {}; S.rooster.forEach(u => { const k = u.dag + '|' + u.start + '|' + u.groep; (per[k] = per[k] || []).push(u); });
+  const dubbel = Object.values(per).filter(L => L.length > 1); if (!dubbel.length) return false;
+  const om = []; const weg = new Set();
+  dubbel.forEach(L => { L.sort((a, b) => (a.id < b.id ? -1 : 1)); const [kies, ...rest] = L; kies.lokaal = kies.lokaal || (rest.find(u => u.lokaal) || {}).lokaal || ''; rest.forEach(u => { weg.add(u); if (String(u.id).length > 8) om.push([u.id, kies.id]); }); });
+  S.rooster = S.rooster.filter(u => !weg.has(u));
+  let tekst = JSON.stringify(S); om.forEach(([a, b]) => { tekst = tekst.split(a).join(b); }); S = JSON.parse(tekst);
+  return true;
 }
 /* ---------- uitval en ankers: lessen schuiven door, toetsen blijven staan ---------- */
 const ONDERBOUW = /^(bb1|havo3|vwo3|kmu3)$/; // toetsen uit het PTO schuiven mee binnen hun periode; de rest staat in een PTA en verplaatst alleen Frans
@@ -500,7 +522,8 @@ function toetsweekToetsen() { // muziektoetsen die de leergang in een toetsweek 
 function toetsweekToetsVoor(groep, s) { const lg = groep && leergangVan(groep); return lg ? toetsweekToetsen().find(x => x.lg === lg && s >= x.tw.d && s <= (x.tw.tot || x.tw.d)) : null; }
 function toetsInZermelo(x) { // staat deze toetsweektoets met tijd in het opgehaalde rooster?
   const gs = B.groepen[x.lg] || [];
-  return !!(ZC && ZC.events || []).find(e => !e.vervallen && e.start && e.d >= x.tw.d && e.d <= (x.tw.tot || x.tw.d) && zMuziek(e) && zToets(e) && gs.includes(zGroep(e)));
+  const noemt = (e, g) => new RegExp('(^|[^a-z0-9])' + g + '([^a-z0-9]|$)', 'i').test(e.summary + ' ' + (e.groepen || []).join(' ')); // v5 en v6 samen in één afspraak: zGroep zegt v5
+  return !!(ZC && ZC.events || []).find(e => !e.vervallen && e.start && e.d >= x.tw.d && e.d <= (x.tw.tot || x.tw.d) && zMuziek(e) && zToets(e) && gs.some(g => g === zGroep(e) || (MEE_MET[g] === zGroep(e) && noemt(e, g))));
 }
 function koorOp(s) {
   const K = B.koor; if (!K) return null;
@@ -1899,7 +1922,7 @@ function jaarNoten(g, lg, lw) {
   return h;
 }
 function jaarToetsen(g) { // de toetsen op hun lesuur (ankersVan) en de rest uit de leergang: toetsen in een toetsweek zijn geen les
-  const lg = leergangVan(g); const A = ankersVan(g); const lw = jaarLw();
+  const lg = leergangVan(g); const A = MEE_MET[g] ? [] : ankersVan(g); const lw = jaarLw(); // meedraaien: geen eigen lesuren, dus de weken uit de leergang
   const uit = A.map(a => ({ a, t: a.t, w: a.verplaatst && a.slot ? a.slot.w : a.item.w, klaar: a.klaar, los: !a.verplaatst && WEEK_LOS.test(a.t.waar || '') }));
   ((B.leergangen[lg] || {}).toetsen || []).filter(T => !A.some(a => a.t.id === T.id)).forEach(T => uit.push({ t: T, w: T.week, klaar: T.week < lw, los: WEEK_LOS.test(T.waar || '') }));
   return uit.sort((a, b) => a.w - b.w);
@@ -1912,7 +1935,7 @@ function jaarBalk(g, lg, lw) {
   for (const s of P.gaten) h += `<i class="jr-band vk" style="left:${jaarPct(s)};width:${jaarPct(1)}"></i>`;
   if (tot >= van) h += `<i class="jr-lijnen${tot < laatste ? ' eind' : ''}" style="left:${jaarPct(P.per[van])};width:calc(${jaarPct(P.per[tot] + 1)} - ${jaarPct(P.per[van])})"></i>`;
   for (const s of P.gaten) if (s > P.per[van] && s < P.per[tot]) h += `<i class="jr-rust" style="left:${jaarPct(s + .5)}"></i>`;
-  h += jaarNoten(g, lg, lw);
+  if (!MEE_MET[g]) h += jaarNoten(g, lg, lw);
   const gehad = {};
   for (const o of jaarToetsen(g)) { const k = o.t.id + '|' + o.w; if (gehad[k] || !(o.w in P.per)) continue; gehad[k] = 1; const prak = o.t.soort === 'praktijk' || /^P/.test(o.t.id);
     h += `<button type="button" class="jr-toets${o.los ? ' los' : prak ? ' p' : ''}${o.klaar ? ' af' : ''}" style="left:${jaarPct(P.per[o.w] + .5)}" data-jaartoets="${esc(g + '|' + o.t.id)}" title="${esc(o.t.id + ' ' + (o.t.naam || ''))}">${esc(o.t.id)}</button>`; }
@@ -1931,7 +1954,7 @@ const JAAR_UITLEG = [['<i class="jr-noot"></i>', 'gegeven'], ['<i class="jr-noot
 function viewJaar() { const g = decodeURIComponent(route.arg[0] || ''); return g ? viewKlasblad(g) : viewPartituur(); }
 function viewPartituur() {
   const lw = jaarLw(); const rang = g => { const i = JAAR_VOLG.indexOf(leergangVan(g)); return i < 0 ? 99 : i; };
-  const gs = rooGroepen().sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
+  const gs = [...new Set(rooGroepen().concat(Object.keys(MEE_MET).filter(m => rooGroepen().includes(MEE_MET[m]))))].sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
@@ -1971,30 +1994,63 @@ function ruimteRegel(g) { const d = ruimte(g)[0]; if (!d) return '<p class="lead
 function viewKlasblad(g) {
   const lg = leergangVan(g); const L = B.leergangen[lg]; const lw = jaarLw(); const terug = `<a class="sub" href="#jaar">Terug naar Jaar</a>`;
   if (!L && !S.rooster.some(u => u.groep === g)) return `<div class="kop"><div><h1>${esc(g)}</h1>${terug}</div></div><div class="kaart"><p class="lead">Deze klas staat niet in je rooster en niet in de leergangen.</p></div>`;
-  const r = L ? reeks(lg) : []; const vi = L ? volgendeIndex(g) : 0; const gegeven = r.filter(x => afgerond(status(g, x.id))).length; const planI = r.findIndex(x => x.w >= lw); const kl = S.beoord.lijsten[g] || [];
-  let h = `<div class="kop"><div><h1>${esc(g)}${L ? ' · ' + esc(lgNaam(lg)) : ''}</h1><div class="sub">${L ? `${gegeven} van ${r.length} lessen gegeven${lesweekVan(vandaag()) && planI >= 0 ? ` · volgens de planning nu bij les ${planI + 1} (lesweek ${lw})` : ''} · volgende: les ${vi + 1} · ` : ''}${terug}</div></div></div>`;
+  const mee = MEE_MET[g]; const r = L ? reeks(lg) : []; const vi = L ? volgendeIndex(g) : 0; const gegeven = r.filter(x => afgerond(status(g, x.id))).length; const planI = r.findIndex(x => x.w >= lw); const kl = S.beoord.lijsten[g] || [];
+  let h = `<div class="kop"><div><h1>${esc(g)}${L ? ' · ' + esc(lgNaam(lg)) : ''}</h1><div class="sub">${mee ? `Draait mee met <a href="${esc(klasUrl(mee))}">${esc(mee)}</a>, alleen de eigen toetsen · ` : L ? `${gegeven} van ${r.length} lessen gegeven${lesweekVan(vandaag()) && planI >= 0 ? ` · volgens de planning nu bij les ${planI + 1} (lesweek ${lw})` : ''} · volgende: les ${vi + 1} · ` : ''}${terug}</div></div></div>`;
   if (L) h += `<div class="kaart jr-vel klein"><div class="jr-score">${jaarAs(lw, false)}<div class="jr-balk">${jaarBalk(g, lg, lw)}</div></div></div>`;
   const klas = `<div class="kaart"><h2>Klas</h2>
     <div class="jr-regel"><span>Klassenlijst<small>${kl.length ? `${kl.length} leerlingen. ` : 'Nog geen klassenlijst. '}Alleen namen, op je apparaten en in de synchronisatie achter je login.</small></span><span class="tb"><button class="btn klein" data-klasopen="${esc(g)}">${kl.length ? 'Opnieuw plakken uit Magister' : 'Plakken uit Magister'}</button></span></div>
     <div class="jr-regel"><span>Leergang</span><span class="tb"><select id="gLg" data-g="${esc(g)}" aria-label="Leergang">${L ? '' : '<option value="" selected>Kies een leergang</option>'}${Object.keys(B.leergangen).map(k => `<option value="${k}" ${k === lg ? 'selected' : ''}>${esc(lgNaam(k))}</option>`).join('')}</select></span></div>
-    ${L ? `<div class="jr-regel"><span>Op de planning zetten<small>alle lessen vóór deze lesweek gelden dan als gegeven</small></span><span class="tb"><button class="btn klein" data-opplan="${esc(g)}">Op de planning zetten</button></span></div>` : ''}</div>`;
-  h += `<div class="jr-twee">${L ? `<div class="jr-kolom">${toetsenKaart(g)}</div>` : ''}<div class="jr-kolom">${L ? `<div class="kaart"><h2>Tot de volgende toets</h2>${ruimteRegel(g)}</div>` : ''}${klas}</div></div>`;
+    ${L && !mee ? `<div class="jr-regel"><span>Op de planning zetten<small>alle lessen vóór deze lesweek gelden dan als gegeven</small></span><span class="tb"><button class="btn klein" data-opplan="${esc(g)}">Op de planning zetten</button></span></div>` : ''}</div>`;
+  h += `<div class="jr-twee">${L ? `<div class="jr-kolom">${toetsenKaart(g)}</div>` : ''}<div class="jr-kolom">${L && !mee ? `<div class="kaart"><h2>Tot de volgende toets</h2>${ruimteRegel(g)}</div>` : ''}${klas}</div></div>`;
   if (klasOpen === g) h += lijstKaart(g, kl);
   h += afwijkingenKaart(g);
-  if (L) h += lessenKaart(g, lg, lw);
+  if (L && !mee) h += lessenKaart(g, lg, lw);
   return h;
 }
 document.addEventListener('toggle', e => { const d = e.target.dataset && e.target.dataset.jaarblok; if (d) jaarBlok[d] = e.target.open; }, true);
 
 /* ---------- rooster ---------- */
+function roosterRaster(L) { // de week als raster: rijen zijn de lestijden die op meer dagen voorkomen; een tijd die maar op één dag voorkomt schuift bij de dichtstbijzijnde rij als dat vak leeg is
+  const tijden = {}; L.forEach(u => (tijden[u.start] = tijden[u.start] || new Set()).add(+u.dag));
+  const rijen = Object.keys(tijden).filter(t => tijden[t].size > 1).map(t => ({ t, m: minuten(t), c: {} }));
+  const dagen = [1, 2, 3, 4]; if (L.some(u => +u.dag === 5)) dagen.push(5);
+  const vaak = {}; L.forEach(u => { if (u.lokaal) vaak[u.lokaal] = (vaak[u.lokaal] || 0) + 1; }); const lokaal = Object.keys(vaak).sort((a, b) => vaak[b] - vaak[a])[0];
+  [...L].sort((a, b) => minuten(a.start) - minuten(b.start)).forEach(u => { const m = minuten(u.start); const d = +u.dag;
+    let r = rijen.find(x => x.t === u.start);
+    if (!r) r = rijen.filter(x => Math.abs(x.m - m) <= 30 && !x.c[d]).sort((a, b) => Math.abs(a.m - m) - Math.abs(b.m - m))[0];
+    if (!r) { r = { t: u.start, m, c: {} }; rijen.push(r); }
+    (r.c[d] = r.c[d] || []).push(`<a class="ro-les" href="${esc(klasUrl(u.groep))}" title="${esc(lgNaam(leergangVan(u.groep)) || '')}">${esc(klasLabel(u.groep))}${r.t !== u.start ? `<small>${esc(u.start)}</small>` : ''}${u.lokaal && u.lokaal !== lokaal ? `<small>${esc(u.lokaal)}</small>` : ''}</a>`); });
+  rijen.sort((a, b) => a.m - b.m);
+  return `<table class="ro-raster"><thead><tr><th></th>${dagen.map(d => `<th scope="col">${esc(cap(DAGLANG[d]))}</th>`).join('')}</tr></thead><tbody>${rijen.map(r => `<tr><th scope="row" class="num">${esc(r.t)}</th>${dagen.map(d => `<td>${(r.c[d] || []).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+function roosterAfwijkingen() { // wat de komende opgehaalde weken anders is dan de vaste week
+  if (!ZC || !ZC.events) return ''; const t = vandaag(); const sleutel = (d, st, g) => d + '|' + st + '|' + g;
+  const vast = new Set(S.rooster.map(u => sleutel(+u.dag, u.start, u.groep))); const nieuw = new Set(zVastRooster().map(u => sleutel(u.dag, u.start, u.groep)));
+  const L = ZC.events.filter(e => e.d >= t && e.start && zLes(e) && !zToets(e)).sort((a, b) => (a.d + a.start < b.d + b.start ? -1 : 1));
+  const rij = []; const uit = L.filter(e => e.vervallen);
+  L.filter(e => !e.vervallen).forEach(e => { const g = zGroep(e); const d = dOf(e.d).getDay(); const k = sleutel(d, e.start, g); if (vast.has(k) || nieuw.has(k)) return;
+    const n = S.rooster.find(u => u.groep === g && +u.dag === d); rij.push(`<span>${esc(fmtD(e.d))}</span><span>${esc(klasLabel(g))} om ${esc(e.start)}${n ? `, normaal ${esc(n.start)}` : ', extra les'}</span>`); });
+  if (uit.length) rij.push(`<span>${esc(fmtD(uit[0].d))}${uit[0].d !== uit[uit.length - 1].d ? ' tot en met ' + esc(fmtD(uit[uit.length - 1].d)) : ''}</span><span>${uit.length} ${uit.length === 1 ? 'les vervalt' : 'lessen vervallen'}, per dag te zien in <a href="#week">Week</a></span>`);
+  return rij.length ? `<div class="kaart"><h2>Wijkt af de komende weken</h2><div class="ro-wijk">${rij.join('')}</div></div>` : '';
+}
+function roosterVerschil() { // komt iets in Zermelo minstens twee weken anders terug, dan vraagt Lesdag of het vaste rooster mee moet
+  const z = zVastRooster(); if (!z.length) return ''; const zelfde = (a, b) => +a.dag === +b.dag && a.start === b.start && a.groep === b.groep; const tekst = u => `${DAGLANG[u.dag]} ${u.start} ${klasLabel(u.groep)}`;
+  const erbij = z.filter(u => !S.rooster.some(x => zelfde(x, u))); const eraf = S.rooster.filter(u => !z.some(x => zelfde(x, u)));
+  if (!erbij.length && !eraf.length) return '';
+  return `<div class="kaart"><h2>Zermelo is veranderd</h2><p class="lead">Dit komt in je rooster minstens twee weken anders terug.</p><div class="ro-wijk">${erbij.map(u => `<span>Nieuw</span><span>${esc(tekst(u))}</span>`).join('')}${eraf.map(u => `<span>Vervalt</span><span>${esc(tekst(u))}</span>`).join('')}</div><div class="knoppen" style="margin-top:.6rem"><button class="btn hoofd" data-zovernemen="">Neem over in je vaste week</button></div></div>`;
+}
 function viewRooster() {
   const rows = [...S.rooster].sort((a, b) => a.dag - b.dag || minuten(a.start) - minuten(b.start));
-  const opties = alleGroepen();
-  let h = `<div class="kop"><div><h1>Rooster</h1><div class="sub">Elke week hetzelfde. Een losse uitval zet je op de dag zelf met "valt uit".</div></div></div>`;
-  h += `<div class="kaart scroll"><table><tr><th>Dag</th><th>Van</th><th>Tot</th><th>Groep</th><th>Leergang</th><th>Lokaal</th><th></th></tr>${rows.length ? rows.map(u => `<tr><td>${esc(DAGLANG[u.dag])}</td><td class="num">${esc(u.start)}</td><td class="num">${esc(u.eind)}</td><td><b>${esc(u.groep)}</b></td><td>${esc(lgNaam(leergangVan(u.groep)))}</td><td>${esc(u.lokaal || '')}</td><td><button class="btn klein rood" data-weg="${esc(u.id)}">weg</button></td></tr>`).join('') : '<tr><td colspan="7" class="leeg">Nog geen lesuren.</td></tr>'}</table></div>`;
-  const zv = zVastRooster();
-  if (zv.length) h += `<div class="kaart"><h2>Uit Zermelo</h2><p class="lead">Deze muzieklessen staan in je Zermelo-rooster. Neem ze over als vast rooster; je voortgang per groep blijft staan.</p><div class="scroll"><table><tr><th>Dag</th><th>Van</th><th>Tot</th><th>Groep</th><th>Lokaal</th></tr>${zv.map(u => `<tr><td>${esc(DAGLANG[u.dag])}</td><td class="num">${esc(u.start)}</td><td class="num">${esc(u.eind)}</td><td><b>${esc(u.groep)}</b>${leergangVan(u.groep) ? '' : ' <span class="chip rood">geen leergang</span>'}</td><td>${esc(u.lokaal)}</td></tr>`).join('')}</table></div><div class="knoppen" style="margin-top:.6rem"><button class="btn hoofd" data-zovernemen="">Overnemen als vast rooster</button></div></div>`;
-  h += `<form class="kaart form" id="rForm"><h2>Lesuur toevoegen</h2><div class="rij">
+  const opties = alleGroepen(); const lok = [...new Set(rows.map(u => u.lokaal).filter(Boolean))]; const verschil = roosterVerschil(); const klassen = new Set(rows.map(u => u.groep)).size;
+  const stand = !ZC ? 'zelf ingevuld' : verschil ? 'Zermelo wijkt af' : zVastRooster().length ? 'klopt met Zermelo' : '';
+  let h = `<div class="kop"><div><h1>Rooster</h1><div class="sub">${rows.length ? [`${rows.length} ${rows.length === 1 ? 'les' : 'lessen'}`, `${klassen} ${klassen === 1 ? 'klas' : 'klassen'}`, lok.length === 1 ? 'alles in ' + esc(lok[0]) : '', stand].filter(Boolean).join(' · ') : 'Je vaste week. Zermelo vult die vanzelf zodra je gekoppeld bent.'}</div></div></div>`;
+  h += verschil;
+  if (rows.length) h += `<div class="kaart">${roosterRaster(rows)}${Object.entries(MEE_MET).filter(([, v]) => rows.some(u => u.groep === v)).map(([m, v]) => `<p class="sub ro-noot">${esc(m)} draait mee met ${esc(v)}. De toetsen van ${esc(m)} staan op <a href="${esc(klasUrl(m))}">het klasblad van ${esc(m)}</a>.</p>`).join('')}</div>`;
+  h += roosterAfwijkingen();
+  const open = jaarBlok.rooster != null ? jaarBlok.rooster : !rows.length;
+  h += `<details class="kaart ro-zelf" data-jaarblok="rooster"${open ? ' open' : ''}><summary>Zelf een lesuur toevoegen of weghalen</summary>
+    ${rows.length ? `<div class="scroll"><table><tr><th>Dag</th><th>Van</th><th>Tot</th><th>Groep</th><th>Lokaal</th><th></th></tr>${rows.map(u => `<tr><td>${esc(DAGLANG[u.dag])}</td><td class="num">${esc(u.start)}</td><td class="num">${esc(u.eind)}</td><td><b>${esc(u.groep)}</b></td><td>${esc(u.lokaal || '')}</td><td><button class="btn klein rood" data-weg="${esc(u.id)}">weg</button></td></tr>`).join('')}</table></div>` : ''}
+    <form class="form" id="rForm"><div class="rij">
     <label>Dag <select id="rDag">${[1, 2, 3, 4, 5].map(d => `<option value="${d}">${DAGLANG[d]}</option>`).join('')}</select></label>
     <label>Van <input id="rVan" type="time" required value="08:30"></label>
     <label>Tot <input id="rTot" type="time" required value="09:15"></label>
@@ -2002,7 +2058,7 @@ function viewRooster() {
     <label>Lokaal <input id="rLok" list="lokalen" value="009" placeholder="009"></label>
     <button class="btn hoofd" type="submit">Toevoegen</button></div>
     <datalist id="groeplijst">${opties.map(x => `<option value="${esc(x.g)}">${esc(lgNaam(x.lg))}</option>`).join('')}</datalist><datalist id="lokalen"><option value="009"><option value="020"></datalist>
-    <p class="lead" style="font-size:.9rem">Groepen en leergangen: ${opties.map(x => esc(x.g)).join(', ')}. Een andere groep kan ook; koppel die daarna aan een leergang op het klasblad onder Jaar.</p></form>`;
+    <p class="lead" style="font-size:.9rem">Een andere groep kan ook; koppel die daarna aan een leergang op het klasblad onder Jaar.</p></form></details>`;
   return h;
 }
 
@@ -2029,6 +2085,7 @@ function syncDoc() { const { updated, ...d } = S; const t = zApiToken(); if (t) 
 function syncZet(d) {
   const { _zermeloApi: t, ...rest } = d; const upd = S.updated; const had = zGekoppeld();
   S = Object.assign(nieuweStaat(), rest); S.beoord = Object.assign({ lijsten: {}, toetsen: {} }, S.beoord); S.updated = upd;
+  roosterOpruimen(); // twee apparaten die apart overnamen geven na samenvoegen dubbele lesuren
   try { localStorage.setItem(LS_KEY, JSON.stringify(S)); if (t) localStorage.setItem(Z_API, t); else localStorage.removeItem(Z_API); opslagMelding(null); } catch (e) { opslagMelding(e); }
   if (!had && zGekoppeld() && zProxy() && navigator.onLine) zOphalen(false);
   const a = document.activeElement; if (B && !LES && !PAL && !(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName))) render();
@@ -2369,7 +2426,7 @@ document.addEventListener('click', async e => {
   if (D.zkopie != null) { try { await navigator.clipboard.writeText(zOverzichtTekst()); toast('Gekopieerd. Plak het in de chat bij het nakijken.'); } catch (err) { toast('Kopiëren lukt niet in deze browser'); } return; }
   if (D.zweg != null) { delete S.zermeloToken; if (!zApiToken()) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); return; }
   if (D.zapiweg != null) { try { localStorage.removeItem(Z_API); } catch (e) {} if (!S.zermeloToken) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); if (S.zermeloToken) await zOphalen(false); return; }
-  if (D.zovernemen != null) { const terug = foto(); const oud = S.rooster; S.rooster = zVastRooster().map(u => { const o = oud.find(x => +x.dag === u.dag && x.start === u.start && x.groep === u.groep); return Object.assign({ id: o ? o.id : 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) }, u); }); bewaar(); toast('Rooster overgenomen uit Zermelo', terug); return; }
+  if (D.zovernemen != null) { const terug = foto(); roosterUitZermelo(); bewaar(); toast('Rooster overgenomen uit Zermelo', terug); return; }
   if (D.export != null) { const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lesdag-' + vandaag() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return; }
   if (D.zoek != null) { zoek(); return; }
   if (D.kies != null) { kiesBestand(+D.kies); return; }
@@ -2859,6 +2916,8 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   (S.taken || []).forEach(k => { if (k.af || k.afspraak || !AFSPRAAK.test(k.titel) || !/\d{1,2}[:.]\d{2}/.test(k.titel)) return; const dag = k.d || (k.plan && k.plan.dag); if (!dag) return;
     try { const t = leesTaak(k.titel, dag); if (t.afspraak && t.plan) { k.titel = t.titel; k.plan = t.plan; k.afspraak = true; delete k.d; delete k.min; anders = true; } } catch (e) { console.warn(e); } });
   Object.entries(S.duur || {}).forEach(([b, L]) => { const so = SCHAT[b] ? b : 'overig'; (L || []).forEach(f => { (S.duurLog = S.duurLog || []).push({ s: so, t: '', e: vijf(f * SCHAT[so]), d: vandaag(), id: 'oud' }); anders = true; }); delete S.duur[b]; });
+  if (roosterOpruimen()) anders = true;
+  if (zVastBij()) anders = true;
   if (anders) bewaar(true);
 }
 /* ---------- start ---------- */
