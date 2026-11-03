@@ -4,204 +4,912 @@
     "klas": "BB1",
     "lessen": [
       {
-        "koppel": [{ "lg": "bb1", "w": 11, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 11,
+            "slot": "l1"
+          }
+        ],
         "titel": "Gitaar: onderdelen, houding en tab lezen",
         "type": "praktijk",
         "detail": "Tweede gitaarles. Onderdelen en snaren benoemen, goed zitten en de eerste partij uit tab spelen van Vader ik aanbid U.",
         "vraag": "Hoe lees je een tab en hoe klinkt je eerste partij?",
         "doel": "Je benoemt de onderdelen en snaren van de gitaar en speelt een eenvoudige partij uit tab.",
-        "criteria": ["Ik noem de onderdelen van de gitaar", "Ik ken de snaren van dik naar dun: E, A, D, G, B, E", "Ik speel partij 1 op de juiste snaren en frets"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Gitaar pakken en goed zitten", "stappen": ["Gitaar op schoot, de dikste snaar boven.", "Rug recht, voeten plat op de grond.", "Sla elke snaar één keer aan: klinkt hij?"], "docent": "Loop rond en kijk naar de houding. Stem de gitaren vooraf, dat kost hier anders de hele start." },
-          { "min": 10, "soort": "uitleg", "kop": "De gitaar en de tab", "stappen": ["Wijs aan: kop, hals, frets, klankgat, klankkast, brug.", "De snaren van dik naar dun: E, A, D, G, B, E.", "Een tab heeft zes lijnen, één per snaar. De dikste snaar staat onderaan.", "Het cijfer is de fret. Een 0 is de losse snaar."], "beeld": { "soort": "kaarten", "items": [{ "k": "Lijn", "t": "welke snaar" }, { "k": "Cijfer", "t": "welke fret" }, { "k": "0", "t": "losse snaar" }] }, "docent": "Deze zes onderdelen en de snaren komen in T1. De foto gitaaronderdelen.jpg noemt er meer: die hoeven ze niet te kennen." },
-          { "min": 25, "soort": "doen", "kop": "Partij 1 van Vader ik aanbid U", "stappen": ["Lees de tab mee en zoek de eerste noten.", "Speel langzaam, elke toon even lang.", "Lukt het? Speel het hele lied door.", "Gebruik Gitaar voor beginners in Musicbox als je de houding of het plectrum wilt terugzien."], "klaar": "Ga door met partij 2.", "docent": "De partijen staan in vader ik aanbid u.pdf. Hoofdstuk 1 tot en met 4 van Gitaar voor beginners, niveau 1, sluiten hierop aan." },
-          { "min": 5, "soort": "check", "kop": "Eén keer samen", "stappen": ["Tel samen af.", "Speel partij 1 zo ver als je komt.", "Benoem de snaren van dik naar dun."] }
+        "criteria": [
+          "Ik noem de onderdelen van de gitaar",
+          "Ik ken de snaren van dik naar dun: E, A, D, G, B, E",
+          "Ik speel partij 1 op de juiste snaren en frets"
         ],
-        "formatief": { "soort": "aanwijzen", "tekst": "Wijs op je gitaar de kop, de hals en de frets aan en noem de snaren van dik naar dun." },
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Gitaar pakken en goed zitten",
+            "stappen": [
+              "Gitaar op schoot, de dikste snaar boven.",
+              "Rug recht, voeten plat op de grond.",
+              "Sla elke snaar één keer aan: klinkt hij?"
+            ],
+            "docent": "Loop rond en kijk naar de houding. Stem de gitaren vooraf, dat kost hier anders de hele start."
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "De gitaar en de tab",
+            "stappen": [
+              "Wijs aan: kop, hals, frets, klankgat, klankkast, brug.",
+              "De snaren van dik naar dun: E, A, D, G, B, E.",
+              "Een tab heeft zes lijnen, één per snaar. De dikste snaar staat onderaan.",
+              "Het cijfer is de fret. Een 0 is de losse snaar."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Lijn",
+                  "t": "welke snaar"
+                },
+                {
+                  "k": "Cijfer",
+                  "t": "welke fret"
+                },
+                {
+                  "k": "0",
+                  "t": "losse snaar"
+                }
+              ]
+            },
+            "docent": "Deze zes onderdelen en de snaren komen in T1. De foto gitaaronderdelen.jpg noemt er meer: die hoeven ze niet te kennen."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Partij 1 van Vader ik aanbid U",
+            "stappen": [
+              "Lees de tab mee en zoek de eerste noten.",
+              "Speel langzaam, elke toon even lang.",
+              "Lukt het? Speel het hele lied door.",
+              "Gebruik Gitaar voor beginners in Musicbox als je de houding of het plectrum wilt terugzien."
+            ],
+            "klaar": "Ga door met partij 2.",
+            "docent": "De partijen staan in vader ik aanbid u.pdf. Hoofdstuk 1 tot en met 4 van Gitaar voor beginners, niveau 1, sluiten hierop aan."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Eén keer samen",
+            "stappen": [
+              "Tel samen af.",
+              "Speel partij 1 zo ver als je komt.",
+              "Benoem de snaren van dik naar dun."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "aanwijzen",
+          "tekst": "Wijs op je gitaar de kop, de hals en de frets aan en noem de snaren van dik naar dun."
+        },
         "identiteit": "Vader ik aanbid U is een lied dat je tot God zingt. Daarom kun je het ook eenvoudig spelen en toch samen zingen.",
-        "benodigd": ["Gitaren, gestemd", "Plectrums", "Vader ik aanbid U (tabs) op het bord of geprint", "Foto gitaaronderdelen op het bord"],
+        "benodigd": [
+          "Gitaren, gestemd",
+          "Plectrums",
+          "Vader ik aanbid U (tabs) op het bord of geprint",
+          "Foto gitaaronderdelen op het bord"
+        ],
         "materiaal": [
-          { "t": "Vader ik aanbid U (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\vader ik aanbid u.pdf" },
-          { "t": "Foto onderdelen gitaar", "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\gitaaronderdelen.jpg" },
-          { "t": "Musicbox: Gitaar voor beginners", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3" }
+          {
+            "t": "Vader ik aanbid U (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\vader ik aanbid u.pdf"
+          },
+          {
+            "t": "Foto onderdelen gitaar",
+            "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\gitaaronderdelen.jpg"
+          },
+          {
+            "t": "Musicbox: Gitaar voor beginners",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 12, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 12,
+            "slot": "l1"
+          }
+        ],
         "titel": "Gitaar: de akkoorden D en G",
         "type": "praktijk",
         "detail": "Akkoordschema lezen, D en G pakken en in de maat wisselen. Wie dat kan, neemt A erbij.",
         "vraag": "Hoe wissel je van akkoord zonder te stoppen?",
         "doel": "Je pakt D en G zodat ze helder klinken en wisselt op de tel.",
-        "criteria": ["Ik lees een akkoordschema", "Ik pak D en G zodat de snaren helder klinken", "Ik wissel op de tel tussen D en G"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Partij 1 opwarmen", "stappen": ["Speel partij 1 uit de vorige les.", "Eerst langzaam, dan iets sneller."] },
-          { "min": 10, "soort": "uitleg", "kop": "Een akkoordschema lezen", "stappen": ["Een akkoord zijn meerdere tonen tegelijk.", "Verticale lijnen zijn snaren, horizontale lijnen zijn frets.", "Een stip is een vinger, een x sla je niet aan.", "Vingers steil, vlak achter de fret."], "beeld": { "soort": "akkoorden", "items": ["D", "G", "A"], "onder": "D en G voor iedereen. A als het wisselen lukt." } },
-          { "min": 25, "soort": "doen", "kop": "Wisselen op de tel", "stappen": ["Pak D, sla aan, check elke snaar.", "Pak G, sla aan, check elke snaar.", "Wissel in vier tellen: drie tellen spelen, op de vierde verplaatsen.", "Te laat? Blijf tellen en stap op de volgende 1 weer in."], "klaar": "Neem A erbij, of speel en zing tegelijk.", "docent": "Een akkoord dat op tijd maar net niet schoon klinkt, is hier beter dan een schoon akkoord te laat. Musicbox begint in niveau 1 met Em en Asus2 en doet D en G pas in niveau 2. Hier eerst D en G, omdat het lied daarom vraagt." },
-          { "min": 5, "soort": "check", "kop": "Samen wisselen", "stappen": ["Tel af: vier tellen D, vier tellen G.", "Duim: lukt het op de tel?"] }
+        "criteria": [
+          "Ik lees een akkoordschema",
+          "Ik pak D en G zodat de snaren helder klinken",
+          "Ik wissel op de tel tussen D en G"
         ],
-        "formatief": { "soort": "duimen", "tekst": "Lukt het wisselen tussen D en G op de tel? Duim omhoog, opzij of omlaag." },
-        "benodigd": ["Gitaren, gestemd", "Plectrums", "Vader ik aanbid U op het bord"],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Partij 1 opwarmen",
+            "stappen": [
+              "Speel partij 1 uit de vorige les.",
+              "Eerst langzaam, dan iets sneller."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Een akkoordschema lezen",
+            "stappen": [
+              "Een akkoord zijn meerdere tonen tegelijk.",
+              "Verticale lijnen zijn snaren, horizontale lijnen zijn frets.",
+              "Een stip is een vinger, een x sla je niet aan.",
+              "Vingers steil, vlak achter de fret."
+            ],
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "D",
+                "G",
+                "A"
+              ],
+              "onder": "D en G voor iedereen. A als het wisselen lukt."
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Wisselen op de tel",
+            "stappen": [
+              "Pak D, sla aan, check elke snaar.",
+              "Pak G, sla aan, check elke snaar.",
+              "Wissel in vier tellen: drie tellen spelen, op de vierde verplaatsen.",
+              "Te laat? Blijf tellen en stap op de volgende 1 weer in."
+            ],
+            "klaar": "Neem A erbij, of speel en zing tegelijk.",
+            "docent": "Een akkoord dat op tijd maar net niet schoon klinkt, is hier beter dan een schoon akkoord te laat. Musicbox begint in niveau 1 met Em en Asus2 en doet D en G pas in niveau 2. Hier eerst D en G, omdat het lied daarom vraagt."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Samen wisselen",
+            "stappen": [
+              "Tel af: vier tellen D, vier tellen G.",
+              "Duim: lukt het op de tel?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "duimen",
+          "tekst": "Lukt het wisselen tussen D en G op de tel? Duim omhoog, opzij of omlaag."
+        },
+        "benodigd": [
+          "Gitaren, gestemd",
+          "Plectrums",
+          "Vader ik aanbid U op het bord"
+        ],
         "materiaal": [
-          { "t": "Vader ik aanbid U (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\vader ik aanbid u.pdf" },
-          { "t": "Musicbox: Gitaar voor beginners", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3" }
+          {
+            "t": "Vader ik aanbid U (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\vader ik aanbid u.pdf"
+          },
+          {
+            "t": "Musicbox: Gitaar voor beginners",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 13, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 13,
+            "slot": "l1"
+          }
+        ],
         "titel": "Drums: het basisritme, maat en ritme",
         "type": "praktijk",
         "detail": "Kennismaken met het drumstel en het basisritme. De theorie erbij: puls, maat, maatstreep en noot- en rustwaarden.",
         "vraag": "Wat doet de drummer op welke tel?",
         "doel": "Je speelt het basisritme en legt uit wat een maat en een vierkwartsmaat zijn.",
-        "criteria": ["Ik noem bass drum, snare drum en hihat", "Ik speel bass drum op 1 en 3 en snare op 2 en 4", "Ik leg uit wat een vierkwartsmaat is", "Ik herken hele, halve, kwart- en achtste noten"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Voel de puls", "stappen": ["Klap mee op de tel: 1, 2, 3, 4.", "Stamp op 1 en 3, klap op 2 en 4.", "Dit is al het basisritme, maar dan met je lichaam."] },
-          { "min": 10, "soort": "uitleg", "kop": "Maat en ritme", "stappen": ["De puls is de hartslag van de muziek.", "Maatstrepen delen de muziek in maten. De maatsoort staat aan het begin: in een vierkwartsmaat (4/4) tel je vier kwarten per maat.", "Ritme is hoe lang de tonen duren: hele, halve, kwart- en achtste noot.", "Bij elke noot hoort een rust van dezelfde lengte."], "beeld": { "soort": "tabel", "rijen": [["Noot of rust", "Tellen in 4/4"], ["Hele", "4"], ["Halve", "2"], ["Kwart", "1"], ["Achtste", "een halve"]] }, "docent": "Dit komt terug in T1. Laat ook de hele, halve en kwartrust zien op het bord: die moeten ze herkennen. Maat en ritme in Musicbox, niveau 1, heeft dezelfde onderwerpen in blok 2 tot en met 5." },
-          { "min": 25, "soort": "doen", "kop": "Het basisritme, om de beurt", "stappen": ["Bass drum op 1 en 3, snare op 2 en 4, hihat op elke tel.", "Eerst alleen de voet, dan de snare erbij, dan de hihat.", "Wie niet achter het drumstel zit, speelt het op knieën en voet mee.", "Lukt het? Speel mee met een song uit Spelen op de drums, niveau 1."], "klaar": "Maak in Musicbox de opdrachten van Maat en ritme, niveau 1.", "docent": "Wissel elke paar minuten. Haal er een cajon bij als er te veel leerlingen wachten. De tutorials staan in Spelen op de drums: het drumstel, houding en het basisritme." },
-          { "min": 5, "soort": "check", "kop": "De klas als drummer", "stappen": ["Voet op 1 en 3, klap op 2 en 4.", "Hoeveel tellen duurt een halve noot?", "Hoeveel kwarten passen in een vierkwartsmaat?"] }
+        "criteria": [
+          "Ik noem bass drum, snare drum en hihat",
+          "Ik speel bass drum op 1 en 3 en snare op 2 en 4",
+          "Ik leg uit wat een vierkwartsmaat is",
+          "Ik herken hele, halve, kwart- en achtste noten"
         ],
-        "formatief": { "soort": "vragen", "tekst": "Welk onderdeel klinkt op 1 en 3, en welk op 2 en 4? Hoeveel tellen heeft een halve noot?" },
-        "benodigd": ["Drumstel en drumstokken", "Cajons als die er zijn", "Koptelefoons voor Musicbox"],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Voel de puls",
+            "stappen": [
+              "Klap mee op de tel: 1, 2, 3, 4.",
+              "Stamp op 1 en 3, klap op 2 en 4.",
+              "Dit is al het basisritme, maar dan met je lichaam."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Maat en ritme",
+            "stappen": [
+              "De puls is de hartslag van de muziek.",
+              "Maatstrepen delen de muziek in maten. De maatsoort staat aan het begin: in een vierkwartsmaat (4/4) tel je vier kwarten per maat.",
+              "Ritme is hoe lang de tonen duren: hele, halve, kwart- en achtste noot.",
+              "Bij elke noot hoort een rust van dezelfde lengte."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Noot of rust",
+                  "Tellen in 4/4"
+                ],
+                [
+                  "Hele",
+                  "4"
+                ],
+                [
+                  "Halve",
+                  "2"
+                ],
+                [
+                  "Kwart",
+                  "1"
+                ],
+                [
+                  "Achtste",
+                  "een halve"
+                ]
+              ]
+            },
+            "docent": "Dit komt terug in T1. Laat ook de hele, halve en kwartrust zien op het bord: die moeten ze herkennen. Maat en ritme in Musicbox, niveau 1, heeft dezelfde onderwerpen in blok 2 tot en met 5."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Het basisritme, om de beurt",
+            "stappen": [
+              "Bass drum op 1 en 3, snare op 2 en 4, hihat op elke tel.",
+              "Eerst alleen de voet, dan de snare erbij, dan de hihat.",
+              "Wie niet achter het drumstel zit, speelt het op knieën en voet mee.",
+              "Lukt het? Speel mee met een song uit Spelen op de drums, niveau 1."
+            ],
+            "klaar": "Maak in Musicbox de opdrachten van Maat en ritme, niveau 1.",
+            "docent": "Wissel elke paar minuten. Haal er een cajon bij als er te veel leerlingen wachten. De tutorials staan in Spelen op de drums: het drumstel, houding en het basisritme."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "De klas als drummer",
+            "stappen": [
+              "Voet op 1 en 3, klap op 2 en 4.",
+              "Hoeveel tellen duurt een halve noot?",
+              "Hoeveel kwarten passen in een vierkwartsmaat?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "vragen",
+          "tekst": "Welk onderdeel klinkt op 1 en 3, en welk op 2 en 4? Hoeveel tellen heeft een halve noot?"
+        },
+        "benodigd": [
+          "Drumstel en drumstokken",
+          "Cajons als die er zijn",
+          "Koptelefoons voor Musicbox"
+        ],
         "materiaal": [
-          { "t": "Musicbox: Spelen op de drums, Basis, variaties en fills", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/c068fafe-e585-467e-8532-1f5b6183eef6" },
-          { "t": "Musicbox: Maat en ritme", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/584b92d1-fcce-4322-aad5-11e1e2e5c7c5" },
-          { "t": "Begrippenlijst klas 1 (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Begrippenlijst Klas 1.pdf" }
+          {
+            "t": "Musicbox: Spelen op de drums, Basis, variaties en fills",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/c068fafe-e585-467e-8532-1f5b6183eef6"
+          },
+          {
+            "t": "Musicbox: Maat en ritme",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/584b92d1-fcce-4322-aad5-11e1e2e5c7c5"
+          },
+          {
+            "t": "Begrippenlijst klas 1 (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Begrippenlijst Klas 1.pdf"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 14, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 14,
+            "slot": "l1"
+          }
+        ],
         "titel": "Keyboard: notennamen en toonhoogte",
         "type": "praktijk",
         "detail": "Kennismaken met het keyboard. De theorie erbij: toonhoogte, notenbalk, G-sleutel en de noten van c1 tot e2.",
         "vraag": "Hoe vind je een noot op het keyboard en op de notenbalk?",
         "doel": "Je vindt de noten van c1 tot e2 op het keyboard en leest ze op de notenbalk.",
-        "criteria": ["Ik vind de c op het keyboard", "Ik noem de notennamen van c1 tot e2", "Ik lees die noten op de notenbalk met G-sleutel"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Hoog en laag", "stappen": ["Zing laag, zing hoog.", "Volg de hand van de docent met je stem.", "Hoe hoog of laag een toon klinkt, noemen we toonhoogte."] },
-          { "min": 10, "soort": "uitleg", "kop": "Van toets naar notenbalk", "stappen": ["De c ligt links van de groep van twee zwarte toetsen.", "Daarna: d, e, f, g, a, b, c.", "Een notenbalk heeft vijf lijnen. Hoe hoger de noot, hoe hoger op de balk.", "De G-sleutel staat aan het begin. Noten op de lijnen: e, g, b, d, f. In de vakken: f, a, c, e."], "beeld": { "soort": "kaarten", "items": [{ "k": "Op de lijnen", "t": "e g b d f" }, { "k": "In de vakken", "t": "f a c e" }, { "k": "c1", "t": "op een hulplijn onder de balk" }] }, "docent": "Noten van c1 tot e2 staan op de begrippenlijst en komen terug in T1." },
-          { "min": 25, "soort": "doen", "kop": "Zoek en speel", "stappen": ["Speel met rechts c, d, e, f, g: duim op c, elke vinger een eigen toets.", "Speel de noten op het blad. Zeg de naam hardop.", "Speel een melodie uit Toonhoogte in Musicbox, Like the wind.", "Klaar? Pak het akkoord C: c, e en g tegelijk."], "klaar": "Maak de Muzieknoten Sudoku of de opdrachten van Toonhoogte, niveau 1.", "docent": "Tutorials: Piano in Musicbox, Hoe zit de piano in elkaar?, Hoe weet ik waar de noten zitten?, Hoe gebruik ik al mijn vingers? Laat keyboards op koptelefoon staan." },
-          { "min": 5, "soort": "check", "kop": "Noem de noot", "stappen": ["Op het bord staat een noot: noem hem.", "Laat de buur hem op het keyboard aanwijzen.", "Drie noten goed? Duim omhoog."] }
+        "criteria": [
+          "Ik vind de c op het keyboard",
+          "Ik noem de notennamen van c1 tot e2",
+          "Ik lees die noten op de notenbalk met G-sleutel"
         ],
-        "formatief": { "soort": "wisbordje", "tekst": "Schrijf de namen op van drie noten op de notenbalk." },
-        "benodigd": ["Keyboards en koptelefoons", "Keyboard notennamen op het bord of geprint", "Muzieknoten Sudoku geprint"],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Hoog en laag",
+            "stappen": [
+              "Zing laag, zing hoog.",
+              "Volg de hand van de docent met je stem.",
+              "Hoe hoog of laag een toon klinkt, noemen we toonhoogte."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Van toets naar notenbalk",
+            "stappen": [
+              "De c ligt links van de groep van twee zwarte toetsen.",
+              "Daarna: d, e, f, g, a, b, c.",
+              "Een notenbalk heeft vijf lijnen. Hoe hoger de noot, hoe hoger op de balk.",
+              "De G-sleutel staat aan het begin. Noten op de lijnen: e, g, b, d, f. In de vakken: f, a, c, e."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Op de lijnen",
+                  "t": "e g b d f"
+                },
+                {
+                  "k": "In de vakken",
+                  "t": "f a c e"
+                },
+                {
+                  "k": "c1",
+                  "t": "op een hulplijn onder de balk"
+                }
+              ]
+            },
+            "docent": "Noten van c1 tot e2 staan op de begrippenlijst en komen terug in T1."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Zoek en speel",
+            "stappen": [
+              "Speel met rechts c, d, e, f, g: duim op c, elke vinger een eigen toets.",
+              "Speel de noten op het blad. Zeg de naam hardop.",
+              "Speel een melodie uit Toonhoogte in Musicbox, Like the wind.",
+              "Klaar? Pak het akkoord C: c, e en g tegelijk."
+            ],
+            "klaar": "Maak de Muzieknoten Sudoku of de opdrachten van Toonhoogte, niveau 1.",
+            "docent": "Tutorials: Piano in Musicbox, Hoe zit de piano in elkaar?, Hoe weet ik waar de noten zitten?, Hoe gebruik ik al mijn vingers? Laat keyboards op koptelefoon staan."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Noem de noot",
+            "stappen": [
+              "Op het bord staat een noot: noem hem.",
+              "Laat de buur hem op het keyboard aanwijzen.",
+              "Drie noten goed? Duim omhoog."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "wisbordje",
+          "tekst": "Schrijf de namen op van drie noten op de notenbalk."
+        },
+        "benodigd": [
+          "Keyboards en koptelefoons",
+          "Keyboard notennamen op het bord of geprint",
+          "Muzieknoten Sudoku geprint"
+        ],
         "materiaal": [
-          { "t": "Keyboard notennamen (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\keyboard notennamen.pdf" },
-          { "t": "Muzieknoten Sudoku (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Muzieknoten Sudoku.pdf" },
-          { "t": "Musicbox: Piano", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3" },
-          { "t": "Musicbox: Toonhoogte", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/b6a9c72c-608c-4365-8dba-297a144fb4d5" }
+          {
+            "t": "Keyboard notennamen (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\keyboard notennamen.pdf"
+          },
+          {
+            "t": "Muzieknoten Sudoku (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Muzieknoten Sudoku.pdf"
+          },
+          {
+            "t": "Musicbox: Piano",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3"
+          },
+          {
+            "t": "Musicbox: Toonhoogte",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/b6a9c72c-608c-4365-8dba-297a144fb4d5"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 15, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 15,
+            "slot": "l1"
+          }
+        ],
         "titel": "Kerstles: Mary Did You Know",
         "type": "praktijk",
         "detail": "Kerstlied samen spelen. Keyboard met letters, gitaar en ukelele met akkoorden, de rest zingt.",
         "vraag": "Welke vraag stelt dit lied aan Maria?",
         "doel": "Je speelt of zingt mee met een kerstlied en gebruikt wat je op je instrument hebt geleerd.",
-        "criteria": ["Ik kies een partij die past bij wat ik kan", "Ik speel of zing mee op de tel", "Ik vertel waar het lied over gaat"],
-        "fasen": [
-          { "min": 5, "soort": "luisteren", "kop": "Luister: wie spreekt hier?", "stappen": ["Luister naar het begin van het lied.", "Aan wie is het lied gericht?", "Wat wil de zanger weten?"], "docent": "Kies zelf een opname. De sectiemap heeft alleen de bladmuziek." },
-          { "min": 5, "soort": "uitleg", "kop": "Kies je partij", "stappen": ["Keyboard: de melodie met letters.", "Gitaar en ukelele: de akkoorden op de leadsheet.", "Zang: de melodie.", "Blijf bij wat je kunt: een goede eenvoudige partij telt."] },
-          { "min": 25, "soort": "doen", "kop": "Oefen in je hoek", "stappen": ["Zoek je partij op het blad.", "Eerst langzaam en alleen het begin.", "Daarna samen met de groep ernaast."], "klaar": "Help een ander of probeer een tweede partij.", "docent": "Gitaar met capo is gemiddeld: alleen voor wie al verder is. Piano niveau 1 met letters staat alleen als MuseScore-bestand: vooraf printen." },
-          { "min": 10, "soort": "afsluiten", "kop": "Samen spelen", "stappen": ["Tel af en speel samen het begin.", "Zo ver als het gaat, dan rustig stoppen.", "Wat heb je dit jaar al geleerd op je instrument?"] }
+        "criteria": [
+          "Ik kies een partij die past bij wat ik kan",
+          "Ik speel of zing mee op de tel",
+          "Ik vertel waar het lied over gaat"
         ],
-        "formatief": { "soort": "samenspel", "tekst": "Blijven we samen op de tel? Eén ding dat goed ging, één ding voor de volgende keer." },
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "luisteren",
+            "kop": "Luister: wie spreekt hier?",
+            "stappen": [
+              "Luister naar het begin van het lied.",
+              "Aan wie is het lied gericht?",
+              "Wat wil de zanger weten?"
+            ],
+            "docent": "Kies zelf een opname. De sectiemap heeft alleen de bladmuziek."
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Kies je partij",
+            "stappen": [
+              "Keyboard: de melodie met letters.",
+              "Gitaar en ukelele: de akkoorden op de leadsheet.",
+              "Zang: de melodie.",
+              "Blijf bij wat je kunt: een goede eenvoudige partij telt."
+            ]
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Oefen in je hoek",
+            "stappen": [
+              "Zoek je partij op het blad.",
+              "Eerst langzaam en alleen het begin.",
+              "Daarna samen met de groep ernaast."
+            ],
+            "klaar": "Help een ander of probeer een tweede partij.",
+            "docent": "Gitaar met capo is gemiddeld: alleen voor wie al verder is. Piano niveau 1 met letters staat alleen als MuseScore-bestand: vooraf printen."
+          },
+          {
+            "min": 10,
+            "soort": "afsluiten",
+            "kop": "Samen spelen",
+            "stappen": [
+              "Tel af en speel samen het begin.",
+              "Zo ver als het gaat, dan rustig stoppen.",
+              "Wat heb je dit jaar al geleerd op je instrument?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "samenspel",
+          "tekst": "Blijven we samen op de tel? Eén ding dat goed ging, één ding voor de volgende keer."
+        },
         "identiteit": "In dit lied kijkt iemand met verwondering naar de geboorte van Jezus. Laat leerlingen zelf zeggen wat dat voor Maria betekend moet hebben.",
-        "benodigd": ["Gitaren, ukeleles, keyboards", "Leadsheet geprint", "Piano niveau 1 met letters geprint (uit MuseScore)", "Opname van het lied"],
+        "benodigd": [
+          "Gitaren, ukeleles, keyboards",
+          "Leadsheet geprint",
+          "Piano niveau 1 met letters geprint (uit MuseScore)",
+          "Opname van het lied"
+        ],
         "materiaal": [
-          { "t": "Mary Did You Know: leadsheet akkoorden (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\Kerst\\Mary Did You Know - leadsheet akkoorden (ukelele-gitaar).pdf" },
-          { "t": "Mary Did You Know: gitaar met capo (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\Kerst\\Mary Did You Know - gitaar met capo (gemiddeld!).pdf" },
-          { "t": "Mary Did You Know: niveau 1 met letters (MuseScore)", "sp": "01 Onderbouw muziek\\Klas 1\\Kerst\\Mary Did You Know niveau 1 met letters en twee handen.mscz" }
+          {
+            "t": "Mary Did You Know: leadsheet akkoorden (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\Kerst\\Mary Did You Know - leadsheet akkoorden (ukelele-gitaar).pdf"
+          },
+          {
+            "t": "Mary Did You Know: gitaar met capo (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\Kerst\\Mary Did You Know - gitaar met capo (gemiddeld!).pdf"
+          },
+          {
+            "t": "Mary Did You Know: niveau 1 met letters (MuseScore)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\Kerst\\Mary Did You Know niveau 1 met letters en twee handen.mscz"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 16, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 16,
+            "slot": "l1"
+          }
+        ],
         "titel": "Gitaar: lied en partij kiezen voor P1",
         "type": "praktijk",
         "detail": "Laatste les voor P1. Partij kiezen, tab of akkoorden, en samen oefenen in groepjes.",
         "vraag": "Welke partij laat jij volgende week horen?",
         "doel": "Je kiest een partij die bij je past en speelt die samen met je groep van begin tot eind.",
-        "criteria": ["Ik heb een partij gekozen: tab of akkoorden", "Ik speel op de tel", "Ik speel door als het misgaat en val weer in"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Handen weer warm", "stappen": ["Gitaar stemmen en pakken.", "Speel D en G, of partij 1.", "Wat weet je nog van voor de kerst?"] },
-          { "min": 5, "soort": "uitleg", "kop": "Zo ziet P1 eruit", "stappen": ["Je speelt volgende les Vader ik aanbid U in een groepje.", "Je kiest een tab of de akkoorden.", "We kijken naar juiste noten, ritme, doorspelen en wisselen.", "Drie akkoorden of meer snaren is moeilijker en telt mee."], "beeld": { "soort": "kaarten", "items": [{ "k": "Tab", "t": "partij 1 tot 4" }, { "k": "Akkoorden", "t": "D, G of D, G, A" }, { "k": "Samen", "t": "tel af, speel door" }] }, "docent": "Noem de zelfbeoordeling: die vullen ze na P1 in. Het lied is een voorstel: het model laat de keuze open." },
-          { "min": 30, "soort": "doen", "kop": "Oefen in je groep", "stappen": ["Maak een groepje en verdeel de partijen.", "Eén telt af, iedereen begint samen.", "Gaat het mis? Doorspelen en weer invallen op de 1.", "Twee keer helemaal door zonder stoppen."], "klaar": "Probeer een moeilijkere partij, of zing erbij.", "docent": "Loop langs: past de partij? Stuur bij naar iets dat lukt." },
-          { "min": 5, "soort": "check", "kop": "Wat oefen je nog?", "stappen": ["Elke groep speelt het begin.", "Noem één plek die je nog moet oefenen."] }
+        "criteria": [
+          "Ik heb een partij gekozen: tab of akkoorden",
+          "Ik speel op de tel",
+          "Ik speel door als het misgaat en val weer in"
         ],
-        "formatief": { "soort": "zelfcheck", "tekst": "Welke partij speel je volgende les, en welke plek moet nog beter?" },
-        "benodigd": ["Gitaren, gestemd", "Plectrums", "Vader ik aanbid U geprint", "Oefenruimtes afspreken"],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Handen weer warm",
+            "stappen": [
+              "Gitaar stemmen en pakken.",
+              "Speel D en G, of partij 1.",
+              "Wat weet je nog van voor de kerst?"
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Zo ziet P1 eruit",
+            "stappen": [
+              "Je speelt volgende les Vader ik aanbid U in een groepje.",
+              "Je kiest een tab of de akkoorden.",
+              "We kijken naar juiste noten, ritme, doorspelen en wisselen.",
+              "Drie akkoorden of meer snaren is moeilijker en telt mee."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Tab",
+                  "t": "partij 1 tot 4"
+                },
+                {
+                  "k": "Akkoorden",
+                  "t": "D, G of D, G, A"
+                },
+                {
+                  "k": "Samen",
+                  "t": "tel af, speel door"
+                }
+              ]
+            },
+            "docent": "Noem de zelfbeoordeling: die vullen ze na P1 in. Het lied is een voorstel: het model laat de keuze open."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Oefen in je groep",
+            "stappen": [
+              "Maak een groepje en verdeel de partijen.",
+              "Eén telt af, iedereen begint samen.",
+              "Gaat het mis? Doorspelen en weer invallen op de 1.",
+              "Twee keer helemaal door zonder stoppen."
+            ],
+            "klaar": "Probeer een moeilijkere partij, of zing erbij.",
+            "docent": "Loop langs: past de partij? Stuur bij naar iets dat lukt."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Wat oefen je nog?",
+            "stappen": [
+              "Elke groep speelt het begin.",
+              "Noem één plek die je nog moet oefenen."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "zelfcheck",
+          "tekst": "Welke partij speel je volgende les, en welke plek moet nog beter?"
+        },
+        "benodigd": [
+          "Gitaren, gestemd",
+          "Plectrums",
+          "Vader ik aanbid U geprint",
+          "Oefenruimtes afspreken"
+        ],
         "materiaal": [
-          { "t": "Vader ik aanbid U (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\vader ik aanbid u.pdf" },
-          { "t": "P1 format zelfbeoordeling leerling (Word)", "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\Beoordeling\\P1 Format zelfbeoordeling leerling.docx" }
+          {
+            "t": "Vader ik aanbid U (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\vader ik aanbid u.pdf"
+          },
+          {
+            "t": "P1 format zelfbeoordeling leerling (Word)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\1. Gitaar tabs\\Beoordeling\\P1 Format zelfbeoordeling leerling.docx"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 17, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 17,
+            "slot": "l1"
+          }
+        ],
         "vraag": "Laat horen wat je hebt geleerd.",
         "doel": "Je begeleidt een eenvoudig lied met een tab of met twee of drie akkoorden.",
-        "criteria": ["Juiste noten of grepen", "Op de tel, in een vast tempo", "Doorspelen en wisselen"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Stemmen en inspelen", "stappen": ["Gitaar stemmen.", "Speel je partij één keer zachtjes door."] },
-          { "min": 35, "soort": "doen", "kop": "Groep voor groep", "stappen": ["Groep komt naar voren en telt samen af.", "Speel door als het misgaat en val weer in op de tel.", "De anderen luisteren."], "docent": "Beoordeling in Lesdag of op het formulier. Iedereen krijgt een eigen cijfer, ook in een groep." },
-          { "min": 5, "soort": "afsluiten", "kop": "Zelfbeoordeling", "stappen": ["Vul je zelfbeoordeling in.", "Noem één punt voor het samen spelen van songs."] }
+        "criteria": [
+          "Juiste noten of grepen",
+          "Op de tel, in een vast tempo",
+          "Doorspelen en wisselen"
         ],
-        "benodigd": ["Gitaren, gestemd", "Beoordelingsformulier of Lesdag", "Zelfbeoordeling geprint"]
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Stemmen en inspelen",
+            "stappen": [
+              "Gitaar stemmen.",
+              "Speel je partij één keer zachtjes door."
+            ]
+          },
+          {
+            "min": 35,
+            "soort": "doen",
+            "kop": "Groep voor groep",
+            "stappen": [
+              "Groep komt naar voren en telt samen af.",
+              "Speel door als het misgaat en val weer in op de tel.",
+              "De anderen luisteren."
+            ],
+            "docent": "Beoordeling in Lesdag of op het formulier. Iedereen krijgt een eigen cijfer, ook in een groep."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Zelfbeoordeling",
+            "stappen": [
+              "Vul je zelfbeoordeling in.",
+              "Noem één punt voor het samen spelen van songs."
+            ]
+          }
+        ],
+        "benodigd": [
+          "Gitaren, gestemd",
+          "Beoordelingsformulier of Lesdag",
+          "Zelfbeoordeling geprint"
+        ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 18, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 18,
+            "slot": "l1"
+          }
+        ],
         "titel": "Herhaling en oefentoets voor T1",
         "type": "theorie",
         "detail": "Formatieve toets vóór T1: maat, ritme, toonhoogte en onderdelen van de gitaar, met de oefentoets en de begrippenlijst.",
         "vraag": "Wat kun je al voor T1, en wat moet je nog leren?",
         "doel": "Je weet wat er in T1 komt en wat je nog moet leren.",
-        "criteria": ["Ik heb de oefentoets gemaakt en nagekeken", "Ik weet welke begrippen ik nog moet leren"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Wat komt er in T1?", "stappen": ["Melodieën en notennamen.", "Maten en ritmes in fragmenten of op papier.", "Onderdelen van de gitaar en de snaren."] },
-          { "min": 25, "soort": "doen", "kop": "Maak de oefentoets", "stappen": ["Werk zelf, zonder boek.", "Sla over wat je niet weet en kom erop terug.", "Klaar? Pak de begrippenlijst erbij."], "docent": "Oefentoets is van een eerder jaar. Kijk vooraf na of alle vragen behandeld zijn: kruis, mol en zesachtste maat zijn in deze reeks niet aan bod geweest en staan ook niet in T1." },
-          { "min": 10, "soort": "gesprek", "kop": "Samen nakijken", "stappen": ["Kijk je werk na met de antwoorden.", "Zet een streep bij wat fout ging.", "Stel je vraag: welke fout zie je het vaakst?"] },
-          { "min": 5, "soort": "afsluiten", "kop": "Je leerplan", "stappen": ["Schrijf drie dingen op die je nog gaat leren.", "T1 is volgende les."] }
+        "criteria": [
+          "Ik heb de oefentoets gemaakt en nagekeken",
+          "Ik weet welke begrippen ik nog moet leren"
         ],
-        "formatief": { "soort": "oefentoets", "tekst": "Oefentoets gemaakt en nagekeken: drie leerpunten op papier." },
-        "benodigd": ["Oefentoets geprint", "Antwoorden op het bord", "Begrippenlijst geprint"],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Wat komt er in T1?",
+            "stappen": [
+              "Melodieën en notennamen.",
+              "Maten en ritmes in fragmenten of op papier.",
+              "Onderdelen van de gitaar en de snaren."
+            ]
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Maak de oefentoets",
+            "stappen": [
+              "Werk zelf, zonder boek.",
+              "Sla over wat je niet weet en kom erop terug.",
+              "Klaar? Pak de begrippenlijst erbij."
+            ],
+            "docent": "Oefentoets is van een eerder jaar. Kijk vooraf na of alle vragen behandeld zijn: kruis, mol en zesachtste maat zijn in deze reeks niet aan bod geweest en staan ook niet in T1."
+          },
+          {
+            "min": 10,
+            "soort": "gesprek",
+            "kop": "Samen nakijken",
+            "stappen": [
+              "Kijk je werk na met de antwoorden.",
+              "Zet een streep bij wat fout ging.",
+              "Stel je vraag: welke fout zie je het vaakst?"
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Je leerplan",
+            "stappen": [
+              "Schrijf drie dingen op die je nog gaat leren.",
+              "T1 is volgende les, in Musicbox. Neem je koptelefoon mee."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "oefentoets",
+          "tekst": "Oefentoets gemaakt en nagekeken: drie leerpunten op papier."
+        },
+        "benodigd": [
+          "Oefentoets geprint",
+          "Antwoorden op het bord",
+          "Begrippenlijst geprint"
+        ],
         "materiaal": [
-          { "t": "Oefentoets (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Oefentoets .pdf" },
-          { "t": "Oefentoets met antwoorden (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Oefentoets met antwoorden.pdf" },
-          { "t": "Begrippenlijst klas 1 (pdf)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Begrippenlijst Klas 1.pdf" }
+          {
+            "t": "Oefentoets (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Oefentoets .pdf"
+          },
+          {
+            "t": "Oefentoets met antwoorden (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Oefentoets met antwoorden.pdf"
+          },
+          {
+            "t": "Begrippenlijst klas 1 (pdf)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\Begrippenlijst Klas 1.pdf"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 19, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 19,
+            "slot": "l1"
+          }
+        ],
         "vraag": "Laat zien wat je weet.",
         "doel": "Je herkent melodieën, maten en ritmes in fragmenten of bladmuziek en benoemt de onderdelen van de gitaar.",
-        "criteria": ["Notennamen en melodieën", "Maten en ritmes", "Onderdelen en snaren van de gitaar"],
-        "fasen": [
-          { "min": 5, "soort": "start", "kop": "Klaarzitten", "stappen": ["Tas weg, pen op tafel.", "Naam op je toets.", "Lees eerst de vragen."] },
-          { "min": 40, "soort": "doen", "kop": "T1", "stappen": ["Werk zelf en in stilte.", "Klaar? Controleer je antwoorden en lever in."], "docent": "Vraag 7 en 12 zijn luistervragen: speel melodie A en klap ritme B, elk twee keer. Doe ze als de klas zover is, en houd de rest stil. Antwoorden en cijfer staan in het antwoordmodel." }
+        "criteria": [
+          "Notennamen en melodieën",
+          "Maten en ritmes",
+          "Onderdelen en snaren van de gitaar"
         ],
-        "benodigd": ["Toets T1 geprint", "Piano of keyboard voor vraag 7", "Antwoordmodel"],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Inloggen in Musicbox",
+            "stappen": [
+              "Tas weg, koptelefoon klaar.",
+              "Log in via Magister en ga naar Musicbox.",
+              "Wacht tot de toets is gestart. Daarna open je hem zelf."
+            ],
+            "docent": "Start de toets handmatig als iedereen klaarzit. Musicbox stuurt leerlingen dan door naar de beginpagina met een melding."
+          },
+          {
+            "min": 40,
+            "soort": "doen",
+            "kop": "T1 in Musicbox",
+            "stappen": [
+              "Lees de uitleg op je scherm.",
+              "Werk zelf en blijf in de toets: ander venster openen wordt opgeslagen.",
+              "Klaar? Klik op Inleveren of Afronden."
+            ],
+            "docent": "Kijk achteraf in het logboek van de toets. Werkt Musicbox niet, gebruik dan de papieren back-up: vraag 7 en 12 zijn luistervragen, speel melodie A en klap ritme B, elk twee keer."
+          }
+        ],
+        "benodigd": [
+          "Toets T1 in Musicbox aangemaakt bij BB1",
+          "Laptop of tablet per leerling",
+          "Koptelefoons",
+          "Papieren back-up"
+        ],
         "materiaal": [
-          { "t": "T1 BB1 2026-2027 (Word)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\T1 BB1 2026-2027.docx" },
-          { "t": "T1 BB1 antwoordmodel (Word)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\T1 BB1 2026-2027 antwoordmodel.docx" }
+          {
+            "t": "Musicbox: Mijn toetsen",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/tests-mine"
+          },
+          {
+            "t": "Toetsinstructie Musicbox (Word)",
+            "sp": "01 Onderbouw muziekToetsinstructie Music Box.docx"
+          },
+          {
+            "t": "T1 BB1 back-up op papier (Word)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\T1 BB1 2026-2027.docx"
+          },
+          {
+            "t": "T1 BB1 back-up, antwoordmodel (Word)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\T1 BB1 2026-2027 antwoordmodel.docx"
+          }
         ]
       },
       {
-        "koppel": [{ "lg": "bb1", "w": 20, "slot": "l1" }],
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 20,
+            "slot": "l1"
+          }
+        ],
         "titel": "Terugblik op P1 en T1, vooruit naar samen spelen",
         "type": "theorie",
         "detail": "P1 en T1 bespreken en vooruitkijken naar periode 3: populaire songs samen spelen. Activiteitenweek C.",
         "vraag": "Wat kun je nu, en op welk instrument wil je verder?",
         "doel": "Je weet wat goed ging en kiest een instrument voor het samenspel in periode 3.",
-        "criteria": ["Ik noem één ding dat goed ging en één werkpunt", "Ik kies een instrument voor periode 3"],
-        "fasen": [
-          { "min": 15, "soort": "gesprek", "kop": "P1 en T1 terug", "stappen": ["Bekijk je cijfer en de feedback.", "Wat ging goed? Wat nam je je voor?", "Vragen over de toets kun je nu stellen."] },
-          { "min": 10, "soort": "gesprek", "kop": "Vier instrumenten, en nu?", "stappen": ["Je speelde ukelele, gitaar, drums en keyboard.", "Welk instrument ligt je het best?", "Welke wil je nog beter leren?"], "beeld": { "soort": "kaarten", "items": [{ "k": "Ukelele" }, { "k": "Gitaar" }, { "k": "Drums" }, { "k": "Keyboard" }] } },
-          { "min": 15, "soort": "doen", "kop": "Vooruit: Memories", "stappen": ["Luister naar Memories in Musicbox.", "Wie zou jij zijn in de band?", "Probeer de eerste akkoorden of het ritme."], "docent": "De leerlijn in Musicbox heeft Memories al staan. In de leergang is dit het begin van periode 3." },
-          { "min": 5, "soort": "afsluiten", "kop": "Kies je instrument", "stappen": ["Schrijf je eerste en tweede keuze op.", "Volgende les begint de band."] }
+        "criteria": [
+          "Ik noem één ding dat goed ging en één werkpunt",
+          "Ik kies een instrument voor periode 3"
         ],
-        "formatief": { "soort": "kaartje", "tekst": "Instrumentkeuze voor periode 3, plus één werkpunt." },
-        "benodigd": ["Cijfers P1 en T1", "Instrumenten klaar", "Briefjes voor de instrumentkeuze"],
-        "materiaal": [{ "t": "Musicbox (digitaal.musicboxmethode.nl)", "u": "https://digitaal.musicboxmethode.nl" }]
+        "fasen": [
+          {
+            "min": 15,
+            "soort": "gesprek",
+            "kop": "P1 en T1 terug",
+            "stappen": [
+              "Bekijk je cijfer en de feedback.",
+              "Wat ging goed? Wat nam je je voor?",
+              "Vragen over de toets kun je nu stellen."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "gesprek",
+            "kop": "Vier instrumenten, en nu?",
+            "stappen": [
+              "Je speelde ukelele, gitaar, drums en keyboard.",
+              "Welk instrument ligt je het best?",
+              "Welke wil je nog beter leren?"
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Ukelele"
+                },
+                {
+                  "k": "Gitaar"
+                },
+                {
+                  "k": "Drums"
+                },
+                {
+                  "k": "Keyboard"
+                }
+              ]
+            }
+          },
+          {
+            "min": 15,
+            "soort": "doen",
+            "kop": "Vooruit: Memories",
+            "stappen": [
+              "Luister naar Memories in Musicbox.",
+              "Wie zou jij zijn in de band?",
+              "Probeer de eerste akkoorden of het ritme."
+            ],
+            "docent": "De leerlijn in Musicbox heeft Memories al staan. In de leergang is dit het begin van periode 3."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Kies je instrument",
+            "stappen": [
+              "Schrijf je eerste en tweede keuze op.",
+              "Volgende les begint de band."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "Instrumentkeuze voor periode 3, plus één werkpunt."
+        },
+        "benodigd": [
+          "Cijfers P1 en T1",
+          "Instrumenten klaar",
+          "Briefjes voor de instrumentkeuze"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox (digitaal.musicboxmethode.nl)",
+            "u": "https://digitaal.musicboxmethode.nl"
+          }
+        ]
       }
     ]
   }
