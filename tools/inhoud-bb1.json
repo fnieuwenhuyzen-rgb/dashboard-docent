@@ -181,8 +181,8 @@
         ],
         "benodigd": ["Toets T1 geprint", "Piano of keyboard voor vraag 7", "Antwoordmodel"],
         "materiaal": [
-          { "t": "T1 BB1 2026-2027 (Word)", "sp": "01 Onderbouw muziek\Klas 1\2. theorie toets\T1 BB1 2026-2027.docx" },
-          { "t": "T1 BB1 antwoordmodel (Word)", "sp": "01 Onderbouw muziek\Klas 1\2. theorie toets\T1 BB1 2026-2027 antwoordmodel.docx" }
+          { "t": "T1 BB1 2026-2027 (Word)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\T1 BB1 2026-2027.docx" },
+          { "t": "T1 BB1 antwoordmodel (Word)", "sp": "01 Onderbouw muziek\\Klas 1\\2. theorie toets\\T1 BB1 2026-2027 antwoordmodel.docx" }
         ]
       },
       {
