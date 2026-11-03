@@ -727,7 +727,7 @@
             "kop": "Je leerplan",
             "stappen": [
               "Schrijf drie dingen op die je nog gaat leren.",
-              "T1 is volgende les, in Musicbox. Neem je koptelefoon mee."
+              "T1 is volgende les: de gitaar op papier, de rest in Musicbox. Neem je koptelefoon mee."
             ]
           }
         ],
@@ -774,6 +774,17 @@
           {
             "min": 5,
             "soort": "start",
+            "kop": "De gitaar op papier",
+            "stappen": [
+              "Tas weg, pen klaar.",
+              "Schrijf de onderdelen en de snaren op het blad.",
+              "Klaar? Lever het blad in."
+            ],
+            "docent": "Blad T1 BB1 gitaar op papier, 9 punten. Na 5 minuten inleveren. Tel deze punten bij de 47 uit Musicbox: samen 56."
+          },
+          {
+            "min": 5,
+            "soort": "doen",
             "kop": "Inloggen in Musicbox",
             "stappen": [
               "Tas weg, koptelefoon klaar.",
@@ -783,7 +794,7 @@
             "docent": "Start de toets handmatig als iedereen klaarzit. Musicbox stuurt leerlingen dan door naar de beginpagina met een melding."
           },
           {
-            "min": 40,
+            "min": 35,
             "soort": "doen",
             "kop": "T1 in Musicbox",
             "stappen": [
@@ -791,13 +802,14 @@
               "Werk zelf en blijf in de toets: ander venster openen wordt opgeslagen.",
               "Klaar? Klik op Inleveren of Afronden."
             ],
-            "docent": "Kijk achteraf in het logboek van de toets. Werkt Musicbox niet, gebruik dan de papieren back-up: vraag 7 en 12 zijn luistervragen, speel melodie A en klap ritme B, elk twee keer."
+            "docent": "Kijk achteraf in het logboek van de toets. Werkt Musicbox niet, gebruik dan de papieren back-up (daarin staat de gitaar al, het losse blad vervalt): vraag 7 en 12 zijn luistervragen, speel melodie A en klap ritme B, elk twee keer."
           }
         ],
         "benodigd": [
           "Toets T1 in Musicbox aangemaakt bij BB1",
           "Laptop of tablet per leerling",
           "Koptelefoons",
+          "Blad De gitaar op papier, één per leerling",
           "Papieren back-up"
         ],
         "materiaal": [
@@ -808,6 +820,14 @@
           {
             "t": "Toetsinstructie Musicbox (Word)",
             "sp": "01 Onderbouw muziek\\00 Algemeen\\Toetsinstructie Music Box.docx"
+          },
+          {
+            "t": "T1 BB1 gitaar op papier (Word)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\T1 Theorietoets - Theorie en gitaar\\T1 BB1 gitaar op papier.docx"
+          },
+          {
+            "t": "T1 BB1 gitaar op papier, antwoordmodel (Word)",
+            "sp": "01 Onderbouw muziek\\Klas 1\\T1 Theorietoets - Theorie en gitaar\\T1 BB1 gitaar op papier antwoordmodel.docx"
           },
           {
             "t": "T1 BB1 back-up op papier (Word)",
