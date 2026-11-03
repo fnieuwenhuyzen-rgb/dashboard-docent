@@ -279,7 +279,12 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 .taak .tb{display:flex;gap:.3rem;align-items:center}
 .taak .sub{grid-column:1/-1;font-size:var(--t-klein);color:var(--muted);margin-left:1.6rem}
 .taak.af span{text-decoration:line-through;color:var(--muted)}
-.taak.laat .chk span{color:var(--rood)}
+.taak.laat .chk span,.taak.laat .taak-open{color:var(--rood)}
+.taak-open{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline dotted;text-underline-offset:.2em}
+.taak-open:hover{text-decoration-style:solid}
+.taak.af .taak-open{text-decoration:line-through;color:var(--muted)}
+.taak-open small{color:var(--muted);font-size:var(--t-klein)}
+.taak-klaar{display:flex;margin:.4rem 0 1rem}
 .nav-tel{display:inline-block;min-width:1.2em;padding:0 .3em;border-radius:1em;background:var(--rood);color:#fff;font-size:.72rem;line-height:1.35;text-align:center}
 /* uitval: melding, inhaalvoorstel, bericht aan de klas */
 .uitvalblok{display:grid;gap:.6rem;margin-bottom:1rem}

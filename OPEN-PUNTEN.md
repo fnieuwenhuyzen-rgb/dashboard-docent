@@ -84,6 +84,7 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 - [ ] Microsoft-login en OneDrive-opslag tegen de echte tenant (na B).
 
 - [ ] **Blok Blijft liggen (2-11):** boven de agenda op Vandaag, met teller in het menu. Gemiste geplande taken en voorbije deadlines (eigen, sectie, koor) tot ze klaar, opnieuw gepland of uitgesteld zijn (`S.uitgesteld`). Lokaal getest met nagebootste klok; online sinds 2-11, nog niet in het echt gebruikt. Taken zonder datum en geplande koor- of presentatietaken van een voorbije dag blijven bewust buiten het blok. `proef-nu` heeft dit niet.
+- [ ] **Taak openen (3-11):** in Blijft liggen en Taken opent een klik op de titel de taak (toelichting, Klaar, Plan, Morgen, feedback, feedforward); alleen het vinkje vinkt af. Notities in `S.taakNoot`. Feedforward bij de vaste koortaken gaat mee naar hetzelfde punt bij het volgende concert. Lokaal getest. Nog dun: 9 van de 36 koortaken en 21 van de 72 sectietaken hebben geen toelichting, en de 4 open sectietaken alleen "Eerste stap uit Werkwijze". Sectiepagina en tabblad Reclame vinken nog af via de titel. Geen overzicht van notities en geen terugzetten van afgevinkte koortaken.
 
 ## Afvinken, minuten en afspraken (3-11, lokaal getest, live sinds 3-11)
 
