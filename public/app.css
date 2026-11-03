@@ -445,6 +445,35 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 .bm-crit.grp{border-left:3px solid var(--paars);padding-left:.5rem}
 .bm-cijfer{display:flex;flex-direction:column;gap:.2rem;font-family:var(--lees);font-size:.85rem;color:var(--muted);max-width:22rem}
 .bm-voet small{color:var(--muted);font-family:var(--lees)}
+/* krabbel met de pen, en de concertstand: donker en gedimd, licht niet op in de zaal */
+.bm-krabbel{margin:.6rem 0;max-width:30rem}
+.bm-krabbel svg{display:block;width:100%;aspect-ratio:4/3;border:1px dashed var(--line);border-radius:10px;background:var(--bg);color:var(--ink);touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.bm-krabbel svg:not([data-bmkrabbel]){cursor:default}
+.bm-krabbel polyline{fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.bm-krabbel .regel{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.3rem;font-family:var(--lees);color:var(--muted)}
+body.bm-concert{--bg:#0f0c13;--surface:#17121c;--ink:#e9e1f0;--muted:#a89bb4;--line:#33293c;--paars:#b98ae0;--paars-zacht:#2a1f33;background:var(--bg);color:var(--ink)}
+body.bm-concert .top{display:none}
+body.bm-concert .bm-status .btn{display:none}
+body.bm-concert .bm-status .chip:not(.rood){background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+body.bm-concert .toast{background:var(--paars-zacht);color:var(--ink)}
+body.bm-concert .toast-terug{color:var(--ink)}
+.bm-cs-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-family:var(--lees);color:var(--muted);margin-bottom:.4rem}
+.bm-cs-top span{margin-right:auto}
+.bm-cs-top select{min-height:44px;max-width:16rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;font:inherit}
+.bm-cs-top .btn{min-height:44px}
+@media (pointer:coarse){.bm-cs-wenk{display:none}}
+.bm-cs .kaart{background:var(--surface);border-color:var(--line);box-shadow:none}
+.bm-cs-duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(16rem,24rem);gap:1rem;align-items:start;margin-top:.4rem}
+.bm-cs-duo .bm-krabbel{position:sticky;top:.6rem;margin:0;max-width:none}
+@media (max-width:1000px){.bm-cs-duo{grid-template-columns:1fr}.bm-cs-duo .bm-krabbel{position:static}}
+.bm-cs .bm-velden:empty,.bm-cs .bm-niv,.bm-cs .bm-voet small{display:none}
+.bm-cs .bm-crit{grid-template-columns:1fr;padding:.5rem .6rem}
+.bm-cs .bm-crit.actief{box-shadow:inset 3px 0 0 var(--paars)}
+.bm-cs .bm-rij{flex-wrap:nowrap}
+.bm-cs .bm-knoppen{flex:1}
+.bm-cs .bm-knoppen button{flex:2 1 0;min-width:0;min-height:4rem;font-size:1.6rem}
+.bm-cs .bm-knoppen button.tussen{flex:1 1 0;min-width:0;font-size:1rem}
+.bm-cs .bm-knoppen button[aria-pressed="true"]{background:var(--paars);border-color:var(--paars);color:#0f0c13}
 /* reclame: weekinfo en borden */
 .reckaart{margin-top:1rem}
 .reckaart.uit{opacity:.7}
