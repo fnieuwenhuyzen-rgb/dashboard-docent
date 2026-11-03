@@ -1,0 +1,1158 @@
+{
+  "_uitleg": "Keuzeuur muziek havo 3, zeven lessen in lesweek 31-37. Lessen en decks: schema in inhoud-decks-LEESMIJ.md. Invoeren: node tools/zet-decks-in-leergang.js (lessen), node tools/zet-kmu3.js (meta, blok P4, thuis per week). Decks: node tools/maak-decks.js tools/inhoud-kmu3.json. Notenbeeld: node tools/notenbeeld-kmu3.js.",
+  "_leergang": {
+    "meta": {
+      "bron": "Keuzeuur muziek havo 3, voorbereiding op de bovenbouw: zeven lessen van 45 minuten in lesweek 31-37, nadat de gewone havo 3-klassen rond de meivakantie gestopt zijn. Opgebouwd vanuit het begin van havo 4 (leergang havo 4, blok Jazz en blues), de didactische kaarten BL en RM en de voorlichting Muziek in havo 4 en 5. In lesweek 1-30 is er geen les.",
+      "seAandeel": "geen toetsen, geen cijfer",
+      "toetsKop": "Het keuzeuur heeft geen toets en geen cijfer. De voortgang volg je in de les: wisbordje, voorspelen en de eigen riff in lesweek 37."
+    },
+    "blok": {
+      "id": "P4",
+      "titel": "Op weg naar havo 4",
+      "weken": [31, 38],
+      "toets": "",
+      "kleur": "jazz",
+      "doelen": [
+        "noten in de g-sleutel lezen en op het keyboard vinden",
+        "notenwaarden en rusten lezen en een eenvoudig ritme noteren",
+        "de akkoorden C, F en G spelen en het twaalfmatig bluesschema samen spelen",
+        "majeur en mineur horen, akkoordsymbolen lezen",
+        "een fragment beschrijven met de begrippen van de luistertoets"
+      ],
+      "routekaart": [],
+      "vragen": [
+        "Wat ga je doen in havo 4, en wat kun je daar nu al voor oefenen?",
+        "Hoe schrijf je op wat je hoort?",
+        "Wat maakt een blues tot blues?"
+      ],
+      "inzichten": [
+        "Noten lezen is geen voorwaarde om muziek te kiezen, het is iets wat je oefent.",
+        "Een vast schema geeft houvast: drie akkoorden zijn genoeg om samen te spelen."
+      ],
+      "kennen": "Notenbalk, g-sleutel, hulplijn; hele, halve, kwart- en achtste noot, rusten, punt, teleenheid; akkoord, grondtoon, I, IV en V; twaalfmatig bluesschema, riff; majeur, mineur, drieklank, akkoordsymbolen; ostinaat, walking bass, scat.",
+      "kunnen": [
+        "Een korte melodie uit de g-sleutel op het keyboard spelen",
+        "Een ritme van twee maten klappen en noteren",
+        "Wisselen tussen C, F en G op tempo 60",
+        "De twaalfmatige blues samen spelen zonder te stoppen",
+        "Een eigen riff van twee maten laten horen"
+      ],
+      "identiteit": "De wortels van de blues en de jazz liggen mede in het geloof van tot slaaf gemaakte mensen (lesweek 34). In samenspel heeft iedereen een eigen partij en is iedereen nodig (lesweek 37, bouwsteen solidariteit, vakwerkplan 2.2).",
+      "toetsing": "Geen toets en geen cijfer. Formatief: wisbordje bij notenlezen, ritme en majeur of mineur, de blues samen spelen in lesweek 34 en de eigen riff laten horen in lesweek 37."
+    }
+  },
+  "kmu3": {
+    "klas": "keuzeuur havo 3",
+    "thema": "klas3",
+    "map": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027",
+    "blok": "Periode 4 · Op weg naar havo 4",
+    "blokKort": "op weg naar havo 4",
+    "lessen": [
+      {
+        "bestand": "31 Zo werkt havo 4 - noten lezen.pptx",
+        "kort": "Zo werkt havo 4, en noten lezen",
+        "code": "les 1 van 7",
+        "week": 31,
+        "koppel": [{ "lg": "kmu3", "w": 31, "slot": "l1" }],
+        "titel": "Zo werkt havo 4, en noten lezen",
+        "type": "theorie",
+        "detail": "Eerste keuzeuur. Wat je in havo 4 doet, de notenbalk en de g-sleutel, en een bekende melodie van noten naar keyboard.",
+        "vraag": "Wat ga je doen in havo 4, en hoe lees je noten?",
+        "doel": "Je weet hoe de lessen in havo 4 werken en je vindt noten uit de g-sleutel op het keyboard.",
+        "criteria": [
+          "Ik noem de drie soorten lessen in havo 4",
+          "Ik benoem de noten c tot en met g in de g-sleutel",
+          "Ik speel de eerste regel van When the Saints op het keyboard"
+        ],
+        "benodigd": [
+          "Keyboards, zo veel mogelijk",
+          "Wisbordjes en stiften",
+          "St. Louis Blues van Bessie Smith (1925) klaarzetten"
+        ],
+        "voorbereiding": [
+          "Zoek de opname van St. Louis Blues door Bessie Smith met Louis Armstrong uit 1925 en zet hem klaar. In de sectiemap staat hij niet.",
+          "Tel het aantal leerlingen en de keyboards. Twee aan één keyboard werkt goed: één speelt, de ander leest mee en wijst aan.",
+          "De cijfers over havo 4 komen uit het schooljaar 2026-2027. Kijk of er voor volgend jaar iets veranderd is."
+        ],
+        "notitieTitel": [
+          "Welkom bij het keuzeuur. De gewone muziekles van havo 3 is klaar. Jullie hebben gekozen om je voor te bereiden op muziek in havo 4.",
+          "We hebben zeven lessen. Die gaan over wat je in de eerste weken van havo 4 nodig hebt: noten lezen, ritme, de blues en goed luisteren. Er is geen toets en geen cijfer. Je oefent hier, zodat je in september meteen meekomt."
+        ],
+        "notitieAgenda": [
+          "Eerst luisteren, want daar begint in havo 4 ook elke theorieles mee. Dan vertel ik kort hoe havo 4 eruitziet. Daarna gaan we de noten in, met het grootste deel van de les achter het keyboard."
+        ],
+        "notitieDoel": [
+          "Twee dingen vandaag. Je weet wat je te wachten staat. En je ontdekt dat noten lezen minder moeilijk is dan het eruitziet.",
+          "Kun je nog geen noten lezen? Dat is geen probleem: dat leer je in havo 4 ook. Deze zeven lessen geven je alvast een voorsprong."
+        ],
+        "notitieThuis": [
+          "Musicbox staat open. De box Toonhoogte legt de notenbalk nog eens uit. Doe wat je nodig hebt, tien minuten is genoeg.",
+          "Bij de noten van de g-sleutel helpt het om ze hardop te benoemen: op de lijnen e, g, b, d, f, tussen de lijnen f, a, c, e."
+        ],
+        "thuis": {
+          "mb": "Toonhoogte",
+          "learn": "de noten op en tussen de lijnen"
+        },
+        "fotos": { "titel": "bessie-smith-1936.jpg@0.5,0.25", "doel": "bandles-leerlingen.jpg", "fase": [ "louis-armstrong.jpg@0.5,0.2", null, "noten-gsleutel.png", "noten-saints.png", null ] },
+        "fasen": [
+          {
+            "min": 5, "soort": "luisteren", "kop": "Wat hoor je?",
+            "stappen": [
+              "Luister naar het fragment.",
+              "Welke instrumenten hoor je?",
+              "Hoe zou jij de sfeer beschrijven?"
+            ],
+            "docent": "Speel ongeveer een minuut. Twee beurten is genoeg, niet doorvragen.",
+            "notitie": {
+              "vertel": [
+                "Zo begint in havo 4 elke theorieles: met luisteren. Je hoort St. Louis Blues. W.C. Handy schreef het in 1914. Dit is de opname van Bessie Smith uit 1925. De kornet is van Louis Armstrong. St. Louis Blues staat volgend jaar op je luisterlijst in het blok Jazz en blues."
+              ],
+              "vragen": [
+                { "v": "Welke instrumenten hoor je?", "a": "Een zangeres, een kornet die lijkt op een trompet, en een harmonium. Het harmonium klinkt als een klein orgel. Als ze orgel of trompet zeggen, is dat goed genoeg." },
+                { "v": "Hoe zou jij de sfeer beschrijven?", "a": "Langzaam, verdrietig, klagend. Maak duidelijk dat de zangeres en de kornet elkaar lijken te antwoorden." }
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "uitleg", "kop": "Zo ziet havo 4 eruit",
+            "stappen": [
+              "Drie lessen per week, elk met een eigen taak.",
+              "Bijna twee derde van de lessen maak je zelf muziek.",
+              "Je begint in september met jazz en blues.",
+              "Thuis ongeveer 20 minuten Musicbox per week."
+            ],
+            "beeld": { "soort": "kaarten", "items": [ { "k": "Les 1", "t": "theorie en luisteren" }, { "k": "Les 2", "t": "zingen en spelen" }, { "k": "Les 3", "t": "improviseren en componeren" } ] },
+            "notitie": {
+              "vertel": [
+                "In havo 4 heb je drie lessen muziek per week. Les 1 is theorie en luisteren: begrippen, luisteren en noten lezen. Hierover gaat het centraal examen. Les 2 is zingen en spelen, alleen en samen. Les 3 is improviseren en componeren: zelf muziek maken en opnemen.",
+                "Over het hele jaar zijn dat 31 lessen theorie en 56 lessen waarin je zelf muziek maakt.",
+                "Het jaar loopt zo. September en oktober: jazz en blues. November tot en met januari: barok en classicisme. Februari en maart: romantiek en de 20e eeuw. April tot en met juni: pop en luistertraining.",
+                "Havo 4 telt voor 30 procent mee voor je schoolexamen. De toetsen: samenspel en improvisatie, noten lezen en schrijven, een onbekende melodie zingen of spelen, een mondeling over de concerten en de Messiah, en een luistertoets zoals het centraal examen.",
+                "Daarnaast ga je naar een concert in De Doelen en een tweede concert dat je zelf kiest, en zing je mee in de Messiah in Leiden. Dat zijn handelingsdelen: geen cijfer, wel verplicht. Thuis werk je ongeveer 20 minuten per week in Musicbox en tot maart elke dag 10 minuten aan je Messiah-partij."
+              ],
+              "vragen": [
+                { "v": "Wat lijkt je het leukst, en waar zie je tegenop?", "a": "Persoonlijk. Vaak noemen ze noten lezen of voorspelen. Dat is precies wat we in deze zeven lessen gaan oefenen." }
+              ],
+              "letop": [
+                "Houd dit bij tien minuten. Ze hebben de voorlichting al gehad in de profielkeuzeweek. De presentatie Muziek in havo 4 en 5 staat bij het materiaal als er meer vragen zijn."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "uitleg", "kop": "De notenbalk en de g-sleutel",
+            "stappen": [
+              "Vijf lijnen, vier ruimtes: hoe hoger op de balk, hoe hoger de toon.",
+              "De g-sleutel krult om de lijn van de g.",
+              "Lage c staat op een hulplijn onder de balk."
+            ],
+            "docent": "Laat de noten aanwijzen op een keyboard terwijl je ze benoemt.",
+            "notitie": {
+              "vertel": [
+                "Noten staan op vijf lijnen: de notenbalk. Een noot staat op een lijn of in de ruimte ertussen. Hoe hoger de noot op de balk staat, hoe hoger de toon.",
+                "Vooraan staat de g-sleutel. Die heet zo omdat hij om de tweede lijn van onderen krult: daar staat de g. Vanaf de g kun je alle andere noten vinden.",
+                "De noten heten c, d, e, f, g, a, b en dan weer c. Dat zijn de witte toetsen op het keyboard. De c vind je links van de twee zwarte toetsen. Let op: wij zeggen b waar je in Engelse boeken ook b ziet, en bes voor de zwarte toets links daarvan.",
+                "Op de lijnen staan van onder naar boven e, g, b, d, f. In de ruimtes staan f, a, c, e. Lage c past niet meer op de balk: die krijgt een eigen streepje, de hulplijn."
+              ],
+              "voorbeelden": [
+                "Laat op het keyboard de middelste c zien. Speel c, d, e, f, g, a, b, c omhoog en wijs tegelijk de noten op de balk aan."
+              ],
+              "vragen": [
+                { "v": "Welke noot staat op de tweede lijn van onderen?", "a": "De g. Daar krult de sleutel omheen." },
+                { "v": "Welke noot staat in de ruimte boven de g?", "a": "De a." },
+                { "v": "Hoe heet het extra streepje onder de balk?", "a": "De hulplijn. Daar staat lage c op." }
+              ]
+            }
+          },
+          {
+            "min": 15, "soort": "doen", "kop": "Van noten naar keyboard",
+            "stappen": [
+              "Benoem eerst de noten op je bordje.",
+              "Zoek ze op het keyboard en speel ze rustig na elkaar.",
+              "Eén speelt, de ander leest mee en wijst aan. Daarna wisselen.",
+              "Je hoeft nog niet op ritme te spelen."
+            ],
+            "klaar": "Speel de hele melodie twee keer zonder fout en zoek de melodie een stukje hoger op, beginnend op g.",
+            "docent": "Twee aan één keyboard. Te weinig keyboards: de ander wijst de noten aan op het bord.",
+            "notitie": {
+              "vertel": [
+                "Dit is When the Saints, een oud geestelijk lied uit Amerika dat later een jazzklassieker werd. Je gebruikt maar vijf noten: c, d, e, f en g. Herken je hem pas als je de melodie speelt?"
+              ],
+              "voorbeelden": [
+                "De melodie: c e f g, dan c e f g, dan c e f g e c e d. Elke regel begint na een rust op tel 1."
+              ],
+              "letop": [
+                "Loop rond en kijk of ze op de juiste c beginnen. Vergissen ze zich? Laat ze eerst de c zoeken links van de twee zwarte toetsen.",
+                "Wie al noten leest, kan meteen het klaar-werk doen. Wie vastloopt, schrijft de letters boven de noten. Dat mag vandaag."
+              ]
+            }
+          },
+          {
+            "min": 5, "soort": "check", "kop": "Terug naar de balk",
+            "stappen": [
+              "Kijk naar de noten op het bord.",
+              "Schrijf de namen op je bordje.",
+              "Omhoog als ik het zeg."
+            ],
+            "notitie": {
+              "vertel": [
+                "Teken vier noten op het bord: e, g, c, a. Dit is het soort oefening dat je in havo 4 in je eerste les krijgt, daar als notenbingo."
+              ],
+              "vragen": [
+                { "v": "Hoe heten deze vier noten?", "a": "e, g, c en a." }
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "wisbordje",
+          "tekst": "Schrijf de namen van de vier noten op het bord op je wisbordje.",
+          "notitie": {
+            "vertel": [ "Teken op het bord: e op de onderste lijn, g op de tweede lijn, de c op de hulplijn, de a in de tweede ruimte." ],
+            "vragen": [ { "v": "Welke noten zijn dit?", "a": "e, g, c, a." } ],
+            "letop": [ "Kijk wie alles van onderaf moet aftellen. Dat is prima voor nu: volgende les komt het ritme erbij." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Zo werkt havo 4, en noten lezen (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\31 Zo werkt havo 4 - noten lezen.pptx" },
+          { "t": "Muziek in havo 4 en 5, voorlichting havo 3", "sp": "02 Keuzevak muziek\\Havo\\Muziek in havo 4 en 5 - voorlichting havo 3.pptx" },
+          { "t": "Musicbox: Toonhoogte", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/b6a9c72c-608c-4365-8dba-297a144fb4d5" }
+        ]
+      },
+      {
+        "bestand": "32 Ritme noteren.pptx",
+        "kort": "Ritme noteren",
+        "code": "les 2 van 7",
+        "week": 32,
+        "koppel": [{ "lg": "kmu3", "w": 32, "slot": "l1" }],
+        "titel": "Ritme noteren: notenwaarden en rusten",
+        "type": "theorie",
+        "detail": "Hele, halve, kwart en achtste noot, rusten en teleenheid. Klappen van het blad en een eerste ritmedictee, als opstap naar lesweek 2 van havo 4.",
+        "vraag": "Hoe schrijf je een ritme op?",
+        "doel": "Je leest notenwaarden en rusten en noteert een ritme van twee maten.",
+        "criteria": [
+          "Ik weet hoeveel tellen een hele, halve, kwart en achtste noot duren",
+          "Ik klap een ritme van twee maten van het blad",
+          "Ik noteer een ritme van twee maten dat ik hoor"
+        ],
+        "benodigd": [
+          "Wisbordjes en stiften",
+          "Metronoom op het bord of de telefoon",
+          "Kaart Ritme en maat (RM 1) op het bord of geprint"
+        ],
+        "voorbereiding": [
+          "Oefen de drie dicteeritmes uit de notities één keer: dan kun je ze rustig en gelijk klappen.",
+          "Syncope en triool laat je liggen. Die krijgen ze in havo 4 in lesweek 2."
+        ],
+        "notitieTitel": [
+          "Vorige week ging het over hoe hoog een noot is. Vandaag gaat het over hoe lang hij duurt. Met allebei samen kun je muziek lezen en opschrijven.",
+          "In havo 4 maak je in lesweek 2 ritmedictees, en in de eerste theorietoets moet je zelf ritme noteren. Vandaag leg je daar de basis voor."
+        ],
+        "notitieAgenda": [
+          "We beginnen met klappen en eindigen met schrijven. Eerst op gehoor, dan met de noten erbij, dan zelf opschrijven wat je hoort."
+        ],
+        "notitieDoel": [
+          "Ritme is het patroon van lange en korte tonen en stiltes. Een noot laat zien hoe lang een toon klinkt, een rust hoe lang het stil is. Als je die twee kent, kun je elk eenvoudig ritme lezen en opschrijven."
+        ],
+        "notitieThuis": [
+          "De box Maat en ritme in Musicbox oefent precies dit. Leer de notenwaarden uit je hoofd. Dat scheelt je volgend jaar veel tijd."
+        ],
+        "thuis": {
+          "mb": "Maat en ritme",
+          "learn": "hele, halve, kwart en achtste noot met hun rusten"
+        },
+        "fotos": { "titel": "metronoom.jpg", "fase": [ null, "ritme-waarden.png", "ritme-klappen.png", null, null ] },
+        "fasen": [
+          {
+            "min": 5, "soort": "start", "kop": "Klap het na",
+            "stappen": [
+              "Ik klap, jullie klappen na.",
+              "Tel in je hoofd mee tot vier.",
+              "Hoor je wat langer duurt en wat korter?"
+            ],
+            "docent": "Vier tot zes korte patronen. Begin eenvoudig en laat de tel doorlopen, zonder pauze ertussen.",
+            "notitie": {
+              "vertel": [
+                "We doen vraag en antwoord. Ik klap één maat van vier tellen, jullie klappen dezelfde maat meteen terug. Niet stoppen ertussen."
+              ],
+              "voorbeelden": [
+                "Eerst vier kwarten. Dan kwart, kwart, halve. Dan twee achtsten, kwart, kwart, kwart. Dan kwart, rust, kwart, rust."
+              ],
+              "vragen": [
+                { "v": "Wat gebeurde er in het laatste patroon?", "a": "Er zaten stiltes in, maar de tel liep door. Dat is een rust." }
+              ]
+            }
+          },
+          {
+            "min": 15, "soort": "uitleg", "kop": "Elke noot de helft van de vorige",
+            "stappen": [
+              "Hele noot 4 tellen, halve 2, kwart 1, achtste een halve tel.",
+              "Elke noot heeft een rust van dezelfde duur.",
+              "De teleenheid is de noot die één tel duurt. In 4/4 is dat de kwart.",
+              "Een punt maakt een noot de helft langer."
+            ],
+            "notitie": {
+              "vertel": [
+                "Elke noot duurt de helft van de noot erboven. Een hele noot duurt vier tellen, een halve noot twee, een kwartnoot één tel, een achtste noot een halve tel. Twee achtsten samen duren dus één tel. Die verbind je met een streep: de waardestreep.",
+                "Een open noot zonder stok is een hele. Open met stok is een halve. Dicht met stok is een kwart. Een vlag of waardestreep erbij maakt er een achtste van.",
+                "Elke noot heeft een rust van dezelfde duur. De muziek stopt dan niet: de tel loopt gewoon door, alleen klinkt er even niets. De symfonie nr. 5 van Beethoven begint met een rust.",
+                "Bovenaan staat de maataanduiding, bijvoorbeeld 4/4. Het bovenste cijfer zegt hoeveel tellen in een maat gaan. Het onderste cijfer zegt welke noot één tel duurt: een 4 betekent de kwart. Die noot heet de teleenheid. Dat woord komt in havo 4 terug.",
+                "Een punt achter een noot maakt hem de helft langer. Een halve noot met punt duurt dus drie tellen, een kwart met punt anderhalve."
+              ],
+              "voorbeelden": [
+                "Tel achtsten hardop: 1 en 2 en 3 en 4 en. Klap op elk woord: dat zijn achtsten. Klap alleen op de cijfers: dat zijn kwarten."
+              ],
+              "vragen": [
+                { "v": "Hoeveel achtsten passen in een halve noot?", "a": "Vier." },
+                { "v": "Hoeveel tellen duurt een halve noot met punt?", "a": "Drie." },
+                { "v": "Wat doe je bij een rust?", "a": "Niets laten klinken, maar wel doortellen." }
+              ],
+              "letop": [
+                "Schrijf bij twijfel de tellen onder de noten op het bord. Dat mag bij de opdrachten ook."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "doen", "kop": "Klap van het blad",
+            "stappen": [
+              "Lees het ritme eerst in stilte en tel mee.",
+              "Klap regel 1 samen op de metronoom.",
+              "Daarna regel 2, 3 en 4 in tweetallen.",
+              "De één klapt, de ander controleert."
+            ],
+            "klaar": "Klap twee regels tegelijk met je buur: jij regel 1, je buur regel 3.",
+            "docent": "Metronoom op 70. Lukt dat nog niet, zet hem dan lager.",
+            "notitie": {
+              "vertel": [
+                "Hier staan vier regels van twee maten. Bij elke regel tel je één maat vooraf: 1, 2, 3, 4. Dan begint het."
+              ],
+              "voorbeelden": [
+                "Regel 1: vier kwarten, dan twee halve.",
+                "Regel 2: kwart, kwart, halve, dan twee achtsten, kwart, kwart, kwart.",
+                "Regel 3: kwart, rust, kwart, rust, dan vier achtsten, kwart, kwart.",
+                "Regel 4: halve met punt, kwart, dan een hele."
+              ],
+              "letop": [
+                "Bij regel 3 gaan de rusten vaak verloren. Laat ze op een rust de handen uit elkaar houden.",
+                "Bij regel 4 stoppen ze vaak te vroeg op de hele noot. Laat hardop doortellen."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "doen", "kop": "Ritmedictee",
+            "stappen": [
+              "Teken twee maten op je bordje.",
+              "Ik klap drie keer. Luister de eerste keer alleen.",
+              "Schrijf de tweede keer op wat je hoort.",
+              "De derde keer controleer je."
+            ],
+            "beeld": { "soort": "kaarten", "items": [ { "k": "1e keer", "t": "alleen luisteren" }, { "k": "2e keer", "t": "schrijven" }, { "k": "3e keer", "t": "controleren" } ] },
+            "docent": "Drie ritmes. Laat na elk ritme de bordjes omhoog en schrijf het goede antwoord op het bord.",
+            "notitie": {
+              "vertel": [
+                "Elke maat heeft vier tellen. Schrijf eerst op wat zeker is, de rest vul je daarna in. In havo 4 komt zo'n dictee in lesweek 2 terug, dan ook met syncope en triool."
+              ],
+              "voorbeelden": [
+                "Ritme A: kwart, kwart, halve, dan vier kwarten.",
+                "Ritme B: halve, kwart, kwart, dan vier achtsten, halve.",
+                "Ritme C: kwart, kwartrust, kwart, kwart, dan twee achtsten, kwart, halve."
+              ],
+              "vragen": [
+                { "v": "Hoe controleer je of je maat klopt?", "a": "Tel de waarden op: samen moet het vier tellen zijn." }
+              ],
+              "letop": [
+                "Klap in hetzelfde tempo, met de metronoom aan. Sneller klappen maakt het moeilijker.",
+                "Kijk vooral of de maat optelt tot vier. Dat is belangrijker dan mooie noten."
+              ]
+            }
+          },
+          {
+            "min": 5, "soort": "check", "kop": "Eén dictee zelf",
+            "stappen": [
+              "Eén ritme van twee maten.",
+              "Schrijf het alleen op, niet overleggen.",
+              "Bordjes omhoog."
+            ],
+            "notitie": {
+              "vertel": [
+                "Laatste. Dit keer niet overleggen: dan zie ik waar we staan."
+              ],
+              "voorbeelden": [
+                "Klap: kwart, kwart, kwart, kwart, dan twee achtsten, twee achtsten, halve."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "wisbordje",
+          "tekst": "Noteer het ritme van twee maten dat je hoort op je wisbordje.",
+          "notitie": {
+            "vertel": [ "Kijk niet alleen of het klopt, kijk ook of ze de maatstreep op de goede plek zetten." ],
+            "vragen": [ { "v": "Hoeveel tellen zitten er in je tweede maat?", "a": "Vier: twee achtsten en twee achtsten maken samen twee tellen, plus een halve." } ],
+            "letop": [ "Blijft het voor velen lastig? Klap volgende les bij de start nog één dictee." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Ritme noteren (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\32 Ritme noteren.pptx" },
+          { "t": "Kaart Ritme en maat (RM)", "sp": "02 Keuzevak muziek\\Algemeen\\Didactische kaarten\\Ritme en maat bladen.pdf" },
+          { "t": "Musicbox: Maat en ritme", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/584b92d1-fcce-4322-aad5-11e1e2e5c7c5" }
+        ]
+      },
+      {
+        "bestand": "33 Bluesakkoorden C F G.pptx",
+        "kort": "Bluesakkoorden C, F en G",
+        "code": "les 3 van 7",
+        "week": 33,
+        "koppel": [{ "lg": "kmu3", "w": 33, "slot": "l1" }],
+        "titel": "Bluesakkoorden C, F en G",
+        "type": "praktijk",
+        "detail": "De drie akkoorden van de blues op keyboard, gitaar of ukelele, en wisselen op de metronoom. Dezelfde akkoorden als in havo 4, lesweek 2.",
+        "vraag": "Welke drie akkoorden heb je nodig voor een blues?",
+        "doel": "Je speelt C, F en G op keyboard, gitaar of ukelele en wisselt op de tel.",
+        "criteria": [
+          "Ik speel C, F en G op één instrument",
+          "Ik wissel tussen C, F en G op tempo 60",
+          "Ik weet welk akkoord I, IV en V is"
+        ],
+        "benodigd": [
+          "Keyboards",
+          "Gitaren, gestemd",
+          "Ukeleles, gestemd",
+          "Metronoom op het bord of de telefoon"
+        ],
+        "voorbereiding": [
+          "Stem gitaren en ukeleles vooraf: dat kost anders de start.",
+          "Verdeel de instrumenten pas als je weet hoeveel leerlingen er zijn. Eén instrument per leerling is het best; anders in tweetallen wisselen.",
+          "Kaart BL (Bluesbegrippen speelkaart) staat in A. In deze les en de volgende spelen we in C, zoals de leergang van havo 4."
+        ],
+        "notitieTitel": [
+          "We gaan van lezen naar spelen. Met drie akkoorden kun je al een hele blues begeleiden, en heel veel andere liedjes.",
+          "In havo 4 spelen ze deze akkoorden in lesweek 2, met als doel wisselen op tempo 60. Wie dat nu al kan, begint volgend jaar met een voorsprong."
+        ],
+        "notitieAgenda": [
+          "Het grootste deel van de les speel je zelf. De uitleg is kort: akkoorden leer je met je handen."
+        ],
+        "notitieDoel": [
+          "Een akkoord is drie of meer tonen tegelijk. In de blues gebruik je er drie. Vandaag kun je ze alle drie vinden en van het ene naar het andere gaan zonder de tel kwijt te raken."
+        ],
+        "notitieThuis": [
+          "Heb je thuis een keyboard, gitaar of ukelele? Speel dan twee keer vijf minuten de wissel C, F, G, C. Heb je geen instrument: kijk de box Piano of Gitaar voor beginners in Musicbox door."
+        ],
+        "thuis": {
+          "mb": "Piano of Gitaar voor beginners",
+          "extra": "Oefen de wissel C, F, G, C als je thuis een instrument hebt"
+        },
+        "fotos": { "titel": "leadbelly.jpg" },
+        "fasen": [
+          {
+            "min": 5, "soort": "start", "kop": "Hoor je de wissel?",
+            "stappen": [
+              "Ik speel drie akkoorden.",
+              "Steek je hand op bij elke wissel.",
+              "Welk akkoord voelt als thuis?"
+            ],
+            "docent": "Speel op het keyboard: C, C, F, F, C, C, G, G, C, vier tellen per akkoord.",
+            "notitie": {
+              "vertel": [
+                "Luister eerst. Ik speel een klein stukje en jullie laten met je hand zien waar het verandert."
+              ],
+              "vragen": [
+                { "v": "Welk akkoord voelt als thuis?", "a": "C, de eerste en de laatste. Daar komt het tot rust." },
+                { "v": "En welk akkoord wil het meest terug naar thuis?", "a": "De G. Die geeft spanning." }
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "uitleg", "kop": "Drie akkoorden: I, IV en V",
+            "stappen": [
+              "Een akkoord is drie of meer tonen tegelijk.",
+              "Keyboard: C is c, e, g. F is f, a, c. G is g, b, d.",
+              "Tel vanaf c: c is I, f is IV, g is V."
+            ],
+            "beeld": { "soort": "akkoorden", "items": [ "C", "F", "G" ], "onder": "Op gitaar: F mag op de vier dunste snaren." },
+            "docent": "Laat grepen zien op alle drie de instrumenten. Geef de ukelelegrepen per groepje.",
+            "notitie": {
+              "vertel": [
+                "Een akkoord is drie of meer tonen die tegelijk klinken. Een akkoord van drie tonen heet een drieklank. Je bouwt hem door steeds een toon over te slaan: c, e, g.",
+                "Bij de blues gebruik je de akkoorden op de eerste, vierde en vijfde toon van de toonladder. Tel vanaf c: c is één, d twee, e drie, f vier, g vijf. Die schrijf je met Romeinse cijfers: I, IV en V.",
+                "I is thuis. IV is weg van huis. V is spanning, die wil terug naar I. Dat gevoel zit in elke blues, in elke toonsoort. Op de kaart BL staat diezelfde blues in A: A, D en E."
+              ],
+              "voorbeelden": [
+                "Keyboard: rechterhand, vingers 1, 3 en 5. C is c, e, g. F is f, a, c. G is g, b, d, of makkelijker b, d, g, dan hoef je minder ver te springen.",
+                "Gitaar: C en G zoals in de afbeelding. F is moeilijk: gebruik de vier dunste snaren.",
+                "Ukelele, van de g-snaar naar de a-snaar: C is 0003, F is 2010, G is 0232."
+              ],
+              "vragen": [
+                { "v": "Welke tonen zitten in het F-akkoord?", "a": "f, a en c." },
+                { "v": "Welk akkoord is V in C?", "a": "G." }
+              ]
+            }
+          },
+          {
+            "min": 25, "soort": "doen", "kop": "Wisselen op de tel",
+            "stappen": [
+              "Oefen eerst elk akkoord los, tot het mooi klinkt.",
+              "Dan twee akkoorden: C naar F, en terug.",
+              "Dan C, F, G, C: vier tellen per akkoord.",
+              "Metronoom aan op 60. Lukt het? Wissel van instrument."
+            ],
+            "klaar": "Speel twee akkoorden per maat, of laat je buur blind raden welk akkoord je speelt.",
+            "docent": "Na ongeveer 12 minuten wisselen van instrument als er tijd is. Niet iedereen hoeft alles te doen: eerst één instrument echt kunnen.",
+            "notitie": {
+              "vertel": [
+                "Begin langzaam. Je moet al vóór de tel naar het volgende akkoord kijken. Tel hardop: 1, 2, 3, 4, en op de 4 ga je alvast op weg.",
+                "Liever iets minder mooi en op tijd, dan mooi en te laat. Bij samenspel wachten de anderen niet."
+              ],
+              "leerlingen": [
+                "Kiezen een instrument, oefenen C, F en G los, daarna de wissel met metronoom op 60.",
+                "Laten aan het eind van de doefase één ronde horen aan de buur."
+              ],
+              "letop": [
+                "Gitaar: kijk of de vingers de snaren niet raken die moeten klinken. Vinger vlak achter de fret.",
+                "Keyboard: laat ze bij elk akkoord de hele hand verplaatsen zonder onnodig te zoeken. G met b, d, g scheelt een sprong.",
+                "Metronoom op 60 is het doel. Lukt het nog niet? Dan eerst op 40."
+              ]
+            }
+          },
+          {
+            "min": 5, "soort": "check", "kop": "Samen één ronde",
+            "stappen": [
+              "Iedereen speelt mee: C, F, G, C.",
+              "Vier tellen per akkoord.",
+              "Hand omhoog: wie is geen wissel kwijtgeraakt?"
+            ],
+            "notitie": {
+              "vertel": [
+                "We doen het samen. Ik tel af. Twee rondes achter elkaar zonder te stoppen. Volgende week worden dit de twaalf maten van de blues."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "hand omhoog",
+          "tekst": "Wie wisselt C, F, G zonder stoppen? Kleine groep laat horen.",
+          "notitie": {
+            "vertel": [ "Dit is dezelfde vraag als in havo 4, lesweek 2. Nog niet iedereen hoeft het te kunnen. Noteer wie volgende les bij de bas moet beginnen in plaats van bij de akkoorden." ],
+            "vragen": [ { "v": "Welke wissel was het lastigst?", "a": "Meestal F naar G, omdat de hand ver moet verplaatsen." } ],
+            "letop": [ "Laat vrijwillig horen. Niemand hoeft alleen." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Bluesakkoorden C, F en G (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\33 Bluesakkoorden C F G.pptx" },
+          { "t": "Kaart Bluesbegrippen (BL)", "sp": "02 Keuzevak muziek\\Algemeen\\Didactische kaarten\\Bluesbegrippen speelkaart.pdf" },
+          { "t": "Musicbox: Piano", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3" },
+          { "t": "Musicbox: Gitaar voor beginners", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3" }
+        ]
+      },
+      {
+        "bestand": "34 Twaalfmatige blues samen.pptx",
+        "kort": "Twaalfmatige blues samen",
+        "code": "les 4 van 7",
+        "week": 34,
+        "koppel": [{ "lg": "kmu3", "w": 34, "slot": "l1" }],
+        "titel": "Twaalfmatige blues samen",
+        "type": "praktijk",
+        "detail": "Het bluesschema in C leren en samen spelen met akkoorden, bas en ritme. Inclusief waar de blues vandaan komt.",
+        "vraag": "Blijven we samen in de blues?",
+        "doel": "Je kent het twaalfmatige bluesschema en speelt het samen, zonder te stoppen.",
+        "criteria": [
+          "Ik weet welk akkoord in welke maat hoort",
+          "Ik raak de tel niet kwijt",
+          "We spelen twaalf maten zonder stoppen"
+        ],
+        "identiteit": "De blues is mede ontstaan uit de spirituals en werkliederen van tot slaaf gemaakte mensen en hun nakomelingen. In hun zang klinkt verdriet en ook vertrouwen op God.",
+        "benodigd": [
+          "Keyboards, gitaren, ukeleles",
+          "Basgitaar of keyboard voor de baspartij",
+          "Slagwerk: drumstel of cajon, anders klappen",
+          "Bluesschema op het bord"
+        ],
+        "voorbereiding": [
+          "Maak groepjes naar het aantal leerlingen. Bij weinig leerlingen speel je zelf bas mee. Bij veel leerlingen meerdere bands naast elkaar, om de beurt laten klinken.",
+          "Een spiritual zingen komt in havo 4 terug in lesweek 3. Daar hoef je vandaag niet op vooruit te lopen."
+        ],
+        "notitieTitel": [
+          "Vorige week hebben jullie drie akkoorden geleerd. Vandaag maken we er een schema van. Dat schema is twaalf maten lang en bestaat al meer dan honderd jaar.",
+          "In havo 4 speel je dit in lesweek 4 in een combo. Het is ook de basis voor je eerste praktijktoets, samenspel en improvisatie."
+        ],
+        "notitieAgenda": [
+          "Eerst het schema in je hoofd krijgen. Dan de rollen verdelen en spelen, zo lang mogelijk zonder stoppen. Aan het eind kijken we kort waar deze muziek vandaan komt."
+        ],
+        "notitieDoel": [
+          "Eén doel: samen blijven. Fouten mogen, stoppen niet. Als je de draad kwijt bent, luister je even en stap je bij het volgende akkoord weer in. Dat is echte bandervaring."
+        ],
+        "notitieRodeDraad": [
+          "De blues ontstond rond 1900 in het zuiden van de Verenigde Staten, onder Afro-Amerikanen. De wortels liggen in de werkliederen op het land en in de spirituals: geestelijke liederen uit de tijd van de slavernij.",
+          "Een spiritual als Swing Low, Sweet Chariot gaat over thuiskomen bij God. Het zingen gaf moed in een uitzichtloze situatie. De Bijbelverhalen over de uittocht uit Egypte klonken daarin door: God ziet wie onderdrukt wordt.",
+          "Een blues gaat vaak over het gewone leven, over pijn en gemis. Veel bluesmuzikanten groeiden op in de kerk, en die twee werelden zaten dicht bij elkaar. In havo 4 ga je een spiritual zingen en daarover verder praten."
+        ],
+        "vragenRodeDraad": [
+          { "v": "Waarom zouden mensen zingen als het leven zwaar is?", "a": "Het geeft moed, je staat er niet alleen voor, je kunt iets zeggen wat je niet zomaar hardop zegt. Alle eerlijke antwoorden zijn goed." },
+          { "v": "Ken je een lied dat jou helpt als het moeilijk is?", "a": "Persoonlijk. Laat dit vrijwillig." }
+        ],
+        "notitieThuis": [
+          "Leer het schema uit je hoofd. Teken het op een blaadje of oefen het in je hoofd op de bus: drie regels van vier maten. Volgende les gaan we verder met de klank van de akkoorden."
+        ],
+        "thuis": {
+          "learn": "het twaalfmatige bluesschema uit je hoofd: 4 x C, 2 x F, 2 x C, G, F, C, G"
+        },
+        "fotos": { "titel": "juke-joint-1939.jpg", "fase": [ null, null, "bandles-leerlingen.jpg", null ], "rodeDraad": "cotton-pickers-1935.jpg" },
+        "fasen": [
+          {
+            "min": 5, "soort": "start", "kop": "Puls en backbeat",
+            "stappen": [
+              "Tik met je voet de puls: 1, 2, 3, 4.",
+              "Klap alleen op tel 2 en 4.",
+              "Dat is de backbeat: die houdt de blues in beweging."
+            ],
+            "docent": "Blijf hier niet lang hangen. Tempo rond 70.",
+            "notitie": {
+              "vertel": [
+                "De puls is de vaste tel onder de muziek. In pop en jazz heet dat de beat. Klap je op tel 2 en 4, dan klap je de backbeat. Daarom klapt een bluespubliek ook op 2 en 4, niet op 1 en 3."
+              ],
+              "vragen": [
+                { "v": "Waar valt de backbeat?", "a": "Op tel 2 en 4." }
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "uitleg", "kop": "Twaalf maten",
+            "stappen": [
+              "Drie regels van vier maten, vier tellen per maat.",
+              "Maat 12 is G. Bij het slot wordt dat C.",
+              "Tel de maten mee op je vingers."
+            ],
+            "beeld": { "soort": "tabel", "rijen": [ [ "Maat", "1", "2", "3", "4" ], [ "1-4", "C", "C", "C", "C" ], [ "5-8", "F", "F", "C", "C" ], [ "9-12", "G", "F", "C", "G" ] ], "kol": [ 0.24, 0.19, 0.19, 0.19, 0.19 ] },
+            "notitie": {
+              "vertel": [
+                "De blues is altijd twaalf maten lang en begint daarna opnieuw. Dit noemen we het twaalfmatig bluesschema. Regel 1: vier maten C. Regel 2: twee maten F en twee maten C. Regel 3: G, F, C, G. Die laatste G stuurt je terug naar het begin. Stop je, dan eindig je op C.",
+                "Op de kaart BL zie je hetzelfde schema in A: A, D en E. Het patroon is gelijk: I, IV, V."
+              ],
+              "voorbeelden": [
+                "Speel het op het keyboard voor en zeg hardop de maten: één, twee, drie, vier, F, twee, C, twee, G, F, C, G."
+              ],
+              "vragen": [
+                { "v": "In welke maat komt voor het eerst de F?", "a": "In maat 5." },
+                { "v": "Welk akkoord staat in maat 9?", "a": "G." }
+              ],
+              "letop": [
+                "Op de kaart BL staat bij de A-blues in maat 1 tot 4 ook een aanduiding voor break en fill. Dat laat je vandaag weg."
+              ]
+            }
+          },
+          {
+            "min": 25, "soort": "doen", "kop": "Spelen als band",
+            "stappen": [
+              "Kies een rol: akkoorden, bas of ritme.",
+              "Bas: alleen de grondtoon, op elke tel. Ritme: 2 en 4 op de snaredrum of cajon.",
+              "Eerst heel langzaam: 60 op de metronoom.",
+              "Na een paar keer doorwisselen van rol."
+            ],
+            "klaar": "Speel de akkoorden lang-kort, lang-kort: dat is de shuffle. Of probeer een eigen versiering.",
+            "docent": "Tel maatnummers hardop mee zolang dat nodig is. Geef bij de wissels een teken: F, C, G.",
+            "notitie": {
+              "vertel": [
+                "Een band heeft een taakverdeling. De bas geeft de grondtoon en de tel. Ritme houdt alles bij elkaar. De akkoorden maken de kleur. Niemand kan iets weglaten zonder dat je het hoort.",
+                "Kwijt? Luister, kijk naar het schema en stap in bij het volgende akkoord. Stoppen doen we alleen als iedereen stopt."
+              ],
+              "voorbeelden": [
+                "Bas in maat 1 tot en met 4: c, c, c, c op elke tel. Maat 5 en 6: f. Maat 9: g, maat 10: f, maat 11: c, maat 12: g.",
+                "Op gitaar kan de bas ook op de lage snaren: de lage A, 3e fret is c. De lage E, 1e fret is f, 3e fret is g."
+              ],
+              "leerlingen": [
+                "Spelen het schema minstens drie keer in een rol.",
+                "Wisselen van rol zodat iedereen minstens twee rollen heeft gedaan."
+              ],
+              "letop": [
+                "Het gaat vaak mis bij de overgang van maat 8 naar maat 9, en bij maat 12 naar 1. Oefen die overgang apart.",
+                "Bij weinig leerlingen: speel zelf bas of slagwerk. Bij meer dan tien leerlingen: twee bands, om de beurt twaalf maten, de andere band klapt de backbeat."
+              ]
+            }
+          },
+          {
+            "min": 5, "soort": "check", "kop": "Twaalf maten zonder stoppen",
+            "stappen": [
+              "Eén keer het hele schema.",
+              "Ik tel af en jullie blijven doorgaan.",
+              "We eindigen op C."
+            ],
+            "notitie": {
+              "vertel": [
+                "We spelen twee keer twaalf maten. Eindigen op C. Heeft het gewerkt? Dan heb je nu een blues gespeeld."
+              ],
+              "vragen": [
+                { "v": "Waar ging het mis, en waar ging het juist goed?", "a": "Laat ze zelf de maten aanwijzen. Vaak maat 9." }
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "samen spelen",
+          "tekst": "Speel twaalf maten samen zonder te stoppen. Eindig op C.",
+          "notitie": {
+            "vertel": [ "Hier zie je of de rollen werken. Hoor je geen F in maat 5? Dan volgende week kort nog een ronde aan het begin." ],
+            "vragen": [ { "v": "Wie durft de maat 9 tot en met 12 op te zeggen?", "a": "G, F, C, G." } ],
+            "letop": [ "Dit is geen voorspeelmoment voor een cijfer. Het gaat om samen doorgaan." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Twaalfmatige blues samen (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\34 Twaalfmatige blues samen.pptx" },
+          { "t": "Kaart Bluesbegrippen (BL)", "sp": "02 Keuzevak muziek\\Algemeen\\Didactische kaarten\\Bluesbegrippen speelkaart.pdf" }
+        ]
+      },
+      {
+        "bestand": "35 Majeur en mineur - akkoordsymbolen.pptx",
+        "kort": "Majeur, mineur en akkoordsymbolen",
+        "code": "les 5 van 7",
+        "week": 35,
+        "koppel": [{ "lg": "kmu3", "w": 35, "slot": "l1" }],
+        "titel": "Majeur, mineur en akkoordsymbolen",
+        "type": "theorie",
+        "detail": "Majeur en mineur op gehoor, de drieklank op het keyboard en akkoordsymbolen als C, Am en G7 lezen.",
+        "vraag": "Hoe hoor je het verschil, en hoe schrijf je het op?",
+        "doel": "Je hoort het verschil tussen majeur en mineur, bouwt een drieklank en leest akkoordsymbolen.",
+        "criteria": [
+          "Ik hoor bij zes akkoorden of ze majeur of mineur zijn",
+          "Ik bouw C, Cm en Am op het keyboard",
+          "Ik lees wat C, Am en G7 betekenen"
+        ],
+        "benodigd": [
+          "Keyboards",
+          "Wisbordjes en stiften",
+          "Mahler, Symfonie nr. 1, derde deel, het begin, om kort te laten horen"
+        ],
+        "voorbereiding": [
+          "Zoek een opname van het begin van het derde deel van Mahlers eerste symfonie.",
+          "Oefen Vader Jacob in C en in c mineur: c d e c wordt c d es c."
+        ],
+        "notitieTitel": [
+          "De klas speelt inmiddels drie akkoorden. Vandaag leren we waarom een akkoord blij of verdrietig kan klinken, en hoe je een akkoord leest uit een schema.",
+          "In havo 4 is dit de stof van lesweek 4. Daar wordt het ook getoetst, in de eerste theorietoets."
+        ],
+        "notitieAgenda": [
+          "Eerst luisteren en duimen. Dan de uitleg: hoe is een akkoord gebouwd? Dan zelf op het keyboard. Aan het einde gebruiken we het in een echt schema."
+        ],
+        "notitieDoel": [
+          "Majeur en mineur zijn de twee hoofdkleuren van onze muziek. Je kunt ze horen, je kunt ze zien op het keyboard en je kunt ze lezen uit een symbool. Vandaag doe je alle drie."
+        ],
+        "notitieThuis": [
+          "Luister thuis naar drie nummers die je goed kent. Majeur of mineur? Schrijf het op en neem het mee: het komt volgende les terug."
+        ],
+        "thuis": {
+          "mb": "Toonhoogte",
+          "extra": "Bepaal van drie nummers die je kent of ze majeur of mineur zijn"
+        },
+        "fotos": { "titel": "gitaar-akkoord.jpg" },
+        "fasen": [
+          {
+            "min": 5, "soort": "luisteren", "kop": "Duim omhoog of omlaag",
+            "stappen": [
+              "Ik speel een akkoord.",
+              "Klinkt het licht? Duim omhoog.",
+              "Klinkt het donker? Duim omlaag."
+            ],
+            "docent": "Speel zes akkoorden: C, Am, F, Dm, G, Em. Laat bij twijfel C en Cm vlak na elkaar horen.",
+            "notitie": {
+              "vertel": [
+                "We zeggen vaak: majeur klinkt vrolijk en mineur verdrietig. Dat klopt niet altijd, maar voor het begin is licht en donker een goed geheugensteuntje."
+              ],
+              "voorbeelden": [
+                "Speel Vader Jacob in C, dan in c mineur: c d es c. Laat dan het begin horen van het derde deel van Mahlers eerste symfonie: hetzelfde kinderlied, in mineur, als een langzame treurmars."
+              ],
+              "vragen": [
+                { "v": "Wat veranderde er aan Vader Jacob?", "a": "Eén toon werd lager: de e werd es. Daardoor klinkt het hele lied anders." }
+              ]
+            }
+          },
+          {
+            "min": 15, "soort": "uitleg", "kop": "Eén toon maakt het verschil",
+            "stappen": [
+              "Een drieklank: grondtoon, terts en kwint.",
+              "Majeur: de terts is groot, 4 halve stappen boven de grondtoon.",
+              "Mineur: de terts is klein, 3 halve stappen.",
+              "Het symbool: C is majeur, Cm is mineur, C7 krijgt er een toon bij."
+            ],
+            "beeld": { "soort": "tabel", "rijen": [ [ "Symbool", "Tonen", "Soort" ], [ "C", "c e g", "majeur" ], [ "Cm", "c es g", "mineur" ], [ "Am", "a c e", "mineur" ], [ "Dm", "d f a", "mineur" ], [ "G7", "g b d f", "met septiem" ] ], "kol": [ 0.26, 0.38, 0.36 ] },
+            "notitie": {
+              "vertel": [
+                "Een drieklank bestaat uit de grondtoon, de terts en de kwint. De grondtoon geeft het akkoord zijn naam. Tel op het keyboard alle toetsen mee, ook de zwarte. Dat zijn halve stappen.",
+                "Bij C is de grondtoon c. Vier halve stappen hoger ligt de e: dat is een grote terts. Dan is het akkoord majeur, of groot. Doe je de terts een halve stap lager, dan krijg je es, een kleine terts. Dat is mineur, of klein. De kwint, de g, blijft gelijk.",
+                "Nu de symbolen. Een hoofdletter alleen is altijd majeur: C, F, G. Een kleine m erachter betekent mineur: Cm, Am, Dm. Een 7 betekent dat er een vierde toon bij komt, de kleine septiem. G7 is g, b, d, f.",
+                "Op de kaart BL zie je daarom A7, D7 en E7: in de blues krijgen akkoorden vaak die 7 erbij. Dat geeft de typische scherpe bluesklank.",
+                "Let op de namen: wij zeggen es en bes voor de verlaagde e en b."
+              ],
+              "voorbeelden": [
+                "Speel C, dan Cm. Speel Am, Dm en Em: die liggen op de witte toetsen. Speel G, dan G7 en hoor hoe G7 nog sterker terug wil naar C."
+              ],
+              "vragen": [
+                { "v": "Wat is het verschil tussen C en Cm?", "a": "De terts: e bij C en es bij Cm." },
+                { "v": "Wat betekent Am?", "a": "A mineur: a, c, e." },
+                { "v": "Welke tonen zitten er in G7?", "a": "g, b, d, f." }
+              ]
+            }
+          },
+          {
+            "min": 15, "soort": "doen", "kop": "Bouwen en spelen",
+            "stappen": [
+              "Bouw C, Cm, Am, Dm en G7 op het keyboard.",
+              "Eén speelt, de ander raadt: majeur of mineur?",
+              "Daarna het schema: C, Am, F, G, vier tellen per akkoord.",
+              "Hoor je waar het donkerder wordt?"
+            ],
+            "klaar": "Bedenk zelf een schema van vier akkoorden en speel het voor je buur.",
+            "docent": "Twee aan één keyboard. Wie geen keyboard heeft, speelt het schema op gitaar of ukelele: daar zit de Am al in.",
+            "notitie": {
+              "vertel": [
+                "Tel de halve stappen op het keyboard als je twijfelt. Met de vingers 1, 3 en 5 hoef je niet meer te zoeken: dat is meteen een drieklank op de witte toetsen.",
+                "Veel popsongs gebruiken dit soort schema's met maar vier akkoorden. Je hebt nu alles om ze uit een liedboek te lezen."
+              ],
+              "letop": [
+                "Laat ze de terts hardop benoemen als ze raden. Dat dwingt tot luisteren in plaats van gokken.",
+                "Op ukelele is Am: 2000. Op gitaar: x02210."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "check", "kop": "Hoor en lees",
+            "stappen": [
+              "Duim omhoog of omlaag bij zes nieuwe akkoorden.",
+              "Schrijf de tonen van Am op je bordje.",
+              "Schrijf de tonen van C7 op je bordje."
+            ],
+            "notitie": {
+              "vertel": [
+                "Een laatste keer. Eerst op gehoor en daarna op papier. Dit soort vragen krijg je volgend jaar in de theorietoets."
+              ],
+              "voorbeelden": [
+                "Speel Em, G, Dm, F, Am, C."
+              ],
+              "vragen": [
+                { "v": "Wat zijn de tonen van Am?", "a": "a, c, e." },
+                { "v": "Wat zijn de tonen van C7?", "a": "c, e, g, bes." }
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "duimen",
+          "tekst": "Duim omhoog of omlaag bij zes akkoorden: majeur of mineur?",
+          "notitie": {
+            "vertel": [ "Je ziet meteen wie op de ander let en wie het echt hoort. Vraag ze hun ogen dicht te doen." ],
+            "vragen": [ { "v": "Welk akkoord vond je het moeilijkst?", "a": "Vaak Dm en F, omdat ze twee tonen delen." } ],
+            "letop": [ "Hoort iemand het verschil niet? Speel dan steeds grote en kleine terts los, zonder akkoord, en laat ze de verschillen meezingen." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Majeur, mineur en akkoordsymbolen (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\35 Majeur en mineur - akkoordsymbolen.pptx" },
+          { "t": "Kaart Bluesbegrippen (BL)", "sp": "02 Keuzevak muziek\\Algemeen\\Didactische kaarten\\Bluesbegrippen speelkaart.pdf" },
+          { "t": "Musicbox: Toonhoogte", "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/b6a9c72c-608c-4365-8dba-297a144fb4d5" }
+        ]
+      },
+      {
+        "bestand": "36 Luisteren en beschrijven.pptx",
+        "kort": "Luisteren en beschrijven",
+        "code": "les 6 van 7",
+        "week": 36,
+        "koppel": [{ "lg": "kmu3", "w": 36, "slot": "l1" }],
+        "titel": "Luisteren en beschrijven zoals in de toets",
+        "type": "theorie",
+        "detail": "Echte fragmenten en vragen uit het centraal examen havo 2015, blok 1: Jazz in the present tense van The Solsonics. Wat je hoort in woorden en begrippen zetten.",
+        "vraag": "Hoe beschrijf je wat je hoort?",
+        "doel": "Je beschrijft een fragment en beantwoordt vragen zoals in de luistertoets.",
+        "criteria": [
+          "Ik noem de punten waarop je kunt letten bij het luisteren",
+          "Ik beschrijf eerst in eigen woorden en zoek dan de term",
+          "Ik herken ostinaat, walking bass en scat"
+        ],
+        "benodigd": [
+          "Geluid in 009: mp3's klaarzetten uit het examen",
+          "Papier en pen, of wisbordjes",
+          "Opgaven en antwoorden van het examen havo 2015"
+        ],
+        "voorbereiding": [
+          "Zet de mp3's klaar: 01 (fragment 1), 04 (fragment 4), 05 (fragment 5) en 06 (fragment 6) uit de map HAVO CE 2015 MP3. Fragment 2, 3, 7 en 8 slaan we over: daar heb je notenbeeld of meer theorie bij nodig.",
+          "Luister de fragmenten vooraf, zodat je weet wat er gezongen wordt.",
+          "De vragen staan in je notities in eigen woorden, zodat de leerlingen de begrippen eerst leren. De oorspronkelijke vragen staan in CSE Havo 2015 opgaven.pdf, vraag 1 tot en met 7."
+        ],
+        "notitieTitel": [
+          "In havo 4 sluit je het jaar af met een luistertoets in dezelfde vorm als het centraal examen. In havo 5 maak je het echte examen, op de computer met koptelefoon. Je luistert naar fragmenten en beantwoordt vragen over wat je hoort en leest. Vandaag proef je daar alvast aan."
+        ],
+        "notitieAgenda": [
+          "Kort de aandachtspunten. Dan een uitgebreid voorbeeld met het eerste fragment, en daarna zelf aan de slag met drie andere fragmenten."
+        ],
+        "notitieDoel": [
+          "Goed luisteren is te leren. Het begint niet met moeilijke woorden, maar met goed zeggen wat je hoort. Daarna leer je de term die erbij hoort. Dat is de volgorde vandaag."
+        ],
+        "notitieThuis": [
+          "Neem je drie nummers van vorige week erbij. Beschrijf één ervan met drie punten uit de lijst: bijvoorbeeld tempo, klankkleur en vorm."
+        ],
+        "thuis": {
+          "extra": "Beschrijf één nummer dat je goed kent met drie punten uit de lijst: bijvoorbeeld tempo, klankkleur en vorm"
+        },
+        "fotos": { "titel": "microfoon-studio.jpg", "doel": "mengtafel-leerlingen.jpg" },
+        "fasen": [
+          {
+            "min": 5, "soort": "start", "kop": "Waar let je op?",
+            "stappen": [
+              "Dit zijn acht aandachtspunten.",
+              "Welke kun je al uitleggen?",
+              "Eén zin per punt aan je buur."
+            ],
+            "beeld": { "soort": "kaarten", "items": [ { "k": "Ritme, maat", "t": "patroon, tellen" }, { "k": "Tempo", "t": "snel of langzaam" }, { "k": "Toonsoort", "t": "majeur of mineur" }, { "k": "Samenklank", "t": "akkoorden" }, { "k": "Dynamiek", "t": "hard of zacht" }, { "k": "Klankkleur", "t": "welke instrumenten" }, { "k": "Vorm", "t": "hoe het is opgebouwd" } ] },
+            "notitie": {
+              "vertel": [
+                "De luistertoets aan het einde van havo 4 gaat over: ritme, maat, tempo, toonsoort, samenklank, dynamiek, klankkleur en vorm. Ritme en maat kennen jullie. Toonsoort en samenklank ook. De rest komt vanzelf met luisteren."
+              ],
+              "vragen": [
+                { "v": "Wat is klankkleur?", "a": "Hoe een toon klinkt: welke instrumenten of stemmen je hoort." },
+                { "v": "Wat is dynamiek?", "a": "Hoe hard of zacht de muziek is." }
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "uitleg", "kop": "Eerst in je eigen woorden",
+            "stappen": [
+              "Luister naar fragment 1.",
+              "Zeg wat er steeds terugkomt.",
+              "Dan pas de term: ostinaat.",
+              "Lees de vraag twee keer en geef niet meer antwoorden dan er gevraagd worden."
+            ],
+            "docent": "Fragment 1 is mp3 nummer 01. Twee keer spelen.",
+            "notitie": {
+              "vertel": [
+                "Dit fragment komt uit het centraal examen havo van 2015. Het nummer is Jazz in the present tense uit 1994 van The Solsonics. Je hoort het begin van het nummer. De elektrische piano speelt een begeleiding.",
+                "In het examen stond de vraag: geef de technische term voor de begeleidingswijze van de elektrische piano, of geef een omschrijving. Goed was: ostinaat, of een voortdurende herhaling van hetzelfde motief. Een omschrijving telde dus ook. Daarom begin je altijd met wat je hoort.",
+                "Ostinaat: een korte figuur die voortdurend herhaald wordt. Bij de riff van volgende les zie je hetzelfde idee terug. In het examen moet je niet meer antwoorden geven dan er gevraagd worden: de tweede telt dan niet mee."
+              ],
+              "vragen": [
+                { "v": "Wat doet de elektrische piano?", "a": "Steeds hetzelfde figuurtje herhalen." },
+                { "v": "Hoe heet dat?", "a": "Ostinaat." }
+              ]
+            }
+          },
+          {
+            "min": 20, "soort": "doen", "kop": "Drie fragmenten, vier vragen",
+            "stappen": [
+              "Lees de vraag voordat je luistert.",
+              "Elk fragment hoor je twee keer.",
+              "Schrijf je antwoord op, kort.",
+              "Daarna vergelijken met je buur."
+            ],
+            "beeld": { "soort": "kaarten", "items": [ { "k": "Fragment 4", "t": "Vier gelijke delen. Eerste is a. Hoe verder? Wat doet de bas?" }, { "k": "Fragment 5", "t": "Hoe heet deze manier van zingen?" }, { "k": "Fragment 6", "t": "Welk instrument speelt solo?" } ] },
+            "klaar": "Beschrijf fragment 6 met nog twee aandachtspunten: tempo, dynamiek of samenklank.",
+            "docent": "Bespreek na elk fragment kort. Laat de antwoorden uit de klas komen voor je de term geeft.",
+            "notitie": {
+              "vertel": [
+                "Fragment 4: de saxofoon en andere instrumenten spelen de melodie. Het fragment bestaat uit vier delen die even lang zijn. Maak het vormschema compleet. Goed is a, a, b, c: twee keer hetzelfde, daarna twee keer iets anders.",
+                "In hetzelfde fragment speelt de bas een walking bass: een baslijn met doorgaande noten van gelijke waarde, één noot per tel. Komt uit de jazz en je hebt hem op kaart BL gezien.",
+                "Fragment 5: er wordt gezongen, maar niet met woorden. Dat heet scat: zingen op klanken zonder betekenis, alsof je een instrument bent. Louis Armstrong maakte dat beroemd.",
+                "Fragment 6: de solo is voor de dwarsfluit. Het examen vroeg alleen het instrument."
+              ],
+              "vragen": [
+                { "v": "Fragment 4: maak het vormschema compleet: a, ?, ?, ?", "a": "a, a, b, c." },
+                { "v": "Fragment 4: wat is een walking bass?", "a": "Een baslijn met doorgaande noten van gelijke waarde." },
+                { "v": "Fragment 5: hoe heet deze manier van zingen?", "a": "Scat of scatten." },
+                { "v": "Fragment 6: welk instrument speelt solo?", "a": "Dwarsfluit." }
+              ],
+              "letop": [
+                "Nog niemand hoeft de termen te kennen. Reken een goede omschrijving goed, zoals het examen ook doet.",
+                "Geen koptelefoons nodig: je speelt centraal. Ze kunnen de vragen volgen op het bord."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "gesprek", "kop": "Hoe ging het?",
+            "stappen": [
+              "Welke vraag ging vanzelf?",
+              "Welke vraag was lastig, en waarom?",
+              "Wat doe jij de volgende keer anders?"
+            ],
+            "notitie": {
+              "vertel": [
+                "Dit waren echte examenvragen, en je kon er al veel van beantwoorden. Je hebt nog twee jaar en heel wat oefenfragmenten te gaan.",
+                "Wat veel helpt is de vraag eerst lezen en niet te veel woorden opschrijven. Je hoeft geen muziekbegrippen te kennen om goed te luisteren, en je leert ze sneller als je ze aan iets kunt koppelen."
+              ],
+              "vragen": [
+                { "v": "Wat vond je het moeilijkst?", "a": "Vaak de vorm, omdat je veel tegelijk moet onthouden. Tip: teken met streepjes." }
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "exit ticket",
+          "tekst": "Noem één begrip dat je vandaag hebt geleerd, en leg het in je eigen woorden uit.",
+          "notitie": {
+            "vertel": [ "Sluit af met deze ene vraag. Laat ze het antwoord bij het weggaan hardop zeggen of op een briefje inleveren." ],
+            "vragen": [ { "v": "Wat betekent ostinaat?", "a": "Steeds hetzelfde figuurtje herhalen." } ],
+            "letop": [ "Volgende les maken ze een riff. Daar komt de ostinaat terug." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Luisteren en beschrijven (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\36 Luisteren en beschrijven.pptx" },
+          { "t": "CE havo 2015: opgaven", "sp": "02 Keuzevak muziek\\Centraal examen\\Havo\\HAVO 2015\\CSE Havo 2015 opgaven.pdf" },
+          { "t": "CE havo 2015: antwoorden", "sp": "02 Keuzevak muziek\\Centraal examen\\Havo\\HAVO 2015\\CSE Havo 2015 antwoorden.pdf" },
+          { "t": "Fragment 1 (mp3)", "sp": "02 Keuzevak muziek\\Centraal examen\\Havo\\HAVO 2015\\HAVO CE 2015 MP3\\01 Blok 1 The Solsonics - Jazz in the present tense.mp3" },
+          { "t": "Fragment 4 (mp3)", "sp": "02 Keuzevak muziek\\Centraal examen\\Havo\\HAVO 2015\\HAVO CE 2015 MP3\\04 Blok 1 The Solsonics - Jazz in the present tense.mp3" },
+          { "t": "Fragment 5 (mp3)", "sp": "02 Keuzevak muziek\\Centraal examen\\Havo\\HAVO 2015\\HAVO CE 2015 MP3\\05  Blok 1 The Solsonics - Jazz in the present tense.mp3" },
+          { "t": "Fragment 6 (mp3)", "sp": "02 Keuzevak muziek\\Centraal examen\\Havo\\HAVO 2015\\HAVO CE 2015 MP3\\06 Blok 1 The Solsonics - Jazz in the present tense.mp3" }
+        ]
+      },
+      {
+        "bestand": "37 Eigen riff laten horen.pptx",
+        "kort": "Eigen riff laten horen",
+        "code": "les 7 van 7",
+        "week": 37,
+        "koppel": [{ "lg": "kmu3", "w": 37, "slot": "l1" }],
+        "titel": "Eigen riff laten horen",
+        "type": "praktijk",
+        "detail": "Een riff van twee maten maken over de blues in C, samen laten horen en vooruitkijken naar september.",
+        "vraag": "Kan ik een riff maken op het schema?",
+        "doel": "Je maakt een riff van twee maten en laat die horen over de blues.",
+        "criteria": [
+          "Mijn riff klinkt elke keer hetzelfde",
+          "Mijn riff past in het schema",
+          "Ik weet wat ik in september ga doen"
+        ],
+        "identiteit": "In een band heeft iedereen een eigen partij en is iedereen nodig.",
+        "benodigd": [
+          "Keyboards, gitaren, ukeleles, bas en slagwerk",
+          "Metronoom op het bord of de telefoon",
+          "Bluesschema op het bord",
+          "Eventueel een telefoon om op te nemen"
+        ],
+        "voorbereiding": [
+          "Zet de instrumenten alvast in een kring. Dat scheelt een hoop tijd.",
+          "Kies een riff om voor te doen. Bij de eerste fase staan er twee.",
+          "Bij deze laatste les hoort geen cijfer. Geef complimenten en één tip per leerling mee naar september."
+        ],
+        "notitieTitel": [
+          "De laatste les. Jullie hebben noten gelezen, ritme genoteerd, akkoorden gespeeld, een blues samen gespeeld en naar examenfragmenten geluisterd. Vandaag maak je zelf iets.",
+          "In havo 4 maak je in lesweek 2 ook een riff op dit schema. Daar sta je dus straks niet meer van te kijken."
+        ],
+        "notitieAgenda": [
+          "Eerst horen wat een riff is. Dan zelf maken. Dan samen laten horen. Aan het einde kijken we vooruit naar september."
+        ],
+        "notitieDoel": [
+          "Een riff hoeft niet ingewikkeld te zijn: drie tonen zijn genoeg. Het moet vooral elke keer hetzelfde klinken en passen op de blues."
+        ],
+        "notitieRodeDraad": [
+          "Vandaag hoor je het extra goed. Jouw riff klinkt pas echt als de anderen eronder spelen. Iemand op de bas, iemand op de drums. De één kan niet zonder de ander.",
+          "Dat is geen toeval. In 1 Korinthe 12 gebruikt Paulus het beeld van een lichaam met verschillende delen: elk deel is nodig, ook wat minder opvalt. Een band werkt net zo. Goed spelen is ook luisteren, ruimte geven en de ander laten klinken."
+        ],
+        "vragenRodeDraad": [
+          { "v": "Wat deed iemand vandaag waardoor jij beter ging spelen?", "a": "Bijvoorbeeld de tel vasthouden, wachten, even meetellen. Laat ze elkaar complimenten geven." }
+        ],
+        "notitieThuis": [
+          "Geen huiswerk. Wil je in de zomer iets doen? Oefen C, F en G, en luister eens naar blues en jazz. Dat helpt in september. In de eerste les van havo 4 begin je met luisteren en noten opfrissen."
+        ],
+        "thuis": {
+          "extra": "Geen huiswerk. Wil je toch iets doen: oefen in de zomer C, F en G, en luister naar blues en jazz"
+        },
+        "fotos": { "titel": "bandles-leerlingen.jpg", "doel": "telefoon-opnemen.jpg", "rodeDraad": "orkestrepetitie.jpg" },
+        "fasen": [
+          {
+            "min": 5, "soort": "luisteren", "kop": "Wat is een riff?",
+            "stappen": [
+              "Luister naar het voorbeeld.",
+              "Wat komt steeds terug?",
+              "Een riff is een kort figuur dat steeds herhaald wordt."
+            ],
+            "docent": "Speel de riff zelf op keyboard of gitaar. Eventueel het begin van Smoke on the Water als voorbeeld.",
+            "notitie": {
+              "vertel": [
+                "Een riff is een kort figuur dat steeds herhaald wordt en het nummer draagt. Meestal in gitaar of bas. Hij lijkt op het ostinaat van vorige week. In de blues schuift de riff mee met de akkoorden: hetzelfde figuur op C, F en G.",
+                "Je hoort dit overal, in blues, rock en pop. De gitaar aan het begin van Smoke on the Water van Deep Purple is een riff die bijna iedereen kent."
+              ],
+              "voorbeelden": [
+                "Riff 1, op C, in achtsten: c c e e g g e e. Op F: f f a a c c a a. Op G: g g b b d d b b.",
+                "Riff 2, op C, twee maten: c, es, c, f, g (rust), dan weer hetzelfde. Op de bluestoonladder klinkt de es juist goed."
+              ],
+              "vragen": [
+                { "v": "Wat is het verschil tussen een riff en een motief?", "a": "Een riff herhaal je als fundament. Een motief bewerk je: je kunt het variëren of op een andere toonhoogte spelen." }
+              ]
+            }
+          },
+          {
+            "min": 15, "soort": "doen", "kop": "Maak je eigen riff",
+            "stappen": [
+              "Kies drie of vier tonen: c, es, f, g, bes.",
+              "Maak een ritme van twee maten.",
+              "Speel het tien keer achter elkaar.",
+              "Schrijf de tonen op, en het ritme als je kunt."
+            ],
+            "klaar": "Schuif je riff mee: speel hem op F en op G.",
+            "docent": "Alleen of in tweetallen. Loop rond en laat de metronoom op 70 lopen.",
+            "notitie": {
+              "vertel": [
+                "Begin niet met de hele riff, begin met het ritme. Klap eerst. Pas dan de tonen erbij. Schrijf op wat je hebt: een riff die je niet kunt herhalen is geen riff.",
+                "De tonen c, es, f, g en bes zijn de pentatonische toonladder in c mineur. Die geeft meteen een bluesklank. Daarover leer je in havo 4 meer, in lesweek 4."
+              ],
+              "leerlingen": [
+                "Maken een riff van twee maten, alleen of in tweetallen.",
+                "Oefenen de riff tot hij tien keer gelijk klinkt."
+              ],
+              "letop": [
+                "Maken ze hem te lang of te moeilijk? Halveer hem: één maat herhalen is ook goed.",
+                "Op keyboard: rechterhand op de tonen, linkerhand kan akkoorden doen. Op gitaar: speel de tonen op één of twee snaren, dat is genoeg."
+              ]
+            }
+          },
+          {
+            "min": 15, "soort": "doen", "kop": "Samen laten horen",
+            "stappen": [
+              "Eén groep speelt de blues in C.",
+              "Eén voor één speel je je riff, vier maten.",
+              "Luisteraars: één compliment, één tip.",
+              "Daarna wisselen."
+            ],
+            "docent": "Je speelt zelf mee in de band als dat nodig is. Geen cijfer.",
+            "notitie": {
+              "vertel": [
+                "We spelen de blues in C, iedereen die nu niet aan de beurt is doet mee: bas, akkoorden, ritme. Wie aan de beurt is, speelt de eigen riff bovenop het schema. Dan schuiven we door.",
+                "Wie wil, neemt het op met de telefoon. Dat doen we ook in havo 4."
+              ],
+              "vragen": [
+                { "v": "Wat vond je goed aan deze riff?", "a": "Bijvoorbeeld: bleef gelijk, past mooi, klinkt echt blues. Laat ze concreet zijn." },
+                { "v": "Wat zou je als tip geven?", "a": "Iets langzamer, duidelijker ritme, schuif mee op F en G." }
+              ],
+              "letop": [
+                "Niemand hoeft alleen te spelen. Twee of drie tegelijk mag ook.",
+                "Grote groep? Dan riffs in tweetallen laten horen, zodat je binnen 15 minuten rondkomt."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "afsluiten", "kop": "Vooruitkijken naar september",
+            "stappen": [
+              "Wat kun je nu wat je zeven weken geleden nog niet kon?",
+              "Wat wil je in de zomer nog oefenen?",
+              "September: jazz en blues in havo 4."
+            ],
+            "beeld": { "soort": "tabel", "rijen": [ [ "Havo 4", "Daar komt het terug" ], [ "Lesweek 1", "Jazz en noten lezen" ], [ "Lesweek 2", "Ritme noteren, C F G, riff" ], [ "Lesweek 4", "Majeur en mineur, blues in combo" ], [ "Eind havo 4", "Luistertoets" ] ], "kol": [ 0.34, 0.66 ] },
+            "notitie": {
+              "vertel": [
+                "In de eerste weken van havo 4 herken je alles. Lesweek 1: wat is jazz, en noten lezen opfrissen. Lesweek 2: ritme noteren, nu ook met syncope en triool, de akkoorden C, F en G, en een eigen riff. Lesweek 4: majeur en mineur, akkoordsymbolen, de blues in een combo. Nieuw voor jullie is daar pas het improviseren met de pentatonische toonladder.",
+                "Bedankt voor deze zeven lessen. Jullie hebben laten zien dat je dit wilt en kunt. Tot in september."
+              ],
+              "vragen": [
+                { "v": "Wat kun je nu dat je in mei nog niet kon?", "a": "Persoonlijk. Vraag naar iets concreets: een akkoord, een ritme, een begrip." }
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "laten horen",
+          "tekst": "Laat je riff van twee maten horen over de blues in C.",
+          "notitie": {
+            "vertel": [ "Geen cijfer. Geef elke leerling een compliment en één tip om in september mee te nemen." ],
+            "vragen": [ { "v": "Past je riff bij alle drie de akkoorden?", "a": "Niet per se. Als je hem meeschuift, wel." } ],
+            "letop": [ "Heeft iemand nog extra hulp nodig met lezen of akkoorden? Zeg het die leerling zelf, dan kan die er in de zomer aan werken." ]
+          }
+        },
+        "materiaal": [
+          { "t": "Presentatie: Eigen riff laten horen (PowerPoint)", "sp": "02 Keuzevak muziek\\Havo\\Keuzeuur havo 3\\Lessen 2026-2027\\37 Eigen riff laten horen.pptx" },
+          { "t": "Kaart Bluesbegrippen (BL)", "sp": "02 Keuzevak muziek\\Algemeen\\Didactische kaarten\\Bluesbegrippen speelkaart.pdf" }
+        ]
+      }
+    ]
+  }
+}
