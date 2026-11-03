@@ -13,7 +13,7 @@
   ],
   "vooruit": "Eén punt voor PT2",
   "leerlingTitel": "Zo beoordeel ik ons samenspel en mijn zang",
-  "leerlingInstructie": "Gebruik dit na de generale en na de toets. Zet per onderdeel een kruisje bij wat je hoorde en schrijf je score op. Je docent let op dezelfde onderdelen.",
+  "leerlingInstructie": "Gebruik dit direct na de toets. Zet per onderdeel een kruisje bij wat je hoorde en schrijf je score op. Je docent let op dezelfde onderdelen.",
   "pta": "PTA vwo 4 2026-2027, P1 (in studiewijzer en lesplanning PT1): periode 1 in de les (ma 9 nov), weging 3, 90 minuten, niet herkansbaar. Domein B1 zingen en spelen en B2 improviseren (bluesschema, call-and-response). Beoordeling op presentatie, muzikaliteit en samenspel.",
   "map": "02 Keuzevak muziek\\VWO\\VWO 4\\P1 Praktijktoets - Samenspel jazz-voorlopers\\Beoordeling",
   "lessen": [
@@ -114,8 +114,8 @@
         },
         {
           "id": "zang",
-          "naam": "Zang: call-and-response",
-          "uitleg": "zuiver, op de tel, verstaanbaar",
+          "naam": "Zang: This old hammer",
+          "uitleg": "call-and-response: zuiver, op de tel, verstaanbaar",
           "weging": 2,
           "docent": [
             "Zang vaak onzuiver of te zacht; de response komt te laat of valt weg.",
@@ -136,16 +136,16 @@
           "uitleg": "bluestoonladder, in het schema, motief",
           "weging": 2,
           "docent": [
-            "Geen improvisatie, of de noten passen niet en de solo raakt los van het schema.",
-            "Vier maten op de bluestoonladder (bv. C-Es-G); blijft in de maat, nog weinig vorm.",
-            "Solo blijft in het schema, met een herkenbaar motief dat terugkomt en rust tussen de frasen.",
-            "Varieert het motief, gebruikt blue notes bewust; de solo heeft een opbouw en een slot."
+            "Stopt bij de solo, of de noten raken los van het schema. Alleen de grondtoon in het ritme van de call: 5.",
+            "Vier maten op de bluestoonladder (C-Es-G is genoeg); blijft in de maat, nog weinig vorm.",
+            "Blijft in het schema, met een motief dat terugkomt en rust tussen de frasen.",
+            "Varieert het motief, gebruikt de blue notes (Es, Fis); de solo heeft een opbouw."
           ],
           "leerling": [
-            "Ik improviseer niet, of mijn noten passen niet bij het schema.",
-            "Ik improviseer vier maten op de bluestoonladder en blijf in de maat.",
-            "Mijn solo heeft een motief dat terugkomt, met rust ertussen.",
-            "Ik varieer mijn motief, gebruik blue notes en mijn solo heeft een opbouw."
+            "Ik stop bij de solo, of mijn noten passen niet bij het schema. Alleen de grondtoon in het ritme: 5.",
+            "Ik improviseer vier maten op de bluestoonladder (C-Es-G is genoeg) en blijf in de maat.",
+            "Mijn solo blijft in het schema, met een motief dat terugkomt en rust ertussen.",
+            "Ik varieer mijn motief, gebruik de blue notes (Es, Fis) en mijn solo heeft een opbouw."
           ]
         }
       ]
