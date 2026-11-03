@@ -507,7 +507,7 @@ const koorNaam = k => k.type === 'concert' ? 'Concert: ' + (k.concert || k.titel
 /* een presentatie doorlopen geldt per les, niet per dag: dezelfde les komt terug bij een parallelgroep of als hij doorschuift */
 const presAf = key => Object.entries(S.dagTaken || {}).some(([d, dt]) => dt && dt[key] && d >= addD(vandaag(), -120));
 function zetDagTaak(d, key, aan) { if (aan) { (S.dagTaken[d] = S.dagTaken[d] || {})[key] = true; return; } if (/^pres:/.test(key)) Object.values(S.dagTaken).forEach(dt => { if (dt) delete dt[key]; }); else if (S.dagTaken[d]) delete S.dagTaken[d][key]; }
-function koorTakenOpen(s) { const G = geplandeSleutels(); return ((B.koor || {}).taken || []).filter(t => !S.koorAf[t.id] && !G.koor[t.id] && (!t.d || t.d <= addD(s, 21))); }
+function koorTakenOpen(s) { const G = geplandeSleutels(); return ((B.koor || {}).taken || []).filter(t => !S.koorAf[t.id] && !G.koor[t.id] && (!t.d || t.d <= addD(s, t.zicht || 21)) && (!t.tot || s <= t.tot)); }
 function geplandeSleutels() { const sec = {}, pres = {}, koor = {}, rec = {}; (S.taken || []).forEach(k => { if (k.sectieId) sec[k.sectieId] = k; if (k.koorId) koor[k.koorId] = k; if (k.reclameId) rec[k.reclameId] = k; if (k.dagTaak) { pres[k.dagTaak.dag + '|' + k.dagTaak.key] = k; if (/^pres:/.test(k.dagTaak.key) && !planVoorbij(k)) pres[k.dagTaak.key] = k; } }); return { sec, pres, koor, rec }; }
 /* ---------- reclame: weekinfo (maandag, inleveren tot 14:00) en borden in school ----------
    Activiteiten: koorconcerten (Koorapp), muziekactiviteiten uit de sectieplanning, examenconcerten (leergang) en eigen activiteiten.
