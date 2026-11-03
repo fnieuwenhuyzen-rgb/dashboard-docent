@@ -1,9 +1,9 @@
 // Offline: de app, de leergangen en de lettertypen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v26';
+const CACHE = 'lesdag-v27';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'sync.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'vendor/fonts/EncodeSans-Light.ttf', 'vendor/fonts/EncodeSans-Bold.ttf', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 // precies dezelfde link als in index.html; daarbij de lettertypebestanden voor Latijnse tekst (latin en latin-ext)
-const LETTERS = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,600;0,700;1,400&family=Encode+Sans+Condensed:wght@700;800;900&display=swap';
+const LETTERS = 'https://fonts.googleapis.com/css2?family=Encode+Sans:wdth,wght@75..125,400..900&display=swap';
 const letters = c => fetch(LETTERS).then(r => { if (!r.ok) return; const kopie = r.clone(); return r.text().then(css => {
   const blokken = css.split(/(?=\/\*\s*[a-z-]+\s*\*\/)/i).filter(b => /^\/\*\s*latin(-ext)?\s*\*\//i.test(b));
   const L = [...new Set(blokken.flatMap(b => [...b.matchAll(/url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/g)].map(m => m[1])))];

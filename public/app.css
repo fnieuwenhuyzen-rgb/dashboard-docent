@@ -1,7 +1,6 @@
 /* Lesdag. Indeling: zijbalk (laptop, liggende tablet) of tabbalk onderaan; lesmodus is een volledig scherm voor het digibord.
-   Fundament (ontwerp ronde 3, 29-10): Atkinson Hyperlegible Next voor alle tekst en getallen, Encode Sans Condensed alleen voor koppen vanaf 28 px.
-   Maten per kijkafstand: laptop 16 px (nooit kleiner dan 14), tablet 18 px (nooit kleiner dan 16). Eén kleur per moment: les paars, pauze en rust
-   groen, werk en open oker, koor rood, sectie indigo, bijzaak grijs; daarbij Magister-blauw en Outlook-teal. Elke tekstkleur haalt minstens 4,5:1
+   Fundament (3-11): Encode Sans voor alle tekst, koppen en getallen, koppen vet; in smalle weekkolommen dezelfde letter iets smaller.
+   Maten per kijkafstand: laptop 16 px (nooit kleiner dan 14), tablet 18 px (nooit kleiner dan 16). Agenda: les paars, toets en koor rood, afspraak omlijnd, de rest stil; elders werk en open oker, bijzaak grijs; daarbij Magister-blauw en Outlook-teal. Elke tekstkleur haalt minstens 4,5:1
    tegen zijn achtergrond, licht en donker (nagerekend, laagste 4,9). Overgangen hoogstens 200 ms, en geen beweging bij minder beweging. */
 :root{
   --bg:#f7f5f9;--surface:#ffffff;--ink:#241c2b;--muted:#6b6175;--line:#e3dde8;
@@ -9,7 +8,7 @@
   --ok:#1f6b45;--ok-zacht:#e3f2e9;--let:#8a5a00;--let-zacht:#fdf1d8;--uit:#6b6175;--uit-zacht:#eeebf1;
   --theorie:#e8e3f6;--theorie-ink:#3d2a7a;--praktijk:#e1f1e6;--praktijk-ink:#1f5a3a;--toets:#fbe2e7;--toets-ink:#8e0f2d;
   --mag:#1d5b8f;--mag-zacht:#e2eef8;--out:#0f6b72;--out-zacht:#dff2f1;--op:#ffffff;
-  --lees:"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,"Segoe UI",Roboto,sans-serif;--kop:"Encode Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --lees:"Encode Sans",system-ui,"Segoe UI",Roboto,sans-serif;--kop:var(--lees);
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
   --t:16px;--t-klein:14px;--t-kaartkop:22px;--t-wat:44px;--t-klok:56px;
   color-scheme:light;
@@ -34,7 +33,7 @@
 html{-webkit-text-size-adjust:100%;font-size:var(--t)}
 body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.5 var(--lees)}
 h1,h2,h3,h4{font-family:var(--lees);line-height:1.15;margin:0;text-wrap:balance}
-h1{font-family:var(--kop);font-size:max(1.9rem,28px);font-weight:900;letter-spacing:-.01em}
+h1{font-family:var(--kop);font-size:max(1.9rem,28px);font-weight:800;letter-spacing:-.01em}
 h2{font-size:var(--t-kaartkop);font-weight:700}
 h3{font-size:1.05rem;font-weight:700}
 .tijd,.num,time{font-variant-numeric:tabular-nums}
@@ -738,3 +737,74 @@ body.kompasvenster .top{display:none}
 .duurtabel th,.duurtabel td{text-align:left;padding:.3rem .4rem;border-bottom:1px solid var(--line)}
 .duurtabel input{width:4.2rem;min-height:32px;padding:.1rem .3rem;font:inherit;text-align:right}
 @media (max-width:640px){.taak{grid-template-columns:minmax(0,1fr)}.taak .tb{flex-wrap:wrap}}
+
+/* ---------- rustige agenda (3-11): alleen wat aandacht vraagt krijgt een vorm. Les paars, toets en koor rood, afspraak omlijnd, de rest stil ---------- */
+.btn.kaal{border-color:transparent;background:transparent;color:var(--muted)}
+.btn.kaal:hover,.btn.kaal[aria-pressed="true"]{color:var(--ink);background:var(--uit-zacht)}
+.dag-kop{margin-bottom:1.2rem;align-items:flex-start;flex-wrap:wrap;gap:.6rem 1.5rem}
+.dag-kop>.knoppen{margin:0}
+.dag-zin{margin:.3rem 0 0;font-size:1.05rem;color:var(--muted);max-width:68ch}
+.ag-kol{border-left:1px solid color-mix(in srgb,var(--line) 60%,transparent);cursor:crosshair;user-select:none;-webkit-user-select:none}
+.ag-kol.vandaag{background:transparent}
+.ag-lijn{border-top-color:color-mix(in srgb,var(--line) 55%,transparent)}
+.ag-it{border:0;padding:.15rem .4rem;line-height:1.2}
+.ag-compact .ag-it{font-stretch:88%}
+.ag-rg{display:flex;flex-direction:column;min-width:0;max-width:100%}
+.ag-ruim .ag-rg{flex-direction:row;gap:.45rem;align-items:baseline}
+.ag-it.kort .ag-rg{flex-direction:row;gap:.35rem;align-items:baseline}
+.ag-it b{min-width:0}
+.ag-it .ag-t{flex:none}
+.ag-it .ag-s{display:block;white-space:nowrap;text-overflow:ellipsis;max-width:100%}
+.ag-les{background:var(--paars-zacht);color:var(--paars);border:0}
+.ag-klaar{background:var(--uit-zacht);color:var(--uit)}
+.ag-toets,.ag-koor{background:var(--toets);color:var(--toets-ink);border:0}
+.ag-afspraak,.ag-sectie,.ag-rooster{background:var(--surface);color:var(--ink);border:1.5px solid var(--ink);padding:calc(.15rem - 1.5px) calc(.4rem - 1.5px)}
+.ag-taak{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.ag-taakaf{background:transparent;color:var(--muted);text-decoration:none}
+.ag-taakaf b{font-weight:400}
+.ag-taakgemist{background:var(--surface);color:var(--rood);border:1px solid var(--rood)}
+.ag-pauze,.ag-rust{background:var(--uit-zacht);color:var(--uit);border:0;padding-block:0;justify-content:center}
+.ag-pauze b,.ag-rust b{font-weight:400}
+.ag-compact .ag-pauze .ag-t,.ag-compact .ag-rust .ag-t{display:none}
+.ag-uitval{background:none;color:var(--muted);text-decoration:none;padding-block:0;justify-content:center}
+.ag-uitval b{font-weight:400}
+.ag-uitval:hover{background:var(--uit-zacht)}
+.ag-it.voorbij:not(.ag-uitval):not(.ag-pauze):not(.ag-rust){background:var(--uit-zacht);color:var(--uit);border-color:transparent}
+.ag-it.pak{cursor:grab}
+.ag-it.bezig{z-index:5;cursor:grabbing;box-shadow:0 6px 16px rgba(36,28,43,.25)}
+.ag-grip{position:absolute;left:0;right:0;bottom:0;height:7px;cursor:ns-resize}
+.ag-hover,.ag-ghost{position:absolute;left:3px;right:3px;border-radius:6px;font-family:var(--lees);font-size:var(--t-klein);pointer-events:none}
+.ag-hover{height:24px;padding:.1rem .4rem;background:var(--uit-zacht);color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.ag-ghost{z-index:4;overflow:hidden;padding:.1rem .4rem;line-height:1.2;background:var(--surface);color:var(--paars);border:2px solid var(--paars);box-shadow:0 6px 16px rgba(91,36,127,.2);font-variant-numeric:tabular-nums}
+.ag-ghost b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ag-dag.voorbij b{color:var(--muted);font-weight:600}
+.ag-chip,.ag-chip.ag-deadline,.ag-chip.ag-koor,.ag-chip.ag-koorvrij,.ag-chip.ag-toets,.ag-chip.ag-rooster{background:transparent;border-radius:6px;white-space:normal;line-height:1.25;padding:.1rem .3rem;font-weight:600}
+.ag-chip{color:var(--muted)}
+.ag-chip.ag-deadline{color:var(--ink)}
+.ag-chip.ag-toets,.ag-chip.ag-koor{color:var(--toets-ink)}
+.ag-chip:hover{background:var(--uit-zacht)}
+.ag-band{margin-bottom:.3rem}
+.ag-band button{border:0;background:var(--uit-zacht);color:var(--muted);border-radius:6px;padding:.15rem .6rem;text-align:left;font-family:var(--lees);font-size:var(--t-klein);font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ag-onder{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;align-items:center;justify-content:space-between;margin-top:.7rem;padding-left:3.35rem;font-family:var(--lees);font-size:var(--t-klein);color:var(--muted)}
+.ag-seg{display:inline-flex;align-items:center;gap:.15rem}
+.ag-seg button{border:0;background:none;border-radius:6px;padding:.25rem .55rem;min-height:32px;font-family:var(--lees);font-size:var(--t-klein);font-weight:600;color:var(--muted);cursor:pointer}
+.ag-seg button[aria-pressed="true"]{background:var(--uit-zacht);color:var(--ink)}
+.dag-links .chip{background:transparent;padding:0}
+.dag-links .mats{display:grid;gap:0;border-top:1px solid var(--line)}
+.dag-links .mats .btn{justify-content:flex-start;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;padding:.5rem .1rem;font-weight:400;white-space:normal;text-align:left}
+.dag-links .mats .btn:hover{color:var(--paars)}
+.nw{position:fixed;z-index:50;width:350px;max-width:calc(100vw - 24px);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(36,28,43,.28);padding:.9rem;font-family:var(--lees)}
+.nw[hidden],.nw [hidden]{display:none}
+.nw label{display:block;font-size:var(--t-klein);font-weight:600;color:var(--muted);margin-bottom:.3rem}
+.nw input{width:100%;font-size:1.05rem;padding:.55rem .65rem}
+.nw input:focus{outline:2px solid var(--paars);outline-offset:0}
+.nw-uit{margin:.55rem 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+.nw-let{margin:.2rem 0 0;color:var(--toets-ink);font-weight:600;font-size:.95rem}
+.nw-seg{margin-top:.55rem}
+.nw-sug{margin-top:.65rem;border-top:1px solid var(--line);padding-top:.5rem}
+.nw-sug p{margin:0 0 .15rem;font-size:var(--t-klein);font-weight:600;color:var(--muted)}
+.nw-sug button{display:block;width:100%;border:0;background:none;border-radius:5px;padding:.4rem .15rem;text-align:left;font-family:var(--lees);font-size:.95rem;color:var(--ink);cursor:pointer}
+.nw-sug button:hover{background:var(--uit-zacht)}
+.nw-sug small{color:var(--muted);font-size:var(--t-klein);white-space:nowrap}
+.nw-voet{margin:.75rem 0 0}
+@media (max-width:640px){.nw{left:8px!important;right:8px;top:auto!important;bottom:calc(70px + env(safe-area-inset-bottom,0px));width:auto;max-width:none}.ag-onder{padding-left:0}}
