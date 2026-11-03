@@ -91,7 +91,7 @@
         ],
         "thuis": {
           "mb": "Toonhoogte",
-          "learn": "de noten op de lijnen (e, g, b, d, f) en tussen de lijnen (f, a, c, e)"
+          "learn": "de noten op en tussen de lijnen"
         },
         "fotos": { "titel": "bessie-smith-1936.jpg@0.5,0.25", "doel": "bandles-leerlingen.jpg", "fase": [ "louis-armstrong.jpg@0.5,0.2", null, "noten-gsleutel.png", "noten-saints.png", null ] },
         "fasen": [
@@ -228,7 +228,7 @@
         "type": "theorie",
         "detail": "Hele, halve, kwart en achtste noot, rusten en teleenheid. Klappen van het blad en een eerste ritmedictee, als opstap naar lesweek 2 van havo 4.",
         "vraag": "Hoe schrijf je een ritme op?",
-        "doel": "Je leest notenwaarden en rusten en noteert een eenvoudig ritme van twee maten.",
+        "doel": "Je leest notenwaarden en rusten en noteert een ritme van twee maten.",
         "criteria": [
           "Ik weet hoeveel tellen een hele, halve, kwart en achtste noot duren",
           "Ik klap een ritme van twee maten van het blad",
@@ -615,7 +615,7 @@
             }
           },
           {
-            "min": 10, "soort": "uitleg", "kop": "Het schema van twaalf maten",
+            "min": 10, "soort": "uitleg", "kop": "Twaalf maten",
             "stappen": [
               "Drie regels van vier maten, vier tellen per maat.",
               "Maat 12 is G. Bij het slot wordt dat C.",
@@ -857,7 +857,7 @@
         "type": "theorie",
         "detail": "Echte fragmenten en vragen uit het centraal examen havo 2015, blok 1: Jazz in the present tense van The Solsonics. Wat je hoort in woorden en begrippen zetten.",
         "vraag": "Hoe beschrijf je wat je hoort?",
-        "doel": "Je beschrijft een fragment met de acht aandachtspunten en beantwoordt vragen zoals in de luistertoets.",
+        "doel": "Je beschrijft een fragment en beantwoordt vragen zoals in de luistertoets.",
         "criteria": [
           "Ik noem de punten waarop je kunt letten bij het luisteren",
           "Ik beschrijf eerst in eigen woorden en zoek dan de term",
@@ -1012,7 +1012,7 @@
           "Mijn riff past in het schema",
           "Ik weet wat ik in september ga doen"
         ],
-        "identiteit": "In een band heeft iedereen een eigen partij en is iedereen nodig. Luisteren naar de ander hoort daarbij.",
+        "identiteit": "In een band heeft iedereen een eigen partij en is iedereen nodig.",
         "benodigd": [
           "Keyboards, gitaren, ukeleles, bas en slagwerk",
           "Metronoom op het bord of de telefoon",
