@@ -1,4 +1,4 @@
-// Statische server voor Lesdag (public/) om lokaal te testen; launch-entries `lesdag-proef` en `lesdag-proef-nu`.
+// Statische server voor Lesdag (public/) om lokaal te testen; launch-entry `lesdag-proef`.
 // Gebruik: node serve-lokaal.js [map] [poort]; zonder map de public/ naast deze tools, poort anders uit PORT of 8732.
 const http = require('http'), fs = require('fs'), path = require('path');
 const root = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, '..', 'public');
