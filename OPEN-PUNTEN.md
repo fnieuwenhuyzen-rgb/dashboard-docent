@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 3 november 2026 (afvinken, minuten en afspraken gebouwd, nog niet online). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 3 november 2026 (afvinken, minuten en afspraken live). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
@@ -81,7 +81,7 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 
 - [ ] **Blok Blijft liggen (2-11):** boven de agenda op Vandaag, met teller in het menu. Gemiste geplande taken en voorbije deadlines (eigen, sectie, koor) tot ze klaar, opnieuw gepland of uitgesteld zijn (`S.uitgesteld`). Lokaal getest met nagebootste klok; online sinds 2-11, nog niet in het echt gebruikt. Taken zonder datum en geplande koor- of presentatietaken van een voorbije dag blijven bewust buiten het blok. `proef-nu` heeft dit niet.
 
-## Afvinken, minuten en afspraken (3-11, lokaal getest, nog niet online)
+## Afvinken, minuten en afspraken (3-11, lokaal getest, live sinds 3-11)
 
 Vier meldingen van Frans. Gebouwd in `public/app.js` en `app.css`:
 - **Afgevinkte taken komen terug.** Oorzaak in de code: "Presentatie doorlopen" werd per datum onthouden, dus dezelfde les kwam terug bij een parallelgroep of als hij doorschoof. Nu per les (`presAf`, `zetDagTaak`, 120 dagen terug). Verwijderen van een geplande sectie-, koor- of reclametaak haalt alleen de planning weg; de melding zegt dat nu.

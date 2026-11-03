@@ -689,3 +689,18 @@ body.kompasvenster .top{display:none}
 .nu-rec:hover b{color:var(--paars)}
 .ens-meld .taak{display:grid;grid-template-columns:minmax(0,1fr);gap:.35rem} /* smalle kolom: de knoppen onder de taak, zodat de titel leesbaar blijft */
 .ens-meld .taak .tb{justify-content:flex-start;flex-wrap:wrap}
+
+/* afspraken, minuten en de vraag na het afvinken */
+.ag-afspraak{background:var(--theorie);color:var(--theorie-ink);border-left:3px solid currentColor}
+.nl-r[data-s=afspraak] b{font-weight:700}
+.minveld{display:inline-flex;align-items:center;gap:.25rem;font-size:var(--t-klein);white-space:nowrap}
+.minveld input{width:3.7rem;min-height:32px;padding:.1rem .3rem;font:inherit;text-align:right}
+.duurvraag{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));z-index:69;width:min(32rem,calc(100% - 2rem));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.duurvraag[hidden]{display:none}
+.duurvraag p{margin:0 0 .5rem}
+.duurvraag .knoppen{flex-wrap:wrap;align-items:center}
+.tabelscroll{overflow-x:auto}
+.duurtabel{width:100%;border-collapse:collapse;margin:.5rem 0}
+.duurtabel th,.duurtabel td{text-align:left;padding:.3rem .4rem;border-bottom:1px solid var(--line)}
+.duurtabel input{width:4.2rem;min-height:32px;padding:.1rem .3rem;font:inherit;text-align:right}
+@media (max-width:640px){.taak{grid-template-columns:minmax(0,1fr)}.taak .tb{flex-wrap:wrap}}
