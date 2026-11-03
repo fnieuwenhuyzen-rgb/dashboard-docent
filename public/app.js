@@ -533,7 +533,7 @@ function reclameActs() {
     const eigen = (S.reclame || {})[a.id] || {}; const r = Object.assign({}, a, seed[a.id] || {});
     for (const [k, v] of Object.entries(eigen)) if (v !== undefined && v !== null) r[k] = v;
     if (eigen.d) r.uitLeergang = ''; if (eigen.aanvang) r.alleenVerzamel = false;
-    r.doel = r.soort === 'excursie' && r.sluit && r.sluit < r.d ? r.sluit : r.d; // excursie: reclame richt zich op de sluitdatum van het aanmelden
+    r.doel = (r.soort === 'excursie' || r.toegang === 'ticket') && r.sluit && r.sluit < r.d ? r.sluit : r.d; // excursie en tickets: reclame richt zich op de sluitdatum van het aanmelden of bestellen
     return r;
   }).filter(a => a.d).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
 }
@@ -564,7 +564,10 @@ function recWaarschuwingen(a) {
   if (a.uitLeergang) w.push(`Datum uit de leergang (${a.uitLeergang}). Vul de echte datum in.`);
   if (!a.aanvang) w.push(a.alleenVerzamel ? 'In de koorapp staat alleen de verzameltijd. Vul de aanvang voor het publiek in.' : 'Aanvangstijd ontbreekt.');
   if (!a.plaats) w.push('Plaats ontbreekt.');
-  if (a.soort === 'excursie' && !a.sluit) w.push('Nog geen sluitdatum voor het aanmelden.');
+  if (a.toegang === 'ticket') {
+    if (!a.aanmeldlink) w.push('Website voor de tickets ontbreekt.');
+    if (!a.kosten) w.push('Prijs van de tickets ontbreekt.');
+  } else if (a.soort === 'excursie' && !a.sluit) w.push('Nog geen sluitdatum voor het aanmelden.');
   return w;
 }
 function recMomentRij(m, metLink) {
@@ -585,7 +588,8 @@ function recKaart(a) {
       <div class="rij">${veld('d', 'Datum', 'date')}${veld('aanvang', 'Aanvang', 'time')}${veld('eind', 'Einde', 'time')}<label>Soort<select data-recveld="${id}|soort">${Object.entries(RSOORT).map(([k, n]) => `<option value="${k}"${a.soort === k ? ' selected' : ''}>${n}</option>`).join('')}</select></label></div>
       ${veld('plaats', 'Plaats')}
       <label>Wervende zin <textarea data-recveld="${id}|zin" rows="2">${v('zin')}</textarea></label>
-      ${a.soort === 'excursie' ? `<div class="rij">${veld('sluit', 'Aanmelden tot en met', 'date')}${veld('kosten', 'Kosten')}</div>${veld('aanmeldlink', 'Aanmelden via (link of plek)')}` : ''}
+      <label>Toegang<select data-recveld="${id}|toegang"><option value="">zonder tickets</option><option value="ticket"${a.toegang === 'ticket' ? ' selected' : ''}>met tickets</option></select></label>
+      ${a.toegang === 'ticket' ? `<div class="rij">${veld('sluit', 'Bestellen tot en met', 'date')}${veld('kosten', 'Prijs', 'text', ' placeholder="€ 12,50"')}</div>${veld('aanmeldlink', 'Website voor de tickets')}` : a.soort === 'excursie' ? `<div class="rij">${veld('sluit', 'Aanmelden tot en met', 'date')}${veld('kosten', 'Kosten')}</div>${veld('aanmeldlink', 'Aanmelden via (link of plek)')}` : ''}
     </div></details>
     <label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
     <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>
@@ -598,7 +602,7 @@ function viewReclame() {
   const binnenkort = a => recAlles || a.id === recFocus || (!a.uit && (a.d <= addD(t, 70) || reclameMomenten(a).some(m => !m.af && !m.verlopen && m.d <= addD(t, 42))));
   const nu = reclameOpen(addD(t, 7));
   let h = `<div class="kop"><div><h1>Reclame</h1><div class="sub">Weekinfo op maandag, inleveren tot ${esc(RC.weekinfo.inleverenTot)} · borden staand · mail naar ${esc(RC.mail)}</div></div><div class="knoppen"><button class="btn" data-recalles="" aria-pressed="${recAlles}">hele jaar</button></div></div>`;
-  h += `<div class="kaart"><h2>Te doen, komende week</h2>${nu.length ? nu.map(m => recMomentRij(m, true)).join('') : '<p class="leeg">Niets deze week.</p>'}<p class="sub" style="margin-top:.5rem">Ritme: weekinfo twee weken vooraf en in de week zelf, bord vanaf drie weken vooraf. Bij een excursie met een sluitdatum rekent Lesdag vanaf die datum.</p></div>`;
+  h += `<div class="kaart"><h2>Te doen, komende week</h2>${nu.length ? nu.map(m => recMomentRij(m, true)).join('') : '<p class="leeg">Niets deze week.</p>'}<p class="sub" style="margin-top:.5rem">Ritme: weekinfo twee weken vooraf en in de week zelf, bord vanaf drie weken vooraf. Bij een excursie of tickets met een sluitdatum rekent Lesdag vanaf die datum.</p></div>`;
   const vol = acts.filter(binnenkort), later = acts.filter(a => !binnenkort(a));
   h += vol.map(recKaart).join('');
   if (later.length) h += `<div class="kaart"><h2>Later dit schooljaar</h2>${later.map(a => `<div class="taak"><span><b style="font-family:var(--kop)">${esc(fmtD(a.d))}</b> ${esc(a.titel)} <span class="chip">${esc(RSOORT[a.soort] || a.soort)}</span>${a.uit ? ' <span class="chip">geen reclame</span>' : ''}</span><span class="tb"><button class="btn klein" data-recnaar="${esc(a.id)}">Open</button></span></div>`).join('')}</div>`;
@@ -609,7 +613,7 @@ const recBeeldCache = {};
 async function recBeelden() { // voorbeelden van de borden tekenen na het renderen
   for (const img of document.querySelectorAll('img[data-recimg]')) {
     const a = reclameActs().find(x => x.id === img.dataset.recimg); if (!a) continue;
-    const k = JSON.stringify([a.titel, a.ondertitel, a.d, a.aanvang, a.eind, a.plaats, a.zin, a.soort, a.sluit]);
+    const k = JSON.stringify([a.titel, a.ondertitel, a.d, a.aanvang, a.eind, a.plaats, a.zin, a.soort, a.sluit, a.toegang, a.kosten, a.aanmeldlink]);
     if (!recBeeldCache[k]) { try { const c = await RECLAME.beeld(a, 'bord'); const s = document.createElement('canvas'); s.width = 270; s.height = 480; s.getContext('2d').drawImage(c, 0, 0, 270, 480); recBeeldCache[k] = s.toDataURL('image/png'); } catch (e) { console.warn(e); continue; } }
     img.src = recBeeldCache[k];
   }

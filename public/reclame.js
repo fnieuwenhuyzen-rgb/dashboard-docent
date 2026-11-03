@@ -1,5 +1,5 @@
 /* Reclame voor weekinfo en borden: concepttekst, mailtekst, afbeelding (canvas) en staande dia (pptx).
-   Werkt met een genormaliseerde activiteit uit app.js: {id, soort: koor|muziek|excursie|examen, titel, ondertitel, d, aanvang, eind, plaats, zin, sluit, aanmeldlink, kosten, wie}.
+   Werkt met een genormaliseerde activiteit uit app.js: {id, soort: koor|muziek|excursie|examen, titel, ondertitel, d, aanvang, eind, plaats, zin, sluit, aanmeldlink, kosten, wie, toegang}. Met toegang 'ticket' zijn aanmeldlink, sluit en kosten de website, de besteldatum en de prijs.
    Huisstijl CSG Prins Maurits: paars #5B247F, rood #C5002E, alles in Encode Sans, koppen vet. Geen foto's. */
 (() => {
 'use strict';
@@ -14,6 +14,14 @@ const kort = s => { const d = dOf(s); return `${DAG[d.getDay()]} ${d.getDate()} 
 const lang = s => { const d = dOf(s); return `${DAGLANG[d.getDay()]} ${d.getDate()} ${MNDLANG[d.getMonth()]}`; };
 const tijdNL = t => t ? String(t).replace(':', '.') : '';
 const tijdRegel = a => a.aanvang ? (a.eind ? `${tijdNL(a.aanvang)} tot ${tijdNL(a.eind)} uur` : `${tijdNL(a.aanvang)} uur`) : '';
+const isTicket = a => a.toegang === 'ticket';
+const kortLink = l => String(l || '').trim().replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, '');
+function ticketUrl(a) { // volledige link voor de QR-code; '' als het geen website is
+  if (!isTicket(a)) return '';
+  let l = String(a.aanmeldlink || '').trim();
+  if (!/^https?:\/\//i.test(l)) { if (!/^[\w-]+(\.[\w-]+)+([\/?#]|$)/.test(l)) return ''; l = 'https://' + l; }
+  try { return new URL(l).href; } catch (e) { return ''; }
+}
 const LABEL = { koor: 'Prins Mauritskoor', muziek: 'Muziek', excursie: 'Excursie muziek', examen: 'Muziek · examen' };
 
 /* ---------- teksten ---------- */
@@ -25,11 +33,12 @@ function zinVan(a) {
   return '';
 }
 function slotVan(a) {
+  if (isTicket(a)) return 'Bestel op tijd en neem gerust iemand mee!';
   return { koor: 'Iedereen is welkom. Neem gerust iemand mee!', examen: 'Kom luisteren en moedig ze aan!', excursie: 'Ga je mee?', muziek: 'Iedereen is welkom!' }[a.soort] || '';
 }
 function aanmeldRegel(a) {
-  if (!a.sluit && !a.aanmeldlink) return '';
-  return 'Aanmelden' + (a.aanmeldlink ? ' via ' + a.aanmeldlink : '') + (a.sluit ? ', uiterlijk ' + lang(a.sluit) : '') + '.';
+  if (!isTicket(a) && a.soort !== 'excursie' || !a.sluit && !a.aanmeldlink) return '';
+  return (isTicket(a) ? 'Tickets bestellen' : 'Aanmelden') + (a.aanmeldlink ? ' via ' + a.aanmeldlink : '') + (a.sluit ? ', uiterlijk ' + lang(a.sluit) : '') + '.';
 }
 function tekst(a) { // concept voor de weekinfo: kop, wervende zin, wanneer en waar, slot. Korte zinnen, geen gedachtestreepjes.
   const r = [a.titel, ''];
@@ -38,7 +47,7 @@ function tekst(a) { // concept voor de weekinfo: kop, wervende zin, wanneer en w
   r.push('Wanneer: ' + lang(a.d) + (t ? ', ' + t : ''));
   if (a.plaats) r.push('Waar: ' + a.plaats);
   const am = aanmeldRegel(a); if (am) r.push(am);
-  if (a.kosten) r.push('Kosten: ' + a.kosten);
+  if (a.kosten && (isTicket(a) || a.soort === 'excursie')) r.push((isTicket(a) ? 'Prijs: ' : 'Kosten: ') + a.kosten);
   r.push('', slotVan(a));
   return r.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
@@ -48,7 +57,7 @@ function mailWeekinfo(a, maandag, txt, afzender) {
 }
 function mailBord(a, afzender) {
   return { onderwerp: `Bord: ${a.titel} (${kort(a.d)})`,
-    body: `Hoi,\n\nIn de bijlage een staande dia voor de borden in school, voor ${a.titel} op ${lang(a.d)}. Wil je hem laten draaien tot en met ${lang(a.d)}?\n\nGroet,\n${afzender || ''}`.trim() };
+    body: `Hoi,\n\nIn de bijlage een staande dia voor de borden in school, voor ${a.titel} op ${lang(a.d)}. Wil je hem laten draaien tot en met ${lang(a.doel || a.d)}?\n\nGroet,\n${afzender || ''}`.trim() };
 }
 const veilig = s => String(s || '').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, ' ').trim();
 const bestand = (a, soort) => `${soort === 'bord' ? 'Bord' : 'Weekinfo'} ${veilig(a.titel)} ${a.d}.${soort === 'bord' ? 'pptx' : 'png'}`;
@@ -72,7 +81,12 @@ function spatie(ctx, txt, x, y, sp) { // tekst met letterafstand
   if (ctx.letterSpacing !== undefined) { ctx.letterSpacing = sp + 'px'; ctx.fillText(txt, x, y); ctx.letterSpacing = '0px'; return; }
   let cx = x; for (const c of txt) { ctx.fillText(c, cx, y); cx += ctx.measureText(c).width + sp; }
 }
+function ticketRegels(ctx, a, maxW, max, min) { // prijs en website, vet; een link die ook op de kleinste maat niet past, blijft weg (hij staat in de tekst)
+  if (!isTicket(a)) return [];
+  return [['Tickets', a.kosten].filter(Boolean).join(' '), kortLink(a.aanmeldlink)].filter(Boolean).map(txt => ({ txt, s: pas(ctx, txt, s => `700 ${s}px ${KOP}`, max, min, maxW, 1).s })).filter(r => { ctx.font = `700 ${r.s}px ${KOP}`; return ctx.measureText(r.txt).width <= maxW; });
+}
 function cta(a) { // tekst in de rode hoek
+  if (isTicket(a)) return a.sluit ? ['Tickets', 't/m ' + kort(a.sluit)] : ['Tickets', 'bestellen'];
   if (a.soort === 'excursie') return a.sluit ? ['Aanmelden', 't/m ' + kort(a.sluit)] : ['Ga je mee?'];
   if (a.soort === 'examen') return ['Kom', 'luisteren!'];
   return ['Iedereen', 'welkom'];
@@ -84,23 +98,32 @@ function hoek(ctx, a, W, H, wb, hb, max, pad) { // rode hoek rechtsonder; de opr
   let s = max; for (; s > 30; s -= 2) { ctx.font = `900 ${s}px ${KOP}`; const ok = C.every((l, i) => { const base = H - pad - (C.length - 1 - i) * s * 1.02; return W - pad - ctx.measureText(l).width >= links(base - s * 0.74); }); if (ok) break; }
   ctx.fillStyle = '#fff'; ctx.textAlign = 'right'; C.forEach((l, i) => ctx.fillText(l, W - pad, H - pad - (C.length - 1 - i) * s * 1.02)); ctx.textAlign = 'left';
 }
-function bord(ctx, a, W, H) { // staand paneel 1080 x 1920; alles boven de rode hoek
+function qrTeken(ctx, q, x, y, maat) { // zwart op wit met vrije rand, hele pixels per blokje: dan blijft hij scanbaar
+  const n = q.getModuleCount(), c = Math.floor(maat / (n + 8)), o = Math.floor((maat - c * n) / 2);
+  ctx.fillStyle = '#fff'; ctx.fillRect(x, y, maat, maat); ctx.fillStyle = '#000';
+  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) ctx.fillRect(x + o + k * c, y + o + r * c, c, c);
+}
+function bord(ctx, a, W, H, q) { // staand paneel 1080 x 1920; alles boven de rode hoek. Met een QR-code staat die op de plek van de wervende zin
   const M = 76, GRENS = H - 560; ctx.fillStyle = PAPIER; ctx.fillRect(0, 0, W, H);
   vorm(ctx, [[0, 0], [W, 0], [W, 190], [0, 330]], ROOD);
   ctx.fillStyle = '#fff'; ctx.font = `700 42px ${KOP}`; ctx.textBaseline = 'alphabetic'; spatie(ctx, 'CSG PRINS MAURITS', M, 112, 5);
-  const info = [tijdRegel(a), a.plaats].filter(Boolean).join(' · '); const z = zinVan(a);
+  const info = [tijdRegel(a), a.plaats].filter(Boolean).join(' · '); let z = q ? '' : zinVan(a);
+  const TK = ticketRegels(ctx, a, W - 2 * M, 54, 30);
   const WB = 900, HB = 520; const hoekLinks = y => y <= H - HB ? W : W - WB * (y - (H - HB)) / HB;
   const maak = (tmax, zs) => { // opmaak bij een titel- en zinmaat; past = alles blijft vrij van de rode hoek
     const T = pas(ctx, a.titel, s => `900 ${s}px ${KOP}`, tmax, 90, W - 2 * M, 3);
     let y = 470 + T.s * 0.95 + (T.L.length - 1) * T.s * 0.9; const ond = a.ondertitel ? (y += 92) : 0;
-    const top = y + 150; ctx.font = `400 54px ${TEKST}`; const iL = regels(ctx, info, W - 2 * M).slice(0, 3); const hoog = 230 + iL.length * 66;
+    const top = y + 150; ctx.font = `400 54px ${TEKST}`; const iL = regels(ctx, info, W - 2 * M).slice(0, 3); const hoog = 230 + (iL.length + TK.length) * 66;
     const Z = z ? pas(ctx, z, s => `400 ${s}px ${TEKST}`, zs, zs, W - 2 * M - 40, 6) : { s: 0, L: [] };
     let past = top + hoog <= H - HB - 20; ctx.font = `400 ${Z.s}px ${TEKST}`;
     Z.L.forEach((l, i) => { const yb = top + hoog + 150 + i * Z.s * 1.25; if (yb > H - 70 || M + ctx.measureText(l).width > hoekLinks(yb) - 24) past = false; });
-    return { T, ond, top, iL, hoog, Z, past };
+    let qs = 0; const qy = top + hoog + 90;
+    if (q) { for (let s = 400; s >= 280 && !qs; s -= 20) if (qy + s <= H - 70 && M + s <= hoekLinks(qy + s) - 24) qs = s; if (!qs || qs < 400 && tmax > 100) past = false; }
+    return { T, ond, top, iL, hoog, Z, past, qs, qy };
   };
   let L = null;
-  zoek: for (let tmax = 230; tmax >= 100; tmax -= 10) for (let zs = 62; zs >= 40; zs -= 4) { L = maak(tmax, zs); if (L.past) break zoek; }
+  const zoek = () => { for (let tmax = 230; tmax >= 100; tmax -= 10) for (let zs = 62; zs >= 40; zs -= 4) { L = maak(tmax, zs); if (L.past) return; } };
+  zoek(); if (!L.past && z) { z = ''; zoek(); } // past het niet, dan vervalt de wervende zin (die staat in de weekinfo)
   ctx.fillStyle = ROOD; ctx.font = `700 46px ${KOP}`; spatie(ctx, LABEL[a.soort].toUpperCase(), M, 470, 6);
   ctx.fillStyle = PAARS; ctx.font = `900 ${L.T.s}px ${KOP}`; L.T.L.forEach((l, i) => ctx.fillText(l, M - 4, 470 + L.T.s * 0.95 + i * L.T.s * 0.9));
   if (L.ond) { ctx.fillStyle = GRIJS; ctx.font = `400 68px ${TEKST}`; ctx.fillText(a.ondertitel, M, L.ond); }
@@ -108,10 +131,16 @@ function bord(ctx, a, W, H) { // staand paneel 1080 x 1920; alles boven de rode 
   vorm(ctx, [[0, top + 40], [W, top], [W, top + L.hoog], [0, top + L.hoog + 40]], PAARS);
   ctx.fillStyle = '#fff'; const D = pas(ctx, kort(a.d).toUpperCase(), s => `900 ${s}px ${KOP}`, 150, 90, W - 2 * M, 1); ctx.fillText(D.L[0], M - 4, top + 190);
   ctx.font = `400 54px ${TEKST}`; L.iL.forEach((l, i) => ctx.fillText(l, M, top + 270 + i * 66));
+  TK.forEach((r, i) => { ctx.font = `700 ${r.s}px ${KOP}`; ctx.fillText(r.txt, M, top + 270 + (L.iL.length + i) * 66); });
   ctx.fillStyle = INKT; ctx.font = `400 ${L.Z.s}px ${TEKST}`; L.Z.L.forEach((l, i) => ctx.fillText(l, M, top + L.hoog + 150 + i * L.Z.s * 1.25));
+  if (L.qs) {
+    qrTeken(ctx, q, M, L.qy, L.qs);
+    const x = M + L.qs + 40; ctx.fillStyle = PAARS; ctx.font = `900 62px ${KOP}`;
+    ['Scan en', 'bestel'].forEach((l, i) => ctx.fillText(l, x, L.qy + 62 + i * 72));
+  }
   hoek(ctx, a, W, H, WB, HB, 92, 64);
 }
-function weekinfo(ctx, a, W, H) { // liggend 1600 x 900
+function weekinfo(ctx, a, W, H, q) { // liggend 1600 x 900
   const M = 80; ctx.fillStyle = PAPIER; ctx.fillRect(0, 0, W, H);
   vorm(ctx, [[0, 0], [W, 0], [W, 60], [0, 130]], ROOD);
   ctx.fillStyle = '#fff'; ctx.font = `700 32px ${KOP}`; ctx.textBaseline = 'alphabetic'; spatie(ctx, 'CSG PRINS MAURITS', M, 72, 4);
@@ -129,13 +158,24 @@ function weekinfo(ctx, a, W, H) { // liggend 1600 x 900
   ctx.fillStyle = INKT; ctx.font = `400 ${Z.s}px ${TEKST}`; Z.L.forEach((l, i) => ctx.fillText(l, M, y + 90 + i * Z.s * 1.25));
   const dx = R + 70; ctx.fillStyle = '#fff'; const D = pas(ctx, kort(a.d).toUpperCase(), s => `900 ${s}px ${KOP}`, 112, 60, W - dx - 50, 1); ctx.fillText(D.L[0], dx, 290);
   ctx.font = `400 44px ${TEKST}`; let iy = 380; for (const l of [tijdRegel(a), a.plaats].filter(Boolean)) for (const r of regels(ctx, l, W - dx - 60).slice(0, 3)) { ctx.fillText(r, dx, iy); iy += 56; }
+  for (const r of ticketRegels(ctx, a, W - dx - 60, 44, 28)) { ctx.font = `700 ${r.s}px ${KOP}`; ctx.fillText(r.txt, dx, iy); iy += 56; }
+  if (q) for (let s = 200; s >= 130; s -= 10) { const y = iy - 24; if (y + s <= H - 24 && dx + s < W - 640 * (y + s - (H - 300)) / 300 - 16) { qrTeken(ctx, q, dx, y, s); break; } }
   hoek(ctx, a, W, H, 640, 300, 56, 44);
 }
 async function beeld(a, soort) {
   await fontsKlaar();
   const c = document.createElement('canvas'); const [W, H] = soort === 'bord' ? [1080, 1920] : [1600, 900];
   c.width = W; c.height = H; const ctx = c.getContext('2d');
-  (soort === 'bord' ? bord : weekinfo)(ctx, a, W, H); return c;
+  (soort === 'bord' ? bord : weekinfo)(ctx, a, W, H, await qrVan(a)); return c;
+}
+let qrLaden = null;
+function laadQr() {
+  if (window.qrcode) return Promise.resolve();
+  return qrLaden = qrLaden || new Promise((ok, fout) => { const s = document.createElement('script'); s.src = 'vendor/qrcode.js'; s.onload = ok; s.onerror = () => { qrLaden = null; fout(new Error('qr-bibliotheek niet geladen')); }; document.head.append(s); });
+}
+async function qrVan(a) { // lukt het niet, dan zonder QR-code: de website staat ook in de tekst
+  const u = ticketUrl(a); if (!u) return null;
+  try { await laadQr(); const q = window.qrcode(0, 'M'); q.addData(u); q.make(); return q; } catch (e) { console.warn(e); return null; }
 }
 const png = c => new Promise(r => c.toBlob(r, 'image/png'));
 let pptxLaden = null;
