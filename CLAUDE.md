@@ -1,6 +1,6 @@
 # Lesdag
 
-Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins Maurits). Vanilla JS-PWA zonder build: Vandaag en Week als agenda, Lesmodus (digibord), Groepen, Rooster, Sectie, Instellingen, Beoordelen. Frans schrijft Nederlands: korte zinnen, informeel.
+Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins Maurits). Vanilla JS-PWA zonder build: Vandaag en Week als agenda, Lesmodus (digibord), Groepen, Rooster, Sectie, Reclame, Instellingen, Beoordelen. Frans schrijft Nederlands: korte zinnen, informeel.
 
 **Lees na dit bestand:** `OPEN-PUNTEN.md` (werkvoorraad). Lange achtergrond en geschiedenis: `handboek/overdracht-tot-2026-10-29.md`. Zoek daar eerst de koppen (`grep -n "^## "`) en lees alleen de sectie die je nodig hebt.
 
@@ -47,5 +47,6 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 ## Opbouw van de code (kort)
 
 - `public/app.js`: alles behalve de lesmodus. Agenda: `dagItems`, `agendaRaster`, `agPaneel`, `planKaart`. Koor: `koorOp`, `koorKaart`. Beoordelen: `viewBeoordelen`, `bmExport` (route `#beoordelen/<model>/<groep>`). Service worker `public/sw.js`: verhoog `CACHE` bij elke wijziging in de vaste bestandenlijst.
+- `public/reclame.js` + `public/data/reclame.json`: reclame voor weekinfo en borden (tekst, afbeelding, staande pptx). Taken en tabblad Reclame staan in `app.js` (`reclameActs`, `reclameMomenten`, `reclameOpen`, `viewReclame`).
 - `public/lesmodus.js`: digibordpresentatie (fasen als objecten `{min, soort, kop, stappen, klaar, docent, beeld}`).
 - `tools/`: lesinhoud (`inhoud-*.json` + `merge-inhoud.js`), presentaties (`lesdeck.js`, `maak-decks-*.js`), SharePoint-links (`sp.js`), koor (`koor-sync.js`), beoordeling (`beoordeling/`). Na `merge-inhoud.js --force` altijd `beoordeling/koppel-beoordeling.js` opnieuw draaien.

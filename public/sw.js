@@ -1,6 +1,6 @@
 // Offline: de app en de leergangen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v12';
-const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'bm-reken.js', 'bm-pdf.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json',
+const CACHE = 'lesdag-v13';
+const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'vendor/fonts/EncodeSans-Light.ttf', 'vendor/fonts/EncodeSans-Bold.ttf', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

@@ -41,7 +41,7 @@ function vrijReden(s) {
 const maandagVan = s => { const d = dOf(s); const w = (d.getDay() + 6) % 7; return addD(s, -w); };
 
 /* ---------- staat ---------- */
-function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, uitgesteld: {}, afwezig: {}, ankers: {}, afwijkingen: [], beoord: { lijsten: {}, toetsen: {} } }; }
+function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, reclame: {}, reclameAf: {}, reclameExtra: [], uitgesteld: {}, afwezig: {}, ankers: {}, afwijkingen: [], beoord: { lijsten: {}, toetsen: {} } }; }
 function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 function bewaar(stil) {
   S.updated = Date.now();
@@ -390,12 +390,13 @@ function benodigd(l) {
 }
 
 /* ---------- weergave: algemeen ---------- */
-const ROUTES = [['vandaag', 'Vandaag'], ['week', 'Week'], ['groepen', 'Groepen'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['instellingen', 'Instellingen']];
+const ROUTES = [['vandaag', 'Vandaag'], ['week', 'Week'], ['groepen', 'Groepen'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['reclame', 'Reclame'], ['instellingen', 'Instellingen']];
 function render() {
-  const liggen = blijftLiggen().length;
-  $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k ? 'aria-current="page"' : ''}>${n}${k === 'vandaag' && liggen ? ` <span class="nav-tel" title="${liggen} ${liggen === 1 ? 'taak blijft' : 'taken blijven'} liggen">${liggen}</span>` : ''}</a>`).join('');
-  const f = { vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, instellingen: viewInstellingen, beoordelen: viewBeoordelen }[route.naam] || viewVandaag;
+  const liggen = blijftLiggen().length; const recNu = reclameOpen(vandaag()).length;
+  $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k ? 'aria-current="page"' : ''}>${n}${k === 'vandaag' && liggen ? ` <span class="nav-tel" title="${liggen} ${liggen === 1 ? 'taak blijft' : 'taken blijven'} liggen">${liggen}</span>` : ''}${k === 'reclame' && recNu ? ` <span class="nav-tel" title="${recNu} reclame vandaag of eerder">${recNu}</span>` : ''}</a>`).join('');
+  const f = { vandaag: viewVandaag, week: viewWeek, groepen: viewGroepen, rooster: viewRooster, sectie: viewSectie, reclame: viewReclame, instellingen: viewInstellingen, beoordelen: viewBeoordelen }[route.naam] || viewVandaag;
   $('#main').innerHTML = f();
+  if (route.naam === 'reclame') { recBeelden(); if (recFocus) { const el = document.getElementById('rec-' + recVeilig(recFocus)); if (el) el.scrollIntoView({ block: 'start' }); recFocus = ''; } }
 }
 function toast(t, terug) { // met terug: 8 seconden een knop om het ongedaan te maken
   const el = $('#toast'); el.textContent = t; toast.terug = terug || null;
@@ -464,7 +465,123 @@ function koorOp(s) {
 }
 const koorNaam = k => k.type === 'concert' ? 'Concert: ' + (k.concert || k.titel) : k.type === 'extra' ? 'Extra koorrepetitie' : 'Schoolkoor';
 function koorTakenOpen(s) { const G = geplandeSleutels(); return ((B.koor || {}).taken || []).filter(t => !S.koorAf[t.id] && !G.koor[t.id] && (!t.d || t.d <= addD(s, 21))); }
-function geplandeSleutels() { const sec = {}, pres = {}, koor = {}; (S.taken || []).forEach(k => { if (k.sectieId) sec[k.sectieId] = k; if (k.koorId) koor[k.koorId] = k; if (k.dagTaak) pres[k.dagTaak.dag + '|' + k.dagTaak.key] = k; }); return { sec, pres, koor }; }
+function geplandeSleutels() { const sec = {}, pres = {}, koor = {}, rec = {}; (S.taken || []).forEach(k => { if (k.sectieId) sec[k.sectieId] = k; if (k.koorId) koor[k.koorId] = k; if (k.reclameId) rec[k.reclameId] = k; if (k.dagTaak) pres[k.dagTaak.dag + '|' + k.dagTaak.key] = k; }); return { sec, pres, koor, rec }; }
+/* ---------- reclame: weekinfo (maandag, inleveren tot 14:00) en borden in school ----------
+   Activiteiten: koorconcerten (Koorapp), muziekactiviteiten uit de sectieplanning, examenconcerten (leergang) en eigen activiteiten.
+   Aanvullingen per activiteit in data/reclame.json; wat Frans aanpast staat in S.reclame (gaat voor). Afgevinkt: S.reclameAf. */
+let RC = null;
+const RSOORT = { koor: 'koor', muziek: 'muziek', excursie: 'excursie', examen: 'examenconcert' };
+const recVeilig = id => String(id).replace(/[^a-z0-9]/gi, '-');
+function reclameActs() {
+  if (!RC || !B || !S) return [];
+  const basis = []; const seed = RC.activiteiten || {};
+  ((B.koor || {}).agenda || []).filter(k => k.type === 'concert').forEach(k => basis.push({ id: 'koor:' + k.d, soort: 'koor', titel: k.concert || k.titel, d: k.d, plaats: k.plaats || '', aanvang: k.tijdUitPraktisch ? '' : k.van || '', eind: k.tijdUitPraktisch ? '' : k.tot || '', alleenVerzamel: !!k.tijdUitPraktisch }));
+  (B.sectie || []).filter(i => i.soort === 'muziek' && !(RC.overslaan || []).includes(i.id)).forEach(i => { const tm = sectieTijd(i); basis.push({ id: 'sec:' + i.id, soort: 'muziek', titel: i.titel, d: i.d, aanvang: tm ? hm(tm.van) : '', eind: tm ? hm(tm.tot) : '', plaats: '' }); });
+  (RC.examenconcerten || []).forEach(x => { const T = ((B.leergangen[x.lg] || {}).toetsen || []).find(t => t.id === x.toets); if (T && T.datum) basis.push({ id: `ex:${x.lg}:${x.toets}`, soort: 'examen', titel: 'Examenconcert ' + lgNaam(x.lg), wie: lgNaam(x.lg), d: T.datum, plaats: '', uitLeergang: T.waar || ('lesweek ' + T.week) }); });
+  (S.reclameExtra || []).forEach(e => basis.push(Object.assign({ eigen: true, plaats: '' }, e)));
+  return basis.map(a => {
+    const eigen = (S.reclame || {})[a.id] || {}; const r = Object.assign({}, a, seed[a.id] || {});
+    for (const [k, v] of Object.entries(eigen)) if (v !== undefined && v !== null) r[k] = v;
+    if (eigen.d) r.uitLeergang = ''; if (eigen.aanvang) r.alleenVerzamel = false;
+    r.doel = r.soort === 'excursie' && r.sluit && r.sluit < r.d ? r.sluit : r.d; // excursie: reclame richt zich op de sluitdatum van het aanmelden
+    return r;
+  }).filter(a => a.d).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+}
+const recVrij = s => dOf(s).getDay() % 6 === 0 || B.vrijeDagen.includes(s) || B.kalender.vakanties.some(v => s >= v.van && s <= v.tot);
+function laatsteSchooldag(s) { let d = s; for (let i = 0; i < 30 && recVrij(d); i++) d = addD(d, -1); return d; }
+function weekinfoMaandag(m) { // in een vakantie verschijnt er geen weekinfo: dan de maandag ervoor. Is de maandag zelf vrij, dan inleveren op de schooldag ervoor.
+  let x = m; for (let i = 0; i < 6 && B.kalender.vakanties.some(v => x >= v.van && x <= v.tot); i++) x = addD(x, -7);
+  return { maandag: x, d: recVrij(x) ? laatsteSchooldag(x) : x };
+}
+function reclameMomenten(a) {
+  const t = vandaag(); const tot = (RC.weekinfo || {}).inleverenTot || '14:00'; let m0 = maandagVan(a.doel); if (m0 === a.doel) m0 = addD(m0, -7); // op maandag zelf is die weekinfo te laat
+  const out = []; const gezien = {};
+  for (const w of (RC.weekinfo || {}).wekenVooraf || [2, 0]) { const s = weekinfoMaandag(addD(m0, -7 * w)); if (gezien[s.maandag]) continue; gezien[s.maandag] = 1;
+    out.push({ id: a.id + '#wi' + w, a, soort: 'wi', maandag: s.maandag, d: s.d, tot, titel: `Weekinfo ${fmtD(s.maandag)}: ${a.titel}`, kort: `Weekinfo ${fmtD(s.maandag)}` }); }
+  const b = laatsteSchooldag(addD(a.doel, -((RC.bord || {}).dagenVooraf || 21)));
+  out.push({ id: a.id + '#bord', a, soort: 'bord', d: b, titel: `Bord aanleveren: ${a.titel} (${fmtD(a.d)})`, kort: 'Bord' });
+  return out.sort((x, y) => x.d < y.d ? -1 : 1).map(m => Object.assign(m, { af: (S.reclameAf || {})[m.id] || '', verlopen: m.soort === 'wi' ? m.d < t : a.d < t }));
+}
+function reclameOpen(s, G) { // open taken voor activiteiten die nog komen; een gemiste weekinfo is voorbij, een bord kan tot de activiteit
+  G = G || geplandeSleutels(); const t = vandaag(); const out = [];
+  for (const a of reclameActs()) { if (a.uit || a.d < t) continue; for (const m of reclameMomenten(a)) if (!m.af && !m.verlopen && !G.rec[m.id] && (!s || m.d <= s)) out.push(m); }
+  return out.sort((x, y) => x.d < y.d ? -1 : x.d > y.d ? 1 : 0);
+}
+const reclameMoment = id => { const a = reclameActs().find(a => a.id === id.split('#')[0]); return a ? reclameMomenten(a).find(m => m.id === id) : null; };
+const recTekst = a => (a.tekst != null && a.tekst !== '') ? a.tekst : RECLAME.tekst(a);
+function recWaarschuwingen(a) {
+  const w = [];
+  if (a.uitLeergang) w.push(`Datum uit de leergang (${a.uitLeergang}). Vul de echte datum in.`);
+  if (!a.aanvang) w.push(a.alleenVerzamel ? 'In de koorapp staat alleen de verzameltijd. Vul de aanvang voor het publiek in.' : 'Aanvangstijd ontbreekt.');
+  if (!a.plaats) w.push('Plaats ontbreekt.');
+  if (a.soort === 'excursie' && !a.sluit) w.push('Nog geen sluitdatum voor het aanmelden.');
+  return w;
+}
+function recMomentRij(m, metLink) {
+  const t = vandaag(); const st = m.af ? `<span class="chip ok">verstuurd</span>` : m.verlopen ? '<span class="chip">voorbij</span>' : m.d < t ? `<span class="chip rood">te laat</span>` : m.d === t ? `<span class="chip let">vandaag${m.soort === 'wi' ? ' tot ' + esc(m.tot) : ''}</span>` : `<span class="chip">${m.soort === 'wi' ? 'tot ' + esc(fmtD(m.d)) + ' ' + esc(m.tot) : 'vanaf ' + esc(fmtD(m.d))}</span>`;
+  return `<div class="taak ${m.af ? 'af' : ''} ${!m.af && !m.verlopen && m.d < t ? 'laat' : ''}"><label class="chk"><input type="checkbox" data-recvink="${esc(m.id)}" ${m.af ? 'checked' : ''}><span>${esc(metLink ? m.titel : m.kort)}</span></label><span class="tb">${st}${metLink ? `<button class="btn klein" data-recnaar="${esc(m.a.id)}">Open</button>` : m.af || m.verlopen ? '' : `<button class="btn klein" data-recmail="${m.soort}|${esc(m.a.id)}|${esc(m.id)}">Mail</button>`}</span></div>`;
+}
+function recKaart(a) {
+  const t = vandaag(); const M = reclameMomenten(a); const w = recWaarschuwingen(a); const id = esc(a.id); const v = k => esc(a[k] == null ? '' : a[k]);
+  const veld = (k, label, type, extra) => `<label>${label}<input data-recveld="${id}|${k}" type="${type || 'text'}" value="${v(k)}"${extra || ''}></label>`;
+  const eigenTekst = a.tekst != null && a.tekst !== '';
+  return `<div class="kaart reckaart${a.uit ? ' uit' : ''}" id="rec-${recVeilig(a.id)}"><div class="recgrid">
+    <button class="recvoorbeeld" data-recbord="${id}" title="Bord downloaden (pptx)"><img data-recimg="${id}" alt="Voorbeeld van het bord voor ${esc(a.titel)}"></button>
+    <div class="recin"><p class="eyebrow">${esc(RSOORT[a.soort] || a.soort)} · ${esc(fmtLang(a.d))}${a.aanvang ? ' · ' + esc(a.aanvang) : ''}</p><h2>${esc(a.titel)}</h2>
+    ${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : M.map(m => recMomentRij(m)).join('')}
+    ${w.length && !a.uit ? `<div class="melding recwaar">${w.map(esc).join('<br>')}</div>` : ''}
+    <details class="recgeg"${w.length && !a.uit ? ' open' : ''}><summary>Gegevens voor de tekst en het bord</summary><div class="form recvelden">
+      ${veld('titel', 'Titel')}${veld('ondertitel', 'Regel onder de titel (bord)')}
+      <div class="rij">${veld('d', 'Datum', 'date')}${veld('aanvang', 'Aanvang', 'time')}${veld('eind', 'Einde', 'time')}<label>Soort<select data-recveld="${id}|soort">${Object.entries(RSOORT).map(([k, n]) => `<option value="${k}"${a.soort === k ? ' selected' : ''}>${n}</option>`).join('')}</select></label></div>
+      ${veld('plaats', 'Plaats')}
+      <label>Wervende zin <textarea data-recveld="${id}|zin" rows="2">${v('zin')}</textarea></label>
+      ${a.soort === 'excursie' ? `<div class="rij">${veld('sluit', 'Aanmelden tot en met', 'date')}${veld('kosten', 'Kosten')}</div>${veld('aanmeldlink', 'Aanmelden via (link of plek)')}` : ''}
+    </div></details>
+    <label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
+    <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>
+    </div></div></div>`;
+}
+let recAlles = false, recFocus = '';
+function viewReclame() {
+  if (!RC) return `<div class="kop"><div><h1>Reclame</h1></div></div><div class="kaart"><p class="lead">De gegevens voor reclame (data/reclame.json) zijn niet geladen.</p></div>`;
+  const t = vandaag(); const acts = reclameActs().filter(a => a.d >= t);
+  const binnenkort = a => recAlles || a.id === recFocus || (!a.uit && (a.d <= addD(t, 70) || reclameMomenten(a).some(m => !m.af && !m.verlopen && m.d <= addD(t, 42))));
+  const nu = reclameOpen(addD(t, 7));
+  let h = `<div class="kop"><div><h1>Reclame</h1><div class="sub">Weekinfo op maandag, inleveren tot ${esc(RC.weekinfo.inleverenTot)} · borden staand · mail naar ${esc(RC.mail)}</div></div><div class="knoppen"><button class="btn" data-recalles="" aria-pressed="${recAlles}">hele jaar</button></div></div>`;
+  h += `<div class="kaart"><h2>Te doen, komende week</h2>${nu.length ? nu.map(m => recMomentRij(m, true)).join('') : '<p class="leeg">Niets deze week.</p>'}<p class="sub" style="margin-top:.5rem">Ritme: weekinfo twee weken vooraf en in de week zelf, bord vanaf drie weken vooraf. Bij een excursie met een sluitdatum rekent Lesdag vanaf die datum.</p></div>`;
+  const vol = acts.filter(binnenkort), later = acts.filter(a => !binnenkort(a));
+  h += vol.map(recKaart).join('');
+  if (later.length) h += `<div class="kaart"><h2>Later dit schooljaar</h2>${later.map(a => `<div class="taak"><span><b style="font-family:var(--kop)">${esc(fmtD(a.d))}</b> ${esc(a.titel)} <span class="chip">${esc(RSOORT[a.soort] || a.soort)}</span>${a.uit ? ' <span class="chip">geen reclame</span>' : ''}</span><span class="tb"><button class="btn klein" data-recnaar="${esc(a.id)}">Open</button></span></div>`).join('')}</div>`;
+  h += `<form class="kaart form" id="recForm"><h2>Activiteit of excursie toevoegen</h2><div class="rij"><label style="flex:3 1 16rem">Wat <input id="recT" required placeholder="Bijvoorbeeld: excursie Muziekgebouw"></label><label>Datum <input id="recD" type="date" required min="${t}"></label><label>Soort<select id="recS">${Object.entries(RSOORT).map(([k, n]) => `<option value="${k}"${k === 'excursie' ? ' selected' : ''}>${n}</option>`).join('')}</select></label><button class="btn hoofd" type="submit">Toevoegen</button></div></form>`;
+  return h;
+}
+const recBeeldCache = {};
+async function recBeelden() { // voorbeelden van de borden tekenen na het renderen
+  for (const img of document.querySelectorAll('img[data-recimg]')) {
+    const a = reclameActs().find(x => x.id === img.dataset.recimg); if (!a) continue;
+    const k = JSON.stringify([a.titel, a.ondertitel, a.d, a.aanvang, a.eind, a.plaats, a.zin, a.soort, a.sluit]);
+    if (!recBeeldCache[k]) { try { const c = await RECLAME.beeld(a, 'bord'); const s = document.createElement('canvas'); s.width = 270; s.height = 480; s.getContext('2d').drawImage(c, 0, 0, 270, 480); recBeeldCache[k] = s.toDataURL('image/png'); } catch (e) { console.warn(e); continue; } }
+    img.src = recBeeldCache[k];
+  }
+}
+function reclameKaart(m) { // in het agendapaneel
+  const a = m.a; return `<div class="kaart"><p class="eyebrow">Reclame · ${m.soort === 'wi' ? `weekinfo van ${esc(fmtLang(m.maandag))}, inleveren tot ${esc(fmtD(m.d))} ${esc(m.tot)}` : 'bord voor de panelen in school'}</p><h2>${esc(a.titel)}</h2><p class="lead">${esc(fmtLang(a.d))}${a.plaats ? ' · ' + esc(a.plaats) : ''}</p>
+    ${recWaarschuwingen(a).length ? `<div class="melding recwaar">${recWaarschuwingen(a).map(esc).join('<br>')}</div>` : ''}
+    ${m.soort === 'wi' ? `<pre class="recpre">${esc(recTekst(a))}</pre>` : ''}
+    <label class="chk" style="margin:.6rem 0"><input type="checkbox" data-recvink="${esc(m.id)}" ${m.af ? 'checked' : ''}><span>Verstuurd</span></label>
+    <div class="knoppen"><button class="btn hoofd" data-recmail="${m.soort}|${esc(a.id)}|${esc(m.id)}">Mail ${m.soort === 'wi' ? 'weekinfo' : 'bord'}</button><button class="btn" data-recnaar="${esc(a.id)}">Tekst en bord aanpassen</button></div></div>`;
+}
+function recDownload(naam, blob) { const u = URL.createObjectURL(blob); const l = document.createElement('a'); l.href = u; l.download = naam; document.body.append(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 10000); }
+async function recBestand(a, soort) { return soort === 'bord' ? RECLAME.pptx(a, recTekst(a)) : RECLAME.png(await RECLAME.beeld(a, 'weekinfo')); }
+async function recMail(soort, aid, mid) {
+  const a = reclameActs().find(x => x.id === aid); if (!a) return;
+  const M = reclameMomenten(a); const m = M.find(x => x.id === mid) || M.find(x => x.soort === soort && !x.af && !x.verlopen) || M.find(x => x.soort === soort);
+  const naam = RECLAME.bestand(a, soort);
+  try { recDownload(naam, await recBestand(a, soort)); } catch (e) { console.warn(e); toast('De bijlage maken lukt niet'); return; }
+  const ml = soort === 'bord' ? RECLAME.mailBord(a, RC.afzender) : RECLAME.mailWeekinfo(a, m && m.soort === 'wi' ? m.maandag : maandagVan(addD(vandaag(), 7)), recTekst(a), RC.afzender);
+  setTimeout(() => { location.href = `mailto:${RC.mail}?subject=${encodeURIComponent(ml.onderwerp)}&body=${encodeURIComponent(ml.body)}`; }, 400);
+  toast(`Mail staat klaar. Voeg "${naam}" uit Downloads toe als bijlage, en vink af als hij weg is.`);
+}
 function dagItems(s, p) {
   const t = vandaag(); const items = []; const heleDag = []; const G = geplandeSleutels();
   const werkdag = !(p.reden && /vakantie|weekend/i.test(p.reden)) && !S.afwezig[s]; // afwezig: geen koffie en geen werkblokken
@@ -497,6 +614,7 @@ function dagItems(s, p) {
     if (tm && !i.tot && tm.van < AG.tot) items.push({ key: 'sectie:' + i.id, van: tm.van, tot: Math.min(tm.tot, AG.tot), soort: 'sectie', titel: i.titel, sub: i.info || '', i });
     else heleDag.push({ key: 'sectie:' + i.id, soort: 'sectie', titel: (tm ? hm(tm.van) + ' ' : '') + i.titel, i });
   }
+  for (const m of reclameOpen(null, G)) if (m.d === s) heleDag.push({ key: 'rec:' + m.id, soort: 'deadline', titel: (m.soort === 'wi' ? 'tot ' + m.tot + ' ' : '') + m.titel, rec: m });
   for (const k of S.taken || []) {
     if (k.plan && k.plan.dag === s) items.push({ key: 'taak:' + k.id, van: minuten(k.plan.van), tot: minuten(k.plan.tot), soort: k.af ? 'taakaf' : planVoorbij(k) ? 'taakgemist' : 'taak', titel: k.titel, sub: planVoorbij(k) ? 'gemist' : BRON[k.bron] || '', k });
     else if (!k.plan && !k.af && k.d === s) heleDag.push({ key: 'taak:' + k.id, soort: 'deadline', titel: k.titel, k });
@@ -553,9 +671,10 @@ function agPaneel(s, p, A, sel) {
   if (it.soort === 'start') { const eerste = A.items.find(x => x.soort === 'les'); return `<div class="kaart"><p class="eyebrow">${tijd}</p><h2>Koffie en opstarten</h2><p class="lead">${eerste ? `Eerste les om ${hm(eerste.van)}: ${esc(eerste.titel)}.` : 'Geen lessen vandaag.'} Om 8:30 begint je eerste werkblok.</p></div>`; }
   if (it.soort === 'vrij') return planKaart(s, p, it);
   if (it.koor) return koorKaart(s, it.koor);
+  if (it.rec) return reclameKaart(it.rec);
   if (it.k) { const k = it.k; return `<div class="kaart"><p class="eyebrow">${k.plan ? (planVoorbij(k) ? 'Gemist · ' : 'Gepland · ') + esc(fmtD(k.plan.dag)) + ' ' + esc(k.plan.van) + '–' + esc(k.plan.tot) : 'Eigen taak'}${k.bron ? ' · ' + esc(BRON[k.bron] || k.bron) : ''}</p><h2>${esc(k.titel)}</h2>${k.d ? `<p class="lead">Deadline ${esc(fmtD(k.d))}</p>` : ''}
     <label class="chk" style="margin:.6rem 0"><input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}><span>Klaar</span></label>
-    <div class="knoppen">${planVoorbij(k) && !k.dagTaak ? `<button class="btn hoofd" data-liggenplan="eigen:${esc(k.id)}">Opnieuw plannen</button>` : ''}${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
+    <div class="knoppen">${k.reclameId ? `<button class="btn hoofd" data-recmail="${/#bord$/.test(k.reclameId) ? 'bord' : 'wi'}|${esc(k.reclameId.split('#')[0])}|${esc(k.reclameId)}">Mail ${/#bord$/.test(k.reclameId) ? 'bord' : 'weekinfo'}</button><button class="btn" data-recnaar="${esc(k.reclameId.split('#')[0])}">Naar reclame</button>` : ''}${planVoorbij(k) && !k.dagTaak ? `<button class="btn hoofd" data-liggenplan="eigen:${esc(k.id)}">Opnieuw plannen</button>` : ''}${k.plan ? `<button class="btn" data-ontplan="${esc(k.id)}">Uit de agenda halen</button>` : ''}<button class="btn" data-taakweg="${esc(k.id)}">Verwijderen</button></div></div>`; }
   if (it.z || it.tz) { const tz = it.tz;
     return `<div class="kaart"><p class="eyebrow">${it.z ? 'Uit je Zermelo-rooster' + (tijd ? ' · ' + tijd : '') + (it.lokaal ? ' · ' + esc(it.lokaal) : '') : esc(tz.tw.titel)}</p><h2>${esc(it.z ? it.titel : `${(B.groepen[tz.lg] || []).join(', ')} ${tz.t.id} ${tz.t.naam}`)}</h2>
       ${tz ? `<p class="lead">${esc(tz.t.naam)} · ${esc(String(tz.t.duur || '?'))} min${tz.t.waar ? ' · ' + esc(tz.t.waar) : ''}</p>` : ''}
@@ -581,6 +700,7 @@ function planKaart(s, p, it) {
   sectieItems().filter(i => i.taak && !S.sectieAf[i.id] && !sec[i.id] && i.d <= addD(s, 14)).forEach(i => opties.push([`sec:${i.id}`, 'Sectie: ' + i.titel + ' (' + fmtD(i.d) + ')']));
   const kr = koorOp(s); if (kr && (kr.type === 'rep' || kr.type === 'extra') && !(S.dagTaken[s] || {}).koor && !pres[s + '|koor']) opties.push(['koorrep', 'Koorrepetitie voorbereiden: ' + kr.titel]);
   koorTakenOpen(s).forEach(t => opties.push(['koor:' + t.id, 'Koor: ' + t.titel + (t.d ? ' (' + fmtD(t.d) + ')' : '')]));
+  reclameOpen(addD(s, 14)).forEach(m => opties.push(['rec:' + m.id, 'Reclame: ' + m.titel + ' (' + fmtD(m.d) + ')']));
   for (const x of p.uren || []) { if (!x.item || x.uitval || x.klaar) continue; const l = les(x.item); const key = 'pres:' + x.item.id; if ((l.materiaal || []).some(m => /presentatie|\.pptx/i.test((m.t || '') + ' ' + (m.u || ''))) && !(S.dagTaken[s] || {})[key] && !pres[s + '|' + key]) opties.push([`pres:${x.item.id}`, `Presentatie doorlopen: ${x.u.groep} ${l.titel}`]); }
   const van = s === vandaag() ? Math.max(it.van, Math.ceil(nuMin() / 5) * 5) : it.van; // niet beginnen in het verleden
   const duur = Math.min(it.tot - van, 50); const voork = planVoorkeur; planVoorkeur = '';
@@ -605,6 +725,7 @@ function blijftLiggen() {
   });
   sectieItems().forEach(i => { if (i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && (i.tot || i.d) < t && !op('sec:' + i.id)) out.push({ key: 'sec:' + i.id, titel: i.titel, bron: 'sectie', dag: i.tot || i.d, vink: `data-sdone="${esc(i.id)}"` }); });
   koorTakenOpen(t).forEach(k => { if (k.d && k.d < t && !op('koor:' + k.id)) out.push({ key: 'koor:' + k.id, titel: k.titel, bron: 'koor', dag: k.d, vink: `data-koorvink="${esc(k.id)}"` }); });
+  reclameOpen(addD(t, -1), G).forEach(m => { if (!op('rec:' + m.id)) out.push({ key: 'rec:' + m.id, titel: m.titel, bron: 'reclame', dag: m.d, vink: `data-recvink="${esc(m.id)}"` }); });
   return out.sort((a, b) => a.dag < b.dag ? -1 : a.dag > b.dag ? 1 : 0);
 }
 function liggenBlok() {
@@ -629,7 +750,7 @@ function liggenInPlannen(v) { // opent het eerste vrije blok vanaf de getoonde d
 function stelUit(key, tot) { S.uitgesteld = S.uitgesteld || {}; const t = vandaag(); for (const k of Object.keys(S.uitgesteld)) if (S.uitgesteld[k] <= t) delete S.uitgesteld[k]; S.uitgesteld[key] = tot; bewaar(); toast('Komt terug op ' + fmtD(tot)); }
 
 /* taken en sectieafspraken zonder tijd staan in de agenda; hieronder de takenlijst */
-const BRON = { sectie: 'sectie', koor: 'koor', slc: 'SLC', mail: 'mail', les: 'lessen', overig: 'overig' };
+const BRON = { sectie: 'sectie', koor: 'koor', reclame: 'reclame', slc: 'SLC', mail: 'mail', les: 'lessen', overig: 'overig' };
 function dagExtra(s, p) { return takenBlok(s, p); }
 function takenBlok(s, p) {
   const t = vandaag(); const dt = S.dagTaken[s] || {}; const G = geplandeSleutels();
@@ -643,6 +764,7 @@ function takenBlok(s, p) {
   if (auto.length) h += `<h3>Lessen van ${s === t ? 'vandaag' : 'deze dag'}</h3>` + auto.map(k => rij(k, `<input type="checkbox" data-dagtaak="${esc(k.key)}" data-dag="${s}" ${k.af ? 'checked' : ''}>`)).join('');
   const kr = koorOp(s); const krRep = kr && (kr.type === 'rep' || kr.type === 'extra') && !G.pres[s + '|koor'] ? kr : null; const kt = koorTakenOpen(s);
   if (krRep || kt.length) h += '<h3>Koor</h3>' + (krRep ? rij({ titel: koorNaam(krRep) + ' voorbereiden: ' + krRep.titel, sub: (krRep.van ? krRep.van + ' · ' : '') + ((krRep.plan || []).map(x => x.stuk).join(', ') || 'repetitieplan in de koorapp'), af: !!dt.koor, bron: 'koor' }, `<input type="checkbox" data-dagtaak="koor" data-dag="${s}" ${dt.koor ? 'checked' : ''}>`) : '') + kt.map(t => rij({ titel: t.titel, d: t.d, sub: t.sub, bron: 'koor', af: false }, `<input type="checkbox" data-koorvink="${esc(t.id)}">`)).join('');
+  const rec = reclameOpen(addD(s, 7), G); if (rec.length) h += '<h3>Reclame</h3>' + rec.map(m => rij({ titel: m.titel, d: m.d, sub: m.soort === 'wi' ? 'Inleveren tot ' + m.tot + ' bij ' + RC.mail : 'Staande dia voor de borden, mail naar ' + RC.mail, bron: 'reclame', af: false }, `<input type="checkbox" data-recvink="${esc(m.id)}">`, `<button class="btn klein" data-recmail="${m.soort}|${esc(m.a.id)}|${esc(m.id)}">Mail</button>`)).join('');
   if (sect.length) h += `<h3>Sectie, komende twee weken</h3>` + sect.map(i => rij({ titel: i.titel, d: i.d, bron: 'sectie', af: false }, `<input type="checkbox" data-sdone="${esc(i.id)}">`)).join('');
   h += `<h3>Eigen taken</h3>` + (eigen.length ? eigen.map(k => rij(k, `<input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}>`, `<button class="btn klein" data-taakweg="${esc(k.id)}" title="verwijderen">×</button>`)).join('') : '<p class="leeg">Nog geen eigen taken. Zet hier wat uit de mail, het koor, SLC of de sectie op je komt.</p>');
   h += `<form id="tAdd" class="rij taakform"><input id="tT" placeholder="Nieuwe taak" required><select id="tB">${Object.entries(BRON).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select><input id="tD" type="date"><button class="btn" type="submit">Toevoegen</button></form></div>`;
@@ -967,6 +1089,14 @@ document.addEventListener('click', async e => {
   // alleen knoppen: het planformulier en de vinkjes hebben ook data-dag, maar een klik daarin mag de pagina niet opnieuw tekenen
   const b = e.target.closest('button,[data-week]'); if (!b) return;
   const D = b.dataset;
+  if (D.recnaar) { recFocus = D.recnaar; if (route.naam !== 'reclame') location.hash = 'reclame'; else render(); return; }
+  if (D.recalles != null) { recAlles = !recAlles; render(); return; }
+  if (D.recmail) { const [soort, aid, mid] = D.recmail.split('|'); b.disabled = true; await recMail(soort, aid, mid); b.disabled = false; return; }
+  if (D.reckopie) { const a = reclameActs().find(x => x.id === D.reckopie); const ta = document.querySelector(`[data-rectekst="${CSS.escape(D.reckopie)}"]`); const txt = ta ? ta.value : a ? recTekst(a) : ''; try { await navigator.clipboard.writeText(txt); toast('Tekst gekopieerd'); } catch (err) { if (ta) ta.select(); toast('Kopiëren lukt niet: selecteer en kopieer zelf'); } return; }
+  if (D.recbeeld || D.recbord) { const soort = D.recbord ? 'bord' : 'wi'; const a = reclameActs().find(x => x.id === (D.recbord || D.recbeeld)); if (!a) return; b.disabled = true; try { recDownload(RECLAME.bestand(a, soort), await recBestand(a, soort)); } catch (err) { console.warn(err); toast('Maken lukt niet'); } b.disabled = false; return; }
+  if (D.recuit) { const r = (S.reclame = S.reclame || {})[D.recuit] = S.reclame[D.recuit] || {}; r.uit = !r.uit; if (!r.uit) delete r.uit; recFocus = D.recuit; bewaar(); return; }
+  if (D.recstel) { const r = (S.reclame || {})[D.recstel]; if (r) delete r.tekst; recFocus = D.recstel; bewaar(); return; }
+  if (D.recweg) { S.reclameExtra = (S.reclameExtra || []).filter(x => x.id !== D.recweg); if (S.reclame) delete S.reclame[D.recweg]; bewaar(); return; }
   if (D.toastterug != null) { const f = toast.terug; $('#toast').hidden = true; toast.terug = null; if (f) f(); return; }
   if (e.target.closest('#les')) {
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
@@ -1031,7 +1161,10 @@ document.addEventListener('change', e => {
   if (t.dataset.bericht) { const a = (S.afwijkingen || []).find(x => x.id === t.dataset.bericht); if (a) { a.bericht = t.value; bewaar(true); } return; }
   if (t.dataset.liggentot) { if (t.value > vandaag()) stelUit(t.dataset.liggentot, t.value); return; }
   if (t.dataset.sdone) { if (t.checked) S.sectieAf[t.dataset.sdone] = true; else delete S.sectieAf[t.dataset.sdone]; bewaar(); }
-  if (t.dataset.taakaf) { const k = (S.taken || []).find(k => k.id === t.dataset.taakaf); if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.dagTaak) { const dd = S.dagTaken[k.dagTaak.dag] = S.dagTaken[k.dagTaak.dag] || {}; if (t.checked) dd[k.dagTaak.key] = true; else delete dd[k.dagTaak.key]; } } bewaar(); }
+  if (t.dataset.taakaf) { const k = (S.taken || []).find(k => k.id === t.dataset.taakaf); if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.reclameId) { S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[k.reclameId] = vandaag(); else delete S.reclameAf[k.reclameId]; } if (k.dagTaak) { const dd = S.dagTaken[k.dagTaak.dag] = S.dagTaken[k.dagTaak.dag] || {}; if (t.checked) dd[k.dagTaak.key] = true; else delete dd[k.dagTaak.key]; } } bewaar(); }
+  if (t.dataset.recvink) { const id = t.dataset.recvink; S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[id] = vandaag(); else delete S.reclameAf[id]; (S.taken || []).filter(k => k.reclameId === id).forEach(k => { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; }); bewaar(); return; }
+  if (t.dataset.recveld) { const i = t.dataset.recveld.lastIndexOf('|'); const id = t.dataset.recveld.slice(0, i), k = t.dataset.recveld.slice(i + 1); const r = (S.reclame = S.reclame || {})[id] = S.reclame[id] || {}; r[k] = t.value.trim(); if (k === 'd' && !r.d) delete r.d; recFocus = id; bewaar(); return; }
+  if (t.dataset.rectekst) { const r = (S.reclame = S.reclame || {})[t.dataset.rectekst] = S.reclame[t.dataset.rectekst] || {}; r.tekst = t.value; bewaar(true); return; }
   if (t.dataset.koorvink) { if (t.checked) S.koorAf[t.dataset.koorvink] = true; else delete S.koorAf[t.dataset.koorvink]; bewaar(); }
   if (t.dataset.dagtaak) { const d = t.dataset.dag; S.dagTaken[d] = S.dagTaken[d] || {}; if (t.checked) S.dagTaken[d][t.dataset.dagtaak] = true; else delete S.dagTaken[d][t.dataset.dagtaak]; bewaar(); }
   if (t.id === 'pK') { const n = $('#pNieuw'); if (n) n.hidden = !!t.value; }
@@ -1060,12 +1193,14 @@ document.addEventListener('submit', e => {
     else if (v.startsWith('sec:')) { const i = sectieItems().find(x => x.id === v.slice(4)); if (i) { k = { id: nieuwId(), titel: i.titel, bron: 'sectie', sectieId: i.id, d: i.d, af: false, plan }; S.taken.push(k); } }
     else if (v === 'koorrep') { const kr = koorOp(dag); if (kr) { k = { id: nieuwId(), titel: 'Koorrepetitie voorbereiden: ' + kr.titel, bron: 'koor', dagTaak: { dag, key: 'koor' }, af: false, plan }; S.taken.push(k); } }
     else if (v.startsWith('koor:')) { const kt = ((B.koor || {}).taken || []).find(x => x.id === v.slice(5)); if (kt) { k = { id: nieuwId(), titel: kt.titel, bron: 'koor', koorId: kt.id, d: kt.d, af: false, plan }; S.taken.push(k); } }
+    else if (v.startsWith('rec:')) { const m = reclameMoment(v.slice(4)); if (m) { k = { id: nieuwId(), titel: m.titel, bron: 'reclame', reclameId: m.id, d: m.d, af: false, plan }; S.taken.push(k); } }
     else if (v.startsWith('pres:')) { const it = (planning(dag, dag)[dag].uren || []).find(x => x.item && x.item.id === v.slice(5)); if (it) { k = { id: nieuwId(), titel: 'Presentatie doorlopen: ' + it.u.groep + ' ' + (les(it.item).titel || ''), bron: 'les', dagTaak: { dag, key: 'pres:' + it.item.id }, af: false, plan }; S.taken.push(k); } }
     else { const titel = $('#pT').value.trim(); if (!titel) { toast('Geef de taak een naam'); return; } k = { id: nieuwId(), titel, bron: $('#pB').value, af: false, plan }; S.taken.push(k); }
     if (k) { agSel[dag] = 'taak:' + k.id; bewaar(); toast(`${k.titel} staat op ${fmtD(dag)} om ${van}`); }
     return;
   }
   if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; (S.taken = S.taken || []).push({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }); bewaar(); return; }
+  if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel || !d) return; const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
   if (e.target.id === 'sForm') { S.sectieExtra.push({ id: 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d: $('#sD').value, titel: $('#sT').value.trim(), soort: 'taak', taak: true }); bewaar(); }
   if (e.target.id === 'bForm') bewaarBewerk(new FormData(e.target));
 });
@@ -1417,6 +1552,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden || LES
   try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
   try { BM = await (await fetch('data/beoordeling.json', { cache: 'no-cache' })).json(); } catch (e) { BM = []; }
+  try { RC = await (await fetch('data/reclame.json', { cache: 'no-cache' })).json(); } catch (e) { RC = null; }
   render();
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }

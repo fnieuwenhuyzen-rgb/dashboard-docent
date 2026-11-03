@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 2 november 2026 (presentaties samengevoegd en live; besluiten Frans verwerkt). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
+Bijgewerkt: 3 november 2026 (reclame voor weekinfo en borden gebouwd). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
 
@@ -19,6 +19,7 @@ Besluiten Frans (2-11):
 
 Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen botst altijd. Daarom werkt steeds één sessie tegelijk aan dat bestand. Volgorde: lesinhoud (Way Maker, BB1, mavo, keuzeuur), dan dashboard-artifact. Presentaties, uitval en inhalen en beoordelingsmodus stap 2 zijn live.
 
+- [ ] **Vragen bij reclame (gebouwd 3-11):** (1) De weekinfo verschijnt op maandag. Lesdag gaat uit van inleveren tot 14:00 op die maandag zelf. Of is het de vrijdag ervoor? (2) Is die maandag vrij (4 jan, 18 jan, 29 mrt, 17 mei), dan inleveren op de schooldag ervoor (aanname). (3) Aanvang voor publiek ontbreekt bij Evensong, Vrede op Aarde en Eindconcert (de koorapp heeft alleen verzameltijden); plaats en tijd van PMZingt!; echte datum, tijd en plaats van de examenconcerten (nu de datum uit de leergang). Frans kan dit zelf invullen op het tabblad Reclame. (4) De Doelen (18 feb) en Messiah Leiden (12 mrt) staan als excursie: klopt dat, en hoe melden leerlingen zich aan (link of plek, sluitdatum, kosten)? Zingen leerlingen mee in Leiden of luisteren ze? (5) Sing-In (niet van Frans) en Kerstvieringen (18 dec) staan uit. (6) Er staat geen officieel logo in de repo: het bord heeft nu het woordmerk "CSG Prins Maurits". Officiële png in `public/beeld/` zetten?
 - [ ] **Tegenstrijdige bronnen in de beoordelingsmodellen** (2-11 nagekeken in de PTA-pdf's, studiewijzers en leergang):
   - mavo 4 P2: PTA en leergang weging 40, studiewijzer 30%.
   - mavo 4 P1: PTA M4 weging 10, PTA M3 en leergang 15. Met 15 komt het SE op 100 (P1 15, T1 15, T3 20, P2 40, P3 10), met 10 op 95.
@@ -67,6 +68,19 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 4. Beoordelingsmodus stap 3, vóór 19-3-2027: overzicht per leerling over het jaar, vergelijking met de zelfbeoordeling.
 5. Dashboard-artifact verversen met de nieuwe data (lesinhoud, beoordelingen).
 6. **Rooster via de Zermelo-API: gebouwd (2-11), nog niet getest met echte gegevens.** Worker (`koppel`, `afspraken`) en app staan klaar, de agendalink blijft als reserve. Zie C voor de proef. Daarna kan het raden in `zDienst`/`zToets` verder weg en de iCal eruit.
+
+## Reclame voor weekinfo en borden (3-11, gebouwd in een cloudsessie, live sinds 3-11)
+
+Wens Frans: bij koor- en muziekactiviteiten, examenconcerten en excursies reclame maken in de weekinfo en op de borden, zodat zoveel mogelijk leerlingen meegaan. Besluiten Frans (3-11): weekinfo verschijnt op maandag, inleveren tot 14:00, met afbeelding; borden zijn staande panelen (staande PowerPoint); beide mailen naar ha.denbraber@csgpm.nl, het bord mag kort van tevoren; ritme weekinfo twee weken vooraf en in de week zelf, bord vanaf drie weken vooraf; Sing-In niet; examenconcerten wel; doelgroep leerlingen.
+
+Gebouwd (`public/reclame.js`, `public/data/reclame.json`, blok "reclame" in `app.js`, tabblad Reclame):
+- Activiteiten: koorconcerten uit `B.koor`, `soort: muziek` uit `B.sectie` (behalve `overslaan`), examenconcerten uit de leergang (`examenconcerten` in reclame.json), eigen activiteiten (`S.reclameExtra`). Aanvullingen per id in reclame.json; wat Frans aanpast in `S.reclame[id]` (gaat voor). Afgevinkt: `S.reclameAf[taakId]`, taak-id `<activiteit>#wi2`, `#wi0`, `#bord`.
+- Taken op Vandaag (kop Reclame, een week vooruit), als deadline in Dag en Week, te plannen in een vrij blok (`reclameId` in `S.taken`), teller op het tabblad. Een gemiste weekinfo is voorbij; een bord blijft in Blijft liggen tot de activiteit.
+- Per activiteit: concepttekst (aan te passen), mail via mailto met de bijlage als download (weekinfo-afbeelding 1600x900 png, bord als staande pptx 7,5 x 13,333 inch met het bord als afbeelding), voorbeeld van het bord. pptx via `vendor/pptxgen.bundle.js` (PptxGenJS 3.12.0, MIT), pas geladen bij gebruik.
+- Bord en weekinfo-afbeelding in Encode Sans, koppen vet (afspraak 2-11); de app zelf houdt Condensed en Neuton. Zonder internet valt het beeld terug op Arial.
+- Lokaal getest met Playwright (pptx opent in LibreOffice). Niet getest: Outlook-mailto op de laptop, de borden zelf, OneDrive.
+
+Nog niet gebouwd: mail met bijlage via Microsoft Graph (wacht op de Entra-app, B), officieel logo op het bord.
 
 ## Kerstboxen klas 3 (30-10, gedaan in een cloudsessie, live sinds 2-11)
 
