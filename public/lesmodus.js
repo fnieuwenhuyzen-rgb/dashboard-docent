@@ -123,7 +123,8 @@
     if (!b) return '';
     if (typeof b === 'string') b = { soort: 'tekst', tekst: b };
     switch (b.soort) {
-      case 'akkoorden': return `<div class="beeld akkoorden">${(b.items || []).map(akkoordSvg).join('')}</div>`;
+      case 'akkoorden': return `<div class="beeld akkoorden">${(b.items || []).map(akkoordSvg).join('')}${b.onder ? `<p class="onder">${esc(b.onder)}</p>` : ''}</div>`;
+      case 'fragment': return `<div class="beeld kaarten"><div class="kaartje"><b>${esc(b.k || '')}</b>${b.t ? `<span>${esc(b.t)}</span>` : ''}${b.u ? `<span><a href="${esc(b.u)}" target="_blank" rel="noopener">${esc(b.link || b.u)}</a></span>` : ''}</div></div>`;
       case 'vorm': return `<div class="beeld">${vormSvg(b.items || [])}</div>`;
       case 'opbouw': return `<div class="beeld">${opbouwSvg(b.items || [])}</div>`;
       case 'orkest': return `<div class="beeld">${orkestSvg()}</div>`;
