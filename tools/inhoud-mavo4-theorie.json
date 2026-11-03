@@ -1,0 +1,2605 @@
+{
+ "_uitleg": "Uitwerking van de theorielessen zonder fasen van mavo 4 (examenvoorbereiding K3 en K7, eindopdracht P3, oefenexamens). Praktijklessen staan in een ander bestand.",
+ "_mat": {
+  "mb": {
+   "t": "Musicbox (digitaal.musicboxmethode.nl)",
+   "u": "https://digitaal.musicboxmethode.nl"
+  }
+ },
+ "lessen": {
+  "Samenklank": {
+   "vraag": "Hoeveel stemmen hoor je tegelijk, en klinkt het af of wil het nog verder?",
+   "doel": "Je hoort of muziek eenstemmig, tweestemmig of meerstemmig is, je herkent unisono, homofonie en polyfonie, en je hoort spanning en ontspanning.",
+   "criteria": [
+    "Ik hoor bij een fragment hoeveel stemmen er zijn",
+    "Ik noem het verschil tussen unisono, homofonie en polyfonie",
+    "Ik hoor of een zin spanning of ontspanning geeft",
+    "Ik volg een eenvoudig akkoordenschema mee"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Eén lijn, twee lijnen, een hele groep",
+     "stappen": [
+      "Je hoort drie korte stukjes. Hoeveel verschillende lijnen hoor je tegelijk?",
+      "Steek vingers op: één, twee of meer.",
+      "Hoort de laatste noot van het derde stukje af, of wil het nog verder?"
+     ],
+     "docent": "Zelf spelen of zingen: (1) één melodie alleen, (2) dezelfde melodie met een tweede stem erbij, (3) de melodie met akkoorden op het keyboard, laatste akkoord eerst niet afsluitend, dan wel afsluitend. Laat de klas het verschil eerst in eigen woorden zeggen."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Hoeveel stemmen, en wat doen ze?",
+     "stappen": [
+      "Eenstemmig is één lijn. Tweestemmig zijn twee lijnen. Meerstemmig zijn er meer dan twee.",
+      "Unisono: iedereen zingt of speelt dezelfde melodie op dezelfde toon. Een tweeklank zijn twee tonen tegelijk. Een akkoord zijn er meer, meestal drie of meer.",
+      "Spanning: het klinkt onaf, het wil verder. Ontspanning: het klinkt af, er is rust.",
+      "Een akkoordenschema is de volgorde van akkoorden onder een lied."
+     ],
+     "docent": "Syllabus: eenstemmig en tweestemmig herken en benoem je; meerstemmigheid, akkoord en akkoordenschema hoef je alleen te herkennen (met * in de syllabus: niet actief bevraagd). Homofonie is melodie met begeleiding, polyfonie zijn meerdere melodieën tegelijk (in 12.1 uitgebreid). Tip uit de sectiemap: een akkoord is driestemmig of meer. Laat bij elk begrip een kort stukje horen of spelen, maximaal 20 seconden.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Eenstemmig",
+        "t": "één lijn"
+       },
+       {
+        "k": "Tweestemmig",
+        "t": "twee lijnen tegelijk"
+       },
+       {
+        "k": "Unisono",
+        "t": "allen dezelfde melodie"
+       },
+       {
+        "k": "Tweeklank",
+        "t": "twee tonen tegelijk"
+       },
+       {
+        "k": "Akkoord",
+        "t": "drie of meer tonen tegelijk"
+       },
+       {
+        "k": "Akkoordenschema",
+        "t": "volgorde van akkoorden"
+       },
+       {
+        "k": "Spanning",
+        "t": "klinkt onaf"
+       },
+       {
+        "k": "Ontspanning",
+        "t": "klinkt af"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "doen",
+     "kop": "Luisteren en meeschrijven",
+     "stappen": [
+      "Zes fragmenten. Per fragment: eenstemmig, tweestemmig, meerstemmig of unisono?",
+      "Hoort het einde van de zin spanning of ontspanning? Schrijf er een pijltje bij: omhoog of omlaag.",
+      "Daarna een akkoordenschema van vier akkoorden op het bord. Wijs mee terwijl het keyboard speelt."
+     ],
+     "docent": "Zes fragmenten kies je zelf, uit verschillende stijlen en met een duidelijk verschil in aantal stemmen. Antwoorden vooraf op papier. Schema: vier akkoorden in blokjes, elk blokje een maat, speel het twee keer. Waar het misgaat: unisono wordt vaak eenstemmig genoemd. Dat is goed te verdedigen, laat leerlingen het verschil uitleggen: unisono is met meer spelers of zangers.",
+     "klaar": "Maak zelf een akkoordenschema van vier blokjes en laat je buur meewijzen."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Drie vragen en thuis",
+     "stappen": [
+      "Drie vragen op het bord: een fragment (aantal stemmen), een fragment (spanning of ontspanning), en wat is het verschil tussen een tweeklank en een akkoord?",
+      "Thuis: Musicbox, box Samenklank."
+     ],
+     "docent": "Event: ma 16 nov begint periode 2. Zeg erbij dat de volgende les (12.1) begint bij homofonie en polyfonie."
+    }
+   ],
+   "formatief": {
+    "soort": "drie vragen",
+    "tekst": "Vragen over aantal stemmen, spanning en ontspanning, tweeklank tegenover akkoord. Wie er twee goed heeft, kan door; de rest oefent thuis in de Musicbox-box."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "keyboard of gitaar",
+    "geluid in de klas"
+   ]
+  },
+  "Homofone en polyfone structuren": {
+   "vraag": "Hoe lopen meerdere stemmen door elkaar, en hoe hoor je wie wanneer binnenkomt?",
+   "doel": "Je herkent parallelle beweging, tegenbeweging, imitatie, tegenmelodie en canon, en je onderscheidt homofonie van polyfonie.",
+   "criteria": [
+    "Ik hoor het verschil tussen parallelle beweging en tegenbeweging",
+    "Ik herken imitatie en canon",
+    "Ik leg uit wat homofonie is en wat polyfonie is",
+    "Ik volg bij een fragment wanneer welke stem binnenkomt"
+   ],
+   "fasen": [
+    {
+     "min": 7,
+     "soort": "doen",
+     "kop": "Eerst zelf een canon",
+     "stappen": [
+      "Klap het ritme na dat de docent voorklapt.",
+      "Groep 1 begint, groep 2 begint twee tellen later met hetzelfde ritme. Wat hoor je?",
+      "Doe hetzelfde met je stem op één toon."
+     ],
+     "docent": "Kort ritme van vier tellen, bijvoorbeeld kwart kwart achtste achtste kwart. Groep 2 komt twee tellen later. Dit is een canon. Als het goed gaat: drie groepen. Nog geen begrippen noemen, eerst laten ervaren."
+    },
+    {
+     "min": 13,
+     "soort": "uitleg",
+     "kop": "Stemmen onder elkaar of door elkaar",
+     "stappen": [
+      "Homofonie: één stem heeft de melodie, de rest begeleidt. Polyfonie: meerdere stemmen met een eigen melodie, ongeveer even belangrijk.",
+      "Parallelle beweging: de tweede stem gaat dezelfde kant op als de melodie. Tegenbeweging: de ene stem gaat omhoog, de andere omlaag.",
+      "Imitatie: een stem doet de andere na. Canon: alle stemmen zingen dezelfde melodie, om de beurt binnenkomend.",
+      "Tegenmelodie of tegenstem: een tweede melodie naast de hoofdmelodie."
+     ],
+     "docent": "Uit de sectiemap: homofoon is melodie met begeleiding, polyfoon is een soort canon, imitatie is nadoen, tegenbeweging is stem 1 naar boven en stem 2 naar beneden. Laat de beweging met de handen doen: twee handen tegelijk omhoog (parallel) of één omhoog en één omlaag (tegen). Speel per begrip een stukje van maximaal 20 seconden.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Homofonie",
+        "t": "melodie met begeleiding"
+       },
+       {
+        "k": "Polyfonie",
+        "t": "meerdere melodieën tegelijk"
+       },
+       {
+        "k": "Parallelle beweging",
+        "t": "tweede stem gaat dezelfde kant op"
+       },
+       {
+        "k": "Tegenbeweging",
+        "t": "de ene stem omhoog, de andere omlaag"
+       },
+       {
+        "k": "Imitatie",
+        "t": "een stem doet de andere na"
+       },
+       {
+        "k": "Canon",
+        "t": "dezelfde melodie, om de beurt binnenkomend"
+       },
+       {
+        "k": "Tegenmelodie",
+        "t": "tweede melodie naast de hoofdmelodie"
+       }
+      ]
+     }
+    },
+    {
+     "min": 17,
+     "soort": "luisteren",
+     "kop": "Wie komt wanneer binnen?",
+     "stappen": [
+      "Vijf fragmenten. Per fragment een grafiek met lijnen voor elke stem.",
+      "Teken wanneer elke stem begint. Schrijf het begrip erbij: parallel, tegenbeweging, imitatie, canon of tegenmelodie.",
+      "Vergelijk met je buur. Twee verschillende antwoorden? Luister nog een keer."
+     ],
+     "docent": "Fragmenten kies je zelf: een canon, een lied met een tweede stem in parallelle beweging, een stuk met tegenbeweging of tegenmelodie, een stuk waarin een stem de andere nadoet. Op het examen moet je steminzetten kunnen volgen (syllabus). Waar het misgaat: imitatie en canon door elkaar halen. Verschil: bij een canon komt dezelfde melodie in alle stemmen, bij imitatie hoeft de nagedane stem niet het hele stuk door te gaan.",
+     "klaar": "Teken een eigen canon van drie stemmen als lijnen op papier."
+    },
+    {
+     "min": 8,
+     "soort": "check",
+     "kop": "Homofoon of polyfoon?",
+     "stappen": [
+      "Twee korte fragmenten. Homofoon of polyfoon? Schrijf één reden op.",
+      "Thuis: Musicbox, box Koor en meerstemmigheid."
+     ],
+     "docent": "Antwoord volgt direct na het fragment. Wie homofoon en polyfoon verwisselt: terug naar de handen (één of meer eigen melodieën)."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Twee fragmenten: homofoon of polyfoon, met één reden. Wat fout gaat, leer je thuis als eerste."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas",
+    "papier voor de grafieken"
+   ]
+  },
+  "Melodische relaties en variatie": {
+   "vraag": "Welke stukjes melodie komen terug, en wat verandert er?",
+   "doel": "Je herkent motief, thema, riff, ostinato, voorzin en nazin, sequens, break, improvisatie en variatie in fragmenten.",
+   "criteria": [
+    "Ik leg het verschil uit tussen motief en thema",
+    "Ik herken een riff en een ostinato",
+    "Ik hoor een sequens",
+    "Ik hoor of een melodie of een ritme gevarieerd is"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Een toon hoger, nog een keer",
+     "stappen": [
+      "Je hoort vier tonen. Daarna dezelfde vier tonen, maar hoger. Daarna nog hoger.",
+      "Wat is er gelijk? Wat is er anders?"
+     ],
+     "docent": "Zelf spelen: een motief van vier noten, daarna een toon hoger, daarna weer een toon hoger. Dit is een sequens. De klas zoekt woorden, daarna pas het begrip."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Stukjes melodie met een naam",
+     "stappen": [
+      "Motief: een kort melodiestukje van een paar noten. Thema: een herkenbare melodie die de basis van het stuk is.",
+      "Riff: een herhaalde frase die de hele song door klinkt en er karakter aan geeft. Ostinato: een kort motief dat steeds terugkomt, vaak in de bas.",
+      "Voorzin en nazin: twee zinnen van ongeveer even lang. De eerste begint, de tweede maakt af.",
+      "Sequens: hetzelfde stukje op een andere toonhoogte. Break: de begeleiding stopt een of twee maten en een solist speelt door.",
+      "Improvisatie: niet vooraf vastgelegd. Variatie: een melodie, ritme of akkoordenschema dat verandert."
+     ],
+     "docent": "Syllabus: riff is een muzikale frase die tijdens de hele song herhaald wordt; break is onderbreking van de begeleiding gedurende een of twee maten waarin een solist doorspeelt. Sequens en akkoordenschema bij variatie hoeven alleen herkend te worden (*). Uit de sectiemap: motief is klein (een paar noten), niet verwarren met een thema. Als voorbeeld van een ostinato in de sectiemap: de baslijn in Canon in D van Pachelbel. Voorbeeld voorzin en nazin in de sectiemap: het begin van de Imperial March. Zelf kiezen voor een riff: een bekende gitaarriff.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Motief",
+        "t": "paar noten"
+       },
+       {
+        "k": "Thema",
+        "t": "basismelodie van het stuk"
+       },
+       {
+        "k": "Riff",
+        "t": "herhaalde frase, geeft de song karakter"
+       },
+       {
+        "k": "Ostinato",
+        "t": "motief dat steeds terugkomt"
+       },
+       {
+        "k": "Voorzin en nazin",
+        "t": "begint en maakt af"
+       },
+       {
+        "k": "Sequens",
+        "t": "zelfde stukje, andere hoogte"
+       },
+       {
+        "k": "Break",
+        "t": "begeleiding stopt, solist speelt door"
+       },
+       {
+        "k": "Variatie",
+        "t": "melodie, ritme of schema verandert"
+       }
+      ]
+     }
+    },
+    {
+     "min": 17,
+     "soort": "doen",
+     "kop": "Welk begrip hoor je?",
+     "stappen": [
+      "Acht korte fragmenten. Schrijf bij elk het begrip op dat het best past.",
+      "Twee fragmenten zijn gevarieerd. Wat is er veranderd: melodie, ritme of akkoorden?",
+      "Bespreek met je buur. Waar twijfelen jullie over?"
+     ],
+     "docent": "Acht korte fragmenten van jezelf kiezen: motief, thema, riff, ostinato, voorzin en nazin, sequens, break en twee variaties. Antwoordblad klaar. Waar het misgaat: motief en thema worden verward (klein tegenover groot), riff en ostinato ook (riff geeft de song karakter, ostinato is een herhaald motief). Accepteer bij twijfel een goede reden.",
+     "klaar": "Bedenk een riff die je kent en tik het ritme op tafel. Kan je buur raden welk nummer?"
+    },
+    {
+     "min": 8,
+     "soort": "check",
+     "kop": "Twee fragmenten en een uitleg",
+     "stappen": [
+      "Fragment 1: welk begrip? Fragment 2: welke variatie?",
+      "Leg in je eigen woorden uit wat het verschil is tussen een motief en een thema.",
+      "Thuis: Musicbox, box Vorm en analyse."
+     ],
+     "docent": "Uitleg moet kloppen op: motief is klein, thema is de herkenbare basis van het stuk."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Twee fragmenten en een uitleg in eigen woorden: motief tegenover thema."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "keyboard of gitaar",
+    "geluid in de klas"
+   ]
+  },
+  "Vorm": {
+   "vraag": "Uit welke delen is een nummer opgebouwd, en hoe schrijf je dat op?",
+   "doel": "Je herkent intro, couplet, refrein, bridge, tussenspel en coda en je noteert de vorm van een nummer in een letterschema.",
+   "criteria": [
+    "Ik noem de delen van een popnummer",
+    "Ik hoor het verschil tussen couplet, refrein en bridge",
+    "Ik noteer bij een nummer de vorm in letters",
+    "Ik zie het verschil tussen A en A met een accent"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "luisteren",
+     "kop": "Waar begint iets nieuws?",
+     "stappen": [
+      "Je hoort een nummer. Zet een streepje op papier elke keer dat je denkt: dit is iets nieuws.",
+      "Vergelijk met je buur: hoeveel streepjes?"
+     ],
+     "docent": "Zelf een bekend popnummer kiezen met duidelijk couplet, refrein en bridge. Eerste drie minuten zijn genoeg. Laat het fragment hier nog niet benoemen."
+    },
+    {
+     "min": 13,
+     "soort": "uitleg",
+     "kop": "De delen van een nummer",
+     "stappen": [
+      "Intro (inleiding, voorspel): het begin, vaak zonder zang. Couplet (verse): het deel waarvan de tekst verandert. Refrein (chorus): het deel dat steeds terugkomt.",
+      "Bridge: een tussenstuk dat muzikaal en in de tekst afwijkt van refrein en couplet. Tussenspel: een deel zonder zang tussen twee delen in. Coda (naspel): het slot.",
+      "Vorm schrijf je met letters: A, B, C. Komt het deel terug maar net anders, dan A met een streepje (A')."
+     ],
+     "docent": "Syllabus: bridge is een tussenstuk in een popsong dat muzikaal en tekstueel afwijkt van refrein en couplet; vormschema is een letterschema, zo nodig met accenten. Uit de sectiemap: A' is net even anders dan het eerste A. Slot: vaak vertragen of meer instrumenten. Op het examen gaat het om letters als A, A' of B, niet om de woorden zelf: kijk alleen waar iets A, A' of B moet zijn.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Intro",
+        "t": "begin, vaak zonder zang"
+       },
+       {
+        "k": "Couplet",
+        "t": "tekst verandert"
+       },
+       {
+        "k": "Refrein",
+        "t": "komt steeds terug"
+       },
+       {
+        "k": "Bridge",
+        "t": "wijkt af van couplet en refrein"
+       },
+       {
+        "k": "Tussenspel",
+        "t": "deel zonder zang tussendoor"
+       },
+       {
+        "k": "Coda",
+        "t": "slot, naspel"
+       },
+       {
+        "k": "A'",
+        "t": "terugkeer, net anders"
+       }
+      ]
+     }
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Een popnummer in kaart brengen",
+     "stappen": [
+      "Je luistert opnieuw naar het nummer van het begin. Nu schrijf je de vorm in blokjes: intro, couplet, refrein, enzovoort.",
+      "Daaronder de letters: A, B, C. Waar zit een A'?",
+      "Maak daarna je eigen schema op papier en vergelijk met een ander tweetal. Waar verschilt het?"
+     ],
+     "docent": "Zelfde fragment als in de start. Eén keer helemaal draaien, daarna per deel pauzeren. Schema vooraf zelf maken en op de achterkant klaar hebben, bijvoorbeeld: intro, couplet, refrein, couplet, refrein, bridge, refrein, coda. Waar het misgaat: tussenspel en bridge verwisselen (tussenspel is zonder zang, bridge wijkt af), en letters verdelen op tekst in plaats van op muziek.",
+     "klaar": "Zoek zelf een nummer waarin een deel twee keer achter elkaar komt en schrijf het schema.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Deel",
+        "Letter",
+        "Wat hoor je?"
+       ],
+       [
+        "Intro",
+        "",
+        ""
+       ],
+       [
+        "Couplet",
+        "A",
+        ""
+       ],
+       [
+        "Refrein",
+        "B",
+        ""
+       ],
+       [
+        "Bridge",
+        "C",
+        ""
+       ],
+       [
+        "Coda",
+        "",
+        ""
+       ]
+      ],
+      "kol": [
+       0.25,
+       0.15,
+       0.6
+      ]
+     }
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Een nieuw nummer, alleen het schema",
+     "stappen": [
+      "Nieuw fragment. Noteer de vorm in letters.",
+      "Nakijken met het antwoord op het bord.",
+      "Thuis: Musicbox, box Vorm en analyse."
+     ],
+     "docent": "Kort fragment van maximaal twee minuten, met een duidelijke A A B A of couplet refrein couplet refrein. Antwoord klaar."
+    }
+   ],
+   "formatief": {
+    "soort": "schema",
+    "tekst": "Het vormschema van een nieuw fragment, in letters. Wat niet klopt, bekijk je thuis in Musicbox."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas"
+   ]
+  },
+  "Opera en musical": {
+   "vraag": "Wat is het verschil tussen opera en musical, en wat betekent aria en song?",
+   "doel": "Je herkent opera en musical, en je weet wat een aria en een song zijn als die in een examenvraag staan.",
+   "criteria": [
+    "Ik noem een verschil tussen opera en musical",
+    "Ik weet wat een aria is",
+    "Ik weet wat een song is",
+    "Ik leg uit waarom ik bij een fragment opera of musical kies"
+   ],
+   "fasen": [
+    {
+     "min": 7,
+     "soort": "luisteren",
+     "kop": "Opera of musical?",
+     "stappen": [
+      "Je hoort een korte scène zonder beeld. Opera of musical? Schrijf je keuze en één reden op.",
+      "Welke woorden gebruikte je voor de stem?"
+     ],
+     "docent": "Event: activiteitenweek B, dagexcursie Amsterdam voor mavo 4 op donderdag, herkansingen PTA op di 15 dec, vrijdag kerstviering. De les kan uitvallen of kort zijn: sla dan de doe-fase kort en ga door naar de check. Fragment kies je zelf: een scène uit een opera, daarna een scène uit een musical. Eerst zonder beeld, dan met beeld."
+    },
+    {
+     "min": 13,
+     "soort": "uitleg",
+     "kop": "Vier begrippen",
+     "stappen": [
+      "Opera: een voorstelling waarin alles gezongen wordt, met orkest. De verhaallijn zit in de zang.",
+      "Musical: zang, gesproken tekst en dans door elkaar. De muziek is vaak lichter, met popinvloed.",
+      "Aria: een solozangstuk in klassieke muziek. Song: denk aan een popsong, ook in een musical.",
+      "Op het examen komen aria en song alleen in de vraagstelling voor. Je hoeft ze niet zelf te noemen."
+     ],
+     "docent": "Syllabus: opera en musical zijn begrippen, aria en song hebben een * (niet actief bevraagd). Luistervragen over deze begrippen staan in de syllabus als n.v.t.; ze komen vooral in de tekst van een vraag. Uit de sectiemap: aria is een solozangstuk in klassieke muziek, song is een popsong. Dat opera klassiek gezongen wordt en een musical gesproken tekst en dans bevat, is algemene kennis. Leg het kort uit.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Opera",
+        "t": "alles gezongen, met orkest"
+       },
+       {
+        "k": "Musical",
+        "t": "zang, spraak en dans"
+       },
+       {
+        "k": "Aria",
+        "t": "solozangstuk, klassiek"
+       },
+       {
+        "k": "Song",
+        "t": "popsong, ook in een musical"
+       }
+      ]
+     }
+    },
+    {
+     "min": 17,
+     "soort": "doen",
+     "kop": "Sorteren op wat je hoort",
+     "stappen": [
+      "Zes fragmenten, steeds ongeveer een halve minuut. Opera of musical?",
+      "Noteer wat je hoort dat past: klassieke stem, gesproken tekst, orkest, band, popritme, solo of groep.",
+      "Bespreek verschillen met je buur."
+     ],
+     "docent": "Fragmenten kies je zelf: drie opera en drie musical, zonder ondertiteling. Zorg voor één aria en één song. Antwoorden vooraf. Waar het misgaat: een lichte stem in een opera wordt als musical gehoord. Kijk dan naar het orkest en of er gesproken tekst is. Christelijk repertoire kan: een musical met een Bijbels verhaal is geschikt, kies dan zelf.",
+     "klaar": "Zoek een fragment uit een musical die je kent. Wat is de song, wat is de gesproken tekst?",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Hoor je...",
+        "Opera",
+        "Musical"
+       ],
+       [
+        "klassiek gezongen stem",
+        "vaak",
+        "soms"
+       ],
+       [
+        "gesproken tekst tussendoor",
+        "niet",
+        "vaak"
+       ],
+       [
+        "dans",
+        "soms",
+        "vaak"
+       ],
+       [
+        "pop- of bandklank",
+        "zelden",
+        "vaak"
+       ]
+      ],
+      "kol": [
+       0.5,
+       0.25,
+       0.25
+      ]
+     }
+    },
+    {
+     "min": 8,
+     "soort": "check",
+     "kop": "Drie vragen en thuis",
+     "stappen": [
+      "Opera of musical? Een fragment, één reden.",
+      "Wat is een aria? En een song?",
+      "Thuis: Musicbox, box Muziek en andere kunsten."
+     ],
+     "docent": "Fragment voor de check: kort, met een duidelijk verschil. Antwoord: een aria is een solozangstuk in klassieke muziek, een song is een popsong. Musical komt later terug in 24.1."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Eén fragment: opera of musical, met reden. En in eigen woorden: wat is een aria?"
+   },
+   "identiteit": "De Messiah die jullie in maart zingen heeft aria's: stukken waarin een solozanger alleen zingt met begeleiding van het orkest. Daar hoor je het begrip zelf.",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas"
+   ]
+  },
+  "Herhaling begrippen K3": {
+   "vraag": "Welke begrippen ken je al en welke moet je nog leren?",
+   "doel": "Je ontdekt welke begrippen van het examen je nog moet oefenen en je oefent die met de Trainers.",
+   "criteria": [
+    "Ik weet welke tien begrippen ik het slechtst ken",
+    "Ik heb die begrippen geoefend met Trainers",
+    "Ik leg een begrip uit aan een klasgenoot"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "start",
+     "kop": "Wat ken je al?",
+     "stappen": [
+      "Zet in de lijst bij elk onderdeel een kruisje: ken ik, twijfel, ken ik niet.",
+      "Onderdelen: ritme, maat, tempo, toonhoogte, toonsoort, dynamiek, samenklank, uitvoeringspraktijk, klankkleur, melodische relaties, vorm."
+     ],
+     "docent": "Event: ma 4 jan is een studiedag, leerlingen vrij. Deze les is dus maar een deel van de klas of valt weg. De lijst staat op het bord, leerlingen zetten kruisjes op papier of in hun bestand. Geen cijfer, alleen voor henzelf.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Onderdeel",
+        "ken ik",
+        "twijfel",
+        "ken ik niet"
+       ],
+       [
+        "Ritme",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Maat",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Tempo",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Toonhoogte en toonsoort",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Dynamiek",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Samenklank",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Uitvoeringspraktijk",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Klankkleur",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Melodische relaties",
+        "",
+        "",
+        ""
+       ],
+       [
+        "Vorm",
+        "",
+        "",
+        ""
+       ]
+      ],
+      "kol": [
+       0.4,
+       0.2,
+       0.2,
+       0.2
+      ]
+     }
+    },
+    {
+     "min": 22,
+     "soort": "doen",
+     "kop": "Trainers: alle begrippen",
+     "stappen": [
+      "Open de Trainers op je laptop, onderdeel Alle begrippen.",
+      "Schrijf tijdens het oefenen op: welke begrippen gingen fout?",
+      "Aan het eind heb je een lijst met je tien zwakste begrippen."
+     ],
+     "docent": "Rondlopen. Let op: leerlingen die alleen de makkelijke begrippen herhalen, en begrippen die vaak door elkaar gaan: motief en thema, riff en ostinato, homofonie en polyfonie, backbeat en beat (de syllabus gebruikt backbeat), legato en staccato, accelerando en ritenuto. De zwakke-puntenlijst wordt bewaard voor 17.1 en 27.2.",
+     "klaar": "Kies je zwakste begrip en maak er een eigen voorbeeld bij dat je kunt laten horen of tikken."
+    },
+    {
+     "min": 12,
+     "soort": "gesprek",
+     "kop": "Leg het uit aan een ander",
+     "stappen": [
+      "Zoek een klasgenoot. Kies uit je lijst drie begrippen.",
+      "Leg ze om de beurt uit in je eigen woorden, zonder het woord zelf te zeggen.",
+      "Raadt de ander het begrip?"
+     ],
+     "docent": "Bij een technische term op het examen geef je het begrip, geen omschrijving. Dit is de omgekeerde oefening: omschrijven zonder het woord. Beide kanten oefenen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Plan voor vanavond",
+     "stappen": [
+      "Kies drie begrippen van je lijst die je dit weekend leert.",
+      "Thuis: Musicbox, Trainers: alle begrippen."
+     ],
+     "docent": "Volgende les (17.1) is een oefenexamen: de lijst mogen ze gebruiken om hun fouten te vergelijken."
+    }
+   ],
+   "formatief": {
+    "soort": "eigen lijst",
+    "tekst": "De lijst met je tien zwakste begrippen en drie die je thuis oefent."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "laptop met Trainers",
+    "papier of document voor de lijst"
+   ]
+  },
+  "Oefenexamen in Facet-stijl": {
+   "vraag": "Hoe gaat het op het echte examen, en waar verlies ik nog punten?",
+   "doel": "Je maakt een deel van een oud centraal examen op de computer met koptelefoon en je bekijkt per begrip waar je punten mist.",
+   "criteria": [
+    "Ik werk met koptelefoon en uitwerkbijlage zoals op het examen",
+    "Ik beantwoord elke vraag met één antwoord",
+    "Ik weet na afloop bij welke begrippen ik punten verlies"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Zo gaat het op het examen",
+     "stappen": [
+      "Koptelefoon op, volume testen voordat het begint.",
+      "Naam op de uitwerkbijlage. Eén antwoord per vraag. Alle vragen invullen.",
+      "Vraagt de vraag naar een begrip? Schrijf dan het begrip, niet een omschrijving."
+     ],
+     "docent": "Event: vr 15 jan Sing-In, za 16 jan open dag. De les kan een deel van de klas missen. Het examen in Facet bestaat uit luisteren met koptelefoon, vragen op de computer en notatie in een uitwerkbijlage. Tips uit de sectiemap: tussen haakjes telt gewoon mee, liever iets doorstrepen als het niet goed is; geef niet twee antwoorden als er één gevraagd wordt; controleer of je alles hebt ingevuld."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Oefenexamen: koptelefoon op",
+     "stappen": [
+      "Je maakt een deel van een oud examen. Eerst koptelefoon, dan de vragen.",
+      "Luister de fragmenten zo vaak als de opdracht toestaat.",
+      "Noteren in de uitwerkbijlage: aanvullen, ordenen, wijzigen van tekens of woorden.",
+      "Klaar? Controleer of elke vraag een antwoord heeft."
+     ],
+     "docent": "Het deel kies je zelf uit de oude examens, met vragen over ritme, maat, dynamiek, samenklank, klankkleur en vorm (de begrippen die bij deze les staan). Geen specifieke examenjaren op het bord. Zet de bijlagen klaar en loop rond: let op leerlingen die twee antwoorden geven of een vraag overslaan. Het nakijken doe je met het correctiemodel in de volgende fase.",
+     "klaar": "Kijk je antwoorden nog een keer na. Welke vraag was je het minst zeker over?"
+    },
+    {
+     "min": 12,
+     "soort": "gesprek",
+     "kop": "Nabespreken per begrip",
+     "stappen": [
+      "We bespreken per vraag het goede antwoord.",
+      "Schrijf achter elke fout het begrip op dat erbij hoort.",
+      "Welk begrip kwam het vaakst voor in je fouten?"
+     ],
+     "docent": "Nakijken met het correctiemodel. Per begrip kort bespreken: waarom is dit het antwoord? Leerlingen schrijven fouten op de lijst uit 16.1 of beginnen een nieuwe. Thuis: Musicbox, Examentraining (Vmbo), en de fouten uit dit examen."
+    },
+    {
+     "min": 3,
+     "soort": "afsluiten",
+     "kop": "Eén ding mee naar huis",
+     "stappen": [
+      "Schrijf het begrip op waar je de meeste punten mist.",
+      "Dat leer je thuis als eerste."
+     ],
+     "docent": "Sla na afloop de fouten van de klas op, zodat de lessen daarop kunnen aansluiten (27.2 gaat het over een tweede oefenexamen)."
+    }
+   ],
+   "formatief": {
+    "soort": "foutenlijst",
+    "tekst": "Een lijst met je fouten, elk met het bijbehorende begrip, en het begrip dat je thuis als eerste leert."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "laptop",
+    "koptelefoon",
+    "uitwerkbijlage",
+    "correctiemodel"
+   ]
+  },
+  "Muziek en maatschappij: functies": {
+   "vraag": "Waarvoor wordt muziek gebruikt, en wat hoor je daaraan?",
+   "doel": "Je noemt de functie van een fragment en verklaart die met wat je hoort, niet met wat je ervan vindt.",
+   "criteria": [
+    "Ik noem de functie van een fragment",
+    "Ik leg uit welk muzikaal kenmerk bij die functie hoort",
+    "Ik zeg 'dat voel ik' niet als antwoord, maar 'dat hoor ik'"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Waar zou dit gebruikt worden?",
+     "stappen": [
+      "Je hoort drie fragmenten. Wat doen mensen terwijl deze muziek klinkt?",
+      "Schrijf per fragment één plek of bezigheid op."
+     ],
+     "docent": "Event: activiteitenweek C, de les kan uitvallen. Drie fragmenten kiezen met een duidelijk andere functie: iets om op te dansen, iets rustigs op de achtergrond, een lied dat in een kerk gezongen wordt. Laat ze eerst in eigen woorden zeggen waar de muziek bij hoort."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "De functies, met kenmerken",
+     "stappen": [
+      "Functies: dansmuziek, filmmuziek, achtergrondmuziek, religieuze en wereldlijke muziek, muziek bij arbeid, concert, handelswaar, decoratie, ontspanning, illustratie en therapie.",
+      "Dansmuziek heeft sterke ritmische accenten en een duidelijke vorm. Achtergrondmuziek verandert weinig in dynamiek, heeft een matig tempo en geen zang op de voorgrond.",
+      "Handelswaar heeft een meezingbaar refrein en een makkelijke, herkenbare melodie.",
+      "Op het examen geef je een kenmerk dat je hoort. Een gevoel of herinnering telt niet."
+     ],
+     "docent": "Syllabus K8: kandidaten verbinden functies aan muzikale kenmerken en niet aan subjectieve of associatieve betekenissen. Uit de sectiemap: dansmuziek, want het ritme is vlot; achtergrondmuziek, want de zang is niet op de voorgrond of de muziek is rustig; handelswaar, want de melodie is makkelijk mee te zingen en het refrein is herkenbaar; ontspanning, want rustig en zacht. Legenda per functie op het bord laten staan tijdens de doe-fase.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Functie",
+        "Dit hoor je"
+       ],
+       [
+        "Dansmuziek",
+        "sterk ritme, duidelijke vorm"
+       ],
+       [
+        "Achtergrondmuziek",
+        "weinig dynamiek, matig tempo, zang niet vooraan"
+       ],
+       [
+        "Handelswaar",
+        "meezingbaar refrein, herkenbare melodie"
+       ],
+       [
+        "Ontspanning",
+        "rustig, zacht"
+       ],
+       [
+        "Concert",
+        "wordt in een zaal uitgevoerd"
+       ]
+      ],
+      "kol": [
+       0.3,
+       0.7
+      ]
+     }
+    },
+    {
+     "min": 17,
+     "soort": "doen",
+     "kop": "Functie plus bewijs",
+     "stappen": [
+      "Acht fragmenten. Schrijf per fragment de functie en één kenmerk dat je hoort.",
+      "Vorm de zin: 'Het is ..., want ...'.",
+      "Vergelijk met je buur. Bij verschil: wie kan het kenmerk aanwijzen in het fragment?"
+     ],
+     "docent": "Acht fragmenten kiezen, verspreid over de functies van het bord. Ook religieuze muziek (bijvoorbeeld een koraal of gospel) en filmmuziek. Antwoorden: functie en kenmerk. Waar het misgaat: leerlingen antwoorden met de plek of het gevoel (\"het is gezellig\"). Vraag dan: wat hoor je dat dit zegt?",
+     "klaar": "Zoek een nummer dat meer dan één functie heeft en leg uit welke."
+    },
+    {
+     "min": 8,
+     "soort": "check",
+     "kop": "Twee fragmenten",
+     "stappen": [
+      "Twee nieuwe fragmenten: noem de functie en het kenmerk.",
+      "Thuis: Musicbox, box Muziek en maatschappij."
+     ],
+     "docent": "Korte controle. Wie het kenmerk niet kan noemen, leert thuis eerst de legenda."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Twee fragmenten: de functie en het kenmerk dat je hoort. Een gevoel is geen antwoord."
+   },
+   "identiteit": "Muziek in de kerk is ook een functie: religieuze muziek. Net als bij alle andere functies bewijs je die met wat je hoort, niet met wat je vindt.",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas"
+   ]
+  },
+  "Muziek en maatschappij: handelswaar en meningen": {
+   "vraag": "Waarom wordt muziek verkocht en gebruikt, en hoe onderbouw je een mening?",
+   "doel": "Je herkent muziek als handelswaar, reclame, concert, arbeid en therapie, en je onderbouwt je mening met muzikale kenmerken en de mening van anderen.",
+   "criteria": [
+    "Ik noem een kenmerk van muziek als handelswaar",
+    "Ik leg uit wat een recensie of interview mij vertelt",
+    "Ik geef een mening en noem er een muzikaal kenmerk bij"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "start",
+     "kop": "Zou je dit kopen?",
+     "stappen": [
+      "Je hoort een fragment. Zou je dit kopen of streamen? Ja of nee.",
+      "Schrijf één reden op die je in de muziek hoort."
+     ],
+     "docent": "Event: ma 8 feb start periode 3. Een fragment kiezen met meezingbaar refrein en een herkenbare melodie. Antwoorden noteren zonder te corrigeren, ze komen terug in de doe-fase."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "Muziek als handelswaar en meer",
+     "stappen": [
+      "Handelswaar: muziek om te verkopen. Meezingbaar refrein, makkelijke en herkenbare melodie.",
+      "Reclame: muziek die iets aanprijst. Concert: muziek die live voor een publiek klinkt. Arbeid: muziek die bij werk hoort. Therapie: muziek die helpt bij rust of herstel.",
+      "Meningen van anderen vind je in een recensie, een interview of op een inlaycard. Het zijn teksten of afbeeldingen.",
+      "Je eigen mening geef je altijd met een kenmerk uit de muziek."
+     ],
+     "docent": "Syllabus K8: eigen muzikale beleving verwoorden, meningen van anderen betrekken (voorbeelden: recensie, inlaycard, interview), verwijzen naar muzikale aspecten of functies. Voor het CSE alleen beluisterde muziek. Uitleg arbeid en therapie in eigen woorden houden; geen details toevoegen die niet in de syllabus staan."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Eigen mening, met onderbouwing",
+     "stappen": [
+      "Lees de korte recensie van het fragment. Wat vindt de schrijver?",
+      "Luister nog een keer. Ben je het eens of oneens?",
+      "Schrijf drie zinnen: jouw mening, een kenmerk dat je hoort, en wat de schrijver ervan vindt.",
+      "Lees je zinnen voor aan je buur. Zit er een muzikaal kenmerk in?"
+     ],
+     "docent": "Korte recensie van vier of vijf zinnen bij een fragment dat je zelf kiest, of schrijf er zelf een. Geen echte recensie volledig overnemen. Waar het misgaat: een mening zonder kenmerk (\"het is mooi\"). Vraag steeds: wat hoor je dan precies, tempo, dynamiek, zang, melodie?",
+     "klaar": "Schrijf een eigen mini-recensie van twee zinnen over het fragment."
+    },
+    {
+     "min": 7,
+     "soort": "gesprek",
+     "kop": "Verschillen horen erbij",
+     "stappen": [
+      "Wie dacht hetzelfde, wie niet? Wat was het verschil in kenmerken die jullie noemden?",
+      "Past dit fragment bij reclame? Waarom wel of niet?"
+     ],
+     "docent": "Laat een paar reacties horen. Laat ze elkaars mening respectvol ontleden: het gaat om argumenten, niet om smaak. Thuis: Musicbox, box Muziek en maatschappij."
+    }
+   ],
+   "formatief": {
+    "soort": "drie zinnen",
+    "tekst": "Drie zinnen: je mening, het kenmerk dat je hoort, en wat de schrijver vindt."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas",
+    "korte recensie op papier of scherm"
+   ]
+  },
+  "Terugblik examenconcert": {
+   "vraag": "Wat ging goed op het examenconcert, en wat neem je mee?",
+   "doel": "Je kijkt terug op je eigen optreden en je organisatietaak, en je schrijft op wat je volgende keer anders doet.",
+   "criteria": [
+    "Ik noem wat goed ging, met een voorbeeld",
+    "Ik noem wat ik anders zou doen",
+    "Ik vul mijn zelfbeoordeling concreet en eerlijk in"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "start",
+     "kop": "Eén ding trots, één ding anders",
+     "stappen": [
+      "Schrijf op: waar ben je trots op, en wat zou je anders doen?",
+      "Eén zin per kant."
+     ],
+     "docent": "Event: examenconcert vóór 1 maart. Sing-In woensdag 17 feb, De Doelen donderdag 18 feb, vrijdag 19 feb extra vrije dag. Deze les kan kort zijn of anders vallen. Niemand hoeft het te delen."
+    },
+    {
+     "min": 22,
+     "soort": "doen",
+     "kop": "Zelfbeoordeling invullen",
+     "stappen": [
+      "Vul het P2-format in. Per onderdeel een kruisje en een score.",
+      "Onderdelen: techniek en beheersing, timing en ritme, dynamiek en articulatie, samenspel, samenwerking, presentatie, organisatie.",
+      "Schrijf bij elk onderdeel een zin: waarom deze score?"
+     ],
+     "docent": "Format: P2 format zelfbeoordeling leerling. De onderdelen komen overeen met het beoordelingsformulier. De zelfbeoordeling telt voor 10% mee: de docent kijkt of de leerling eerlijk en concreet is, niet hoe hoog de score is. Waar het misgaat: alles 8 of 10 zonder voorbeeld, of alles laag uit bescheidenheid. Vraag naar een voorbeeld uit het concert.",
+     "klaar": "Schrijf een tip voor een klasgenoot die dit concert ook meespeelde."
+    },
+    {
+     "min": 12,
+     "soort": "gesprek",
+     "kop": "Tips om elkaar verder te helpen",
+     "stappen": [
+      "Lees in een tweetal elkaars zelfbeoordeling.",
+      "Geef elkaar één tip: zo concreet dat de ander er morgen mee kan oefenen.",
+      "Wat nemen jullie mee naar een volgend optreden, op school of daarbuiten?"
+     ],
+     "docent": "Geen cijfers bespreken. Als leerlingen eerlijk zijn over iets wat misging, benoem dat expliciet als sterk. Alle tips komen op het format bij Tip van een klasgenoot."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat blijft er over?",
+     "stappen": [
+      "Lever je format in.",
+      "Volgende les gaan we van muziek en andere kunsten naar jullie eindopdracht."
+     ],
+     "docent": "Formats verzamelen. De formulieren gaan voor de beoordeling mee met het scoreblad."
+    }
+   ],
+   "formatief": {
+    "soort": "ingevuld format",
+    "tekst": "Het ingevulde P2-format, met bij elk onderdeel een zin en een tip van een klasgenoot."
+   },
+   "benodigd": [
+    "P2 format zelfbeoordeling leerling (Word)"
+   ]
+  },
+  "Muziek en andere kunsten": {
+   "vraag": "Welke andere kunsten zitten er in een muziekproductie, en wat doen ze?",
+   "doel": "Je herkent dans, drama, film, literatuur en beeldende kunst in een muziekproductie en je noemt de functie ervan: verhalend, decoratief of ontspannend.",
+   "criteria": [
+    "Ik noem de andere kunstvorm in een fragment",
+    "Ik noem de functie van die kunstvorm",
+    "Ik leg uit wat die kunstvorm toevoegt aan de muziek"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Muziek zonder beeld, muziek mét beeld",
+     "stappen": [
+      "Je ziet een scène zonder geluid. Wat verwacht je dat je hoort?",
+      "Daarna met geluid. Wat veranderde er?"
+     ],
+     "docent": "Event: do 4 mrt PMZingt!. Fragment kies je zelf: een scène uit een film of musical waarin muziek en beeld sterk samenwerken. Eerst zonder geluid, dan met."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Kunstvormen en hun functie",
+     "stappen": [
+      "Beeldende kunst (schilderkunst, architectuur, mode en meer), dans (ballet, moderne dans, breakdance), drama (toneel, soap), film (speelfilm, documentaire, tv-serie) en literatuur (teksten).",
+      "Verhalend: de kunstvorm vertelt het verhaal. Decoratief: de kunstvorm maakt het mooier. Ontspannend: de kunstvorm laat je rusten of genieten.",
+      "Voorbeelden: dans in een videoclip is decoratief. Drama in een musical vertelt de verhaallijn. Het decor van een opera is decoratief. Een filmprojectie kan de emotie versterken."
+     ],
+     "docent": "Syllabus K9 (alleen de eerste eindterm in het CSE): andere kunstvormen herkennen binnen een muziekproductie en de functies benoemen. De specificaties (zoals klassiek ballet of grafische vormgeving) worden niet actief bevraagd; alleen kijken is genoeg. De antwoorden zijn niet vakspecifiek en de samenhang met muziek is duidelijk aanwezig. De voorbeelden zijn die van de syllabus.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Beeldende kunst",
+        "t": "schilderkunst, decor, mode"
+       },
+       {
+        "k": "Dans",
+        "t": "ballet, moderne dans, breakdance"
+       },
+       {
+        "k": "Drama",
+        "t": "toneel, soap, musical"
+       },
+       {
+        "k": "Film",
+        "t": "speelfilm, documentaire, tv-serie"
+       },
+       {
+        "k": "Literatuur",
+        "t": "tekst, beeld of woord"
+       },
+       {
+        "k": "Verhalend",
+        "t": "vertelt het verhaal"
+       },
+       {
+        "k": "Decoratief",
+        "t": "maakt het mooier"
+       },
+       {
+        "k": "Ontspannend",
+        "t": "laat je rusten"
+       }
+      ]
+     }
+    },
+    {
+     "min": 17,
+     "soort": "doen",
+     "kop": "Wat doet elke kunstvorm?",
+     "stappen": [
+      "Vier fragmenten. Per fragment: welke andere kunstvormen zie je?",
+      "Welke functie heeft elke kunstvorm: verhalend, decoratief of ontspannend?",
+      "Leg uit wat de muziek erbij doet. Gebruik minstens één begrip: tempo, dynamiek, klankkleur."
+     ],
+     "docent": "Vier fragmenten uit videoclip, musical, film en een voorstelling kiezen, zonder ondertitels. Antwoordblad vooraf. Waar het misgaat: alleen de kunstvorm noemen, niet de functie. Vraag door: wat voegt dit toe?",
+     "klaar": "Bedenk een fragment uit een clip of film die je kent waarin de muziek zonder het beeld niets betekent."
+    },
+    {
+     "min": 8,
+     "soort": "check",
+     "kop": "Twee vragen en thuis",
+     "stappen": [
+      "Fragment: noem één andere kunstvorm en de functie.",
+      "Waarom is dat een decoratieve of een verhalende functie?",
+      "Thuis: Musicbox, box Muziek en andere kunsten."
+     ],
+     "docent": "Wie de functie niet kan onderbouwen, bekijkt thuis de kaarten opnieuw. Volgende les begint de eindopdracht."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Een fragment: de andere kunstvorm, zijn functie en wat de muziek erbij doet."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "scherm met geluid",
+    "antwoordblad"
+   ]
+  },
+  "Eindopdracht: opdracht en kunstvorm kiezen": {
+   "vraag": "Welke kunstvorm onderzoek je bij muziek, en met welk voorbeeld?",
+   "doel": "Je weet wat de eindopdracht is, waarop je beoordeeld wordt en je kiest een kunstvorm met een voorbeeld.",
+   "criteria": [
+    "Ik kan uitleggen wat de eindopdracht inhoudt",
+    "Ik heb een kunstvorm en een voorbeeld gekozen",
+    "Ik weet in welke stappen ik werk"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "start",
+     "kop": "Wat moet je doen, en waarop word je beoordeeld?",
+     "stappen": [
+      "Eindopdracht: een presentatie en onderzoek over muziek in relatie tot ten minste één andere kunstvorm.",
+      "Je presenteert een muziekstuk voor een ander publiek dan de muziekklas.",
+      "Lees het zelfbeoordelingsformat: welke onderdelen staan erin?"
+     ],
+     "docent": "Event: do 4 mrt PMZingt!. Zelfbeoordeling P3 klaar leggen. De onderdelen: onderzoek (kunstvorm en voorbeeld), functie van de kunstvorm (verhalend, decoratief, ontspannend), samenhang met de muziek, bronnen en fragmenten, presenteren, muziekstuk voor publiek, planning en afspraken. Inleveren: het lessenbestand zegt lesweek 27, het PTA noemt 22 januari 2027 (periode 3). Controleer dit voor je de datum noemt.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Onderdeel",
+        "Wat laat je zien?"
+       ],
+       [
+        "Onderzoek",
+        "kunstvorm en een echt voorbeeld"
+       ],
+       [
+        "Functie",
+        "verhalend, decoratief of ontspannend"
+       ],
+       [
+        "Samenhang",
+        "hoe muziek en kunstvorm samenwerken"
+       ],
+       [
+        "Bronnen",
+        "goede bronnen en fragmenten"
+       ],
+       [
+        "Presenteren",
+        "duidelijke opbouw, niet voorlezen"
+       ],
+       [
+        "Muziekstuk",
+        "voor ander publiek dan de klas"
+       ],
+       [
+        "Planning",
+        "opzet en eindversie op tijd"
+       ]
+      ],
+      "kol": [
+       0.3,
+       0.7
+      ]
+     }
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Kunstvorm en voorbeeld kiezen",
+     "stappen": [
+      "Kies: dans, drama, film, literatuur of beeldende kunst.",
+      "Kies een echt voorbeeld waarin muziek en die kunstvorm samenkomen.",
+      "Schrijf op waarom: wat valt je op in de muziek?",
+      "Controleer met de docent voordat je verder gaat."
+     ],
+     "docent": "Rondlopen en elk voorbeeld controleren: bestaat het, past het bij de kunstvorm, is er te veel te onderzoeken? Christelijke school: laat een voorbeeld toe dat bij hun leefwereld past, maar sluit niets op voorhand uit. Waar het misgaat: leerlingen kiezen een voorbeeld waar de kunstvorm nauwelijks bij hoort of waar geen goede bron over is. Dan bijsturen.",
+     "klaar": "Zoek een tweede voorbeeld als reserve."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Past je voorbeeld en voor wie speel je?",
+     "stappen": [
+      "Leg in twee zinnen aan je buur uit wat je onderzoekt.",
+      "Voor welk publiek ga je je muziekstuk presenteren, buiten onze klas?",
+      "Welk stuk wil je presenteren, en met wie?"
+     ],
+     "docent": "Het muziekstuk voor ander publiek moet nu al ter sprake komen: dat vraagt de meeste voorbereiding. Gesprekken kort houden; leerlingen noteren hun keuze op het format."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Stappen en data",
+     "stappen": [
+      "Schrijf je kunstvorm en voorbeeld bovenaan het format.",
+      "Volgende les: bronnen zoeken. Thuis: Musicbox, box Muziek en andere kunsten."
+     ],
+     "docent": "Formats worden bewaard. Zet op het bord de stappen: onderzoek, opzet, eindversie, presentatie."
+    }
+   ],
+   "formatief": {
+    "soort": "ingevuld format",
+    "tekst": "Kunstvorm, voorbeeld en muziekstuk staan bovenaan het format."
+   },
+   "benodigd": [
+    "P3 format zelfbeoordeling leerling (Word)"
+   ]
+  },
+  "Musical en film: kunsten die samenkomen": {
+   "vraag": "Hoe werken muziek, dans, drama en beeld samen in een musical en een film?",
+   "doel": "Je benoemt welke kunstvormen in een musical en een film voorkomen, welke functie ze hebben en wat de muziek daarin doet.",
+   "criteria": [
+    "Ik noem de kunstvormen in een scène",
+    "Ik leg per kunstvorm de functie uit",
+    "Ik leg uit wat de muziek toevoegt aan het verhaal"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Zonder en met geluid",
+     "stappen": [
+      "Je ziet dezelfde scène twee keer: eerst zonder geluid, dan met.",
+      "Wat verandert er in de sfeer?"
+     ],
+     "docent": "Event: di 9 mrt herkansingen PTA, vr 12 mrt ontwikkeldag en Messiah in Leiden. Scène kies je zelf, bijvoorbeeld de dramatische kern van een film. Laat de klas eerst vertellen wat ze zien, dan wat ze horen."
+    },
+    {
+     "min": 10,
+     "soort": "uitleg",
+     "kop": "Wat doet welke kunstvorm?",
+     "stappen": [
+      "In een musical vertelt het drama de verhaallijn. Dans en decor maken het mooier. De muziek verbindt alles.",
+      "In een film versterkt het beeld de emotie en de muziek de sfeer.",
+      "Verhalend, decoratief of ontspannend: per kunstvorm één functie."
+     ],
+     "docent": "Syllabus K9: drama in een musical om een verhaallijn weer te geven (verhalend), beeldende kunst/decor in opera (decoratief), filmprojectie om de dramatische en emotionele impact te versterken. Verwijs naar muziekbegrippen: tempo en dynamiek van de muziek passen bij de spanning in het beeld."
+    },
+    {
+     "min": 22,
+     "soort": "doen",
+     "kop": "Twee scènes, één tabel",
+     "stappen": [
+      "Je ziet twee scènes: een uit een musical, een uit een film.",
+      "Vul de tabel in: welke kunstvormen, welke functie, welke muziek (tempo, dynamiek, klankkleur)?",
+      "Vergelijk de twee scènes: waar werken muziek en beeld het sterkst samen?"
+     ],
+     "docent": "Scènes zelf kiezen. Aan het eind laat elk tweetal één rij horen. Waar het misgaat: de muziek wordt niet benoemd met begrippen. Vraag naar tempo, dynamiek, klankkleur.",
+     "klaar": "Schrijf op hoe de scène zou klinken met andere muziek.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "",
+        "Musical",
+        "Film"
+       ],
+       [
+        "Kunstvormen",
+        "",
+        ""
+       ],
+       [
+        "Functie",
+        "",
+        ""
+       ],
+       [
+        "Muziek: tempo, dynamiek, klankkleur",
+        "",
+        ""
+       ]
+      ],
+      "kol": [
+       0.4,
+       0.3,
+       0.3
+      ]
+     }
+    },
+    {
+     "min": 7,
+     "soort": "afsluiten",
+     "kop": "Vrijdag Leiden",
+     "stappen": [
+      "Schrijf in één zin wat de muziek toevoegt aan de scène die je het sterkst vond.",
+      "Thuis: Musicbox, box Muziek en andere kunsten."
+     ],
+     "docent": "Thuis sluit hierop aan. Vrijdag is de Messiah in Leiden (handelingsdeel H1). Vraag wie vrijdag aanwezig is."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "In één zin: wat voegt de muziek toe aan de scène die je het sterkst vond?"
+   },
+   "identiteit": "De tekst van de Messiah komt uit de Bijbel. Daar vertelt de muziek het verhaal zonder decor of dans. Dat is een andere manier dan in een musical of film.",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "scherm met geluid",
+    "tabel op papier"
+   ]
+  },
+  "Eindopdracht: onderzoek": {
+   "vraag": "Wat kun je over muziek en je gekozen kunstvorm in bronnen vinden?",
+   "doel": "Je zoekt bronnen bij jouw voorbeeld, kiest fragmenten en maakt aantekeningen in eigen woorden.",
+   "criteria": [
+    "Ik heb minstens twee goede bronnen gevonden",
+    "Ik heb een fragment gekozen en weet de tijd waar het begint",
+    "Ik schrijf aantekeningen in eigen woorden"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat wil je weten?",
+     "stappen": [
+      "Schrijf drie onderzoeksvragen: wat is de kunstvorm, wat is de functie, hoe werken de muziek en de kunstvorm samen?"
+     ],
+     "docent": "Event: di 9 mrt herkansingen PTA, vr 12 mrt ontwikkeldag en Messiah in Leiden. Kijk of iedereen de kunstvorm en het voorbeeld uit 23.2 heeft. Wie nog twijfelt: eerst dat afmaken, samen met jou."
+    },
+    {
+     "min": 32,
+     "soort": "doen",
+     "kop": "Zoeken en aantekeningen maken",
+     "stappen": [
+      "Zoek minstens twee bronnen. Schrijf op waar je ze vond.",
+      "Kies een fragment. Noteer waar het begint en eindigt.",
+      "Vul het schema in: wat zie of hoor je, welk muziekbegrip hoort erbij, welke bron.",
+      "Schrijf in eigen woorden, niet overnemen."
+     ],
+     "docent": "Rondlopen en per leerling controleren op: bron genoemd, eigen woorden, fragment gekozen, aantekening met een muziekbegrip (tempo, dynamiek, klankkleur, ritme). Waar het misgaat: tekst kopiëren, of aantekeningen zonder bron. Wie klaar is met het schema, begint met de opzet.",
+     "klaar": "Zoek een derde bron en vergelijk: zegt die hetzelfde?",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Vraag",
+        "Wat ik zie of hoor",
+        "Bron"
+       ],
+       [
+        "Wat is de functie van de kunstvorm?",
+        "",
+        ""
+       ],
+       [
+        "Welk muziekbegrip hoor ik?",
+        "",
+        ""
+       ],
+       [
+        "Hoe werken ze samen?",
+        "",
+        ""
+       ]
+      ],
+      "kol": [
+       0.4,
+       0.4,
+       0.2
+      ]
+     }
+    },
+    {
+     "min": 8,
+     "soort": "afsluiten",
+     "kop": "Wat heb je, wat mist er?",
+     "stappen": [
+      "Controleer: twee bronnen, één fragment, aantekeningen met begrippen.",
+      "Schrijf op wat je volgende les nog moet zoeken.",
+      "Thuis: Musicbox, box Muziek en andere kunsten."
+     ],
+     "docent": "Wie ontbrekende stappen heeft, krijgt een korte opdracht voor thuis. De volgende les (luisteren, alle begrippen) en 25.2 (uitwerken) komen nog."
+    }
+   ],
+   "formatief": {
+    "soort": "checklist",
+    "tekst": "Twee bronnen, één fragment en aantekeningen met een muziekbegrip. Wat nog mist, staat op je lijstje."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "laptop",
+    "aantekeningenblad"
+   ]
+  },
+  "Luisteren: alle begrippen door elkaar": {
+   "vraag": "Kun je een fragment beschrijven met alle begrippen die je geleerd hebt?",
+   "doel": "Je beschrijft fragmenten uit verschillende stijlen met begrippen over ritme, tempo, dynamiek, samenklank, uitvoeringswijze, klankkleur, melodische relaties en vorm.",
+   "criteria": [
+    "Ik beschrijf een fragment met minstens vijf begrippen",
+    "Ik gebruik de goede term en geen omschrijving",
+    "Ik hoor wat er in een tweede fragment anders is"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Eén fragment, zoveel begrippen als je hoort",
+     "stappen": [
+      "Je hoort één fragment. Zoek zoveel begrippen als je kunt: ritme, tempo, dynamiek, instrumenten, vorm.",
+      "Schrijf elk begrip op een apart regeltje."
+     ],
+     "docent": "Geen uitleg vooraf. Let op welke begrippen leerlingen spontaan vergeten."
+    },
+    {
+     "min": 25,
+     "soort": "luisteren",
+     "kop": "Vijf fragmenten, steeds anders",
+     "stappen": [
+      "Vijf fragmenten uit verschillende stijlen. Per fragment een tabel.",
+      "Vul bij elk: tempo, maat, dynamiek, klankkleur, uitvoeringswijze, vorm of melodisch begrip. Je hoeft niet overal iets in te vullen.",
+      "Je mag samenwerken in een tweetal, maar schrijf je eigen blad."
+     ],
+     "docent": "Vijf fragmenten verspreid over stijlen (klassiek, pop, jazz, wereldmuziek, elektronisch), elk ongeveer anderhalve minuut. Per fragment twee keer draaien. Tabel op papier met rijen voor de begrippen. Waar het misgaat: leerlingen noemen hoe het klinkt (\"druk\") in plaats van het begrip. Vraag door naar de term.",
+     "klaar": "Kies het fragment dat je het moeilijkst vond en schrijf op wat je hoorde.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Begrip",
+        "Wat hoor je?"
+       ],
+       [
+        "Tempo en maat",
+        ""
+       ],
+       [
+        "Dynamiek",
+        ""
+       ],
+       [
+        "Klankkleur",
+        ""
+       ],
+       [
+        "Uitvoeringswijze",
+        ""
+       ],
+       [
+        "Vorm of melodisch begrip",
+        ""
+       ]
+      ],
+      "kol": [
+       0.35,
+       0.65
+      ]
+     }
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Nabespreken",
+     "stappen": [
+      "Bij elk fragment: wat hadden jullie? Wat is het goede antwoord?",
+      "Welk begrip kwam vaak voor?"
+     ],
+     "docent": "Per fragment het antwoord laten horen. Verbind aan de lessen. Bijvoorbeeld legato en staccato (uitvoeringspraktijk) of de vorm (couplet en refrein)."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Thuis",
+     "stappen": [
+      "Schrijf op welke twee begrippen je vandaag miste.",
+      "Thuis: Musicbox, Trainers: alle begrippen."
+     ],
+     "docent": "Verband met de herhaling in 16.1 en de laatste training in 30.1."
+    }
+   ],
+   "formatief": {
+    "soort": "tabel",
+    "tekst": "Je tabel met vijf fragmenten en twee begrippen die je miste."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas",
+    "tabel op papier"
+   ]
+  },
+  "Eindopdracht: uitwerken": {
+   "vraag": "Is je eindopdracht al af, en waar kan het sterker?",
+   "doel": "Je werkt je onderzoek en presentatie uit en krijgt feedback op de opzet.",
+   "criteria": [
+    "Mijn opzet laat alle onderdelen van het format zien",
+    "Ik heb feedback gekregen en gebruikt",
+    "Mijn muziekstuk voor publiek staat vast"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat moet vandaag af?",
+     "stappen": [
+      "Controleer met het format: welke onderdelen staan er al in je opzet?",
+      "Zet bovenaan wat je vandaag afmaakt."
+     ],
+     "docent": "Format: P3 format zelfbeoordeling leerling. Rondlopen en per leerling snel kijken wat nog ontbreekt."
+    },
+    {
+     "min": 30,
+     "soort": "doen",
+     "kop": "Uitwerken",
+     "stappen": [
+      "Werk je opzet uit: kunstvorm, functie, samenhang met de muziek.",
+      "Zet erin welke muziekbegrippen je gebruikt en bij welk fragment.",
+      "Werk je presentatie uit en bedenk wat je zegt.",
+      "Leg je muziekstuk voor publiek vast: wie, wanneer, waar."
+     ],
+     "docent": "Feedback op de opzet geef je op de onderdelen uit het format: functie uitgelegd, begrippen toegepast, bronnen genoemd, presentatie niet voorlezen. Waar het misgaat: een beschrijving van het voorbeeld zonder te zeggen wat de kunstvorm toevoegt, of de muziek los van het beeld. Vraag steeds: wat doet de kunstvorm voor de muziek?",
+     "klaar": "Oefen de eerste minuut van je presentatie hardop met je buur.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Onderdeel",
+        "Staat het erin?"
+       ],
+       [
+        "Kunstvorm en voorbeeld",
+        ""
+       ],
+       [
+        "Functie: verhalend, decoratief of ontspannend",
+        ""
+       ],
+       [
+        "Samenhang met muziekbegrippen",
+        ""
+       ],
+       [
+        "Bronnen en fragmenten",
+        ""
+       ],
+       [
+        "Presentatie",
+        ""
+       ],
+       [
+        "Muziekstuk voor publiek",
+        ""
+       ]
+      ],
+      "kol": [
+       0.6,
+       0.4
+      ]
+     }
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Feedback in tweetallen",
+     "stappen": [
+      "Lees elkaars opzet.",
+      "Geef één tip en één compliment, bij een onderdeel van het format.",
+      "Schrijf de tip op je eigen opzet."
+     ],
+     "docent": "Vooral kijken of de feedback specifiek is. Dus niet \"mooi\", maar \"bij functie noem je alleen verhalend, wat doet de dans erbij?\"."
+    }
+   ],
+   "formatief": {
+    "soort": "opzet met feedback",
+    "tekst": "Je opzet met een tip van je buur erbij en een lijstje voor de afronding."
+   },
+   "benodigd": [
+    "P3 format zelfbeoordeling leerling (Word)",
+    "laptop"
+   ]
+  },
+  "Oefenexamen 2": {
+   "vraag": "Hoe ver ben je nu, een paar weken voor het examen?",
+   "doel": "Je maakt een volledig oud examen in de vorm van Facet en kijkt het na met het correctiemodel.",
+   "criteria": [
+    "Ik maak het examen met koptelefoon en zonder hulp",
+    "Ik kijk na met het correctiemodel",
+    "Ik schrijf bij elke fout het begrip op"
+   ],
+   "fasen": [
+    {
+     "min": 3,
+     "soort": "start",
+     "kop": "Klaarzetten",
+     "stappen": [
+      "Koptelefoon op, volume testen.",
+      "Naam op de uitwerkbijlage."
+     ],
+     "docent": "Event: activiteitenweek D, do paasviering voor m1234, vr Goede Vrijdag. De les kan uitvallen of kort zijn. Zet alles klaar voor de leerlingen binnenkomen."
+    },
+    {
+     "min": 30,
+     "soort": "doen",
+     "kop": "Het examen",
+     "stappen": [
+      "Maak het examen zoals op het centraal examen.",
+      "Eén antwoord per vraag, alles invullen.",
+      "Houd bij welke vragen je twijfelde."
+     ],
+     "docent": "Gebruik een volledig oud examen dat je zelf kiest (geen jaartal op het bord). De duur van een echt examen staat niet in onze bronnen: past het niet in de les, verdeel het in blokken en maak de rest in 27.2 of thuis. Tijdens het maken niet rondlopen met antwoorden. Rustig toezicht.",
+     "klaar": "Controleer of je elke vraag een antwoord hebt gegeven."
+    },
+    {
+     "min": 12,
+     "soort": "gesprek",
+     "kop": "Nakijken met het correctiemodel",
+     "stappen": [
+      "Kijk je eigen werk na met het correctiemodel.",
+      "Schrijf achter elke fout het begrip op dat erbij hoort.",
+      "Thuis: Musicbox, Examentraining (Vmbo), en je eigen foutenlijst."
+     ],
+     "docent": "Correctiemodel uitdelen of tonen. Laat leerlingen zelf nakijken. De punten tellen niet als cijfer. De fouten per begrip nemen we mee naar 27.2 (foutenanalyse)."
+    }
+   ],
+   "formatief": {
+    "soort": "foutenlijst",
+    "tekst": "Je gecorrigeerde examen en een lijst met per fout het begrip."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "laptop",
+    "koptelefoon",
+    "uitwerkbijlage",
+    "correctiemodel"
+   ]
+  },
+  "Eindopdracht: afronden": {
+   "vraag": "Is je eindopdracht klaar om in te leveren?",
+   "doel": "Je maakt je eindopdracht af, controleert alle onderdelen en vult je zelfbeoordeling in.",
+   "criteria": [
+    "Alle onderdelen van het format staan in mijn werk",
+    "Ik heb mijn werk gecontroleerd op bronnen en eigen woorden",
+    "Ik heb mijn zelfbeoordeling concreet ingevuld"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Controle met het format",
+     "stappen": [
+      "Loop alle onderdelen langs: staat het erin?",
+      "Markeer wat nog mist."
+     ],
+     "docent": "Event: activiteitenweek D, do paasviering voor m1234, vr Goede Vrijdag. Les kan kort zijn. Zelfbeoordeling P3 klaar. Inleveren: het lessenbestand noemt volgende week (lesweek 27)."
+    },
+    {
+     "min": 28,
+     "soort": "doen",
+     "kop": "Afronden",
+     "stappen": [
+      "Werk de laatste punten af.",
+      "Controleer je bronnen: staat bij elk fragment waar het vandaan komt?",
+      "Lees je presentatie hardop door, zonder te lezen van papier.",
+      "Zet je werk klaar om in te leveren."
+     ],
+     "docent": "Rondlopen. Let op: bron per fragment, eigen woorden, muziekbegrippen aanwezig, muziekstuk voor ander publiek vastgelegd. Wie klaar is, helpt een ander.",
+     "klaar": "Oefen je presentatie met je buur als publiek."
+    },
+    {
+     "min": 12,
+     "soort": "afsluiten",
+     "kop": "Zelfbeoordeling",
+     "stappen": [
+      "Vul het P3-format in: per onderdeel een kruisje en een score.",
+      "Schrijf er een zin bij: waarom deze score?",
+      "Thuis: Musicbox, Examentraining (Vmbo), en je foutenlijst."
+     ],
+     "docent": "De zelfbeoordeling telt voor 10% mee: eerlijk en concreet, niet hoog. Format ligt klaar. Vraag naar een voorbeeld bij elke score."
+    }
+   ],
+   "formatief": {
+    "soort": "zelfbeoordeling",
+    "tekst": "Je ingevulde P3-format, met bij elke score een zin."
+   },
+   "benodigd": [
+    "P3 format zelfbeoordeling leerling (Word)"
+   ]
+  },
+  "Foutenanalyse oefenexamen 2": {
+   "vraag": "Bij welke begrippen verlies je punten, en wat doe je daaraan?",
+   "doel": "Je zoekt per begrip uit waar je punten verloor en maakt een plan voor de laatste weken.",
+   "criteria": [
+    "Ik weet bij welke begrippen ik punten verloor",
+    "Ik weet waarom ik een fout maakte",
+    "Ik heb een herhaalplan voor de laatste weken"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Tel je punten per onderdeel",
+     "stappen": [
+      "Pak je gecorrigeerde examen.",
+      "Tel de verloren punten per onderdeel: ritme, maat, tempo, dynamiek, samenklank, klankkleur, vorm, muziek en maatschappij, muziek en andere kunsten."
+     ],
+     "docent": "Event: ma 29 mrt tweede paasdag, vr 2 apr start toetsweek 3. De les kan uitvallen. Lijsten met begrippen klaar. Als het examen nog niet af was (zie 26.1): eerst het resterende deel maken en nakijken."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Waarom ging het mis?",
+     "stappen": [
+      "Kies per fout een reden: begrip niet gekend, begrip verward, niet goed geluisterd, vraag niet goed gelezen.",
+      "Schrijf de begrippen met de meeste fouten bovenaan.",
+      "Zoek het begrip op in de Trainers of in de syllabus."
+     ],
+     "docent": "Rondlopen. Let op de reden: zonder reden geen goed plan. Waar het misgaat: leerlingen schrijven \"dom fout\". Vraag naar de vraag zelf: wat stond er precies, wat hoorde je?",
+     "klaar": "Zoek een vraag uit het examen die je alsnog goed kunt maken en leg hem uit aan je buur.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Begrip",
+        "Reden",
+        "Wat doe ik?"
+       ],
+       [
+        "",
+        "",
+        ""
+       ],
+       [
+        "",
+        "",
+        ""
+       ],
+       [
+        "",
+        "",
+        ""
+       ]
+      ],
+      "kol": [
+       0.3,
+       0.3,
+       0.4
+      ]
+     }
+    },
+    {
+     "min": 13,
+     "soort": "doen",
+     "kop": "Herhaalplan",
+     "stappen": [
+      "Kies je vijf zwakste begrippen.",
+      "Verdeel ze over de weken tot het examen: wanneer oefen je welk begrip?",
+      "Schrijf erbij waarmee: Trainers, syllabus, oefenexamen."
+     ],
+     "docent": "Plan op papier of in een bestand. Eén begrip per dag is realistischer dan alles in het weekend. Leerlingen met weinig fouten: begrippen waar ze onzeker over waren.",
+     "klaar": "Maak voor een klasgenoot drie vragen over diens zwakste begrip."
+    },
+    {
+     "min": 7,
+     "soort": "afsluiten",
+     "kop": "Drie vragen",
+     "stappen": [
+      "Drie vragen over je zwakste begrip. Schrijf antwoorden zonder je blad.",
+      "Controleer met het blad."
+     ],
+     "docent": "Korte check. Thuis: Musicbox, Examentraining (Vmbo), en eigen foutenlijst."
+    }
+   ],
+   "formatief": {
+    "soort": "plan",
+    "tekst": "Je tabel met fouten, redenen en je herhaalplan tot het examen."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "gecorrigeerd oefenexamen 2",
+    "laptop met Trainers"
+   ]
+  },
+  "Laatste examentraining": {
+   "vraag": "Wat moet je op het examen nog weten en doen?",
+   "doel": "Je maakt examenvragen door elkaar en je kent de aanpak voor het examen op de computer.",
+   "criteria": [
+    "Ik beantwoord vragen over verschillende begrippen door elkaar",
+    "Ik ken de tips voor het examen in Facet",
+    "Ik weet wat ik tot het examen nog oefen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat heb je nodig op de examendag?",
+     "stappen": [
+      "Koptelefoon op, volume testen voor je begint.",
+      "Naam op de uitwerkbijlage.",
+      "Eén antwoord per vraag, controleer of alles is ingevuld."
+     ],
+     "docent": "Event: wo 21 apr examenuitje mavo, laatste lesweek. Centraal examen vanaf vr 14 mei. Tips uit de sectiemap: tussen haakjes telt mee (liever doorstrepen), niet twee antwoorden geven als er één gevraagd wordt, bij een technische term geen omschrijving geven."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Examenvragen door elkaar",
+     "stappen": [
+      "Vragen door elkaar uit alle onderdelen. Je werkt op je eigen tempo.",
+      "Eerst de vragen die je zeker weet, dan de rest.",
+      "Schrijf bij elke vraag het begrip."
+     ],
+     "docent": "Zet vragen en fragmenten door elkaar uit alle onderdelen: ritme, maat, tempo, toonhoogte, toonsoort, dynamiek, samenklank, uitvoeringspraktijk, klankkleur, melodische relaties, variatie, homofone en polyfone structuren, opera en musical, vorm, muziek en maatschappij, muziek en andere kunsten. Rondlopen. Waar het misgaat: leerlingen slaan lastige instrumenten over (floortom, vibrafoon, marimba, castagnetten, maraca's, buisklokken, synthesizer worden vaak niet gekend).",
+     "klaar": "Kies het instrument dat je het slechtst kent en leg het uit aan je buur."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Nabespreken en laatste vragen",
+     "stappen": [
+      "Welke vragen gingen fout? Bij welk begrip?",
+      "Wat is je laatste vraag voor het examen?"
+     ],
+     "docent": "Antwoorden nabespreken. Laatste vragen noteren voor 30.2. Thuis: Musicbox, Examentraining (Vmbo), alle begrippen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Eén ding tot 14 mei",
+     "stappen": [
+      "Schrijf op wat je elke week blijft oefenen.",
+      "Volgende les: afsluiting en vooruitblik op het centraal examen."
+     ],
+     "docent": "Verwijs naar 30.2 voor de afsluiting."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Eén ding dat je elke week blijft oefenen tot het examen."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "laptop",
+    "koptelefoon",
+    "uitwerkbijlage"
+   ]
+  },
+  "Wat komt er op het examen?": {
+   "vraag": "Wat wordt er van je gevraagd op het examen, en hoe tellen de onderdelen mee?",
+   "doel": "Je weet hoe het centraal examen en het schoolexamen in elkaar zitten en je maakt samen een vraag in de stijl van het examen.",
+   "criteria": [
+    "Ik leg uit wat centraal examen en schoolexamen zijn",
+    "Ik weet hoe het examen op de computer gaat",
+    "Ik beantwoord een vraag in examenstijl"
+   ],
+   "fasen": [
+    {
+     "min": 7,
+     "soort": "start",
+     "kop": "Wat weet je al over het examen?",
+     "stappen": [
+      "Schrijf op: wat verwacht je van het examen muziek?",
+      "Wat denk je dat het zwaarst wordt?",
+      "Wat is je grootste vraag?"
+     ],
+     "docent": "Event: ma en di startdagen. De les kan korter zijn of een deel van de klas missen. Vragen verzamelen op het bord; sommige worden vanzelf in de uitleg beantwoord."
+    },
+    {
+     "min": 13,
+     "soort": "uitleg",
+     "kop": "Centraal examen en schoolexamen",
+     "stappen": [
+      "Centraal examen: luisteren met koptelefoon, vragen op de computer in Facet, notatie in een uitwerkbijlage. Het examen gaat over de begrippen, beluisteren, muziek en maatschappij, en muziek en andere kunsten.",
+      "Schoolexamen: T3 (proefexamen, weging 20), P2 (examenconcert, 40) en P3 (eindopdracht, 10). Daarbij komen P1 en T1 uit mavo 3.",
+      "SE en CE tellen elk voor de helft mee in je eindcijfer."
+     ],
+     "docent": "Uit de PTA-tekst van muziek: SE en CE tellen elk voor de helft mee; mavo 3 telt voor 30% van het SE, mavo 4 voor 70%. Syllabus: het CE is K3 (begrippen), K7 (beluisteren), K8 (muziek en maatschappij) en het eerste deel van K9 (andere kunsten). Weging T3 20, P2 40, P3 10 uit het lessenbestand. De weging van P1 en T1 verschilt tussen lessenbestand (15 en 15) en PTA (10 en 10). Noem die cijfers dus niet hardop voordat je ze hebt nagekeken.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Onderdeel",
+        "Wat?",
+        "Weging"
+       ],
+       [
+        "T3",
+        "proefexamen, luistertoets",
+        "20"
+       ],
+       [
+        "P2",
+        "examenconcert vóór 1 maart",
+        "40"
+       ],
+       [
+        "P3",
+        "eindopdracht muziek en andere kunst",
+        "10"
+       ],
+       [
+        "P1 en T1",
+        "uit mavo 3",
+        "zie PTA"
+       ],
+       [
+        "CE",
+        "in Facet, vanaf 14 mei",
+        "helft eindcijfer"
+       ]
+      ],
+      "kol": [
+       0.15,
+       0.55,
+       0.3
+      ]
+     }
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Een examenvraag samen maken",
+     "stappen": [
+      "We maken samen één vraag uit een oud examen, met koptelefoon.",
+      "Eerst luisteren. Dan de vraag lezen. Dan antwoorden.",
+      "Wat vraagt de vraag precies? Onderstreep het vraagwoord.",
+      "Vergelijk met je buur: is jullie antwoord hetzelfde?"
+     ],
+     "docent": "Kies zelf een vraag uit een oud vmbo gl/tl-examen (geen jaartal op het bord) met een contrast: noem de tegenstelling tussen twee fragmenten. In de syllabus staat: veranderingen en contrasten interpreteren. Tip uit de sectiemap: een contrast is een tegenstelling, bijvoorbeeld hard en zacht. Laat het stap voor stap zien: wat vraagt de vraag, welk begrip hoort erbij, welk antwoord past. Waar het misgaat: twee antwoorden geven als er één gevraagd wordt, en geen begrip noemen maar een omschrijving.",
+     "klaar": "Bedenk zelf een tegenstelling tussen twee fragmenten en schrijf een vraag."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat nemen we mee?",
+     "stappen": [
+      "Welke vraag over het examen is nog open?",
+      "Thuis: lees nog eens de tips op het bord."
+     ],
+     "docent": "Open vragen noteren voor een volgende les. Verwijs naar de praktijkles van vandaag voor het examenconcert."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Eén open vraag over het examen, en één ding dat je nu zeker weet."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "koptelefoon of geluid in de klas",
+    "oude examenvraag"
+   ]
+  },
+  "Ritme: notenwaarden en ritmische figuren": {
+   "vraag": "Hoe lang duurt een noot, en welke ritmes hoor je?",
+   "doel": "Je herkent notenwaarden, rusten, een punt, een verbindingsboog en de achtstentriool, en je hoort syncope, break, fill, ostinato en swing.",
+   "criteria": [
+    "Ik noem de notenwaarden van hele tot zestiende",
+    "Ik weet wat een punt en een verbindingsboog doen",
+    "Ik hoor een triool en een syncope",
+    "Ik hoor het verschil tussen een break en een fill"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "doen",
+     "kop": "Klap na",
+     "stappen": [
+      "Klap het ritme na dat de docent voorklapt.",
+      "Eerst vier lange tonen. Dan korter. Dan nog korter."
+     ],
+     "docent": "Voorklappen: eerst hele noten (vier tellen), dan halve, kwarten, achtsten, zestienden. Laat ze ervaren dat elke noot de helft kort wordt. Pas daarna de namen."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Notenwaarden en wat erbij hoort",
+     "stappen": [
+      "Hele noot (4 tellen), halve (2), kwart (1), achtste (een halve tel), zestiende (een kwart tel). De rusten hebben dezelfde duur.",
+      "Een punt achter een noot maakt hem de helft langer. Een verbindingsboog plakt twee noten aan elkaar, vaak over de maatstreep.",
+      "Een triool zijn drie achtsten op één tel.",
+      "Syncope: het accent schuift naar een plek waar je het niet verwacht."
+     ],
+     "docent": "Syllabus: notenwaarden en rusten hele tot en met zestiende, punt, verbindingsboog, triool als achtstentriool, syncope, break, fill, ritmisch ostinato, swing. Tips uit de sectiemap: zestienden hebben een dubbele vlag; drie achtsten met een 3 eronder klinken als ap-pel-taart. De tel is hier de kwartnoot (4/4). Swing: ritmische intensiteit door triolenfeel (syllabus, met *); de sectie-tip noemt het een huppelend ritme.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Noot",
+        "Rust",
+        "Tellen"
+       ],
+       [
+        "hele",
+        "hele rust",
+        "4"
+       ],
+       [
+        "halve",
+        "halve rust",
+        "2"
+       ],
+       [
+        "kwart",
+        "kwartrust",
+        "1"
+       ],
+       [
+        "achtste",
+        "achtste rust",
+        "1/2"
+       ],
+       [
+        "zestiende",
+        "zestiende rust",
+        "1/4"
+       ]
+      ],
+      "kol": [
+       0.35,
+       0.35,
+       0.3
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "luisteren",
+     "kop": "Welk ritme hoor je?",
+     "stappen": [
+      "Zes ritmes. Kies het juiste notenbeeld bij wat je hoort.",
+      "Drie fragmenten: hoor je een syncope, een triool, een break of een fill?",
+      "Een ostinato: schrijf het steeds terugkerende ritme op."
+     ],
+     "docent": "Zes korte ritmes op de klas en drie fragmenten uit muziek zelf kiezen. Een break is een onderbreking van de begeleiding van een of twee maten waarin een solist doorspeelt; een fill is een ingevoegde korte ritmische figuur. Waar het misgaat: break en fill door elkaar halen. Een break is stilte, een fill vult.",
+     "klaar": "Maak een ritme met een punt, een verbindingsboog en een syncope."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Drie vragen",
+     "stappen": [
+      "Wat duurt de langste, een halve of een kwart noot?",
+      "Hoor je een syncope of een triool in dit fragment?",
+      "Thuis: Musicbox, box Ritmische figuren."
+     ],
+     "docent": "Antwoorden na afloop. Wie twijfelt tussen triool en syncope: terug naar het klappen."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Drie vragen over notenwaarden en één fragment: syncope of triool?"
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas"
+   ]
+  },
+  "Maat: maatsoorten en opmaat": {
+   "vraag": "Hoe tel je een stuk muziek, en waar zit het accent?",
+   "doel": "Je herkent maatsoorten, maataccenten, opmaat en maatwisseling, en je hoort beat en backbeat.",
+   "criteria": [
+    "Ik noem de maatsoorten 2/4, 3/4, 4/4, C, 6/8 en 3/8",
+    "Ik hoor waar de accenten liggen",
+    "Ik herken een opmaat en een maatwisseling",
+    "Ik weet wat beat en backbeat zijn"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "doen",
+     "kop": "Loop in de maat",
+     "stappen": [
+      "Loop door de klas op de tel van de muziek.",
+      "Stap steeds op de eerste tel groot, de rest klein.",
+      "Hoeveel tellen tel je tot je weer groot stapt?"
+     ],
+     "docent": "Muziek in 2, 3 en 4 aanzetten (mars, wals, rock). Laat ze eerst zelf de telling ontdekken."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Maatsoorten en accenten",
+     "stappen": [
+      "De maatsoort zegt hoeveel tellen er in een maat zitten en welke noot een tel is. Een maatstreep scheidt de maten.",
+      "Tweedelig: 2/4, 4/4 (ook geschreven als C) en 6/8. Driedelig: 3/4 en 3/8.",
+      "Beat is het beklemtoonde maatdeel. Backbeat is het accent op de tweede en vierde tel in 4/4.",
+      "Een opmaat komt voor de eerste maat. Bij een maatwisseling verandert de maatsoort, en daarmee de sfeer."
+     ],
+     "docent": "Syllabus: maataanduiding tweedelig 2/4, 4/4, C, 6/8; driedelig 3/4, 3/8; beat is beklemtoond maatdeel (tel); backbeat is het benadrukken van de tweede en vierde tel in een vierkwartsmaat. Het lessenbestand noemt dit afterbeat, de syllabus backbeat. Gebruik backbeat. Tips uit de sectiemap: 3/8 lijkt op 3/4 maar met drie achtsten; driedelig voelt als een wals; een maatwisseling geeft een ander karakter, bijvoorbeeld van mars naar wals; een opmaat begint nooit op de eerste tel.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "2/4, 4/4, C",
+        "t": "tweedelig"
+       },
+       {
+        "k": "6/8",
+        "t": "tweedelig"
+       },
+       {
+        "k": "3/4, 3/8",
+        "t": "driedelig"
+       },
+       {
+        "k": "Beat",
+        "t": "beklemtoond maatdeel"
+       },
+       {
+        "k": "Backbeat",
+        "t": "accent op tel 2 en 4"
+       },
+       {
+        "k": "Opmaat",
+        "t": "noten vóór de eerste maat"
+       },
+       {
+        "k": "Maatwisseling",
+        "t": "de maatsoort verandert"
+       },
+       {
+        "k": "Maatstreep",
+        "t": "scheidt de maten"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "luisteren",
+     "kop": "Tel mee",
+     "stappen": [
+      "Zes fragmenten. Welke maatsoort hoor je?",
+      "Twee fragmenten hebben een opmaat of een maatwisseling. Welke?",
+      "Klap de backbeat mee in een rock- of popfragment."
+     ],
+     "docent": "Zes fragmenten kiezen: een mars (2/4 of 4/4), een wals (3/4), een 6/8, een popnummer met backbeat, een nummer met maatwisseling, een stuk met opmaat. Antwoorden vooraf. Waar het misgaat: 6/8 klinkt tweedelig maar leerlingen tellen zes. Laat ze in twee groepen van drie tellen.",
+     "klaar": "Verzin een ritme in 3/4 en klap het voor."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Drie fragmenten",
+     "stappen": [
+      "Drie nieuwe fragmenten. Welke maatsoort?",
+      "Noem een verschil tussen beat en backbeat.",
+      "Thuis: Musicbox, box Trainers: maat en ritme."
+     ],
+     "docent": "Antwoord direct na afloop. Wie de backbeat niet hoort: nog een keer meeklappen."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Drie fragmenten: welke maatsoort? En het verschil tussen beat en backbeat in eigen woorden."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas"
+   ]
+  },
+  "Tempo en dynamiek": {
+   "vraag": "Hoe snel en hoe hard speelt de muziek, en verandert dat?",
+   "doel": "Je herkent tempoaanduidingen en tempowijzigingen, dynamiektekens en de verschillende manieren waarop de dynamiek verandert.",
+   "criteria": [
+    "Ik noem adagio, andante en allegro, en slow, medium en uptempo",
+    "Ik hoor accelerando en ritenuto",
+    "Ik ken de dynamiektekens van pp tot ff",
+    "Ik hoor het verschil tussen overgangsdynamiek en terrassendynamiek"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "doen",
+     "kop": "Stem en handen",
+     "stappen": [
+      "Zeg 'hoi' op vijf manieren: heel zacht tot heel hard.",
+      "Klap een tel en verander het tempo: steeds sneller, steeds trager."
+     ],
+     "docent": "Laat eerst ervaren, dan de woorden. Noteer woorden die leerlingen gebruiken (hard, stil, snel, traag)."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Tempo en dynamiek",
+     "stappen": [
+      "Klassiek: adagio (langzaam), andante (rustig), allegro (snel). Pop: slow, medium, uptempo.",
+      "Accelerando: steeds sneller. Ritenuto: steeds trager.",
+      "Dynamiek: pp (pianissimo), p (piano), mf (mezzo-forte), f (forte), ff (fortissimo).",
+      "Crescendo: steeds harder. Decrescendo: steeds zachter. Fade out: het nummer wordt zachter tot het weg is.",
+      "Overgangsdynamiek: geleidelijk veranderen. Terrassendynamiek: van het ene niveau direct naar het andere."
+     ],
+     "docent": "Syllabus: tempo in drie categorieën langzaam, rustig, snel; tempowijzigingen accelerando en ritenuto; aanduidingen ff, f, mf, p, pp, crescendo, decrescendo, fade out, overgangsdynamiek, terrassendynamiek. Tips uit de sectiemap: fade out is steeds zachter zonder slottoon; bij terrassendynamiek ga je direct van p naar ff of andersom; een crescendoteken is een langgerekt <. Op het examen vul je dynamiektekens in vanuit minstens één gegeven teken.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Teken",
+        "Naam",
+        "Betekenis"
+       ],
+       [
+        "pp",
+        "pianissimo",
+        "heel zacht"
+       ],
+       [
+        "p",
+        "piano",
+        "zacht"
+       ],
+       [
+        "mf",
+        "mezzo-forte",
+        "halfhard"
+       ],
+       [
+        "f",
+        "forte",
+        "hard"
+       ],
+       [
+        "ff",
+        "fortissimo",
+        "heel hard"
+       ]
+      ],
+      "kol": [
+       0.2,
+       0.4,
+       0.4
+      ]
+     }
+    },
+    {
+     "min": 19,
+     "soort": "luisteren",
+     "kop": "Wat verandert er?",
+     "stappen": [
+      "Zes fragmenten. Noteer tempo, en of het tempo verandert.",
+      "Bij drie fragmenten staat de dynamiek op een lijn getekend. Vul de tekens in.",
+      "Welk fragment heeft terrassendynamiek, welk overgangsdynamiek?"
+     ],
+     "docent": "Zes fragmenten kiezen: langzaam, rustig, snel, één met accelerando of ritenuto, een met crescendo, een met fade out. Dynamiek op een lijn laten invullen met één gegeven teken, zoals in het examen. Waar het misgaat: ritenuto en decrescendo door elkaar halen (trager tegenover zachter).",
+     "klaar": "Maak een stukje op het bord: een ritme met een crescendo en een ritenuto."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Drie vragen",
+     "stappen": [
+      "Welk tempo hoor je, en waar verandert het?",
+      "Vul de dynamiek in bij een korte lijn met één gegeven teken.",
+      "Thuis: Musicbox, box Trainers: tempo en dynamiek."
+     ],
+     "docent": "Korte controle. Alleen de lijn invullen: wie dit goed heeft, begrijpt het principe."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Een fragment met tempo en tempowijziging en een dynamieklijn waarin je tekens invult."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas"
+   ]
+  },
+  "Toonhoogte en toonsoort": {
+   "vraag": "Hoe lees je noten, en hoor je of het majeur of mineur is?",
+   "doel": "Je herkent de notennamen op de g-sleutel, de voortekens kruis, mol en herstellingsteken, en je hoort majeur en mineur.",
+   "criteria": [
+    "Ik benoem noten op de g-sleutel",
+    "Ik weet wat kruis, mol en herstellingsteken doen",
+    "Ik hoor of een fragment majeur of mineur is"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Blij of verdrietig?",
+     "stappen": [
+      "Je hoort twee korte melodieën. Welke klinkt vrolijker? Waarom?"
+     ],
+     "docent": "Zelf spelen: dezelfde melodie in majeur en in mineur. Woorden verzamelen. Mineur klinkt vaak droeviger (tip sectiemap)."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Noten lezen",
+     "stappen": [
+      "De g-sleutel zet de noot g op de tweede lijn. De notennamen: c, d, e, f, g, a, b.",
+      "Een kruis verhoogt een noot een halve toon. Een mol verlaagt hem een halve toon. Een herstellingsteken zet hem weer terug.",
+      "De f-sleutel (bassleutel) hoef je alleen te herkennen, niet te lezen.",
+      "Majeur en mineur herken je op gehoor."
+     ],
+     "docent": "Syllabus: absolute notennamen, g-sleutel, f-sleutel met *, voortekens herstellingsteken, kruis, mol; majeur en mineur met * (herkennen in luistervoorbeelden). Tip uit de sectiemap: f-sleutel is de bassleutel, de linkerhand bij piano, die hoef je niet te lezen. Notennamen onder de g-sleutel: lijnen e, g, b, d, f; ruimtes f, a, c, e (algemene kennis). Gebruik een notenbalk op het bord.",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Teken",
+        "Naam",
+        "Wat doet het?"
+       ],
+       [
+        "kruis",
+        "kruis",
+        "halve toon hoger"
+       ],
+       [
+        "mol",
+        "mol",
+        "halve toon lager"
+       ],
+       [
+        "herstel",
+        "herstellingsteken",
+        "terug naar de gewone noot"
+       ]
+      ],
+      "kol": [
+       0.2,
+       0.4,
+       0.4
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "doen",
+     "kop": "Noten, tekens en gehoor",
+     "stappen": [
+      "Tien noten op de notenbalk. Schrijf de naam erbij.",
+      "Drie noten hebben een kruis of een mol. Wat betekent dat voor de klank?",
+      "Vijf fragmenten: majeur of mineur?",
+      "Volg een korte melodie op een grafische voorstelling: omhoog, omlaag of gelijk."
+     ],
+     "docent": "Werkblad met tien noten. Fragmenten: vijf korte, drie majeur en twee mineur. Waar het misgaat: noten tellen vanaf de verkeerde lijn,. Een grafische voorstelling: lijn die omhoog of omlaag loopt waar de melodie stijgt of daalt. Klaar? Leg zelf een eigen melodie op een grafische lijn.",
+     "klaar": "Teken een melodie als lijn en laat je buur er een toon bij zingen."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Vier vragen",
+     "stappen": [
+      "Twee noten benoemen.",
+      "Wat doet een mol?",
+      "Een fragment: majeur of mineur?",
+      "Thuis: Musicbox, box Toonsoorten."
+     ],
+     "docent": "Snelle check. Wie majeur en mineur niet hoort, luistert thuis in de Musicbox-box."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Twee noten benoemen, de mol uitleggen en één fragment: majeur of mineur?"
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "keyboard",
+    "werkblad met notenbalk"
+   ]
+  },
+  "Klankkleur: instrumenten": {
+   "vraag": "Welke instrumenten herken je aan hun klank en aan hun beeld?",
+   "doel": "Je herkent slag-, blaas-, snaar- en elektronische instrumenten op gehoor en beeld, en je gebruikt de goede namen.",
+   "criteria": [
+    "Ik noem instrumenten uit de syllabus bij hun juiste naam",
+    "Ik herken instrumenten op gehoor",
+    "Ik herken instrumenten op een plaatje",
+    "Ik weet bij welke familie een instrument hoort"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "luisteren",
+     "kop": "Wat hoor je?",
+     "stappen": [
+      "Vijf korte geluiden. Schrijf op wat voor instrument het is.",
+      "Hoe klinkt het: scherp, warm, rond, klikkend?"
+     ],
+     "docent": "Instrumenten eerst alleen laten horen en in eigen woorden beschrijven. Klankkleur gaat ook over woorden als licht en donker (tip sectiemap)."
+    },
+    {
+     "min": 15,
+     "soort": "uitleg",
+     "kop": "De families en de goede namen",
+     "stappen": [
+      "Slaginstrumenten: met vel (bijvoorbeeld snaredrum, pauk, conga) en zonder vel (bijvoorbeeld triangel, xylofoon, cowbell).",
+      "Blaasinstrumenten: hout (blokfluit, dwarsfluit, hobo, klarinet, fagot, saxofoon) en koper (trompet, hoorn, trombone, tuba).",
+      "Snaarinstrumenten: getokkeld (gitaar, basgitaar, harp, klavecimbel), gestreken (viool, cello, contrabas) en aangeslagen (piano).",
+      "Elektronisch: elektrische gitaar, basgitaar, keyboard en synthesizer."
+     ],
+     "docent": "De volledige lijst staat in de syllabus onder klankkleur. Namen moeten goed: kleine trom/snaredrum (niet trommel), maraca's/shaker (niet sambaballen), blokfluit of panfluit (niet fluit), trombone (niet schuiftrompet). Gong en tamtam zijn allebei goed, dwarsfluit en fluit ook. Niet te onderscheiden op gehoor: beatring en tamboerijn, bongo's, conga's en djembé, cabasa en guiro en rasp, castagnetten en claves en woodblock, maraca's en shaker, vibrafoon en metallofoon, keyboard en synthesizer, xylofoon en marimba. Tips uit de sectiemap: floortom, vibrafoon, marimba, castagnetten, maraca's, buisklokken en synthesizer kennen leerlingen vaak niet. Een dwarsfluit hoort bij hout, klavecimbel wordt getokkeld, piano aangeslagen.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Slaginstrumenten",
+        "t": "met vel en zonder vel"
+       },
+       {
+        "k": "Houten blaasinstrumenten",
+        "t": "blokfluit, dwarsfluit, hobo, klarinet, fagot, saxofoon"
+       },
+       {
+        "k": "Koperen blaasinstrumenten",
+        "t": "trompet, hoorn, trombone, tuba"
+       },
+       {
+        "k": "Getokkeld",
+        "t": "gitaar, basgitaar, harp, klavecimbel"
+       },
+       {
+        "k": "Gestreken",
+        "t": "viool, cello, contrabas"
+       },
+       {
+        "k": "Aangeslagen",
+        "t": "piano"
+       },
+       {
+        "k": "Elektronisch",
+        "t": "keyboard, synthesizer"
+       },
+       {
+        "k": "Drumstel",
+        "t": "basdrum, snare, toms, hihat, bekkens"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "luisteren",
+     "kop": "Herken ze",
+     "stappen": [
+      "Tien instrumenten, eerst op beeld, dan op gehoor.",
+      "Schrijf de naam op en de familie.",
+      "Welke twee kon je niet uit elkaar horen? Dat mag."
+     ],
+     "docent": "Tien instrumenten kiezen, waaronder lastige uit de tip: floortom, vibrafoon, marimba, castagnetten, maraca's, buisklokken, synthesizer. Foto en geluid. Antwoorden op het werkblad. Waar het misgaat: fluit zonder specificatie voor blokfluit, panfluit; trommel voor snaredrum.",
+     "klaar": "Zoek een instrument dat niet op de lijst staat en bedenk bij welke familie het zou horen."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Vijf instrumenten",
+     "stappen": [
+      "Vijf instrumenten: foto of geluid. Schrijf naam en familie.",
+      "Thuis: Musicbox, box Instrumenten en speeltechnieken."
+     ],
+     "docent": "Antwoord direct na afloop. Wie fouten maakt in de namen, krijgt de lijst mee."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Vijf instrumenten op foto of geluid: naam en familie. Wat fout is, oefen je met de lijst."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas",
+    "foto's van instrumenten"
+   ]
+  },
+  "Klankkleur: stemmen en ensembles": {
+   "vraag": "Welke stemmen en groepen hoor je, en hoe klinkt een groep als geheel?",
+   "doel": "Je herkent sopraan, alt, tenor en bas, en vocale en instrumentale ensembles op gehoor en beeld.",
+   "criteria": [
+    "Ik herken sopraan, alt, tenor en bas",
+    "Ik noem het verschil tussen een koor en een band",
+    "Ik noem het verschil tussen een bigband en een combo",
+    "Ik herken een symfonieorkest en een strijkorkest"
+   ],
+   "fasen": [
+    {
+     "min": 6,
+     "soort": "luisteren",
+     "kop": "Hoog en laag",
+     "stappen": [
+      "Je hoort vier stemmen, één voor één. Zet ze van hoog naar laag.",
+      "Wie van jullie zingt hoog, wie laag?"
+     ],
+     "docent": "Event: wo 14 okt ontwikkeldag, leerlingen vrij. De les kan een deel van de klas missen. Stemmen laten horen: een sopraan, een alt, een tenor, een bas. Fragmenten of zelf zingen."
+    },
+    {
+     "min": 14,
+     "soort": "uitleg",
+     "kop": "Stemmen en ensembles",
+     "stappen": [
+      "Stemmen van hoog naar laag: sopraan, alt, tenor, bas.",
+      "Vocale ensembles: gemengd koor, mannenkoor, vrouwenkoor, achtergrondkoor (backing vocals).",
+      "Instrumentale ensembles: rockgroep of popgroep, jazzcombo, bigband, strijkorkest (strijkers, strings), blaasorkest, symfonieorkest.",
+      "Combo: een klein ensemble van drie tot acht muzikanten. Bigband: een groot jazzorkest."
+     ],
+     "docent": "Syllabus: omschrijvingen combo (drie tot acht muzikanten) en bigband (groot jazzorkest). Blaasorkest: harmonie, fanfare en brassband horen erbij (met *). Tip uit de sectiemap: harmonie, fanfare en brassband zijn allemaal blaasorkesten met slagwerk. Op het examen herken je ensembles op gehoor en op beeld.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Sopraan, alt",
+        "t": "hoge stemmen"
+       },
+       {
+        "k": "Tenor, bas",
+        "t": "lagere stemmen"
+       },
+       {
+        "k": "Gemengd koor",
+        "t": "hoge en lage stemmen samen"
+       },
+       {
+        "k": "Mannenkoor, vrouwenkoor",
+        "t": "één soort stemmen"
+       },
+       {
+        "k": "Backing vocals",
+        "t": "achtergrondkoor"
+       },
+       {
+        "k": "Jazzcombo",
+        "t": "drie tot acht muzikanten"
+       },
+       {
+        "k": "Bigband",
+        "t": "groot jazzorkest"
+       },
+       {
+        "k": "Symfonieorkest",
+        "t": "strijkers, hout, koper, slagwerk"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "luisteren",
+     "kop": "Wie speelt of zingt hier?",
+     "stappen": [
+      "Acht fragmenten of foto's. Welke stem of welk ensemble?",
+      "Hoeveel stemmen hoor je tegelijk?",
+      "Schrijf er een kenmerk bij dat je hoort of ziet."
+     ],
+     "docent": "Acht fragmenten of foto's kiezen: vier stemmen, een gemengd koor, een mannenkoor, een bigband, een combo, een strijkorkest, een symfonieorkest. Antwoorden vooraf. Waar het misgaat: combo en bigband door elkaar (aantal muzikanten), en alt en tenor (kleur van de stem). Christelijk repertoire kan: een koor in een kerk of een gospelkoor.",
+     "klaar": "Maak van de klas in groepjes een band, een koor en een combo en laat zien hoe ze klinken."
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Vijf vragen",
+     "stappen": [
+      "Een stem: sopraan, alt, tenor of bas?",
+      "Een ensemble: wat hoor je?",
+      "Thuis: Musicbox, boxen Het orkest en Koor en meerstemmigheid."
+     ],
+     "docent": "Korte controle. Wie dit goed heeft kan door met de syllabus."
+    }
+   ],
+   "formatief": {
+    "soort": "luistercheck",
+    "tekst": "Een stem en een ensemble herkennen, met één kenmerk dat je hoort."
+   },
+   "identiteit": "In de Messiah zing je zelf in een groot gemengd koor met honderden jongeren. Welke stemsoort zing jij daar, en hoe klinkt dat samen?",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluid in de klas",
+    "foto's van ensembles"
+   ]
+  }
+ }
+}

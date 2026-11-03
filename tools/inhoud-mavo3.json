@@ -1,0 +1,2186 @@
+{
+ "_uitleg": "Lesinhoud mavo 3, lesweek 1 tot en met 7 en 11 tot en met 37 (zonder 12 en 14, die uit de presentaties komen). Titels exact uit het lessenbestand.",
+ "_mat": {
+  "mb": {
+   "t": "Musicbox (digitaal.musicboxmethode.nl)",
+   "u": "https://digitaal.musicboxmethode.nl"
+  }
+ },
+ "lessen": {
+  "Muziek als examenvak": {
+   "vraag": "Wat gaan we dit jaar doen, en wat telt mee?",
+   "doel": "Je weet wat er in mavo 3 en mavo 4 van je gevraagd wordt en welke onderdelen meetellen voor je cijfer.",
+   "criteria": [
+    "Ik noem de onderdelen die in mavo 3 meetellen",
+    "Ik weet wat er in mavo 4 bij komt",
+    "Ik heb een vraag gesteld of een verwachting opgeschreven"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "start",
+     "kop": "Wat is jouw muziek?",
+     "stappen": [
+      "Schrijf op: welke muziek zet jij het vaakst op?",
+      "Bespeel je een instrument of zing je ergens? Schrijf dat erbij.",
+      "Vertel het je buur. Eén ding, geen lange verhalen."
+     ],
+     "docent": "Startdagen ma en di: de les kan uitvallen, afhankelijk van de lesdag van de klas. Wat de leerlingen al kunnen gebruik je straks bij het kiezen van instrument en lied. Geen namen op het bord."
+    },
+    {
+     "min": 20,
+     "soort": "uitleg",
+     "kop": "Het examenprogramma over twee jaar",
+     "stappen": [
+      "Mavo 3 telt voor 30% van het schoolexamen, mavo 4 voor 70%.",
+      "Schoolexamen en centraal examen tellen elk voor de helft mee in je eindcijfer.",
+      "Dit jaar: P1 (drie presentaties) en T1 (luistertoets begrippen).",
+      "Ook dit jaar: de loopbaanpresentatie over muziek in het werkveld."
+     ],
+     "docent": "Uit het PTA. P1: praktijk, weging 15, gemiddelde van minstens drie presentaties (zang, akkoordinstrument, slagwerk), verspreid over het jaar. T1: luistertoets in toetsweek 3, weging 15, over ritme, maat, tempo, toonhoogte, dynamiek en klankkleur. P1 en T1 zijn herkansbaar. H1, de loopbaanpresentatie: weging 0, niet herkansbaar. Mavo 4: examenconcert, eindopdracht over muziek in relatie tot een andere kunstvorm, en het centraal examen. Begin met de vraag: wat denk je dat er op een muziekexamen gevraagd wordt?",
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Onderdeel",
+        "Wat",
+        "Weging"
+       ],
+       [
+        "P1",
+        "Drie presentaties: zang, akkoordinstrument, slagwerk",
+        "15"
+       ],
+       [
+        "T1",
+        "Luistertoets begrippen, toetsweek 3",
+        "15"
+       ],
+       [
+        "H1",
+        "Loopbaanpresentatie: muziek in het werkveld",
+        "0"
+       ]
+      ],
+      "kol": [
+       0.15,
+       0.7,
+       0.15
+      ]
+     }
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Wat wil je weten?",
+     "stappen": [
+      "Welke vragen heb je over het vak of over het examen?",
+      "Welke presentatie lijkt je het spannendst: zang, akkoordinstrument of slagwerk?",
+      "Schrijf één verwachting voor dit jaar op."
+     ],
+     "docent": "Vraag naar zorgen over zingen voor de klas; presentatie 1 is in lesweek 8. Geen toezeggingen over liedkeuze, die volgt in lesweek 2."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat onthoud je?",
+     "stappen": [
+      "Welke twee onderdelen tellen dit jaar mee voor je cijfer?",
+      "Volgende les: zingen. Je stem is je instrument."
+     ],
+     "docent": "Laat het antwoord hardop noemen of op een briefje inleveren."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Noem twee onderdelen die in mavo 3 meetellen voor je schoolexamencijfer."
+   }
+  },
+  "Zingen: stem, houding en ademhaling": {
+   "vraag": "Hoe gebruik je je stem zonder dat het knijpt?",
+   "doel": "Je staat goed om te zingen, ademt rustig in en zingt samen een lied. Je kiest een lied voor presentatie 1.",
+   "criteria": [
+    "Ik sta rechtop met losse knieën",
+    "Ik zing een hele zin op één adem",
+    "Ik heb een lied gekozen voor presentatie 1"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Stem wakker maken",
+     "stappen": [
+      "Zucht luid uit, van hoog naar laag.",
+      "Lipbubbels: laat je lippen trillen op een lange toon.",
+      "Sirene: glij met je stem van laag naar hoog en terug."
+     ],
+     "docent": "Eerst zelf voordoen, dan de klas. Wie het niet durft, doet zacht mee. Kort houden: dit is warmlopen."
+    },
+    {
+     "min": 10,
+     "soort": "uitleg",
+     "kop": "Houding en ademhaling",
+     "stappen": [
+      "Voeten op heupbreedte, knieën los, schouders laag.",
+      "Kin recht, blik naar voren, niet naar je schoenen.",
+      "Adem in door je neus, laat je buik naar buiten komen.",
+      "Adem uit op een lange sjj. Tel hoe lang je het volhoudt."
+     ],
+     "docent": "Houding is een criterium bij presentatie 1 (rechtop, naar het publiek kijken). Leg een hand op je eigen buik als je het voordoet. Let op opgetrokken schouders en een achterover gelegd hoofd: daar knijpt de klank van."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Samen een lied zingen",
+     "stappen": [
+      "We zingen een lied samen. Eerst zacht, dan vol.",
+      "Let op je houding terwijl je zingt.",
+      "Zing een hele zin op één adem.",
+      "Zing met een open mond."
+     ],
+     "docent": "Kies zelf een lied dat de klas kent of snel leert. Open klank en verstaanbare tekst staan op het beoordelingsformulier van presentatie 1. Hoor je geknepen of heel zachte stemmen, laat dan eerst een zin op la zingen."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Een lied kiezen voor presentatie 1",
+     "stappen": [
+      "Open Musicbox en kies een songbox.",
+      "Luister naar twee of drie liedjes.",
+      "Kies een lied waarvan je de tekst wilt leren en dat bij jouw stem past.",
+      "Schrijf de titel op. Je hebt hem volgende les nodig."
+     ],
+     "docent": "Presentatie 1 is lesweek 8. Het formulier heeft een regel voor de groep, dus een groepje van twee of drie mag. Onzekere leerlingen helpen met een lied met een klein bereik. Noteer wie wat kiest, dat gebruik je voor de volgorde.",
+     "klaar": "Klaar? Luister nog een lied en schrijf op waarom je het wel of niet kiest."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Thuis verder",
+     "stappen": [
+      "Thuis: kies een songbox naar keuze in Musicbox en luister je lied.",
+      "Volgende les oefenen we in groepjes."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Welk lied kies je voor presentatie 1, en waarom dat lied?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Ritme: notenwaarden en rusten": {
+   "vraag": "Hoe lang duurt een noot, en hoe lang een rust?",
+   "doel": "Je herkent de notenwaarden van hele tot zestiende noot en de rusten. Je klapt en noteert eenvoudige ritmes.",
+   "criteria": [
+    "Ik noem de waarde van hele, halve, kwart-, achtste en zestiende noten",
+    "Ik weet wat een punt en een verbindingsboog doen",
+    "Ik klap een ritme in 4/4 foutloos na"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Klap mee",
+     "stappen": [
+      "Ik klap een ritme voor. Klap het na.",
+      "Wat klonk lang en wat klonk kort?"
+     ],
+     "docent": "Klap vier korte ritmes, oplopend in moeilijkheid: alleen kwarten, kwarten en achtsten, daarna met een rust. Laat ze het verschil eerst voelen voor je namen noemt."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "Notenwaarden en rusten",
+     "stappen": [
+      "Een hele noot duurt vier tellen, een halve twee, een kwart één.",
+      "Een achtste duurt een halve tel, een zestiende een kwart tel.",
+      "Elke notenwaarde heeft een rust van dezelfde lengte.",
+      "Een punt achter een noot maakt hem de helft langer.",
+      "Een verbindingsboog tussen twee gelijke noten: ze tellen op."
+     ],
+     "docent": "Syllabus: notenwaarden en rusten van hele tot en met zestiende, verlenging met een punt, verbindingsboog; het begrip is toonduur. In 4/4 is de kwart één tel. Een gepunteerde halve duurt drie tellen, een gepunteerde kwart anderhalve. Een halve gebonden aan een kwart is ook drie tellen. Veelgemaakte fout: de punt achter een noot verwarren met een staccatopunt boven of onder de noot.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Hele noot",
+        "t": "vier tellen"
+       },
+       {
+        "k": "Halve noot",
+        "t": "twee tellen"
+       },
+       {
+        "k": "Kwartnoot",
+        "t": "één tel"
+       },
+       {
+        "k": "Achtste noot",
+        "t": "een halve tel"
+       },
+       {
+        "k": "Zestiende noot",
+        "t": "een kwart tel"
+       },
+       {
+        "k": "Punt",
+        "t": "de helft langer"
+       },
+       {
+        "k": "Verbindingsboog",
+        "t": "twee noten worden één"
+       }
+      ]
+     }
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Klappen en noteren",
+     "stappen": [
+      "Klap de ritmes van het bord na. Tel hardop in 4/4.",
+      "Je buur klapt vier tellen, jij schrijft het op.",
+      "Wissel en controleer elkaars notatie.",
+      "Maak zelf een ritme van twee maten met een rust erin."
+     ],
+     "docent": "Zet vier ritmes op het bord, oplopend. Loop rond: wie laat de rust niet klinken? Hardop tellen (1 en 2 en 3 en 4 en) helpt bij achtsten. Noteren mag met ritmesymbolen of met woorden zoals ta en ti-ti.",
+     "klaar": "Klaar? Maak een ritme met een gepunteerde noot en een verbindingsboog en laat een ander klappen."
+    },
+    {
+     "min": 8,
+     "soort": "afsluiten",
+     "kop": "Wat kan ik nu?",
+     "stappen": [
+      "Hoeveel tellen duurt een gepunteerde halve noot?",
+      "Thuis: Musicbox, de box Maat en ritme.",
+      "Volgende les: maatsoorten."
+     ],
+     "docent": "Antwoord: drie tellen."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Hoeveel tellen duurt een gepunteerde halve noot in 4/4?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Zingen: oefenen in groepjes": {
+   "vraag": "Hoe zorg je dat je lied klopt in ritme en inzet?",
+   "doel": "Je oefent het lied voor presentatie 1 in een groepje en let op ritme en op het moment dat je inzet.",
+   "criteria": [
+    "Ik zing mijn lied in de maat",
+    "Ik zet op de goede plek in",
+    "Ik geef een groepsgenoot een tip over ritme of inzet"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Inzingen en klappen",
+     "stappen": [
+      "Lipbubbels en sirenes, van laag naar hoog.",
+      "Klap met de klas op 2 en 4.",
+      "Tel hardop 1 2 3 4 en zing dan door."
+     ],
+     "docent": "Kort houden. Het klappen op 2 en 4 is het gevoel voor de afterbeat; het begrip komt volgende les."
+    },
+    {
+     "min": 28,
+     "soort": "doen",
+     "kop": "Oefenen in groepjes",
+     "stappen": [
+      "Zing je lied voor je groepje. Eerst een couplet, dan het refrein.",
+      "Kijk waar je inzet. Tel in voor je begint.",
+      "De anderen luisteren op ritme: komt het op de goede plek?",
+      "Geef elkaar één tip en probeer het nog een keer."
+     ],
+     "docent": "Groepjes van drie of vier, elk in een eigen hoek. Op ritme en maat staat bij presentatie 1 de weging 2. Let op: wie komt te vroeg of te laat in, wie raakt de maat kwijt in het couplet? Een telefoon met het lied als oefentrack kan helpen. Onzekere leerlingen laat je eerst in het groepje zingen en later alleen.",
+     "klaar": "Klaar? Zing je lied zonder tekstblad. Wat weet je al uit je hoofd?"
+    },
+    {
+     "min": 7,
+     "soort": "check",
+     "kop": "Eén zin laten horen",
+     "stappen": [
+      "Elk groepje zingt één zin voor de klas.",
+      "Luisteraars: zit de inzet goed?"
+     ],
+     "docent": "Dit is geen beoordeling maar horen of ze op koers zijn. Wie nog geen lied heeft, krijgt nu hulp."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Volgende stap",
+     "stappen": [
+      "Wat oefen je thuis: tekst, ritme of inzet?",
+      "Volgende les: maatsoorten."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Waar zet je in, en wat is je tip aan jezelf voor de volgende keer?"
+   }
+  },
+  "Maat: maatsoorten, opmaat, beat en afterbeat": {
+   "vraag": "Waarom voelt een lied in 4/4 anders dan een lied in 3/4?",
+   "doel": "Je herkent de maatsoorten 2/4, 3/4, 4/4 en 6/8. Je weet wat een opmaat, de beat en de afterbeat zijn.",
+   "criteria": [
+    "Ik leg uit wat de cijfers van een maatsoort zeggen",
+    "Ik herken een opmaat",
+    "Ik klap de afterbeat op 2 en 4"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Tel mee",
+     "stappen": [
+      "Je hoort een fragment. Tel hardop mee.",
+      "Tel je tot twee, tot drie of tot vier?",
+      "Stamp op de eerste tel, tik de rest."
+     ],
+     "docent": "Draai drie fragmenten die je zelf kiest: een in 2/4, een wals in 3/4 en een in 4/4. Geen uitleg vooraf."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "Maatsoorten, opmaat, beat en afterbeat",
+     "stappen": [
+      "Een maat staat tussen twee maatstrepen.",
+      "In 4/4 tel je vier tellen per maat, in 3/4 drie, in 2/4 twee.",
+      "In 6/8 tel je twee groepen van drie achtsten.",
+      "Een opmaat komt vóór de eerste volle maat.",
+      "Beat is het beklemtoonde maatdeel. Afterbeat: nadruk op 2 en 4."
+     ],
+     "docent": "Syllabus: tweedelig 2/4, 4/4, C en 6/8; driedelig 3/4 en 3/8. C is een andere schrijfwijze voor 4/4. Beat is het beklemtoonde maatdeel, tel. Backbeat (in de les afterbeat) is het benadrukken van de tweede en vierde tel in een vierkwartsmaat. Het bovenste cijfer geeft het aantal tellen, het onderste de notenwaarde van een tel: 4 is een kwart, 8 een achtste. De eerste tel is het zwaarst. Houd de uitleg bij het aantal tellen en bij het gevoel, niet bij de indeling tweedelig of driedelig uit de syllabus.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "2/4",
+        "t": "twee tellen per maat"
+       },
+       {
+        "k": "3/4",
+        "t": "drie tellen per maat"
+       },
+       {
+        "k": "4/4",
+        "t": "vier tellen per maat"
+       },
+       {
+        "k": "6/8",
+        "t": "zes achtsten, voelt als twee keer drie"
+       },
+       {
+        "k": "Maatstreep",
+        "t": "scheidt twee maten"
+       },
+       {
+        "k": "Opmaat",
+        "t": "noot vóór de eerste volle maat"
+       },
+       {
+        "k": "Beat",
+        "t": "beklemtoond maatdeel, tel"
+       },
+       {
+        "k": "Afterbeat",
+        "t": "nadruk op tel 2 en 4"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "doen",
+     "kop": "Maat voelen",
+     "stappen": [
+      "Stamp op de eerste tel, klap de rest. Eerst in 4/4, dan in 3/4.",
+      "Klap de afterbeat op 2 en 4 terwijl je buur de beat tikt.",
+      "Luister naar een fragment en bepaal de maatsoort.",
+      "Zoek de maatsoort en de opmaat van jouw lied voor presentatie 1."
+     ],
+     "docent": "Draai een fragment in 6/8 en een in 3/4: 6/8 voelt als twee grote tellen, 3/4 als wals. Wie uit de maat valt, stampt eerst alleen de eerste tel. Kan een leerling de maatsoort van zijn lied niet vinden, laat hem dan meetellen met het origineel.",
+     "klaar": "Klaar? Klap de afterbeat op een lied dat jij kiest en laat je buur de maatsoort raden."
+    },
+    {
+     "min": 10,
+     "soort": "afsluiten",
+     "kop": "Welke maatsoort is het?",
+     "stappen": [
+      "Welke maatsoort heeft jouw lied?",
+      "Thuis: Musicbox, de box Maat en ritme, onderdeel Trainers.",
+      "Volgende les zingen de groepjes voor de klas."
+     ],
+     "docent": "Korte fragmentvraag als exit ticket. Vertel dat volgende les het voorspelen met feedback is."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Je hoort een fragment. Tel mee: in welke maatsoort staat het, en op welke tellen klap je de afterbeat?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Zingen: voorspelen met feedback": {
+   "vraag": "Wat hoort een ander als jij zingt, en wat kan beter?",
+   "doel": "Je zingt je lied voor de klas en krijgt tips op toon, ritme en presentatie. Je geeft zelf ook een tip.",
+   "criteria": [
+    "Ik zing mijn lied voor de klas",
+    "Ik krijg een tip en schrijf die op",
+    "Ik geef een ander een tip over toon, ritme of presentatie"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken voor het voorspelen",
+     "stappen": [
+      "Een groep zingt, de rest luistert stil.",
+      "Elke tip begint met iets wat goed ging.",
+      "Tip op toon, ritme of presentatie. Kort en vriendelijk."
+     ],
+     "docent": "Dit is een oefenronde, nog geen beoordeling. Bepaal de volgorde vooraf; zenuwachtige leerlingen niet als eerste en niet als laatste."
+    },
+    {
+     "min": 30,
+     "soort": "doen",
+     "kop": "Voorspelen met feedback",
+     "stappen": [
+      "Zeg je naam en de titel van je lied. Tel in.",
+      "Gaat het mis? Zing door tot je weer terug bent.",
+      "Luisteraars: schrijf per zanger één compliment en één tip op.",
+      "Na afloop: de zanger leest de tips en kiest één werkpunt."
+     ],
+     "docent": "Per groep ongeveer twee tot drie minuten plus feedback. Let op de punten van het formulier van presentatie 1: aankondigen, begin en slot, tekst, toonhoogte en klank, ritme en maat, houding en publiek, samen met de begeleiding. Zorg dat elke leerling minstens twee tips krijgt. Opnemen alleen met toestemming van de zanger."
+    },
+    {
+     "min": 10,
+     "soort": "afsluiten",
+     "kop": "Mijn werkpunt",
+     "stappen": [
+      "Lees je tips nog eens.",
+      "Schrijf op: dit oefen ik voor presentatie 1.",
+      "Volgende week is presentatie 1. Het format voor zelfbeoordeling krijg je nu alvast."
+     ],
+     "docent": "Het zelfbeoordelingsformat telt voor 10% mee in het cijfer: eerlijk en concreet beoordelen van de eigen uitvoering, 4 tot 10 (formulier presentatie 1)."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Schrijf op: één ding dat goed ging en één werkpunt voor presentatie 1."
+   }
+  },
+  "Ritmische figuren: syncope, break en fill": {
+   "vraag": "Hoe herken je syncope, een triool, een break en een fill?",
+   "doel": "Je herkent syncope, achtstentriool, break, fill en ritmisch ostinato in muziekfragmenten en klapt ze.",
+   "criteria": [
+    "Ik leg uit wat een syncope is",
+    "Ik herken een break en een fill in een fragment",
+    "Ik klap een triool en een syncope"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat hoor je?",
+     "stappen": [
+      "Je hoort een kort fragment.",
+      "Wat gebeurt er opeens in de muziek?",
+      "Steek je hand op als de band even stopt."
+     ],
+     "docent": "Woensdag 14 okt is een ontwikkeldag (leerlingen vrij): de les kan uitvallen, afhankelijk van de lesdag van de klas. Kies zelf een fragment met een duidelijke break of fill en laat de klas het horen vóór je de namen noemt."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "Ritmische figuren",
+     "stappen": [
+      "Syncope: de nadruk valt op een licht maatdeel.",
+      "Achtstentriool: drie noten in de tijd van één tel.",
+      "Break: de begeleiding stopt een of twee maten, een solist speelt door.",
+      "Fill: een korte ritmische figuur die erdoorheen wordt gespeeld.",
+      "Ritmisch ostinato: een figuur die steeds terugkomt."
+     ],
+     "docent": "Syllabus: break is een onderbreking van de begeleiding gedurende een of twee maten waarin een solist doorspeelt. Fill is een ingevoegde korte ritmische figuur, vaak op drums. Ostinato is een steeds herhaalde figuur. Swing (triolenfeel) hoeft de klas alleen te herkennen. Een achtstentriool klap je als 1-la-li 2-la-li. Syncope voel je door tegen de tel in te klappen: de nadruk valt op de en tussen twee tellen.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Syncope",
+        "t": "nadruk op een licht maatdeel"
+       },
+       {
+        "k": "Achtstentriool",
+        "t": "drie noten op één tel"
+       },
+       {
+        "k": "Break",
+        "t": "begeleiding stopt, solist speelt door"
+       },
+       {
+        "k": "Fill",
+        "t": "korte ritmische figuur ertussen"
+       },
+       {
+        "k": "Ritmisch ostinato",
+        "t": "een figuur die steeds terugkomt"
+       }
+      ]
+     }
+    },
+    {
+     "min": 13,
+     "soort": "luisteren",
+     "kop": "Herken de figuur",
+     "stappen": [
+      "Je hoort steeds een kort fragment.",
+      "Schrijf op: syncope, triool, break, fill of ostinato.",
+      "We bespreken elk fragment direct na afloop."
+     ],
+     "docent": "Kies zelf vijf tot zes korte fragmenten, een per figuur, uit je eigen collectie of uit Musicbox. Laat de leerlingen hun antwoord eerst opschrijven, dan pas bespreken."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Klap ze zelf",
+     "stappen": [
+      "Klap een triool: 1-la-li 2-la-li.",
+      "Klap een syncope: tel 1 en 2 en 3 en 4 en en leg het accent op een en.",
+      "Eén helft klapt een ostinato, de andere helft klapt een fill erboven.",
+      "Wissel van rol."
+     ],
+     "docent": "Houd het ritme rustig. Een ostinato van twee tellen is genoeg. Loop rond en help leerlingen die de triool als vier noten klappen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat neem je mee?",
+     "stappen": [
+      "Wat is een break, wat een fill?",
+      "Thuis: Musicbox, de box Ritmische figuren.",
+      "Volgende week is presentatie 1: zang."
+     ],
+     "docent": "Vertel dat het volgende week presentatie 1 is en geef de volgorde als die al klaar is."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Wat is het verschil tussen een break en een fill? Noem er één kenmerk van."
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Toonhoogte: notennamen en g-sleutel": {
+   "vraag": "Hoe heten de noten, en hoe zie je aan een voorteken dat een noot hoger of lager wordt?",
+   "doel": "Je leest de notennamen in de g-sleutel en je weet wat een kruis, een mol en een herstellingsteken doen.",
+   "criteria": [
+    "Ik noem de notennamen op de lijnen en in de spaties van de g-sleutel",
+    "Ik leg uit wat kruis, mol en herstellingsteken doen",
+    "Ik lees een korte reeks noten hardop"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Hoog of laag?",
+     "stappen": [
+      "Je hoort twee tonen. Is de tweede hoger of lager?",
+      "Wijs met je hand omhoog of omlaag.",
+      "Hoe weet je dat?"
+     ],
+     "docent": "Speel twee tonen na elkaar op een instrument of toetsenbord, zes keer, steeds met een grotere of kleinere afstand. Periode 2 start vandaag (ma 16 nov). Zeg kort waar periode 2 naartoe gaat: toonhoogte, tempo en presentatie 2 met een akkoordinstrument."
+    },
+    {
+     "min": 15,
+     "soort": "uitleg",
+     "kop": "Notennamen en voortekens",
+     "stappen": [
+      "Notennamen: C D E F G A B.",
+      "De g-sleutel begint op de tweede lijn: dat is de G.",
+      "Lijnen van onder naar boven: E G B D F.",
+      "Spaties van onder naar boven: F A C E.",
+      "Kruis: een halve toon hoger. Mol: een halve toon lager. Herstellingsteken: terug naar de gewone noot."
+     ],
+     "docent": "Syllabus: het notenschrift met absolute notennamen, g-sleutel, f-sleutel (alleen herkennen), en voortekens: herstellingsteken, kruis, mol. De noot tussen A en C heet in het Nederlands B. Een geheugensteun voor de lijnen: de leerlingen verzinnen zelf een zin met de beginletters E G B D F. Het voorteken geldt tot het eind van de maat.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "G-sleutel",
+        "t": "krult om de tweede lijn: daar staat de G"
+       },
+       {
+        "k": "Kruis",
+        "t": "halve toon hoger"
+       },
+       {
+        "k": "Mol",
+        "t": "halve toon lager"
+       },
+       {
+        "k": "Herstellingsteken",
+        "t": "terug naar de gewone noot"
+       },
+       {
+        "k": "Lijnen",
+        "t": "E G B D F"
+       },
+       {
+        "k": "Spaties",
+        "t": "F A C E"
+       }
+      ]
+     }
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Noten lezen",
+     "stappen": [
+      "Schrijf de notennamen onder de noten die ik op het bord zet.",
+      "Speel de noten op een keyboard of ukelele als je die bij je hebt.",
+      "Wat doet het voorteken met de noot?",
+      "Maak er zelf vijf, laat je buur ze benoemen."
+     ],
+     "docent": "Zet zes tot acht noten op het bord, een deel met voortekens. Laat de leerlingen eerst zonder instrument benoemen, daarna op een keyboard vinden. Fout die je veel ziet: de spaties en lijnen omdraaien, of het voorteken als aparte noot lezen.",
+     "klaar": "Klaar? Maak een korte melodie van vijf noten met een voorteken. Laat de buur de namen zeggen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat is de noot?",
+     "stappen": [
+      "Welke noot staat op de tweede lijn van de g-sleutel?",
+      "Thuis: Musicbox, de box Toonhoogte.",
+      "Volgende les gaan we een melodie volgen."
+     ],
+     "docent": "Antwoord: G."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Welke noot staat op de tweede lijn van de g-sleutel, en wat doet een kruis ervoor?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Toonhoogte: melodie volgen en lezen": {
+   "vraag": "Hoe volg je een melodie in notenschrift?",
+   "doel": "Je ziet in notenschrift of een melodie stijgt of daalt. Je volgt de melodie van het refrein van Go Tell It on the Mountain.",
+   "criteria": [
+    "Ik hoor of een melodie stijgt of daalt",
+    "Ik volg een melodie in notenschrift terwijl ik luister",
+    "Ik zing of speel een korte melodie van de balk"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Stijgt of daalt?",
+     "stappen": [
+      "Je hoort een korte melodie.",
+      "Teken met je hand: omhoog of omlaag.",
+      "Teken de lijn in de lucht."
+     ],
+     "docent": "Speel of zing drie korte melodieën. Laat de klas de contour met de hand volgen. Dit is de grafische voorstelling uit de syllabus."
+    },
+    {
+     "min": 10,
+     "soort": "uitleg",
+     "kop": "Van geluid naar notenbalk",
+     "stappen": [
+      "Hoge noot: hoog op de balk. Lage noot: laag.",
+      "Stijgend: de noten gaan omhoog. Dalend: omlaag.",
+      "Noten naast elkaar: een stap. Noten verder uit elkaar: een sprong.",
+      "Volg de noten met je vinger terwijl je luistert."
+     ],
+     "docent": "Syllabus: een melodie volgen, eventueel via een grafische voorstelling. Laat zien dat de hoogte van de noot op de balk de hoogte van de toon weergeeft. Gebruik de melodie van het refrein van Go Tell It on the Mountain uit de kerstbox of van de dia, als voorbeeld om te volgen. De noten van het refrein staan niet in dit lesplan; Frans haalt ze uit de kerstbox."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Volg het refrein",
+     "stappen": [
+      "Luister naar het refrein en volg de noten met je vinger.",
+      "Zing het refrein mee op la, of speel de melodie.",
+      "Wijs aan waar de melodie stijgt en waar ze daalt.",
+      "Teken zelf de lijn van de melodie als een golf."
+     ],
+     "docent": "Loop rond en let op: kan de leerling de plek terugvinden als hij kwijt is? Oefen eerst een paar maten. Leerlingen die de kerstbox thuis ook gebruiken zijn straks beter voorbereid op presentatie 2 (lesweek 19). Het tempo van de oefentrack is 88 slagen per minuut.",
+     "klaar": "Klaar? Zing het refrein op de notennamen uit les 11."
+    },
+    {
+     "min": 10,
+     "soort": "afsluiten",
+     "kop": "Wat zie je, wat hoor je?",
+     "stappen": [
+      "Waar stijgt de melodie van het refrein?",
+      "Thuis: Musicbox, de box Toonhoogte.",
+      "Volgende les: de kerstbox, begeleidingspatroon."
+     ],
+     "docent": "Laat twee of drie leerlingen hun lijn laten zien."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Teken de melodie van de eerste maat van het refrein als een lijn: stijgt of daalt ze?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Tempo": {
+   "vraag": "Hoe snel of hoe langzaam speel je een lied?",
+   "doel": "Je herkent de tempo-aanduidingen adagio, andante en allegro, en slow, medium en uptempo. Je speelt Go Tell It langzaam en op tempo.",
+   "criteria": [
+    "Ik noem drie klassieke en drie populaire tempo-aanduidingen",
+    "Ik weet wat accelerando en ritenuto betekenen",
+    "Ik speel mijn partij van Go Tell It op tempo"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Snel, rustig of langzaam?",
+     "stappen": [
+      "Je hoort een fragment.",
+      "Is het langzaam, rustig of snel?",
+      "Tik de beat mee op je knie."
+     ],
+     "docent": "Activiteitenweek B: de les kan uitvallen. Di 15 dec zijn herkansingen PTA en vr is de kerstviering; controleer of de klas er is. Draai drie fragmenten die je zelf kiest: langzaam, rustig en snel. Metronoom of tik de beat mee."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "Tempo-aanduidingen",
+     "stappen": [
+      "Klassiek: adagio is langzaam, andante is rustig, allegro is snel.",
+      "Pop: slow, medium en uptempo.",
+      "Accelerando: steeds sneller. Ritenuto: vertragen.",
+      "Tempo meet je in slagen per minuut."
+     ],
+     "docent": "Syllabus: goed te onderscheiden tempi in drie categorieën: langzaam, rustig en snel; klassiek adagio, andante, allegro; pop slow, medium, uptempo; tempowijzigingen accelerando en ritenuto. Slagen per minuut staat in de oefentrack van de kerstbox (88 slagen per minuut). Laat een metronoom op 88 horen. Tempokeuze verandert ook de stemming van een stuk.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Adagio",
+        "t": "langzaam"
+       },
+       {
+        "k": "Andante",
+        "t": "rustig"
+       },
+       {
+        "k": "Allegro",
+        "t": "snel"
+       },
+       {
+        "k": "Slow",
+        "t": "langzaam (pop)"
+       },
+       {
+        "k": "Medium",
+        "t": "gemiddeld (pop)"
+       },
+       {
+        "k": "Uptempo",
+        "t": "snel (pop)"
+       },
+       {
+        "k": "Accelerando",
+        "t": "steeds sneller"
+       },
+       {
+        "k": "Ritenuto",
+        "t": "vertragend"
+       }
+      ]
+     }
+    },
+    {
+     "min": 23,
+     "soort": "doen",
+     "kop": "Go Tell It in verschillende tempo's",
+     "stappen": [
+      "Pak je instrument of zing mee: het refrein van Go Tell It.",
+      "Speel het eerst langzaam, onder 88.",
+      "Speel het dan op het tempo van de oefentrack.",
+      "Probeer een accelerando of ritenuto in de laatste maat."
+     ],
+     "docent": "Zet de oefentrack of een metronoom aan. Laat per tempo een keer spelen en vraag: wat is het verschil, wat is makkelijker? Let op: jaagt iemand mee met de metronoom, of zakt het tempo in bij een lastige wissel? Daar gaat het bij presentatie 2 ook om (slag- of begeleidingspatroon, vast tempo). Wie een ander lied met dezelfde grepen heeft gekozen, speelt dat.",
+     "klaar": "Klaar? Speel het refrein op een eigen tempo en laat je buur raden of het slow, medium of uptempo is."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat is het tempo?",
+     "stappen": [
+      "Noem het tempo van Go Tell It in een tempo-aanduiding.",
+      "Thuis: Musicbox, de box Tempo en dynamiek.",
+      "Volgende les: oefenen in duo's."
+     ],
+     "docent": "Mogelijk antwoord: medium of andante, afhankelijk van de uitvoering. Beide kunnen goed zijn als de leerling het uitlegt."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Wat betekent ritenuto, en waar zou je dat in een lied verwachten?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Akkoordinstrument: oefenen in duo's": {
+   "vraag": "Hoe blijf je in tempo samen spelen als er twee spelers zijn?",
+   "doel": "Je oefent Go Tell It (of je eigen lied) in een duo en wisselt de akkoorden op tijd en in tempo.",
+   "criteria": [
+    "Ik wissel mijn akkoorden op tijd",
+    "Ik houd het tempo vast met mijn duopartner",
+    "Ik speel door na een fout"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wissels opwarmen",
+     "stappen": [
+      "Pak je grepen los: G, C, D7, Em en A7.",
+      "Wissel op mijn teken, vier tellen per akkoord.",
+      "Speel rustig en gelijk."
+     ],
+     "docent": "Ma 4 jan is een studiedag (leerlingen vrij): de les kan uitvallen, afhankelijk van de lesdag van de klas. Na de kerstvakantie eerst terug naar de grepen."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Oefenen in duo's",
+     "stappen": [
+      "Zoek je duopartner: twee akkoordinstrumenten, of akkoordinstrument en zang.",
+      "Spreek af: wie telt af, wie speelt het couplet?",
+      "Couplet en refrein, achter elkaar. Speel door op de tel als je een akkoord mist.",
+      "Speel met de oefentrack van 88 slagen per minuut."
+     ],
+     "docent": "Het couplet: Em, D7, G, G, Em, Em, A7, D7. Het refrein op niveau 2: G, G, C, G, G, Em, C-D7, G. Slagpatroon: neer, neer-op, op-neer-op met accent op 2 en 4. Let op het rondlopen: wisselen ze op de één, houdt het duo het tempo samen, begint en eindigt het samen? Lastig: de wissel A7 naar D7 in maat 7 en 8 van het couplet. Duo's zonder partner zet je bij elkaar."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "In tempo, met opname",
+     "stappen": [
+      "Speel het hele lied door zonder te stoppen.",
+      "Neem jullie op met een telefoon of tablet.",
+      "Luister terug. Kies één werkpunt.",
+      "Speel het nog een keer met dat werkpunt."
+     ],
+     "docent": "Vraag per duo naar het werkpunt: wissel, tempo, begin of slot. Wie dit niet zonder te stoppen kan, krijgt in les 17 extra oefentijd. Opnemen blijft in de les; niets delen buiten het duo.",
+     "klaar": "Klaar? Speel het lied met een andere slag, bijvoorbeeld alleen op 1 en 3."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Waar sta ik?",
+     "stappen": [
+      "Wat is jullie werkpunt voor volgende les?",
+      "Volgende les spelen jullie voor de klas, met feedback."
+     ],
+     "docent": "Noteer welke duo's nog niet door kunnen spelen."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Noem één werkpunt voor jullie duo en wat je ermee gaat doen."
+   },
+   "identiteit": "Een duo werkt alleen als je op elkaar let. Wie een greep al kent, helpt de ander. Zo bouw je samen een lied."
+  },
+  "Akkoordinstrument: voorspelen met feedback": {
+   "vraag": "Hoe klinkt ons lied voor een publiek, en wat kan nog beter voor presentatie 2?",
+   "doel": "Je speelt je lied met begeleiding voor de klas, krijgt tips en kiest een werkpunt voor presentatie 2.",
+   "criteria": [
+    "Ik speel mijn begeleiding voor de klas",
+    "Ik krijg een tip en schrijf die op",
+    "Ik kies één werkpunt voor presentatie 2"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken voor het voorspelen",
+     "stappen": [
+      "Een duo speelt, de rest luistert stil.",
+      "Aankondigen: naam, titel, instrument.",
+      "Tip op akkoorden, wissels, patroon of samenspel."
+     ],
+     "docent": "Vr 15 jan is Sing-In: controleer of de les doorgaat. Dit is een tussenstand, nog geen beoordeling. Bepaal de volgorde van tevoren."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Laatste oefenronde",
+     "stappen": [
+      "Stem je instrument.",
+      "Speel het lied nog een keer door met je duo.",
+      "Spreek af wie aftelt en wie het couplet speelt."
+     ],
+     "docent": "Stemmen: gitaar E A D G B e, ukelele G C E A. Laat leerlingen elkaars instrument controleren. Zet de volgorde op het bord."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Voorspelen met feedback",
+     "stappen": [
+      "Kondig je lied aan: naam, titel en instrument. Tel af.",
+      "Speel couplet en refrein. Fout? Speel door.",
+      "Luisteraars schrijven per duo een compliment en een tip.",
+      "Het duo leest de tip en kiest één werkpunt."
+     ],
+     "docent": "Per duo ongeveer drie minuten plus feedback. Let op de onderdelen van het formulier van presentatie 2: presentatie (weging 1), akkoorden (2), akkoordwisselingen (2), slag- of begeleidingspatroon (2), houding en techniek (1), samenspel (1). Past niet iedereen, dan gaat het door in de volgende les. Opnemen alleen met toestemming van het duo."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Mijn werkpunt",
+     "stappen": [
+      "Schrijf op: dit oefen ik voor presentatie 2.",
+      "Het format zelfbeoordeling krijg je alvast mee.",
+      "Les 18 herhaalt toonhoogte en tempo. Presentatie 2 is lesweek 19."
+     ],
+     "docent": "Het zelfbeoordelingsformat telt voor 10% mee: eerlijk en concreet, 4 tot 10."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Schrijf op: één ding dat goed ging en één werkpunt voor presentatie 2."
+   }
+  },
+  "Herhaling toonhoogte en tempo": {
+   "vraag": "Weet je nog hoe toonhoogte en tempo werken?",
+   "doel": "Je herhaalt toonhoogte en tempo met Trainers en luisterfragmenten en weet welke begrippen je nog moet oefenen.",
+   "criteria": [
+    "Ik benoem noten in de g-sleutel en voortekens",
+    "Ik herken langzaam, rustig en snel in een fragment",
+    "Ik noem één begrip dat ik nog oefen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Vijf snelle vragen",
+     "stappen": [
+      "Hoe heet de noot op de tweede lijn?",
+      "Wat doet een mol?",
+      "Wat betekent allegro?",
+      "Wat betekent ritenuto?"
+     ],
+     "docent": "Ma 18 jan is een ontwikkeldag (leerlingen vrij): de les kan uitvallen, afhankelijk van de lesdag van de klas. Antwoorden: G; een halve toon lager; snel; vertragend. Vraag er ook een uit lesweek 15, bijvoorbeeld: wat is andante?"
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Trainers: toonhoogte en tempo",
+     "stappen": [
+      "Open Musicbox en ga naar Trainers.",
+      "Kies toonhoogte en daarna tempo.",
+      "Noteer welk onderdeel je moeilijk vindt."
+     ],
+     "docent": "Loop rond: welke leerlingen blijven hangen op notennamen of voortekens? Dat zijn de herhalingsvragen voor T1 in toetsweek 3. Leerlingen zonder laptop of telefoon: werkblad met noten van het bord.",
+     "klaar": "Klaar? Probeer het volgende niveau."
+    },
+    {
+     "min": 15,
+     "soort": "luisteren",
+     "kop": "Luisteren: toonhoogte en tempo",
+     "stappen": [
+      "Je hoort een fragment. Is het langzaam, rustig of snel?",
+      "Volg de melodie: stijgt of daalt ze?",
+      "Hoor je een accelerando of ritenuto?"
+     ],
+     "docent": "Kies zelf vijf fragmenten die elk iets anders laten horen: een met duidelijk stijgende melodie, een met ritenuto, een met accelerando, twee in verschillend tempo. Laat de leerlingen antwoorden op papier en bespreek ze daarna. De syllabus vraagt het volgen van een melodie en het herkennen van veranderingen en contrasten."
+    },
+    {
+     "min": 10,
+     "soort": "afsluiten",
+     "kop": "Mijn zwakke plek",
+     "stappen": [
+      "Welk begrip uit toonhoogte of tempo moet je nog oefenen?",
+      "Thuis: Musicbox, Trainers: toonhoogte en tempo.",
+      "Volgende les is presentatie 2."
+     ],
+     "docent": "Verzamel de zwakke begrippen op het bord; die kom je terug in lesweek 24 en 25."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Schrijf het begrip op dat je nog het minst zeker weet en oefen het thuis."
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Presentatie 2: akkoordinstrument": {
+   "vraag": "Kan ik een lied begeleiden zodat een ander erop kan zingen?",
+   "doel": "Je speelt Go Tell It on the Mountain, of een lied met dezelfde grepen, met een akkoordinstrument. Presentatie 2 telt mee voor P1.",
+   "criteria": [
+    "Ik noem naam, titel en instrument en begin samen",
+    "Ik wissel mijn akkoorden op tijd en in tempo",
+    "Ik houd mijn patroon vast en speel door na een fout"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken voor vandaag",
+     "stappen": [
+      "De volgorde staat op het bord. Wie aan de beurt is, komt naar voren.",
+      "Kondig aan: naam, titel, instrument. Tel af en begin samen.",
+      "Fout? Speel door op de tel.",
+      "Publiek: stil, telefoon weg. Applaus na afloop."
+     ],
+     "docent": "Di 26 jan is de avond van de voorlichting vakkenpakket; dat raakt de les niet. Zet de volgorde klaar; zenuwachtige leerlingen niet als eerste en niet als laatste. Formulier en scoreblad liggen klaar."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Inspelen",
+     "stappen": [
+      "Stem je instrument.",
+      "Pak je grepen los: G, C, D7, Em en A7.",
+      "Speel het lied één keer door met je duo, zacht."
+     ],
+     "docent": "Stemmen: gitaar E A D G B e, ukelele G C E A. Zet de duo's in hoeken of laat ze afwisselen met koptelefoon op het keyboard. Kort en rustig; het is er om de spanning te breken."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "De presentaties",
+     "stappen": [
+      "Kondig je lied aan en tel af.",
+      "Speel couplet en refrein door.",
+      "Gaat het mis, speel dan door op de tel.",
+      "Publiek: schrijf per duo één ding op dat goed ging."
+     ],
+     "docent": "Beoordelen op het formulier van presentatie 2, zes onderdelen met weging: presentatie 1, akkoorden 2, akkoordwisselingen 2, slag- of begeleidingspatroon 2, houding en techniek 1, samenspel 1. Per onderdeel de niveaus 4, 6, 8 of 10, ertussenin mag 5, 7 of 9. Totaal delen door 9 is het cijfer van de docent. Eindcijfer is 0,9 maal het cijfer van de docent plus 0,1 maal de zelfbeoordeling (4 tot 10, eerlijk en concreet). P1 is het gemiddelde van presentatie 1, 2 en 3. Past niet iedereen in 25 minuten, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat ging goed?",
+     "stappen": [
+      "Per duo één compliment uit het publiek, hardop.",
+      "De cijfers volgen later.",
+      "Volgende les: muziek in het werkveld."
+     ],
+     "docent": "Zelfbeoordeling laten invullen als dat nog niet gebeurd is."
+    }
+   ],
+   "formatief": {
+    "soort": "presentatie",
+    "tekst": "Per duo één compliment uit het publiek. De cijfers volgen later."
+   }
+  },
+  "Muziek in het werkveld": {
+   "vraag": "Wie werkt er allemaal met muziek?",
+   "doel": "Je noemt beroepen waarin muziek een rol speelt en je weet wat zo iemand doet. Je koppelt dat aan jouw stage.",
+   "criteria": [
+    "Ik noem vijf beroepen met muziek",
+    "Ik leg uit wat één beroep inhoudt",
+    "Ik noem een plek waar muziek in mijn stage of toekomstige werk voorkomt"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "start",
+     "kop": "Wie maakt muziek?",
+     "stappen": [
+      "Schrijf alle beroepen op waarbij je met muziek werkt.",
+      "Denk ook aan mensen die je niet ziet.",
+      "Vergelijk met je buur."
+     ],
+     "docent": "Activiteitenweek C: di en wo stage voor mavo 3. De les kan uitvallen, afhankelijk van de lesdag van de klas. Verzamel antwoorden op het bord. Laat ruimte voor beroepen waar de leerling zelf mee bezig is."
+    },
+    {
+     "min": 15,
+     "soort": "uitleg",
+     "kop": "Vier beroepen",
+     "stappen": [
+      "Musicus: speelt of zingt voor publiek.",
+      "Geluidstechnicus: zorgt dat muziek goed klinkt en te horen is.",
+      "Muziektherapeut: gebruikt muziek om mensen te helpen.",
+      "Docent: leert anderen zingen en spelen."
+     ],
+     "docent": "Dit zijn de beroepen uit het lesplan. Vul aan met wat leerlingen noemen. Vraag ook naar mensen die je niet ziet: wie kiest de muziek in een film, wie speelt in de kerk? Syllabus K8 noemt functies van muziek, zoals religieuze muziek, filmmuziek, achtergrondmuziek en muziek als therapie. Vakwerkplan 3.4: in elke studie en elk beroep heb je samenwerken, presenteren voor publiek, plannen en organiseren nodig; dat leren ze ook in het vak.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Musicus",
+        "t": "speelt of zingt voor publiek"
+       },
+       {
+        "k": "Geluidstechnicus",
+        "t": "zorgt voor goed geluid"
+       },
+       {
+        "k": "Muziektherapeut",
+        "t": "helpt mensen met muziek"
+       },
+       {
+        "k": "Docent",
+        "t": "leert anderen zingen en spelen"
+       }
+      ]
+     }
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Mijn werkveld en muziek",
+     "stappen": [
+      "Kies een werkveld dat jou interesseert, ook als het geen muziekberoep is.",
+      "Schrijf op: waar komt muziek daar voor?",
+      "Denk aan je stage: welke muziek hoor je daar?",
+      "Vertel het je buur."
+     ],
+     "docent": "Dit is de voorbereiding op de loopbaanpresentatie (handelingsdeel H1, lesweek 33 en 37). Leerlingen mogen een werkveld kiezen waar muziek niet de hoofdzaak is, bijvoorbeeld zorg, winkel of de kerk. Loop rond en help leerlingen die niets weten.",
+     "klaar": "Klaar? Zoek twee functies van muziek die in dat werkveld passen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat neem je mee?",
+     "stappen": [
+      "Noem het werkveld dat je kiest.",
+      "Tijdens je stage: let op muziek om je heen.",
+      "In lesweek 33 werk je je loopbaanpresentatie uit."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Welk werkveld kies je, en op welke manier speelt muziek daar een rol?"
+   }
+  },
+  "Dynamiek": {
+   "vraag": "Hoe hard of zacht speel je, en hoe verandert dat in een stuk?",
+   "doel": "Je kent de dynamiektekens ff, f, mf, p en pp, crescendo en decrescendo, fade out, overgangsdynamiek en terrassendynamiek.",
+   "criteria": [
+    "Ik noem de dynamiektekens van zacht naar hard",
+    "Ik herken crescendo en decrescendo in een fragment",
+    "Ik leg het verschil uit tussen overgangs- en terrassendynamiek"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Hard en zacht",
+     "stappen": [
+      "Klap zacht. Klap hard.",
+      "Klap steeds harder, dan steeds zachter.",
+      "Klap opeens heel zacht."
+     ],
+     "docent": "Periode 3 start vandaag (ma 8 feb). Laat de klas het verschil voelen voordat je namen noemt."
+    },
+    {
+     "min": 15,
+     "soort": "uitleg",
+     "kop": "Dynamiektekens",
+     "stappen": [
+      "pp pianissimo (heel zacht), p piano (zacht), mf mezzoforte (halfhard).",
+      "f forte (hard), ff fortissimo (heel hard).",
+      "Crescendo: steeds luider. Decrescendo: steeds zachter.",
+      "Fade out: in een opname wordt het geluid langzaam zachter tot stilte.",
+      "Overgangsdynamiek: langzaam veranderen. Terrassendynamiek: plotseling veranderen."
+     ],
+     "docent": "Syllabus: ff, f, mf, p, pp, crescendo, decrescendo, fade out, overgangsdynamiek en terrassendynamiek. Overgangsdynamiek is geleidelijk (crescendo, decrescendo), terrassendynamiek een plotselinge sprong van zacht naar hard of andersom. Een crescendo teken is een hoek die opent, een decrescendo sluit zich. De syllabus vraagt ook het verloop van de dynamiek volgen in een traditionele of grafische notatie en tekens invullen in een luistervoorbeeld.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "pp",
+        "t": "pianissimo: heel zacht"
+       },
+       {
+        "k": "p",
+        "t": "piano: zacht"
+       },
+       {
+        "k": "mf",
+        "t": "mezzoforte: halfhard"
+       },
+       {
+        "k": "f",
+        "t": "forte: hard"
+       },
+       {
+        "k": "ff",
+        "t": "fortissimo: heel hard"
+       },
+       {
+        "k": "Crescendo",
+        "t": "steeds luider"
+       },
+       {
+        "k": "Decrescendo",
+        "t": "steeds zachter"
+       },
+       {
+        "k": "Fade out",
+        "t": "langzaam zachter tot stilte"
+       }
+      ]
+     }
+    },
+    {
+     "min": 12,
+     "soort": "luisteren",
+     "kop": "Luister naar de dynamiek",
+     "stappen": [
+      "Je hoort een fragment. Teken de lijn: harder, zachter of gelijk.",
+      "Zet er dynamiektekens bij op het blad.",
+      "Welke dynamiek is het begin, welke het slot?"
+     ],
+     "docent": "Kies zelf drie of vier fragmenten: een met crescendo, een met een plotselinge overgang (terrassendynamiek), een met fade out. Laat de leerlingen hun lijn tekenen voor je de namen noemt. Geef bij een luistervoorbeeld ten minste één teken als startpunt, zoals de syllabus bij dit soort vragen doet."
+    },
+    {
+     "min": 8,
+     "soort": "doen",
+     "kop": "Zelf spelen met dynamiek",
+     "stappen": [
+      "Speel een ritme op je knie of slagwerk: p, crescendo, f, decrescendo, p.",
+      "Het groepje voert aan wat de dirigent aangeeft.",
+      "Wissel van dirigent."
+     ],
+     "docent": "Gebruik klappen, stampen en tikken. Een leerling dirigeert met de hand: hand omhoog is harder, omlaag zachter."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Welk teken hoort erbij?",
+     "stappen": [
+      "Welk teken staat voor heel zacht, welk voor heel hard?",
+      "Thuis: Musicbox, de box Tempo en dynamiek.",
+      "Volgende les: klankkleur en instrumenten."
+     ],
+     "docent": "Antwoord: pp en ff."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Wat is het verschil tussen crescendo en terrassendynamiek?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Klankkleur: instrumenten": {
+   "vraag": "Hoe herken je een instrument aan zijn klank?",
+   "doel": "Je herkent slag-, blaas-, snaar- en elektronische instrumenten en noemt ze met de juiste naam.",
+   "criteria": [
+    "Ik sorteer instrumenten in hun familie",
+    "Ik herken instrumenten aan hun klank",
+    "Ik gebruik de juiste naam, bijvoorbeeld snaredrum en blokfluit"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "luisteren",
+     "kop": "Welk instrument hoor je?",
+     "stappen": [
+      "Je hoort een fragment. Welk instrument is te horen?",
+      "Slaat, blaast of tokkelt iemand?",
+      "Schrijf je antwoord op."
+     ],
+     "docent": "Wo 17 feb is Sing-In en vr 19 feb is een extra vrije dag: de les kan uitvallen, afhankelijk van de lesdag van de klas. Kies zelf zes fragmenten met een duidelijk instrument: een slaginstrument, een blaasinstrument, een gestreken, een getokkeld en een elektronisch instrument."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "De families",
+     "stappen": [
+      "Slaginstrumenten: met vel of zonder vel.",
+      "Blaasinstrumenten: hout of koper.",
+      "Snaarinstrumenten: getokkeld, gestreken of aangeslagen.",
+      "Elektronisch: basgitaar, elektrische gitaar, keyboard en synthesizer.",
+      "Gebruik de juiste naam: snaredrum en niet trommel."
+     ],
+     "docent": "Syllabus. Slag zonder vel: bekkens, buisklokken, cowbell, hihat, klokkenspel, maraca, shaker, tamtam, triangel, vibrafoon, metallofoon, xylofoon, marimba. Met vel: basdrum, bongo, conga, djembé, floortom, grote trom, snaredrum, pauken, tamboerijn, tomtoms. Drumstel: basdrum, cymbals, floortom, hihat, snaredrum, tomtoms. Hout: blokfluit, panfluit, dwarsfluit, hobo, klarinet, fagot, saxofoon. Koper: trompet, hoorn, trombone, tuba. Accordeon en orgel zijn blaas-toetsinstrumenten. Getokkeld: akoestische gitaar, elektrische gitaar, basgitaar, harp, klavecimbel. Gestreken: viool, cello, contrabas. Aangeslagen: piano. Namen: snaredrum of kleine trom, niet trommel; maraca of shaker, niet sambaballen; blokfluit en panfluit, niet fluit; trombone, niet schuiftrompet. Dwarsfluit of fluit en tamtam of gong zijn allebei goed. De syllabus vraagt niet het auditieve verschil tussen bongo, conga en djembé of tussen xylofoon en marimba.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Slagwerk zonder vel",
+        "t": "bekken, triangel, xylofoon, hihat"
+       },
+       {
+        "k": "Slagwerk met vel",
+        "t": "snaredrum, basdrum, pauken, conga"
+       },
+       {
+        "k": "Hout",
+        "t": "blokfluit, klarinet, hobo, fagot, saxofoon"
+       },
+       {
+        "k": "Koper",
+        "t": "trompet, hoorn, trombone, tuba"
+       },
+       {
+        "k": "Getokkeld",
+        "t": "gitaar, basgitaar, harp, klavecimbel"
+       },
+       {
+        "k": "Gestreken",
+        "t": "viool, cello, contrabas"
+       },
+       {
+        "k": "Aangeslagen",
+        "t": "piano"
+       },
+       {
+        "k": "Elektronisch",
+        "t": "elektrische gitaar, basgitaar, keyboard"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "doen",
+     "kop": "Sorteren en benoemen",
+     "stappen": [
+      "Sorteer de kaartjes in de goede familie.",
+      "Schrijf bij elk instrument de juiste naam.",
+      "Speel een instrument na met je stem of hand en laat je buur raden.",
+      "Maak een lijst van de vijf instrumenten die je het minst zeker weet."
+     ],
+     "docent": "Kaartjes met instrumentnamen of afbeeldingen maak je klaar of toon je op het bord. Instrumenten in het lokaal laat je even horen, vooral slaginstrumenten. Let op de benamingen: veel fouten komen uit alledaags taalgebruik (trommel, fluit).",
+     "klaar": "Klaar? Zoek in Musicbox een fragment met een instrument dat je net hebt geleerd."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat is de familie?",
+     "stappen": [
+      "Waar hoort de klarinet bij, en waar de cello?",
+      "Thuis: Musicbox, de box Instrumenten en speeltechnieken.",
+      "Volgende les: stemmen en ensembles."
+     ],
+     "docent": "Klarinet: hout, blaasinstrument. Cello: snaarinstrument, gestreken."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Noem één houten blaasinstrument en één gestreken snaarinstrument."
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Klankkleur: stemmen en ensembles": {
+   "vraag": "Welke stemmen en ensembles bestaan er, en hoe klinken ze?",
+   "doel": "Je herkent de stemmen sopraan, alt, tenor en bas en ensembles zoals koor, band en orkest.",
+   "criteria": [
+    "Ik noem de vier stemsoorten van hoog naar laag",
+    "Ik herken een koor, een band en een orkest aan de klank",
+    "Ik leg het verschil uit tussen een bigband en een combo"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "luisteren",
+     "kop": "Wie zingt of speelt dit?",
+     "stappen": [
+      "Je hoort een fragment. Hoeveel mensen horen we?",
+      "Zingt er een man of een vrouw, hoog of laag?",
+      "Is het een koor, een band of een orkest?"
+     ],
+     "docent": "Do 4 mrt is PMZingt!: de les kan uitvallen of anders lopen, afhankelijk van de lesdag van de klas. Kies zelf vijf fragmenten: een gemengd koor, een band, een symfonieorkest, een bigband en een solozanger."
+    },
+    {
+     "min": 12,
+     "soort": "uitleg",
+     "kop": "Stemmen en ensembles",
+     "stappen": [
+      "Vrouwen: sopraan (hoog) en alt (laag). Mannen: tenor (hoog) en bas (laag).",
+      "Vocale ensembles: gemengd koor, mannenkoor, vrouwenkoor, backing vocals.",
+      "Instrumentaal: rockgroep of popgroep, jazzcombo, bigband, blaasorkest, strijkorkest, symfonieorkest.",
+      "Een combo is klein: drie tot acht muzikanten. Een bigband is een groot jazzorkest."
+     ],
+     "docent": "Syllabus. Zangstemmen: sopraan, alt, tenor, bas. Vocale ensembles: achtergrondkoor/backing vocals, gemengd koor, mannenkoor, vrouwenkoor. Instrumentale: bigband, jazzcombo, blaasorkest (harmonie, fanfare, brassband: niet actief bevraagd), rockgroep/popgroep, strijkorkest/strijkers/strings, symfonieorkest. Omschrijvingen uit de syllabus: bigband is een groot jazzorkest, combo is een klein ensemble van drie tot acht muzikanten.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Sopraan",
+        "t": "hoge vrouwenstem"
+       },
+       {
+        "k": "Alt",
+        "t": "lage vrouwenstem"
+       },
+       {
+        "k": "Tenor",
+        "t": "hoge mannenstem"
+       },
+       {
+        "k": "Bas",
+        "t": "lage mannenstem"
+       },
+       {
+        "k": "Gemengd koor",
+        "t": "mannen en vrouwen"
+       },
+       {
+        "k": "Combo",
+        "t": "klein ensemble, drie tot acht muzikanten"
+       },
+       {
+        "k": "Bigband",
+        "t": "groot jazzorkest"
+       },
+       {
+        "k": "Symfonieorkest",
+        "t": "strijkers, hout, koper en slagwerk"
+       }
+      ]
+     }
+    },
+    {
+     "min": 18,
+     "soort": "doen",
+     "kop": "Zingen in stemmen",
+     "stappen": [
+      "Zing samen een kort lied in één stem.",
+      "Nu twee groepen: hoog en laag.",
+      "Welke stem klinkt voor jou bij welke groep? Zoek je eigen plek.",
+      "Zeg welke stemsoort jij het dichtst benadert."
+     ],
+     "docent": "Kies zelf een lied dat zich leent voor twee stemmen, bijvoorbeeld een simpele canon of een lied met een liggende lage stem. Wie niet durft te zingen, luistert mee en benoemt wat hij hoort. Gebruik geen scherpe oordelen over stemmen; veel stemmen van jongeren zijn nog aan het veranderen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat is het ensemble?",
+     "stappen": [
+      "Noem een vocaal en een instrumentaal ensemble.",
+      "Thuis: Musicbox, de box Het orkest.",
+      "Volgende les: luisteren met alle begrippen."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Welke vier stemsoorten zijn er, van hoog naar laag?"
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "identiteit": "Een koor werkt alleen als iedere stem er is. Hoog, laag, sterk of zacht: allemaal nodig in het geheel."
+  },
+  "Luisteren: begrippen in fragmenten": {
+   "vraag": "Hoe beschrijf je wat je hoort met de begrippen van dit jaar?",
+   "doel": "Je beschrijft muziekfragmenten met de begrippen ritme, maat, tempo, toonhoogte, dynamiek en klankkleur en maakt een oefentoets.",
+   "criteria": [
+    "Ik herken ritme, maat, tempo, toonhoogte, dynamiek en klankkleur in een fragment",
+    "Ik gebruik de juiste begrippen",
+    "Ik weet welke begrippen ik nog moet oefenen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Zes onderdelen",
+     "stappen": [
+      "Kijk naar het overzicht van de zes onderdelen.",
+      "Noem bij elk onderdeel één begrip dat je kent.",
+      "Welk onderdeel vind je het moeilijkst?"
+     ],
+     "docent": "Di 9 mrt zijn herkansingen PTA en vr 12 mrt is een ontwikkeldag teams (leerlingen vrij): de les kan uitvallen, afhankelijk van de lesdag van de klas. T1 gaat over de zes onderdelen uit het PTA: ritme, maat, tempo, toonhoogte, dynamiek en klankkleur.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Ritme",
+        "t": "notenwaarden, rusten, syncope, triool, break, fill, ostinato"
+       },
+       {
+        "k": "Maat",
+        "t": "maatsoorten, opmaat, beat, afterbeat"
+       },
+       {
+        "k": "Tempo",
+        "t": "adagio, andante, allegro, slow, medium, uptempo, accelerando, ritenuto"
+       },
+       {
+        "k": "Toonhoogte",
+        "t": "notennamen, g-sleutel, voortekens"
+       },
+       {
+        "k": "Dynamiek",
+        "t": "pp tot ff, crescendo, decrescendo, fade out"
+       },
+       {
+        "k": "Klankkleur",
+        "t": "instrumenten, stemmen, ensembles"
+       }
+      ]
+     }
+    },
+    {
+     "min": 15,
+     "soort": "luisteren",
+     "kop": "Fragmenten beschrijven",
+     "stappen": [
+      "Je hoort een fragment.",
+      "Schrijf op wat je hoort bij elk onderdeel.",
+      "Gebruik de begrippen, niet je eigen woorden."
+     ],
+     "docent": "Kies zelf drie fragmenten waarin steeds meerdere begrippen herkenbaar zijn. Draai elk fragment twee keer. Bespreek na elk fragment wat de klas genoteerd heeft. De syllabus vraagt muzikale begrippen herkennen, benoemen en noteren; noteren is aanvullen, ordenen of wijzigen van grafische notatietekens en woorden."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Oefentoets in Musicbox",
+     "stappen": [
+      "Open Musicbox en start de oefentoets.",
+      "Maak de toets alleen, met je koptelefoon.",
+      "Kijk na afloop welke vragen fout waren.",
+      "Schrijf de fouten op in je foutenlijst."
+     ],
+     "docent": "Laat leerlingen hun fouten opschrijven per onderdeel; de foutenlijst gebruiken ze in les 25 en 26. Let op de tijd: een toets ter oefening duurt een deel van de les.",
+     "klaar": "Klaar? Maak de toets opnieuw voor de vragen die fout waren."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Mijn foutenlijst",
+     "stappen": [
+      "Welk onderdeel ging het slechtst?",
+      "Thuis: de oefentoets in Musicbox opnieuw doen.",
+      "Volgende les herhalen we je zwakke begrippen."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Welk onderdeel van de oefentoets ging het slechtst, en wat ga je daaraan doen?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Herhaling voor T1": {
+   "vraag": "Welke begrippen ken ik nog niet goed genoeg voor T1?",
+   "doel": "Je herhaalt je eigen zwakke begrippen met Trainers en legt ze aan een ander uit.",
+   "criteria": [
+    "Ik weet welke begrippen ik niet goed ken",
+    "Ik oefen die begrippen met Trainers",
+    "Ik leg één begrip uit aan een klasgenoot"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Mijn foutenlijst",
+     "stappen": [
+      "Pak je foutenlijst van de oefentoets.",
+      "Kies de drie begrippen die je het minst kent.",
+      "Schrijf ze bovenaan je blad."
+     ],
+     "docent": "Als leerlingen geen foutenlijst hebben, laat ze hun eigen top drie kiezen. T1 is in toetsweek 3, ma 5 tot en met di 13 april."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Oefenen met Trainers",
+     "stappen": [
+      "Open Musicbox en ga naar Trainers.",
+      "Kies de onderdelen die bij jouw top drie horen.",
+      "Oefen tot je drie keer achter elkaar goed hebt.",
+      "Noteer wat je nog niet kunt."
+     ],
+     "docent": "Loop rond bij leerlingen die steeds dezelfde fout maken. Leg dan kort zelf uit, met de definitie uit de syllabus. Voorbeelden: break is een onderbreking van de begeleiding gedurende een of twee maten waarin een solist doorspeelt; fill is een ingevoegde korte ritmische figuur; backbeat is het benadrukken van tel 2 en 4.",
+     "klaar": "Klaar? Oefen nog een onderdeel dat je goed kent, om het vast te houden."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Leg het uit",
+     "stappen": [
+      "Zoek een klasgenoot met een ander zwak begrip dan jij.",
+      "Leg elkaar om de beurt je begrip uit.",
+      "Controleer: heb je het goed uitgelegd?"
+     ],
+     "docent": "Koppel leerlingen die complementair zijn. Uitleggen is de beste controle op of ze het snappen. Noteer begrippen die niemand kan uitleggen en pak die klassikaal op in les 27."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat neem je mee?",
+     "stappen": [
+      "Welk begrip is nu sterker dan voorheen?",
+      "Thuis: Musicbox, Trainers: alle begrippen.",
+      "Volgende les: een tweede oefentoets in de vorm van T1."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Noem één begrip dat je nu beter kent dan vorige week, en leg het uit."
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Oefentoets T1": {
+   "vraag": "Hoe doe ik het op een toets die lijkt op T1?",
+   "doel": "Je maakt een oefentoets in de vorm van T1 en weet daarna welke fouten je nog maakt.",
+   "criteria": [
+    "Ik maak de oefentoets zelfstandig",
+    "Ik schrijf mijn fouten op",
+    "Ik weet wat ik moet herhalen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Zo gaat de toets",
+     "stappen": [
+      "Je krijgt luisterfragmenten met vragen.",
+      "Je luistert, schrijft of klikt je antwoord.",
+      "Doe alsof het T1 is: stil en alleen."
+     ],
+     "docent": "Activiteitenweek D: di LOB kennismaken mbo, do dagexcursie Brussel en paasviering, vr Goede Vrijdag. De les kan uitvallen, afhankelijk van de lesdag van de klas. T1 zelf is een luistertoets begrippen in Musicbox, volgens het PTA 45 minuten; deze oefentoets past in de rest van de les, dus kies zelf de vragen of laat leerlingen een deel doen."
+    },
+    {
+     "min": 35,
+     "soort": "doen",
+     "kop": "Oefentoets in Musicbox",
+     "stappen": [
+      "Open de tweede oefentoets in Musicbox.",
+      "Maak de toets zonder hulp.",
+      "Schrijf direct na afloop je fouten op."
+     ],
+     "docent": "Zorg dat iedereen koptelefoon en een werkende inlog heeft. Stil lokaal. Laat de uitslag niet hardop bespreken. Noteer wie veel fouten had op één onderdeel, daar werk je in les 27 mee."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Mijn foutenlijst",
+     "stappen": [
+      "Zet je fouten op een foutenlijst.",
+      "Thuis: de foutenlijst nalopen.",
+      "Volgende les bespreken we de fouten."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Welke drie fouten maakte je, en welk begrip hoort erbij?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Laatste vragen voor T1": {
+   "vraag": "Wat ging fout in de oefentoets en hoe voorkom ik dat bij T1?",
+   "doel": "Je analyseert je fouten van de oefentoets en beantwoordt de laatste vragen voor T1.",
+   "criteria": [
+    "Ik leg uit waarom ik een fout maakte",
+    "Ik weet nu het juiste antwoord",
+    "Ik heb een plan voor de laatste dagen voor T1"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat ging fout?",
+     "stappen": [
+      "Pak je foutenlijst van de oefentoets.",
+      "Zet een kruisje bij de fouten die je snapt.",
+      "Onderstreep de fouten waar je nog vragen over hebt."
+     ],
+     "docent": "Ma 29 mrt is tweede paasdag: de les kan uitvallen, afhankelijk van de lesdag van de klas. Verzamel de vragen die vaak fout zijn. T1 is in toetsweek 3, ma 5 tot en met di 13 april."
+    },
+    {
+     "min": 20,
+     "soort": "gesprek",
+     "kop": "Fouten bespreken",
+     "stappen": [
+      "We bespreken de vragen die veel fout waren.",
+      "Hoe kwam je op dat antwoord? Wat had je moeten horen?",
+      "Welk begrip hoort erbij en wat is de definitie?",
+      "Schrijf het juiste antwoord op."
+     ],
+     "docent": "Draai de fragmenten die moeilijk waren nog een keer en vraag welke begrippen erbij horen. Leg zelf uit waar nodig: syllabus-definities voor break (onderbreking van de begeleiding gedurende een of twee maten, een solist speelt door), fill (ingevoegde korte ritmische figuur), backbeat (tel 2 en 4 benadrukt), crescendo en decrescendo."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Laatste oefening",
+     "stappen": [
+      "Kies je zwakste begrip en oefen het in Trainers of met je blad.",
+      "Laat een klasgenoot je overhoren.",
+      "Schrijf op wat je morgen nog doet."
+     ],
+     "docent": "Laat leerlingen elkaar overhoren met de zes onderdelen als lijst. Wie klaar is, helpt een ander.",
+     "klaar": "Klaar? Verzin twee vragen voor een klasgenoot."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Klaar voor T1?",
+     "stappen": [
+      "T1 is een luistertoets begrippen in Musicbox, toetsweek 3.",
+      "Oefen de laatste dagen je zwakste begrip.",
+      "Veel succes."
+     ],
+     "docent": "Praktische afspraken: waar, wanneer en wat meebrengen (koptelefoon). Duur en herkansing: zie het PTA."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Wat is jouw zwakste begrip, en hoe oefen je dat in de dagen voor T1?"
+   },
+   "materiaal": [
+    "mb"
+   ]
+  },
+  "Slagwerk: basisgroove": {
+   "vraag": "Hoe speel je een groove die een groep draagt?",
+   "doel": "Je speelt een basisgroove op drumstel, cajon of handpercussie, in een vast tempo en samen met anderen.",
+   "criteria": [
+    "Ik speel bas op 1 en 3 en snare op 2 en 4",
+    "Ik houd een vast tempo",
+    "Ik speel zo zacht dat ik de anderen hoor"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Tel de groove",
+     "stappen": [
+      "Tel samen 1 2 3 4, steeds hetzelfde tempo.",
+      "Stamp op 1 en 3, klap op 2 en 4.",
+      "Dat is de basis van de groove."
+     ],
+     "docent": "Zet de instrumenten klaar in groepen: drumstel, cajon, handpercussie. Kies zelf een metronoom of oefentrack; 88 slagen per minuut is bekend uit de kerstbox. Drums en cajon staan het verst van elkaar."
+    },
+    {
+     "min": 10,
+     "soort": "uitleg",
+     "kop": "De basisgroove",
+     "stappen": [
+      "Bas (basdrum of lage klank) op 1 en 3.",
+      "Snare (hoge klank) op 2 en 4.",
+      "Hihat op elke achtste: tel 1 en 2 en 3 en 4 en.",
+      "Cajon: laag in het midden, hoog bij de bovenrand.",
+      "Houd het tempo, ook als het saai voelt."
+     ],
+     "docent": "Bas op 1 en 3 en snare op 2 en 4 (de afterbeat) is de basisgroove in 4/4. Hihat op de achtsten is de gebruikelijke basisgroove; laat beginners eerst alleen bas en snare doen. Op cajon speel je de lage klank midden en de hogere dichtbij de bovenrand. Handpercussie: bongo, conga, djembé (met vel), shaker of maraca (zonder vel). Syllabus: drumstel bestaat uit basdrum, cymbals/bekkens, floortom, hihat, snaredrum en tomtoms.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Basdrum",
+        "t": "op 1 en 3"
+       },
+       {
+        "k": "Snare",
+        "t": "op 2 en 4"
+       },
+       {
+        "k": "Hihat",
+        "t": "op elke achtste"
+       },
+       {
+        "k": "Cajon",
+        "t": "bas in het midden, snare bovenaan"
+       },
+       {
+        "k": "Shaker",
+        "t": "steeds gelijk, zacht"
+       }
+      ]
+     }
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Groove spelen",
+     "stappen": [
+      "Kies je instrument: drumstel, cajon of handpercussie.",
+      "Speel bas en snare met de metronoom. Eerst langzaam.",
+      "Voeg de hihat of een tweede klank toe.",
+      "Speel met een klasgenoot samen, wissel van instrument."
+     ],
+     "docent": "Verdeel de klas in rondes van vijf tot zeven minuten, zodat iedereen elk instrument aanraakt. Let op: hoort iedereen elkaar, raakt iemand de tel kwijt, is de aanslag gelijk? Dat zijn de onderdelen van presentatie 3 (timing en tempo, groove en partij, techniek en klank). Wie niet aan de beurt is, speelt op een knie of tafel mee.",
+     "klaar": "Klaar? Speel de groove op een tweede instrument."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Eén groove samen",
+     "stappen": [
+      "Alle instrumenten tegelijk: de basisgroove, vier maten.",
+      "Welke groove lukt jou al?",
+      "Volgende keer: groove in lagen, met een break en een fill."
+     ],
+     "docent": "Noteer wie welk instrument speelde."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Speel vier maten bas en snare in het tempo van de metronoom."
+   },
+   "identiteit": "In een groove heeft iedereen een eigen partij en is iedereen nodig. Als één laag wegvalt, merkt de groep dat."
+  },
+  "Slagwerk: ritme in lagen": {
+   "vraag": "Hoe bouw je een groove op uit lagen, met een break en een fill?",
+   "doel": "Je speelt een groove in lagen met je groep, voegt een break en een fill toe en kiest een lied of groove voor presentatie 3.",
+   "criteria": [
+    "Ik speel mijn laag in het vaste tempo",
+    "Ik speel een fill en val op de één weer in",
+    "Wij hebben een lied of groove gekozen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Lagen opwarmen",
+     "stappen": [
+      "Eén laag tegelijk: bas en snare.",
+      "Dan komt de hihat of shaker erbij.",
+      "Dan de laatste laag."
+     ],
+     "docent": "Ma 17 mei is tweede pinksterdag en di zijn herkansingen PTA: de les kan uitvallen, afhankelijk van de lesdag van de klas. Zet de instrumenten in groepen klaar."
+    },
+    {
+     "min": 8,
+     "soort": "uitleg",
+     "kop": "Break en fill",
+     "stappen": [
+      "Een groove bestaat uit lagen: bas, snare, hihat en percussie.",
+      "Fill: een korte ritmische figuur tussen de groove.",
+      "Break: de begeleiding stopt een of twee maten, een solist speelt door.",
+      "Na een fill of break val je weer in op de één."
+     ],
+     "docent": "Syllabus: fill is een ingevoegde korte ritmische figuur; break is een onderbreking van de begeleiding gedurende een of twee maten waarin een solist doorspeelt; ritmisch ostinato is een steeds terugkerende figuur. Het formulier van presentatie 3 beoordeelt: break of fill op de afgesproken plek, en weer invallen op de één.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Laag",
+        "t": "een partij in de groove"
+       },
+       {
+        "k": "Fill",
+        "t": "korte figuur, vaak op drums"
+       },
+       {
+        "k": "Break",
+        "t": "begeleiding stopt, solist speelt door"
+       },
+       {
+        "k": "Invallen",
+        "t": "weer beginnen op de één"
+       }
+      ]
+     }
+    },
+    {
+     "min": 27,
+     "soort": "doen",
+     "kop": "Groep en lied kiezen en oefenen",
+     "stappen": [
+      "Vorm een groep van drie tot vijf leerlingen.",
+      "Kies een lied of een eigen groove.",
+      "Verdeel de lagen. Oefen eerst elke laag apart, dan samen.",
+      "Spreek af waar de fill of de break komt."
+     ],
+     "docent": "Een groep kiest een lied of maakt een eigen groove; noteer wat iedereen kiest. Let op: de break of fill valt op de afgesproken plek, de groep valt weer in op de één, de balans klopt (niemand overstemt). Leerlingen die al klaar zijn, voegen een extra laag of dynamiek toe.",
+     "klaar": "Klaar? Voeg dynamiek toe: begin zacht, eindig hard."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat spelen wij?",
+     "stappen": [
+      "Noteer jullie lied of groove en wie wat speelt.",
+      "Volgende les werken we aan het idee voor je loopbaanpresentatie.",
+      "Les 34 is voorspelen met feedback."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Waar speelt jullie groep de fill of de break, en hoe val je weer in?"
+   }
+  },
+  "Loopbaanpresentatie: opzet": {
+   "vraag": "Welke rol speelt muziek in het werkveld dat jij kiest?",
+   "doel": "Je kiest een werkveld dat jou interesseert, zoekt uit welke rol muziek daar speelt en maakt een opzet voor je presentatie.",
+   "criteria": [
+    "Ik kies een werkveld en weet waarom",
+    "Ik beschrijf de rol van muziek in dat werkveld",
+    "Ik heb een opzet voor mijn presentatie"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat is jouw werkveld?",
+     "stappen": [
+      "Welk werk wil je later doen, of welke studie?",
+      "Waar zou muziek daar een rol spelen?",
+      "Schrijf het op."
+     ],
+     "docent": "H1 is de loopbaanpresentatie: oriëntatie op de eigen loopbaan en het belang van muziek in de maatschappij; de leerling presenteert op welke manier muziek een rol speelt in het (toekomstige) werkveld. Weging 0, niet herkansbaar (PTA). Uiterste inleverdatum in het PTA: 2 juli 2027. De presentaties zijn in lesweek 37."
+    },
+    {
+     "min": 10,
+     "soort": "uitleg",
+     "kop": "Wat moet erin?",
+     "stappen": [
+      "Welk werkveld heb je gekozen?",
+      "Welke rol speelt muziek daar? Gebruik de functies van muziek.",
+      "Welk werk doen mensen daar, en wat heb jij nodig?",
+      "Eén concreet voorbeeld van muziek in dat werkveld."
+     ],
+     "docent": "Functies van muziek uit de syllabus (K8): dansmuziek, filmmuziek, achtergrondmuziek, religieuze muziek, wereldlijke muziek, muziek en arbeid, muziek en concert, muziek als handelswaar, als decoratie, als ontspanning, als illustratie en als therapie. Voorbeeld: een winkel gebruikt achtergrondmuziek, een zorginstelling muziek als therapie. Duur en vorm van de presentatie staan niet in de bronnen: bepaal ze zelf en zet ze op het bord.",
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Achtergrondmuziek",
+        "t": "weinig verandering in dynamiek, matig tempo"
+       },
+       {
+        "k": "Filmmuziek",
+        "t": "ondersteunt beeld en verhaal"
+       },
+       {
+        "k": "Muziek als therapie",
+        "t": "muziek helpt mensen"
+       },
+       {
+        "k": "Religieuze muziek",
+        "t": "muziek bij geloof en dienst"
+       },
+       {
+        "k": "Handelswaar",
+        "t": "meezingbaar refrein, makkelijke melodie"
+       }
+      ]
+     }
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Mijn opzet maken",
+     "stappen": [
+      "Zoek informatie over jouw werkveld en muziek.",
+      "Schrijf op wat je wilt vertellen: het werkveld, de rol van muziek, een voorbeeld.",
+      "Maak een opzet met begin, midden en slot.",
+      "Bedenk wat je laat zien of horen."
+     ],
+     "docent": "Loop rond: weten ze iets concreets, niet alleen een beroepsnaam? Help leerlingen die nog geen werkveld hebben met een vraag over hun stage of hun hobby. Laat ze een voorbeeld zoeken waar muziek vanzelf in zit, zonder een specifiek bedrijf te noemen als ze dat niet kunnen onderbouwen.",
+     "klaar": "Klaar? Oefen je presentatie hardop voor je buur."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat is af?",
+     "stappen": [
+      "Wat heb je nu en wat mis je nog?",
+      "Maak je opzet af voor lesweek 37.",
+      "Presentatie in lesweek 37."
+     ]
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Welk werkveld heb je gekozen, en welke rol speelt muziek daar?"
+   }
+  },
+  "Slagwerk: voorspelen met feedback": {
+   "vraag": "Hoe klinkt onze groove voor een publiek, en wat kan beter voor presentatie 3?",
+   "doel": "Je speelt de groove met je groep voor de klas, krijgt tips en kiest een werkpunt voor presentatie 3.",
+   "criteria": [
+    "Ik speel mijn laag voor de klas",
+    "Ik krijg een tip en schrijf die op",
+    "Ik kies één werkpunt voor presentatie 3"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken",
+     "stappen": [
+      "De groep speelt, de rest luistert stil.",
+      "Aankondigen: naam, titel of groove, instrument. Tel af.",
+      "Tip op tempo, groove, fill of samenspel."
+     ],
+     "docent": "Di 1 jun is een ontwikkeldag secties (leerlingen vrij): de les kan uitvallen, afhankelijk van de lesdag van de klas. Dit is een tussenstand, nog geen beoordeling. Bepaal vooraf de volgorde."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Laatste oefenronde",
+     "stappen": [
+      "Zet je instrumenten klaar.",
+      "Speel de groove nog een keer samen.",
+      "Spreek af wie aftelt en waar de fill is."
+     ],
+     "docent": "Let op het volume: te hard overstemt de groep. Zet de volgorde op het bord."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Voorspelen met feedback",
+     "stappen": [
+      "Kondig aan en tel af.",
+      "Speel de groove met je fill of break. Fout? Speel door.",
+      "Luisteraars schrijven per groep een compliment en een tip.",
+      "De groep kiest één werkpunt."
+     ],
+     "docent": "Per groep ongeveer drie minuten plus feedback. Let op de onderdelen van het formulier van presentatie 3: presentatie (weging 1), timing en tempo (2), groove en partij (2), break en fill (1), techniek en klank (1), samenspel (2). Past niet iedereen, dan gaat het door in de volgende les."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Mijn werkpunt",
+     "stappen": [
+      "Schrijf op: dit oefen ik voor presentatie 3.",
+      "Het format zelfbeoordeling krijg je mee.",
+      "Presentatie 3 is lesweek 35."
+     ],
+     "docent": "Zelfbeoordeling telt voor 10%: eerlijk en concreet, 4 tot 10."
+    }
+   ],
+   "formatief": {
+    "soort": "check",
+    "tekst": "Schrijf op: één ding dat goed ging en één werkpunt voor presentatie 3."
+   }
+  },
+  "Presentatie 3: slagwerk": {
+   "vraag": "Kan ik met mijn slagwerkpartij de groove van de groep dragen?",
+   "doel": "Je speelt je slagwerkpartij in een groove met je groep, met een break of fill. Presentatie 3 telt mee voor P1.",
+   "criteria": [
+    "Ik tel af en begin samen met de groep",
+    "Ik speel strak op de tel in een vast tempo",
+    "Ik speel mijn fill en val op de één weer in"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken voor vandaag",
+     "stappen": [
+      "De volgorde staat op het bord. Wie aan de beurt is, komt naar voren.",
+      "Kondig aan: naam, titel of groove, instrument. Tel af.",
+      "Fout? Speel door op de tel.",
+      "Publiek: stil, telefoon weg. Applaus na afloop."
+     ],
+     "docent": "Zet de instrumenten van tevoren klaar. Formulier en scoreblad liggen klaar. Zenuwachtige leerlingen niet als eerste en niet als laatste."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Inspelen",
+     "stappen": [
+      "Pak je sticks of je handen en speel je laag zacht.",
+      "Speel de groove één keer samen door.",
+      "Check: iedereen hoort iedereen."
+     ],
+     "docent": "Spreek een volume af. Te hard overstemt de groep: dat is een criterium bij samenspel."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "De presentaties",
+     "stappen": [
+      "Kondig aan, tel af en begin samen.",
+      "Speel je groove met break of fill.",
+      "Gaat het mis, speel dan door op de tel.",
+      "Publiek: schrijf per groep één ding op dat goed ging."
+     ],
+     "docent": "Beoordelen op het formulier van presentatie 3, zes onderdelen met weging: presentatie 1, timing en tempo 2, groove en partij 2, break en fill 1, techniek en klank 1, samenspel 2. Per onderdeel de niveaus 4, 6, 8 of 10, ertussenin mag 5, 7 of 9. Totaal delen door 9 is het cijfer van de docent. Eindcijfer is 0,9 maal het cijfer van de docent plus 0,1 maal de zelfbeoordeling (4 tot 10, eerlijk en concreet). P1 is het gemiddelde van presentatie 1, 2 en 3. Past niet iedereen, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat ging goed?",
+     "stappen": [
+      "Per groep één compliment uit het publiek, hardop.",
+      "Volgende week stellen we het P1-cijfer vast.",
+      "Daarna volgen de loopbaanpresentaties."
+     ],
+     "docent": "Zelfbeoordeling laten invullen als dat nog niet gebeurd is. In lesweek 36 stel je het P1-cijfer vast als gemiddelde van presentatie 1, 2 en 3 (PTA: minstens drie praktijkdelen)."
+    }
+   ],
+   "formatief": {
+    "soort": "presentatie",
+    "tekst": "Per groep één compliment uit het publiek. De cijfers volgen bij het vaststellen van P1."
+   }
+  },
+  "Loopbaanpresentaties": {
+   "vraag": "Welke rol speelt muziek in het werkveld dat jij kiest?",
+   "doel": "Je presenteert hoe muziek een rol speelt in het werkveld dat jou interesseert, en luistert naar de presentaties van anderen.",
+   "criteria": [
+    "Ik vertel welk werkveld ik koos en waarom",
+    "Ik leg uit welke rol muziek daar speelt",
+    "Ik stel een vraag aan een klasgenoot na zijn presentatie"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken",
+     "stappen": [
+      "De volgorde staat op het bord.",
+      "Publiek: stil, telefoon weg, luister goed.",
+      "Na elke presentatie mag er één vraag gesteld worden."
+     ],
+     "docent": "Toetsweek 4 begint woensdag 23 juni: de les kan uitvallen, afhankelijk van de lesdag van de klas. H1 heeft weging 0 en is niet herkansbaar (PTA). Duur en beoordeling staan niet in de bronnen: bepaal ze zelf."
+    },
+    {
+     "min": 35,
+     "soort": "doen",
+     "kop": "De loopbaanpresentaties",
+     "stappen": [
+      "Vertel welk werkveld je koos en waarom.",
+      "Leg uit welke rol muziek daar speelt, met een voorbeeld.",
+      "Laat zien of horen wat je meebracht.",
+      "Publiek: schrijf per presentatie één ding op wat je leerde."
+     ],
+     "docent": "Houd de tijd per presentatie in de gaten. Noteer per leerling of de presentatie is gedaan. Let op: weet de leerling iets concreets over de rol van muziek, of blijft het bij algemeenheden? Vraag door."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat leerde je?",
+     "stappen": [
+      "Noem één werkveld van een klasgenoot waar muziek een rol speelt.",
+      "Volgende les begint de toetsweek."
+     ],
+     "docent": "Dit is de laatste inhoudelijke les van het jaar."
+    }
+   ],
+   "formatief": {
+    "soort": "presentatie",
+    "tekst": "Noem één werkveld van een klasgenoot en de rol van muziek daarin."
+   }
+  }
+ }
+}

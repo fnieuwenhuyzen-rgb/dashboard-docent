@@ -1,0 +1,1241 @@
+{
+ "_uitleg": "Mavo 4, praktijklessen zonder fasen (repetities, doorlopen, organisatie en generales voor het examenconcert P2): lesweek 1 tot en met 7 en 11 tot en met 30.",
+ "_mat": {
+  "mb": {
+   "t": "Musicbox (digitaal.musicboxmethode.nl)",
+   "u": "https://digitaal.musicboxmethode.nl"
+  }
+ },
+ "lessen": {
+  "Repetitie 6: podiumpresentatie": {
+   "vraag": "Hoe sta je op het podium zodat het publiek meteen gelooft in jullie nummer?",
+   "doel": "Je oefent opkomst, opstelling en contact met het publiek, en je speelt door als er iets misgaat.",
+   "criteria": [
+    "Ik loop rustig op, sta op mijn plek en begin samen met de groep",
+    "Ik speel door na een fout",
+    "Ik kijk tijdens het nummer minstens een paar keer naar het publiek of naar mijn medespelers"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Zo wil je het publiek niet zien binnenkomen",
+     "stappen": [
+      "Eén groep loopt het podium op zoals het niet moet. Wat zie je?",
+      "Noem drie dingen die een publiek meteen opvallen voordat er een noot klinkt."
+     ],
+     "docent": "Laat een groep vrijwillig overdrijven: te laat, fluisterend overleg, instrument nog stemmen, niemand die kijkt. Verzamel de woorden van de klas. Dit is het criterium Presentatie van het P2-formulier: onrustig op het podium, stoppen bij een fout, geen contact met het publiek."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Opkomst en opstelling",
+     "stappen": [
+      "Spreek af waar iedereen staat of zit. Zang en melodie moeten zichtbaar en hoorbaar zijn.",
+      "Loop op, pak je plek, kijk elkaar aan en begin. Drie keer, steeds sneller en rustiger.",
+      "Loop na het laatste akkoord weer af zonder te rennen."
+     ],
+     "klaar": "Teken de opstelling van je groep op papier, met de plek van publiek en techniek erbij.",
+     "docent": "Loop rond: wie staat achter een ander verstopt, wie staat te ver van de drummer of het keyboard, waar komen kabels in de weg. Het podium kan lokaal anders zijn dan in de zaal: noteer de opstelling per groep voor de generale."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Het nummer met publiek erbij",
+     "stappen": [
+      "Speel jullie nummer een keer helemaal door. De rest van de klas is het publiek.",
+      "Gaat er iets mis? Speel door. Niet stoppen, niet lachen, niet kijken naar wie het fout deed.",
+      "Kijk in elk couplet en refrein minstens één keer op naar het publiek."
+     ],
+     "klaar": "Bedenk wat je doet als je een inzet mist. Spreek het af met je groep.",
+     "docent": "Rouleren: per groep ongeveer vier minuten, publiek luistert zonder te praten. Let op: wie stopt na een fout, wie blijft met zijn neus in de partij, wie durft op te kijken. Zeg alleen na afloop iets, niet tijdens het spelen."
+    },
+    {
+     "min": 5,
+     "soort": "check",
+     "kop": "Eén tip aan elke groep",
+     "stappen": [
+      "Geef de groep die je net zag één tip over opkomst, houding of doorspelen.",
+      "Schrijf je eigen tip van de groep voor jou op een briefje."
+     ],
+     "docent": "Eén tip per groep, concreet ('kijk na de intro op') in plaats van algemeen ('beter kijken'). Verzamel de briefjes bij de volgende repetitie."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat oefen je thuis?",
+     "stappen": [
+      "Thuis: Musicbox, box 'Samenklank'. Leer eenstemmig, tweestemmig, unisono, homofonie, polyfonie en spanning en ontspanning.",
+      "Oefen je partij zonder naar je handen te kijken, zodat je op het podium kunt opkijken."
+     ],
+     "docent": "Aansluiting op samenklank (les 11.1): vraag of ze in hun eigen nummer horen waar spanning en ontspanning zit."
+    }
+   ],
+   "formatief": {
+    "soort": "tip van een groep",
+    "tekst": "Een klasgenoot geeft je groep één concrete tip over opkomst, houding of doorspelen. Jullie kiezen er één om volgende keer te laten zien."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking van de groepen",
+    "partijen of bladmuziek"
+   ]
+  },
+  "Organisatie: affiche, programma, begroting": {
+   "vraag": "Wat moet er klaar zijn zodat het publiek weet wat, waar en wanneer, en wij kunnen spelen?",
+   "doel": "Je werkt aan je eigen organisatietaak (affiche, programma, begroting of techniek) en laat de klas zien hoe ver je bent.",
+   "criteria": [
+    "Mijn taak heeft een concept dat anderen kunnen bekijken",
+    "Ik weet wat ik nog nodig heb en van wie",
+    "Ik ken mijn eigen deadline voor de volgende les"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wie doet wat, en wat is er al?",
+     "stappen": [
+      "Zoek je taakgroep op: publiciteit, programma, begroting of techniek.",
+      "Schrijf op één briefje: wat is klaar, wat nog niet, wat blokkeert?"
+     ],
+     "docent": "Taakverdeling van les 5.2 op het bord. Als iemand ontbreekt of een taak leeg is, nu oplossen. Het P2-formulier beoordeelt je taak als: zelfstandig en op tijd gedaan, volgens het draaiboek."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Werken aan je concept",
+     "stappen": [
+      "Publiciteit: eerste ontwerp van de affiche. Wat moet erop (wat, wanneer, waar, voor wie)?",
+      "Programma: de nummers in een eerste volgorde, met naam en uitvoerenden.",
+      "Begroting: wat heb je nodig en wat kost dat? Zet de kosten op een rij, ook wat de school al regelt.",
+      "Techniek: maak een lijst van wat jullie nodig hebben (microfoons, versterking, keyboards, drumstel, kabels)."
+     ],
+     "klaar": "Vraag een andere taakgroep wat zij van jou nodig hebben, en wat jij van hen nodig hebt.",
+     "docent": "Loop rond per taakgroep. Techniek heeft per groep de bezetting uit de repetities nodig: haal die bij de bandleden op. Begroting: alleen echte kosten, zet vast wat de school beschikbaar stelt (zelf navragen vooraf). Vastleggen: de datum en plek van het concert (vóór 1 maart), die moeten op de affiche."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Elke groep in één minuut",
+     "stappen": [
+      "Elke taakgroep laat in één minuut zien wat er ligt.",
+      "De klas stelt één vraag: wat ontbreekt er voor iemand die het concert nog niet kent?"
+     ],
+     "docent": "Strak bewaken: één minuut per groep. Schrijf de vragen op het bord; die zijn de opdracht voor volgende week. Let op of de groepen elkaar nodig hebben (affiche en programma moeten kloppen)."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Deadlines vastleggen",
+     "stappen": [
+      "Per taak: wat is er klaar bij de volgende les?",
+      "Thuis: Musicbox, box 'Koor en meerstemmigheid'. Leer parallel, tegenbeweging, imitatie, canon en tegenmelodie."
+     ],
+     "docent": "Deadlines in Teams of op papier. Aansluiting op de theorieles over homofone en polyfone structuren (12.1)."
+    }
+   ],
+   "formatief": {
+    "soort": "concept en vraag",
+    "tekst": "Je taak heeft een concept en je hebt één vraag van de klas om mee te nemen."
+   },
+   "identiteit": "Een concert organiseer je samen: ieders taak telt, niemand blijft over. Dat is solidariteit in de praktijk (vakwerkplan 2.2).",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "laptops",
+    "taakverdeling van les 5.2"
+   ]
+  },
+  "Repetitie 7": {
+   "vraag": "Hoe maak je een lastige plek in je partij wél goed?",
+   "doel": "Je oefent de moeilijkste passages van jullie nummers apart en speelt ze daarna weer in het geheel.",
+   "criteria": [
+    "Ik weet precies welke plekken in mijn partij nog fout gaan",
+    "Ik oefen een lastige plek langzaam en bouw het tempo op",
+    "De plek klinkt in het nummer beter dan aan het begin van de les"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Waar gaat het mis?",
+     "stappen": [
+      "Zet in je partij een kruisje bij elke plek die nog niet zeker is.",
+      "Kies er per nummer drie. Overleg in je groep of dat ook de plekken van de anderen zijn."
+     ],
+     "docent": "Laat ze concreet maten, regels of akkoordwissels aanwijzen, niet 'het refrein'. Dit is het criterium Techniek en beheersing: weegt dubbel."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "De lastige plek in stukjes",
+     "stappen": [
+      "Maak de plek kleiner: één maat of één wissel, met de noot of het akkoord ervoor erbij.",
+      "Speel hem vijf keer achter elkaar goed en langzaam. Eén fout, dan opnieuw tellen.",
+      "Verhoog het tempo pas als het vijf keer goed ging.",
+      "Speel daarna de zin of regel eromheen."
+     ],
+     "klaar": "Zing of tik je partij zonder instrument. Weet je hem uit je hoofd?",
+     "docent": "Loop rond met een metronoom of laat de drummer het tempo geven. Let op wie meteen het hele nummer opnieuw begint in plaats van het stukje te oefenen. Een groep die vastloopt: de lastige plek samen langzaam spelen en de anderen laten luisteren."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Terug in het nummer",
+     "stappen": [
+      "Speel het nummer van het stuk vóór de lastige plek tot na de plek.",
+      "Laat de groep beoordelen: klinkt hij beter dan aan het begin van de les?"
+     ],
+     "docent": "Luister of de plek in het nummer nog net zo goed gaat als apart. Zo niet: terug naar langzamer."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat blijft er over?",
+     "stappen": [
+      "Noteer per nummer: wat is nu goed, wat blijft lastig?",
+      "Thuis: Musicbox, box 'Vorm en analyse'. Leer motief, thema, riff, ostinato, voorzin, nazin, improvisatie en variatie."
+     ],
+     "docent": "Aansluiting op melodische relaties en variatie (13.1): herken je in je eigen partij een motief of een riff dat steeds terugkomt? Dat oefen je maar één keer."
+    }
+   ],
+   "formatief": {
+    "soort": "voor en na",
+    "tekst": "Je speelt je lastigste plek aan het begin en aan het eind van de les. Je groep hoort het verschil."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking van de groepen",
+    "partijen of bladmuziek",
+    "metronoom"
+   ]
+  },
+  "Doorloop 1 met feedback": {
+   "vraag": "Hoe klinkt ons hele programma als we niet stoppen?",
+   "doel": "Je speelt het hele programma achter elkaar, zonder te stoppen, en je krijgt feedback op de onderdelen van het P2-formulier.",
+   "criteria": [
+    "We spelen het hele programma door zonder te stoppen",
+    "Ik weet bij elk nummer wat goed ging en wat beter kan",
+    "Ik heb mijn zelfbeoordeling P2 ingevuld"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken voor de doorloop",
+     "stappen": [
+      "We spelen alles achter elkaar, ook de overgangen tussen de nummers.",
+      "Stoppen mag niet. Een fout? Doorspelen.",
+      "Het publiek schrijft per nummer één ding op dat goed was en één ding dat beter kan."
+     ],
+     "docent": "Zet de volgorde op het bord. Neem alles op, zodat leerlingen terug kunnen luisteren. Kijkwijzer: dezelfde onderdelen als het P2-formulier: techniek, timing, dynamiek en articulatie, samenspel, samenwerking, presentatie, organisatie."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Het hele programma",
+     "stappen": [
+      "Groep voor groep: opkomst, nummer, afgaan. De volgende groep staat al klaar.",
+      "Wie niet speelt, luistert als publiek en schrijft op."
+     ],
+     "klaar": "Zet in je partij een kruisje bij elke plek waar je twijfelde tijdens de doorloop.",
+     "docent": "Niet ingrijpen, niets zeggen. Noteer zelf per leerling: speelt de partij zeker (techniek), blijft in de maat (timing), hard en zacht (dynamiek), luistert naar de anderen (samenspel). Dit is de nulmeting voor de generales."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Feedback: wat hoorde je?",
+     "stappen": [
+      "Per groep: het publiek noemt één wat goed was en één wat beter kan.",
+      "De groep zegt zelf: wat nemen we mee?"
+     ],
+     "docent": "Eerst wat goed ging, daarna één verbeterpunt. Vraag door op wat ze hoorden, niet op wat ze vonden. Laat de opname eventueel op één moeilijk moment terugluisteren."
+    },
+    {
+     "min": 5,
+     "soort": "doen",
+     "kop": "Eén werkpunt direct herhalen",
+     "stappen": [
+      "Kies met je groep het grootste werkpunt.",
+      "Speel dat stuk nog een keer, nu beter."
+     ],
+     "docent": "Kies zelf een groep die het meest kan leren; de andere groepen oefenen hun eigen werkpunt."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Zelfbeoordeling invullen",
+     "stappen": [
+      "Vul je Format zelfbeoordeling P2 in: per onderdeel een score en wat je meeneemt.",
+      "Thuis: Musicbox, box 'Vorm en analyse'. Leer vormschema, couplet, refrein, bridge, intro, tussenspel en coda."
+     ],
+     "docent": "Het formulier is bedoeld om na een doorloop, na de generale en na het concert in te vullen. Doorloop 1 is de eerste keer."
+    }
+   ],
+   "formatief": {
+    "soort": "zelfbeoordeling",
+    "tekst": "Je zelfbeoordeling P2 is ingevuld en je weet wat je meeneemt naar de volgende repetitie."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking van de groepen",
+    "opnameapparaat of telefoon",
+    "Format zelfbeoordeling P2"
+   ]
+  },
+  "Repetitie 8": {
+   "vraag": "Wat moeten we nog oefenen voor de kerstvakantie?",
+   "doel": "Je repeteert de nummers die nog het meest nodig hebben en je maakt een oefenplan voor de vakantie.",
+   "criteria": [
+    "Ons zwakste nummer klinkt aan het eind beter dan aan het begin",
+    "Ik weet wat ik in de kerstvakantie oefen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wie is er, en wat is nodig?",
+     "stappen": [
+      "Tel per groep wie er is. Ontbreekt er iemand? Bepaal wat je dan wél kunt oefenen.",
+      "Kies per groep het nummer dat vandaag de meeste aandacht nodig heeft."
+     ],
+     "docent": "Activiteitenweek B: de les kan vandaag uitvallen of gedeeltelijk bezet zijn, di 15 dec herkansingen PTA, do dagexcursie Amsterdam voor mavo 4, vr kerstviering. Ontbreken er leerlingen, laat de aanwezigen dan hun eigen partij en de overgangen oefenen."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Het zwakste nummer eerst",
+     "stappen": [
+      "Begin bij de plek waar het vorige keer misging.",
+      "Speel stukje voor stukje, daarna het hele nummer.",
+      "Neem het nummer één keer op en luister het samen terug."
+     ],
+     "klaar": "Zet in je partij een kruisje bij elke plek die nog niet in je vingers zit.",
+     "docent": "Loop langs de groepen met de meeste kruisjes. Luister naar samenspel: begint iedereen op dezelfde tel, blijft het tempo staan? Opnemen met telefoon is voldoende."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Van het ene nummer naar het volgende",
+     "stappen": [
+      "Oefen de overgang tussen twee nummers: afgaan, aankondigen, instrumenten klaarzetten, inzetten.",
+      "Hoe lang duurt het tot je weer klaarstaat?"
+     ],
+     "docent": "Overgangen kosten in de praktijk meer tijd dan gedacht. Houd de tijd bij en schrijf op wat sneller kan."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Oefenplan voor de kerstvakantie",
+     "stappen": [
+      "Schrijf op: welke plekken oefen ik, hoeveel minuten per week?",
+      "Thuis: Musicbox, box 'Muziek en andere kunsten'. Leer opera, musical, aria en song."
+     ],
+     "docent": "Zeg erbij dat na de vakantie het draaiboek van het concert wordt gemaakt."
+    }
+   ],
+   "formatief": {
+    "soort": "oefenplan",
+    "tekst": "Je hebt voor de vakantie een oefenplan met plekken en minuten."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking van de groepen",
+    "partijen of bladmuziek"
+   ]
+  },
+  "Repetitie 9 en draaiboek": {
+   "vraag": "Wie doet wat, op welk moment van het concert?",
+   "doel": "Je repeteert na de kerstvakantie en maakt samen het draaiboek: tijden, techniek en wie wat doet.",
+   "criteria": [
+    "Ons zwakste nummer is weer op niveau na de vakantie",
+    "In het draaiboek staat bij elk moment wie wat doet",
+    "Ik weet precies wat mijn taak op de dag zelf is"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat is blijven hangen?",
+     "stappen": [
+      "Speel je moeilijkste plek een keer voor jezelf, zonder te oefenen.",
+      "Schrijf op: gaat het nog? Zo niet, wat doe je eraan?"
+     ],
+     "docent": "Ma 4 jan is een studiedag (leerlingen vrij): de les kan voor een deel van de klas uitvallen. Kijk wie de vakantie heeft gebruikt: de plekken die ze toen opschreven staan nu in hun partij."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Repetitie 9: terug op niveau",
+     "stappen": [
+      "Eerst het zwakste nummer, dan de rest.",
+      "Speel elk nummer één keer helemaal door en let op samen beginnen en samen eindigen."
+     ],
+     "klaar": "Bedenk hoe je het nummer opent: wat is de eerste noot die het publiek hoort?",
+     "docent": "Zorg dat elke groep minstens één keer een volledig nummer speelt. Let op wie het langst uit het spel is geweest: tempo, inzetten, vergeten partijen."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Het draaiboek",
+     "stappen": [
+      "Zet de avond op een rij: opbouw, soundcheck, deuren open, nummers, afbouw.",
+      "Zet bij elk moment een tijd en een naam.",
+      "Wat gebeurt er als een nummer uitloopt of als de techniek hapert? Schrijf het op.",
+      "Het draaiboek gaat naar iedereen in Teams."
+     ],
+     "beeld": {
+      "soort": "tabel",
+      "rijen": [
+       [
+        "Tijd",
+        "Wat",
+        "Wie"
+       ],
+       [
+        "...",
+        "Opbouw en soundcheck",
+        "..."
+       ],
+       [
+        "...",
+        "Deuren open, programma uitdelen",
+        "..."
+       ],
+       [
+        "...",
+        "Nummers en aankondigingen",
+        "..."
+       ],
+       [
+        "...",
+        "Afbouw",
+        "..."
+       ]
+      ],
+      "kol": [
+       0.2,
+       0.55,
+       0.25
+      ]
+     },
+     "docent": "Draaiboek is de taak van de organisatiegroep; de klas denkt mee. Doel: een leerling kan zonder Frans zien wat er op elk moment moet gebeuren. Datum en tijden van het concert moeten nu vaststaan; vastleggen als dat nog niet is gebeurd."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Mijn taak op de dag",
+     "stappen": [
+      "Lees het draaiboek en onderstreep je eigen taken.",
+      "Thuis: Musicbox, box 'Trainers: alle begrippen'. Herhaal de begrippenlijst K3 en let op je zwakke punten."
+     ],
+     "docent": "Controleer of niemand zonder taak is gebleven. Het draaiboek wordt de basis voor de generales."
+    }
+   ],
+   "formatief": {
+    "soort": "taak op de dag",
+    "tekst": "Je kunt in het draaiboek aanwijzen wat jouw taak is, wanneer en met wie."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking van de groepen",
+    "laptops",
+    "taakverdeling en concept van de organisatiegroepen"
+   ]
+  },
+  "Doorloop 2 met feedback": {
+   "vraag": "Klinkt ons concert als één geheel, met de aankondigingen erbij?",
+   "doel": "Je speelt het programma met presentatie tussen de nummers, en je krijgt voor het eerst feedback met het formulier voor klasgenoten.",
+   "criteria": [
+    "We spelen het programma door met aankondigingen tussen de nummers",
+    "Ik geef een klasgenoot concrete feedback met het formulier",
+    "Ik weet wat ik nog moet verbeteren voor de generale"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Afspraken en formulieren",
+     "stappen": [
+      "Dit is de doorloop zoals het concert: opkomst, aankondiging, nummer, afgaan.",
+      "Je eindcijfer P2 bestaat voor een deel uit het gemiddelde van minstens drie klasgenoten. Je geeft vandaag oefenfeedback.",
+      "Pak het formulier P2 Beoordeling klasgenoten."
+     ],
+     "docent": "Vr 15 jan Sing-In en za 16 jan open dag: de les kan beïnvloed zijn door dat programma. Eindcijfer P2 = 75% docent + 10% eigen cijfer van de leerling + 15% gemiddelde van minstens 3 klasgenoten. Leg uit wat een goede opmerking is."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Doorloop met aankondigingen",
+     "stappen": [
+      "Speel het programma van begin tot eind, met de aankondigingen zoals jullie ze op het concert doen.",
+      "Wie luistert, vult het klasgenotenformulier in voor twee klasgenoten.",
+      "Niet stoppen na een fout."
+     ],
+     "klaar": "Oefen je aankondiging nog eens hardop: naam, titel, één zin.",
+     "docent": "Opnemen. Presentatie is een apart criterium: duidelijke aankondiging, rustige houding, doorspelen na een fout. Let op wie zacht praat of ingestudeerd leest."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Feedback geven en krijgen",
+     "stappen": [
+      "Lees je feedback van je klasgenoot. Wat valt je op?",
+      "Vraag: wat kan ik morgen anders doen?",
+      "Per groep: één tip voor de generale."
+     ],
+     "docent": "Controleer of de feedback concreet is, 'je was te zacht in het couplet' in plaats van 'goed gedaan'. Zachte feedback bijsturen."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Zelfbeoordeling bijwerken",
+     "stappen": [
+      "Vul je zelfbeoordeling P2 opnieuw in en vergelijk met de vorige keer.",
+      "Thuis: Examentraining (Vmbo) in de Facet-oefenomgeving. Maak de fouten uit het oefenexamen opnieuw."
+     ],
+     "docent": "Laat ze kijken wat er is veranderd sinds doorloop 1."
+    }
+   ],
+   "formatief": {
+    "soort": "feedbackformulier",
+    "tekst": "Je hebt twee klasgenoten feedback gegeven met het klasgenotenformulier en je eigen zelfbeoordeling bijgewerkt."
+   },
+   "benodigd": [
+    "instrumenten en versterking van de groepen",
+    "Format zelfbeoordeling P2",
+    "P2 Beoordeling klasgenoten",
+    "opnameapparaat of telefoon"
+   ]
+  },
+  "Generale repetitie 1 met techniek": {
+   "vraag": "Werkt het podium met geluid en licht ook echt als wij erop staan?",
+   "doel": "Je bouwt het podium op, doet een soundcheck en speelt het programma met geluid en licht.",
+   "criteria": [
+    "Het podium staat op tijd klaar volgens het draaiboek",
+    "Alle zang en melodie is hoorbaar in de soundcheck",
+    "Ik speel mijn partij ook met de techniek erbij"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "start",
+     "kop": "Opbouwen volgens het draaiboek",
+     "stappen": [
+      "Techniekgroep: volg het draaiboek. Wie sjouwt wat, waar komt wat te staan?",
+      "Bandleden: help met je eigen instrument en je eigen kabels.",
+      "Klaar? Meld je bij de techniek."
+     ],
+     "docent": "Activiteitenweek C: de les kan uitvallen of korter zijn. Als de techniek niet beschikbaar is, doorloop dan zonder en noteer wat ontbreekt. Let op wat nog mist op de lijst van de techniekgroep."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Soundcheck per groep",
+     "stappen": [
+      "Elke groep speelt een stuk van het nummer. De techniek stelt het volume in.",
+      "Zang en melodie moeten boven de begeleiding uitkomen. Zeg wat je zelf niet goed hoort.",
+      "Afspraak: geluid wijzigen doen we samen, niet tijdens het nummer."
+     ],
+     "docent": "Soundcheck per groep: vijf minuten. Let op volume: past het bij de groep, blijft de zang hoorbaar (criterium Samenspel)? Zet de instellingen vast als foto of schriftelijk voor de generale 2 en het concert."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Doorloop met geluid en licht",
+     "stappen": [
+      "Het hele programma op het podium, zoals op het concert.",
+      "Gaat er iets mis met de techniek? Speel door. De techniek lost het op.",
+      "Wie niet speelt, luistert in de zaal: kun je alles verstaan en zien?"
+     ],
+     "klaar": "Noteer welke plek op het podium of welke instelling je nog zou aanpassen.",
+     "docent": "Loop door de zaal: klinkt het in het midden anders dan voorin? Noteer problemen die de organisatiegroep kan oplossen. Spelen de leerlingen op volume van de techniek of op eigen gehoor?"
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Afbouwen en werkpunten",
+     "stappen": [
+      "Alles terug op zijn plek.",
+      "Schrijf één werkpunt voor de techniek en één voor jezelf op.",
+      "Thuis: Musicbox, box 'Muziek en maatschappij'. Leer de functies van muziek en de kenmerken per functie."
+     ],
+     "docent": "Afbouw ook onderdeel van het draaiboek. De werkpunten leveren de lijst voor generale 2."
+    }
+   ],
+   "formatief": {
+    "soort": "werkpunten",
+    "tekst": "Je hebt één werkpunt voor de techniek en één voor jezelf opgeschreven."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "geluidsinstallatie, microfoons en kabels",
+    "licht",
+    "draaiboek",
+    "instrumenten van de groepen"
+   ]
+  },
+  "Generale repetitie 2": {
+   "vraag": "Kunnen we het concert nu helemaal spelen zoals het straks gaat?",
+   "doel": "Je speelt de laatste doorloop vóór het examenconcert, precies zoals het concert zal gaan.",
+   "criteria": [
+    "We spelen het hele programma door met opkomst, aankondigingen en afgaan",
+    "Ik speel mijn partij zeker, ook met de techniek erbij",
+    "Ik weet wat ik de laatste keer voor het concert nog moet verbeteren"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Dit is de laatste keer",
+     "stappen": [
+      "We spelen alles alsof het het concert is.",
+      "Alle afspraken uit het draaiboek gelden.",
+      "Wat ging bij generale 1 mis? Dat gaat vandaag goed."
+     ],
+     "docent": "Ma 8 feb start periode 3. Het draaiboek en de lijst met werkpunten van generale 1 liggen klaar. Het concert is vóór 1 maart; de exacte datum moet vaststaan."
+    },
+    {
+     "min": 5,
+     "soort": "doen",
+     "kop": "Opbouw en korte soundcheck",
+     "stappen": [
+      "Zet het podium neer volgens de instellingen van generale 1.",
+      "Eén regel per groep: controleer of de zang en melodie hoorbaar zijn."
+     ],
+     "docent": "Kort houden: de instellingen zijn al bepaald. Alleen controleren."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "De doorloop als concert",
+     "stappen": [
+      "Zaal open, programma uitgedeeld, aankondiging, nummer, afgaan. Zo vaak als er nummers zijn.",
+      "Niet stoppen, ook niet bij een fout.",
+      "Wie niet speelt: publiek. Echt luisteren en klappen aan het eind."
+     ],
+     "klaar": "Bereid je volgende aankondiging nog een keer voor in je hoofd.",
+     "docent": "Nu niet ingrijpen. Noteer per leerling kort: speelt de partij zeker, blijft in de maat, luistert naar anderen, kondigt duidelijk aan, houdt zich aan de taak. Dit is het laatste punt waarop je nog kunt bijsturen. Op de dag zelf bepaalt het P2-formulier het cijfer."
+    },
+    {
+     "min": 5,
+     "soort": "gesprek",
+     "kop": "Wat je meeneemt",
+     "stappen": [
+      "Per groep: één ding wat goed ging en één ding voor de dag zelf.",
+      "Klaar zijn: weet iedereen wanneer en waar hij verwacht wordt?"
+     ],
+     "docent": "Concreet maken: tijd, plek, kleding of materialen die leerlingen zelf meenemen. Alleen wat in het draaiboek staat."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Zelfbeoordeling na de generale",
+     "stappen": [
+      "Vul je Format zelfbeoordeling P2 in na de generale.",
+      "Thuis: Musicbox, box 'Muziek en maatschappij'. Leer handelswaar, recensie, functie en kenmerk."
+     ],
+     "docent": "Het formulier hoort bij een doorloop, bij de generale en na het concert."
+    }
+   ],
+   "formatief": {
+    "soort": "zelfbeoordeling",
+    "tekst": "Je zelfbeoordeling P2 na de generale is ingevuld, met één punt voor de dag zelf."
+   },
+   "benodigd": [
+    "geluidsinstallatie, microfoons en kabels",
+    "licht",
+    "draaiboek",
+    "instrumenten van de groepen",
+    "Format zelfbeoordeling P2"
+   ]
+  },
+  "Afsluiting en vooruitblik op het centraal examen": {
+   "vraag": "Wat moet ik tot 14 mei nog doen om het centraal examen goed te maken?",
+   "doel": "Je weet wat je tot het centraal examen nog gaat doen, je stelt je laatste vragen en je kijkt terug op twee jaar muziek.",
+   "criteria": [
+    "Ik weet welke begrippen ik nog moet leren en hoe ik dat ga doen",
+    "Ik ken de afspraken voor Facet: koptelefoon, volume en uitwerkbijlage",
+    "Ik heb mijn laatste vragen gesteld"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat staat er nog voor je?",
+     "stappen": [
+      "Het centraal examen begint vanaf vr 14 mei. Hoeveel weken zijn dat nog?",
+      "Schrijf op: wat vind je zelf nog het moeilijkst?"
+     ],
+     "docent": "Laatste lesweek, wo 21 apr is het examenuitje van mavo. De les kan korter zijn. Het centraal examen vanaf vr 14 mei."
+    },
+    {
+     "min": 15,
+     "soort": "gesprek",
+     "kop": "Laatste vragen",
+     "stappen": [
+      "Elke leerling stelt één vraag over een begrip of over het examen.",
+      "De klas probeert eerst zelf te antwoorden.",
+      "Wat niemand weet, schrijven we op."
+     ],
+     "docent": "Antwoorden zelf paraat hebben. Houd de lijst bij; herhalen in de laatste minuten. Facet-tips uit les 30.1: koptelefoon, volume, uitwerkbijlage."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Mijn plan tot 14 mei",
+     "stappen": [
+      "Pak je foutenlijst van de oefenexamens.",
+      "Kies drie begrippen die je nog niet zeker weet.",
+      "Schrijf bij elk begrip: wanneer ga ik het leren, met welke Trainers of welk oefenexamen?"
+     ],
+     "klaar": "Maak een vraag over een van je zwakke begrippen en wissel met je buur.",
+     "docent": "Loop langs: haalbaar plan? Weinig tijd per dag is beter dan alles in één keer. Per leerling het zwakste punt aanwijzen."
+    },
+    {
+     "min": 10,
+     "soort": "afsluiten",
+     "kop": "Terugblik en afscheid",
+     "stappen": [
+      "Wat neem je mee uit het examenconcert?",
+      "Thuis: Musicbox, Examentraining (Vmbo). Herhaal alle begrippen.",
+      "Succes met het examen."
+     ],
+     "docent": "Terugblik op samen spelen, organiseren en optreden. Wie dat wil, laat nog een moment van het concert terugluisteren.."
+    }
+   ],
+   "formatief": {
+    "soort": "persoonlijk plan",
+    "tekst": "Je hebt een plan met drie begrippen, wat je gaat doen en wanneer."
+   },
+   "identiteit": "Je sluit af met wat je in twee jaar hebt gedaan: samen musiceren, organiseren, zingen in de Messiah, een concert voor publiek (vakwerkplan 2.2).",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "foutenlijst van de oefenexamens",
+    "begrippenlijst"
+   ]
+  },
+  "Examenconcert: opdracht en taken": {
+   "vraag": "Wat is het examenconcert en wat heb je nodig om het samen neer te zetten?",
+   "doel": "Je weet wat het examenconcert is, waarop je beoordeeld wordt en welke taken erbij horen. Je denkt na over repertoire en bezetting.",
+   "criteria": [
+    "Ik weet wanneer het concert is, hoeveel het telt en dat het niet herkansbaar is",
+    "Ik kan de onderdelen van het beoordelingsformulier noemen",
+    "Ik kan drie taken in de organisatie noemen en weet welke ik graag zou doen"
+   ],
+   "fasen": [
+    {
+     "min": 10,
+     "soort": "uitleg",
+     "kop": "Dit is jullie examenconcert",
+     "stappen": [
+      "Het examenconcert is P2: een optreden voor publiek, vóór 1 maart. Het telt voor 40 in het schoolexamen en je kunt het niet herkansen.",
+      "Je speelt of zingt niet alleen. Je organiseert het concert ook zelf.",
+      "Bekijk het beoordelingsformulier. Dit zijn de zeven onderdelen waarop je wordt beoordeeld."
+     ],
+     "beeld": {
+      "soort": "kaarten",
+      "items": [
+       {
+        "k": "Techniek en beheersing",
+        "t": "je partij goed spelen of zingen (telt 2×)"
+       },
+       {
+        "k": "Timing en ritme",
+        "t": "in de maat blijven, op tijd inzetten (telt 2×)"
+       },
+       {
+        "k": "Dynamiek en articulatie",
+        "t": "hard en zacht, kort en lang (telt 1×)"
+       },
+       {
+        "k": "Samenspel",
+        "t": "luisteren naar elkaar, samen beginnen en eindigen (telt 2×)"
+       },
+       {
+        "k": "Samenwerking",
+        "t": "voorbereid op repetities, afspraken nakomen (telt 1×)"
+       },
+       {
+        "k": "Presentatie",
+        "t": "op het podium, aankondigen, contact met publiek (telt 1×)"
+       },
+       {
+        "k": "Organisatie",
+        "t": "jouw taak: affiche, programma, begroting, draaiboek of techniek (telt 1×)"
+       }
+      ]
+     },
+     "docent": "Eindcijfer P2 = 75% docent + 10% eigen cijfer van de leerling + 15% gemiddelde van minstens 3 klasgenoten. Ontbreekt een deel, dan is er geen eindcijfer. Het P2-formulier telt de scores × weging op en deelt door 10. Laat zien dat de helft van het cijfer over samenspel, samenwerking en voorbereiding gaat, niet alleen over hoe goed je speelt. Datum van het concert: vóór 1 maart, nog vast te leggen."
+    },
+    {
+     "min": 15,
+     "soort": "gesprek",
+     "kop": "Wie doet wat?",
+     "stappen": [
+      "Wat moet er allemaal gebeuren voor een concert? Schrijf in je groepje zoveel mogelijk taken op.",
+      "Sorteer ze: publiciteit, programma, begroting, techniek, planning.",
+      "Welke taak lijkt jou leuk? Welke niet?"
+     ],
+     "docent": "Verzamel op het bord. Het formulier noemt affiche, programma, begroting, draaiboek en techniek. Voeg toe wat de klas mist: zaal reserveren, uitnodigen, opbouw en afbouw, geluid en licht. De taakverdeling zelf gebeurt in les 5.2. Nu alleen inventariseren."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Eerste ideeën voor repertoire en bezetting",
+     "stappen": [
+      "Schrijf op wat je zou willen spelen of zingen: welk soort muziek, met welke instrumenten en stemmen?",
+      "Vergelijk met je buur. Wat vinden jullie allebei goed?",
+      "Welk instrument speel je zelf het zekerst? Dat is je beginpunt."
+     ],
+     "klaar": "Bedenk waar je groep een bassist, drummer of zanger zou kunnen vinden.",
+     "docent": "Nog geen titels vastleggen: de definitieve keuze is in les 2.2. Let op de balans: voldoende melodie, harmonie en slagwerk of bas. Repertoire hoort bij een christelijke school; stuur bij als een idee daar niet bij past."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Zelfbeoordeling P2 bekijken",
+     "stappen": [
+      "Je krijgt het Format zelfbeoordeling P2. Hierin beoordeel je jezelf op dezelfde onderdelen.",
+      "Schrijf op: waar ben ik al goed in, wat wil ik leren?"
+     ],
+     "docent": "Zelfbeoordeling invullen: na een doorloop, na de generale en na het concert. Nu alleen kennis laten maken met het formulier."
+    }
+   ],
+   "formatief": {
+    "soort": "exit ticket",
+    "tekst": "Noem drie onderdelen van het P2-formulier, drie taken in de organisatie en je eerste idee voor een instrument of stem."
+   },
+   "identiteit": "Een concert zet je samen neer: iedereen heeft een taak, niemand blijft over. Dat past bij solidariteit en democratie, twee bouwstenen van het vakwerkplan (2.2).",
+   "benodigd": [
+    "Format zelfbeoordeling P2",
+    "beoordelingsformulier P2 (alleen lezen)"
+   ]
+  },
+  "Repertoire en bezetting kiezen": {
+   "vraag": "Welke nummers kiezen we en wie speelt wat?",
+   "doel": "Je vormt een groep, kiest nummers die jullie kunnen en wilt spelen, en verdeelt de partijen zodat iedereen een eigen partij heeft.",
+   "criteria": [
+    "Onze groep heeft een bezetting waarin iedereen een eigen partij speelt",
+    "We hebben nummers gekozen die we vóór het concert goed kunnen spelen",
+    "De partijverdeling staat op papier"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat maakt een nummer geschikt?",
+     "stappen": [
+      "Denk aan een nummer dat je wilt spelen. Kunnen jullie dat in een paar maanden goed?",
+      "Noteer drie vragen die je jezelf stelt voordat je kiest."
+     ],
+     "docent": "Criteria op het bord: past het bij de groep, kunnen we het halen vóór het concert, heeft elk instrument een eigen partij, past het bij een christelijke school (tekst en sfeer). Dit zijn de criteria voor de keuze van vandaag."
+    },
+    {
+     "min": 15,
+     "soort": "gesprek",
+     "kop": "Groepen maken",
+     "stappen": [
+      "Kies een groep met een goede mix: zang, melodie, harmonie, ritme.",
+      "Noem per persoon: welk instrument of welke stem speel je het zekerst?",
+      "Welke nummers kennen jullie allemaal?"
+     ],
+     "docent": "Samenstellen in overleg met de klas; stuur bij als een groep geen ritmeslag of begeleider heeft. Iedereen speelt een eigen partij, ook leerlingen met weinig ervaring: zoek een partij die past bij het niveau. De leerlingen kiezen het repertoire; jij beoordeelt of het uitvoerbaar is."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Proefspelen en partijen verdelen",
+     "stappen": [
+      "Speel of zing een stuk van een kandidaat-nummer, of luister er samen naar.",
+      "Wie speelt welke partij? Schrijf het op.",
+      "Past het? Kies, of kies een ander nummer."
+     ],
+     "klaar": "Zoek een tweede nummer als reserve.",
+     "docent": "Loop langs: haalbaarheid beoordelen. Is een partij te makkelijk of te moeilijk, zeg het nu. Elke leerling kent aan het eind zijn eigen partij."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Op papier zetten",
+     "stappen": [
+      "Schrijf op: nummers, instrumenten, wie wat speelt.",
+      "Thuis: Musicbox, box 'Ritmische figuren'. Leer notenwaarden, rusten, punt, boog, triool, syncope, break, fill en ostinato."
+     ],
+     "docent": "Lijst verzamelen. Bij twijfel volgende les terugkomen. Ritme-box sluit aan bij les 2.1."
+    }
+   ],
+   "formatief": {
+    "soort": "partijverdeling",
+    "tekst": "De groep levert een lijst in met nummers, instrumenten en wie welke partij speelt."
+   },
+   "identiteit": "Het repertoire past bij onze school: let op tekst en sfeer van de nummers die je kiest.",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking",
+    "bladmuziek of akkoorden van gekozen nummers"
+   ]
+  },
+  "Repetitie 1: partijen leren": {
+   "vraag": "Hoe leer je je partij zo dat je hem zeker kunt spelen?",
+   "doel": "Je leert je eigen partij per instrument en speelt voor het eerst het begin van het nummer samen met je groep.",
+   "criteria": [
+    "Ik speel mijn partij langzaam zonder fouten",
+    "Ik tel zachtjes mee en blijf in de maat",
+    "We spelen het begin van het nummer samen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Wat is jouw partij?",
+     "stappen": [
+      "Pak je partij. Wat moet je doen: akkoorden, melodie, bas, ritme?",
+      "Schrijf op: wat lukt al, wat nog niet?"
+     ],
+     "docent": "Elke leerling heeft een partij uit les 2.2. Wie geen partij heeft, nu oplossen. Partijen kloppen met het nummer?"
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Je eigen partij, langzaam",
+     "stappen": [
+      "Speel je partij heel langzaam. Tel hardop mee.",
+      "Speel het tempo pas omhoog als het twee keer goed ging.",
+      "Let op de maatsoort van je nummer. Waar valt de nadruk?"
+     ],
+     "klaar": "Speel je partij mee met het origineel, met koptelefoon.",
+     "docent": "Loop rond: tellen de leerlingen mee, blijven ze in de maat, spelen ze op de juiste tel? Beat en afterbeat: in een 4/4 maat de nadruk op 1 en 3 (beat), en op 2 en 4 (afterbeat). Let op leerlingen die op het gehoor spelen en de maat niet voelen. Dit is Timing en ritme (telt dubbel)."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "De eerste keer samen",
+     "stappen": [
+      "Speel samen het begin van het nummer, zo ver als lukt.",
+      "Eén persoon telt in. Iedereen begint op dezelfde tel.",
+      "Stop als het misgaat en begin opnieuw."
+     ],
+     "docent": "Een inzet van drie of vier tellen voor het begin; laat een leerling aftellen. Niet te lang doorgaan als een groep niet kan beginnen: dan terug naar eigen partij."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Wat oefen je thuis?",
+     "stappen": [
+      "Schrijf op: wat oefen ik thuis, hoeveel minuten?",
+      "Thuis: Musicbox, box 'Trainers: maat en ritme'. Leer maatsoorten, opmaat, maatwisseling, beat en afterbeat."
+     ],
+     "docent": "Aansluiting op les 3.1 over maat."
+    }
+   ],
+   "formatief": {
+    "soort": "eigen partij",
+    "tekst": "Je speelt je partij langzaam en foutloos voor iemand uit je groep."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking",
+    "partijen of akkoorden",
+    "metronoom"
+   ]
+  },
+  "Repetitie 2: samen beginnen en eindigen": {
+   "vraag": "Hoe begin en eindig je samen, zonder dat het publiek het hoort wiebelen?",
+   "doel": "Je oefent samen inzetten, het tempo vasthouden en samen eindigen.",
+   "criteria": [
+    "We beginnen samen op dezelfde tel",
+    "We houden het tempo vast tot het einde",
+    "We eindigen samen"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Kijk naar elkaar",
+     "stappen": [
+      "Eén persoon telt in. De rest begint zonder te praten.",
+      "Hoe weet je dat iedereen klaar is?"
+     ],
+     "docent": "Laat ze ontdekken dat inzetten ook met adem, knik of handbeweging kan. Het P2-formulier let op samen beginnen en eindigen, onderdeel Samenspel (telt dubbel)."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Het begin: vier keer inzetten",
+     "stappen": [
+      "Speel alleen het begin van je nummer. Vier keer achter elkaar.",
+      "Wie telt in? Spreek het af: aftellen hardop of met zichtbare beweging.",
+      "Speel net zolang door tot de eerste vier maten staan."
+     ],
+     "klaar": "Wissel wie inzet. Werkt het ook als de drummer het niet doet?",
+     "docent": "Loop rond: zet iedereen op dezelfde tel in, klopt het tempo van de eerste maat met de tweede? Vaak te snel begonnen. Opmaat: staat een nummer op een opmaat, oefen die apart."
+    },
+    {
+     "min": 15,
+     "soort": "doen",
+     "kop": "Tempo vasthouden en eindigen",
+     "stappen": [
+      "Speel het hele nummer. Blijft het tempo gelijk?",
+      "Het einde: spreek af wie het teken geeft en hoe het slot klinkt. Soms stopt iedereen, soms een ritenuto of een fade out.",
+      "Oefen het slot drie keer."
+     ],
+     "docent": "Ritenuto: geleidelijk langzamer. Fade out: geleidelijk zachter tot stilte. Accelerando: geleidelijk sneller. Laat de groep kiezen wat bij hun nummer past. Veel groepen versnellen: een metronoom of de drummer houdt het tempo."
+    },
+    {
+     "min": 5,
+     "soort": "check",
+     "kop": "Luister terug",
+     "stappen": [
+      "Speel het begin en het slot nog een keer. Noteer: samen of niet?"
+     ],
+     "docent": "Eventueel opnemen en terugluisteren."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Thuis",
+     "stappen": [
+      "Thuis: Musicbox, box 'Trainers: tempo en dynamiek'. Leer tempoaanduidingen klassiek en pop, accelerando, ritenuto, dynamiektekens, fade out en terrassendynamiek."
+     ],
+     "docent": "Aansluiting op de theorieles over tempo en dynamiek (4.1)."
+    }
+   ],
+   "formatief": {
+    "soort": "begin en slot",
+    "tekst": "Je groep speelt het begin en het slot twee keer achter elkaar samen."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking",
+    "metronoom"
+   ]
+  },
+  "Repetitie 3 en organisatie verdelen": {
+   "vraag": "Wie doet welke taak voor het concert?",
+   "doel": "Je repeteert met je groep en je kiest samen met de klas je taak in de organisatie van het concert.",
+   "criteria": [
+    "We spelen een nummer één keer helemaal door",
+    "Iedereen in de klas heeft een organisatietaak",
+    "Ik weet wat mijn taak inhoudt en voor wanneer"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "De taken op een rij",
+     "stappen": [
+      "Publiciteit: affiche, uitnodigingen.",
+      "Programma, begroting, draaiboek en planning.",
+      "Techniek: geluid, licht, instrumenten, opbouw."
+     ],
+     "docent": "Taken van les 1.2 op het bord. Het P2-formulier noemt: affiche, programma, begroting, draaiboek of techniek. Bepaal samen hoeveel leerlingen per taak nodig zijn."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Repetitie 3: een nummer door",
+     "stappen": [
+      "Speel een nummer van begin tot eind. Stoppen als het niet anders kan.",
+      "Let in je partij op de voortekens: kruisen en mollen.",
+      "Elke groep: schrijf op welk stuk nog niet goed gaat."
+     ],
+     "klaar": "Speel je partij uit je hoofd, zonder te kijken.",
+     "docent": "Loop rond: worden de voortekens in de partij gespeeld? Kloppen de akkoorden bij de toonsoort van het nummer? Welke groepen kunnen een nummer helemaal doorspelen en welke niet?"
+    },
+    {
+     "min": 15,
+     "soort": "gesprek",
+     "kop": "Taken verdelen",
+     "stappen": [
+      "Kies een taak die bij je past. Zeg waarom.",
+      "Elke taak heeft minstens één persoon. Zijn er te veel of te weinig? Ruil.",
+      "Schrijf op: wie, welke taak, voor wanneer."
+     ],
+     "docent": "Laat de klas verdelen; grijp pas in als iemand blijft hangen. Het mag niet gebeuren dat een leerling geen taak heeft: het formulier beoordeelt iedereen op organisatie. Deadlines op het bord."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Taken vastleggen",
+     "stappen": [
+      "De lijst met taken gaat in Teams.",
+      "Thuis: Musicbox, box 'Toonsoorten'. Leer notennamen, g-sleutel, voortekens, majeur en mineur."
+     ],
+     "docent": "Aansluiting op les 5.1 over toonhoogte en toonsoort."
+    }
+   ],
+   "formatief": {
+    "soort": "taaklijst",
+    "tekst": "De klas heeft een lijst met namen, taken en deadlines."
+   },
+   "identiteit": "Wie niet goed kan zingen of spelen, kan het concert wel dragen met een taak. Iedereen telt mee (solidariteit, vakwerkplan 2.2).",
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking",
+    "partijen of akkoorden"
+   ]
+  },
+  "Repetitie 4: dynamiek in het samenspel": {
+   "vraag": "Hoe maak je een nummer spannend met hard en zacht?",
+   "doel": "Je oefent hard en zacht samenspelen en bepaalt wie op welk moment de melodie heeft.",
+   "criteria": [
+    "We spelen met hoorbaar verschil tussen hard en zacht",
+    "De melodie of zang blijft hoorbaar boven de begeleiding",
+    "We bouwen op naar het refrein"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Hard en zacht in één akkoord",
+     "stappen": [
+      "De hele klas speelt of zingt één toon. Begin zacht, bouw op naar hard en weer terug.",
+      "Hoe weet je dat de groep samen hard wordt?"
+     ],
+     "docent": "Dirigeer met je hand. Crescendo (geleidelijk harder) en decrescendo (geleidelijk zachter). Dynamiek is onderdeel van het P2-formulier: een opbouw naar het refrein."
+    },
+    {
+     "min": 20,
+     "soort": "doen",
+     "kop": "Wie heeft de melodie?",
+     "stappen": [
+      "Kies in je nummer: wie heeft de melodie, wie begeleidt?",
+      "De begeleiding speelt zachter als de melodie begint. Test het.",
+      "Zet in je partij: p (zacht) bij het couplet, f (hard) bij het refrein."
+     ],
+     "klaar": "Zing of speel de opbouw naar het refrein zo spannend mogelijk.",
+     "docent": "Loop rond met oog voor volume: blijft de zang hoorbaar? Begeleiders die niet luisteren spelen te hard. Dynamiektekens: pp, p, mp, mf, f, ff; mf is half hard."
+    },
+    {
+     "min": 10,
+     "soort": "doen",
+     "kop": "Kort en lang",
+     "stappen": [
+      "Speel een stukje van het nummer eerst kort (staccato) en dan lang gebonden (legato).",
+      "Wat past beter bij jullie nummer?",
+      "Kies per couplet en refrein."
+     ],
+     "docent": "Staccato: kort en los. Legato: gebonden. Het formulier noemt articulatie: kort en lang. Laat ze het verschil horen en een bewuste keuze maken."
+    },
+    {
+     "min": 5,
+     "soort": "check",
+     "kop": "Hoorbaar verschil?",
+     "stappen": [
+      "Speel het refrein één keer. De rest luistert: hoor je het verschil?"
+     ],
+     "docent": "Een andere groep luistert en zegt wat ze horen. Opnemen kan."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Thuis",
+     "stappen": [
+      "Thuis: Musicbox, box 'Instrumenten en speeltechnieken'. Leer instrumentfamilies en instrumentnamen uit de begrippenlijst."
+     ],
+     "docent": "Aansluiting op klankkleur (6.1)."
+    }
+   ],
+   "formatief": {
+    "soort": "luisterronde",
+    "tekst": "Een andere groep hoort het verschil tussen couplet en refrein."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking",
+    "partijen of akkoorden"
+   ]
+  },
+  "Tussenstand: voorspelen met feedback": {
+   "vraag": "Hoe klinkt ons nummer voor een publiek, en wat moet er nog beter?",
+   "doel": "Je speelt je nummer voor de klas en geeft en krijgt feedback op samenspel, ritme en presentatie.",
+   "criteria": [
+    "Onze groep speelt een nummer helemaal door voor de klas",
+    "Ik geef een klasgenoot één tip en één top",
+    "Ik weet wat mijn groep voor de volgende repetitie gaat verbeteren"
+   ],
+   "fasen": [
+    {
+     "min": 5,
+     "soort": "start",
+     "kop": "Zo geef je feedback",
+     "stappen": [
+      "Eerst één ding dat goed ging (top).",
+      "Dan één ding dat beter kan (tip), concreet en aardig.",
+      "Kijk naar: samenspel, ritme en presentatie."
+     ],
+     "docent": "Wo 14 okt is een ontwikkeldag (leerlingen vrij): de les kan uitvallen of verschuiven. Voorbeelden van goede feedback: 'jullie begonnen samen' of 'de zang was te zacht in het couplet'. Voorbeelden van slechte feedback: 'goed' of 'niet zo mooi'."
+    },
+    {
+     "min": 25,
+     "soort": "doen",
+     "kop": "Groep voor groep voorspelen",
+     "stappen": [
+      "Elke groep speelt het nummer, zo ver als het lukt.",
+      "Het publiek luistert en schrijft een top en een tip op.",
+      "Na afloop leest iemand de feedback voor."
+     ],
+     "klaar": "Bedenk hoe je morgen het begin van het nummer anders speelt.",
+     "docent": "Ongeveer vier minuten per groep. Noteer zelf voor elke leerling een eerste indruk op de onderdelen van het P2-formulier: techniek, timing, samenspel, samenwerking. Niet te veel corrigeren; de klas moet leren luisteren."
+    },
+    {
+     "min": 10,
+     "soort": "gesprek",
+     "kop": "Wat nemen we mee?",
+     "stappen": [
+      "Per groep: welk werkpunt kiezen jullie voor de volgende repetitie?",
+      "Schrijf het op een briefje en lever het in."
+     ],
+     "docent": "Eén werkpunt per groep; dat is het begin van de volgende repetitie. Briefjes bewaren."
+    },
+    {
+     "min": 5,
+     "soort": "afsluiten",
+     "kop": "Zelfbeoordeling en thuis",
+     "stappen": [
+      "Vul je Format zelfbeoordeling P2 in voor dit voorspelen.",
+      "Thuis: Musicbox, boxen 'Het orkest' en 'Koor en meerstemmigheid'. Leer stemsoorten, ensembles en orkestvormen."
+     ],
+     "docent": "Zelfbeoordeling: deze tussenstand is de eerste invulling."
+    }
+   ],
+   "formatief": {
+    "soort": "top en tip",
+    "tekst": "Je hebt een klasgenoot een top en een tip gegeven en je groep heeft één werkpunt gekozen."
+   },
+   "materiaal": [
+    "mb"
+   ],
+   "benodigd": [
+    "instrumenten en versterking",
+    "Format zelfbeoordeling P2"
+   ]
+  }
+ }
+}
