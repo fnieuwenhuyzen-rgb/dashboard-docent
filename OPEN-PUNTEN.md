@@ -101,7 +101,7 @@ Niet getest: het echte Zermelo-rooster en de echte gegevens van Frans.
 3. Lesinhoud nog leeg: BB1 periode 3 en 4: voorstel staat onder A.
 1. Lespresentaties voor de week van 2 november (alle klassen met lesinhoud), vóór maandag. Op 30-10 nog niet af (Frans); hij koos toch eerst ronde 3, stap 1 in de proef.
 4. Beoordelingsmodus stap 3, vóór 19-3-2027: overzicht per leerling over het jaar, vergelijking met de zelfbeoordeling.
-5. Dashboard-artifact verversen met de nieuwe data (lesinhoud, beoordelingen).
+5. Dashboard-artifact: ververst op 3-11 (versie 19), met `tools/ververs-dashboard.js`. Opnieuw verversen zodra Way Maker en BB1 periode 3 en 4 vaststaan.
 6. **Rooster via de Zermelo-API: gebouwd (2-11), nog niet getest met echte gegevens.** Worker (`koppel`, `afspraken`) en app staan klaar, de agendalink blijft als reserve. Zie C voor de proef. Daarna kan het raden in `zDienst`/`zToets` verder weg en de iCal eruit.
 
 ## Reclame voor weekinfo en borden (3-11, gebouwd in een cloudsessie, live sinds 3-11)
@@ -129,7 +129,6 @@ Gewijzigd in de bestanden:
 Gedaan op 2-11: formulieren en scoreblad staan in `01 Onderbouw muziek\Klas 3\P1 Presentatie kerstlied\Beoordeling`, gekoppeld met `koppel-beoordeling.js` en live gezet.
 
 Nog te doen:
-1. Dashboard-artifact verversen (D5) zodat het de kerstboxen ook toont.
 
 Lespresentaties lesweek 11-16 havo 3 en vwo 3 en mavo 3 lesweek 12 en 14 zijn klaar en gekoppeld (2-11).
 
