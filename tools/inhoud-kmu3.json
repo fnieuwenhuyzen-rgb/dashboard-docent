@@ -2,7 +2,7 @@
   "_uitleg": "Keuzeuur muziek havo 3, zeven lessen in lesweek 31-37. Lessen en decks: schema in inhoud-decks-LEESMIJ.md. Invoeren: node tools/zet-decks-in-leergang.js (lessen), node tools/zet-kmu3.js (meta, blok P4, thuis per week). Decks: node tools/maak-decks.js tools/inhoud-kmu3.json. Notenbeeld: node tools/notenbeeld-kmu3.js.",
   "_leergang": {
     "meta": {
-      "bron": "Keuzeuur muziek havo 3, voorbereiding op de bovenbouw: zeven lessen van 45 minuten in lesweek 31-37, nadat de gewone havo 3-klassen rond de meivakantie gestopt zijn. Opgebouwd vanuit het begin van havo 4 (leergang havo 4, blok Jazz en blues), de didactische kaarten BL en RM en de voorlichting Muziek in havo 4 en 5. Lesweek 1-30 hebben geen uitgewerkte les.",
+      "bron": "Keuzeuur muziek havo 3, voorbereiding op de bovenbouw: zeven lessen van 45 minuten in lesweek 31-37, nadat de gewone havo 3-klassen rond de meivakantie gestopt zijn. Opgebouwd vanuit het begin van havo 4 (leergang havo 4, blok Jazz en blues), de didactische kaarten BL en RM en de voorlichting Muziek in havo 4 en 5. In lesweek 1-30 is er geen les.",
       "seAandeel": "geen toetsen, geen cijfer",
       "toetsKop": "Het keuzeuur heeft geen toets en geen cijfer. De voortgang volg je in de les: wisbordje, voorspelen en de eigen riff in lesweek 37."
     },
