@@ -4,6 +4,12 @@ Bijgewerkt: 3 november 2026 (onderbouwmappen heringedeeld, links bijgewerkt). We
 
 ## A. Wacht op Frans
 
+- [ ] **Synchroniseren tussen apparaten (3-11, gebouwd, lokaal getest, zie plan in de sessie).** Taken, afspraken, planning, klassenlijsten, scores en de Zermelo-koppeling gaan mee naar D1 `lesdag-sync` (EU) achter Access. Besluiten Frans: leerlingnamen en Zermelo-token gaan mee; login alleen `nwn@csgpm.nl`. Verjaardagen, absenten, logboeknotities en het beoordelingslogboek blijven per apparaat.
+  - **Volgorde eerste keer:** in Instellingen op de knop, eerst op het apparaat dat het meest bij is (Edge, Chrome of tablet), daarna de andere twee. Elke bron downloadt eerst een kopie. Zonder gemeenschappelijke basis kunnen eerder verwijderde taken terugkomen en lesuren dubbel staan: daarna even nalopen.
+  - **Frans:** privacyfunctionaris van de school informeren (leerlinggegevens op eigen Cloudflare-account); tweestapsverificatie op dat account aanzetten.
+  - **Alleen op echte apparaten te testen:** Access-login in de app op het beginscherm (Android), en de echte token-controle op de server (lokaal staat die uit). Mislukt die, dan verschijnt "Opnieuw inloggen" en blijft alles op het apparaat.
+  - Telefoon: alle tabbladen passen zonder dat de pagina breder wordt. De menubalk veegt opzij (Instellingen staat buiten beeld) en Week veegt binnen het raster. Nog niet gewijzigd; beslissen na een paar dagen gebruik.
+
 - [x] **Onderbouwmappen heringedeeld (3-11).** Indeling als de bovenbouw, zie `01 Onderbouw muziek\00 Lees mij eerst.docx`. Paden en links in `basis.json`, `bron/` en `tools/` zijn omgezet en live. `P1 Presentatie Way Maker` heet nu `Way Maker`, want het PTO kent nog maar één P per klas. De klasmappen heten `01 Klas 1`, `02 Klas 2` en `03 Klas 3`; de links zijn daarop omgezet en alle 45 linkdoelen in het dashboard bestaan op schijf. Dashboard-artifact opnieuw gepubliceerd (versie 21).
 - [ ] **PTO muziek onderbouw, oppakken in de loop van 2026-2027 (Frans, 3-11).** Bron: `pto_overzicht_2026 november.xlsx`. (1) Klas 1 verschilt per niveau: h1 P1 "presentatie speelvaardigheden", m1 en v1 "lied met gitaar"; de omschrijving van T1 is drie keer anders. (2) Herkansing is ongelijk: P1 wel bij m1, v1, m2 en niet bij h1, h2, h3, v3; T1 alleen bij h1 (TW2). Dat kb1, kg1 en v2 geen muziek meer hebben klopt (Frans). (3) BB1 komt niet voor als klascode in het PTO. Aanwijzing voor h1: daar staat bij Engels "BB-niveau". T1 BB1 toetst wel "maat, ritme, toonhoogte en de gitaar", de omschrijving van v1. Niet vastgesteld.
 
@@ -68,8 +74,7 @@ Verdeling over sessies (2-11): `basis.json` is één regel, dus samenvoegen bots
 
 ## B. Wacht op anderen
 
-- [ ] ICT: Microsoft Entra-app (clientId, tenantId) voor OneDrive-opslag en -export. Tot dan staan scores alleen in de browser; scoreblad als CSV-download.
-- [ ] ICT: Microsoft Entra-app (clientId, tenantId) voor OneDrive-opslag en -export. Tot dan staan scores alleen in de browser; scoreblad als CSV-download. Voor het ontwerp van ronde 3 komen er gedelegeerde rechten bij (nu in `m365.js`: User.Read, Files.ReadWrite.AppFolder, Files.Read.All, Sites.Read.All): **Mail.ReadBasic** (onderwerp, afzender en datum, zonder inhoud of bijlagen), **Tasks.ReadWrite** (gemarkeerde mail in To Do en taken), **Calendars.Read** (Outlook-agenda) en voor het markeren vanuit Lesdag **Mail.ReadWrite** (alleen als Frans dat wil; anders markeren in Outlook zelf). De tekst voor ICT in LEESMIJ.md bijwerken als het zover is.
+- [x] ICT: Microsoft Entra-app vervalt (besluit Frans, 3-11): synchroniseren loopt via Cloudflare. Mail, To Do en Outlook-agenda uit ronde 3 hadden dit nodig en zijn dus niet haalbaar zonder nieuwe keuze. `m365.js`, MSAL en de Entra-tekst in `LEESMIJ.md` kunnen nog weg.
 - [ ] SLC-taken na de conferentie.
 
 ## C. Te testen in het echt
