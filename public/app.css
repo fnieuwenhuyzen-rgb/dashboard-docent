@@ -808,3 +808,62 @@ body.kompasvenster .top{display:none}
 .nw-sug small{color:var(--muted);font-size:var(--t-klein);white-space:nowrap}
 .nw-voet{margin:.75rem 0 0}
 @media (max-width:640px){.nw{left:8px!important;right:8px;top:auto!important;bottom:calc(70px + env(safe-area-inset-bottom,0px));width:auto;max-width:none}.ag-onder{padding-left:0}}
+
+/* Jaar: de partituur. Vijf lijnen zijn ma tot en met vr; een noot is een les. Op een telefoon schuift de balk en blijft de klasnaam staan. */
+.jr-vel{padding:0;overflow-x:auto}
+.jr-score{min-width:940px;padding:.5rem 1rem .7rem 0}
+.jr-vel.klein .jr-score{min-width:820px;padding-left:1rem}
+.jr-rij{display:grid;grid-template-columns:4.6rem minmax(0,1fr);height:34px;align-items:stretch}
+.jr-rij.kopregel{height:auto}
+.jr-rij.eerst{margin-top:5px}
+.jr-naam{position:sticky;left:0;z-index:5;background:var(--surface);font-weight:700;padding:0 .3rem 0 .85rem;white-space:nowrap;color:var(--ink);text-decoration:none;display:flex;align-items:center}
+a.jr-naam:hover{color:var(--paars)}
+.jr-rij.acc .jr-naam::before{content:"";position:absolute;left:.4rem;top:0;bottom:0;border-left:2px solid var(--line)}
+.jr-rij.acc.eerst .jr-naam::before{top:7px}
+.jr-rij.acc.laatst .jr-naam::before{bottom:7px}
+.jr-balk{position:relative;cursor:pointer;height:34px}
+.jr-balk.geen{cursor:default;display:flex;align-items:center}
+.jr-vel.klein .jr-balk{cursor:default}
+.jr-band{position:absolute;top:0;bottom:0}
+.jr-band.tw{background:var(--paars-zacht)}
+.jr-band.vk{background:var(--uit-zacht)}
+.jr-lijnen{position:absolute;top:50%;height:27px;transform:translateY(-50%);background:repeating-linear-gradient(to bottom,color-mix(in srgb,var(--muted) 40%,transparent) 0 1px,transparent 1px 6.5px)}
+.jr-lijnen.eind{border-right:3px double var(--muted)}
+.jr-noot{position:absolute;width:9px;height:6px;border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg);border:1.4px solid var(--paars);background:var(--paars);z-index:1}
+.jr-noot.open{background:var(--surface)}
+.jr-noot.half{background:linear-gradient(90deg,var(--paars) 50%,var(--surface) 50%)}
+.jr-noot.mis{background:var(--surface);border-color:var(--let);box-shadow:0 0 0 2px var(--let-zacht)}
+.jr-noot.leeg{background:transparent;border:1.2px dotted var(--muted)}
+.jr-noot.over{background:var(--surface);border-color:var(--muted)}
+.jr-rust{position:absolute;top:calc(50% - 1px);width:9px;height:3px;background:var(--muted);transform:translateX(-50%);opacity:.75;z-index:1}
+.jr-kop{position:absolute;top:-1px;bottom:-1px;width:2px;background:var(--rood);z-index:3}
+.jr-toets{position:absolute;top:50%;transform:translate(-50%,-50%);z-index:4;font-family:var(--lees);font-stretch:75%;border:1.4px solid var(--rood);background:var(--rood);color:var(--op);border-radius:4px;font-size:var(--t-klein);font-weight:700;line-height:1;padding:.14rem .2rem;cursor:pointer;white-space:nowrap}
+.jr-toets.p{background:var(--surface);color:var(--rood)}
+.jr-toets.los{border-style:dashed;background:var(--surface);color:var(--rood)}
+.jr-toets.af{opacity:.5}
+.jr-as{position:relative;height:44px;font-size:var(--t-klein);font-stretch:75%;color:var(--muted);font-variant-numeric:tabular-nums}
+.jr-as span{position:absolute;white-space:nowrap}
+.jr-as .m{top:0;font-weight:700}
+.jr-as .w{top:21px;transform:translateX(-50%)}
+.jr-as .nu{color:var(--rood);font-weight:700}
+.jr-vel.klein .jr-as{height:24px}
+.jr-vel.klein .jr-as .w{top:0}
+.jr-info{margin:0;font-size:.95rem;min-height:1.5em}
+.jr-uitleg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.3rem 1.4rem;font-size:var(--t-klein);color:var(--muted);margin:0;padding:0;list-style:none}
+.jr-uitleg li{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.5rem;align-items:center}
+.jr-vb{position:relative;display:block;height:20px}
+.jr-vb .jr-noot,.jr-vb .jr-toets{left:50%;top:50%;cursor:default}
+.jr-vb .jr-rust{left:50%}
+.jr-vb .jr-kop{left:50%;top:0;bottom:0}
+.jr-vb .jr-band{left:0;right:0}
+.jr-lijn5{position:absolute;left:10%;right:10%;top:0;height:20px;background:repeating-linear-gradient(to bottom,color-mix(in srgb,var(--muted) 55%,transparent) 0 1px,transparent 1px 4.5px)}
+/* Jaar: het klasblad */
+.jr-twee{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:1rem;align-items:start}
+.jr-kolom{display:grid;gap:1rem;min-width:0}
+.jr-regel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.3rem .8rem;align-items:center;padding:.5rem 0;border-top:1px solid var(--line)}
+.jr-regel small{display:block;color:var(--muted);font-size:var(--t-klein)}
+.jr-regel .tb{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:flex-end;align-items:center}
+.jr-blok{border-top:1px solid var(--line)}
+.jr-blok>summary{padding:.5rem 0;cursor:pointer}
+.jr-blok>summary .sub{color:var(--muted);font-size:var(--t-klein)}
+@media (max-width:640px){.jr-regel{grid-template-columns:minmax(0,1fr)}.jr-regel .tb{justify-content:flex-start}}
