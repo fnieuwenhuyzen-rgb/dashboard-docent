@@ -195,5 +195,18 @@
       ]
     }
   ],
-  "zelfbeoordeling": 10
+  "zelfbeoordeling": 10,
+  "strookje": {
+    "titel": "Presentatie 3: slagwerk",
+    "stellingen": [
+      "Ik tel af en begin samen met de groep",
+      "Ik speel strak op de tel in een vast tempo",
+      "Ik speel mijn fill en val op de één weer in"
+    ],
+    "vragen": [
+      "Dit ging het lastigst:",
+      "Dit ga ik oefenen:"
+    ],
+    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+  }
 }

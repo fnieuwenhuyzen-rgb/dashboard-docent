@@ -769,10 +769,10 @@
             "kop": "Mijn werkpunt",
             "stappen": [
               "Schrijf op: dit oefen ik voor presentatie 2.",
-              "Het format zelfbeoordeling krijg je alvast mee.",
+              "Na presentatie 2 vul je een kort strookje in.",
               "Les 18 herhaalt toonhoogte en tempo. Presentatie 2 is lesweek 19."
             ],
-            "docent": "Het zelfbeoordelingsformat telt voor 10% mee: eerlijk en concreet, 4 tot 10."
+            "docent": "Na presentatie 2 vullen de leerlingen een strookje in. Dat telt voor 10% mee."
           }
         ],
         "formatief": {
@@ -831,7 +831,7 @@
               "Gaat het mis, speel dan door op de tel.",
               "Daarna oefen je een lastige plek."
             ],
-            "docent": "Beoordelen op het formulier van presentatie 2, zes onderdelen met weging: begin en slot 1, akkoorden 2, akkoordwisselingen 2, slag- of begeleidingspatroon 2, houding en techniek 1, samenspel 1. Per onderdeel de niveaus 4, 6, 8 of 10, ertussenin mag 5, 7 of 9. Totaal delen door 9 is het cijfer van de docent. Eindcijfer is 0,9 maal het cijfer van de docent plus 0,1 maal de zelfbeoordeling (4 tot 10, eerlijk en concreet). P1 is het gemiddelde van presentatie 1, 2 en 3. Kom je niet bij elk groepje, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36."
+            "docent": "Beoordelen op het formulier van presentatie 2, zes onderdelen met weging: begin en slot 1, akkoorden 2, akkoordwisselingen 2, slag- of begeleidingspatroon 2, houding en techniek 1, samenspel 1. Per onderdeel de niveaus 4, 6, 8 of 10, ertussenin mag 5, 7 of 9. Totaal delen door 9 is het cijfer van de docent. Eindcijfer is 0,9 maal het cijfer van de docent plus 0,1 maal het strookje (4 tot 10). P1 is het gemiddelde van presentatie 1, 2 en 3. Kom je niet bij elk groepje, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36."
           },
           {
             "min": 5,
@@ -839,10 +839,10 @@
             "kop": "Wat ging goed?",
             "stappen": [
               "Noem in je groepje één ding dat goed ging.",
-              "De cijfers volgen later.",
-              "Volgende les: muziek in het werkveld."
+              "Vul je strookje in. Je hebt 3 minuten.",
+              "Lever het in bij de deur. Volgende les: muziek in het werkveld."
             ],
-            "docent": "Zelfbeoordeling laten invullen als dat nog niet gebeurd is."
+            "docent": "Strookje uitdelen, na 3 minuten innemen bij de deur. Score: 4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
           }
         ],
         "formatief": {
@@ -1098,10 +1098,10 @@
             "kop": "Mijn werkpunt",
             "stappen": [
               "Schrijf op: dit oefen ik voor presentatie 3.",
-              "Het format zelfbeoordeling krijg je mee.",
+              "Na presentatie 3 vul je een kort strookje in.",
               "Presentatie 3 is lesweek 35."
             ],
-            "docent": "Zelfbeoordeling telt voor 10%: eerlijk en concreet, 4 tot 10."
+            "docent": "Na presentatie 3 vullen de leerlingen een strookje in. Dat telt voor 10% mee."
           }
         ],
         "formatief": {
@@ -1160,7 +1160,7 @@
               "Gaat het mis, speel dan door op de tel.",
               "Daarna oefen je een lastige plek."
             ],
-            "docent": "Beoordelen op het formulier van presentatie 3, zes onderdelen met weging: begin en slot 1, timing en tempo 2, groove en partij 2, break en fill 1, techniek en klank 1, samenspel 2. Per onderdeel de niveaus 4, 6, 8 of 10, ertussenin mag 5, 7 of 9. Totaal delen door 9 is het cijfer van de docent. Eindcijfer is 0,9 maal het cijfer van de docent plus 0,1 maal de zelfbeoordeling (4 tot 10, eerlijk en concreet). P1 is het gemiddelde van presentatie 1, 2 en 3. Kom je niet bij elk groepje, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36."
+            "docent": "Beoordelen op het formulier van presentatie 3, zes onderdelen met weging: begin en slot 1, timing en tempo 2, groove en partij 2, break en fill 1, techniek en klank 1, samenspel 2. Per onderdeel de niveaus 4, 6, 8 of 10, ertussenin mag 5, 7 of 9. Totaal delen door 9 is het cijfer van de docent. Eindcijfer is 0,9 maal het cijfer van de docent plus 0,1 maal het strookje (4 tot 10). P1 is het gemiddelde van presentatie 1, 2 en 3. Kom je niet bij elk groepje, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36."
           },
           {
             "min": 5,
@@ -1168,10 +1168,10 @@
             "kop": "Wat ging goed?",
             "stappen": [
               "Noem in je groepje één ding dat goed ging.",
-              "Volgende week stellen we het P1-cijfer vast.",
-              "Daarna volgt de loopbaanopdracht."
+              "Vul je strookje in. Je hebt 3 minuten.",
+              "Lever het in bij de deur. Volgende week stellen we het P1-cijfer vast."
             ],
-            "docent": "Zelfbeoordeling laten invullen als dat nog niet gebeurd is. In lesweek 36 stel je het P1-cijfer vast als gemiddelde van presentatie 1, 2 en 3 (PTA: minstens drie praktijkdelen)."
+            "docent": "Strookje uitdelen, na 3 minuten innemen bij de deur. Score: 4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen. In lesweek 36 stel je het P1-cijfer vast als gemiddelde van presentatie 1, 2 en 3 (PTA: minstens drie praktijkdelen)."
           }
         ],
         "formatief": {

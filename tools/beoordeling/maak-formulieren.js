@@ -13,7 +13,7 @@ const somW = M.onderdelen.flatMap(o => o.criteria).reduce((a, c) => a + c.weging
 const kop = (titel) => `<html><head><meta charset="utf-8"><style>
 @page Sec { size: 841.9pt 595.3pt; mso-page-orientation: landscape; margin: 28pt 32pt 26pt 32pt; }
 div.Sec { page: Sec; }
-body { font-family: Calibri, Arial, sans-serif; font-size: 9pt; color: #1d1d1b; }
+body { font-family: 'Encode Sans', Arial, sans-serif; font-size: 9pt; color: #1d1d1b; }
 p { margin: 0; }
 .eyebrow { color: ${ACC}; font-size: 8pt; font-weight: bold; letter-spacing: 1pt; text-transform: uppercase; }
 h1 { font-size: 17pt; margin: 1pt 0 3pt 0; }
@@ -57,19 +57,47 @@ d += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)}${M
 d += veldRijen(['Naam', 'Datum', ...(M.velden || [])]);
 d += `<p style="margin:3pt 0 4pt 0">Omcirkel per onderdeel het niveau dat het best past en schrijf de score op. ${esc(M.tussenscores)}</p>`;
 d += rubriek('docent');
-d += `<table style="margin-top:5pt"><tr><td style="width:60%;height:52pt"><b>Opmerking per onderdeel</b><br><span class="klein">${esc(groepen)}</span></td><td><b>Totaal</b> ______ punten ÷ ${somW} = <b>cijfer docent</b> ______<br><span class="klein">${esc(M.cijfer)}</span>${kg ? `<br><b>Eindcijfer</b> = ${kg.docent}% docent + ${kg.zelf}% eigen cijfer ______ + ${kg.klasgenoten}% klasgenoten ______ = <b>______</b><br><span class="klein">Eigen cijfer: het overall-cijfer dat de leerling zichzelf geeft. Klasgenoten: gemiddelde van minstens ${M.klasgenotenMin || 3} inzendingen. Ontbreekt een deel, dan geen eindcijfer.</span>` : zb ? `<br><b>Eindcijfer</b> = ${String((100 - zb) / 100).replace('.', ',')} × cijfer docent + ${String(zb / 100).replace('.', ',')} × zelfbeoordeling ______ = <b>______</b><br><span class="klein">Zelfbeoordeling (${zb}%): hoe eerlijk en concreet de leerling de eigen uitvoering beoordeelt, 4 tot 10.</span>` : ''}<br><b>${esc(vooruit)}:</b></td></tr></table>`;
+d += `<table style="margin-top:5pt"><tr><td style="width:60%;height:52pt"><b>Opmerking per onderdeel</b><br><span class="klein">${esc(groepen)}</span></td><td><b>Totaal</b> ______ punten ÷ ${somW} = <b>cijfer docent</b> ______<br><span class="klein">${esc(M.cijfer)}</span>${kg ? `<br><b>Eindcijfer</b> = ${kg.docent}% docent + ${kg.zelf}% eigen cijfer ______ + ${kg.klasgenoten}% klasgenoten ______ = <b>______</b><br><span class="klein">Eigen cijfer: het overall-cijfer dat de leerling zichzelf geeft. Klasgenoten: gemiddelde van minstens ${M.klasgenotenMin || 3} inzendingen. Ontbreekt een deel, dan geen eindcijfer.</span>` : zb ? `<br><b>Eindcijfer</b> = ${String((100 - zb) / 100).replace('.', ',')} × cijfer docent + ${String(zb / 100).replace('.', ',')} × zelfbeoordeling ______ = <b>______</b><br><span class="klein">${M.strookje ? `Strookje (${zb}%). ${esc(M.strookje.score)}` : `Zelfbeoordeling (${zb}%): hoe eerlijk en concreet de leerling de eigen uitvoering beoordeelt, 4 tot 10.`}</span>` : ''}<br><b>${esc(vooruit)}:</b></td></tr></table>`;
 d += '</div></body></html>';
 fs.writeFileSync(path.join(uit, `${M.toets} Beoordelingsformulier docent.html`), d, 'utf8');
 
+// strookje (veld strookje in het model): twee per A4 staand, 3 minuten, afvinken en twee korte zinnen
+const strookjeHtml = (S) => {
+  const hok = '<td class="hok">&nbsp;</td>';
+  const rijen = S.stellingen.map(s => `<tr><td class="stelling">${esc(s)}</td>${hok.repeat(3)}</tr>`).join('');
+  const vragen = S.vragen.map(v => `<p class="vraag">${esc(v)}</p><table><tr><td class="schrijf">&nbsp;</td></tr></table>`).join('');
+  return `<p class="eyebrow">${esc(M.klas)} · ${esc(M.toets)} · 3 minuten</p><h1>${esc(S.titel)}</h1><p class="naam">Naam: ______________________________ &nbsp; Klas: __________</p><table class="vink"><tr><td class="leeg">&nbsp;</td><td class="kopje">nog niet</td><td class="kopje">bijna</td><td class="kopje">ja</td></tr>${rijen}</table>${vragen}<p class="voet">Lever dit in bij de deur. Dit strookje telt voor ${zb}% mee. Je docent kijkt of je concreet bent, niet hoe hoog je jezelf scoort.</p>`;
+};
+
 // leerlingformat
-let l = kop(`${M.toets} format zelfbeoordeling`);
-l += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)} · format voor je eigen uitvoering</p><h1>${esc(M.leerlingTitel || 'Zo beoordeel ik mijn uitvoering')}</h1>`;
-l += veldRijen(['Naam', ...(M.velden || [])]);
-l += `<p style="margin:3pt 0 4pt 0">${esc(M.leerlingInstructie || 'Luister je opname terug. Zet per onderdeel een kruisje bij wat je hoort en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.')}</p>`;
-l += rubriek('leerling');
-if (kg) l += `<p style="margin-top:3pt"><b>Mijn eigen cijfer (overall): ______</b> <span class="klein">Dit cijfer telt voor ${kg.zelf}% mee in je eindcijfer. Je docent telt ${kg.docent}%, je klasgenoten ${kg.klasgenoten}%.</span></p>`;
-else if (zb) l += `<p class="klein" style="margin-top:3pt">Je zelfbeoordeling telt voor ${zb}% mee. Je docent kijkt of je eerlijk en concreet bent, niet hoe hoog je jezelf scoort.</p>`;
-l += `<table style="margin-top:5pt"><tr><td style="width:33%;height:58pt"><b>Wat ging goed?</b></td><td style="width:34%"><b>${esc(vooruit)}</b><br><span class="klein">Welke maat of welk moment, welk probleem, hoe ga je het oefenen?</span></td><td><b>Tip van een klasgenoot</b></td></tr></table>`;
+let l;
+if (M.strookje) {
+  l = kop(`${M.toets} strookje zelfbeoordeling`).replace('</style>', `@page Sec { size: 595.3pt 841.9pt; mso-page-orientation: portrait; margin: 28pt 40pt 22pt 40pt; }
+body { font-size: 12pt; }
+.eyebrow { font-size: 9pt; }
+h1 { font-size: 19pt; margin: 2pt 0 8pt 0; }
+.naam { font-size: 11pt; margin-bottom: 10pt; }
+table.vink td { padding: 5pt 6pt; vertical-align: middle; }
+.stelling { font-size: 12pt; }
+.hok { width: 13%; }
+.kopje { width: 13%; font-size: 9.5pt; text-align: center; background: ${ZAND}; font-weight: bold; }
+.leeg { background: ${ZAND}; }
+.vraag { font-weight: bold; margin: 11pt 0 0 0; }
+td.schrijf { border: none; border-bottom: 0.75pt solid #1d1d1b; height: 24pt; padding: 0; }
+.voet { font-size: 8.5pt; color: #5d5850; margin-top: 9pt; }
+.knip { border-bottom: 0.75pt dashed #9a948b; margin: 24pt 0 24pt 0; font-size: 2pt; }
+</style>`);
+  l += strookjeHtml(M.strookje) + '<p class="knip">&nbsp;</p>' + strookjeHtml(M.strookje) + '<p>&nbsp;</p>'; // naar-word.ps1 verkleint de laatste alinea
+} else {
+  l = kop(`${M.toets} format zelfbeoordeling`);
+  l += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)} · format voor je eigen uitvoering</p><h1>${esc(M.leerlingTitel || 'Zo beoordeel ik mijn uitvoering')}</h1>`;
+  l += veldRijen(['Naam', ...(M.velden || [])]);
+  l += `<p style="margin:3pt 0 4pt 0">${esc(M.leerlingInstructie || 'Luister je opname terug. Zet per onderdeel een kruisje bij wat je hoort en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.')}</p>`;
+  l += rubriek('leerling');
+  if (kg) l += `<p style="margin-top:3pt"><b>Mijn eigen cijfer (overall): ______</b> <span class="klein">Dit cijfer telt voor ${kg.zelf}% mee in je eindcijfer. Je docent telt ${kg.docent}%, je klasgenoten ${kg.klasgenoten}%.</span></p>`;
+  else if (zb) l += `<p class="klein" style="margin-top:3pt">Je zelfbeoordeling telt voor ${zb}% mee. Je docent kijkt of je eerlijk en concreet bent, niet hoe hoog je jezelf scoort.</p>`;
+  l += `<table style="margin-top:5pt"><tr><td style="width:33%;height:58pt"><b>Wat ging goed?</b></td><td style="width:34%"><b>${esc(vooruit)}</b><br><span class="klein">Welke maat of welk moment, welk probleem, hoe ga je het oefenen?</span></td><td><b>Tip van een klasgenoot</b></td></tr></table>`;
+}
 l += '</div></body></html>';
 fs.writeFileSync(path.join(uit, `${M.toets} Format zelfbeoordeling leerling.html`), l, 'utf8');
 // papieren reserve voor de klasgenoten (hoofdroute is Microsoft Forms)

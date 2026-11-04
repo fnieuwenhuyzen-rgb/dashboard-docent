@@ -195,5 +195,18 @@
       ]
     }
   ],
-  "zelfbeoordeling": 10
+  "zelfbeoordeling": 10,
+  "strookje": {
+    "titel": "Presentatie 2: akkoorden",
+    "stellingen": [
+      "Ik tel af en begin samen met mijn groepje",
+      "Ik wissel mijn akkoorden op tijd en in tempo",
+      "Ik houd mijn patroon vast en speel door na een fout"
+    ],
+    "vragen": [
+      "Dit ging het lastigst:",
+      "Dit ga ik oefenen:"
+    ],
+    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+  }
 }
