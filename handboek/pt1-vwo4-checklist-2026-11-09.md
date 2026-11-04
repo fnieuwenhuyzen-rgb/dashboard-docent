@@ -2,16 +2,25 @@
 
 **PT1 staat op ma 23-11 (Frans, 4-11: "Ja, op 23-11"). Ma 9-11 vervalt.** Nog op ma 9-11 staan: `basis.json` (toets in de leergang, lesweek 10), de studiewijzer en het model (dus ook tabblad Rubric van het scoreblad). Het rooster van 23-11 staat nog niet in Zermelo.
 
-**Nog niet klaar.** De beoordeling werkt en datum en opstelling staan vast, maar stuk, toonsoort en zang niet.
+**Nog niet klaar.** De beoordeling werkt en de datum staat vast. Stuk, toonsoort en zang staan hieronder als voorstel, nog niet verwerkt.
 
-## Vragen aan Frans
+## Antwoorden van Frans (4-11)
 
-0. **Komen de generale en de uitleg over improviseren er alsnog, nu er tijd is vóór 23-11?** Ma 16 en wo 18-11 staan nu op pop (week 11). Zo ja, dan kloppen deze zinnen in deck en lesmodus niet meer: "generale vervallen", "dit is de enige uitleg die ze krijgen" en de twee minuten uitleg. De rubric van 3-11 (C-Es-G is genoeg) is ook gemaakt omdat de uitleg was vervallen. Ik heb hier niets aan veranderd.
-1. **Welk stuk speelt elke groep, en hoeveel groepen zijn er?** Dat staat nergens. Het deck rekent 2, 3 en 4 groepen voor. Met het aantal kies je het tijdschema op dia 1 (notities).
-2. **In welke toonsoort is er geoefend, A of C?** De bronnen spreken elkaar tegen, zie onder. Dit bepaalt welke uitleg en welk schema maandag op tafel liggen.
-3. **Opstelling: beantwoord.** Frans koos één groep tegelijk. De tekst staat op branch `nooit-voor-de-klas` en gaat met die sessie live, ook in het deck. Nog open: waar staat het drumstel en hoe komt de drummer van een groep daar?
-4. **Hoe klinkt This old hammer als call-and-response, en hoe hoor je de zang per leerling?** De pdf is een canon van 16 maten, zonder call en response erin. De tabel in deck 08.1 legt call en response op het twaalfmatenschema. Zang telt per leerling met weging 2, dus een groep die samen zingt is lastig te scoren. Mogelijkheid: iedereen zingt om de beurt een call.
-5. **Luisteren en balans: per groep of per leerling?** Het model en de app geven een groepsscore (eigen score gaat voor). De notities van het deck zeggen "van de leerling zelf", en de rubric is ook per leerling geschreven. Weging 2, dus het telt.
+- **Generale en uitleg improviseren:** komen er alsnog.
+- **Groepen:** één groep, want er zijn vijf leerlingen. "Haal desnoods een stuk uit Musicbox."
+- **Toonsoort:** Frans kon de vraag niet beantwoorden ("?").
+- **This old hammer als call-and-response, zang per leerling:** "Weet ik niet."
+- **Luisteren en balans:** "Omdat er zo weinig leerlingen zijn is dit wel erg ingewikkeld." Mijn lezing: geen apart onderscheid, het blijft een groepsscore met eigen score als uitzondering, zoals het model en de app al doen. Nog bevestigen.
+- **Drumstel:** drumstellen in 009, elektronisch drumstel in 020.
+
+## Voorstel, wacht op het ja van Frans
+
+1. **Stuk: Backwater blues (Musicbox, box Voorlopers van Jazz).** Gelezen in Musicbox: piano, bas, gitaar, drums of zang, drie niveaus die door elkaar kunnen, bluesschema van twaalf maten. Vijf partijen voor vijf leerlingen. Het is ook het huiswerk (N2 blok 5 improviseren, blok 6 Musicsheets). De bladmuziek blijft in Musicbox, want verspreiden mag niet volgens de melding in de box.
+2. **Toonsoort: A.** De Chordsheet staat in drie kruisen, A-D-E, tempo 100. Daarmee vervalt de tegenspraak: kaart BL 1 en TL 1a staan al in A. Ladder wordt A, C, D, Es, E, G; "genoeg" wordt A, C, E. Rubric, deck 10.1 en de les over improviseren gaan van C naar A. Let op: in les 7 (12-10) oefenden ze C, F en G.
+3. **Zang: Backwater blues in plaats van This old hammer (wijkt af van besluit 3-11).** Iedereen zingt één couplet, de anderen spelen door. Zingen wordt zo per leerling hoorbaar. Call-and-response uit het PTA: de zanger zingt de regel, de band antwoordt in de open maten.
+4. **Twee lessen vooraf:** ma 16-11 uitleg improviseren in A en partijen; wo 18-11 generale. Pop schuift dan naar na PT1. Dat moet in de agenda van Frans zelf, en de leergang moet mee.
+5. **Toets in 009,** waar het drumstel staat. Niemand hoeft te verhuizen. De groepen, hoeken, volgorde en tijdschema's voor 2, 3 en 4 groepen gaan uit deck, lesmodus en checklist. De regel "één groep tegelijk" (live sinds 4-11) is voor vwo 4 niet meer nodig. Er is geen publiek, dus "nooit voor de klas" is geregeld.
+6. **Tijd:** ruim genoeg. Eén keer door met vijf couplets en soloruil duurt rond de drie à vier minuten (narekenen bij de generale), dus twee keer doorspelen past.
 
 Kleine keuzes, zonder antwoord blijft het zoals het is:
 - Het format heeft een vak "Tip van een klasgenoot". Zonder publiek wordt dat een groepsgenoot, of het blijft leeg.
@@ -23,10 +32,10 @@ Niets gedownload of gemaakt.
 
 | Stuk | Waar | Bijzonderheid |
 |---|---|---|
-| Mo' Better Blues | **Niet gevonden.** Niet in de sectiemap, de oude decks en de Lesdag-bronnen, alleen in `OPEN-PUNTEN.md`. Niet in het deel van de boxenlijst in Musicbox dat ik las (het begin van de lijst, plus Voorlopers van Jazz). | Herkomst onbekend. Frans moet dit aanleveren of laten vallen. |
+| Mo' Better Blues | **Niet gevonden.** Niet in de sectiemap, de oude decks en de Lesdag-bronnen, alleen in `OPEN-PUNTEN.md`. Niet in het deel van de boxenlijst in Musicbox dat ik las (het begin van de lijst, plus Voorlopers van Jazz). | Herkomst onbekend. Valt weg als Backwater blues het stuk wordt. |
 | When I walk hand in hand | Alleen `Havo 4/P1.../Jazz/Zingen` | Drie mollen, canon van 12 maten, geen akkoorden, geen bluesschema. Past niet zomaar bij de ladder in C. Gedownload van vrijeschoolliederen.nl. |
 | This old hammer | Alleen `Havo 4/P1.../Jazz/Zingen` | **Ontbreekt ook in de vwo 4-map.** Geen voortekens, canon van 16 maten. |
-| Backwater blues | Musicbox: box Voorlopers van Jazz, drie niveaus | Is het stuk van het huiswerk (N2 blok 5 en 6). Het rondje op de Musicsheets toont "A"; ik lees dat als de toonsoort, de partijen zelf heb ik niet geopend. Staat niet in de les of het deck. |
+| Backwater blues | Musicbox: box Voorlopers van Jazz, drie niveaus | Is het stuk van het huiswerk (N2 blok 5 en 6). Chordsheet bekeken: in A, drie kruisen, begin van het schema gelezen. De andere partijen niet geopend. Staat nog niet in de les of het deck. |
 | Vwo 4-map, Speelstukken | Boogie Woogie 101, Gospel 101, St. Louis Blues (mscz), 30 licks | Boogie Woogie op de eerste bladzijde in G. Geen van deze is als PT1-stuk aangewezen. |
 
 **Toonsoort tegenstrijdig.** In C: lesmodus, deck 10.1, deck 08.2, de rubric (Es, Fis) en het schema op dia 5 van deck 08.1. In A: speelkaart BL 1, kaart TL 1a (blue note es) en, zo te zien, Backwater blues. De lijst "klaarzetten" vraagt om het "BL schema op de standaards", en dat staat in A. Is er in C geoefend, print dan dia 5 van deck 08.1 en niet BL 1.
