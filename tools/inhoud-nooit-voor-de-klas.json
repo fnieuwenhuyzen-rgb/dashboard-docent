@@ -359,6 +359,94 @@
             "docent": "Beoordeling in Lesdag of op het formulier. Iedereen krijgt een eigen cijfer, ook in een groep. Niemand speelt voor de klas."
           }
         }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "vwo5",
+            "w": 8,
+            "slot": "l1"
+          }
+        ],
+        "doel": "Je speelt je solowerk en je samenspelstuk voor de docent, in het P9-format dat we vorige week hebben geoefend.",
+        "fasenExtra": {
+          "1": {
+            "stappen": [
+              "Iedereen werkt in een eigen hoek. De volgorde staat op het bord.",
+              "Aan de beurt? Dan kom ik bij je staan. Zeg kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.",
+              "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.",
+              "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."
+            ],
+            "docent": "Scorelijst per leerling: solo en samenspel apart. Donderdag de resterende uitvoeringen. Opnemen met het opnameapparaat van de docent, zodat de format-reflectie thuis kan. Niemand speelt voor de klas."
+          }
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "vwo5",
+            "w": 8,
+            "slot": "l3"
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "stappen": [
+              "Zelfde afspraken als maandag: eigen hoek, ik kom bij je staan.",
+              "Wie al geweest is, oefent zonder geluid of wacht buiten het lokaal.",
+              "Daarna is P9 afgerond voor iedereen."
+            ],
+            "docent": "Scorelijst afmaken; opnamen bewaren in de klasmap. Niemand speelt voor de klas."
+          }
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "mavo4",
+            "w": 7,
+            "slot": "l2"
+          }
+        ],
+        "titel": "Tussenstand: meeluisteren met feedback",
+        "detail": "Elke groep speelt in de eigen hoek voor de docent; feedback op samenspel, ritme en presentatie.",
+        "vraag": "Hoe klinkt ons nummer, en wat moet er nog beter?",
+        "doel": "Je speelt je nummer voor de docent en krijgt feedback op samenspel, ritme en presentatie.",
+        "criteria": [
+          "Onze groep speelt een nummer helemaal door voor de docent",
+          "Ik noem in mijn groep één tip en één top",
+          "Ik weet wat mijn groep voor de volgende repetitie gaat verbeteren"
+        ],
+        "formatief": {
+          "soort": "meeluisteren met feedback",
+          "tekst": "Twee tips en één top per groep, van de docent."
+        },
+        "fasenExtra": {
+          "0": {
+            "kop": "Zo gaat de tussenstand",
+            "stappen": [
+              "Elke groep werkt in een eigen hoek.",
+              "Ik kom bij jullie langs en jullie spelen het nummer voor mij.",
+              "Je krijgt één top en twee tips: samenspel, ritme en presentatie."
+            ],
+            "docent": "Wo 14 okt is een ontwikkeldag (leerlingen vrij): de les kan uitvallen of verschuiven. Niemand speelt voor de klas."
+          },
+          "1": {
+            "kop": "Spelen met feedback",
+            "stappen": [
+              "Oefen het nummer in je groep tot ik langskom.",
+              "Kom ik langs? Dan spelen jullie het nummer, zo ver als het lukt.",
+              "Daarna krijg je één top en twee tips."
+            ],
+            "docent": "Ongeveer vier minuten per groep. Noteer zelf voor elke leerling een eerste indruk op de onderdelen van het P2-formulier: techniek, timing, samenspel, samenwerking. Niet te veel corrigeren."
+          },
+          "3": {
+            "stappen": [
+              "Vul je Format zelfbeoordeling P2 in voor deze tussenstand.",
+              "Thuis: Musicbox, boxen 'Het orkest' en 'Koor en meerstemmigheid'. Leer stemsoorten, ensembles en orkestvormen."
+            ]
+          }
+        }
       }
     ]
   }
