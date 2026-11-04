@@ -439,7 +439,7 @@ function render() {
   const concert = bmConcertAan(); document.body.classList.toggle('bm-concert', concert);
   const liggen = blijftLiggen().length; const recNu = reclameOpen(vandaag()).length;
   $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k || (k === 'nu' && route.naam === 'regie') ? 'aria-current="page"' : ''}><span class="ico" aria-hidden="true">${ICO[k] || ''}</span><span class="nl">${n}${k === 'nu' && liggen ? ` <span class="nav-tel" title="${liggen} ${liggen === 1 ? 'taak blijft' : 'taken blijven'} liggen">${liggen}</span>` : ''}${k === 'reclame' && recNu ? ` <span class="nav-tel" title="${recNu} reclame vandaag of eerder">${recNu}</span>` : ''}</span></a>`).join('');
-  if (concert) waak(true); else if (route.naam !== 'regie' && !LES) waak(false);
+  if (concert) waak(true); else if (route.naam !== 'regie' && !LES && !LESKLOK.loopt()) waak(false);
   const f = { nu: viewNu, regie: viewRegie, vandaag: viewVandaag, week: viewWeek, jaar: viewJaar, rooster: viewRooster, sectie: viewSectie, reclame: viewReclame, instellingen: viewInstellingen, beoordelen: viewBeoordelen, kompas: viewKompas }[route.naam] || viewNu;
   try { $('#main').innerHTML = f(); }
   catch (e) { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Dit scherm lukt nu niet</h2><p class="lead">Er ging iets mis bij het tekenen: ${esc(e && e.message)}. De andere onderdelen in het menu werken nog.</p></div>`; } // nooit een leeg scherm
@@ -1757,9 +1757,9 @@ function viewRegie() {
     return `<div class="kop"><div><p class="eyebrow">Regie</p><h1>Het bord is niet open</h1></div></div><div class="kaart"><p class="lead">Open het bord opnieuw en sleep het venster naar het digibord. Of geef de les op dit scherm.</p>
       <div class="knoppen" style="margin-top:.6rem"><button class="btn hoofd" data-bord="${esc(uid)}|${s}">Bord openen</button><button class="btn" data-start="${esc(uid)}|${s}">Les op dit scherm</button><a class="btn" href="#nu">Naar Nu</a></div></div>`;
   }
-  const sl = RG.slides[RG.i] || {}; const rest = minuten(RG.eind) - nuMin();
+  const sl = RG.slides[RG.i] || {};
   const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
-  return `<div class="kop"><div><p class="eyebrow">Regie · alleen op dit scherm</p><h1>${esc(RG.groep)} · ${esc(RG.titel)}</h1><div class="sub">${esc(RG.start)}–${esc(RG.eind)}${rest > 0 && s === vandaag() ? ' · nog ' + rest + ' min les' : ''}</div></div><div class="knoppen"><button class="btn" data-rg="sluit">Bord sluiten</button></div></div>
+  return `<div class="kop"><div><p class="eyebrow">Regie · alleen op dit scherm</p><h1>${esc(RG.groep)} · ${esc(RG.titel)}</h1><div class="sub">${esc(RG.start)}–${esc(RG.eind)}</div></div><div class="knoppen"><button class="btn" data-rg="sluit">Bord sluiten</button></div></div>
   <div class="rg"><div class="kaart"><p class="eyebrow">Op het bord</p><h2>${esc(slideNaam(sl))}</h2>
     ${sl.min ? `<div class="rg-klok ${RG.left <= 120 && RG.tot >= 300 ? 'bijna' : ''}" id="rgKlok"><b id="rgTijd">${pad(Math.max(0, RG.left))}</b><span>${RG.loopt ? 'loopt' : 'staat stil'}</span></div>` : ''}
     ${sl.docent ? `<div class="rg-notitie"><b>Alleen jij ziet dit</b>${esc(sl.docent)}</div>` : ''}
@@ -2135,7 +2135,7 @@ async function syncKlik(D) {
 function viewInstellingen() {
   const on = M365.enabled(); const acc = M365.account;
   return `<div class="kop"><div><h1>Instellingen</h1></div></div>
-  ${syncKaart()}${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
+  ${syncKaart()}<div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div>${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
   <div class="kaart"><h2>Rooster uit Zermelo</h2>${zProxy() ? `<p class="lead">Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie) en plak die hier. Lesdag leest dan vak, groep, lokaal en soort afspraak rechtstreeks uit Zermelo. De koppeling gaat mee met synchroniseren. Verwijderen hier trekt hem niet in: dat doe je in Zermelo bij Koppelingen.</p>
     <form class="form" id="zKoppelForm"><div class="rij"><label style="flex:3 1 18rem">Koppelcode <input id="zCode" type="password" autocomplete="off" placeholder="${zApiToken() ? 'gekoppeld' : '12 cijfers'}"></label><button class="btn hoofd" type="submit">Koppelen</button>${zApiToken() ? '<button class="btn rood" type="button" data-zapiweg="">Koppeling verwijderen</button>' : ''}</div></form>
     <p class="lead">Reserve: als de koppeling niet werkt, gebruikt Lesdag je agendalink. Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
@@ -2225,6 +2225,17 @@ function bewaarBewerk(f) {
   S.les[id] = o; sluit(); bewaar(); toast('Les opgeslagen');
 }
 
+/* ---------- lesklok: de klok zelf staat in lesklok.js ---------- */
+function lesklokUren() {
+  const s = vandaag(); const p = planning(s, s)[s]; if (!p || p.reden) return [];
+  return (p.uren || []).map(x => {
+    const u = { van: minuten(x.u.start), tot: minuten(x.u.eind), groep: x.u.groep, uitval: !!x.uitval };
+    if (x.item) { const l = les(x.item);
+      u.stil = l.type === 'toets' && (toetsVan(x.item.lg, l.toets) || {}).soort !== 'praktijk'; // een praktijktoets ruimt wel op
+      u.strookje = /strookje/i.test(JSON.stringify(l.fasen || [])) || bmVoor(x.item).some(m => m.strookje); }
+    return u;
+  });
+}
 /* ---------- lesmodus ---------- */
 let LES = null;
 function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de regie zit in het andere venster
@@ -2250,13 +2261,14 @@ function toonSlide() {
   const fasen = P.slides.filter(x => x.k === 'fase'); const fi = fasen.indexOf(sl);
   if (sl.min) { P.left = sl.min * 60; P.tot = sl.min * 60; } else { P.left = 0; P.tot = 0; }
   $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
-  $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="klok" id="klok">${klok()}</span></div>
+  $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
   <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}</div>
   ${sl.k === 'fase' && sl.min ? timerHtml() : ''}
   <div class="notities ${P.notities && sl.docent && sl.docent !== true ? 'open' : ''}" id="notities">${sl.docent && sl.docent !== true && !P.bord ? `<b>Docent</b> ${esc(sl.docent)}` : ''}</div>
   <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${sl.docent && sl.docent !== true && !P.bord ? `<button data-l="notities" aria-pressed="${P.notities}">notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
   if (sl.min) timer(true);
   bordZeg();
+  LESKLOK.tik(); // de band en de resttijd staan meteen goed op de nieuwe dia
 }
 function klok() { const d = new Date(); return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes(); }
 function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.left, LES.tot)}</div>`; }
@@ -2930,6 +2942,7 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   try { BM = await (await fetch('data/beoordeling.json', { cache: 'no-cache' })).json(); } catch (e) { BM = []; }
   try { RC = await (await fetch('data/reclame.json', { cache: 'no-cache' })).json(); } catch (e) { RC = null; }
   herstelStaat();
+  LESKLOK.start({ uren: lesklokUren, vandaag, esc, waak, lesOpen: () => !!LES, route: () => route.naam, klaar: () => !!B });
   if (route.naam === 'bord') { // dit venster is het digibord
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
