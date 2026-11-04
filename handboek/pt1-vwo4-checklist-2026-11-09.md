@@ -1,12 +1,12 @@
 # PT1 vwo 4: checklist (stand 4-11)
 
-**Eerst de datum: PT1 staat in de eigen Lesdag van Frans niet meer op ma 9-11.** In de afwijkingenlijst en de ankers staat sinds 3-11: "PT1 verplaatst naar ma 23 nov", reden "Diverse uitgevallen lessen" (zelf gelezen in de live staat). De sessie week-9-11 las in Zermelo dat de lessen van ma 9-11 en wo 11-11 vervallen. Dat heb ik niet zelf gezien. Op ma 9-11 staat het nog in `OPEN-PUNTEN.md`, `basis.json`, de studiewijzer en het model (dus ook op tabblad Rubric van het scoreblad). De opdracht "klaar voor maandag" ging daar ook van uit.
+**PT1 gaat niet op ma 9-11: die les vervalt (Frans, 4-11: "Nee, vervalt"). De nieuwe datum heeft hij nog niet bevestigd.** In de afwijkingenlijst en de ankers staat sinds 3-11: "PT1 verplaatst naar ma 23 nov", reden "Diverse uitgevallen lessen" (zelf gelezen in de live staat). Op ma 9-11 staat het nog in `OPEN-PUNTEN.md`, `basis.json`, de studiewijzer en het model (dus ook op tabblad Rubric van het scoreblad). De opdracht "klaar voor maandag" ging daar ook van uit.
 
 **Nog niet klaar.** De beoordeling werkt, maar datum, stuk, toonsoort en opstelling staan niet vast. Daarvoor zijn zes antwoorden van Frans nodig.
 
 ## Vragen aan Frans
 
-0. **Is het ma 23-11?** Zo ja, dan is er meer tijd, en is er misschien les vóór de toets (ma 16 en wo 18-11 staan nu op pop, week 11). Komen de generale en de uitleg over improviseren dan alsnog? Dan kloppen deze zinnen in deck en lesmodus niet meer: "generale vervallen", "dit is de enige uitleg die ze krijgen", de twee minuten uitleg, en "maandag 16 november" als uitwijk voor de zelfbeoordeling. De rubric van 3-11 (C-Es-G is genoeg) is ook gemaakt omdat de uitleg was vervallen. Ik heb hier niets aan veranderd.
+0. **Is de nieuwe datum ma 23-11?** Zo ja, dan is er meer tijd, en is er misschien les vóór de toets (ma 16 en wo 18-11 staan nu op pop, week 11). Komen de generale en de uitleg over improviseren dan alsnog? Dan kloppen deze zinnen in deck en lesmodus niet meer: "generale vervallen", "dit is de enige uitleg die ze krijgen", de twee minuten uitleg. De rubric van 3-11 (C-Es-G is genoeg) is ook gemaakt omdat de uitleg was vervallen. Ik heb hier niets aan veranderd.
 1. **Welk stuk speelt elke groep, en hoeveel groepen zijn er?** Dat staat nergens. Het deck rekent 2, 3 en 4 groepen voor. Met het aantal kies je het tijdschema op dia 1 (notities).
 2. **In welke toonsoort is er geoefend, A of C?** De bronnen spreken elkaar tegen, zie onder. Dit bepaalt welke uitleg en welk schema maandag op tafel liggen.
 3. **Opstelling: mag dit?** Nu staat er "Publiek luistert zoals op een concert" en "Applaus. Volgende groep". Dat past niet bij nooit voor de klas. Voorstel: elke groep in een eigen hoek, om de beurt spelen, Frans staat bij die groep en de rest oefent zonder geluid. Allemaal tegelijk spelen werkt hier slecht: er is één drumstel en er zijn versterkers, en de opname van elke groep gaat dan niet meer. Waar staat dan het drumstel: blijft het staan en loopt de drummer van een groep ernaartoe?
@@ -15,7 +15,7 @@
 
 Kleine keuzes, zonder antwoord blijft het zoals het is:
 - Het format heeft een vak "Tip van een klasgenoot". Zonder publiek wordt dat een groepsgenoot, of het blijft leeg.
-- PT1 houdt het volledige format, geen strookje. Het strookje is nog niet in de klas geprobeerd. De vijf minuten zijn krap, het deck geeft uiterlijk ma 16-11 als uitwijk.
+- PT1 houdt het volledige format, geen strookje. Het strookje is nog niet in de klas geprobeerd. De vijf minuten zijn krap, het deck geeft de volgende les als uitwijk.
 
 ## Bladmuziek: wat ontbreekt
 
@@ -44,6 +44,7 @@ Niets gedownload of gemaakt.
 In deck 10.1, in de sectiemap (alleen notities; dia's ongewijzigd):
 - "Dit staat ook op kaart TL 1a" klopte niet. Er staat nu dat de kaart dezelfde ladder in A heeft.
 - Bij improvisatie stond de grondtoon-5 uit het besluit van 3-11 nog niet. Die staat er nu.
+- De uitwijk voor de zelfbeoordeling noemde "maandag 16 november", en die datum hing aan 9-11. Er staat nu alleen nog "aan het begin van de volgende les".
 
 Kopie van het deck van vóór deze wijziging: `C:\Users\nwn\AppData\Local\Temp\claude\3126362be3b9924a\b4db6619-c1f5-4d5e-9d48-9328c9938141\scratchpad\deck-voor-4-11`, plus de versiegeschiedenis van OneDrive. Het deck is hierna niet in PowerPoint geopend.
 
