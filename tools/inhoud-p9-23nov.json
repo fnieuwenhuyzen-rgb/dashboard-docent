@@ -1,0 +1,134 @@
+{
+  "_uitleg": "P9 vwo 5 verplaatst naar ma 23-11-2026 (lesweek 12), besluit Frans 4-11. Vorm: eigen hoek, een tegelijk, Frans staat bij die leerling of groep (ja van Frans 4-11). Vervangt de decks 08.1 en 08.3 uit inhoud-week8.json. Les-id's blijven vwo5:8.1 en vwo5:8.3.",
+  "vwo5": {
+    "klas": "vwo 5",
+    "thema": "klas5",
+    "map": "02 Keuzevak muziek\\VWO\\VWO 5\\Lessen 2026-2027",
+    "blok": "Periode 1 · Het classicisme",
+    "blokKort": "praktijktoets P9",
+    "lessen": [
+      {
+        "bestand": "08.1 Praktijktoets P9 - eigen hoek.pptx",
+        "kort": "Praktijktoets P9",
+        "code": "P1 · P9",
+        "week": 12,
+        "koppel": [{ "lg": "vwo5", "w": 8, "slot": "l1" }],
+        "titel": "Praktijktoets P9: solowerk en samenspel",
+        "type": "toets",
+        "vraag": "Wat laat ik vandaag horen?",
+        "doel": "Je speelt je solowerk en samenspelstuk voor de docent, in het P9-format.",
+        "criteria": ["Ik begin en eindig overtuigend", "Ik speel door na een fout", "Ik luister naar mijn medespelers"],
+        "voorbereiding": [
+          "Zet de volgorde op het bord: eerst de duo's en groepen, dan de solo's.",
+          "Deel het lokaal in hoeken in, zodat iedereen weet waar hij of zij zit.",
+          "Leg klaar: beoordelingsformulier en scoreblad P9, P9-format voor de leerlingen, opnameapparaat.",
+          "Vwo 6 zit volgens het rooster in dit uur. P9 is een toets van vwo 5: bedenk vooraf wat vwo 6 doet."
+        ],
+        "notitieTitel": [
+          "P9 stond op 26 oktober en is verplaatst naar maandag 23 november, omdat er lessen waren uitgevallen.",
+          "Deze les 13:40 tot 14:25, het vervolg om 15:25. Daartussen heb je vwo 4 met PT1. Wie vandaag niet aan de beurt komt, speelt in het vervolg.",
+          "Het solostuk mag ook uit de romantiek komen."
+        ],
+        "notitieDoel": [
+          "Niemand speelt voor de klas. Iedereen werkt in een eigen hoek en jij staat bij wie aan de beurt is.",
+          "Je beoordeelt zes punten; het cijfer is score maal weging, opgeteld en gedeeld door 10. Presentatie 1, toon en zuiverheid 2, ritme en tempo 2, uitdrukking en stijl 2, eigen partij 1, luisteren en reageren 2.",
+          "P9 telt 6 mee voor het SE en is niet herkansbaar."
+        ],
+        "fasen": [
+          {
+            "min": 10, "soort": "start",
+            "kop": "Inzingen: And the glory of the Lord (nr. 4), daarna Hallelujah (nr. 44)",
+            "stappen": ["Nr. 4 vanaf het begin; nr. 44 herhalen tot 'King of Kings'.", "Daarna: instrumenten stemmen, standaards klaar, telefoon weg.", "De volgorde van vandaag staat op het bord. Ga naar je hoek."],
+            "docent": "Kort houden: het inzingen is bedoeld om de spanning uit de ruimte te halen.",
+            "notitie": {
+              "vertel": ["We zingen eerst samen. Dat haalt de spanning weg.", "Daarna gaat iedereen naar de eigen hoek. Niemand speelt voor de klas: ik kom bij je staan als je aan de beurt bent."],
+              "letop": ["Na tien minuten stoppen, ook als het nog niet af is. De uitvoeringen hebben de tijd nodig."]
+            }
+          },
+          {
+            "min": 35, "soort": "doen",
+            "kop": "De uitvoeringen: zo gaat het",
+            "stappen": ["Iedereen werkt in een eigen hoek. De volgorde staat op het bord.", "Aan de beurt? Dan kom ik bij je staan. Zeg kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.", "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.", "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."],
+            "docent": "Scorelijst per leerling: solo en samenspel apart. Niemand speelt voor de klas.",
+            "beeld": { "soort": "kaarten", "items": [{ "k": "Presentatie", "t": "begin, slot, doorspelen" }, { "k": "Toon en zuiverheid", "t": "klinkt het zoals bedoeld?" }, { "k": "Ritme en tempo", "t": "blijft het staan?" }, { "k": "Uitdrukking en stijl", "t": "dynamiek, frasering, karakter" }, { "k": "Samenspel", "t": "eigen partij, luisteren en reageren" }] },
+            "notitie": {
+              "vertel": ["Stuk, componist en bezetting noemen hoort bij de beoordeling van presentatie. Dat zeggen ze tegen jou, in de hoek. Daarna spelen, en doorspelen na een fout.", "Solowerk en samenspelstuk beoordeel je apart: toon, ritme en uitdrukking bij het solowerk, eigen partij en luisteren bij het samenspel. Presentatie geldt voor allebei."],
+              "vragen": [{ "v": "Wat doe je als het misgaat?", "a": "Doorspelen. Dat hoort bij presentatie." }],
+              "letop": ["Opnemen met het opnameapparaat van de docent. Zet de opnamen na de les, per leerling een bestand, in de gedeelde map met P9-opnamen, zodat de reflectie thuis kan.", "Wat niet lukt in deze les, komt in het vervolg om 15:25."]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "toets",
+          "tekst": "P9 telt mee. Je krijgt je cijfer na de tweede toetsles, met een opmerking per onderdeel.",
+          "notitie": { "vertel": ["Zeg dat het cijfer komt na het vervolg, met per onderdeel een opmerking."] }
+        },
+        "fotos": { "titel": "fortepiano-walter.jpg", "doel": "concertzaal.jpg", "fase": ["messiah-koor.jpg", null] }
+      },
+      {
+        "bestand": "08.3 Praktijktoets P9 vervolg - eigen hoek.pptx",
+        "kort": "P9 vervolg, Brahms naast Mozart",
+        "code": "P1 · P9",
+        "week": 12,
+        "koppel": [{ "lg": "vwo5", "w": 8, "slot": "l3" }],
+        "titel": "Praktijktoets P9, vervolg",
+        "type": "toets",
+        "vraag": "Wat hoor je als je Brahms naast Mozart zet?",
+        "doel": "De laatste uitvoeringen van P9. Daarna vergelijk je een pianoconcert van Brahms met een van Mozart.",
+        "criteria": ["Resterende uitvoeringen gedaan", "Drie verschillen tussen Brahms en Mozart benoemd"],
+        "thuis": { "mb": "Romantiek N2 b2 afmaken · Toonsoorten N2 b4 Modulaties", "info": "Romantiek › Stijlkenmerken: virtuositeit en chromatiek", "learn": "chromatiek, tertsverwantschap" },
+        "voorbereiding": [
+          "Zet twee fragmenten klaar: Mozart, pianoconcert KV 488 in A groot, eerste deel, opening en piano-inzet; Brahms, pianoconcert nr. 2 opus 83, opening met hoorn en piano.",
+          "Scoreblad P9 bij de hand: wie moet nog?"
+        ],
+        "notitieTitel": [
+          "Tweede P9-les op maandag 23 november, 15:25 tot 16:10. Vwo 4 had je net voor PT1.",
+          "Eerst de laatste uitvoeringen, in de eigen hoek. Daarna luisteren. Is het spelen eerder klaar, dan begin je eerder met luisteren."
+        ],
+        "notitieDoel": [
+          "Na de 25 minuten is P9 voor iedereen afgerond. Het luisterstuk is geen toets: het laat horen wat er in honderd jaar veranderde.",
+          "Brahms kennen ze van het concert in De Doelen op 15 oktober."
+        ],
+        "fasen": [
+          {
+            "min": 25, "soort": "doen",
+            "kop": "De laatste uitvoeringen",
+            "stappen": ["Zelfde afspraken als de eerste les: eigen hoek, ik kom bij je.", "Wie al geweest is, oefent zonder geluid of wacht buiten het lokaal.", "Daarna is P9 afgerond voor iedereen."],
+            "docent": "Scorelijst afmaken; opnamen bewaren in de gedeelde map met P9-opnamen. Niemand speelt voor de klas.",
+            "notitie": {
+              "vertel": ["Wie nog moet, begint meteen. Noem stuk, componist en bezetting, en speel.", "Wie al geweest is en het P9-format nog niet af heeft, maakt dat nu af."],
+              "letop": ["P9 is niet herkansbaar. Blijft er na 25 minuten iemand over, dan moet je zelf een moment kiezen."]
+            }
+          },
+          {
+            "min": 15, "soort": "luisteren",
+            "kop": "Brahms naast Mozart: een pianoconcert, honderd jaar later",
+            "stappen": ["Eerst Mozart: een pianoconcert uit de jaren 1780. Hoe groot is het orkest, hoe is de piano begeleid, hoe lang zijn de zinnen?", "Dan Brahms: een pianoconcert uit de negentiende eeuw. Wat is er gegroeid, wat is dikker, wat is anders?", "Schrijf drie verschillen op: bezetting, klank, vorm of karakter."],
+            "klaar": "Welk fragment zou je kiezen voor een film over hoop? En waarom?",
+            "docent": "Twee keer twee minuten is genoeg.",
+            "notitie": {
+              "vertel": ["Mozart schreef KV 488 in 1786. Het orkest is klein: fluit, klarinetten, fagotten, hoorns en strijkers, zonder trompetten en pauken.", "Brahms voltooide zijn tweede pianoconcert in 1881. Het begint met een hoorn, en de piano antwoordt. Het orkest is groter, met vier hoorns, trompetten en pauken. Het concert heeft vier delen in plaats van de gebruikelijke drie."],
+              "vragen": [{ "v": "Wat is het grootste verschil in bezetting?", "a": "Brahms heeft meer blazers en pauken." }, { "v": "Wat doet de piano bij Mozart en wat bij Brahms?", "a": "Bij Mozart lichte, heldere lijnen. Bij Brahms grote akkoorden, die het tegen het hele orkest opnemen." }]
+            }
+          },
+          {
+            "min": 5, "soort": "gesprek",
+            "kop": "Wat maakt classicisme classicisme?",
+            "stappen": ["Jullie drie verschillen op het bord.", "Welke daarvan horen bij het classicisme zelf: evenwicht, heldere zinnen, bescheiden orkest?", "Thuis staat op de volgende dia."],
+            "docent": "Afsluiten met de kernwoorden van het blok: periodebouw, Alberti-bas, sonatevorm, orkest zonder trombones.",
+            "notitie": {
+              "vertel": ["Hiermee sluit je het classicisme af. T5 in toetsweek 2 gaat over classicisme en romantiek samen, dus dit verschil komt terug."],
+              "vragen": [{ "v": "Wat is een Alberti-bas?", "a": "Een gebroken akkoord in de linkerhand, in een vast patroon." }]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "gesprek",
+          "tekst": "Drie verschillen tussen Brahms en Mozart op het bord. Welke horen bij het classicisme zelf?",
+          "notitie": { "vertel": ["Laat elk tweetal één verschil noemen tot er drie op het bord staan."] }
+        },
+        "fotos": { "titel": "mozart-lange-1782.jpg", "doel": "brahms.jpg", "fase": ["concertzaal.jpg", "brahms.jpg", null] }
+      }
+    ]
+  }
+}

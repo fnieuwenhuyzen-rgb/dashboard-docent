@@ -5,7 +5,7 @@ const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 const droog = process.argv.includes('--droog');
 const { spUrl } = require('./sp');
-const NAMEN = ['week10', 'kerst-klas3', 'herbouw-mavo', 'bb1', 'kmu3', 'mavo3-p1', 'mavo3-groepjes', 'klas3-groepjes'];
+const NAMEN = ['week10', 'kerst-klas3', 'herbouw-mavo', 'bb1', 'kmu3', 'mavo3-p1', 'mavo3-groepjes', 'klas3-groepjes', 'nooit-voor-de-klas', 'p9-23nov', 'pt1-23nov'];
 const VELDEN = ['titel', 'type', 'detail', 'vraag', 'doel', 'criteria', 'identiteit', 'benodigd'];
 const blokken = NAMEN.flatMap(n => Object.entries(JSON.parse(fs.readFileSync(path.join(__dirname, 'inhoud-' + n + '.json'), 'utf8'))).filter(([k]) => k[0] !== '_').map(([, b]) => b));
 

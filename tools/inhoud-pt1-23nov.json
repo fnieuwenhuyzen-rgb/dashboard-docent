@@ -1,0 +1,300 @@
+{
+  "_uitleg": "PT1 vwo 4 op ma 23-11 (besluit Frans 4-11): één groep van vijf, Backwater blues in A, toets in 009. Les 8.2 (ma 16-11) improviseren, les 10.2 (wo 18-11) generale, les 10.1 de toets. Les 10.2 was het uitvaluur van de themadag: zo krijgt de generale een eigen les zonder de weekindeling te wijzigen. Bouwen: node tools/maak-decks.js tools/inhoud-pt1-23nov.json, daarna zet-decks-in-leergang.js en koppel-presentaties.js.",
+  "vwo4": {
+    "klas": "vwo 4",
+    "thema": "klas4",
+    "map": "02 Keuzevak muziek\\VWO\\VWO 4\\Lessen 2026-2027",
+    "blok": "Periode 1 · De voorlopers van de jazz",
+    "blokKort": "voorlopers van de jazz",
+    "lessen": [
+      {
+        "bestand": "08.2 Improviseren op de bluestoonladder in A.pptx",
+        "kort": "Improviseren in A",
+        "code": "P1 · les 8.2",
+        "week": 8,
+        "koppel": [{ "lg": "vwo4", "w": 8, "slot": "l2" }],
+        "titel": "Improviseren op de bluestoonladder in A",
+        "type": "praktijk",
+        "detail": "Partij en niveau kiezen in Backwater blues; bluestoonladder in A; soloruil.",
+        "vraag": "Durf ik te improviseren op de bluestoonladder?",
+        "doel": "Je kiest je partij en niveau in Backwater blues en improviseert vier maten op de bluestoonladder in A.",
+        "criteria": ["Ik ken mijn partij en mijn niveau", "Mijn improvisatie blijft in het schema", "Wij beginnen en eindigen samen"],
+        "fotos": { "titel": "juke-joint-1939.jpg", "doel": "leadbelly.jpg" },
+        "benodigd": [
+          "Musicbox op de laptop: box Voorlopers van Jazz, Backwater blues, Musicsheets",
+          "Keyboards, gitaar, basgitaar, drumstel in 009, versterkers",
+          "Kaart TL 1a (bluestoonladder in A) en kaart BL 1",
+          "Opnameapparaat van de docent"
+        ],
+        "voorbereiding": [
+          "Bekijk de Leadsheet van Backwater blues in Musicbox. Kijk waar de zangregels stoppen: daar antwoordt de band.",
+          "Vijf partijen voor vijf leerlingen: piano, bas, gitaar, drums en zang. Een dubbele partij mag ook, als er dan maar bas en drums zijn.",
+          "De niveaus mogen door elkaar, want alle niveaus hebben twaalf maten."
+        ],
+        "notitieTitel": [
+          "Over een week is PT1. Vandaag kiezen we het stuk vast: Backwater blues van Bessie Smith. Jullie kennen het uit het huiswerk in Musicbox.",
+          "En vandaag krijg je de uitleg over improviseren die nog niet geweest is."
+        ],
+        "notitieAgenda": [
+          "Eerst kort Messiah. Dan partij en niveau kiezen. Dan de bluestoonladder in A. Dan samen spelen met een soloruil."
+        ],
+        "notitieDoel": [
+          "PT1 is op maandag 23 november, in dit lokaal. Jullie zijn met zijn vijven één band. Er is geen publiek: alleen ik luister.",
+          "Niveau is wat je speelt. De score zegt hoe goed je het speelt."
+        ],
+        "fasen": [
+          {
+            "min": 5, "soort": "start",
+            "kop": "Messiah: kort inzingen",
+            "stappen": ["Nr. 4: de inzet van de alten, dan de rest erbij.", "Nr. 44: alleen het begin tot de eerste 'King of Kings'.", "Eén aandachtspunt: eindklinkers samen loslaten."],
+            "docent": "Opname van de oefensite erbij. Niet langer dan vijf minuten: vandaag gaat de tijd naar PT1.",
+            "notitie": { "vertel": ["We zingen ons even warm met de Messiah. Kort, want we hebben de tijd nodig voor de blues."] }
+          },
+          {
+            "min": 10, "soort": "doen",
+            "kop": "Backwater blues: kies je partij en je niveau",
+            "stappen": ["Kies: piano, bas, gitaar, drums of zang.", "Kies je niveau in de Musicsheets. Niveaus mogen door elkaar.", "Twaalf maten in A. Speel je partij één keer door, de rest telt mee."],
+            "docent": "Noteer wie wat speelt en op welk niveau: dat komt op het formulier. Op de chordsheet staat tempo 100; begin langzamer als dat nodig is.",
+            "notitie": {
+              "vertel": [
+                "Backwater blues gaat over een overstroming. Bessie Smith nam het op in 1927. Het is een blues van twaalf maten, en de akkoorden zijn A, D en E. Dat is I, IV en V, net als in het schema dat je kent, alleen op een andere plek.",
+                "Musicbox heeft drie niveaus. Niveau 1 is het eenvoudigst. Kies wat je over een week zeker kunt spelen. Lukt het, dan kun je altijd nog omhoog."
+              ],
+              "vragen": [{ "v": "Welk akkoord is de I, de IV en de V in A?", "a": "A, D en E." }],
+              "letop": ["In les 7 oefenden ze C, F en G. Wie op keyboard speelt, moet nu de Cis, Fis en Gis vinden. Laat de greep van A, D en E even zien.", "Zorg dat bas en drums bezet zijn."]
+            }
+          },
+          {
+            "min": 10, "soort": "uitleg",
+            "kop": "De bluestoonladder in A: zes noten, drie zijn genoeg",
+            "stappen": ["A · C · D · Es · E · G · A. De C en de Es zijn de blue notes: ze schuren tegen het akkoord aan.", "Begin met drie noten: A, C en E. Daar kun je al een solo mee spelen.", "Een goede solo heeft rust: speel een motief, wacht, speel het nog eens iets anders."],
+            "klaar": "Speel een motief van twee noten en herhaal het in elke maat van het schema.",
+            "docent": "Kaart TL 1a. Voordoen op het keyboard: eerst A-C-E in het ritme van de zangregel, dan de Es erbij. Niet de hele ladder op en neer laten spelen.",
+            "beeld": { "soort": "kaarten", "items": [{ "k": "A", "t": "grondtoon · altijd goed" }, { "k": "C", "t": "blue note · schuurt" }, { "k": "D", "t": "op het IV-akkoord" }, { "k": "Es", "t": "blue note · doorgang" }, { "k": "E", "t": "kwint · rustpunt" }, { "k": "G", "t": "septiem · bluesklank" }] },
+            "notitie": {
+              "vertel": [
+                "Zes tonen: A, C, D, Es, E en G. De C en de Es zijn de blue notes. De akkoorden hebben een Cis, en jij speelt er een C tegenaan. Dat schuurt. Dat mag, dat is de blues.",
+                "Je hebt niet alle zes nodig. Met A, C en E kun je al een solo spelen. Speel een klein motief van twee of drie noten. Laat dan rust. Speel het nog eens, iets anders.",
+                "Bij PT1 krijgt iedereen vier maten. De band speelt door, gewoon zachter. Geen idee? Speel de grondtoon in het ritme van de zangregel. Dan ben je nog steeds aan het spelen, en je staat dan op een 5."
+              ],
+              "voorbeelden": ["Voordoen in acht tellen: A-C-E, rust, A-C-E iets later ingezet. Zo klinkt een motief dat terugkomt.", "Niet de toonladder op en neer spelen. Dat klinkt als oefenen."],
+              "vragen": [{ "v": "Welke drie tonen zijn genoeg?", "a": "A, C en E." }, { "v": "Wat doe je als je niets weet?", "a": "De grondtoon spelen in het ritme van de zangregel en doorgaan." }],
+              "letop": ["Drummer: de solo mag op keyboard of gezongen, omdat het onderdeel de bluestoonladder vraagt.", "De Es heet op de bladmuziek soms Dis. Het is dezelfde toets."]
+            }
+          },
+          {
+            "min": 15, "soort": "doen",
+            "kop": "Soloruil: vier maten per persoon",
+            "stappen": ["De band speelt door. Om de vier maten is de volgende aan de beurt. De rest speelt zachter.", "Niemand stopt. Geen inspiratie? Speel de grondtoon in het ritme van de zangregel.", "Daarna: één keer van begin tot eind, met aftellen en een afgesproken slot."],
+            "klaar": "Solo over twaalf maten in plaats van vier.",
+            "docent": "Volgorde van de solo's vastleggen. Vijf solo's zijn twintig maten, dus de laatste vier maten van de tweede ronde speelt iedereen samen.",
+            "notitie": {
+              "vertel": ["Vijf keer vier maten is twintig maten. Twee rondes van twaalf zijn er vierentwintig. Dus de laatste vier maten speel je weer samen, en daar begint het slot of het volgende couplet."],
+              "letop": ["Blijf niet repareren. Wie een fout maakt, stapt in bij de volgende maat."]
+            }
+          },
+          {
+            "min": 5, "soort": "check",
+            "kop": "Klaar-voor-woensdag",
+            "stappen": ["Schrijf op: mijn partij, mijn niveau.", "Drie kruisjes: mijn partij, mijn inzet, mijn improvisatie.", "Woensdag is de generale, maandag daarna PT1."],
+            "docent": "Partijen en niveaus overnemen voor de formulieren. Noem nog niet wie welk couplet zingt: dat is woensdag.",
+            "notitie": { "vertel": ["Thuis oefen je je partij in Musicbox, en één couplet van de zang: bij PT1 zingt iedereen één couplet."] }
+          }
+        ],
+        "formatief": {
+          "soort": "zelfcheck",
+          "tekst": "Partij, inzet, improvisatie: drie kruisjes. Mis je er twee? Oefen thuis met Musicbox.",
+          "notitie": { "vertel": ["Dit is geen cijfer. Het zegt je wat je voor woensdag nog moet oefenen."] }
+        },
+        "thuis": { "mb": "Voorlopers van Jazz N2 b5 Improviseer een solo en b6 Musicsheets: Backwater blues", "extra": "Partij twee keer tien minuten en één couplet zingen; Messiah dagelijks" }
+      },
+      {
+        "bestand": "10.2 Generale PT1 - Backwater blues.pptx",
+        "kort": "Generale PT1",
+        "code": "P1 · les 10.2",
+        "week": 10,
+        "koppel": [{ "lg": "vwo4", "w": 10, "slot": "l2" }],
+        "titel": "Generale PT1: Backwater blues",
+        "type": "praktijk",
+        "detail": "Afspraken maken en Backwater blues twee keer helemaal doorspelen zoals bij PT1.",
+        "vraag": "Staat ons stuk zoals het maandag moet klinken?",
+        "doel": "Je speelt Backwater blues twee keer helemaal door zoals bij PT1: met aftellen, één couplet zang per persoon, soloruil en een slot.",
+        "criteria": ["We tellen af en eindigen samen", "Ik zing mijn couplet", "Ik improviseer vier maten in het schema", "Ik speel zachter onder zang en solo"],
+        "fotos": { "titel": "juke-joint-1939.jpg", "doel": "leadbelly.jpg" },
+        "benodigd": [
+          "Musicbox op de laptop: Backwater blues, Musicsheets en Lyrics",
+          "Keyboards, gitaar, basgitaar, drumstel in 009, versterkers",
+          "Opnameapparaat van de docent",
+          "Klaar-voor-PT1-lijst: partij, inzet, zang, improvisatie"
+        ],
+        "voorbereiding": [
+          "Neem de rubric erbij. Luister zoals je maandag luistert, maar geef nu wel tips.",
+          "Eén keer door duurt ruim drie minuten: vijf couplets (60 maten) en de soloruil (24 maten) zijn 84 maten, op tempo 100 is dat 3 minuten 22."
+        ],
+        "notitieTitel": [
+          "Vandaag doen we alsof het maandag is. Twee keer helemaal door, en daartussen luisteren we terug.",
+          "Dit is geen toets. Fouten nu zijn precies de bedoeling: daar leer je van voor maandag."
+        ],
+        "notitieAgenda": ["Afspraken maken. Eerste keer door. Terugluisteren. Tweede keer door. Lijstje invullen."],
+        "notitieDoel": [
+          "Maandag telt alles mee: presentatie, je partij, je zang, je improvisatie, groove en luisteren. Vandaag oefen je dat allemaal in de echte volgorde."
+        ],
+        "fasen": [
+          {
+            "min": 5, "soort": "start",
+            "kop": "Afspraken: wie doet wat",
+            "stappen": ["Wie telt af?", "Wie zingt welk couplet? Na couplet 3 begin je weer bij 1, dus iedereen zingt er één.", "Volgorde van de solo's, en hoe eindigen we?"],
+            "docent": "Laat ze het zelf regelen. Schrijf de volgorde van de zang en de solo's over voor de formulieren.",
+            "notitie": {
+              "vertel": ["Het verloop is altijd hetzelfde: aftellen, vijf couplets met wisselende zanger, twee rondes soloruil, slot. Musicbox heeft drie couplets, dus de vierde en vijfde zanger zingen couplet 1 en 2 nog een keer."],
+              "letop": ["Lukt spelen en zingen niet tegelijk, dan laat je in jouw couplet je partij liggen. Dat kost geen punten. Bij de drummer: bas en piano houden het vast."]
+            }
+          },
+          {
+            "min": 15, "soort": "doen",
+            "kop": "Eerste keer: helemaal door, zonder stoppen",
+            "stappen": ["Zeg kort wat je speelt, tel af, en ga.", "De zanger zingt de regel. De band antwoordt in de open maten.", "Soloruil: iedereen vier maten. De rest speelt zachter.", "Sluit af zoals afgesproken."],
+            "docent": "Neem op met het opnameapparaat. Niet onderbreken. De rest van de tijd: lastige plekken apart.",
+            "notitie": {
+              "vertel": ["In de blues is de zang de call. De band of een instrument geeft antwoord als de zanger ademhaalt. Dat is de call-and-response die het PTA vraagt."],
+              "letop": ["Valt de band stil, laat dan opnieuw aftellen. Na de eerste keer is er nog tijd voor de plekken die wiebelden, vooral maat 9-10 (E naar D)."]
+            }
+          },
+          {
+            "min": 5, "soort": "gesprek",
+            "kop": "Terugluisteren",
+            "stappen": ["Luister de opname terug, of alleen het stuk dat wiebelde.", "Iedereen één zin: wat doe ik de volgende keer anders?", "Hoor je de zanger en de solist steeds boven de band uit?"],
+            "docent": "Tips van jou mogen hier. Maandag niet meer.",
+            "notitie": {
+              "vertel": ["We luisteren nu als band. Eén zin per persoon, en geen uitleg waarom het misging."],
+              "vragen": [{ "v": "Waar werd het wiebelig?", "a": "Een maat of overgang, niet 'het ging niet goed'." }, { "v": "Hoorde je de zang?", "a": "Zo niet: wie speelt er zachter?" }]
+            }
+          },
+          {
+            "min": 15, "soort": "doen",
+            "kop": "Tweede keer: zoals maandag",
+            "stappen": ["Nu helemaal zoals bij PT1.", "Fout? Doorspelen en instappen op de volgende maat.", "Tijd over? Nog een keer, of oefen je eigen couplet of solo."],
+            "docent": "Luister met de rubric in de hand en onthoud wie nog steun nodig heeft. Geen scores geven.",
+            "notitie": { "vertel": ["Deze keer gaan we niet meer stoppen. Speel het alsof ik een formulier in mijn hand heb."], "letop": ["De zelfbeoordeling doen ze alleen maandag. Vandaag is het lijstje genoeg."] }
+          },
+          {
+            "min": 5, "soort": "check",
+            "kop": "Klaar-voor-PT1-lijst",
+            "stappen": ["Vier kruisjes: mijn partij, mijn inzet, mijn couplet, mijn improvisatie.", "Mis je er twee? Oefen thuis met Musicbox.", "Maandag: zelfde stuk, zelfde afspraken, in dit lokaal."],
+            "docent": "Lijstjes bekijken. Wie twee kruisjes mist, krijgt een tip voor thuis.",
+            "notitie": { "vertel": ["Maandag telt het mee, met weging 3. Niet herkansbaar. Je hebt het vandaag al twee keer gedaan, dus je weet hoe het gaat."] }
+          }
+        ],
+        "formatief": {
+          "soort": "zelfcheck",
+          "tekst": "Klaar-voor-PT1-lijst: partij, inzet, couplet, improvisatie.",
+          "notitie": { "vertel": ["Geen cijfer. Wie twee kruisjes mist, weet wat er thuis nog geoefend moet worden."] }
+        },
+        "thuis": { "mb": "Voorlopers van Jazz N2 b6 Musicsheets: Backwater blues", "extra": "Partij, couplet en solo oefenen voor PT1 op maandag 23 november" }
+      },
+      {
+        "bestand": "10.1 PT1 afnemen - samenspel en zang.pptx",
+        "kort": "Praktijktoets PT1",
+        "code": "P1 · les 10.1",
+        "week": 10,
+        "koppel": [{ "lg": "vwo4", "w": 10, "slot": "l1" }],
+        "bronLes": { "lg": "vwo4", "w": 10, "slot": "l1" },
+        "vraag": "Wat laten we vandaag horen?",
+        "doel": "Je speelt met je band Backwater blues, met je eigen partij, één couplet zang en vier maten improvisatie op de bluestoonladder.",
+        "criteria": ["We tellen af en eindigen samen", "Ik speel door na een fout", "Ik zing mijn couplet", "Ik improviseer vier maten in het schema", "Ik speel zachter onder zang en solo"],
+        "fotos": { "titel": "juke-joint-1939.jpg", "doel": "leadbelly.jpg" },
+        "benodigd": [
+          "Beoordelingsformulier docent: één per leerling, met naam, partij en niveau vooraf ingevuld",
+          "Beoordelen open op de laptop, met de vijf leerlingen als één groep",
+          "Format zelfbeoordeling: één per leerling",
+          "Keyboards, gitaar, basgitaar, drumstel in 009, versterkers",
+          "Musicbox op de laptop: Backwater blues, Musicsheets",
+          "Opnameapparaat van de docent"
+        ],
+        "voorbereiding": [
+          "De toets is in 009, waar het drumstel staat. Zet het klaar voordat ze binnenkomen.",
+          "Je hebt de volgorde van de zang en de solo's van de generale. Controleer of niemand ontbreekt. Mist iemand: gebruik het vak afwezig in Beoordelen, en maak een inhaalafspraak.",
+          "Eén keer door duurt ruim drie minuten (84 maten op tempo 100). Je hoort het stuk dus zeker twee keer, en een derde keer kan ook."
+        ],
+        "notitieTitel": [
+          "Vandaag is PT1. Jullie laten horen wat jullie hebben opgebouwd: je partij, je zang, je solo. Woensdag heb je het al twee keer gedaan.",
+          "Jullie zijn één band, en alleen ik luister. Fout gemaakt? Doorspelen en instappen op de volgende maat. Dat telt juist mee als iets goeds.",
+          "Als iemand vraagt naar het PTA: daar staat 90 minuten. Dat is ruim gerekend, want je bent vaak eerder klaar. Vandaag is deze les genoeg."
+        ],
+        "notitieAgenda": [
+          "Opstellen en afspraken. Twee keer helemaal door. Zelfbeoordeling."
+        ],
+        "notitieDoel": [
+          "PT1 telt met weging 3 en is niet herkansbaar. Zeg dat rustig, één keer, en ga door. Het gaat vandaag om zes onderdelen: presentatie, je eigen partij, zang, improvisatie, groove en luisteren.",
+          "De wegingen: presentatie 1, eigen partij 2, zang 2, improvisatie 2, groove 1, luisteren 2. Samen 10. Het cijfer is de som van score keer weging, gedeeld door 10.",
+          "Elk onderdeel krijgt 4 (onvoldoende), 6 (voldoende), 8 (goed) of 10 (uitstekend). Zit iets ertussen, dan geef je 5, 7 of 9.",
+          "De zelfbeoordeling telt voor 10 procent mee in het eindcijfer. Rekenvoorbeeld: scores 8, 8, 7, 6, 8, 8 geven 8 + 16 + 14 + 12 + 8 + 16 = 74, gedeeld door 10 = 7,4. Met een zelfbeoordeling van 8 wordt het eindcijfer 0,9 keer 7,4 plus 0,1 keer 8 = 7,5."
+        ],
+        "fasen": [
+          {
+            "min": 5, "soort": "start",
+            "kop": "Opstellen: zo werkt het vandaag",
+            "stappen": ["Zet je instrument neer en stem. Telefoon weg.", "Check de afspraken: wie telt af, wie zingt wanneer, volgorde van de solo's, het slot.", "We spelen twee keer helemaal door. Dan kan ik iedereen goed horen."],
+            "docent": "Rustig houden. Geef zelf het tempo niet aan: aftellen hoort bij presentatie.",
+            "notitie": {
+              "vertel": ["Dit is hetzelfde als woensdag. We spelen het twee keer, en ik luister. Daarna vul je je zelfbeoordeling in."]
+            }
+          },
+          {
+            "min": 30, "soort": "doen",
+            "kop": "Backwater blues: twee keer helemaal door",
+            "stappen": ["Zeg kort wat je speelt, tel af, en ga.", "Iedereen zingt één couplet. De band antwoordt in de open maten.", "Soloruil: iedereen vier maten in het schema. De rest speelt zachter.", "Sluit af zoals afgesproken. Even ademhalen, en dan nog een keer."],
+            "beeld": { "soort": "tabel", "rijen": [["Onderdeel", "Waar gaat het om", "Weging"], ["Presentatie", "aftellen, begin en slot, doorspelen", "1"], ["Eigen partij", "twaalf maten, A-D-E op tijd", "2"], ["Zang", "zuiver, op de tel, verstaanbaar", "2"], ["Improvisatie", "bluestoonladder in A, motief", "2"], ["Groove en tempo", "backbeat, swing, samen in tempo", "1"], ["Luisteren en balans", "samen, ruimte voor zang en solo", "2"]], "kol": [0.3, 0.5, 0.2] },
+            "docent": "Niet onderbreken, niet repareren: dit is de toets. Stokt het op de eerste maat, laat dan opnieuw aftellen. De rubric scoort dat onder presentatie.",
+            "notitie": {
+              "vertel": [
+                "Zo gebruik je het formulier. Eén beoordelingsformulier per leerling, A4 liggend. Omcirkel per onderdeel het niveau dat het best past en schrijf de score op. Past een uitvoering tussen twee niveaus, dan geef je 5, 7 of 9.",
+                "Presentatie, groove en luisteren geef je als groep: dat is één score voor de hele band. Wijkt één leerling duidelijk af, geef die dan een eigen score. Partij, zang en improvisatie scoor je per leerling.",
+                "Een handige volgorde: eerste keer de zang en de solo's, want die komen maar één keer per persoon. Tweede keer de partijen en de groepsscores.",
+                "Heb je iemand nog niet goed gehoord? Laat ze nog een keer spelen. Er is tijd genoeg."
+              ],
+              "voorbeelden": [
+                "PRESENTATIE (weging 1, groep). 4: geen duidelijke start, de groep stopt bij een fout. 6: er wordt afgeteld, stuk komt rond, begin of slot aarzelt. 8: strak afgeteld, duidelijk begin en slot, iedereen speelt door na een fout. 10: klinkt als een optreden, afgesproken slot, fouten vallen nauwelijks op.",
+                "EIGEN PARTIJ IN HET SCHEMA (weging 2). Let op de wissels en vooral maat 9-10 (E naar D). 4: partij valt vaak weg, plek in het schema kwijt. 6: grotendeels gespeeld, maat 9-10 of invallen na een fout wiebelt. 8: zeker en op tijd, wisselt op de één, valt na een fout direct in. 10: beheerst en muzikaal, geeft houvast aan de groep. Het niveau is wat de leerling speelt, de score hoe goed.",
+                "ZANG: EEN COUPLET (weging 2). Let op zuiverheid, de tel en verstaanbaarheid. 4: vaak onzuiver of te zacht, regels te laat. 6: overwegend zuiver en op de tel, tekst soms onduidelijk. 8: zuiver en verstaanbaar, laat ruimte voor het antwoord van de band. 10: expressie in de stijl van de blues, drive.",
+                "IMPROVISATIE (weging 2). Let op tonen, schema en motief. 4: geen improvisatie of noten passen niet. Alleen de grondtoon in het ritme van de zangregel: 5. 6: vier maten op de bluestoonladder (A-C-E is genoeg), in de maat, nog weinig vorm. 8: blijft in het schema, herkenbaar motief komt terug, rust tussen frasen. 10: varieert het motief, blue notes (C, Es) bewust, opbouw en slot.",
+                "GROOVE EN TEMPO (weging 1, groep). 4: tempo zakt of jaagt, groep valt uit elkaar. 6: grotendeels stabiel, backbeat of triolenfeel niet overal hoorbaar. 8: stabiel met backbeat, swing hoorbaar. 10: strakke groove die swingt, ook in de soloruil.",
+                "LUISTEREN EN BALANS (weging 2, groep). 4: los van elkaar, zang en solo overstemd. 6: samen beginnen en eindigen lukt, balans nog niet altijd. 8: zachter onder zang en solo, die blijven hoorbaar. 10: reageren op elkaar, klinkt als één band."
+              ],
+              "letop": [
+                "Bij een fout: wachten. Doorspelen is onderdeel van presentatie. Grijp pas in als de band helemaal stilvalt.",
+                "Laat het opnameapparaat meelopen, dan kun je twijfelscores na de les nalopen.",
+                "De vaste zanger: de 'eigen partij' is dan de melodie in het schema. De score voor zang geef je op het eigen couplet, net als bij de anderen.",
+                "Wie in zijn couplet zijn partij laat liggen, verliest daarvoor geen punten."
+              ]
+            }
+          },
+          {
+            "min": 10, "soort": "afsluiten",
+            "kop": "Klaar: vul je zelfbeoordeling in",
+            "stappen": ["Pak het format. Per onderdeel een kruisje bij wat je hoorde, dan je score.", "Schrijf één concreet punt op voor PT2.", "Vul naam, partij en niveau in en lever in.", "Instrumenten terug en lokaal netjes."],
+            "docent": "Formats verzamelen. Ruim de tijd: er hoeft niemand te wachten.",
+            "notitie": {
+              "vertel": [
+                "Goed gedaan, allemaal. Het spannende deel is klaar. Nu kijk je zelf terug met dezelfde onderdelen als ik gebruik.",
+                "De zelfbeoordeling telt voor 10 procent mee. Ik kijk of je eerlijk en concreet bent, niet hoe hoog je jezelf scoort. Een 6 met een goede onderbouwing telt mee als sterk.",
+                "Schrijf onderaan één punt op dat je meeneemt naar PT2: solowerk en een eigen compositie rond de barok, in lesweek 35.",
+                "Je krijgt je cijfer met een opmerking per onderdeel."
+              ],
+              "vragen": [{ "v": "Wat is voor jou de ene plek in het stuk die je anders zou doen?", "a": "Concreet: maat, partij of solo. 'Beter spelen' is geen antwoord." }],
+              "letop": ["Bewaar de formats bij de docentformulieren: het cijfer klopt pas als beide er zijn."]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "zelfbeoordeling",
+          "tekst": "Je zelfbeoordeling telt voor 10% mee. Eerlijk en concreet telt, niet hoe hoog.",
+          "notitie": {
+            "vertel": ["Scoor de zelfbeoordeling op eerlijkheid en concreetheid, niet op hoe hoog de leerling zichzelf heeft ingeschaald.", "Het cijfer docent telt 90 procent, de zelfbeoordeling 10 procent."],
+            "letop": ["PT1 is niet herkansbaar. Zeg dat niet hier nog een keer: de toets is klaar."]
+          }
+        }
+      }
+    ]
+  }
+}

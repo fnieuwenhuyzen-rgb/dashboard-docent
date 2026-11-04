@@ -76,8 +76,8 @@
     "w": 11,
     "slot": "l1",
     "t": "Presentatie: Mary's Boy Child leren kennen (PowerPoint)",
-    "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/03%20Klas%203/Lessen%202026-2027/11%20Mary's%20Boy%20Child%20-%20leren%20kennen.pptx?web=1",
-    "bestand": "11 Mary's Boy Child - leren kennen.pptx"
+    "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/03%20Klas%203/Lessen%202026-2027/11%20Mary's%20Boy%20Child%20-%20leren%20kennen%20-%20nieuw.pptx?web=1",
+    "bestand": "11 Mary's Boy Child - leren kennen - nieuw.pptx"
   },
   {
     "lg": "havo3",
@@ -124,8 +124,8 @@
     "w": 11,
     "slot": "l1",
     "t": "Presentatie: God Rest Ye leren kennen (PowerPoint)",
-    "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/03%20Klas%203/Lessen%202026-2027/11%20God%20Rest%20Ye%20-%20leren%20kennen.pptx?web=1",
-    "bestand": "11 God Rest Ye - leren kennen.pptx"
+    "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/01%20Onderbouw%20muziek/03%20Klas%203/Lessen%202026-2027/11%20God%20Rest%20Ye%20-%20leren%20kennen%20-%20nieuw.pptx?web=1",
+    "bestand": "11 God Rest Ye - leren kennen - nieuw.pptx"
   },
   {
     "lg": "vwo3",
@@ -254,5 +254,21 @@
     "t": "Presentatie: Go Tell It: begeleidingspatroon (PowerPoint)",
     "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/Mavo/Mavo%203/Lessen%202026-2027/14%20Kerstbox%20Go%20Tell%20It%20-%20begeleidingspatroon%20-%20groepjes.pptx?web=1",
     "bestand": "14 Kerstbox Go Tell It - begeleidingspatroon - groepjes.pptx"
+  },
+  {
+    "lg": "vwo4",
+    "w": 8,
+    "slot": "l2",
+    "t": "Presentatie: Improviseren in A (PowerPoint)",
+    "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%204/Lessen%202026-2027/08.2%20Improviseren%20op%20de%20bluestoonladder%20in%20A.pptx?web=1",
+    "bestand": "08.2 Improviseren op de bluestoonladder in A.pptx"
+  },
+  {
+    "lg": "vwo4",
+    "w": 10,
+    "slot": "l2",
+    "t": "Presentatie: Generale PT1 (PowerPoint)",
+    "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%204/Lessen%202026-2027/10.2%20Generale%20PT1%20-%20Backwater%20blues.pptx?web=1",
+    "bestand": "10.2 Generale PT1 - Backwater blues.pptx"
   }
 ]

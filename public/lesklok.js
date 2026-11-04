@@ -4,7 +4,15 @@
 (function (root) {
   const OPRUIM_SEC = 240, STROOKJE_SEC = 420, GROOT_SEC = 15, GELUID_SEC = 60;
   // De vaste opruimstappen van lokaal 009 komen hier; zolang de lijst leeg is, staat er alleen "Opruimen" en de klok.
-  const OPRUIM_STAPPEN = [];
+  const OPRUIM_STAPPEN = [
+    'Keyboards op de standaards en de adapters uit',
+    'Gitaren op de goede plek aan de wand',
+    'Ukeleles in de goede hangers',
+    'Drumstokken in de kast',
+    'Stoelen en tafels netjes',
+    'Krukken netjes',
+    'Koptelefoons opgeruimd bij de keyboards'
+  ];
 
   // ---------- rekenen (getest in tools/test-lesklok.js) ----------
   function blokken(uren) { // uren: [{van, tot, groep, uitval, stil, strookje}], van en tot in minuten
