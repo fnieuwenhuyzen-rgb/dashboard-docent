@@ -46,6 +46,8 @@ function rubriek(soort) {
 
 // velden bovenaan: Naam, (docent: Datum) en de velden uit het model, drie per regel
 const veldRijen = (namen) => { let h = '<table class="velden">'; for (let i = 0; i < namen.length; i += 3) { const r = namen.slice(i, i + 3); h += '<tr>' + r.map(n => `<td style="width:33%">${esc(n)}: ${'_'.repeat(Math.max(12, 40 - n.length))}</td>`).join('') + '<td></td>'.repeat(3 - r.length) + '</tr>'; } return h + '</table>'; };
+// speelbox: welke partijen en niveaus er zijn. De teksten per partij staan in de app en op het tabblad Rubric van het scoreblad.
+const speelRegel = (soort) => { const k = M.speelkeuze; if (!k) return ''; const n = k.niveaus.map(x => `${x.naam}${x.wat && x.wat.length < 30 ? ' (' + x.wat + ')' : ''}${soort === 'docent' ? ': max ' + String(x.plafond).replace('.', ',') : ''}`).join(' · '); return `<p class="klein" style="margin:2pt 0">${esc(k.partijVeld)}: ${esc(k.partijen.map(x => x.naam).join(', '))}. ${esc(n)}.</p>`; };
 const vooruit = M.vooruit || 'Eén punt om aan te werken';
 const zb = +M.zelfbeoordeling || 0;
 const kg = M.delen && M.delen.klasgenoten ? M.delen : null; // examenconcerten: docent, eigen cijfer van de leerling en klasgenoten
@@ -55,6 +57,7 @@ const groepen = M.onderdelen.map(o => o.groep.toLowerCase()).join(' · ');
 let d = kop(`${M.toets} beoordelingsformulier docent`);
 d += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)}${M.weging ? ' · weging ' + esc(M.weging) : ''}${M.herkansbaar === false ? ' · niet herkansbaar' : M.herkansbaar ? ' · herkansbaar' : ''}</p><h1>${esc(M.titel)}</h1>`;
 d += veldRijen(['Naam', 'Datum', ...(M.velden || [])]);
+d += speelRegel('docent');
 d += `<p style="margin:3pt 0 4pt 0">Omcirkel per onderdeel het niveau dat het best past en schrijf de score op. ${esc(M.tussenscores)}</p>`;
 d += rubriek('docent');
 d += `<table style="margin-top:5pt"><tr><td style="width:60%;height:52pt"><b>Opmerking per onderdeel</b><br><span class="klein">${esc(groepen)}</span></td><td><b>Totaal</b> ______ punten ÷ ${somW} = <b>cijfer docent</b> ______<br><span class="klein">${esc(M.cijfer)}</span>${kg ? `<br><b>Eindcijfer</b> = ${kg.docent}% docent + ${kg.zelf}% eigen cijfer ______ + ${kg.klasgenoten}% klasgenoten ______ = <b>______</b><br><span class="klein">Eigen cijfer: het overall-cijfer dat de leerling zichzelf geeft. Klasgenoten: gemiddelde van minstens ${M.klasgenotenMin || 3} inzendingen. Ontbreekt een deel, dan geen eindcijfer.</span>` : zb ? `<br><b>Eindcijfer</b> = ${String((100 - zb) / 100).replace('.', ',')} × cijfer docent + ${String(zb / 100).replace('.', ',')} × zelfbeoordeling ______ = <b>______</b><br><span class="klein">${M.strookje ? `Strookje (${zb}%). ${esc(M.strookje.score)}` : `Zelfbeoordeling (${zb}%): hoe eerlijk en concreet de leerling de eigen uitvoering beoordeelt, 4 tot 10.`}</span>` : ''}<br><b>${esc(vooruit)}:</b></td></tr></table>`;
@@ -66,7 +69,7 @@ const strookjeHtml = (S) => {
   const hok = '<td class="hok">&nbsp;</td>';
   const rijen = S.stellingen.map(s => `<tr><td class="stelling">${esc(s)}</td>${hok.repeat(3)}</tr>`).join('');
   const vragen = S.vragen.map(v => `<p class="vraag">${esc(v)}</p><table><tr><td class="schrijf">&nbsp;</td></tr></table>`).join('');
-  return `<p class="eyebrow">${esc(M.klas)} · ${esc(M.toets)} · 3 minuten</p><h1>${esc(S.titel)}</h1><p class="naam">Naam: ______________________________ &nbsp; Klas: __________</p><table class="vink"><tr><td class="leeg">&nbsp;</td><td class="kopje">nog niet</td><td class="kopje">bijna</td><td class="kopje">ja</td></tr>${rijen}</table>${vragen}<p class="voet">Lever dit in bij de deur. Dit strookje telt voor ${zb}% mee. Je docent kijkt of je concreet bent, niet hoe hoog je jezelf scoort.</p>`;
+  return `<p class="eyebrow">${esc(M.klas)} · ${esc(M.toets)} · 3 minuten</p><h1>${esc(S.titel)}</h1><p class="naam">Naam: ______________________________ &nbsp; Klas: __________</p>${M.speelkeuze ? `<p class="naam">${esc(M.speelkeuze.partijVeld)}: ____________________ &nbsp; Niveau: 1 / 2 / 3</p>` : ""}<table class="vink"><tr><td class="leeg">&nbsp;</td><td class="kopje">nog niet</td><td class="kopje">bijna</td><td class="kopje">ja</td></tr>${rijen}</table>${vragen}<p class="voet">Lever dit in bij de deur. Dit strookje telt voor ${zb}% mee. Je docent kijkt of je concreet bent, niet hoe hoog je jezelf scoort.</p>`;
 };
 
 // leerlingformat
@@ -92,6 +95,7 @@ td.schrijf { border: none; border-bottom: 0.75pt solid #1d1d1b; height: 24pt; pa
   l = kop(`${M.toets} format zelfbeoordeling`);
   l += `<p class="eyebrow">${esc(M.klas)} · ${esc(M.thema)} · ${esc(M.toets)} · format voor je eigen uitvoering</p><h1>${esc(M.leerlingTitel || 'Zo beoordeel ik mijn uitvoering')}</h1>`;
   l += veldRijen(['Naam', ...(M.velden || [])]);
+  l += speelRegel('leerling');
   l += `<p style="margin:3pt 0 4pt 0">${esc(M.leerlingInstructie || 'Luister je opname terug. Zet per onderdeel een kruisje bij wat je hoort en schrijf je score op. Dit zijn dezelfde onderdelen waarop je docent let.')}</p>`;
   l += rubriek('leerling');
   if (kg) l += `<p style="margin-top:3pt"><b>Mijn eigen cijfer (overall): ______</b> <span class="klein">Dit cijfer telt voor ${kg.zelf}% mee in je eindcijfer. Je docent telt ${kg.docent}%, je klasgenoten ${kg.klasgenoten}%.</span></p>`;

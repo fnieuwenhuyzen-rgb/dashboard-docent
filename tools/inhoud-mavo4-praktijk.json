@@ -286,7 +286,7 @@
    ],
    "benodigd": [
     "instrumenten en versterking van de groepen",
-    "opnameapparaat of telefoon",
+    "laptop om op te nemen",
     "Format zelfbeoordeling P2"
    ]
   },
@@ -318,7 +318,7 @@
       "Neem het nummer één keer op en luister het samen terug."
      ],
      "klaar": "Zet in je partij een kruisje bij elke plek die nog niet in je vingers zit.",
-     "docent": "Loop langs de groepen met de meeste kruisjes. Luister naar samenspel: begint iedereen op dezelfde tel, blijft het tempo staan? Opnemen met telefoon is voldoende."
+     "docent": "Loop langs de groepen met de meeste kruisjes. Luister naar samenspel: begint iedereen op dezelfde tel, blijft het tempo staan? Opnemen met de laptop is voldoende."
     },
     {
      "min": 10,
@@ -516,7 +516,7 @@
     "instrumenten en versterking van de groepen",
     "Format zelfbeoordeling P2",
     "P2 Beoordeling klasgenoten",
-    "opnameapparaat of telefoon"
+    "laptop om op te nemen"
    ]
   },
   "Generale repetitie 1 met techniek": {

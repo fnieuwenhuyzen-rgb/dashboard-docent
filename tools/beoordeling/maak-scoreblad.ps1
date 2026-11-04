@@ -20,9 +20,14 @@ try {
   for ($r = 5; $r -le 40; $r++) {
     $delen = @(); for ($i = 0; $i -lt $C.Count; $i++) { $delen += "$(& $kolL ($eerste + $i))$r*$($C[$i].c.weging)" }
     $bereik = "$(& $kolL $eerste)${r}:$(& $kolL $laatste)$r"
-    $s.Cells.Item($r, $cijferKol).Formula = "=IF(COUNT($bereik)=$($C.Count),ROUND(($($delen -join '+'))/$somW,1),`"`")"
-    if ($kg) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $gk = "$(& $kolL ($cijferKol + 2))$r"; $nk = "$(& $kolL ($cijferKol + 3))$r"; $min = [int]$M.klasgenotenMin; $s.Cells.Item($r, $cijferKol + 4).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk),ISNUMBER($gk),N($nk)>=$min),ROUND($ck*$($M.delen.docent / 100)+$zk*$($zb / 100)+$gk*$($kg / 100),1),`"`")" } elseif ($zb) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $s.Cells.Item($r, $cijferKol + 2).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk)),ROUND($ck*$((100 - $zb) / 100)+$zk*$($zb / 100),1),`"`")" }
+    # plafond per niveau (speelbox): geldt voor het eindcijfer; zonder zelfdeel is dat de kolom Cijfer
+    $pl = $null; if ($M.speelkeuze) { $nk = "`$$(& $kolL (2 + [array]::IndexOf($velden, 'Niveau')))$r"; $pl = '10'; foreach ($n in @($M.speelkeuze.niveaus | Sort-Object plafond -Descending)) { $pl = "IF($nk=`"$($n.naam)`",$(([double]$n.plafond).ToString([Globalization.CultureInfo]::InvariantCulture)),$pl)" } }
+    $ruw = "ROUND(($($delen -join '+'))/$somW,1)"; if ($pl -and -not $zb) { $ruw = "MIN($ruw,$pl)" }
+    $s.Cells.Item($r, $cijferKol).Formula = "=IF(COUNT($bereik)=$($C.Count),$ruw,`"`")"
+    if ($kg) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $gk = "$(& $kolL ($cijferKol + 2))$r"; $nk = "$(& $kolL ($cijferKol + 3))$r"; $min = [int]$M.klasgenotenMin; $s.Cells.Item($r, $cijferKol + 4).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk),ISNUMBER($gk),N($nk)>=$min),ROUND($ck*$($M.delen.docent / 100)+$zk*$($zb / 100)+$gk*$($kg / 100),1),`"`")" } elseif ($zb) { $ck = "$(& $kolL $cijferKol)$r"; $zk = "$(& $kolL ($cijferKol + 1))$r"; $ei = "ROUND($ck*$((100 - $zb) / 100)+$zk*$($zb / 100),1)"; if ($pl) { $ei = "MIN($ei,$pl)" }; $s.Cells.Item($r, $cijferKol + 2).Formula = "=IF(AND(ISNUMBER($ck),ISNUMBER($zk)),$ei,`"`")" }
   }
+  # velden met vaste keuzes: keuzelijst
+  if ($M.keuzes) { for ($i = 0; $i -lt $velden.Count; $i++) { $lijst = $M.keuzes.($velden[$i]); if ($lijst) { $k = $(& $kolL (2 + $i)); $vk = $s.Range("${k}5:${k}40").Validation; $vk.Delete(); $vk.Add(3, 2, 1, ($lijst -join ',')) ; $vk.ErrorMessage = 'Kies uit de lijst, of laat staan.' } } }
   $v = $s.Range("$(& $kolL $eerste)5:$(& $kolL $laatste)40").Validation; $v.Delete()
   $v.Add(2, 1, 1, '4', '10'); $v.ErrorMessage = 'Vul een score van 4 tot en met 10 in.'
   $hdr = $s.Range("A4:$(& $kolL ($cijferKol + 2 + $extra))4"); $hdr.Font.Bold = $true; $hdr.Font.Color = 0xFFFFFF; $hdr.Interior.Color = 0x23238C; $hdr.WrapText = $true
@@ -38,6 +43,8 @@ try {
   $r = 2; foreach ($k in $C) {
     $t.Cells.Item($r,1) = "$($k.groep): $($k.c.naam)"; $t.Cells.Item($r,2) = $k.c.weging
     for ($n = 0; $n -lt $k.c.docent.Count; $n++) { $t.Cells.Item($r, 3 + $n) = $k.c.docent[$n] }; $r++ }
+  # teksten per soort partij (speelbox)
+  if ($M.speelkeuze) { foreach ($p in $M.speelkeuze.partijen) { foreach ($k in $C) { $o = $k.c.perPartij.($p.soort); if ($o) { $nm = if ($o.naam) { $o.naam } else { $k.c.naam }; $t.Cells.Item($r,1) = "$($p.naam): $nm"; $t.Cells.Item($r,2) = $k.c.weging; for ($n = 0; $n -lt $o.docent.Count; $n++) { $t.Cells.Item($r, 3 + $n) = $o.docent[$n] }; $r++ } } } }
   $t.Cells.Item($r + 1, 1) = $M.pta
   $t.Range('A1:F1').Font.Bold = $true; $t.Columns.Item(1).ColumnWidth = 30; for ($i = 3; $i -le 6; $i++) { $t.Columns.Item($i).ColumnWidth = 40 }
   $t.Range("A2:F$($r - 1)").WrapText = $true; $t.Range("A1:F$($r - 1)").VerticalAlignment = -4160

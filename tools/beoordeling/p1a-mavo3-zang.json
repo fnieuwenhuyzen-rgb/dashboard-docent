@@ -2,18 +2,19 @@
   "id": "p1a-mavo3-zang",
   "klas": "mavo 3",
   "toets": "P1 · presentatie 1",
-  "titel": "Praktijktoets P1, presentatie 1: zang",
-  "thema": "Ritme, maat en presentatie zang",
+  "titel": "Praktijktoets P1, presentatie 1: speelbox",
+  "thema": "Ritme, maat en presentatie 1",
   "weging": 15,
   "herkansbaar": true,
   "velden": [
     "Lied",
-    "Begeleiding",
+    "Mijn partij",
+    "Niveau",
     "Groep"
   ],
   "vooruit": "Eén punt voor presentatie 2",
-  "leerlingTitel": "Zo beoordeel ik mijn zangpresentatie",
-  "leerlingInstructie": "Zeg je naam en de titel van je lied. Tel jezelf in of knik naar de begeleiding. Ga je de tekst kwijt? Zing door op 'la' tot je hem weer hebt.",
+  "leerlingTitel": "Zo beoordeel ik mijn spel",
+  "leerlingInstructie": "Tel samen af en begin samen. Fout? Speel of zing door op de tel en pak het volgende stuk.",
   "pta": "PTA mavo 3 2026-2027, P1 muzikale presentaties: gemiddelde van minstens drie praktijkdelen (zang/melodie, akkoordinstrument, slagwerk), weging 15, 45 minuten, herkansbaar in TW3, domeinen K2, K4, K5 en K6. Presentatie 1 (zang) is in lesweek 8.",
   "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\P1 Praktijktoets - Muzikale presentaties\\Beoordeling",
   "lessen": [
@@ -64,7 +65,7 @@
     }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 8 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 8 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3. Plafond per niveau: niveau 1 maximaal 7, niveau 2 maximaal 8,5, niveau 3 maximaal 10.",
   "onderdelen": [
     {
       "groep": "Presentatie",
@@ -72,87 +73,273 @@
       "criteria": [
         {
           "id": "presentatie",
-          "naam": "Presentatie",
-          "uitleg": "aankondigen, begin en slot, doorzingen",
+          "naam": "Begin en slot",
+          "uitleg": "samen beginnen en eindigen, doorgaan na een fout",
           "weging": 1,
           "docent": [
-            "Kondigt niets aan; begin en slot zijn onduidelijk; stopt bij een fout.",
-            "Noemt naam en titel; begint en eindigt aarzelend; stopt soms na een fout.",
-            "Noemt naam en titel; duidelijk begin en slot; zingt door na een fout.",
-            "Rustige aankondiging, zekere inzet en slot; een fout valt bijna niet op."
+            "Begin en slot zijn onduidelijk; stopt bij een fout.",
+            "Begint en eindigt aarzelend; stopt soms na een fout.",
+            "Duidelijk begin en slot; gaat door na een fout.",
+            "Zekere inzet en slot; een fout valt bijna niet op."
           ],
           "leerling": [
-            "Ik zeg niets vooraf en stop als het misgaat.",
-            "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.",
-            "Ik zeg naam en titel, begin en eindig duidelijk en zing door na een fout.",
-            "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."
+            "Ons begin en slot zijn onduidelijk; ik stop bij een fout.",
+            "We beginnen en eindigen aarzelend; ik stop soms na een fout.",
+            "We hebben een duidelijk begin en slot; ik ga door na een fout.",
+            "We beginnen en eindigen zeker; een fout valt bijna niet op."
           ],
           "groepsscore": true
         },
         {
           "id": "houding",
-          "naam": "Houding en publiek",
-          "uitleg": "rechtop, naar het publiek kijken",
+          "naam": "Houding en techniek",
+          "uitleg": "je instrument of stem beheersen",
           "weging": 1,
           "docent": [
-            "Staat onrustig of in elkaar gedoken; kijkt weg of naar de grond.",
-            "Staat redelijk rechtop; kijkt af en toe naar het publiek.",
-            "Staat rechtop en rustig; kijkt het grootste deel van het lied naar het publiek.",
-            "Open houding en oogcontact; neemt het publiek mee in het lied."
+            "Houding en techniek staan het spelen in de weg.",
+            "Redelijke houding; techniek nog onrustig of gespannen.",
+            "Goede houding en techniek; speelt rustig en gelijk.",
+            "Ontspannen en zeker; kan opkijken naar het groepje tijdens het spelen."
           ],
           "leerling": [
-            "Ik sta onrustig en kijk naar de grond.",
-            "Ik sta redelijk rechtop en kijk soms naar het publiek.",
-            "Ik sta rechtop en rustig en kijk meestal naar het publiek.",
-            "Ik sta open en neem het publiek mee in mijn lied."
-          ]
+            "Mijn houding en techniek zitten me in de weg.",
+            "Mijn houding is redelijk; ik ben nog onrustig of gespannen.",
+            "Mijn houding en techniek zijn goed; ik speel rustig en gelijk.",
+            "Ik ben ontspannen en zeker en kan opkijken naar mijn groepje."
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "rechtop staan, op tijd ademen",
+              "docent": [
+                "Staat in elkaar gedoken; ademt hoog of midden in de zin.",
+                "Staat redelijk rechtop; ademt soms te laat, de zin zakt weg.",
+                "Staat rechtop en rustig; ademt op de goede plekken.",
+                "Ontspannen houding; de adem draagt lange zinnen tot het eind."
+              ],
+              "naam": "Houding en adem"
+            },
+            "snaar": {
+              "uitleg": "wisselen, slaghand, vingers",
+              "docent": [
+                "Grepen lukken nog niet; de slaghand stopt bij elke wissel.",
+                "Grepen lukken; wisselen kost tijd, de slag is nog onrustig.",
+                "Wisselt vloeiend; de slaghand blijft gelijkmatig doorgaan.",
+                "Soepele wissels en een slagpatroon dat het lied mooier maakt."
+              ],
+              "naam": "Grepen en slag"
+            },
+            "melodie": {
+              "uitleg": "vingerzetting, overgangen tussen noten",
+              "docent": [
+                "Vingerzetting staat het spelen in de weg; stopt bij elke noot.",
+                "Vindt de noten; overgangen nog hoekig, vingers gespannen.",
+                "Vloeiende overgangen met een vaste vingerzetting.",
+                "Ontspannen en zeker; ook de lastige plekken lopen vanzelf."
+              ],
+              "naam": "Vingers"
+            },
+            "piano": {
+              "uitleg": "vingerzetting, omzetten, twee handen",
+              "docent": [
+                "Vingers en handen staan het spelen in de weg; stopt bij elk akkoord.",
+                "Vindt de akkoorden; omzetten kost tijd, vingers nog gespannen.",
+                "Zet vloeiend om, met rustige vingers en handen.",
+                "Ontspannen en zeker; omzetten valt niet op, ook met twee handen."
+              ],
+              "naam": "Vingers en handen"
+            },
+            "bas": {
+              "uitleg": "aanslag, fret of toets vinden, overgangen",
+              "docent": [
+                "Aanslag en vingers staan het spelen in de weg; stopt bij elke toon.",
+                "Vindt de tonen; overgangen kosten tijd, aanslag nog onrustig.",
+                "Rustige, gelijke aanslag; verplaatst vloeiend.",
+                "Ontspannen en zeker; verplaatst zonder te kijken."
+              ],
+              "naam": "Aanslag en vingers"
+            },
+            "drums": {
+              "uitleg": "handen en voet los van elkaar",
+              "docent": [
+                "Handen en voet lukken nog niet samen; patroon valt steeds uit elkaar.",
+                "Handen en voet lukken; bij een overgang hapert het nog.",
+                "Handen en voet lopen vloeiend samen, ook bij overgangen.",
+                "Ontspannen en zeker; een eenvoudige fill past in de groove."
+              ],
+              "naam": "Coördinatie"
+            }
+          }
         }
       ]
     },
     {
-      "groep": "Zang",
-      "stuk": "lied",
+      "groep": "Mijn partij",
+      "stuk": "gekozen instrument en niveau",
       "criteria": [
         {
           "id": "tekst",
-          "naam": "Tekst en uitspraak",
-          "uitleg": "tekst kennen, verstaanbaar zingen",
+          "naam": "Mijn partij",
+          "uitleg": "je partij op dit niveau kennen",
           "weging": 1,
           "docent": [
-            "Kent de tekst niet; leest steeds af of valt stil; woorden niet te verstaan.",
-            "Kent de tekst grotendeels; kijkt soms op het blad; meestal te verstaan.",
-            "Kent de tekst uit het hoofd; zingt goed verstaanbaar.",
-            "Kent de tekst zeker; duidelijke uitspraak die de betekenis laat horen."
+            "Kent de partij niet; valt steeds stil of maakt veel fouten.",
+            "Kent de partij grotendeels; kijkt vaak op het blad, soms een fout.",
+            "Kent de partij en speelt of zingt hem zonder te stoppen.",
+            "Kent de partij zeker; kan opkijken naar het groepje."
           ],
           "leerling": [
-            "Ik ken mijn tekst niet en je verstaat me slecht.",
-            "Ik ken mijn tekst bijna; soms kijk ik op het blad.",
-            "Ik ken mijn tekst uit mijn hoofd en je verstaat me goed.",
-            "Ik zing de tekst zo duidelijk dat je hoort waar het lied over gaat."
-          ]
+            "Ik ken mijn partij nog niet; ik val steeds stil.",
+            "Ik ken mijn partij grotendeels; ik kijk vaak op het blad.",
+            "Ik ken mijn partij en stop niet.",
+            "Ik ken mijn partij zeker en kan opkijken naar mijn groepje."
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "tekst kennen, verstaanbaar zingen",
+              "docent": [
+                "Kent de tekst niet; leest steeds af of valt stil; woorden niet te verstaan.",
+                "Kent de tekst grotendeels; kijkt soms op het blad; meestal te verstaan.",
+                "Kent de tekst uit het hoofd; zingt goed verstaanbaar.",
+                "Kent de tekst zeker; duidelijke uitspraak die de betekenis laat horen."
+              ],
+              "naam": "Tekst en uitspraak"
+            },
+            "snaar": {
+              "uitleg": "de juiste akkoorden van jouw niveau kennen",
+              "docent": [
+                "Kent de akkoorden niet; valt steeds stil of pakt verkeerde grepen.",
+                "Kent de meeste akkoorden; kijkt vaak op het blad, soms een verkeerde greep.",
+                "Kent alle akkoorden en speelt ze zonder te stoppen.",
+                "Kent de partij zeker; kan opkijken naar het groepje tijdens het spelen."
+              ],
+              "naam": "Akkoorden"
+            },
+            "melodie": {
+              "uitleg": "de juiste noten van jouw niveau kennen",
+              "docent": [
+                "Kent de melodie niet; valt steeds stil of speelt veel verkeerde noten.",
+                "Melodie herkenbaar; kijkt vaak op het blad, soms een verkeerde noot.",
+                "Speelt alle noten van de melodie zonder te stoppen.",
+                "Kent de melodie zeker; speelt hem met frasering, als een zanger."
+              ],
+              "naam": "Melodie"
+            },
+            "piano": {
+              "uitleg": "de juiste akkoorden van jouw niveau kennen",
+              "docent": [
+                "Kent de akkoorden niet; valt steeds stil of zoekt de toetsen.",
+                "Kent de meeste akkoorden; kijkt vaak op het blad, soms een verkeerde toets.",
+                "Kent alle akkoorden en speelt ze zonder te stoppen.",
+                "Kent de partij zeker; kan opkijken naar het groepje tijdens het spelen."
+              ],
+              "naam": "Akkoorden"
+            },
+            "bas": {
+              "uitleg": "de juiste grondtonen van jouw niveau kennen",
+              "docent": [
+                "Kent de baslijn niet; valt steeds stil of speelt verkeerde tonen.",
+                "Kent de meeste grondtonen; kijkt vaak op het blad, soms een verkeerde toon.",
+                "Speelt de hele baslijn zonder te stoppen.",
+                "Kent de baslijn zeker; kan opkijken naar de drummer en het groepje."
+              ],
+              "naam": "Baslijn"
+            },
+            "drums": {
+              "uitleg": "de groove van jouw niveau kennen",
+              "docent": [
+                "Kent het patroon niet; valt steeds stil of speelt iets anders.",
+                "Kent het patroon grotendeels; kijkt vaak op het blad, soms een fout.",
+                "Speelt het hele patroon zonder te stoppen.",
+                "Kent de partij zeker; kan opkijken naar het groepje en geeft de wissels aan."
+              ],
+              "naam": "Patroon"
+            }
+          }
         },
         {
           "id": "toon",
-          "naam": "Toonhoogte en klank",
-          "uitleg": "zuiver zingen, open klank",
+          "naam": "Klank",
+          "uitleg": "zuiver, de juiste noten, verzorgde klank",
           "weging": 2,
           "docent": [
-            "Zingt vaak vals; de melodie is moeilijk te herkennen; klank geknepen.",
-            "Melodie herkenbaar; overwegend zuiver, vals op hoge of lastige plekken.",
-            "Zingt zuiver door het hele lied met een open, heldere klank.",
-            "Zuiver en vol, ook hoog en laag; kleurt de klank bewust bij de tekst."
+            "Klinkt vaak vals of met verkeerde noten; klank dof of geknepen.",
+            "Overwegend juiste noten en een redelijke klank; soms mis op lastige plekken.",
+            "Juiste noten met een heldere klank, door het hele stuk.",
+            "Mooie, verzorgde klank; zacht en vol waar het past."
           ],
           "leerling": [
-            "Ik zing vaak vals en je herkent de melodie moeilijk.",
-            "Ik zing meestal zuiver, behalve op hoge of lastige plekken.",
-            "Ik zing het hele lied zuiver met een open, heldere klank.",
-            "Ik zing zuiver en vol, ook hoog en laag, en mijn klank past bij de tekst."
-          ]
+            "Ik klink vaak vals of speel verkeerde noten.",
+            "Ik speel of zing meestal de juiste noten; soms mis op lastige plekken.",
+            "Mijn noten kloppen en mijn klank is helder.",
+            "Mijn klank is mooi en verzorgd, zacht en vol waar het past."
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "zuiver zingen, open klank",
+              "docent": [
+                "Zingt vaak vals; de melodie is moeilijk te herkennen; klank geknepen.",
+                "Melodie herkenbaar; overwegend zuiver, vals op hoge of lastige plekken.",
+                "Zingt zuiver door het hele lied met een open, heldere klank.",
+                "Zuiver en vol, ook hoog en laag; kleurt de klank bewust bij de tekst."
+              ],
+              "naam": "Toonhoogte en klank"
+            },
+            "snaar": {
+              "uitleg": "akkoorden klinken schoon, instrument gestemd",
+              "docent": [
+                "Akkoorden klinken dof of vals; snaren brommen of worden niet geraakt.",
+                "Meeste akkoorden klinken; een paar blijven dof of met een verkeerde snaar.",
+                "Alle akkoorden klinken helder, alle snaren die horen te klinken.",
+                "Volle, verzorgde klank; zacht in het couplet en voller in het refrein."
+              ],
+              "naam": "Klank"
+            },
+            "melodie": {
+              "uitleg": "heldere noten, juiste sterkte",
+              "docent": [
+                "Noten klinken dof of vallen weg; veel te hard of te zacht.",
+                "Meeste noten klinken helder; sterkte nog wisselend.",
+                "Elke noot klinkt helder; de melodie is goed te horen in de groep.",
+                "Zingende, verzorgde klank; speelt zacht en vol waar het past."
+              ],
+              "naam": "Klank"
+            },
+            "piano": {
+              "uitleg": "alle tonen tegelijk, juiste sterkte",
+              "docent": [
+                "Tonen komen los of ontbreken; veel te hard of te zacht.",
+                "Meeste akkoorden klinken samen; sterkte nog wisselend.",
+                "Akkoorden klinken gelijk en in goede balans met de groep.",
+                "Verzorgde aanslag; zacht in het couplet en voller in het refrein."
+              ],
+              "naam": "Klank"
+            },
+            "bas": {
+              "uitleg": "volle tonen, juiste lengte en sterkte",
+              "docent": [
+                "Tonen klinken dof of brommen; veel te hard of te zacht.",
+                "Meeste tonen klinken; lengte en sterkte nog wisselend.",
+                "Volle, gelijke tonen; de bas draagt de groep.",
+                "Verzorgde klank; tonen precies zo lang en sterk als het lied vraagt."
+              ],
+              "naam": "Klank"
+            },
+            "drums": {
+              "uitleg": "niet te hard, bassdrum, snare en hihat in balans",
+              "docent": [
+                "Veel te hard of te zacht; je hoort de anderen niet meer.",
+                "Sterkte is meestal goed; onderdelen nog niet in balans.",
+                "Bassdrum, snare en hihat in balans; de groep blijft goed hoorbaar.",
+                "Speelt zacht in het couplet en voller in het refrein, en blijft in balans."
+              ],
+              "naam": "Klank en balans"
+            }
+          }
         },
         {
           "id": "ritme",
           "naam": "Ritme en maat",
-          "uitleg": "in de maat blijven, ritmes kloppen",
+          "uitleg": "in de maat blijven, inzetten kloppen",
           "weging": 2,
           "docent": [
             "Raakt de maat kwijt; ritmes kloppen vaak niet; inzetten te vroeg of te laat.",
@@ -165,7 +352,69 @@
             "Ik blijf meestal in de maat, met een paar ritmefouten.",
             "Ik blijf het hele lied in de maat en mijn inzetten kloppen.",
             "Ik zing strak in de maat, ook de lastige ritmes gaan vanzelf."
-          ]
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "in de maat blijven, inzetten kloppen",
+              "docent": [
+                "Raakt de maat kwijt; ritmes kloppen vaak niet; inzetten te vroeg of te laat.",
+                "Blijft grotendeels in de maat; enkele ritmefouten of een late inzet.",
+                "Blijft het hele lied in de maat; ritmes en inzetten kloppen.",
+                "Strak in de maat met levendig ritme; ook de lastige ritmes klinken vanzelf."
+              ],
+              "naam": "Ritme en maat"
+            },
+            "snaar": {
+              "uitleg": "op de tel wisselen, slagpatroon vasthouden",
+              "docent": [
+                "Raakt de maat kwijt; akkoorden komen niet op de tel.",
+                "Blijft grotendeels in de maat; wisselt soms te laat.",
+                "Wisselt precies op de tel en houdt het slagpatroon vast.",
+                "Strak met groove; de groep kan op deze slag bouwen."
+              ],
+              "naam": "Ritme en maat"
+            },
+            "melodie": {
+              "uitleg": "in de maat, ritmes van de melodie",
+              "docent": [
+                "Raakt de maat kwijt; ritmes kloppen vaak niet.",
+                "Blijft grotendeels in de maat; enkele ritmefouten of een late inzet.",
+                "Blijft in de maat; ritmes en inzetten kloppen.",
+                "Strak en levendig; ook de lastige ritmes klinken vanzelf."
+              ],
+              "naam": "Ritme en maat"
+            },
+            "piano": {
+              "uitleg": "op de tel omzetten, patroon vasthouden",
+              "docent": [
+                "Raakt de maat kwijt; akkoorden komen niet op de tel.",
+                "Blijft grotendeels in de maat; zet soms te laat om.",
+                "Zet precies op de tel om en houdt het patroon vast.",
+                "Strak met groove; de groep kan op dit patroon bouwen."
+              ],
+              "naam": "Ritme en maat"
+            },
+            "bas": {
+              "uitleg": "op de tel, samen met de drums",
+              "docent": [
+                "Raakt de maat kwijt; grondtonen komen niet op de tel.",
+                "Blijft grotendeels in de maat; soms te laat op een nieuwe grondtoon.",
+                "Elke grondtoon precies op de tel; blijft bij de drums.",
+                "Strak met groove; de groep kan op deze baslijn bouwen."
+              ],
+              "naam": "Ritme en maat"
+            },
+            "drums": {
+              "uitleg": "vast tempo, de groep op de tel houden",
+              "docent": [
+                "Tempo jaagt of zakt in; de groep raakt erdoor de maat kwijt.",
+                "Tempo blijft grotendeels staan; versnelt of vertraagt bij overgangen.",
+                "Vast tempo van begin tot eind; de groove klopt.",
+                "Timing zo strak dat de groep erop bouwt; de groove houdt stand in de volle delen."
+              ],
+              "naam": "Timing en groove"
+            }
+          }
         }
       ]
     },
@@ -175,25 +424,130 @@
       "criteria": [
         {
           "id": "samenspel",
-          "naam": "Samen met de begeleiding",
+          "naam": "Samenspel",
           "uitleg": "luisteren, gelijk blijven, balans",
           "weging": 1,
           "docent": [
-            "Zingt los van de begeleiding of groep; loopt voor of achter; te hard of te zacht.",
-            "Luistert naar de begeleiding; blijft meestal gelijk; balans soms uit.",
-            "Blijft gelijk met de begeleiding; stem en begeleiding zijn goed in balans.",
-            "Reageert op de begeleiding of groep; samen beginnen, samen eindigen, één geheel."
+            "Speelt los van de anderen; loopt voor of achter; te hard of te zacht.",
+            "Luistert naar de anderen; blijft meestal gelijk; balans soms uit.",
+            "Blijft gelijk met de anderen; goed in balans met het groepje.",
+            "Reageert op de anderen; samen beginnen, samen eindigen, één geheel."
           ],
           "leerling": [
-            "Ik zing los van de begeleiding en loop voor of achter.",
-            "Ik luister naar de begeleiding en blijf meestal gelijk.",
-            "Ik blijf gelijk met de begeleiding en ben goed te horen.",
-            "Ik reageer op de begeleiding; we klinken als één geheel."
+            "Ik speel los van de anderen, te hard of te zacht.",
+            "Ik luister naar de anderen en blijf meestal gelijk.",
+            "Ik blijf gelijk met de anderen en we zijn in balans.",
+            "Ik reageer op de anderen; we klinken als één geheel."
           ],
           "groepsscore": true
         }
       ]
     }
   ],
-  "zelfbeoordeling": 10
+  "zelfbeoordeling": 10,
+  "keuzes": {
+    "Mijn partij": [
+      "Zang",
+      "Gitaar: akkoorden",
+      "Gitaar: melodie",
+      "Ukelele: akkoorden",
+      "Ukelele: melodie",
+      "Piano: akkoorden",
+      "Piano: melodie",
+      "Piano: 2 handen",
+      "Piano: bas",
+      "Basgitaar",
+      "Drums of cajon"
+    ],
+    "Niveau": [
+      "Niveau 1",
+      "Niveau 2",
+      "Niveau 3"
+    ],
+    "Lied": [
+      "C'est la vie",
+      "Duurt te lang"
+    ]
+  },
+  "speelkeuze": {
+    "partijVeld": "Mijn partij",
+    "niveauVeld": "Niveau",
+    "partijen": [
+      {
+        "naam": "Zang",
+        "soort": "zang"
+      },
+      {
+        "naam": "Gitaar: akkoorden",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Gitaar: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Ukelele: akkoorden",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Ukelele: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Piano: akkoorden",
+        "soort": "piano"
+      },
+      {
+        "naam": "Piano: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Piano: 2 handen",
+        "soort": "piano"
+      },
+      {
+        "naam": "Piano: bas",
+        "soort": "bas"
+      },
+      {
+        "naam": "Basgitaar",
+        "soort": "bas"
+      },
+      {
+        "naam": "Drums of cajon",
+        "soort": "drums"
+      }
+    ],
+    "niveaus": [
+      {
+        "naam": "Niveau 1",
+        "wat": "C'est la vie: refrein. Duurt te lang: 8 maten",
+        "plafond": 7
+      },
+      {
+        "naam": "Niveau 2",
+        "wat": "C'est la vie: couplet, pre-chorus, refrein. Duurt te lang: 8 maten",
+        "plafond": 8.5
+      },
+      {
+        "naam": "Niveau 3",
+        "wat": "C'est la vie: couplet, pre-chorus, refrein. Duurt te lang: 8 maten",
+        "plafond": 10
+      }
+    ],
+    "opmerking": "Duurt te lang is een Songbox Light: alle partijen zijn 8 maten en niveaus mogen door elkaar. Op niveau 3 heeft die box alleen bladen voor piano 2 handen en drums."
+  },
+  "strookje": {
+    "titel": "Presentatie 1: speelbox",
+    "stellingen": [
+      "Ik ken mijn partij",
+      "Ik blijf in de maat",
+      "Ik luister naar mijn groepje en speel door na een fout"
+    ],
+    "vragen": [
+      "Dit ging het lastigst:",
+      "Dit ga ik oefenen:"
+    ],
+    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+  }
 }

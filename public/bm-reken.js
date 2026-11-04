@@ -9,6 +9,16 @@ const fmt = x => x == null ? '' : x.toFixed(1).replace('.', ',');
 const critVan = (m, T) => (T && T.vast && T.vast.crit) || m.onderdelen.flatMap(o => o.criteria.map(c => Object.assign({ groep: o.groep }, c)));
 const delenVan = (m, T) => { if (T && T.vast && T.vast.delen) return T.vast.delen; if (m.delen) return m.delen; const zb = +m.zelfbeoordeling || 0; return zb ? { docent: 100 - zb, zelf: zb } : { docent: 100 }; };
 const groepVan = (T, id) => (T.groepjes || []).find(g => g.leden.includes(id)) || null;
+// speelbox: de leerling kiest een partij en een niveau (velden uit m.speelkeuze). v = de ingevulde velden.
+const niveauVan = (m, v) => { const k = m.speelkeuze; return k && v ? (k.niveaus || []).find(n => n.naam === v[k.niveauVeld || 'Niveau']) || null : null; };
+const plafondVan = (m, v) => { const n = niveauVan(m, v); return n && n.plafond != null ? +n.plafond : null; };
+// het criterium met de naam en teksten van de gekozen partij. Geen of een onbekende partij: de algemene tekst.
+function critVoor(m, c, v) {
+  const k = m.speelkeuze; if (!k || !c.perPartij || !v) return c;
+  const p = (k.partijen || []).find(x => x.naam === v[k.partijVeld]); const o = p && c.perPartij[p.soort]; if (!o) return c;
+  return Object.assign({}, c, o, { leerling: null });
+}
+const veldenVan = (L, T, id) => Object.assign({}, ((T && T.ll && T.ll[id]) || {}).v, ((L && L.ll && L.ll[id]) || {}).v);
 
 /* ---------- cijfers ---------- */
 // geldende score van één criterium. Een eigen score gaat altijd voor; een startpunt-groepsscore telt pas als hij per leerling is bevestigd.
@@ -36,8 +46,9 @@ function eind(m, L, T, id) {
   const d = docentCijfer(m, L, T, id); const mist = []; if (d == null) mist.push('docent');
   const z = r && r.zelf != null ? r.zelf : null; if (D.zelf && z == null) mist.push('zelf');
   const kg = D.klasgenoten ? klasgenoten(r, +m.klasgenotenMin || 3) : { n: 0, gem: null }; if (D.klasgenoten && kg.gem == null) mist.push('klasgenoten');
-  const e = mist.length ? null : rond1((d * D.docent + (D.zelf ? z * D.zelf : 0) + (D.klasgenoten ? kg.gem * D.klasgenoten : 0)) / 100);
-  return { d, z, k: kg.gem, kn: kg.n, e, delen: D, mist, vast: false };
+  const ruw = mist.length ? null : rond1((d * D.docent + (D.zelf ? z * D.zelf : 0) + (D.klasgenoten ? kg.gem * D.klasgenoten : 0)) / 100);
+  const pl = plafondVan(m, veldenVan(L, T, id)); const e = ruw != null && pl != null ? Math.min(ruw, pl) : ruw; // plafond per niveau geldt voor het eindcijfer
+  return { d, z, k: kg.gem, kn: kg.n, e, ruw, plafond: pl, delen: D, mist, vast: false };
 }
 // legt cijfers, scores, wegingen en tijdstip vast. Later afgeronde leerlingen (inhalen) rekenen met dezelfde vastgelegde wegingen.
 function afronden(m, T, lijst, nu) {
@@ -129,6 +140,6 @@ function leesKlasgenoten(txt, lijst) {
   return uit;
 }
 
-const API = { rond1, fmt, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
+const API = { rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
 if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.BMR = API;
 })(typeof window !== 'undefined' ? window : globalThis);
