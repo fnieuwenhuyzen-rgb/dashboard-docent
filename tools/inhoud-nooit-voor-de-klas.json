@@ -363,46 +363,6 @@
       {
         "koppel": [
           {
-            "lg": "vwo5",
-            "w": 8,
-            "slot": "l1"
-          }
-        ],
-        "doel": "Je speelt je solowerk en je samenspelstuk voor de docent, in het P9-format dat we vorige week hebben geoefend.",
-        "fasenExtra": {
-          "1": {
-            "stappen": [
-              "Iedereen werkt in een eigen hoek. De volgorde staat op het bord.",
-              "Aan de beurt? Dan kom ik bij je staan. Zeg kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.",
-              "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.",
-              "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."
-            ],
-            "docent": "Scorelijst per leerling: solo en samenspel apart. Donderdag de resterende uitvoeringen. Opnemen met het opnameapparaat van de docent, zodat de format-reflectie thuis kan. Niemand speelt voor de klas."
-          }
-        }
-      },
-      {
-        "koppel": [
-          {
-            "lg": "vwo5",
-            "w": 8,
-            "slot": "l3"
-          }
-        ],
-        "fasenExtra": {
-          "0": {
-            "stappen": [
-              "Zelfde afspraken als maandag: eigen hoek, ik kom bij je staan.",
-              "Wie al geweest is, oefent zonder geluid of wacht buiten het lokaal.",
-              "Daarna is P9 afgerond voor iedereen."
-            ],
-            "docent": "Scorelijst afmaken; opnamen bewaren in de klasmap. Niemand speelt voor de klas."
-          }
-        }
-      },
-      {
-        "koppel": [
-          {
             "lg": "mavo4",
             "w": 7,
             "slot": "l2"
