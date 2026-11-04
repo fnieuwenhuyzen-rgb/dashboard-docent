@@ -2,11 +2,11 @@
 // Plafonds: PLAFOND hieronder. Teksten per soort partij: speelkeuze/teksten.json. De id's van de criteria blijven gelijk, dus bestaande scores blijven staan.
 const fs = require('fs'), path = require('path');
 const T = JSON.parse(fs.readFileSync(path.join(__dirname, 'speelkeuze', 'teksten.json'), 'utf8'));
-const PLAFOND = [7, 8.5, 10]; // voorbeeld uit de vraag aan Frans; nog vast te stellen
+const PLAFOND = [7, 8.5, 10]; // vastgesteld door Frans, 4-11-2026
 const lees = id => JSON.parse(fs.readFileSync(path.join(__dirname, id + '.json'), 'utf8'));
 const schrijf = m => fs.writeFileSync(path.join(__dirname, m.id + '.json'), JSON.stringify(m, null, 2) + '\n', 'utf8');
-const niveaus = wat => wat.map((w, i) => ({ naam: 'Niveau ' + (i + 1), wat: w, plafond: PLAFOND[i] }));
-const plafondZin = n => 'Plafond per niveau: ' + n.map(x => x.naam.toLowerCase() + ' maximaal ' + String(x.plafond).replace('.', ',')).join(', ') + '.';
+const niveaus = (wat, pl) => wat.map((w, i) => ({ naam: 'Niveau ' + (i + 1), wat: w, plafond: pl === null ? null : PLAFOND[i] }));
+const plafondZin = n => n.every(x => x.plafond == null) ? '' : 'Plafond per niveau: ' + n.map(x => x.naam.toLowerCase() + ' maximaal ' + String(x.plafond).replace('.', ',')).join(', ') + '.';
 const ZONDER_ZIN = c => String(c).replace(/ Plafond per niveau:.*$/, '');
 const KERST = [{ naam: 'Zang', soort: 'zang' }, { naam: 'Gitaar', soort: 'snaar' }, { naam: 'Ukelele', soort: 'snaar' }, { naam: 'Keyboard', soort: 'piano' }, { naam: 'Basgitaar', soort: 'bas' }, { naam: 'Drums of cajon', soort: 'drums' }];
 // per criterium: welke tekstsoort hoort erbij, en of de naam mee verandert
@@ -20,22 +20,23 @@ const soortenVan = p => [...new Set(p.map(x => x.soort))];
 function keuze(m, velden, partijVeld, partijen, nv, opmerking, extra) {
   m.velden = velden; m.keuzes = Object.assign({ [partijVeld]: partijen.map(x => x.naam), Niveau: nv.map(x => x.naam) }, extra || {});
   m.speelkeuze = { partijVeld, niveauVeld: 'Niveau', partijen, niveaus: nv, opmerking };
-  m.cijfer = ZONDER_ZIN(m.cijfer) + ' ' + plafondZin(nv);
+  m.cijfer = (ZONDER_ZIN(m.cijfer) + ' ' + plafondZin(nv)).trim();
 }
 
 // Klas 3, Songbox 1 (al beoordeeld of bezig; de waarde van "Mijn partij" blijft staan)
-{ const m = lees('songbox1-klas3'); const nv = niveaus(['', '', '']);
-  keuze(m, ['Klas', 'Groep', 'Mijn partij', 'Niveau'], 'Mijn partij', T.partijen, nv, 'Niveau is wat de leerling speelt, de score is hoe goed. Kies partij en niveau zoals in Musicbox.');
+{ const m = lees('songbox1-klas3'); const nv = niveaus(['refrein', 'couplet, pre-chorus, refrein', 'couplet, pre-chorus, refrein'], null); // C'est la vie; geen plafond: leerlingen wisten het niet vooraf (Frans, 4-11-2026)
+  keuze(m, ['Klas', 'Groep', 'Mijn partij', 'Niveau'], 'Mijn partij', T.partijen, nv, "Songbox 1 is C'est la vie. Niveau wordt alleen genoteerd: het plafond geldt pas vanaf het kerstlied.");
   zetCrit(m, { ritme: 'ritme', toon: 'klank', techniek: 'techniek' }, false, soortenVan(T.partijen)); schrijf(m); }
 
 // Klas 3, P1 kerstlied. Niveaus uit de kerstboxen.
 { const m = lees('p1-klas3-waymaker'); const nv = niveaus(['refrein', 'couplet en refrein', 'het hele lied']);
-  keuze(m, ['Klas', 'Groep', 'Mijn partij', 'Niveau'], 'Mijn partij', KERST, nv, 'In de lessen staat: minimaal niveau 2 voor P1.');
+  keuze(m, ['Klas', 'Groep', 'Mijn partij', 'Niveau'], 'Mijn partij', KERST, nv, 'Streef naar niveau 2. Niveau 1 mag ook, tot een 7.');
   zetCrit(m, { ritme: 'ritme', toon: 'klank', techniek: 'techniek' }, false, soortenVan(KERST)); schrijf(m); }
 
 // Mavo 3, presentatie 1: C'est la vie of Duurt te lang. Wordt een speelbox-beoordeling.
 { const m = lees('p1a-mavo3-zang'); const nv = niveaus(["C'est la vie: refrein. Duurt te lang: 8 maten", "C'est la vie: couplet, pre-chorus, refrein. Duurt te lang: 8 maten", "C'est la vie: couplet, pre-chorus, refrein. Duurt te lang: 8 maten"]);
   keuze(m, ['Lied', 'Mijn partij', 'Niveau', 'Groep'], 'Mijn partij', T.partijen, nv, "Duurt te lang is een Songbox Light: alle partijen zijn 8 maten en niveaus mogen door elkaar. Op niveau 3 heeft die box alleen bladen voor piano 2 handen en drums.", { Lied: ["C'est la vie", 'Duurt te lang'] });
+  const AF = ' Afwijking (Frans, 4-11-2026): presentatie 1 is een vrije keuze van partij, dus niet altijd zang of melodie.'; if (!m.pta.includes(AF)) m.pta += AF;
   m.titel = 'Praktijktoets P1, presentatie 1: speelbox'; m.thema = 'Ritme, maat en presentatie 1'; m.leerlingTitel = 'Zo beoordeel ik mijn spel';
   m.leerlingInstructie = 'Tel samen af en begin samen. Fout? Speel of zing door op de tel en pak het volgende stuk.';
   const crit = id => m.onderdelen.flatMap(o => o.criteria).find(c => c.id === id);
@@ -52,5 +53,5 @@ function keuze(m, velden, partijVeld, partijen, nv, opmerking, extra) {
 
 // Mavo 3, presentatie 2: Go Tell It. Het PTA noemt akkoordinstrument; de criteria gaan al over akkoorden.
 { const m = lees('p1b-mavo3-akkoord'); const nv = niveaus(['refrein', 'couplet en refrein', '']); const P = [{ naam: 'Gitaar', soort: 'snaar' }, { naam: 'Ukelele', soort: 'snaar' }, { naam: 'Keyboard', soort: 'piano' }];
-  keuze(m, ['Lied', 'Instrument', 'Niveau', 'Groep'], 'Instrument', P, nv, 'In de lessen staat: minimaal niveau 2 voor presentatie 2.'); schrijf(m); }
+  keuze(m, ['Lied', 'Instrument', 'Niveau', 'Groep'], 'Instrument', P, nv, 'Streef naar niveau 2. Niveau 1 mag ook, tot een 7.'); schrijf(m); }
 console.log('klaar');

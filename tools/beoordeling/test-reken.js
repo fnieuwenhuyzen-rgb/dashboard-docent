@@ -59,6 +59,7 @@ is('komma', R.leesCijfer('7,5'), 7.5); is('tien', R.leesCijfer('10'), 10); is('t
   const M2 = model([c], { speelkeuze: k, zelfbeoordeling: 10 }); const U = nieuweT(); U.ll.x = { s: { a: 9 }, zelf: 10, v: { Niveau: 'Niveau 2' } }; is('plafond met zelfdeel', R.eind(M2, U, U, 'x').e, 8.5);
   R.afronden(m, T, [{ id: 'x' }], 1); is('vastgelegd met plafond', T.ll.x.vast.e, 7); T.ll.x.v.Niveau = 'Niveau 3'; is('vast verandert niet', R.eind(m, T, T, 'x').e, 7);
   const v = R.critVoor(m, c, { Partij: 'Drums' }); is('partij naam', [v.naam, v.docent[0], v.leerling], ['Klank', 'dr', null]); is('onbekende partij', R.critVoor(m, c, { Partij: 'Oud' }).naam, 'a'); }
+{ const m = model([crit('a', 1)], { speelkeuze: { partijVeld: 'P', niveauVeld: 'Niveau', partijen: [], niveaus: [{ naam: 'Niveau 1', plafond: null }] } }); const T = nieuweT(); T.ll.x = { s: { a: 9 }, v: { Niveau: 'Niveau 1' } }; is('niveau zonder plafond', R.eind(m, T, T, 'x').e, 9); }
 // alle modellen: hebben ze wat de app nodig heeft
 { const dir = __dirname; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const m = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); const D = R.delenVan(m); const som = Object.values(D).reduce((a, b) => a + b, 0); is(f + ' delen 100', som, 100); if (D.klasgenoten) is(f + ' zelfdeel', m.zelfSoort, 'cijfer'); } }
 console.log(fout ? fout + ' fouten' : 'alles goed'); process.exit(fout ? 1 : 0);

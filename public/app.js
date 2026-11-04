@@ -2764,8 +2764,8 @@ function bmVeldHtml(m, v, w) {
 }
 function bmSpeelHtml(m, v) {
   const k = m.speelkeuze; if (!k) return ''; const n = BMR.niveauVan(m, v);
-  const delen = [k.opmerking]; if (n) delen.unshift(`${n.naam}${n.wat ? ': ' + n.wat : ''}. Plafond ${komma(n.plafond)}.`); 
-  return `<p class="bm-niv">${n ? '' : '<b>Nog geen niveau: er geldt geen plafond.</b> '}${esc(delen.filter(Boolean).join(' '))}</p>`;
+  const delen = [k.opmerking]; if (n) delen.unshift(`${n.naam}${n.wat ? ': ' + n.wat : ''}.${n.plafond != null ? ` Plafond ${komma(n.plafond)}.` : ''}`); const heeftPl = (k.niveaus || []).some(x => x.plafond != null);
+  return `<p class="bm-niv">${n || !heeftPl ? '' : '<b>Nog geen niveau: er geldt geen plafond.</b> '}${esc(delen.filter(Boolean).join(' '))}</p>`;
 }
 function bmScoorKaart(m, T, L, cur, naam) {
   const r = bmRij(L, cur); const dicht = L === T && !!r.vast; const u = BMR.eind(m, L, T, cur); const D = u.delen; const zb = D.zelf || 0; const cs = bmConcertAan(); const rv = BMR.veldenVan(L, T, cur);

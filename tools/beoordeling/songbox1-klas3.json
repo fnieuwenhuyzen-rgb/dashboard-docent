@@ -56,7 +56,7 @@
     }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Spelen telt dubbel, reflectie één keer. Plafond per niveau: niveau 1 maximaal 7, niveau 2 maximaal 8,5, niveau 3 maximaal 10.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Spelen telt dubbel, reflectie één keer.",
   "onderdelen": [
     {
       "groep": "Spelen (telt dubbel)",
@@ -423,20 +423,20 @@
     "niveaus": [
       {
         "naam": "Niveau 1",
-        "wat": "",
-        "plafond": 7
+        "wat": "refrein",
+        "plafond": null
       },
       {
         "naam": "Niveau 2",
-        "wat": "",
-        "plafond": 8.5
+        "wat": "couplet, pre-chorus, refrein",
+        "plafond": null
       },
       {
         "naam": "Niveau 3",
-        "wat": "",
-        "plafond": 10
+        "wat": "couplet, pre-chorus, refrein",
+        "plafond": null
       }
     ],
-    "opmerking": "Niveau is wat de leerling speelt, de score is hoe goed. Kies partij en niveau zoals in Musicbox."
+    "opmerking": "Songbox 1 is C'est la vie. Niveau wordt alleen genoteerd: het plafond geldt pas vanaf het kerstlied."
   }
 }

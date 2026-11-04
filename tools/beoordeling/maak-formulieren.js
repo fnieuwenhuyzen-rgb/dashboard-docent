@@ -47,7 +47,7 @@ function rubriek(soort) {
 // velden bovenaan: Naam, (docent: Datum) en de velden uit het model, drie per regel
 const veldRijen = (namen) => { let h = '<table class="velden">'; for (let i = 0; i < namen.length; i += 3) { const r = namen.slice(i, i + 3); h += '<tr>' + r.map(n => `<td style="width:33%">${esc(n)}: ${'_'.repeat(Math.max(12, 40 - n.length))}</td>`).join('') + '<td></td>'.repeat(3 - r.length) + '</tr>'; } return h + '</table>'; };
 // speelbox: welke partijen en niveaus er zijn. De teksten per partij staan in de app en op het tabblad Rubric van het scoreblad.
-const speelRegel = (soort) => { const k = M.speelkeuze; if (!k) return ''; const n = k.niveaus.map(x => `${x.naam}${x.wat && x.wat.length < 30 ? ' (' + x.wat + ')' : ''}${soort === 'docent' ? ': max ' + String(x.plafond).replace('.', ',') : ''}`).join(' · '); return `<p class="klein" style="margin:2pt 0">${esc(k.partijVeld)}: ${esc(k.partijen.map(x => x.naam).join(', '))}. ${esc(n)}.</p>`; };
+const speelRegel = (soort) => { const k = M.speelkeuze; if (!k) return ''; const n = k.niveaus.map(x => `${x.naam}${x.wat && x.wat.length < 30 ? ' (' + x.wat + ')' : ''}${soort === 'docent' && x.plafond != null ? ': max ' + String(x.plafond).replace('.', ',') : ''}`).join(' · '); return `<p class="klein" style="margin:2pt 0">${esc(k.partijVeld)}: ${esc(k.partijen.map(x => x.naam).join(', '))}. ${esc(n)}.</p>`; };
 const vooruit = M.vooruit || 'Eén punt om aan te werken';
 const zb = +M.zelfbeoordeling || 0;
 const kg = M.delen && M.delen.klasgenoten ? M.delen : null; // examenconcerten: docent, eigen cijfer van de leerling en klasgenoten
