@@ -1,6 +1,6 @@
 # PT1 vwo 4: checklist (stand 4-11, herzien)
 
-**PT1 is op ma 23-11 in 009.** Eén groep van vijf speelt Backwater blues in A (Musicbox), iedereen zingt één couplet. Besluit Frans, 4-11: "Ja, zo doen". De decks en formulieren staan al in de sectiemap. Leergang en model staan op branch `pt1-vwo4` en zijn nog niet live.
+**PT1 is op ma 23-11 in 009.** Eén groep van vijf speelt Backwater blues in A (Musicbox), iedereen zingt één couplet. Besluit Frans, 4-11: "Ja, zo doen". De decks en formulieren staan in de sectiemap, leergang en model staan live (ja van Frans, 4-11).
 
 | Wanneer | Les | Deck |
 |---|---|---|
@@ -11,8 +11,8 @@
 
 ## Frans moet nog
 
-1. **Live zetten: ja of nee.** Tot die tijd wijst de live les 8.2 naar het oude deck, dat nu in `99 Archief/Oud` staat, dus die link werkt niet.
-2. **Na live, in Jaar bij vwo 4:** staat les 8.2 op overgeslagen of gegeven, klik dan "niet gegeven". Anders schuift de generale naar ma 16-11. Dit staat in je eigen staat en die heb ik niet gezien of gewijzigd.
+1. (Live zetten: gedaan.)
+2. **In Jaar bij vwo 4:** staat les 8.2 op overgeslagen of gegeven, klik dan "niet gegeven". Anders schuift de generale naar ma 16-11. Dit staat in je eigen staat en die heb ik niet gezien of gewijzigd.
 3. **Leadsheet nakijken.** Ik zag alleen het begin van de Chordsheet (A, D, E, tempo 100, maat 9-10 E naar D). De Leadsheet kon ik niet lezen, want Musicbox vroeg in het paneel opnieuw om in te loggen. "De band antwoordt in de open maten" is dus algemene bluesvorm, niet afgelezen.
 4. **Bladmuziek:** leerlingen lezen nu vanaf de laptop in Musicbox, want de box zegt dat verspreiden niet mag. Wil je printen, dan is dat jouw keuze.
 5. **Studiewijzer** noemt nog 9 november. Die heb ik niet aangepast.
