@@ -1,0 +1,365 @@
+{
+  "_uitleg": "Alle klassen behalve mavo 3 en klas 3: niemand speelt voor de klas (Frans, 4-11-2026). Lessen zonder eigen presentatie. Wordt toegepast door zet-decks-in-leergang.js, ook na merge-inhoud.js --force.",
+  "nooitVoorDeKlas": {
+    "lessen": [
+      {
+        "koppel": [
+          {
+            "lg": "vwo4",
+            "w": 20,
+            "slot": "l2"
+          }
+        ],
+        "titel": "Spelen in je groep: meeluisteren met tips",
+        "detail": "Nummers van de periode achter elkaar in je eigen hoek; de docent luistert mee en geeft tip en top.",
+        "doel": "Je speelt de nummers van de periode in je groep achter elkaar voor de docent en krijgt tip en top.",
+        "criteria": [
+          "Wij spelen ons nummer zonder stoppen",
+          "Ik noem in mijn groep een tip die over timing, balans of presentatie gaat"
+        ],
+        "fasen": [
+          {
+            "min": 15,
+            "soort": "start",
+            "kop": "Messiah: nr. 37 en 39 nieuw, herhaal 33",
+            "stappen": [
+              "Nr. 37 en 39 nieuw.",
+              "Nr. 33 herhalen."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Afspraken",
+            "stappen": [
+              "Elke groep werkt in een eigen hoek.",
+              "Ik kom bij jullie langs en jullie spelen de nummers voor mij."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          },
+          {
+            "min": 20,
+            "soort": "doen",
+            "kop": "Spelen in je groep",
+            "stappen": [
+              "Speel de nummers achter elkaar door.",
+              "Kom ik langs? Dan speel je ze voor mij, zonder stoppen.",
+              "Daarna oefen je een lastige plek."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Tip en top in je groep",
+            "stappen": [
+              "Noem samen één top en één tip.",
+              "Waar gaat het over? Timing, balans of presentatie."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "meeluisteren",
+          "tekst": "Elke groep speelt in de eigen hoek voor de docent en krijgt één tip en één top op timing, balans en presentatie."
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "vwo4",
+            "w": 22,
+            "slot": "l2"
+          }
+        ],
+        "detail": "Oefenlog starten; eerste regel voor de docent spelen.",
+        "doel": "Je kiest je solowerk, start je oefenlog en speelt de eerste regel voor de docent.",
+        "criteria": [
+          "Mijn solowerk is gekozen en genoteerd",
+          "Ik speel de eerste regel voor de docent zonder stoppen"
+        ],
+        "fasen": [
+          {
+            "min": 15,
+            "soort": "start",
+            "kop": "Messiah: nr. 53 nieuw, herhaal 46, 51, 25",
+            "stappen": [
+              "Nr. 53 nieuw.",
+              "Nr. 46, 51 en 25 herhalen."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "PT2 en je oefenlog",
+            "stappen": [
+              "Zo ziet PT2 eruit.",
+              "Oefenlog: stuk, moeilijkste maat, plan voor thuis."
+            ]
+          },
+          {
+            "min": 20,
+            "soort": "doen",
+            "kop": "Kiezen en eerste regel",
+            "stappen": [
+              "Kies je solowerk en zet het in je oefenlog.",
+              "Studeer de eerste regel in.",
+              "Kom ik langs? Dan speel je die regel voor mij."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "vwo4",
+            "w": 23,
+            "slot": "l2"
+          }
+        ],
+        "titel": "Solowerk spelen met feedback",
+        "doel": "Je speelt je solowerk voor de docent en verwerkt één feedbackpunt meteen.",
+        "criteria": [
+          "Ik speel door zonder opnieuw te beginnen",
+          "Ik pas één tip direct toe"
+        ],
+        "fasen": [
+          {
+            "min": 10,
+            "soort": "start",
+            "kop": "Messiah: herhaal 4, 7, 21, 28",
+            "stappen": [
+              "Nr. 4, 7, 21 en 28 herhalen."
+            ]
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Solowerk in je eigen hoek",
+            "stappen": [
+              "Oefen je solowerk in een eigen hoek.",
+              "Kom ik langs? Dan speel je het voor mij.",
+              "Je krijgt een feedbackkaartje: toon, tempo, frasering.",
+              "Probeer één tip meteen uit."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Oefenlog",
+            "stappen": [
+              "Schrijf je tip en je volgende stap in je oefenlog."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "meeluisteren met feedback",
+          "tekst": "Feedbackkaartje: toon, tempo, frasering; één tip direct uitproberen."
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "vwo4",
+            "w": 25,
+            "slot": "l2"
+          }
+        ],
+        "detail": "Eerste helft solowerk voor de docent spelen.",
+        "doel": "Je bespreekt de Messiah-uitvoering na en speelt de eerste helft van je solowerk voor de docent.",
+        "fasen": [
+          {
+            "min": 15,
+            "soort": "gesprek",
+            "kop": "Nabespreking Messiah in kring",
+            "stappen": [
+              "Eén moment uit Leiden dat je bijbleef.",
+              "Noem het met een vakterm."
+            ]
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Eerste helft solowerk",
+            "stappen": [
+              "Oefen de eerste helft in een eigen hoek.",
+              "Kom ik langs? Dan speel je die voor mij.",
+              "Je krijgt één feedbackpunt."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Oefenlog",
+            "stappen": [
+              "Schrijf je feedbackpunt in je oefenlog."
+            ]
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "vwo4",
+            "w": 33,
+            "slot": "l2"
+          }
+        ],
+        "detail": "Solowerk voor de docent spelen, met feedback op tempo, toon, frasering.",
+        "doel": "Je speelt je solowerk voor de docent, met feedback op tempo, toon en frasering.",
+        "fasen": [
+          {
+            "min": 35,
+            "soort": "doen",
+            "kop": "Solowerk in je eigen hoek",
+            "stappen": [
+              "Oefen je solowerk in een eigen hoek.",
+              "Kom ik langs? Dan speel je het hele stuk voor mij.",
+              "Je krijgt een feedbackkaartje: tempo, toon, frasering."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          },
+          {
+            "min": 10,
+            "soort": "afsluiten",
+            "kop": "Oefenlog en planning tot PT2",
+            "stappen": [
+              "Noteer je laatste verbeterpunt.",
+              "Plan je oefenen tot PT2."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "meeluisteren met feedback",
+          "tekst": "Feedbackkaartje tempo/toon/frasering; laatste verbeterpunt noteren."
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo4",
+            "w": 35,
+            "slot": "l2"
+          }
+        ],
+        "criteria": [
+          "Project klaar voor de slotronde"
+        ],
+        "formatief": {
+          "soort": "generale",
+          "tekst": "Doorloop voor de slotronde in je groep."
+        },
+        "fasen": [
+          {
+            "min": 40,
+            "soort": "doen",
+            "kop": "Bandproject",
+            "stappen": [
+              "Werk aan het bandproject in je eigen hoek.",
+              "Speel het een keer helemaal door."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Afsluiting",
+            "stappen": [
+              "Wat oefen je nog voor de slotronde?"
+            ]
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo4",
+            "w": 36,
+            "slot": "l2"
+          }
+        ],
+        "titel": "Slotronde in je groep",
+        "vraag": "Wat laten we horen van onze song?",
+        "doel": "Elke groep speelt de eigen song voor de docent; je geeft je groepsgenoten een top.",
+        "criteria": [
+          "Wij spelen onze song voor de docent",
+          "Ik geef elke groepsgenoot een concrete top"
+        ],
+        "identiteit": "Slotronde in je groep: wat wil je met je song zeggen?",
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Afspraken",
+            "stappen": [
+              "Elke groep werkt in een eigen hoek.",
+              "Ik kom bij jullie langs en jullie spelen de song voor mij."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "De slotronde",
+            "stappen": [
+              "Speel de song door tot ik langskom.",
+              "Kom ik langs? Dan spelen jullie van begin tot slot.",
+              "Daarna: oefen wat je nog beter wilt."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "afsluiten",
+            "kop": "Tops in je groep",
+            "stappen": [
+              "Schrijf voor elke groepsgenoot een concrete top op.",
+              "Geef ze aan elkaar."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "tops in de groep",
+          "tekst": "Per groepsgenoot één top."
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 16,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "3": {
+            "stappen": [
+              "Speel in je groep het begin.",
+              "Noem één plek die je nog moet oefenen."
+            ]
+          }
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 17,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "1": {
+            "kop": "Ik kom bij elke groep langs",
+            "stappen": [
+              "Elke groep werkt in een eigen hoek.",
+              "Kom ik langs? Dan tel je samen af en speel je het lied voor mij.",
+              "Speel door als het misgaat en val weer in op de tel.",
+              "Daarna oefen je zacht verder."
+            ],
+            "docent": "Beoordeling in Lesdag of op het formulier. Iedereen krijgt een eigen cijfer, ook in een groep. Niemand speelt voor de klas."
+          }
+        }
+      }
+    ]
+  }
+}
