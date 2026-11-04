@@ -106,7 +106,7 @@ function slideFase(p, les, meta, f, i, img, extra) {
     s.addText(st, { x: M + 0.45, y: y + 0.04, w: tw - 0.45, h: m.h[j], fontFace: BODY, fontSize: fs, color: K.tekst, margin: 0, isTextBox: true, valign: 'top' });
     y += m.h[j] - 0.1 + (groot ? 0.3 : breed ? 0.18 : 0.22);
   });
-  if (f.klaar) { const ky = breed ? H - 1.55 : Math.min(Math.max(y + 0.2, 5.4), H - 1.6); kaart(s, M, ky, tw, 0.95); s.addText([{ text: 'Klaar? ', options: { bold: true, color: K.accent, fontFace: KOPB } }, { text: f.klaar, options: { color: K.tekst } }], { x: M + 0.25, y: ky + 0.1, w: tw - 0.5, h: 0.75, fontFace: BODY, fontSize: 13, margin: 0, isTextBox: true, valign: 'middle' }); }
+  if (f.klaar) { const ky = breed ? H - 1.55 : Math.min(Math.max(y + 0.2, 5.4), H - 1.6); kaart(s, M, ky, tw, 0.95); s.addText([{ text: 'Klaar? ', options: { bold: true, color: K.accent, fontFace: KOPB } }, { text: String(f.klaar).replace(/^Klaar\?\s*/, ''), options: { color: K.tekst } }], { x: M + 0.25, y: ky + 0.1, w: tw - 0.5, h: 0.75, fontFace: BODY, fontSize: 13, margin: 0, isTextBox: true, valign: 'middle' }); }
   if (heeftFoto) { fotoRond(s, img, 8.0, 1.3, W - 8.0 - M, H - 2.3); bron(s, img); }
   if (extra && !breed) extra(s, { x: 8.0, y: 1.3, w: W - 8.0 - M, h: H - 2.3 });
   if (extra && breed) extra(s, { x: M, y: Math.max(y, 4.4), w: W - 2 * M, h: 1.8 });

@@ -13,7 +13,7 @@
   ],
   "vooruit": "Eén punt voor het examenconcert in mavo 4",
   "leerlingTitel": "Zo beoordeel ik mijn slagwerkpresentatie",
-  "leerlingInstructie": "Zeg je naam, de titel en je instrument. Wie telt af? Spreek af hoe jullie beginnen en eindigen. Raak je de tel kwijt? Luister naar de anderen en val weer in op de één.",
+  "leerlingInstructie": "Wie telt af? Spreek af hoe jullie beginnen en eindigen. Raak je de tel kwijt? Luister naar de anderen en val weer in op de één.",
   "pta": "PTA mavo 3 2026-2027, P1 muzikale presentaties: gemiddelde van minstens drie praktijkdelen (zang/melodie, akkoordinstrument, slagwerk), weging 15, 45 minuten, herkansbaar in TW3, domeinen K2, K4, K5 en K6. Presentatie 3 (slagwerk) is in lesweek 35.",
   "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\P1 Praktijktoets - Muzikale presentaties\\Beoordeling",
   "lessen": [
@@ -72,19 +72,19 @@
       "criteria": [
         {
           "id": "presentatie",
-          "naam": "Presentatie",
-          "uitleg": "aankondigen, aftellen, begin en slot, doorspelen",
+          "naam": "Begin en slot",
+          "uitleg": "aftellen, begin en slot, doorspelen",
           "weging": 1,
           "docent": [
-            "Kondigt niets aan; geen afgesproken begin of slot; stopt bij een fout.",
-            "Noemt naam en titel; begin of slot rommelig; stopt soms na een fout.",
-            "Noemt naam, titel en instrument; telt af, duidelijk slot; speelt door na een fout.",
+            "Geen afgesproken begin of slot; stopt bij een fout.",
+            "Begin of slot rommelig; stopt soms na een fout.",
+            "Telt af, duidelijk slot; speelt door na een fout.",
             "Zekere start en strak slot; een fout valt bijna niet op."
           ],
           "leerling": [
-            "Ik zeg niets vooraf en stop als het misgaat.",
-            "Ik zeg mijn naam en titel, maar ons begin of slot is rommelig.",
-            "Ik zeg naam, titel en instrument, we tellen af, eindigen samen en ik speel door.",
+            "We hebben geen afgesproken begin of slot en ik stop als het misgaat.",
+            "Ons begin of slot is rommelig.",
+            "We tellen af, eindigen samen en ik speel door.",
             "We beginnen zeker en eindigen strak; een fout merkt bijna niemand."
           ],
           "groepsscore": true

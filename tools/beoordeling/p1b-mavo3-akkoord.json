@@ -9,11 +9,11 @@
   "velden": [
     "Lied",
     "Instrument",
-    "Duo met"
+    "Groep"
   ],
   "vooruit": "Eén punt voor presentatie 3",
   "leerlingTitel": "Zo beoordeel ik mijn presentatie op gitaar, ukelele of keyboard",
-  "leerlingInstructie": "Zeg je naam, de titel van je lied en je instrument. Tel samen af. Mis je een akkoord? Speel door op de tel en pak het volgende akkoord.",
+  "leerlingInstructie": "Tel samen af en begin samen. Mis je een akkoord? Speel door op de tel en pak het volgende akkoord.",
   "pta": "PTA mavo 3 2026-2027, P1 muzikale presentaties: gemiddelde van minstens drie praktijkdelen (zang/melodie, akkoordinstrument, slagwerk), weging 15, 45 minuten, herkansbaar in TW3, domeinen K2, K4, K5 en K6. Presentatie 2 (akkoordinstrument) is in lesweek 19.",
   "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\P1 Praktijktoets - Muzikale presentaties\\Beoordeling",
   "lessen": [
@@ -72,20 +72,20 @@
       "criteria": [
         {
           "id": "presentatie",
-          "naam": "Presentatie",
-          "uitleg": "aankondigen, samen beginnen en eindigen, doorspelen",
+          "naam": "Begin en slot",
+          "uitleg": "samen beginnen en eindigen, doorspelen",
           "weging": 1,
           "docent": [
-            "Kondigt niets aan; begin en slot zijn onduidelijk; stopt bij een fout.",
-            "Noemt naam en titel; begint en eindigt aarzelend; stopt soms na een fout.",
-            "Noemt naam, titel en instrument; duidelijk begin en slot; speelt door na een fout.",
-            "Rustige aankondiging, zekere inzet en slot; een fout valt bijna niet op."
+            "Begin en slot zijn onduidelijk; stopt bij een fout.",
+            "Begint en eindigt aarzelend; stopt soms na een fout.",
+            "Duidelijk begin en slot; speelt door na een fout.",
+            "Zekere inzet en slot; een fout valt bijna niet op."
           ],
           "leerling": [
-            "Ik zeg niets vooraf en stop als het misgaat.",
-            "Ik zeg mijn naam en titel, maar begin of eindig aarzelend.",
-            "Ik zeg naam, titel en instrument, begin en eindig duidelijk en speel door.",
-            "Ik begin en eindig zeker; als er iets misgaat, merkt bijna niemand het."
+            "We beginnen en eindigen rommelig en ik stop als het misgaat.",
+            "We beginnen of eindigen aarzelend.",
+            "We beginnen en eindigen duidelijk en ik speel door.",
+            "We beginnen en eindigen zeker; als er iets misgaat, merkt bijna niemand het."
           ],
           "groepsscore": true
         }
@@ -158,7 +158,7 @@
             "Houding en vingerzetting staan het spelen in de weg.",
             "Redelijke houding; vingers en aanslag nog onrustig of gespannen.",
             "Goede houding en vingerzetting; rustige, gelijke aanslag.",
-            "Ontspannen en zeker; kan opkijken naar publiek of duopartner tijdens het spelen."
+            "Ontspannen en zeker; kan opkijken naar het groepje tijdens het spelen."
           ],
           "leerling": [
             "Mijn houding en vingers maken het spelen moeilijk.",
@@ -179,16 +179,16 @@
           "uitleg": "luisteren, gelijk blijven, de zang dragen",
           "weging": 1,
           "docent": [
-            "Speelt los van de ander; loopt voor of achter; te hard of te zacht.",
-            "Luistert naar de ander; blijft meestal gelijk; balans soms uit.",
-            "Blijft gelijk met de ander; de begeleiding draagt de zang of melodie.",
-            "Reageert op de ander; zo begeleid dat anderen er makkelijk op kunnen zingen."
+            "Speelt los van de anderen; loopt voor of achter; te hard of te zacht.",
+            "Luistert naar de anderen; blijft meestal gelijk; balans soms uit.",
+            "Blijft gelijk met de anderen; de begeleiding draagt de zang of melodie.",
+            "Reageert op de anderen; zo begeleid dat anderen er makkelijk op kunnen zingen."
           ],
           "leerling": [
-            "Ik speel los van mijn duopartner.",
-            "Ik luister naar mijn partner en blijf meestal gelijk.",
-            "Ik blijf gelijk met mijn partner en mijn begeleiding helpt de zang.",
-            "Ik reageer op mijn partner; je kunt makkelijk op mijn begeleiding zingen."
+            "Ik speel los van mijn groepje.",
+            "Ik luister naar mijn groepje en blijf meestal gelijk.",
+            "Ik blijf gelijk met mijn groepje en mijn begeleiding helpt de zang.",
+            "Ik reageer op mijn groepje; je kunt makkelijk op mijn begeleiding zingen."
           ],
           "groepsscore": true
         }

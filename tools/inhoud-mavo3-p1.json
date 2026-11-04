@@ -1,0 +1,137 @@
+{
+  "_uitleg": "Mavo 3 lesweek 8: presentatie 1 in groepjes (Frans, 4-11-2026).",
+  "mavo3p1": {
+    "klas": "mavo 3",
+    "thema": "mavo",
+    "map": "02 Keuzevak muziek\\Mavo\\Mavo 3\\Lessen 2026-2027",
+    "blok": "Periode 1 · Ritme, maat en presentatie zang",
+    "blokKort": "presentatie 1",
+    "lessen": [
+      {
+        "week": 8,
+        "code": "P1 · presentatie 1",
+        "bestand": "08 Presentatie 1 - in groepjes.pptx",
+        "kort": "Presentatie 1 in groepjes",
+        "koppel": [
+          {
+            "lg": "mavo3",
+            "w": 8,
+            "slot": "l1"
+          }
+        ],
+        "fotos": {
+          "titel": "bandles-leerlingen.jpg",
+          "doel": "bandles-leerlingen.jpg",
+          "fase": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "titel": "Presentatie 1 in groepjes",
+        "type": "praktijk",
+        "detail": "Je speelt in je groepje de MusicBox C'est la vie of Duurt te lang. Telt mee in P1 (gemiddelde van drie presentaties).",
+        "vraag": "Hoe klinkt ons stuk als we het samen doorspelen?",
+        "doel": "Je speelt met je groepje de MusicBox C'est la vie of Duurt te lang. Presentatie 1 telt mee voor P1, samen met presentatie 2 en 3.",
+        "criteria": [
+          "Ik ken mijn partij",
+          "Ik blijf in de maat",
+          "Ik luister naar mijn groepje en speel door na een fout"
+        ],
+        "voorbereiding": [
+          "Formulier en scoreblad van presentatie 1 bij de hand.",
+          "Instrumenten klaar in de hoeken. Laptop of telefoon per groepje voor de MusicBox."
+        ],
+        "notitieTitel": [
+          "Vandaag is presentatie 1. Niemand speelt voor de klas: elk groepje speelt in de eigen hoek en jij loopt langs."
+        ],
+        "notitieAgenda": [
+          "Afspraken, inspelen, spelen in het groepje terwijl jij langsloopt, afsluiten met de zelfbeoordeling."
+        ],
+        "notitieDoel": [
+          "Elk groepje speelt C'est la vie of Duurt te lang. Je beoordeelt met het formulier van presentatie 1."
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Afspraken voor vandaag",
+            "stappen": [
+              "Je speelt met je groepje C'est la vie of Duurt te lang.",
+              "Elk groepje werkt in een eigen hoek.",
+              "Ik kom bij jullie langs en luister. Niemand speelt voor de klas."
+            ],
+            "docent": "Bepaal vooraf in welke volgorde je langs de groepjes loopt.",
+            "notitie": {
+              "vertel": [
+                "Vandaag telt het. Elk groepje speelt in de eigen hoek. Ik kom langs, en als ik bij jullie ben, spelen jullie het stuk voor mij. Niemand hoeft naar voren en niemand speelt voor de klas."
+              ]
+            }
+          },
+          {
+            "min": 10,
+            "soort": "doen",
+            "kop": "Inspelen",
+            "stappen": [
+              "Open jullie stuk in de MusicBox.",
+              "Zet je instrument klaar of warm je stem op.",
+              "Speel het stuk één keer samen door."
+            ],
+            "docent": "Kort en rustig. Help groepjes die nog niet klaarstaan.",
+            "notitie": {
+              "vertel": [
+                "Tien minuten om in te spelen. Zet alles klaar en speel het stuk één keer helemaal door."
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Spelen in je groepje",
+            "stappen": [
+              "Speel het stuk helemaal door.",
+              "Kom ik langs? Dan spelen jullie het stuk voor mij.",
+              "Fout? Speel door op de tel. Niet stoppen.",
+              "Daarna oefen je een lastige plek."
+            ],
+            "docent": "Beoordelen op het formulier van presentatie 1. Kom je niet bij elk groepje, dan komt de rest later aan de beurt; inhaalpresentaties staan in lesweek 36.",
+            "notitie": {
+              "vertel": [
+                "Loop van groepje naar groepje. Laat elk groepje het stuk een keer helemaal spelen en vul het formulier in. De andere groepjes spelen intussen door in de eigen hoek."
+              ],
+              "letop": [
+                "Houd de tijd per groepje in de gaten, zodat je bij iedereen komt."
+              ]
+            }
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Wat ging goed?",
+            "stappen": [
+              "Noem in je groepje één ding dat goed ging.",
+              "Vul je zelfbeoordeling in.",
+              "Volgende week: je krijgt je cijfer en we herhalen ritme en maat."
+            ],
+            "docent": "Cijfer volgende week met de terugblik; gemiddelde van drie presentaties telt voor P1.",
+            "notitie": {
+              "vertel": [
+                "Bespreek in je groepje wat goed ging en vul de zelfbeoordeling in. Die telt voor 10% mee. Volgende week krijg je je cijfer."
+              ]
+            }
+          }
+        ],
+        "formatief": {
+          "soort": "presentatie in groepjes",
+          "tekst": "Noem in je groepje één ding dat goed ging. De cijfers volgen bij de terugblik volgende week.",
+          "notitie": {
+            "vertel": [
+              "Geen ronde langs de klas: de groepjes bespreken dit onderling."
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
