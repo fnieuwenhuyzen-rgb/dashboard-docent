@@ -1,6 +1,6 @@
 # Past de tekstwissels uit pt1-vwo4-paren.json toe op deck 10.1 (dia's en sprekersnotities).
-# Gebruik: powershell -NoProfile -ExecutionPolicy Bypass -File tools\zet-pt1-deck.ps1 -Set veilig|groepen [-Deck <pad>] [-Backup <map>] [-Proef]
-param([Parameter(Mandatory)][ValidateSet('veilig','groepen')][string]$Set, [string]$Deck, [string]$Backup, [switch]$Proef)
+# Gebruik: powershell -NoProfile -ExecutionPolicy Bypass -File tools\zet-pt1-deck.ps1 -Set veilig|groepen|datum [-Deck <pad>] [-Backup <map>] [-Proef]
+param([Parameter(Mandatory)][ValidateSet('veilig','groepen','datum')][string]$Set, [string]$Deck, [string]$Backup, [switch]$Proef)
 Add-Type -AssemblyName System.IO.Compression
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 if (-not $Deck) { $Deck = "C:\Users\nwn\OneDrive - CSG Prins Maurits\Documenten - Sectie Muziek\02 Keuzevak muziek\VWO\VWO 4\Lessen 2026-2027\10.1 PT1 afnemen - samenspel en zang.pptx" }
