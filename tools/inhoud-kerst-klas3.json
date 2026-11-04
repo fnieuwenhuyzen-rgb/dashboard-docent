@@ -660,7 +660,7 @@
           "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor wie verder wil."
         ],
         "notitieAgenda": [
-          "Eerst luisteren naar de opname: waar wordt het voller? Dan uitleg over opbouwen. Dan maken jullie een plan en oefenen het. Aan het eind spelen twee groepen voor."
+          "Eerst luisteren naar de opname: waar wordt het voller? Dan uitleg over opbouwen. Dan maken jullie een plan en oefenen het. Aan het eind luister ik bij twee groepen mee."
         ],
         "notitieDoel": [
           "Je groep speelt couplet en refrein met een hoorbaar verschil tussen rustig en vol.",
@@ -764,9 +764,16 @@
             }
           },
           "3": {
+            "kop": "Ik luister bij twee groepen mee",
+            "stappen": [
+              "Speel jullie opbouw nog één keer in je groep.",
+              "Waar hoorde je de opbouw?",
+              "Was het verschil tussen couplet en refrein duidelijk?"
+            ],
+            "docent": "Niemand speelt voor de klas.",
             "notitie": {
               "vertel": [
-                "Twee groepen spelen hun opbouw voor. De rest luistert en antwoordt op twee vragen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
+                "Elke groep speelt de opbouw nog één keer in de eigen hoek. Ik luister bij twee groepen mee. De groep antwoordt zelf op twee vragen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
                 "Peerfeedback in twee stappen: eerst wat goed ging, dan één tip."
               ],
               "vragen": [
@@ -780,16 +787,17 @@
                 }
               ],
               "letop": [
-                "Kies twee groepen die het aandurven. Vraag eerst of ze dat willen.",
+                "Niemand speelt voor de klas. Loop langs en luister mee bij twee groepen.",
                 "Feedback is niet alleen 'goed' of 'slecht'. Dit is ook een oefening voor de feedback die bij P1 meetelt."
               ]
             }
           }
         },
         "formatief": {
+          "tekst": "De groep benoemt zelf: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
           "notitie": {
             "vertel": [
-              "Peerfeedback: de luisteraars benoemen waar ze de opbouw hoorden en of het verschil tussen couplet en refrein duidelijk was."
+              "Peerfeedback in de eigen groep: de groepsgenoten benoemen waar ze de opbouw hoorden en of het verschil tussen couplet en refrein duidelijk was."
             ],
             "vragen": [
               {
@@ -1844,7 +1852,7 @@
           "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
         ],
         "notitieAgenda": [
-          "Eerst luisteren naar de opname: waar wordt het voller? Dan uitleg over opbouwen. Dan maken jullie een plan en oefenen het. Aan het eind spelen twee groepen voor."
+          "Eerst luisteren naar de opname: waar wordt het voller? Dan uitleg over opbouwen. Dan maken jullie een plan en oefenen het. Aan het eind luister ik bij twee groepen mee."
         ],
         "notitieDoel": [
           "Je groep speelt couplet en refrein met een hoorbaar verschil tussen rustig en vol.",
@@ -1947,9 +1955,16 @@
             }
           },
           "3": {
+            "kop": "Ik luister bij twee groepen mee",
+            "stappen": [
+              "Speel jullie opbouw nog één keer in je groep.",
+              "Waar hoorde je de opbouw?",
+              "Was het verschil tussen couplet en refrein duidelijk?"
+            ],
+            "docent": "Niemand speelt voor de klas.",
             "notitie": {
               "vertel": [
-                "Twee groepen spelen hun opbouw voor. De rest luistert en antwoordt op twee vragen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
+                "Elke groep speelt de opbouw nog één keer in de eigen hoek. Ik luister bij twee groepen mee. De groep antwoordt zelf op twee vragen: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
                 "Peerfeedback in twee stappen: eerst wat goed ging, dan één tip."
               ],
               "vragen": [
@@ -1963,16 +1978,17 @@
                 }
               ],
               "letop": [
-                "Kies twee groepen die het aandurven. Vraag eerst of ze dat willen.",
+                "Niemand speelt voor de klas. Loop langs en luister mee bij twee groepen.",
                 "Feedback is niet alleen 'goed' of 'slecht'. Dit is ook een oefening voor de feedback die bij P1 meetelt."
               ]
             }
           }
         },
         "formatief": {
+          "tekst": "De groep benoemt zelf: waar hoorde je de opbouw, en was het verschil tussen couplet en refrein duidelijk?",
           "notitie": {
             "vertel": [
-              "Peerfeedback: de luisteraars benoemen waar ze de opbouw hoorden en of het verschil tussen couplet en refrein duidelijk was."
+              "Peerfeedback in de eigen groep: de groepsgenoten benoemen waar ze de opbouw hoorden en of het verschil tussen couplet en refrein duidelijk was."
             ],
             "vragen": [
               {
@@ -2020,7 +2036,7 @@
           "Spreek oefenruimtes af."
         ],
         "notitieTitel": [
-          "Dit is de laatste les voor de kerst. Jullie spelen het lied helemaal door en nemen het op als tussenstand. De groep die op de kerstviering speelt, doet de generale voor de klas.",
+          "Dit is de laatste les voor de kerst. Jullie spelen het lied helemaal door en nemen het op als tussenstand. De groep die op de kerstviering speelt, doet de generale voor mij.",
           "Het lied in het kort: God Rest Ye Merry Gentlemen, een van de oudste Engelse kerstliederen, een carol met een traditionele melodie. De tekst volgt het kerstverhaal uit Lucas 2. Wij spelen een bandversie in e-mineur, in 4/4, tempo rond 110 slagen per minuut. Het couplet is mineur, het refrein buigt naar G-majeur.",
           "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (maandag 25 januari 2027, 45 minuten, niet herkansbaar). Minimaal niveau voor P1 is niveau 2; niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel."
         ],
@@ -2054,10 +2070,15 @@
             }
           },
           "1": {
+            "stappen": [
+              "Speel jullie versie twee keer helemaal door.",
+              "Let op begin, opbouw en slot.",
+              "De groep die op de kerstviering speelt, doet nu de generale voor mij."
+            ],
             "notitie": {
               "vertel": [
                 "Speel jullie versie twee keer helemaal door. Let op begin, opbouw en slot. Niveau 2 is het minimum: couplet en refrein. Wie niveau 3 speelt, speelt het eigen arrangement.",
-                "De groep die op de kerstviering speelt, doet nu de generale voor de klas, in de opstelling van de viering.",
+                "De groep die op de kerstviering speelt, doet nu de generale voor mij, in de opstelling van de viering. De andere groepen spelen intussen door in hun eigen hoek.",
                 "Gaat het mis? Speel door en stap weer in."
               ],
               "voorbeelden": [

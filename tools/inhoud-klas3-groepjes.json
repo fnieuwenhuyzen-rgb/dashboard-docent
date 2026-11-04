@@ -1,0 +1,280 @@
+{
+  "_uitleg": "Havo 3 en vwo 3: niemand speelt voor de klas (Frans, 4-11-2026). Lessen zonder eigen presentatie. Wordt toegepast door zet-decks-in-leergang.js, ook na merge-inhoud.js --force.",
+  "klas3groepjes": {
+    "lessen": [
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 1,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 1,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "1": {
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Periode 1",
+                  "t": "Songbox 1 samen spelen"
+                },
+                {
+                  "k": "Periode 2",
+                  "t": "Kerstbox · speelstuk P1"
+                },
+                {
+                  "k": "Periode 3",
+                  "t": "Instrumenten, bands en orkesten · T1"
+                },
+                {
+                  "k": "Periode 4",
+                  "t": "Songbox 2 en slotronde in je groep"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 4,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 4,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "3": {
+            "kop": "Ik kom bij elke groep langs",
+            "stappen": [
+              "Speel de inzet en het slot in je groep.",
+              "Kom ik langs? Dan speel je het voor mij.",
+              "Wat was strak? Noem samen één ding."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          }
+        },
+        "formatief": {
+          "soort": "meeluisteren",
+          "tekst": "Elke groep speelt de inzet en het slot in de eigen hoek; de docent luistert mee en de groep benoemt wat strak was."
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 17,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 17,
+            "slot": "l1"
+          }
+        ],
+        "titel": "Tussenstand: meeluisteren met feedback",
+        "detail": "Formatieve ronde vóór de PTO-toets: elke groep speelt voor de docent en krijgt feedback op de vier speelcriteria.",
+        "doel": "Je groep speelt het lied voor de docent en krijgt feedback op samenspel, ritme, toon en techniek; je weet wat je nog oefent.",
+        "criteria": [
+          "Wij spelen het hele lied voor de docent",
+          "Ik krijg per onderdeel een score en een tip",
+          "Ik heb twee werkpunten voor de laatste twee lessen"
+        ],
+        "fasenExtra": {
+          "0": {
+            "stappen": [
+              "Elke groep werkt in een eigen hoek.",
+              "Ik kom bij jullie langs en jullie spelen het hele lied voor mij.",
+              "Je krijgt per onderdeel een voorlopige score en één tip."
+            ],
+            "docent": "Voorlopige kolom in het scoreblad of op papier. Benadruk: formatief, niet voor het cijfer. Niemand speelt voor de klas."
+          },
+          "1": {
+            "kop": "Spelen met feedback",
+            "stappen": [
+              "Oefen het lied in je groep tot ik langskom.",
+              "Kom ik langs? Dan speel je het hele lied voor mij.",
+              "Daarna krijgt elke speler een score en een tip.",
+              "Geef elkaar een compliment en oefen verder."
+            ]
+          }
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 31,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "stappen": [
+              "Wat ging goed bij T1?",
+              "Dit blok eindigt met een slotronde in je groep."
+            ]
+          }
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 32,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 32,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "3": {
+            "kop": "Ik luister bij één groep mee",
+            "stappen": [
+              "Speel couplet en refrein nog één keer in je groep.",
+              "Noem samen één sterk punt bij samenspel, ritme, toon of techniek."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          }
+        },
+        "formatief": {
+          "tekst": "De groep noemt zelf één sterk punt bij samenspel, ritme, toon of techniek."
+        }
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 34,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 34,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "2": {
+            "stappen": [
+              "Luister de opname samen terug.",
+              "Kies één verbeterpunt voor de slotronde."
+            ]
+          }
+        },
+        "formatief": {
+          "tekst": "Generale repetitie opnemen; één verbeterpunt per groep voor de slotronde."
+        },
+        "benodigd": [
+          "Opnameapparatuur (telefoons)"
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 35,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 35,
+            "slot": "l1"
+          }
+        ],
+        "titel": "Slotronde in je groep",
+        "detail": "Elke groep speelt voor de docent; opname terugluisteren.",
+        "identiteit": "Een jaar samen opbouwen vraagt moed en respect. In een goede groep durft iedereen.",
+        "doel": "Elke groep speelt het eigen arrangement voor de docent; je geeft je groepsgenoten een compliment.",
+        "criteria": [
+          "Wij spelen ons arrangement voor de docent",
+          "Ik geef elke groepsgenoot een concreet compliment"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Afspraken",
+            "stappen": [
+              "Elke groep werkt in een eigen hoek.",
+              "Ik kom bij jullie langs en jullie spelen het arrangement voor mij.",
+              "Ik neem jullie versie op."
+            ],
+            "docent": "Niemand speelt voor de klas."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "De slotronde",
+            "stappen": [
+              "Speel het arrangement door tot ik langskom.",
+              "Kom ik langs? Dan spelen jullie van intro tot slot.",
+              "Daarna: oefen wat je nog beter wilt."
+            ],
+            "docent": "Opnemen per groep; de opname is het luisterfragment voor de terugblikles."
+          },
+          {
+            "min": 10,
+            "soort": "afsluiten",
+            "kop": "Complimenten in je groep",
+            "stappen": [
+              "Schrijf voor elke groepsgenoot een concreet compliment op.",
+              "Geef ze aan elkaar.",
+              "Waar tijd is: jullie opname terugluisteren."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "complimenten in de groep",
+          "tekst": "Elke leerling schrijft voor elke groepsgenoot een concreet compliment op een briefje."
+        },
+        "benodigd": [
+          "Opnameapparatuur",
+          "Complimentenbriefjes"
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "havo3",
+            "w": 36,
+            "slot": "l1"
+          },
+          {
+            "lg": "vwo3",
+            "w": 36,
+            "slot": "l1"
+          }
+        ],
+        "fasenExtra": {
+          "0": {
+            "kop": "Luister: jullie eigen opname",
+            "stappen": [
+              "Luister in je groep de opname van vorige week.",
+              "Hoor je hoe ver je gekomen bent?"
+            ],
+            "docent": "Zet per groep de eigen opname klaar. Geen opname voor de hele klas."
+          }
+        },
+        "benodigd": [
+          "Terugblikbladen",
+          "Opname per groep van de slotronde"
+        ]
+      }
+    ]
+  }
+}

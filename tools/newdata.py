@@ -650,7 +650,7 @@ def vul3(k, p1naam, kort):
     kl['blokken'][2]['vragen'] = ['Hoe ontstaat de klank van een instrument?', 'Waarom werken orkesten en bands met vaste groepen en rollen?']
     kl['blokken'][3]['vragen'] = ['Hoe maak je van een song je eigen arrangement?']
     kl['blokken'][0]['toetsing'] = 'Songbox 1 uit Musicbox nog kiezen. Formatief: opname terugluisteren.'
-    kl['blokken'][3]['toetsing'] = 'Songbox 2 kiest de klas in lesweek 30. Afsluiting: slotoptreden in de klas.'
+    kl['blokken'][3]['toetsing'] = 'Songbox 2 kiest de klas in lesweek 30. Afsluiting: slotronde in je groep, voor de docent.'
     for t in kl['toetsen']:
         if t['id'] == 'P1': t['stof'] = f'{WM}, eigen songbox. ' + SPEEL
         if t['id'] == 'T1': t['stof'] = 'Instrumenten, bands en orkesten: instrumentfamilies, symfonieorkest, bands en ensembles, rollen in een band.'
