@@ -51,6 +51,14 @@ is('komma', R.leesCijfer('7,5'), 7.5); is('tien', R.leesCijfer('10'), 10); is('t
   const lang = 'ID\tNaam\tWie beoordeel je?\tCijfer\tToelichting\n1\tAnna Jansen\tJansen, Anna\t9\t"Leuk\nen goed"\n2\tAnna Jansen\tBram de Boer\t7\tok\n3\tAnna Jansen\tBram de Boer\t8\tbijgesteld\n4\tCas Dijk\tBram de Boer\t6,5\t\n5\tCas Dijk\tBrom Boer\t5\t\n6\tCas Dijk\tAnna Jansen\t12\t';
   const y = R.leesKlasgenoten(lang, lijst); is('lang vorm', y.vorm, 'rij per beoordeling'); is('lang b laatste telt', y.per.b, [8, 6.5]); is('lang eigen eruit', [y.per.a, y.zelf], [[], 1]); is('lang onbekend', y.onbekend, [{ label: 'Brom Boer', w: [5] }]); is('lang ongeldig', y.ongeldig, 1);
   is('geen tabel', !!R.leesKlasgenoten('alleen tekst', lijst).fout, true); is('geen namen', !!R.leesKlasgenoten('a\tb\nc\td', lijst).fout, true); }
+// speelbox: plafond per niveau op het eindcijfer, teksten per partij
+{ const k = { partijVeld: 'Partij', niveauVeld: 'Niveau', partijen: [{ naam: 'Drums', soort: 'drums' }], niveaus: [{ naam: 'Niveau 1', plafond: 7 }, { naam: 'Niveau 2', plafond: 8.5 }, { naam: 'Niveau 3', plafond: 10 }] };
+  const c = crit('a', 1, { docent: ['d'], leerling: ['l'], perPartij: { drums: { naam: 'Klank', docent: ['dr'] } } }); const m = model([c], { speelkeuze: k });
+  const T = nieuweT(); T.ll.x = { s: { a: 9 }, v: { Niveau: 'Niveau 1' } }; T.ll.y = { s: { a: 9 }, v: { Niveau: 'Niveau 3' } }; T.ll.z = { s: { a: 9 }, v: {} }; T.ll.w = { s: { a: 6 }, v: { Niveau: 'Niveau 1' } };
+  is('plafond geraakt', [R.eind(m, T, T, 'x').e, R.eind(m, T, T, 'x').d, R.eind(m, T, T, 'x').ruw], [7, 9, 9]); is('plafond hoog', R.eind(m, T, T, 'y').e, 9); is('geen niveau, geen plafond', R.eind(m, T, T, 'z').e, 9); is('onder plafond', R.eind(m, T, T, 'w').e, 6);
+  const M2 = model([c], { speelkeuze: k, zelfbeoordeling: 10 }); const U = nieuweT(); U.ll.x = { s: { a: 9 }, zelf: 10, v: { Niveau: 'Niveau 2' } }; is('plafond met zelfdeel', R.eind(M2, U, U, 'x').e, 8.5);
+  R.afronden(m, T, [{ id: 'x' }], 1); is('vastgelegd met plafond', T.ll.x.vast.e, 7); T.ll.x.v.Niveau = 'Niveau 3'; is('vast verandert niet', R.eind(m, T, T, 'x').e, 7);
+  const v = R.critVoor(m, c, { Partij: 'Drums' }); is('partij naam', [v.naam, v.docent[0], v.leerling], ['Klank', 'dr', null]); is('onbekende partij', R.critVoor(m, c, { Partij: 'Oud' }).naam, 'a'); }
 // alle modellen: hebben ze wat de app nodig heeft
 { const dir = __dirname; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const m = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); const D = R.delenVan(m); const som = Object.values(D).reduce((a, b) => a + b, 0); is(f + ' delen 100', som, 100); if (D.klasgenoten) is(f + ' zelfdeel', m.zelfSoort, 'cijfer'); } }
 console.log(fout ? fout + ' fouten' : 'alles goed'); process.exit(fout ? 1 : 0);

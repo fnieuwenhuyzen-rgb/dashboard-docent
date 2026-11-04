@@ -9,6 +9,7 @@
   "velden": [
     "Lied",
     "Instrument",
+    "Niveau",
     "Groep"
   ],
   "vooruit": "Eén punt voor presentatie 3",
@@ -64,7 +65,7 @@
     }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 9 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 9 (de som van de wegingen). Het P1-cijfer is het gemiddelde van presentatie 1, 2 en 3. Plafond per niveau: niveau 1 maximaal 7, niveau 2 maximaal 8,5, niveau 3 maximaal 10.",
   "onderdelen": [
     {
       "groep": "Presentatie",
@@ -208,5 +209,53 @@
       "Dit ga ik oefenen:"
     ],
     "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+  },
+  "keuzes": {
+    "Instrument": [
+      "Gitaar",
+      "Ukelele",
+      "Keyboard"
+    ],
+    "Niveau": [
+      "Niveau 1",
+      "Niveau 2",
+      "Niveau 3"
+    ]
+  },
+  "speelkeuze": {
+    "partijVeld": "Instrument",
+    "niveauVeld": "Niveau",
+    "partijen": [
+      {
+        "naam": "Gitaar",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Ukelele",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Keyboard",
+        "soort": "piano"
+      }
+    ],
+    "niveaus": [
+      {
+        "naam": "Niveau 1",
+        "wat": "refrein",
+        "plafond": 7
+      },
+      {
+        "naam": "Niveau 2",
+        "wat": "couplet en refrein",
+        "plafond": 8.5
+      },
+      {
+        "naam": "Niveau 3",
+        "wat": "",
+        "plafond": 10
+      }
+    ],
+    "opmerking": "In de lessen staat: minimaal niveau 2 voor presentatie 2."
   }
 }

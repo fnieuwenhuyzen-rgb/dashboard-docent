@@ -236,7 +236,7 @@
         ],
         "benodigd": [
           "Wisbordjes en stiften",
-          "Metronoom op het bord of de telefoon",
+          "Metronoom op het bord",
           "Kaart Ritme en maat (RM 1) op het bord of geprint"
         ],
         "voorbereiding": [
@@ -417,7 +417,7 @@
           "Keyboards",
           "Gitaren, gestemd",
           "Ukeleles, gestemd",
-          "Metronoom op het bord of de telefoon"
+          "Metronoom op het bord"
         ],
         "voorbereiding": [
           "Stem gitaren en ukeleles vooraf: dat kost anders de start.",
@@ -1015,9 +1015,9 @@
         "identiteit": "In een band heeft iedereen een eigen partij en is iedereen nodig.",
         "benodigd": [
           "Keyboards, gitaren, ukeleles, bas en slagwerk",
-          "Metronoom op het bord of de telefoon",
+          "Metronoom op het bord",
           "Bluesschema op het bord",
-          "Eventueel een telefoon om op te nemen"
+          "Eventueel een laptop om op te nemen"
         ],
         "voorbereiding": [
           "Zet de instrumenten alvast in een kring. Dat scheelt een hoop tijd.",
@@ -1047,7 +1047,7 @@
         "thuis": {
           "extra": "Geen huiswerk. Wil je toch iets doen: oefen in de zomer C, F en G, en luister naar blues en jazz"
         },
-        "fotos": { "titel": "bandles-leerlingen.jpg", "doel": "telefoon-opnemen.jpg", "rodeDraad": "orkestrepetitie.jpg" },
+        "fotos": { "titel": "bandles-leerlingen.jpg", "doel": "microfoon-studio.jpg", "rodeDraad": "orkestrepetitie.jpg" },
         "fasen": [
           {
             "min": 5, "soort": "luisteren", "kop": "Wat is een riff?",
@@ -1108,7 +1108,7 @@
             "notitie": {
               "vertel": [
                 "We spelen de blues in C, iedereen die nu niet aan de beurt is doet mee: bas, akkoorden, ritme. Wie aan de beurt is, speelt de eigen riff bovenop het schema. Dan schuiven we door.",
-                "Wie wil, neemt het op met de telefoon. Dat doen we ook in havo 4."
+                "Wie wil, neemt het op met de laptop. Dat doen we ook in havo 4."
               ],
               "vragen": [
                 { "v": "Wat vond je goed aan deze riff?", "a": "Bijvoorbeeld: bleef gelijk, past mooi, klinkt echt blues. Laat ze concreet zijn." },

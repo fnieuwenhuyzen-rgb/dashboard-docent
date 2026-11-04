@@ -13,7 +13,7 @@ const FOTOS = {
   'vwo4|08.2': { titel: 'leadbelly.jpg', doel: 'louis-armstrong.jpg', fase: ['messiah-koor.jpg', null, 'juke-joint-1939.jpg', null] },
   'havo4|08.1': { titel: 'bessie-smith-1936.jpg', doel: 'juke-joint-1939.jpg', fase: [null, null, 'muziekleraar-1700.jpg', null], rodeDraad: 'hymnal-our-god-our-help.png' },
   'havo4|08.2': { titel: 'messiah-koor.jpg', doel: 'bandles-leerlingen.jpg', fase: [null, 'mengtafel-leerlingen.jpg', null] },
-  'havo4|08.3': { titel: 'microfoon-studio.jpg', doel: 'telefoon-opnemen.jpg', fase: ['louis-armstrong.jpg', null, 'mengtafel-leerlingen.jpg'] },
+  'havo4|08.3': { titel: 'microfoon-studio.jpg', doel: 'microfoon-studio.jpg', fase: ['louis-armstrong.jpg', null, 'mengtafel-leerlingen.jpg'] },
   'vwo5|08.1': { titel: 'fortepiano-walter.jpg', doel: 'concertzaal.jpg', fase: ['messiah-koor.jpg', null] },
   'vwo5|08.2': { titel: 'muziekleraar-1700.jpg', doel: 'fortepiano-walter.jpg', fase: ['messiah-koor.jpg', 'concertzaal.jpg'] },
   'vwo5|08.3': { titel: 'mozart-lange-1782.jpg', doel: 'brahms.jpg', fase: ['concertzaal.jpg', 'brahms.jpg', null] },

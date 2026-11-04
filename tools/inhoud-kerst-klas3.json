@@ -834,13 +834,13 @@
           "fase": [
             null,
             null,
-            "telefoon-opnemen.jpg",
+            "microfoon-studio.jpg",
             null
           ]
         },
         "voorbereiding": [
           "Dit is activiteitenweek B en de les kan uitvallen. Controleer in de agenda of je groep les heeft. Zo niet, sla deze les over; lesweek 16 pakt de draad weer op.",
-          "Zorg voor telefoons of recorders, één per groep.",
+          "Zorg voor één laptop per groep.",
           "Spreek oefenruimtes af.",
           "Leg capo's klaar."
         ],
@@ -913,12 +913,12 @@
           "2": {
             "notitie": {
               "vertel": [
-                "Neem jullie versie op, één keer. Zet de telefoon op een stabiele plek, niet te dicht bij de drums. Bewaar de opname goed; na de kerst luisteren we hem terug.",
+                "Neem jullie versie op, één keer. Zet de laptop op een stabiele plek, niet te dicht bij de drums. Bewaar de opname goed; na de kerst luisteren we hem terug.",
                 "Beoordeel hem nu nog niet. Luister alleen kort of hij is opgenomen."
               ],
               "vragen": [
                 {
-                  "v": "Waar moet de telefoon staan?",
+                  "v": "Waar moet de laptop staan?",
                   "a": "Een stukje van de groep af, op een stabiele plek, zodat alle instrumenten te horen zijn."
                 }
               ],
@@ -984,7 +984,7 @@
           "titel": "bandles-leerlingen.jpg",
           "doel": "mengtafel-leerlingen.jpg",
           "fase": [
-            "telefoon-opnemen.jpg",
+            "microfoon-studio.jpg",
             null,
             null,
             null
@@ -2025,13 +2025,13 @@
           "fase": [
             null,
             null,
-            "telefoon-opnemen.jpg",
+            "microfoon-studio.jpg",
             null
           ]
         },
         "voorbereiding": [
           "Dit is activiteitenweek B en de les kan uitvallen. Controleer in de agenda of je groep les heeft: woensdag 16 december is de profielkeuzedag voor vwo 3. Zo niet, sla deze les over; lesweek 16 pakt de draad weer op.",
-          "Zorg voor telefoons of recorders, één per groep.",
+          "Zorg voor één laptop per groep.",
           "Zet de opstelling klaar voor de generale van de groep die op de kerstviering speelt.",
           "Spreek oefenruimtes af."
         ],
@@ -2109,12 +2109,12 @@
           "2": {
             "notitie": {
               "vertel": [
-                "Neem jullie versie op, één keer. Zet de telefoon op een stabiele plek, niet te dicht bij de drums. Bewaar de opname goed; na de kerst luisteren we hem terug.",
+                "Neem jullie versie op, één keer. Zet de laptop op een stabiele plek, niet te dicht bij de drums. Bewaar de opname goed; na de kerst luisteren we hem terug.",
                 "Beoordeel hem nu nog niet. Luister alleen kort of hij is opgenomen."
               ],
               "vragen": [
                 {
-                  "v": "Waar moet de telefoon staan?",
+                  "v": "Waar moet de laptop staan?",
                   "a": "Een stukje van de groep af, op een stabiele plek, zodat alle instrumenten te horen zijn."
                 }
               ],
@@ -2180,7 +2180,7 @@
           "titel": "bandles-leerlingen.jpg",
           "doel": "mengtafel-leerlingen.jpg",
           "fase": [
-            "telefoon-opnemen.jpg",
+            "microfoon-studio.jpg",
             null,
             null,
             null

@@ -12,7 +12,7 @@ const F = n => n ? { pad: BEELD + '/' + n, bron: bronnen[n] || n } : null;
 const LESSEN = {
   'Songbox 1: opnemen en terugluisteren': {
     week: 8, blok: 'Periode 1 · Samenspelen in bandbezetting', code: 'P1 · les 8', bestand: '08 Songbox 1 - opnemen en terugluisteren.pptx',
-    fotos: { titel: F('bandles-leerlingen.jpg'), doel: F('microfoon-studio.jpg'), fase: [null, F('telefoon-opnemen.jpg'), F('mengtafel-leerlingen.jpg'), F('sinach.jpg')], rodeDraad: F('mengtafel-leerlingen.jpg') },
+    fotos: { titel: F('bandles-leerlingen.jpg'), doel: F('microfoon-studio.jpg'), fase: [null, F('microfoon-studio.jpg'), F('mengtafel-leerlingen.jpg'), F('sinach.jpg')], rodeDraad: F('mengtafel-leerlingen.jpg') },
     extra: { 0: D.beeldKaarten([{ k: 'Samenspel', t: 'Luisteren we naar elkaar?' }, { k: 'Ritme', t: 'Houden we het tempo?' }, { k: 'Toon', t: 'Klinkt het zuiver?' }, { k: 'Techniek', t: 'Spelen we de partij netjes?' }]) },
     thuis: { mb: 'Luister thuis nog een keer naar jullie opname', extra: 'Na de herfstvakantie: Way Maker, het lied voor jullie speelstuk' }
   },

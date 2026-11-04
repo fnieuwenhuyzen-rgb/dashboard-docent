@@ -37,7 +37,7 @@
           "doel": "microfoon-studio.jpg",
           "fase": [
             null,
-            "telefoon-opnemen.jpg",
+            "microfoon-studio.jpg",
             "mengtafel-leerlingen.jpg",
             null
           ],
@@ -47,7 +47,7 @@
           "Zoek vooraf een stille plek per groep: een hoek, de gang of een klein lokaal. Zet drums en cajon zo ver mogelijk van de zang vandaan.",
           "Zet de vier luistervragen op het bord: Samenspel, Ritme, Toon, Techniek.",
           "Leg het beoordelingsformulier songbox 1 (docent) en het scoreblad klaar. Je beoordeelt de opname die de groep deelt.",
-          "Test vooraf of delen via Magister werkt, en reserveer een extra telefoon voor als er een leerling met een volle telefoon zit."
+          "Test vooraf of delen via Magister werkt, en reserveer een extra laptop voor als er een laptop niet werkt."
         ],
         "notitieTitel": [
           "Vandaag nemen jullie de song op waar je sinds de eerste lessen aan werkt, en luisteren jullie terug.",
@@ -67,7 +67,7 @@
           "0": {
             "notitie": {
               "vertel": [
-                "Vandaag nemen jullie op. Eén telefoon per groep. Leg hem liggend neer, horizontaal, en zo ver van de drums als kan. Ligt de telefoon vlak bij de drums, dan hoor je op de opname alleen drums.",
+                "Vandaag nemen jullie op. Eén laptop per groep. Zet hem op tafel, zo ver van de drums als kan. Staat de laptop vlak bij de drums, dan hoor je op de opname alleen drums.",
                 "Daarna luisteren jullie terug met vier vragen. Dat zijn dezelfde vier dingen waar ik op let bij het cijfer: samenspel, ritme, toon en techniek.",
                 "Samenspel: luisteren we naar elkaar? Beginnen en eindigen we samen? Groeit de song samen van een rustig couplet naar een vol refrein?",
                 "Ritme: houden we het tempo vast? Hoor je de groove? Wisselen we akkoorden op de tel?",
@@ -82,7 +82,7 @@
               ],
               "vragen": [
                 {
-                  "v": "Waarom leg je de telefoon niet naast de drums?",
+                  "v": "Waarom zet je de laptop niet naast de drums?",
                   "a": "Dan klinken de drums zo hard dat je de rest niet meer hoort."
                 },
                 {
@@ -106,7 +106,7 @@
                 "Eerst één keer de song helemaal doorspelen als repetitie. Dan opnemen. Die repetitie is bedoeld om de zenuwen eruit te halen.",
                 "Spreek vooraf af: wie telt af, wie geeft het teken voor het slot? Mis je een akkoord, speel dan door op de tel en pak het volgende.",
                 "Controleer na de opname even tien seconden: is iedereen te horen en klinkt het niet vervormd? Deel de opname daarna via Magister met mij.",
-                "Verdeel de tijd zo: 3 minuten opstellen en telefoon klaarzetten, 4 minuten repetitie, 5 minuten opnemen, 3 minuten delen."
+                "Verdeel de tijd zo: 3 minuten opstellen en laptop klaarzetten, 4 minuten repetitie, 5 minuten opnemen, 3 minuten delen."
               ],
               "vragen": [
                 {
@@ -119,8 +119,8 @@
                 }
               ],
               "letop": [
-                "Loop langs elke groep: staat de telefoon goed en doet iedereen mee? Zachte partijen zoals zang verdrinken snel. Laat de groep zelf horen of de zang hoorbaar blijft.",
-                "Gaat de opname mis (telefoon vol, geluid vervormd), laat ze opnieuw opnemen als er tijd is.",
+                "Loop langs elke groep: staat de laptop goed en doet iedereen mee? Zachte partijen zoals zang verdrinken snel. Laat de groep zelf horen of de zang hoorbaar blijft.",
+                "Gaat de opname mis (geen opslag meer, geluid vervormd), laat ze opnieuw opnemen als er tijd is.",
                 "Is een groep nog niet klaar met de song, laat ze toch opnemen wat ze hebben. De opname laat zien waar ze staan en daar gaat de les over.",
                 "Lukt delen via Magister niet in de les, spreek met de groep af wanneer ze het alsnog doen."
               ]
@@ -552,7 +552,7 @@
         "voorbereiding": [
           "Cijfers en feedback van presentatie 1 klaar per leerling, op papier of in een bericht. Niet hardop voorlezen.",
           "Metronoom of een eenvoudige beat klaar voor het klappen.",
-          "Laptop of telefoon voor Trainerz: laat leerlingen vooraf inloggen op Musicbox.",
+          "Laptop voor Trainerz: laat leerlingen vooraf inloggen op Musicbox.",
           "Exit-ticketbriefjes of het bord klaar voor de laatste vraag."
         ],
         "notitieTitel": [
@@ -1030,7 +1030,7 @@
         "benodigd": [
           "Gitaren, ukeleles en keyboards met koptelefoon",
           "Bas en drumstel of cajon",
-          "De kerstbox met tutorials en oefentrack op laptop of telefoon",
+          "De kerstbox met tutorials en oefentrack op de laptop",
           "Akkoordenschema van het refrein op het bord",
           "Hoeken in het lokaal klaargezet"
         ],
@@ -1303,12 +1303,12 @@
           "Bas en drumstel of cajon",
           "De kerstbox met tutorials en oefentrack (88 slagen per minuut)",
           "Het couplet en het slagpatroon op het bord",
-          "Telefoon of tablet per groepje om op te nemen"
+          "Laptop per groepje om op te nemen"
         ],
         "voorbereiding": [
           "Zet het couplet op het bord: Em, D7, G, G | Em, Em, A7, D7.",
           "Zet het slagpatroon op het bord: tel 1 2 en 3 en 4 en, slag neer, neer-op, op-neer-op.",
-          "Zorg dat de oefentrack werkt en dat er telefoons zijn om op te nemen."
+          "Zorg dat de oefentrack werkt en dat elk groepje een laptop heeft om op te nemen."
         ],
         "notitieTitel": [
           "Vandaag niveau 2 van de kerstbox: het couplet komt erbij, met Em en A7, en een begeleidingspatroon. Dit is het minimale niveau voor presentatie 2 in lesweek 19.",

@@ -7,7 +7,8 @@
   "velden": [
     "Klas",
     "Groep",
-    "Mijn partij"
+    "Mijn partij",
+    "Niveau"
   ],
   "vooruit": "Eén punt voor de kerstbox",
   "leerlingTitel": "Zo beoordeel ik mijn spel in songbox 1",
@@ -55,7 +56,7 @@
     }
   ],
   "tussenscores": "Zit een uitvoering tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Spelen telt dubbel, reflectie één keer.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 10 (de som van de wegingen). Spelen telt dubbel, reflectie één keer. Plafond per niveau: niveau 1 maximaal 7, niveau 2 maximaal 8,5, niveau 3 maximaal 10.",
   "onderdelen": [
     {
       "groep": "Spelen (telt dubbel)",
@@ -96,7 +97,63 @@
             "Ik speel de ritmes goed en wissel meestal op de tel.",
             "Ik speel strak in de maat, met groove, en wissel precies op de tel.",
             "Mijn timing is zo strak dat de groep op mij kan bouwen, ook als het voller wordt."
-          ]
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "in de maat blijven, inzetten kloppen",
+              "docent": [
+                "Raakt de maat kwijt; ritmes kloppen vaak niet; inzetten te vroeg of te laat.",
+                "Blijft grotendeels in de maat; enkele ritmefouten of een late inzet.",
+                "Blijft het hele lied in de maat; ritmes en inzetten kloppen.",
+                "Strak in de maat met levendig ritme; ook de lastige ritmes klinken vanzelf."
+              ]
+            },
+            "snaar": {
+              "uitleg": "op de tel wisselen, slagpatroon vasthouden",
+              "docent": [
+                "Raakt de maat kwijt; akkoorden komen niet op de tel.",
+                "Blijft grotendeels in de maat; wisselt soms te laat.",
+                "Wisselt precies op de tel en houdt het slagpatroon vast.",
+                "Strak met groove; de groep kan op deze slag bouwen."
+              ]
+            },
+            "melodie": {
+              "uitleg": "in de maat, ritmes van de melodie",
+              "docent": [
+                "Raakt de maat kwijt; ritmes kloppen vaak niet.",
+                "Blijft grotendeels in de maat; enkele ritmefouten of een late inzet.",
+                "Blijft in de maat; ritmes en inzetten kloppen.",
+                "Strak en levendig; ook de lastige ritmes klinken vanzelf."
+              ]
+            },
+            "piano": {
+              "uitleg": "op de tel omzetten, patroon vasthouden",
+              "docent": [
+                "Raakt de maat kwijt; akkoorden komen niet op de tel.",
+                "Blijft grotendeels in de maat; zet soms te laat om.",
+                "Zet precies op de tel om en houdt het patroon vast.",
+                "Strak met groove; de groep kan op dit patroon bouwen."
+              ]
+            },
+            "bas": {
+              "uitleg": "op de tel, samen met de drums",
+              "docent": [
+                "Raakt de maat kwijt; grondtonen komen niet op de tel.",
+                "Blijft grotendeels in de maat; soms te laat op een nieuwe grondtoon.",
+                "Elke grondtoon precies op de tel; blijft bij de drums.",
+                "Strak met groove; de groep kan op deze baslijn bouwen."
+              ]
+            },
+            "drums": {
+              "uitleg": "vast tempo, de groep op de tel houden",
+              "docent": [
+                "Tempo jaagt of zakt in; de groep raakt erdoor de maat kwijt.",
+                "Tempo blijft grotendeels staan; versnelt of vertraagt bij overgangen.",
+                "Vast tempo van begin tot eind; de groove klopt.",
+                "Timing zo strak dat de groep erop bouwt; de groove houdt stand in de volle delen."
+              ]
+            }
+          }
         },
         {
           "id": "toon",
@@ -114,7 +171,64 @@
             "Ik speel of zing meestal zuiver en de juiste noten.",
             "Mijn klank is helder en krachtig; mijn akkoorden of noten klinken schoon.",
             "Mijn klank is mooi en verzorgd, van begin tot eind."
-          ]
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "zuiver zingen, open klank",
+              "docent": [
+                "Zingt vaak vals; de melodie is moeilijk te herkennen; klank geknepen.",
+                "Melodie herkenbaar; overwegend zuiver, vals op hoge of lastige plekken.",
+                "Zingt zuiver door het hele lied met een open, heldere klank.",
+                "Zuiver en vol, ook hoog en laag; kleurt de klank bewust bij de tekst."
+              ]
+            },
+            "snaar": {
+              "uitleg": "akkoorden klinken schoon, instrument gestemd",
+              "docent": [
+                "Akkoorden klinken dof of vals; snaren brommen of worden niet geraakt.",
+                "Meeste akkoorden klinken; een paar blijven dof of met een verkeerde snaar.",
+                "Alle akkoorden klinken helder, alle snaren die horen te klinken.",
+                "Volle, verzorgde klank; zacht in het couplet en voller in het refrein."
+              ]
+            },
+            "melodie": {
+              "uitleg": "heldere noten, juiste sterkte",
+              "docent": [
+                "Noten klinken dof of vallen weg; veel te hard of te zacht.",
+                "Meeste noten klinken helder; sterkte nog wisselend.",
+                "Elke noot klinkt helder; de melodie is goed te horen in de groep.",
+                "Zingende, verzorgde klank; speelt zacht en vol waar het past."
+              ]
+            },
+            "piano": {
+              "uitleg": "alle tonen tegelijk, juiste sterkte",
+              "docent": [
+                "Tonen komen los of ontbreken; veel te hard of te zacht.",
+                "Meeste akkoorden klinken samen; sterkte nog wisselend.",
+                "Akkoorden klinken gelijk en in goede balans met de groep.",
+                "Verzorgde aanslag; zacht in het couplet en voller in het refrein."
+              ]
+            },
+            "bas": {
+              "uitleg": "volle tonen, juiste lengte en sterkte",
+              "docent": [
+                "Tonen klinken dof of brommen; veel te hard of te zacht.",
+                "Meeste tonen klinken; lengte en sterkte nog wisselend.",
+                "Volle, gelijke tonen; de bas draagt de groep.",
+                "Verzorgde klank; tonen precies zo lang en sterk als het lied vraagt."
+              ]
+            },
+            "drums": {
+              "uitleg": "niet te hard, bassdrum, snare en hihat in balans",
+              "docent": [
+                "Veel te hard of te zacht; je hoort de anderen niet meer.",
+                "Sterkte is meestal goed; onderdelen nog niet in balans.",
+                "Bassdrum, snare en hihat in balans; de groep blijft goed hoorbaar.",
+                "Speelt zacht in het couplet en voller in het refrein, en blijft in balans."
+              ],
+              "naam": "Klank en balans"
+            }
+          }
         },
         {
           "id": "techniek",
@@ -132,7 +246,63 @@
             "Ik speel de basis van mijn partij goed.",
             "Ik speel mijn partij vloeiend, zonder te haperen bij de wissels.",
             "Ik gebruik technieken om het lied mooier of spannender te laten klinken."
-          ]
+          ],
+          "perPartij": {
+            "zang": {
+              "uitleg": "rechtop staan, op tijd ademen",
+              "docent": [
+                "Staat in elkaar gedoken; ademt hoog of midden in de zin.",
+                "Staat redelijk rechtop; ademt soms te laat, de zin zakt weg.",
+                "Staat rechtop en rustig; ademt op de goede plekken.",
+                "Ontspannen houding; de adem draagt lange zinnen tot het eind."
+              ]
+            },
+            "snaar": {
+              "uitleg": "wisselen, slaghand, vingers",
+              "docent": [
+                "Grepen lukken nog niet; de slaghand stopt bij elke wissel.",
+                "Grepen lukken; wisselen kost tijd, de slag is nog onrustig.",
+                "Wisselt vloeiend; de slaghand blijft gelijkmatig doorgaan.",
+                "Soepele wissels en een slagpatroon dat het lied mooier maakt."
+              ]
+            },
+            "melodie": {
+              "uitleg": "vingerzetting, overgangen tussen noten",
+              "docent": [
+                "Vingerzetting staat het spelen in de weg; stopt bij elke noot.",
+                "Vindt de noten; overgangen nog hoekig, vingers gespannen.",
+                "Vloeiende overgangen met een vaste vingerzetting.",
+                "Ontspannen en zeker; ook de lastige plekken lopen vanzelf."
+              ]
+            },
+            "piano": {
+              "uitleg": "vingerzetting, omzetten, twee handen",
+              "docent": [
+                "Vingers en handen staan het spelen in de weg; stopt bij elk akkoord.",
+                "Vindt de akkoorden; omzetten kost tijd, vingers nog gespannen.",
+                "Zet vloeiend om, met rustige vingers en handen.",
+                "Ontspannen en zeker; omzetten valt niet op, ook met twee handen."
+              ]
+            },
+            "bas": {
+              "uitleg": "aanslag, fret of toets vinden, overgangen",
+              "docent": [
+                "Aanslag en vingers staan het spelen in de weg; stopt bij elke toon.",
+                "Vindt de tonen; overgangen kosten tijd, aanslag nog onrustig.",
+                "Rustige, gelijke aanslag; verplaatst vloeiend.",
+                "Ontspannen en zeker; verplaatst zonder te kijken."
+              ]
+            },
+            "drums": {
+              "uitleg": "handen en voet los van elkaar",
+              "docent": [
+                "Handen en voet lukken nog niet samen; patroon valt steeds uit elkaar.",
+                "Handen en voet lukken; bij een overgang hapert het nog.",
+                "Handen en voet lopen vloeiend samen, ook bij overgangen.",
+                "Ontspannen en zeker; een eenvoudige fill past in de groove."
+              ]
+            }
+          }
         }
       ]
     },
@@ -180,5 +350,93 @@
     }
   ],
   "zelfbeoordeling": 0,
-  "weging": 1
+  "weging": 1,
+  "keuzes": {
+    "Mijn partij": [
+      "Zang",
+      "Gitaar: akkoorden",
+      "Gitaar: melodie",
+      "Ukelele: akkoorden",
+      "Ukelele: melodie",
+      "Piano: akkoorden",
+      "Piano: melodie",
+      "Piano: 2 handen",
+      "Piano: bas",
+      "Basgitaar",
+      "Drums of cajon"
+    ],
+    "Niveau": [
+      "Niveau 1",
+      "Niveau 2",
+      "Niveau 3"
+    ]
+  },
+  "speelkeuze": {
+    "partijVeld": "Mijn partij",
+    "niveauVeld": "Niveau",
+    "partijen": [
+      {
+        "naam": "Zang",
+        "soort": "zang"
+      },
+      {
+        "naam": "Gitaar: akkoorden",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Gitaar: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Ukelele: akkoorden",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Ukelele: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Piano: akkoorden",
+        "soort": "piano"
+      },
+      {
+        "naam": "Piano: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Piano: 2 handen",
+        "soort": "piano"
+      },
+      {
+        "naam": "Piano: bas",
+        "soort": "bas"
+      },
+      {
+        "naam": "Basgitaar",
+        "soort": "bas"
+      },
+      {
+        "naam": "Drums of cajon",
+        "soort": "drums"
+      }
+    ],
+    "niveaus": [
+      {
+        "naam": "Niveau 1",
+        "wat": "",
+        "plafond": 7
+      },
+      {
+        "naam": "Niveau 2",
+        "wat": "",
+        "plafond": 8.5
+      },
+      {
+        "naam": "Niveau 3",
+        "wat": "",
+        "plafond": 10
+      }
+    ],
+    "opmerking": "Niveau is wat de leerling speelt, de score is hoe goed. Kies partij en niveau zoals in Musicbox."
+  }
 }
