@@ -522,7 +522,7 @@ function toetsweekOp(s) { /* schoolbreed: ergens op school toetsweek (standaardr
 const toetsweekVan = (lg, s) => ((B.toetsweken || {})[lg] || []).find(tw => s >= tw.van && s <= tw.tot) || null; // uit de jaarplanning, per leergang
 function toetsweekKlassen(s) { // jouw klassen die deze dag toetsweek hebben; m3a, m3b en m3c samen als m3
   const r = rooGroepen(); const gs = r.length ? r.concat(Object.keys(MEE_MET).filter(m => r.includes(MEE_MET[m]))) : alleGroepen().map(x => x.g);
-  return [...new Set(gs.filter(g => { const lg = leergangVan(g); return lg && toetsweekVan(lg, s); }).map(g => g.replace(/^([hvm]d)[a-z]$/, '$1')))].sort();
+  return [...new Set(gs.filter(g => { const lg = leergangVan(g); return lg && toetsweekVan(lg, s); }).map(g => g.replace(/^([hvm][1-6])[a-z]$/, '$1')))].sort();
 }
 const isToetsweekRij = it => it.soort === 'sectie' && /^toetsweek/i.test(it.titel || '');
 let TWT = null;
