@@ -529,7 +529,7 @@
         ],
         "formatief": {
           "soort": "hand omhoog",
-          "tekst": "Wie wisselt C, F, G zonder stoppen? Kleine groep laat horen.",
+          "tekst": "Wie wisselt C, F, G zonder stoppen? Ik luister mee bij de groepjes.",
           "notitie": {
             "vertel": [ "Dit is dezelfde vraag als in havo 4, lesweek 2. Nog niet iedereen hoeft het te kunnen. Noteer wie volgende les bij de bas moet beginnen in plaats van bij de akkoorden." ],
             "vragen": [ { "v": "Welke wissel was het lastigst?", "a": "Meestal F naar G, omdat de hand ver moet verplaatsen." } ],
@@ -1004,7 +1004,7 @@
         "koppel": [{ "lg": "kmu3", "w": 37, "slot": "l1" }],
         "titel": "Eigen riff laten horen",
         "type": "praktijk",
-        "detail": "Een riff van twee maten maken over de blues in C, samen laten horen en vooruitkijken naar september.",
+        "detail": "Een riff van twee maten maken over de blues in C, in je groep laten horen en vooruitkijken naar september.",
         "vraag": "Kan ik een riff maken op het schema?",
         "doel": "Je maakt een riff van twee maten en laat die horen over de blues.",
         "criteria": [
@@ -1029,7 +1029,7 @@
           "In havo 4 maak je in lesweek 2 ook een riff op dit schema. Daar sta je dus straks niet meer van te kijken."
         ],
         "notitieAgenda": [
-          "Eerst horen wat een riff is. Dan zelf maken. Dan samen laten horen. Aan het einde kijken we vooruit naar september."
+          "Eerst horen wat een riff is. Dan zelf maken. Dan in je groep laten horen. Aan het einde kijken we vooruit naar september."
         ],
         "notitieDoel": [
           "Een riff hoeft niet ingewikkeld te zijn: drie tonen zijn genoeg. Het moet vooral elke keer hetzelfde klinken en passen op de blues."
@@ -1097,17 +1097,17 @@
             }
           },
           {
-            "min": 15, "soort": "doen", "kop": "Samen laten horen",
+            "min": 15, "soort": "doen", "kop": "In je groep laten horen",
             "stappen": [
-              "Eén groep speelt de blues in C.",
+              "Elke groep werkt in een eigen hoek en speelt de blues in C.",
               "Eén voor één speel je je riff, vier maten.",
-              "Luisteraars: één compliment, één tip.",
-              "Daarna wisselen."
+              "Groepsgenoten: één compliment, één tip.",
+              "Kom ik langs? Dan laat je je riff aan mij horen."
             ],
-            "docent": "Je speelt zelf mee in de band als dat nodig is. Geen cijfer.",
+            "docent": "Niemand speelt voor de klas. Speel zelf mee in een groep als dat nodig is. Geen cijfer.",
             "notitie": {
               "vertel": [
-                "We spelen de blues in C, iedereen die nu niet aan de beurt is doet mee: bas, akkoorden, ritme. Wie aan de beurt is, speelt de eigen riff bovenop het schema. Dan schuiven we door.",
+                "Elke groep speelt in een eigen hoek de blues in C. Wie niet aan de beurt is, doet mee: bas, akkoorden, ritme. Wie aan de beurt is, speelt de eigen riff bovenop het schema. Dan schuiven ze door. Ik loop langs en luister.",
                 "Wie wil, neemt het op met de laptop. Dat doen we ook in havo 4."
               ],
               "vragen": [
@@ -1116,7 +1116,7 @@
               ],
               "letop": [
                 "Niemand hoeft alleen te spelen. Twee of drie tegelijk mag ook.",
-                "Grote groep? Dan riffs in tweetallen laten horen, zodat je binnen 15 minuten rondkomt."
+                "Grote groep? Dan riffs in tweetallen laten horen, zodat de groep binnen 15 minuten rondkomt."
               ]
             }
           },

@@ -1,0 +1,49 @@
+{
+  "_uitleg": "Tekstwissels PT1 vwo 4 (les 10.1). Set 'veilig' zijn sprekersnotities die volgen uit besluiten en bronnen, set 'groepen' is nooit voor de klas (groepen in een eigen hoek, Frans komt bij de groep): alleen na een ja van Frans. Toepassen: tools/zet-pt1-deck.ps1 voor het deck, tools/zet-pt1-inhoud.js voor inhoud-week10.json, daarna zet-decks-in-leergang.js voor basis.json. Set 'datum': datum die aan 9-11 hing uit de notities (ma 9-11 vervalt, Frans 4-11). Elke set maar één keer toepassen.",
+  "veilig": [
+    [
+      "Dit staat ook op kaart TL 1a.",
+      "Kaart TL 1a heeft dezelfde ladder, maar dan in A."
+    ],
+    [
+      "4: geen improvisatie of noten passen niet.",
+      "4: geen improvisatie of noten passen niet. Alleen de grondtoon in het ritme van de call: 5."
+    ]
+  ],
+  "groepen": [
+    [
+      "Elke groep komt één keer aan de beurt. De volgorde staat op het bord.",
+      "Elke groep staat in een eigen hoek en komt één keer aan de beurt. Ik kom dan bij jullie staan. De volgorde staat op het bord."
+    ],
+    [
+      "Telefoon weg. Publiek luistert zoals op een concert: stil, applaus na afloop.",
+      "Telefoon weg. Ga met je groep in jullie eigen hoek staan."
+    ],
+    [
+      "Wie aan de beurt is, zegt kort: stuk en wie wat speelt. Dan aftellen.",
+      "Aan de beurt? Dan kom ik bij jullie. Zeg kort: stuk en wie wat speelt. Dan aftellen."
+    ],
+    [
+      "Zelf al bij het bord staan met de formulieren per groep op volgorde.",
+      "Formulieren per groep op volgorde op een klembord: daarmee loop je naar de groep die aan de beurt is."
+    ],
+    [
+      "We doen het zoals op een concert. Je zegt kort wat je gaat spelen",
+      "Niemand speelt voor de klas: ik kom bij jullie groep staan. Je zegt kort wat je gaat spelen"
+    ],
+    [
+      "Als je niet speelt, ben je publiek. Geen instrumenten aanraken, geen telefoon. Stil inspelen kan: vingers op de toetsen, geen geluid.",
+      "Is jouw groep niet aan de beurt? Oefen zonder geluid in je eigen hoek, of wacht buiten het lokaal. Geen telefoon. Stil inspelen kan: vingers op de toetsen."
+    ],
+    [
+      "Sluit het stuk af zoals afgesproken. Applaus. Volgende groep.",
+      "Sluit het stuk af zoals afgesproken. Ik loop door naar de volgende groep."
+    ]
+  ],
+  "datum": [
+    [
+      " Woensdag 11 november valt uit, dus dat wordt maandag 16 november.",
+      ""
+    ]
+  ]
+}

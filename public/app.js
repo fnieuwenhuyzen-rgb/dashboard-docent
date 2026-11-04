@@ -190,11 +190,20 @@ function zGroep(e) {
 const zTekst = e => e.summary + ' ' + e.desc;
 const zDienst = e => /surveillance|surveilleren|pauzedienst|toezicht|\bdienst\b/i.test(zTekst(e)) || (e.api && e.soort === 'exam' && !zMuziek(e)); // toets van een ander vak op jouw naam: surveillance
 const zToets = e => e.soort === 'exam' || /toets|tentamen|examen|\bse\b|\bpta\b/i.test(zTekst(e));
-const zLes = e => zMuziek(e) && !zDienst(e) && !(zToets(e) && toetsweekOp(e.d));
+function zKlassen(e) { // alle klassen van een afspraak: zGroep, plus wie meedraait als die ook genoemd wordt (v6.mu1, v5.mu1: zGroep zegt v5)
+  const g = zGroep(e); if (!g) return [];
+  const txt = e.api ? e.summary + ' ' + (e.groepen || []).join(' ') : e.summary + ' ' + e.desc;
+  return [g, ...Object.keys(MEE_MET).filter(m => MEE_MET[m] === g && new RegExp('(^|[^a-z0-9])' + m + '([^a-z0-9]|$)', 'i').test(txt))];
+}
+function zInToetsweek(e) { // toetsweken verschillen per klas; zonder bekende klas geldt de schoolbrede toetsweek
+  const lgs = zKlassen(e).map(leergangVan).filter(Boolean);
+  return lgs.length ? lgs.some(lg => toetsweekVan(lg, e.d)) : toetsweekOp(e.d);
+}
+const zLes = e => zMuziek(e) && !zDienst(e) && !(zToets(e) && zInToetsweek(e));
 function zAnders(s) { // [{van, tot, titel, lokaal, groep, toets, dienst}] voor één dag, zonder lessen en gewone pauzes
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return [];
   return ZC.events.filter(e => e.d === s && !e.vervallen && !zLes(e) && !((e.soort === 'interlude' || /\bpauze\b/i.test(zTekst(e))) && !zDienst(e)))
-    .map(e => { const n = zNaam(e); return { van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: n.titel, lokaal: e.loc || n.lokaal, groep: zMuziek(e) ? zGroep(e) : '', toets: zToets(e), dienst: zDienst(e) }; });
+    .map(e => { const n = zNaam(e); return { van: e.start ? minuten(e.start) : null, tot: e.eind ? minuten(e.eind) : null, titel: n.titel, lokaal: e.loc || n.lokaal, groep: zMuziek(e) ? zGroep(e) : '', klassen: zMuziek(e) ? zKlassen(e) : [], toets: zToets(e), dienst: zDienst(e) }; });
 }
 function zNaam(e) { // Zermelo schrijft "[o] [toets] 215 entl h4b": status en soort tussen haken, dan lokaal, vak en groep
   const t = String(e.summary || '').replace(/\[[^\]]*\]\s*/g, '').trim(); const m = t.match(/^(\d{2,4}[a-z]?)\s+(.+)$/i);
@@ -479,9 +488,9 @@ function viewVandaag() {
   if (!dagKeuze && S.afgesloten[t]) s = volgendeLesdag(t, 1); // dag afgesloten: dan pas morgen, en alleen als je zelf kijkt
   const p = planning(s, s)[s]; const lw = lesweekVan(s);
   const A = dagItems(s, p); const sel = kiesSel(s, A);
-  const tw = A.heleDag.find(it => it.soort === 'sectie' && /^toetsweek/i.test(it.titel || '')); // de toetsweek staat in het label
+  // de toetsweek staat in de dagzin, per klas
   const zonderTijd = A.heleDag.filter(it => it.key.startsWith('tw:')); // toetsweektoets zonder tijd: onder de zin, als vraag
-  const chips = A.heleDag.filter(it => it !== tw && !zonderTijd.includes(it));
+  const chips = A.heleDag.filter(it => !isToetsweekRij(it) && !zonderTijd.includes(it));
   const weg = A.items.filter(it => it.soort === 'uitval'); const Z = dagZin(s, p, A);
   dagGetoond = s; const voor = volgendeLesdag(s, -1), na = volgendeLesdag(s, 1);
   let h = `<div class="kop dag-kop"><div><h1>${esc(cap(fmtLang(s)))}</h1><p class="dag-zin">${lw ? 'Lesweek ' + lw + '. ' : ''}${esc(Z)}</p></div>
@@ -509,21 +518,26 @@ const AG = { van: 8 * 60, tot: 17 * 60, werkVan: 8 * 60 + 30, werkTot: 16 * 60 +
 const hm = m => Math.floor(m / 60) + ':' + ('0' + m % 60).slice(-2);
 function sectieTijd(i) { const m = String(i.tijd || '').match(/(\d{1,2})[:.](\d{2})\s*[–-]\s*(\d{1,2})[:.](\d{2})/); return m ? { van: +m[1] * 60 + +m[2], tot: +m[3] * 60 + +m[4] } : null; }
 /* schoolkoor: agenda uit de Koorapp (B.koor, via tools/koor-sync.js); op dinsdag anders de vaste repetitie */
-function toetsweekOp(s) { return (B.sectie || []).some(i => /^toetsweek/i.test(i.titel || '') && s >= i.d && s <= (i.tot || i.d)); }
+function toetsweekOp(s) { /* schoolbreed: ergens op school toetsweek (standaardrepetitie koor); per klas: toetsweekVan */ return (B.sectie || []).some(i => /^toetsweek/i.test(i.titel || '') && s >= i.d && s <= (i.tot || i.d)); }
+const toetsweekVan = (lg, s) => ((B.toetsweken || {})[lg] || []).find(tw => s >= tw.van && s <= tw.tot) || null; // uit de jaarplanning, per leergang
+function toetsweekKlassen(s) { // jouw klassen die deze dag toetsweek hebben; m3a, m3b en m3c samen als m3
+  const r = rooGroepen(); const gs = r.length ? r.concat(Object.keys(MEE_MET).filter(m => r.includes(MEE_MET[m]))) : alleGroepen().map(x => x.g);
+  return [...new Set(gs.filter(g => { const lg = leergangVan(g); return lg && toetsweekVan(lg, s); }).map(g => g.replace(/^([hvm][1-6])[a-z]$/, '$1')))].sort();
+}
+const isToetsweekRij = it => it.soort === 'sectie' && /^toetsweek/i.test(it.titel || '');
 let TWT = null;
 function toetsweekToetsen() { // muziektoetsen die de leergang in een toetsweek zet: [{lg, t, tw}]
   if (TWT) return TWT; TWT = [];
-  const tws = (B.sectie || []).filter(i => /^toetsweek/i.test(i.titel || ''));
   for (const [lg, L] of Object.entries(B.leergangen)) for (const w of L.weken) { if (!w.toetsweek) continue;
-    const ma = (B.kalender.weken.find(k => k.w === w.w) || {}).datum; const tw = ma && tws.find(i => addD(ma, 4) >= i.d && ma <= (i.tot || i.d)); if (!tw) continue;
+    const tws = (B.toetsweken || {})[lg] || [];
+    const ma = (B.kalender.weken.find(k => k.w === w.w) || {}).datum; const i0 = ma && tws.find(i => addD(ma, 4) >= i.van && ma <= i.tot); if (!i0) continue; const tw = { d: i0.van, tot: i0.tot, titel: 'Toetsweek ' + i0.n };
     for (const i of [1, 2, 3]) { const l = w['l' + i]; const t = l && l.type === 'toets' && toetsVan(lg, l.toets); if (t && !TWT.some(x => x.lg === lg && x.t.id === t.id)) TWT.push({ lg, t, tw }); } }
   return TWT;
 }
 function toetsweekToetsVoor(groep, s) { const lg = groep && leergangVan(groep); return lg ? toetsweekToetsen().find(x => x.lg === lg && s >= x.tw.d && s <= (x.tw.tot || x.tw.d)) : null; }
 function toetsInZermelo(x) { // staat deze toetsweektoets met tijd in het opgehaalde rooster?
   const gs = B.groepen[x.lg] || [];
-  const noemt = (e, g) => new RegExp('(^|[^a-z0-9])' + g + '([^a-z0-9]|$)', 'i').test(e.summary + ' ' + (e.groepen || []).join(' ')); // v5 en v6 samen in één afspraak: zGroep zegt v5
-  return !!(ZC && ZC.events || []).find(e => !e.vervallen && e.start && e.d >= x.tw.d && e.d <= (x.tw.tot || x.tw.d) && zMuziek(e) && zToets(e) && gs.some(g => g === zGroep(e) || (MEE_MET[g] === zGroep(e) && noemt(e, g))));
+  return !!(ZC && ZC.events || []).find(e => !e.vervallen && e.start && e.d >= x.tw.d && e.d <= (x.tw.tot || x.tw.d) && zMuziek(e) && zToets(e) && zKlassen(e).some(g => gs.includes(g)));
 }
 function koorOp(s) {
   const K = B.koor; if (!K) return null;
@@ -669,8 +683,8 @@ function dagItems(s, p) {
       sub: x.uitval ? (x.afwezig ? 'afwezig' : x.u.vervallen ? 'vervallen' : x.planLes ? (x.planLes.titel || 'valt uit') : 'valt uit') : x.fout ? x.fout : verleden ? '' : l ? (l.titel || '') : 'alles gegeven', lokaal: x.u.lokaal || '009', x });
   }
   zAnders(s).forEach((a, n) => { // surveillance, toetsen en andere afspraken uit Zermelo
-    const tz = a.toets ? toetsweekToetsVoor(a.groep, s) : null;
-    const it = { key: 'z:' + s + ':' + n, soort: a.toets || a.dienst ? 'toets' : 'rooster', titel: tz ? a.groep + ' ' + tz.t.id + ' ' + tz.t.naam : a.titel,
+    const tg = a.toets ? a.klassen.find(g => toetsweekToetsVoor(g, s)) : null; const tz = tg ? toetsweekToetsVoor(tg, s) : null;
+    const it = { key: 'z:' + s + ':' + n, soort: a.toets || a.dienst ? 'toets' : 'rooster', titel: tz ? tg + ' ' + tz.t.id + ' ' + tz.t.naam : a.titel,
       sub: tz ? tz.t.duur + ' min · ' + (tz.t.waar || '') : a.dienst ? 'surveillance' : a.toets ? 'toets' : 'uit Zermelo', lokaal: a.lokaal || '', z: a, tz };
     if (a.van != null && a.tot != null && a.tot > a.van && a.van < AG.tot) items.push(Object.assign(it, { van: Math.max(a.van, AG.van), tot: Math.min(a.tot, AG.tot) }));
     else heleDag.push(it);
@@ -728,7 +742,8 @@ function dagZin(s, p, A) {
   if (kr) delen.push(`koor om ${hm(kr.van)}`);
   if (V) delen.push(L.length ? `${V} ${V === 1 ? 'les vervalt' : 'lessen vervallen'}` : 'je lessen vervallen');
   const zin = delen.length ? cap(delen.join('; ')) + '.' : 'Geen lessen of afspraken. De dag is vrij om te plannen.';
-  return (toetsweekOp(s) ? 'Toetsweek. ' : '') + zin;
+  const tk = toetsweekKlassen(s);
+  return (tk.length ? `Toetsweek ${tk.join(', ')}. ` : '') + zin;
 }
 /* ---------- pauzes en herstel ----------
    De pauzes komen uit het Zermelo-rooster (de roostermaker plant ze): afspraken met "pauze" erin, of anders de vaste gaten tussen
@@ -1364,7 +1379,8 @@ function vandaagLijst(s, A, nu, sel) { // de dag als rustige lijst; tik een rege
   const t = vandaag(); const its = A.items.filter(it => it.soort !== 'uitval' && it.soort !== 'start' && !(it.soort === 'vrij' && it.tot - it.van < 15));
   if (A.werkdag) its.push({ key: 'afsluiten', van: AG.werkTot - 15, tot: AG.werkTot, soort: 'afsluiten', titel: 'dag afsluiten' });
   if (!its.length && !A.heleDag.length) return '<p class="lead">Niets vandaag.</p>';
-  return '<ol class="nu-lijst">' + A.heleDag.map(it => `<li><div class="nl-r nl-hd" data-s="${it.soort}"><b>dag</b><span>${esc(it.titel)}</span></div></li>`).join('') + its.sort((a, b) => a.van - b.van).map(it => { const voorbij = s < t || (s === t && it.tot <= nu); const nuIn = s === t && it.van <= nu && nu < it.tot; const st = it.x ? magStip(s, it.x) : '';
+  const tk = toetsweekKlassen(s); const hd = A.heleDag.filter(it => !isToetsweekRij(it)); if (tk.length) hd.unshift({ soort: 'sectie', titel: 'Toetsweek ' + tk.join(', ') });
+  return '<ol class="nu-lijst">' + hd.map(it => `<li><div class="nl-r nl-hd" data-s="${it.soort}"><b>dag</b><span>${esc(it.titel)}</span></div></li>`).join('') + its.sort((a, b) => a.van - b.van).map(it => { const voorbij = s < t || (s === t && it.tot <= nu); const nuIn = s === t && it.van <= nu && nu < it.tot; const st = it.x ? magStip(s, it.x) : '';
     const naam = it.x || it.soort === 'toets' || it.soort === 'rooster' ? `${it.titel}${it.sub ? ' · ' + it.sub : ''}` : it.soort === 'vrij' ? 'werkblok' : it.soort === 'rust' ? 'rustblok' : it.titel;
     return `<li><button class="nl-r${voorbij ? ' nl-voorbij' : ''}${nuIn ? ' nl-nuin' : ''}${sel === it.key ? ' nl-sel' : ''}" data-s="${it.soort}" data-kijk="${esc(it.key)}"><b>${hm(it.van)}</b><span>${esc(naam)}</span>${st ? `<i class="nl-stip ${st}" aria-label="${st === 'ok' ? 'Magister rond' : 'Magister nog open'}"></i>` : nuIn ? '<em>nu</em>' : ''}</button></li>`; }).join('') + '</ol>';
 }
