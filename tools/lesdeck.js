@@ -137,9 +137,10 @@ function slideThuis(p, les, meta, thuis) {
   return s;
 }
 // beeldelementen binnen een vak {x,y,w,h}
-function akkoordDiagram(s, naam, x, y, w) { // gitaardiagram; w = breedte, hoogte ≈ 1.3 w
+function akkoordDiagram(s, item, x, y, w) { // gitaardiagram; w = breedte, hoogte ≈ 1.3 w; item 'G' of met eigen greep 'G|xxx003'
+  const [naam, eigen] = String(item).split('|');
   const GIT = { G: '320003', C: 'x32010', D: 'xx0232', Em: '022000', Am: 'x02210', E: '022100', A: 'x02220', Dm: 'xx0231', F: '133211', Bm: 'x24432', D7: 'xx0212', G7: '320001', A7: 'x02020', E7: '020100', Bm7: 'x20202', B7: 'x21202', Dsus4: 'xx0233' };
-  const g = GIT[naam]; const kol = w / 5; const fr = (w * 1.0) / 4; const top = y + 0.32;
+  const g = eigen || GIT[naam]; const kol = w / 5; const fr = (w * 1.0) / 4; const top = y + 0.32;
   kaart(s, x - 0.15, y - 0.1, w + 0.3, w * 1.0 + 0.95);
   for (let i = 0; i < 6; i++) s.addShape('line', { x: x + i * kol, y: top, w: 0, h: fr * 4, line: { color: K.inkt, width: 0.75 } });
   for (let j = 0; j <= 4; j++) s.addShape('line', { x, y: top + j * fr, w: kol * 5, h: 0, line: { color: K.inkt, width: j === 0 ? 2.5 : 0.75 } });

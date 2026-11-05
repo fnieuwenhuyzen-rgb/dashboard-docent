@@ -1333,14 +1333,8 @@
           "2": {
             "beeld": {
               "soort": "akkoorden",
-              "items": [
-                "G",
-                "D",
-                "Em",
-                "C",
-                "B7"
-              ],
-              "onder": "Gitaar en ukelele: dezelfde grepen, zonder capo. Keyboard speelt G, D, Em, C, B7."
+              "items": ["G|xxx003", "D|xxx230", "Em|xxx000", "C|xxx010", "B7|xxx202"],
+              "onder": "Gitaar: kleine grepen, alleen de drie dunste snaren aanslaan. Ukelele: eigen grepen in de kerstbox. Keyboard speelt G, D, Em, C, B7."
             },
             "notitie": {
               "vertel": [
@@ -1350,14 +1344,14 @@
               ],
               "voorbeelden": [
                 "Grondtonen om te zingen: G C | B | E | D | G | B | E.",
-                "Gitaar, standaard open grepen: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
+                "Gitaar niveau 1, kleine grepen op de drie dunste snaren: G = xxx003, D = xxx230 (eigenlijk Dsus2), Em = xxx000, C = xxx010, B7 = xxx202 (zonder D♯). Tussenstap op vier snaren: G = xx0003, D = xx0232, Em = xx2000, C = xx2010, B7 = xx1202. Volle grepen vanaf niveau 2: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
                 "Keyboard, rechterhand: G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A (de D♯ is een zwarte toets), Am = E A C. Links de grondtonen: E, C, B, A, D, G.",
                 "Bas, grondtonen: G op de E-snaar fret 3, D op de A-snaar fret 5, E de lege E-snaar, C op de A-snaar fret 3, B op de A-snaar fret 2, A de lege A-snaar."
               ],
               "vragen": [
                 {
                   "v": "Welk akkoord is nieuw?",
-                  "a": "B7; G, D, Em en C kennen ze al."
+                  "a": "B7; G, D, Em en C kennen ze al. Op gitaar spelen ze op niveau 1 alle vijf in de kleine greep."
                 },
                 {
                   "v": "Hoeveel maten heeft het refrein?",
@@ -1373,7 +1367,7 @@
           "3": {
             "notitie": {
               "vertel": [
-                "De kerstbox staat in Musicbox. Hij heeft drie niveaus. Niveau 1 is het refrein, vijf akkoorden waarvan je er vier kent: G, D, Em, C. Nieuw is B7. Niveau 2 is couplet en refrein, in e-mineur, met het nieuwe akkoord Am. Niveau 3 is het hele lied in een eigen arrangement: je band kiest een intro, hoeveel coupletten, waar het rustig is en waar vol, en hoe het eindigt.",
+                "De kerstbox staat in Musicbox. Hij heeft drie niveaus. Niveau 1 is het refrein, vijf akkoorden waarvan je er vier kent: G, D, Em, C. Nieuw is B7. Op gitaar speel je op niveau 1 kleine grepen op de drie dunste snaren. Niveau 2 is couplet en refrein, in e-mineur, met het nieuwe akkoord Am en op gitaar de volle grepen. Niveau 3 is het hele lied in een eigen arrangement: je band kiest een intro, hoeveel coupletten, waar het rustig is en waar vol, en hoe het eindigt.",
                 "Elk niveau heeft acht hoofdstukken: het lied leren kennen, zang, gitaar en ukelele, keyboard, bas, drums, samen spelen en een check. Je kiest je partij: zang, gitaar of ukelele, keyboard, bas of drums.",
                 "Je mag altijd een niveau hoger proberen. Ik zeg welk niveau ik van je verwacht. Wie op niveau 1 zit, speelt in de band mee in het refrein.",
                 "Planning: lesweek 11 tot en met 15 voor de kerst, lesweek 16 tot en met 18 erna, P1 in lesweek 19 (week van 25 januari 2027, 45 minuten, niet herkansbaar). Streef naar niveau 2 voor P1. Niveau 1 kan tot een 7, niveau 2 tot een 8,5, niveau 3 tot een 10. Niveau 3 is voor groepen die verder willen, het arrangement kan meewegen bij samenspel.",
@@ -1489,22 +1483,16 @@
           "0": {
             "beeld": {
               "soort": "akkoorden",
-              "items": [
-                "G",
-                "D",
-                "Em",
-                "C",
-                "B7"
-              ],
-              "onder": "Gitaar en ukelele: dezelfde grepen, zonder capo. Keyboard speelt G, D, Em, C, B7."
+              "items": ["G|xxx003", "D|xxx230", "Em|xxx000", "C|xxx010", "B7|xxx202"],
+              "onder": "Gitaar: kleine grepen, alleen de drie dunste snaren aanslaan. Ukelele: eigen grepen in de kerstbox. Keyboard speelt G, D, Em, C, B7."
             },
             "notitie": {
               "vertel": [
                 "Iedereen met een akkoordinstrument pakt de akkoorden van het refrein één voor één. Jij geeft het teken: tel hardop 1, 2, 3, 4 en wissel op de 1.",
-                "B7 is nieuw. Pak hem los: klinken alle snaren? Daarna oefenen ze de wissels C naar B7 en B7 naar Em."
+                "B7 is nieuw. Gitaristen spelen op niveau 1 de kleine grepen en slaan alleen de drie dunste snaren aan. Pak B7 los: klinken die drie snaren? Daarna oefenen ze de wissels C naar B7 en B7 naar Em."
               ],
               "voorbeelden": [
-                "Gitaar, standaard open grepen: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
+                "Gitaar niveau 1, kleine grepen op de drie dunste snaren: G = xxx003, D = xxx230 (eigenlijk Dsus2), Em = xxx000, C = xxx010, B7 = xxx202 (zonder D♯). Tussenstap op vier snaren: G = xx0003, D = xx0232, Em = xx2000, C = xx2010, B7 = xx1202. Volle grepen vanaf niveau 2: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
                 "Keyboard, rechterhand: G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A (de D♯ is een zwarte toets), Am = E A C. Links de grondtonen: E, C, B, A, D, G."
               ],
               "vragen": [
@@ -1518,7 +1506,7 @@
                 }
               ],
               "letop": [
-                "B7 op de gitaar is de lastigste greep (x21202): de wijsvinger ligt op fret 1 van de D-snaar. Controleer of de lege B-snaar niet gedempt wordt.",
+                "Gitaar niveau 1: controleer dat ze alleen de drie dunste snaren aanslaan. Bij de kleine B7 (xxx202) blijft de B-snaar open: klinkt hij? De volle B7 (x21202) komt op niveau 2.",
                 "Op de ukelele is B7 2322; dat is een vlakke greep met een vinger er dwars overheen. Vraag of het klinkt."
               ]
             }
@@ -1563,14 +1551,14 @@
             "notitie": {
               "vertel": [
                 "Per hoek geldt: eerst langzaam, dan met de oefentrack. Loop rond en help per instrument met de echte tonen en grepen.",
-                "Gitaar en ukelele: pak B7 los, oefen de wissels C naar B7 en B7 naar Em tien keer, speel het refrein zonder track en tel hardop.",
+                "Gitaar: kleine grepen op de drie dunste snaren. Gitaar en ukelele: pak B7 los, oefen de wissels C naar B7 en B7 naar Em tien keer, speel het refrein zonder track en tel hardop.",
                 "Keyboard: de tutorial laat zien welke toetsen je indrukt. Let op B7: de D♯ is een zwarte toets.",
                 "Zang: drie keer luisteren, dan zacht meezingen, dan zingen met de oefentrack zonder zang. Spreek af waar je adem haalt.",
                 "Bas: zoek de vijf tonen op de hals en speel op de 1 en de 3. Samen met de drummer.",
                 "Drums: hihat in achtsten, bassdrum en snare op hun plek, tel hardop af."
               ],
               "voorbeelden": [
-                "Gitaar, standaard open grepen: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
+                "Gitaar niveau 1, kleine grepen op de drie dunste snaren: G = xxx003, D = xxx230 (eigenlijk Dsus2), Em = xxx000, C = xxx010, B7 = xxx202 (zonder D♯). Tussenstap op vier snaren: G = xx0003, D = xx0232, Em = xx2000, C = xx2010, B7 = xx1202. Volle grepen vanaf niveau 2: G = 320003, D = xx0232, Em = 022000, C = x32010, B7 = x21202, Am = x02210. Ukelele: G = 0232, D = 2220, Em = 0432, C = 0003, B7 = 2322, Am = 2000.",
                 "Keyboard, rechterhand: G = D G B, D = D F♯ A, Em = E G B, C = E G C, B7 = D♯ F♯ A (de D♯ is een zwarte toets), Am = E A C. Links de grondtonen: E, C, B, A, D, G.",
                 "Bas, grondtonen: G op de E-snaar fret 3, D op de A-snaar fret 5, E de lege E-snaar, C op de A-snaar fret 3, B op de A-snaar fret 2, A de lege A-snaar."
               ],
@@ -1589,7 +1577,7 @@
                 }
               ],
               "letop": [
-                "Gitaar: de wissel C naar B7 is het lastigst. Laat ze langzaam wisselen en tel hardop.",
+                "Gitaar: de wissel C naar B7 is het lastigst. Laat ze langzaam wisselen en tel hardop. Lukt het nog niet? Dan speelt de leerling in de eerste maat alleen G en is stil op tel 3 en 4; de C komt later.",
                 "Is een leerling al klaar? Wijs naar het couplet van niveau 2 (Am erbij).",
                 "Doe de niveaucheck 1 zodra het lukt: de drie vragen staan in de kerstbox."
               ]
@@ -1741,7 +1729,7 @@
               "vertel": [
                 "Verdeel je over het lokaal en de ruimtes ernaast. Speel het refrein tot het samen klinkt. Klaar? Begin aan het couplet uit niveau 2.",
                 "Het refrein is maat 13 tot en met 19: G C | B7 | Em | D | G | B7 | Em. Dat zijn vijf akkoorden: G, D, Em, C en B7.",
-                "Niveau 2 voegt het couplet toe en één nieuw akkoord: Am. Gitaar x02210, ukelele 2000, keyboard E A C. Couplet in e-mineur: Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen.",
+                "Niveau 2 voegt het couplet toe en één nieuw akkoord: Am. Op gitaar komen nu de volle grepen; wie die nog niet haalt, speelt ze op vier snaren of klein. Gitaar x02210, ukelele 2000, keyboard E A C. Couplet in e-mineur: Per maat (19 maten met opmaat): maat 1 tot 4 Em | Em | C | B7; maat 5 tot 8 Em | Em | C | B7; maat 9 tot 12 Am | B7 | Em | D; maat 13 tot 16 (refrein) G C | B7 | Em | D; maat 17 tot 19 (refrein) G | B7 | Em. Twee akkoorden in een maat zijn elk twee tellen.",
                 "Op niveau 2 speel je het couplet anders dan het refrein. Gitaar en ukelele: in het couplet neer op elke tel, gedempt met je handpalm; in het refrein neer · neer-op · op-neer-op, open en vol. Keyboard: in het couplet lange akkoorden, in het refrein op elke tel. Bas: achtsten, E in achtsten, in het couplet E, C, B, A, D, G. Drums: in het couplet de floor tom op elke tel en snare op 2 en 4; in het refrein de rockbeat met open hihat."
               ],
               "voorbeelden": [

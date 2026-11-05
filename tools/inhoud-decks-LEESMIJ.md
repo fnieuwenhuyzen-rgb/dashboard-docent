@@ -32,7 +32,7 @@ Eén JSON-bestand per groep presentaties. Controleren: `node tools/maak-decks.js
 `{ "min", "soort": "start|luisteren|uitleg|doen|gesprek|check|afsluiten", "kop", "stappen": [], "klaar", "docent", "beeld", "notitie" }`
 
 - `stappen` staan op de dia: kort, voor de leerling, hooguit vijf, elk hooguit twee regels.
-- `beeld` komt rechts op de dia in plaats van een foto: `{ "soort": "kaarten", "items": [{ "k", "t" }] }`, `{ "soort": "tabel", "rijen": [[...]], "kol": [0.55,0.25,0.2] }`, `{ "soort": "akkoorden", "items": ["G","D"], "onder": "onderschrift" }` (grepen: G C D Em Am E A Dm F Bm D7 G7 A7 E7 Bm7 B7 Dsus4), `{ "soort": "vorm", "items": [{ "d": "Couplet", "m": 8 }] }`, `{ "soort": "opbouw", "items": [{ "d": "couplet", "v": 2 }] }`, `{ "soort": "fragment", "k", "t", "link", "u" }`.
+- `beeld` komt rechts op de dia in plaats van een foto: `{ "soort": "kaarten", "items": [{ "k", "t" }] }`, `{ "soort": "tabel", "rijen": [[...]], "kol": [0.55,0.25,0.2] }`, `{ "soort": "akkoorden", "items": ["G","D"], "onder": "onderschrift" }` (eigen greep: `"G|xxx003"`) (grepen: G C D Em Am E A Dm F Bm D7 G7 A7 E7 Bm7 B7 Dsus4), `{ "soort": "vorm", "items": [{ "d": "Couplet", "m": 8 }] }`, `{ "soort": "opbouw", "items": [{ "d": "couplet", "v": 2 }] }`, `{ "soort": "fragment", "k", "t", "link", "u" }`.
 - `notitie`: `{ "vertel": [], "voorbeelden": [], "vragen": [{ "v", "a" }], "leerlingen": [], "letop": [] }`. `leerlingen` alleen als het meer is dan de stappen (die komen er anders vanzelf in). Tijd en `klaar` komen er vanzelf bij; `docent` komt onder LET OP.
 
 ## Wat in de notities hoort
