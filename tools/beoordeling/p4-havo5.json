@@ -5,6 +5,7 @@
   "titel": "Praktijktoets P4: muzikale productie",
   "thema": "Productie voor publiek",
   "weging": 15,
+  "compact": true,
   "herkansbaar": false,
   "velden": [
     "Mijn programmaonderdelen",
