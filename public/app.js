@@ -44,6 +44,36 @@ const maandagVan = s => { const d = dOf(s); const w = (d.getDay() + 6) % 7; retu
 /* ---------- staat ---------- */
 function nieuweStaat() { return { v: 1, updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, taakNoot: {}, reclame: {}, reclameAf: {}, reclameExtra: [], uitgesteld: {}, afwezig: {}, ankers: {}, afwijkingen: [], extraUren: [], beoord: { lijsten: {}, toetsen: {} },
   pauzes: [], rust: {}, afLater: {}, afgesloten: {}, goed: {}, later: {}, klaarExtra: {}, duur: {}, duurLog: [], schatStart: {}, minuten: {}, mag: {}, magHw: {} }; }
+/* vorm van de staat controleren: een kopie of opgeslagen staat die er geldig uitziet maar kapot is ("rooster":"kapot")
+   mag de app niet laten stoppen. staatFouten noemt de kapotte onderdelen, staatRepareer zet alleen die terug op leeg. */
+const isObj = x => !!x && typeof x === 'object' && !Array.isArray(x);
+const ST_NAAM = { rooster: 'rooster', voortgang: 'voortgang', les: 'eigen lesaanpassingen', taken: 'taken', groepLeergang: 'leergang per klas', beoord: 'beoordelen' };
+function staatFouten(d) {
+  if (!isObj(d)) return ['geen Lesdag-kopie'];
+  if (!d.v) return ['geen Lesdag-kopie (versie ontbreekt)'];
+  const leeg = nieuweStaat(); const out = [];
+  for (const [k, w] of Object.entries(leeg)) {
+    if (d[k] === undefined) continue; const x = d[k];
+    const goed = Array.isArray(w) ? Array.isArray(x) && x.every(isObj) : isObj(w) ? isObj(x) : typeof x === typeof w;
+    if (!goed) out.push(ST_NAAM[k] || k);
+  }
+  if (isObj(d.beoord) && ((d.beoord.lijsten !== undefined && !isObj(d.beoord.lijsten)) || (d.beoord.toetsen !== undefined && !isObj(d.beoord.toetsen)))) out.push(ST_NAAM.beoord);
+  if (Array.isArray(d.rooster) && d.rooster.some(u => isObj(u) && (typeof u.groep !== 'string' || typeof u.start !== 'string' || typeof u.eind !== 'string'))) out.push('lessen in het rooster');
+  return [...new Set(out)];
+}
+function staatRepareer(d) { // kapotte onderdelen leeg, de rest blijft
+  const leeg = nieuweStaat(); const r = Object.assign({}, isObj(d) ? d : {}); r.v = r.v || 1;
+  for (const [k, w] of Object.entries(leeg)) {
+    if (r[k] === undefined) continue;
+    if (Array.isArray(w)) r[k] = Array.isArray(r[k]) ? r[k].filter(isObj) : w;
+    else if (isObj(w)) r[k] = isObj(r[k]) ? r[k] : w;
+    else if (typeof r[k] !== typeof w) r[k] = w;
+  }
+  r.beoord = Object.assign({}, r.beoord); if (!isObj(r.beoord.lijsten)) r.beoord.lijsten = {}; if (!isObj(r.beoord.toetsen)) r.beoord.toetsen = {};
+  if (Array.isArray(r.rooster)) r.rooster = r.rooster.filter(u => typeof u.groep === 'string' && typeof u.start === 'string' && typeof u.eind === 'string');
+  return r;
+}
+const VOOR_KOPIE = 'lesdag-staat-voor-kopie'; // de stand van vóór de laatst teruggezette kopie, voor als de melding al weg is
 function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 /* alleen op dit apparaat: jarige collega's, wie er absent is en logboeknotities over
    leerlingen. Een eigen sleutel die nooit naar OneDrive gaat, niet in de kopie zit en nooit naar de server. Absenten en logboeknotities
@@ -503,6 +533,21 @@ function toast(t, terug) {
   const el = $('#toast'); clearTimeout(toast.t); TERUG = terug || null;
   el.innerHTML = `<span>${esc(t)}</span>${TERUG ? '<button type="button" class="toast-terug" data-terug="">Ongedaan maken</button>' : ''}`; el.hidden = false;
   toast.t = setTimeout(() => { el.hidden = true; TERUG = null; }, TERUG ? 8000 : 4000);
+}
+function kopieOmvang(d) { // wat er in een kopie zit, in gewone woorden
+  const n = (x, een, meer) => `${x} ${x === 1 ? een : meer}`; const r = Array.isArray(d.rooster) ? d.rooster.length : 0;
+  const kl = isObj(d.voortgang) ? Object.keys(d.voortgang).length : 0; const tk = Array.isArray(d.taken) ? d.taken.length : 0;
+  const ll = isObj(d.beoord) && isObj(d.beoord.lijsten) ? Object.keys(d.beoord.lijsten).length : 0;
+  return `${n(r, 'les', 'lessen')} in het rooster, voortgang van ${n(kl, 'klas', 'klassen')}, ${n(tk, 'taak', 'taken')}${ll ? `, ${n(ll, 'klassenlijst', 'klassenlijsten')}` : ''}`;
+}
+async function kopieTerug(file) {
+  let d; try { d = JSON.parse(await file.text()); } catch (e) { toast('Dit bestand kan ik niet lezen. Kies een kopie die Lesdag heeft gedownload.'); return; }
+  const fout = staatFouten(d);
+  if (fout.length) { alert(`Deze kopie zet ik niet terug: hij is kapot of hoort niet bij Lesdag.\n\nNiet in orde: ${fout.join(', ')}.\n\nJe gegevens op dit apparaat blijven zoals ze zijn.`); return; }
+  const wanneer = d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum';
+  if (!confirm(`Kopie van ${wanneer} terugzetten?\n\nDaarin: ${kopieOmvang(d)}.\nNu op dit apparaat: ${kopieOmvang(S)}.\n\nAlles op dit apparaat wordt vervangen${SY && SY.aan() ? ', en via synchroniseren ook op je andere apparaten' : ''}.`)) return;
+  const terug = foto(); try { localStorage.setItem(VOOR_KOPIE, JSON.stringify({ tijd: Date.now(), foto: terug })); } catch (e) {}
+  S = Object.assign(nieuweStaat(), d); bewaar(); toast('Kopie teruggezet', terug);
 }
 function terugZetten() {
   if (!TERUG) return; const o = TERUG; TERUG = null;
@@ -1396,7 +1441,9 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
         zin: `Goedemorgen. ${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${L[0].u.start} (${L[0].u.groep})` : 'Geen lessen vandaag'}${kr ? `, koor om ${hm(kr.van)}` : ''}${T.length ? `, ${T.length === 1 ? 'een afspraak' : T.length + ' afspraken'} uit je rooster om ${lijstTxt(T.map(y => hm(y.van)))}` : ''}.${C.length ? ` ${C[0].c.naam} ${wanneerJarig(C[0].d, s)}.` : ''}` }; }
     case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
       return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
-    case 'les': { const y = it.x; const l = les(y.item); const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
+    case 'les': { const y = it.x; const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
+      if (!y.item && !presVoorop(s, y, nu)) return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}.${y.fout ? ' Deze klas heeft nog geen leergang.' : ''}` };
+      const l = y.item ? les(y.item) : {};
       if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.` }; }
       const v = magTelt(s, y) ? magVakken(s, y) : {};
       return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}` }; }
@@ -1465,7 +1512,7 @@ function nuKaart(s, p, A, m, nu) {
   if (m.m === 'vrijedag') return vrijeDagKaart(s, p);
   if (m.m === 'stil') return stilKaart(s);
   if (m.m === 'start') return startKaart(s, p, A, nu);
-  if (m.m === 'les') return presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : lesKaart(s, m.it.x, nu);
+  if (m.m === 'les') return presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu);
   if (m.m === 'koor') return (pauzeTekst(A.pz) ? `<div class="melding" style="margin-bottom:.8rem">${esc(pauzeTekst(A.pz))}</div>` : '') + koorKaart(s, m.it.koor);
   if (m.m === 'pauze' || m.m === 'rust') return rustKaart(s, m.it, A, true);
   if (m.m === 'naLes') return naLesKaart(s, p, m.x, nu);
@@ -1480,7 +1527,7 @@ function kijkKaart(s, p, A, key, nu) {
   if (key === 'afsluiten') return afsluitKaart(s, p, A, nu);
   const it = A.items.find(x => x.key === key); if (!it) return '';
   const nuIn = it.van <= nu && nu < it.tot;
-  if (it.x) return it.x.klaar || it.x.uitval || !it.x.item ? agPaneel(s, p, A, key) + (magTelt(s, it.x) ? `<div class="kaart" style="margin-top:1rem">${magBlok(s, it.x)}</div>` : '') : minuten(it.x.u.eind) <= nu ? naLesKaart(s, p, it.x, nu) : nuIn ? (presVoorop(s, it.x, nu) ? presKaart(s, it.x, nu) : lesKaart(s, it.x, nu)) : voorLesKaart(s, p, it.x, nu);
+  if (it.x) return it.x.klaar || it.x.uitval || !it.x.item ? agPaneel(s, p, A, key) + (magTelt(s, it.x) ? `<div class="kaart" style="margin-top:1rem">${magBlok(s, it.x)}</div>` : '') : minuten(it.x.u.eind) <= nu ? naLesKaart(s, p, it.x, nu) : nuIn ? (presVoorop(s, it.x, nu) ? presKaart(s, it.x, nu) : it.x.item ? lesKaart(s, it.x, nu) : lesZonderKaart(s, it.x, nu)) : voorLesKaart(s, p, it.x, nu);
   if (it.soort === 'pauze' || it.soort === 'rust') return rustKaart(s, it, A, nuIn);
   if (it.soort === 'vrij') return werkblokKaart(s, p, A, it, nu, nuIn);
   if (it.soort === 'start') return startKaart(s, p, A, nu);
@@ -1516,6 +1563,12 @@ function lesKaart(s, x, nu) {
     ${bordLoopt ? `<p class="lead">Het bord loopt in het andere venster.</p><!--dok--><a class="btn hoofd" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a><!--/dok-->` : `<!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok-->`}
     ${fasen.length ? `<h3>Verloop · alleen jij ziet dit</h3><ol class="fasen nu-fasen">${fasen.map(f => `<li><b>${f.min} min · ${esc(LESMODUS.SOORT[f.soort].naam.toLowerCase())}</b> ${esc(f.kop)}${f.docent ? `<div class="sub">${esc(f.docent)}</div>` : ''}</li>`).join('')}</ol>` : ''}
     ${bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}${magBlok(s, x)}</div>`;
+}
+function lesZonderKaart(s, x, nu) { // les zonder lesinhoud (klas zonder leergang, of alle lessen gegeven): nooit een foutscherm midden in de les
+  const rest = minuten(x.u.eind) - nu; const lg = leergangVan(x.u.groep);
+  return `<div class="kaart"><p class="eyebrow">Les loopt · ${esc(x.u.groep)} · nog ${rest} min · tot ${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p><h2>${esc(x.u.groep)}</h2>
+    <p class="lead">${lg ? `Alle lessen van ${esc(lgNaam(lg))} zijn gegeven. Lesdag heeft voor dit uur geen inhoud.` : 'Deze klas heeft nog geen leergang. Lesdag heeft voor dit uur dus geen inhoud.'}</p>
+    ${lg ? '' : `<p style="margin-top:.4rem"><a href="${esc(klasUrl(x.u.groep))}">Kies een leergang op het klasblad van ${esc(x.u.groep)}</a></p>`}${magBlok(s, x)}</div>`;
 }
 function naLesKaart(s, p, x, nu) {
   const l = les(x.item); const rest = teAfronden(s, p, nu).filter(y => y !== x);
@@ -2715,7 +2768,7 @@ document.addEventListener('change', e => {
   if (t.id === 'gGoed') { S.goed[vandaag()] = t.value.trim() || undefined; bewaar(true); }
   if (t.id === 'pK') { const n = $('#pNieuw'); if (n) n.hidden = !!t.value; }
   if (t.id === 'gLg') { S.groepLeergang[t.dataset.g] = t.value; bewaar(); }
-  if (t.id === 'imp' && t.files[0]) { const terug = foto(); t.files[0].text().then(txt => { const d = JSON.parse(txt); if (d && d.v) { S = Object.assign(nieuweStaat(), d); bewaar(); toast('Kopie teruggezet', terug); } }).catch(() => toast('Dit bestand kan ik niet lezen')); }
+  if (t.id === 'imp' && t.files[0]) { const f = t.files[0]; t.value = ''; kopieTerug(f); }
 });
 document.addEventListener('submit', e => {
   e.preventDefault();
@@ -3297,6 +3350,7 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
 (async function start() {
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
+  const kapot = staatFouten(S); if (kapot.length) { herstelScherm('Je opgeslagen gegevens zijn beschadigd. Niet in orde: ' + kapot.join(', ') + '.'); return; } // vóór bewaren en synchroniseren: niets kapots doorgeven
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
   try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
@@ -3308,6 +3362,7 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
   render();
+  try { const vk = JSON.parse(localStorage.getItem(VOOR_KOPIE) || 'null'); if (vk && Date.now() - vk.tijd > 2 * 864e5) localStorage.removeItem(VOOR_KOPIE); } catch (e) { localStorage.removeItem(VOOR_KOPIE); } // na twee dagen gewoon starten is de reserve niet meer nodig
   if (/diag/.test(location.search)) setTimeout(diag, 800);
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
@@ -3315,5 +3370,31 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
-})().catch(e => { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Lesdag start niet</h2><p class="lead">${esc(e && e.message)}</p></div>`; });
+})().catch(e => { console.error(e); herstelScherm('Er ging iets mis bij het starten (' + (e && e.message) + ').'); });
+function herstelScherm(reden) { // Lesdag start niet: altijd een uitweg zonder script. Elke keuze schrijft de staat en laadt opnieuw
+  let ruw = null; try { ruw = localStorage.getItem(LS_KEY); } catch (e) {}
+  let voor = null; try { voor = localStorage.getItem(VOOR_KOPIE); } catch (e) {}
+  let oud = null; try { oud = JSON.parse(ruw); } catch (e) {}
+  const fout = staatFouten(oud); const kanRep = isObj(oud) && fout.length > 0;
+  $('#main').innerHTML = `<div class="kaart herstel"><h2>Lesdag start niet</h2><p class="lead">${esc(reden)}</p>
+    <p>Kies hoe je verder wilt. Download eerst wat er nu staat als je twijfelt: dan raak je niets kwijt.</p>
+    <div class="knoppen" style="margin-top:.8rem">
+      ${voor ? '<button class="btn hoofd" data-h="voor">Terug naar de stand van vóór de laatste kopie</button>' : ''}
+      ${kanRep ? `<button class="btn${voor ? '' : ' hoofd'}" data-h="rep">Alleen de kapotte onderdelen leegmaken (${esc(fout.join(', '))})</button>` : ''}
+      <label class="btn">Kopie terugzetten<input type="file" accept="application/json" data-h="imp" hidden></label>
+      ${ruw ? '<button class="btn" data-h="dl">Wat er nu staat downloaden</button>' : ''}
+      <button class="btn" data-h="leeg">Leeg beginnen</button>
+    </div><p class="sub" style="margin-top:.6rem">Synchroniseren staat uit tot Lesdag weer gewoon start, zodat er niets kapots naar je andere apparaten gaat.</p></div>`;
+  const zet = (st, msg) => { if (msg && !confirm(msg)) return; try { localStorage.setItem(LS_KEY, JSON.stringify(st)); } catch (e) { alert('Opslaan lukt niet: ' + e.message); return; } location.reload(); };
+  const el = $('#main');
+  el.onclick = ev => { const b = ev.target.closest('[data-h]'); if (!b || b.tagName === 'INPUT') return; const h = b.dataset.h;
+    if (h === 'voor') { let f = null; try { f = JSON.parse(JSON.parse(voor).foto).S; } catch (e) {} if (staatFouten(f).length) { alert('Die stand is ook niet te lezen. Kies een andere uitweg.'); return; } zet(f, 'De stand van vóór de laatste kopie terugzetten?'); }
+    if (h === 'rep') zet(staatRepareer(oud), `Deze onderdelen worden leeggemaakt: ${fout.join(', ')}. De rest blijft. Doorgaan?`);
+    if (h === 'leeg') zet(nieuweStaat(), 'Leeg beginnen? Alles op dit apparaat is dan weg. Download eerst wat er nu staat als je het wilt bewaren.');
+    if (h === 'dl') { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ruw], { type: 'application/json' })); a.download = 'lesdag-beschadigd-' + vandaag() + '.json'; a.click(); }
+  };
+  el.onchange = async ev => { const t = ev.target; if (t.dataset.h !== 'imp' || !t.files[0]) return; let d = null; try { d = JSON.parse(await t.files[0].text()); } catch (e) {} t.value = '';
+    const f = staatFouten(d); if (f.length) { alert('Deze kopie is ook niet in orde (' + f.join(', ') + '). Kies een andere.'); return; }
+    zet(Object.assign(nieuweStaat(), d), `Kopie van ${d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum'} terugzetten? Daarin: ${kopieOmvang(d)}.`); };
+}
 })();
