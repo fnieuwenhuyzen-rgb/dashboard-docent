@@ -187,6 +187,15 @@
                 "Strak met groove; de groep kan op deze slag bouwen."
               ]
             },
+            "melodie": {
+              "uitleg": "in de maat, ritmes van de melodie",
+              "docent": [
+                "Raakt de maat kwijt; ritmes kloppen vaak niet.",
+                "Blijft grotendeels in de maat; enkele ritmefouten of een late inzet.",
+                "Blijft in de maat; ritmes en inzetten kloppen.",
+                "Strak en levendig; ook de lastige ritmes klinken vanzelf."
+              ]
+            },
             "piano": {
               "uitleg": "op de tel omzetten, patroon vasthouden",
               "docent": [
@@ -250,6 +259,15 @@
                 "Meeste akkoorden klinken; een paar blijven dof of met een verkeerde snaar.",
                 "Alle akkoorden klinken helder, alle snaren die horen te klinken.",
                 "Volle, verzorgde klank; zacht in het couplet en voller in het refrein."
+              ]
+            },
+            "melodie": {
+              "uitleg": "heldere noten, juiste sterkte",
+              "docent": [
+                "Noten klinken dof of vallen weg; veel te hard of te zacht.",
+                "Meeste noten klinken helder; sterkte nog wisselend.",
+                "Elke noot klinkt helder; de melodie is goed te horen in de groep.",
+                "Zingende, verzorgde klank; speelt zacht en vol waar het past."
               ]
             },
             "piano": {
@@ -316,6 +334,15 @@
                 "Grepen lukken; wisselen kost tijd, de slag is nog onrustig.",
                 "Wisselt vloeiend; de slaghand blijft gelijkmatig doorgaan.",
                 "Soepele wissels en een slagpatroon dat het lied mooier maakt."
+              ]
+            },
+            "melodie": {
+              "uitleg": "vingerzetting, overgangen tussen noten",
+              "docent": [
+                "Vingerzetting staat het spelen in de weg; stopt bij elke noot.",
+                "Vindt de noten; overgangen nog hoekig, vingers gespannen.",
+                "Vloeiende overgangen met een vaste vingerzetting.",
+                "Ontspannen en zeker; ook de lastige plekken lopen vanzelf."
               ]
             },
             "piano": {
@@ -396,9 +423,12 @@
   "keuzes": {
     "Mijn partij": [
       "Zang",
-      "Gitaar",
-      "Ukelele",
-      "Keyboard",
+      "Gitaar: akkoorden",
+      "Gitaar: melodie",
+      "Ukelele: akkoorden",
+      "Ukelele: melodie",
+      "Keyboard: akkoorden",
+      "Keyboard: melodie",
       "Basgitaar",
       "Drums of cajon"
     ],
@@ -417,16 +447,28 @@
         "soort": "zang"
       },
       {
-        "naam": "Gitaar",
+        "naam": "Gitaar: akkoorden",
         "soort": "snaar"
       },
       {
-        "naam": "Ukelele",
+        "naam": "Gitaar: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Ukelele: akkoorden",
         "soort": "snaar"
       },
       {
-        "naam": "Keyboard",
+        "naam": "Ukelele: melodie",
+        "soort": "melodie"
+      },
+      {
+        "naam": "Keyboard: akkoorden",
         "soort": "piano"
+      },
+      {
+        "naam": "Keyboard: melodie",
+        "soort": "melodie"
       },
       {
         "naam": "Basgitaar",

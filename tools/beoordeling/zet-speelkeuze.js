@@ -8,7 +8,8 @@ const schrijf = m => fs.writeFileSync(path.join(__dirname, m.id + '.json'), JSON
 const niveaus = (wat, pl) => wat.map((w, i) => ({ naam: 'Niveau ' + (i + 1), wat: w, plafond: pl === null ? null : PLAFOND[i] }));
 const plafondZin = n => n.every(x => x.plafond == null) ? '' : 'Plafond per niveau: ' + n.map(x => x.naam.toLowerCase() + ' maximaal ' + String(x.plafond).replace('.', ',')).join(', ') + '.';
 const ZONDER_ZIN = c => String(c).replace(/ Plafond per niveau:.*$/, '');
-const KERST = [{ naam: 'Zang', soort: 'zang' }, { naam: 'Gitaar', soort: 'snaar' }, { naam: 'Ukelele', soort: 'snaar' }, { naam: 'Keyboard', soort: 'piano' }, { naam: 'Basgitaar', soort: 'bas' }, { naam: 'Drums of cajon', soort: 'drums' }];
+// Melodie als eigen partij op gitaar, ukelele en keyboard (besluit Frans 5-11-2026). De soort bepaalt de beoordelingsteksten.
+const KERST = [{ naam: 'Zang', soort: 'zang' }, { naam: 'Gitaar: akkoorden', soort: 'snaar' }, { naam: 'Gitaar: melodie', soort: 'melodie' }, { naam: 'Ukelele: akkoorden', soort: 'snaar' }, { naam: 'Ukelele: melodie', soort: 'melodie' }, { naam: 'Keyboard: akkoorden', soort: 'piano' }, { naam: 'Keyboard: melodie', soort: 'melodie' }, { naam: 'Basgitaar', soort: 'bas' }, { naam: 'Drums of cajon', soort: 'drums' }];
 // per criterium: welke tekstsoort hoort erbij, en of de naam mee verandert
 function perPartij(crit, tekst, metNaam, soorten) {
   const uit = {};
