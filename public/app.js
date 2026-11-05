@@ -932,7 +932,7 @@ function nwNu() {
   const soort = NW.vast || (q && klas && LES_WOORD.test(q) ? 'les' : q && NW_TAAK.test(q) && !AFSPRAAK.test(q) ? 'taak' : 'afspraak');
   if (soort === 'les' && !(lt && lt.eigenDuur) && !NW.sleep) tot = Math.min(1440, van + lesDuur(klas)); // een les duurt zo lang als het vaste uur van de klas, tenzij je iets anders typt of sleept
   const ruw = lt && !(lt.titel === 'Taak' && !/taak/i.test(q)) ? lt.titel : ''; const titel = soort === 'afspraak' && /^met\s/i.test(ruw) ? 'Afspraak ' + ruw[0].toLowerCase() + ruw.slice(1) : ruw;
-  return { dag, van, tot, titel, soort, bron: lt ? lt.bron : 'overig', klas, lokaal: NW.lokaal != null ? NW.lokaal : lokaalVan(klas) };
+  return { dag, van, tot, titel, soort, bron: lt ? lt.bron : 'overig', klas, lokaal: NW.lokaal != null ? NW.lokaal : lokaalVan(klas), fout: lt ? lt.fout : '' };
 }
 function outlookUrl(titel, dag, van, tot) { const u = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0') + ':00'; return 'https://outlook.office.com/calendar/deeplink/compose?subject=' + encodeURIComponent(titel || 'Afspraak') + '&startdt=' + dag + 'T' + u(van) + '&enddt=' + dag + 'T' + u(tot); }
 function agGhost(kol, van, tot, tekst) { // het blok in wording
@@ -942,14 +942,15 @@ function agGhost(kol, van, tot, tekst) { // het blok in wording
 }
 function nwGhost() {
   if (!NW) { document.querySelectorAll('.ag-ghost').forEach(x => x.remove()); return; }
-  const g = nwNu(); const kol = document.querySelector(`.ag-kol[data-kdag="${g.dag}"]`);
+  const g = nwNu(); if (g.fout) { agGhost(null); return; } // geen blok op een plek die niet klopt
+  const kol = document.querySelector(`.ag-kol[data-kdag="${g.dag}"]`);
   if (kol) { const r = kol.closest('.ag-raster').dataset; if (g.van < +r.van || g.tot > +r.tot) { render(); return; } } // render() tekent de ruimere agenda en komt hier terug
   agGhost(kol, g.van, g.tot, g.soort === 'les' ? `${g.klas || 'Les'} ${NW.weg ? 'geruild' : 'extra'}` : g.titel || (g.soort === 'taak' ? 'Nieuwe taak' : 'Nieuwe afspraak'));
 }
 function nwToon() {
   const g = nwNu(); const zicht = !!document.querySelector(`.ag-kol[data-kdag="${g.dag}"]`);
-  $('#nwUit').textContent = `${g.soort === 'taak' ? 'Taak' : g.soort === 'les' ? 'Les' + (g.klas ? ' ' + g.klas : '') : 'Afspraak'} · ${fmtD(g.dag)} · ${hm(g.van)}–${hm(g.tot)}${zicht ? '' : ' · niet in dit beeld'}`;
-  const weg = g.soort === 'les' ? nwLes(g) : null; const w = [botsing(g.dag, g.van, g.tot), weg && weg.anker ? `${weg.anker.t.id} staat op het uur dat vervalt. Lesdag vraagt daarna waar die heen gaat.` : ''].filter(Boolean).join(' '); $('#nwLet').textContent = w; $('#nwLet').hidden = !w;
+  $('#nwUit').textContent = `${g.soort === 'taak' ? 'Taak' : g.soort === 'les' ? 'Les' + (g.klas ? ' ' + g.klas : '') : 'Afspraak'} · ${g.fout ? 'dag of tijd klopt nog niet' : `${fmtD(g.dag)} · ${hm(g.van)}–${hm(g.tot)}${zicht ? '' : ' · niet in dit beeld'}`}`;
+  const weg = g.soort === 'les' ? nwLes(g) : null; const w = g.fout || [botsing(g.dag, g.van, g.tot),weg && weg.anker ? `${weg.anker.t.id} staat op het uur dat vervalt. Lesdag vraagt daarna waar die heen gaat.` : ''].filter(Boolean).join(' '); $('#nwLet').textContent = w; $('#nwLet').hidden = !w;
   $('#nw').querySelectorAll('[data-nwsoort]').forEach(b => b.setAttribute('aria-pressed', b.dataset.nwsoort === g.soort));
   $('#nwUitlook').href = outlookUrl(g.titel, g.dag, g.van, g.tot);
   $('#nwUitlook').hidden = g.soort === 'les'; // een les gaat vanzelf mee met de agendafeed
@@ -982,6 +983,7 @@ function nwOpen(o, cx, cy) {
 function nwDicht() { NW = null; const el = $('#nw'); if (el) el.hidden = true; nwGhost(); }
 function nwZet() {
   if (!NW) return; const g = nwNu();
+  if (g.fout) { const l = $('#nwLet'); l.textContent = g.fout; l.hidden = false; $('#nwQ').focus(); return; } // niet stil een andere dag of tijd kiezen
   if (g.soort === 'les') { nwZetLes(g); return; }
   if (!g.titel) { const l = $('#nwLet'); l.textContent = 'Typ nog wat het is.'; l.hidden = false; $('#nwQ').focus(); return; }
   const terug = foto(); const k = maakTaak('', { dag: g.dag, van: hm(g.van), tot: hm(g.tot) }, g.titel, g.bron); if (!k) return; if (g.soort === 'afspraak') k.afspraak = true;
@@ -1741,7 +1743,7 @@ const tril1 = () => { try { if (navigator.vibrate) navigator.vibrate(250); } cat
 /* jarige collega's: de lijst die Frans zelf plakt (AP.collegas). Verjaardagen van leerlingen blijven in Magister, in het vak Jarig bij de les.
    Lesdag haalt niets van het intranet. Een verjaardag in het weekend telt op de eerste werkdag erna. */
 const MAANDEN = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-const mdUit = (m, d) => m >= 1 && m <= 12 && d >= 1 && d <= 31 ? String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0') : '';
+const mdUit = (m, d) => m >= 1 && m <= 12 && d >= 1 && d <= [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1] ?String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0') : '';
 const mdTekst = md => +md.slice(3) + ' ' + MAANDEN[+md.slice(0, 2) - 1];
 function jarigDagen(s) { const out = []; for (let d = addD(volgendeLesdag(s, -1), 1); d <= s; d = addD(d, 1)) out.push(d); return out; }
 const wanneerJarig = (d, s) => d === s ? 'is vandaag jarig' : 'was ' + DAGLANG[dOf(d).getDay()] + ' jarig';
@@ -1754,18 +1756,22 @@ function felicUrl(c) {
 const felicRij = ({ c, d }) => { const s = vandaag(); const af = AP.felic[s + '|' + c.naam];
   return `<div class="nu-rij"><span><span class="chip out">Outlook</span> <b>${esc(c.naam)}</b> ${wanneerJarig(d, s)}</span><span class="tb">${af ? '<span class="ok">✓ <span class="sub">mail geopend</span></span>' : `<a class="btn klein out" href="${esc(felicUrl(c))}" target="_blank" rel="noopener" data-felic="${esc(s + '|' + c.naam)}">Feliciteer in Outlook</a>`}</span></div>`; };
 function collegaParse(txt) { // een collega per regel met de datum ("12 november Jan Jansen", "Jan Jansen 12-11"); een regel met alleen een datum geldt voor de regels eronder
-  let nu = ''; const out = [];
-  for (const r0 of String(txt).split(/\r?\n/)) { let r = ' ' + r0.replace(/\t/g, ' ') + ' ', md = '', mail = '';
+  let nu = ''; const out = []; const mis = []; // mis: regels die niet lukten, met de reden
+  for (const r0 of String(txt).split(/\r?\n/)) { let r = ' ' + r0.replace(/\t/g, ' ') + ' ', md = '', mail = '', datum = ''; // datum: wat er als datum stond, ook als die niet bestaat
     r = r.replace(/[\w.+-]+@[\w-]+(\.[\w-]+)+/, m => { mail = m; return ' '; });
-    r = r.replace(/\s(\d{1,2})[-\/.](\d{1,2})(?:[-\/.]\d{2,4})?(?=\s)/, (m, d, mm) => { md = mdUit(+mm, +d); return ' '; });
-    if (!md) r = r.replace(/\s(\d{1,2})\s+(jan|feb|mrt|maa|apr|mei|jun|jul|aug|sep|okt|nov|dec)[a-z]*\.?(?:\s+\d{4})?(?=\s)/i, (m, d, mn) => { const k = mn.toLowerCase(); md = mdUit((k === 'maa' ? 2 : MND.indexOf(k)) + 1, +d); return ' '; });
+    r = r.replace(/\s(\d{1,2})[-\/.](\d{1,2})(?:[-\/.]\d{2,4})?(?=\s)/, (m, d, mm) => { datum = m.trim(); md = mdUit(+mm, +d); return ' '; });
+    if (!datum) r = r.replace(/\s(\d{1,2})\s+(jan|feb|mrt|maa|apr|mei|jun|jul|aug|sep|okt|nov|dec)[a-z]*\.?(?:\s+\d{4})?(?=\s)/i, (m, d, mn) => { datum = m.trim(); const k = mn.toLowerCase(); md = mdUit((k === 'maa' ? 2 : MND.indexOf(k)) + 1, +d); return ' '; });
+    if (!r0.trim()) continue;
+    if (datum && !md) { mis.push({ r: r0.trim(), w: `${datum} bestaat niet` }); if (!r.replace(/[\s,;:|–-]/g, '')) nu = ''; continue; }
     const naam = r.replace(/\(\s*\d+\s*(jaar)?\s*\)/gi, ' ').replace(/\b(is|wordt)?\s*(vandaag\s+)?jarig\b/gi, ' ').replace(/\b(maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|vandaag|morgen)\b:?/gi, ' ')
       .replace(/\s+/g, ' ').replace(/^[\s,;:|–-]+|[\s,;:|–-]+$/g, '').trim();
     if (md && !naam) { nu = md; continue; }
     if (naam && (md || nu)) out.push({ naam, md: md || nu, mail });
+    else if (naam) mis.push({ r: r0.trim(), w: /\b(?:eer)?gisteren\b/i.test(r0) ? '"gisteren" is geen datum' : 'geen datum gevonden' });
   }
-  return out;
+  out.mis = mis; return out;
 }
+let colMis = []; // wat bij de laatste keer opslaan niet lukte, onder de lijst
 
 /* ---------- kompas: een smal venster naast Magister ----------
    Wat er nu in Magister moet, groot en in gewone taal, met de tekst klaar om te kopiëren. Daaronder de rest. Smal genoeg voor een
@@ -1949,7 +1955,7 @@ function paletZoek(q) {
 }
 function paletLijst() {
   const q = PAL.q.trim(); if (!q) return PAL.acties.slice(0, 8);
-  const t = leesTaak(q); const taak = { t: (t.afspraak ? 'Nieuwe afspraak: ' : 'Nieuwe taak: ') + t.titel, sub: t.uitleg, let: t.waarschuw, run: () => taakUitPalet(t) };
+  const t = leesTaak(q); const taak = { t: (t.afspraak ? 'Nieuwe afspraak: ' : 'Nieuwe taak: ') + t.titel, sub: t.fout ? '' : t.uitleg, let: t.fout || t.waarschuw, run: () => taakUitPalet(t) };
   const hits = paletZoek(q); // een treffer gaat voor, zodat Enter niet per ongeluk een taak maakt; wie "taak ..." typt maakt altijd een taak
   if (klasUitTekst(q) && LES_WOORD.test(q)) return [{ t: 'Nieuwe les: ' + t.titel, sub: 'kies of er een ander uur wegvalt', run: () => nwOpen({ dag: t.d || (t.plan && t.plan.dag) || vandaag(), van: 9 * 60, tot: 9 * 60 + 30, tekst: q }, innerWidth - 60, 110) }].concat(hits, [taak]);
   return /^(taak|zet|plan)\b/i.test(q) ? [taak].concat(hits) : hits.concat([taak]);
@@ -1961,22 +1967,38 @@ function paletToon() {
 }
 function paletKies(j) { const a = PAL && PAL.L[j]; if (!a) return; if (a.zet != null) { $('#palQ').value = a.zet; PAL.q = a.zet; PAL.i = 0; paletToon(); $('#palQ').focus(); return; } paletDicht(); a.run(); }
 const DAGW = { zondag: 0, maandag: 1, dinsdag: 2, woensdag: 3, donderdag: 4, vrijdag: 5, zaterdag: 6, ma: 1, di: 2, wo: 3, do: 4, vr: 5 };
-function datumVan(dag, mnd) { const j = dOf(vandaag()).getFullYear(); let x = ymd(new Date(j, mnd, dag, 12)); if (x < vandaag()) x = ymd(new Date(j + 1, mnd, dag, 12)); return x; }
+function datumVan(dag, mnd) { // de eerstvolgende keer; '' als de datum niet bestaat (31 februari)
+  const j = dOf(vandaag()).getFullYear();
+  for (let y = j; y <= j + 4; y++) { const D = new Date(y, mnd, dag, 12); if (D.getMonth() !== mnd || D.getDate() !== dag) continue; const x = ymd(D); if (x >= vandaag()) return x; }
+  return '';
+}
+const tijdFout = q => { // "25:00", "10:75", "om 25 uur": geen tijd die bestaat
+  for (const x of (' ' + q + ' ').matchAll(/(?<![\d:.])(\d{1,2})[:.](\d{2})(?![\d:.])/g)) if (+x[1] > 23 || +x[2] > 59) return `${x[1]}:${x[2]} bestaat niet als tijd. Kies een tijd tussen 0:00 en 23:59.`;
+  const o = (' ' + q + ' ').match(/\som\s+(\d{1,2})(?:\s*uur)?(?=\s)/i); if (o && +o[1] > 23) return `${o[1]} uur bestaat niet als tijd. Kies een tijd tussen 0:00 en 23:59.`;
+  return '';
+};
 const AFSPRAAK = /afspraak|gesprek|overleg|vergader|bespreking|meeting|bellen met/i;
 const tijdTekst = x => { const [h, mi] = String(x).split(/[:.]/); return +h * 60 + (+mi || 0); };
 function leesTaak(q, dagHint, los) { // los: in de agenda telt 11-12 als tijd en 11 uur als tijdstip; "afspraak om 11:00-12:00 met Sam", "mail ouders koor morgen 10:30", "sectie agenda voor vrijdag", "plan slc 20 min do om 14 uur"
   let t = ' ' + String(q).replace(/^\s*(taak:?|zet|plan)\s+/i, '') + ' '; const s0 = vandaag(); let dag = null, van = null, dur = null, uiterlijk = false, m;
   const pak = re => { const r = t.match(re); if (r) t = t.slice(0, r.index) + ' ' + t.slice(r.index + r[0].length); return r; };
+  const fouten = []; const tf = tijdFout(q); if (tf) fouten.push(tf); // fout: Lesdag zet dit niet weg, maar zegt wat er niet klopt
   let totT = null; // tijdvak: 11:00-12:00, 11.00 tot 12.00, van 11 tot 12, 11-12 uur (eerst, anders leest de datum 11-12 als 11 december)
-  if ((m = pak(/\s(?:om\s+|van\s+)?(\d{1,2}[:.]\d{2})\s*(?:-|–|—|tot)\s*(\d{1,2}(?:[:.]\d{2})?)(?:\s*uur)?(?=\s)/i) || pak(/\svan\s+(\d{1,2})\s*(?:-|–|—|tot)\s*(\d{1,2})(?:\s*uur)?(?=\s)/i) || pak(/\s(?:om\s+)?(\d{1,2})\s*(?:-|–|—|tot)\s*(\d{1,2})\s*uur(?=\s)/i)) && tijdTekst(m[2]) > tijdTekst(m[1]) && tijdTekst(m[2]) <= 1440) { van = tijdTekst(m[1]); totT = tijdTekst(m[2]); }
+  if ((m = pak(/\s(?:om\s+|van\s+)?(\d{1,2}[:.]\d{2})\s*(?:-|–|—|tot)\s*(\d{1,2}(?:[:.]\d{2})?)(?:\s*uur)?(?=\s)/i) || pak(/\svan\s+(\d{1,2})\s*(?:-|–|—|tot)\s*(\d{1,2})(?:\s*uur)?(?=\s)/i) || pak(/\s(?:om\s+)?(\d{1,2})\s*(?:-|–|—|tot)\s*(\d{1,2})\s*uur(?=\s)/i))) {
+    const a = tijdTekst(m[1]), b = tijdTekst(m[2]);
+    if (b > a && b <= 1440) { van = a; totT = b; }
+    else if (!tf) fouten.push(b === a ? `Begin en eind zijn allebei ${m[1]}. Kies een eindtijd na de begintijd.` : b < a ? `De eindtijd ${m[2]} ligt vóór de begintijd ${m[1]}. Kies een eindtijd na de begintijd.` : 'Na middernacht kan niet. Kies een eindtijd vóór 24:00.');
+  }
   if (los && van == null) { const re = /\s(\d{1,2})\s*(?:-|–|—|tot)\s*(\d{1,2})(?=\s)/i; const r = t.match(re); const mid = u => (u < 7 ? u + 12 : u) * 60; if (r && mid(+r[2]) > mid(+r[1]) && mid(+r[2]) <= 1440) { pak(re); van = mid(+r[1]); totT = mid(+r[2]); } }
   if (pak(/\s(voor|uiterlijk|deadline)(?=\s+(vandaag|morgen|overmorgen|volgende|maandag|dinsdag|woensdag|donderdag|vrijdag|ma|di|wo|do|vr|\d))/i)) uiterlijk = true;
+  if (pak(/\s(?:eer)?gisteren(?=\s)/i)) fouten.push('Gisteren is al voorbij. Kies vandaag of een dag die nog komt.');
   if ((m = pak(/\s(vandaag|morgen|overmorgen)(?=\s)/i))) dag = addD(s0, { vandaag: 0, morgen: 1, overmorgen: 2 }[m[1].toLowerCase()]);
   const vw = pak(/\svolgende\s+week(?=\s)/i);
   if ((m = pak(/\s(maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|ma|di|wo|do|vr)(?=\s)/i))) { const wd = DAGW[m[1].toLowerCase()]; let d = s0; while (dOf(d).getDay() !== wd) d = addD(d, 1); if (vw && d < addD(maandagVan(s0), 7)) d = addD(d, 7); dag = d; }
   else if (vw) dag = addD(maandagVan(s0), 7);
-  if (!dag && (m = pak(/\s(\d{1,2})[-\/](\d{1,2})(?=\s)/))) dag = datumVan(+m[1], +m[2] - 1);
-  if (!dag && (m = pak(/\s(\d{1,2})\s+(jan|feb|mrt|maa|apr|mei|jun|jul|aug|sep|okt|nov|dec)[a-z]*(?=\s)/i))) { const k = m[2].toLowerCase(); dag = datumVan(+m[1], k === 'maa' ? 2 : MND.indexOf(k)); }
+  const geenDatum = (d, mn) => fouten.push(`${d} ${MAANDEN[mn] || 'van maand ' + (mn + 1)} bestaat niet. Kies een datum die bestaat.`);
+  if (!dag && (m = pak(/\s(\d{1,2})[-\/](\d{1,2})(?=\s)/))) { dag = +m[2] >= 1 && +m[2] <= 12 ? datumVan(+m[1], +m[2] - 1) : ''; if (!dag) geenDatum(+m[1], +m[2] - 1); }
+  if (!dag && (m = pak(/\s(\d{1,2})\s+(jan|feb|mrt|maa|apr|mei|jun|jul|aug|sep|okt|nov|dec)[a-z]*(?=\s)/i))) { const k = m[2].toLowerCase(); const mn = k === 'maa' ? 2 : MND.indexOf(k); dag = datumVan(+m[1], mn); if (!dag) geenDatum(+m[1], mn); }
   if (van != null) { /* tijdvak staat er al */ }
   else if ((m = pak(/\s(?:om\s+)?(\d{1,2})[:.](\d{2})(?:\s*uur)?(?=\s)/i))) van = +m[1] * 60 + +m[2];
   else if ((m = pak(/\som\s+(\d{1,2})(?:\s*uur)?(?=\s)/i))) van = +m[1] * 60;
@@ -1988,7 +2010,7 @@ function leesTaak(q, dagHint, los) { // los: in de agenda telt 11-12 als tijd en
   const bron = /\bsectie\b/i.test(q) ? 'sectie' : /\bkoor\b/i.test(q) ? 'koor' : /\bslc\b/i.test(q) ? 'slc' : /\b(e-?mail|mail|mailen)\b/i.test(q) ? 'mail' : /\b(les|lessen|presentatie)\b/i.test(q) ? 'les' : 'overig';
   if (!dag && dagHint) dag = dagHint;
   if (van != null && !dag) dag = van > nuMin() ? s0 : addD(s0, 1);
-  const r = { titel, bron, wanneer: !!(dag || van != null), eigenDuur };
+  const r = { titel, bron, wanneer: !!(dag || van != null), eigenDuur, fout: fouten[0] || '' };
   const afspr = AFSPRAAK.test(q) || (totT != null && /\smet\s/i.test(t));
   if (afspr && van != null) { dur = totT != null ? totT - van : dur || 30; r.afspraak = true; r.wanneer = true; r.plan = { dag, van: hm(van), tot: hm(van + dur) }; r.uitleg = `afspraak · ${fmtD(dag)} ${hm(van)}–${hm(van + dur)}`; r.waarschuw = botsing(dag, van, van + dur); return r; }
   if (van != null && !uiterlijk) { dur = totT != null ? totT - van : dur || schat(SCHAT[bron] ? bron : 'overig', titel); r.plan = { dag, van: hm(van), tot: hm(van + dur) }; r.uitleg = `${fmtD(dag)} ${hm(van)}–${hm(van + dur)} · ${BRON[bron]}`; r.waarschuw = botsing(dag, van, van + dur); }
@@ -2004,6 +2026,7 @@ function botsing(dag, van, tot) {
   return it.soort === 'les' ? `Let op: dan geef je les (${it.titel})` : ['afspraak', 'sectie', 'rooster', 'taak', 'toets'].includes(it.soort) ? `Let op: dan heb je al ${it.titel}` : it.soort === 'koor' ? 'Let op: dan is het koor' : `Let op: dat is je ${it.soort === 'rust' ? 'rustblok' : 'pauze'}`;
 }
 function taakUitPalet(t) {
+  if (t.fout) { toast(t.fout); return; }
   const k = maakTaak('', t.plan || null, t.titel, t.bron); if (!k) return;
   if (t.afspraak) k.afspraak = true; if (t.d) k.d = t.d; if (t.min) k.min = t.min; bewaar();
   toast(t.plan ? `${k.titel} staat op ${fmtD(t.plan.dag)} om ${t.plan.van}` : `${k.titel} staat in je takenlijst${t.d ? ', deadline ' + fmtD(t.d) : ''}`);
@@ -2206,11 +2229,20 @@ function viewRooster() {
 
 /* ---------- sectie ---------- */
 function sectieItems() { return (B.sectie || []).concat(S.sectieExtra || []).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }
+const fmtDJ = d => fmtD(d) + (Math.abs(dOf(d) - dOf(vandaag())) > 300 * 864e5 ? ' ' + d.slice(0, 4) : ''); // ver weg: met jaartal
+const sEigen = id => (S.sectieExtra || []).find(x => x.id === id); // zelf toegevoegd: wijzigen en weghalen mag
 function sRij(i) {
-  const t = vandaag(); const af = i.taak && S.sectieAf[i.id]; const laat = i.taak && !af && i.d < t;
-  return `<div class="srij ${laat ? 'laat' : ''} ${af ? 'af' : ''}"><span class="dt">${esc(fmtD(i.d))}${i.tot ? ' – ' + esc(fmtD(i.tot)) : ''}${i.tijd ? '<br>' + esc(i.tijd) : ''}</span><div>${i.taak ? `<label class="chk"><input type="checkbox" data-sdone="${esc(i.id)}" ${af ? 'checked' : ''}><span>${esc(i.titel)}</span></label>` : `<b style="font-family:var(--lees)">${esc(i.titel)}</b>`}${i.info ? `<div class="vorige" style="border:0;padding:0">${esc(i.info)}</div>` : ''}${S.sectieNotitie[i.id] ? `<div class="vorige">✎ ${esc(S.sectieNotitie[i.id])}</div>` : ''}</div></div>`;
+  const t = vandaag(); const af = i.taak && S.sectieAf[i.id]; const laat = i.taak && !af && i.d < t; const eigen = !!sEigen(i.id);
+  if (eigen && sBewerk === i.id) return `<form class="srij form" id="sEdit" data-id="${esc(i.id)}"><span class="dt">${esc(fmtDJ(i.d))}</span><div class="rij"><label style="flex:3 1 14rem">Wat <input id="seT" required value="${esc(i.titel)}"></label><label>Datum <input id="seD" type="date" required value="${esc(i.d)}"></label><button class="btn hoofd klein" type="submit">Opslaan</button><button class="btn klein" type="button" data-sbewerk="">Annuleer</button></div></form>`;
+  return `<div class="srij ${laat ? 'laat' : ''} ${af ? 'af' : ''}"><span class="dt">${esc(fmtDJ(i.d))}${i.tot ? ' – ' + esc(fmtDJ(i.tot)) : ''}${i.tijd ? '<br>' + esc(i.tijd) : ''}</span><div>${i.taak ? `<label class="chk"><input type="checkbox" data-sdone="${esc(i.id)}" ${af ? 'checked' : ''}><span>${esc(i.titel)}</span></label>` : `<b style="font-family:var(--lees)">${esc(i.titel)}</b>`}${i.info ? `<div class="vorige" style="border:0;padding:0">${esc(i.info)}</div>` : ''}${S.sectieNotitie[i.id] ? `<div class="vorige">✎ ${esc(S.sectieNotitie[i.id])}</div>` : ''}${eigen ? `<div class="knoppen" style="margin-top:.3rem"><button class="btn klein" type="button" data-sbewerk="${esc(i.id)}">wijzig</button><button class="btn klein" type="button" data-sweg="${esc(i.id)}">weg</button></div>` : ''}</div></div>`;
 }
-let sAlles = false;
+function sTaakFout(titel, d, oud) { // lege tekst of een datum die al voorbij is: niet opslaan
+  if (!titel) return 'Typ wat de taak is.';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d || '')) return 'Kies een datum.';
+  if (d < vandaag() && d !== oud) return `${cap(fmtDJ(d))} is al voorbij. Kies vandaag of een dag die nog komt.`;
+  return '';
+}
+let sAlles = false, sBewerk = '';
 function viewSectie() {
   const t = vandaag(); const it = sectieItems();
   const open = it.filter(i => i.taak && !S.sectieAf[i.id]);
@@ -2358,9 +2390,10 @@ function viewInstellingen() {
     <div class="knoppen" style="margin-top:.6rem"><button class="btn mag" data-kompas="">Kompas naast Magister</button><a class="btn" href="${esc(MAGURL())}" target="magister" rel="noopener">Open Magister</a></div>
     <p class="sub" style="margin-top:.5rem">Klassenlijsten: ${rooGroepen().map(g => `<button class="btn klein" data-klasopen="${esc(g)}">${esc(g)} ${(S.beoord.lijsten[g] || []).length || 'nog niet'}</button>`).join(' ') || 'nog geen rooster'}</p></div>
   <div class="kaart"><h2>Jarige collega's</h2><p class="lead">Plak de verjaardagen van het intranet: één collega per regel met de datum, bijvoorbeeld "12 november Jan Jansen". Lesdag haalt daar zelf niets op. De lijst staat alleen op dit apparaat. Op de dag zelf staat de collega bij Opstarten, met een knop voor een felicitatie in Outlook.</p>
-    <textarea id="colLijst" rows="6" style="margin-top:.6rem" placeholder="12 november Jan Jansen">${esc((AP.collegas || []).map(c => mdTekst(c.md) + ' ' + c.naam + (c.mail ? ' ' + c.mail : '')).join('\n'))}</textarea>
+    <textarea id="colLijst" rows="6" style="margin-top:.6rem" placeholder="12 november Jan Jansen">${esc((AP.collegas || []).map(c => mdTekst(c.md) + ' ' + c.naam + (c.mail ? ' ' + c.mail : '')).concat(colMis.map(x => x.r)).join('\n'))}</textarea>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-colopslaan="">Opslaan op dit apparaat</button><a class="btn" href="https://web.csgpm.nl/home/index.php" target="_blank" rel="noopener">Intranet openen</a></div>
-    <p class="sub" style="margin-top:.5rem">${(AP.collegas || []).length ? `${AP.collegas.length} collega's op dit apparaat.` : 'Nog geen lijst.'}</p></div>
+    <p class="sub" style="margin-top:.5rem">${(AP.collegas || []).length ? `${AP.collegas.length} collega's op dit apparaat.` : 'Nog geen lijst.'}</p>
+    ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
@@ -2423,7 +2456,9 @@ function bewaarTaakBewerk(f) {
 }
 function sluit() { $('#drawer').classList.remove('open'); $('#scrim').hidden = true; }
 function bewaarBewerk(f) {
-  const id = $('#drawer').dataset.id; const g = k => (f.get(k) || '').trim(); const lines = k => g(k).split('\n').map(x => x.trim()).filter(Boolean);
+  const id = $('#drawer').dataset.id; const g = k => (f.get(k) || '').trim();
+  if (!g('titel')) { toast('Geef de les een titel. Wil je de titel uit de leergang terug? Kies dan Terug naar de leergang.'); const v = $('#drawer [name=titel]'); if (v) v.focus(); return; }
+  const lines = k => g(k).split('\n').map(x => x.trim()).filter(Boolean);
   const meta = $('#drawer')._matMeta || {};
   const oudItem = reeks(id.split(':')[0]).find(x => x.id === id); const oudFasen = oudItem ? (les(oudItem).fasen || []) : [];
   const o = { titel: g('titel'), vraag: g('vraag'), doel: g('doel'), detail: g('detail'), fasen: LESMODUS.tekstNaarFasen(g('fasen'), oudFasen), identiteit: g('identiteit'), benodigd: lines('benodigd'),
@@ -2601,7 +2636,8 @@ document.addEventListener('click', async e => {
   if (D.klasopen) { klasOpen = D.klasopen; klasScroll = true; const h = 'jaar/' + encodeURIComponent(D.klasopen); if (location.hash.slice(1) !== h) location.hash = h; else render(); return; }
   if (D.klas) { const i = D.klas.indexOf('|'); const w = D.klas.slice(0, i), g = D.klas.slice(i + 1); klasOpen = null;
     if (w === 'opslaan') { const terug = foto(); const t = lijstOpslaan(g, $('#bmLijst').value); bewaar(); toast(t, terug); } else render(); return; }
-  if (D.colopslaan != null) { const terug = foto(); AP.collegas = collegaParse(($('#colLijst') || {}).value || ''); apBewaar(); render(); toast(`${AP.collegas.length} collega's opgeslagen op dit apparaat`, terug); return; }
+  if (D.colopslaan != null) { const terug = foto(); const L = collegaParse(($('#colLijst') || {}).value || ''); colMis = L.mis; AP.collegas = L.slice(); apBewaar(); render();
+    toast(`${AP.collegas.length} collega's opgeslagen op dit apparaat${colMis.length ? `. ${colMis.length === 1 ? 'Eén regel lukte' : colMis.length + ' regels lukten'} niet; die staan onder de lijst.` : ''}`, terug); return; }
   if (D.rgaf) { const uid = decodeURIComponent(route.arg[0] || ''); const s = route.arg[1] || vandaag(); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
     if (!x || !x.item) { toast('Deze les staat niet meer op de planning'); return; }
     const terug = foto(); rondAf(s, x, D.rgaf, ($('#rgNot') || {}).value); bewaar(true); rgStuur('sluit'); RG = null; toast(x.u.groep + ' afgerond', terug); location.hash = 'nu'; return; }
@@ -2639,6 +2675,9 @@ document.addEventListener('click', async e => {
   if (D.taakweg) { const terug = foto(); const w = (S.taken || []).find(k => k.id === D.taakweg); S.taken = (S.taken || []).filter(k => k.id !== D.taakweg); sluit(); bewaar(); toast(w && !w.af && (w.sectieId || w.koorId || w.reclameId || w.dagTaak) ? 'Uit je planning gehaald. De taak zelf staat nog open; vink hem af als hij klaar is.' : w && w.afspraak ? 'Afspraak verwijderd' : 'Taak verwijderd', terug); return; }
   if (D.weg) { const terug = foto(); S.rooster = S.rooster.filter(u => u.id !== D.weg); bewaar(); toast('Lesuur verwijderd', terug); return; }
   if (D.salles != null) { sAlles = !sAlles; render(); return; }
+  if (D.sbewerk != null) { sBewerk = D.sbewerk; render(); const v = $('#seT'); if (v) v.focus(); return; }
+  if (D.sweg) { const w = sEigen(D.sweg); if (!w) return; const terug = foto(); S.sectieExtra = S.sectieExtra.filter(x => x.id !== w.id); delete S.sectieAf[w.id]; delete S.sectieNotitie[w.id];
+    S.taken = (S.taken || []).filter(k => k.sectieId !== w.id); bewaar(); toast(`${kort(w.titel)} is weggehaald`, terug); return; }
   if (D.login != null) { M365.login(); return; }
   if (D.logout != null) { M365.logout(); return; }
   if (D.sync != null) { await syncNu(true); return; }
@@ -2662,7 +2701,9 @@ document.addEventListener('change', e => {
   if (t.dataset.minv) { const v = t.dataset.minv; const m = Math.round(+t.value); if (!(m >= 1 && m <= 480)) { bewaar(); return; } const k = v.startsWith('eigen:') && (S.taken || []).find(x => x.id === v.slice(6)); if (k) k.min = m; else (S.minuten = S.minuten || {})[v] = m; bewaar(); return; }
   if (t.dataset.schatstart) { const m = Math.round(+t.value); S.schatStart = S.schatStart || {}; if (m >= 1 && m <= 480) S.schatStart[t.dataset.schatstart] = m; else delete S.schatStart[t.dataset.schatstart]; bewaar(); return; }
   if (t.id === 'kSoort') { const n = $('#kTaak'); if (n) n.hidden = t.value === 'afspraak'; return; }
-  if (t.dataset.sdone) { const i = sectieItems().find(x => x.id === t.dataset.sdone); if (t.checked) { S.sectieAf[t.dataset.sdone] = true; if (i) duurVraag('sec:' + i.id, 'sectie', i.titel, schat('sectie', i.titel)); } else { delete S.sectieAf[t.dataset.sdone]; duurTerug('sec:' + t.dataset.sdone); } bewaar(); }
+  if (t.dataset.sdone) { const id = t.dataset.sdone; const i = sectieItems().find(x => x.id === id);
+    if (t.checked) { S.sectieAf[id] = true; if (i) duurVraag('sec:' + i.id, 'sectie', i.titel, schat('sectie', i.titel)); bewaar(); toast(`${i ? kort(i.titel) : 'Taak'} is afgevinkt`, () => { delete S.sectieAf[id]; duurTerug('sec:' + id); bewaar(); toast('Weer open'); }); }
+    else { delete S.sectieAf[id]; duurTerug('sec:' + id); bewaar(); } }
   if (t.dataset.taakaf) { const k = (S.taken || []).find(k => k.id === t.dataset.taakaf);
     if (k && t.checked) { const echt = k.start ? Math.round((Date.now() - k.start) / 60000) : 0; const gemeten = echt >= 2 && echt <= 240 ? echt : 0; delete k.start; duurVraag(k.id, soortVan(k), k.titel, gemeten || k.min || (k.plan ? minuten(k.plan.tot) - minuten(k.plan.van) : schat(soortVan(k), k.titel)), gemeten); } else if (k) duurTerug(k.id); // zo leert de schatting
     if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.reclameId) { S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[k.reclameId] = vandaag(); else delete S.reclameAf[k.reclameId]; } if (k.dagTaak) zetDagTaak(k.dagTaak.dag, k.dagTaak.key, t.checked); } bewaar(); }
@@ -2686,14 +2727,19 @@ document.addEventListener('submit', e => {
   if (e.target.id === 'zForm') { const v = $('#zLink').value; if (v.trim()) { S.zermeloToken = zToken(v); bewaar(true); } zOphalen(true).then(() => render()); return; }
   if (e.target.id === 'rForm') {
     const u = { id: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), dag: +$('#rDag').value, start: $('#rVan').value, eind: $('#rTot').value, groep: $('#rGroep').value.trim(), lokaal: $('#rLok').value.trim() };
-    if (!u.groep) return; S.rooster.push(u); bewaar(); toast(`${DAGLANG[u.dag]} ${u.start} ${u.groep} toegevoegd`);
+    if (!u.groep) return;
+    const a = minuten(u.start), b = minuten(u.eind);
+    if (!u.start || !u.eind || b <= a) { toast(b === a ? 'Begin en eind zijn gelijk. Kies een eindtijd na de begintijd.' : `Het uur eindigt (${u.eind}) vóór het begint (${u.start}). Kies een eindtijd na de begintijd.`); return; }
+    const over = S.rooster.filter(x => +x.dag === u.dag && minuten(x.start) < b && minuten(x.eind) > a); // waarschuwen, niet weigeren: twee groepen in één uur kan
+    const waar = [over.length ? `het overlapt met ${lijstTxt(over.map(x => `${x.groep} ${x.start.replace(/^0/, '')}-${x.eind.replace(/^0/, '')}`))}` : '', b - a > 120 ? `het duurt ${Math.floor((b - a) / 60)} uur${(b - a) % 60 ? ' en ' + (b - a) % 60 + ' min' : ''}` : ''].filter(Boolean);
+    const terug = foto(); S.rooster.push(u); bewaar(); toast(`${DAGLANG[u.dag]} ${u.start} ${u.groep} toegevoegd${waar.length ? ". Let op: " + waar.join(' en ') + '.' : ''}`, waar.length ? terug : undefined);
     setTimeout(() => { const g = $('#rGroep'); if (g) g.focus(); }, 0);
   }
   if (e.target.id === 'planForm') {
     const dag = e.target.dataset.dag; const v = $('#pK').value; const van = $('#pVan').value.replace(/^0/, ''), tot = $('#pTot').value.replace(/^0/, '');
     if (!van || !tot || minuten(tot) <= minuten(van)) { toast('Kies een eindtijd na de begintijd'); return; }
     if (!v && !$('#pT').value.trim()) { toast('Geef de taak een naam'); return; }
-    const ruw = $('#pT').value.trim(); const lt = !v && ruw ? leesTaak(ruw, dag) : null; const metTijd = lt && lt.afspraak && lt.plan; // een afspraak met eigen tijd in de tekst: die tijd telt
+    const ruw = $('#pT').value.trim(); const lt = !v && ruw ? leesTaak(ruw, dag) : null; if (lt && lt.fout) { toast(lt.fout); return; } const metTijd = lt && lt.afspraak && lt.plan; // een afspraak met eigen tijd in de tekst: die tijd telt
     const k = maakTaak(v, metTijd ? lt.plan : { dag, van, tot }, metTijd ? lt.titel : ruw, $('#pB').value); if (k && !v && AFSPRAAK.test(ruw)) k.afspraak = true;
     const link = ($('#pU') || {}).value; if (k && link && /^https?:\/\//i.test(link.trim())) k.url = link.trim(); // waar je de taak doet: zelf geplakt
     if (k) { agSel[dag] = 'taak:' + k.id; bewaar(); toast(`${k.titel} staat op ${fmtD(dag)} om ${van}`); }
@@ -2701,9 +2747,13 @@ document.addEventListener('submit', e => {
   }
   if (e.target.id === 'pzForm') { const T = [...e.target.querySelectorAll('[name=tot]')].map(x => x.value); S.pauzes = [...e.target.querySelectorAll('[name=van]')].map((x, i) => ({ van: x.value.replace(/^0/, ''), tot: (T[i] || '').replace(/^0/, '') })).filter(p => p.van && p.tot && minuten(p.tot) > minuten(p.van)); bewaar(); toast('Pauzes opgeslagen'); return; }
   if (e.target.id === 'kForm') { bewaarTaakBewerk(new FormData(e.target)); return; }
-  if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; const lt = leesTaak(titel, $('#tD').value); if (lt.afspraak && lt.plan) { taakUitPalet(lt); return; } (S.taken = S.taken || []).push({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }); bewaar(); return; }
+  if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; const lt = leesTaak(titel, $('#tD').value); if (lt.fout) { toast(lt.fout); return; } if (lt.afspraak && lt.plan) { taakUitPalet(lt); return; } (S.taken = S.taken || []).push({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }); bewaar(); return; }
   if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel || !d) return; const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
-  if (e.target.id === 'sForm') { S.sectieExtra.push({ id: 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d: $('#sD').value, titel: $('#sT').value.trim(), soort: 'taak', taak: true }); bewaar(); }
+  if (e.target.id === 'sForm') { const titel = $('#sT').value.trim(), d = $('#sD').value; const f = sTaakFout(titel, d); if (f) { toast(f); $(titel ? '#sD' : '#sT').focus(); return; }
+    S.sectieExtra.push({ id: 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d, titel, soort: 'taak', taak: true }); bewaar(); toast(`${kort(titel)} staat erbij op ${fmtDJ(d)}`); return; }
+  if (e.target.id === 'sEdit') { const k = sEigen(e.target.dataset.id); if (!k) return; const titel = $('#seT').value.trim(), d = $('#seD').value; const f = sTaakFout(titel, d, k.d); if (f) { toast(f); $(titel ? '#seD' : '#seT').focus(); return; }
+    const terug = foto(); k.titel = titel; k.d = d; (S.taken || []).filter(x => x.sectieId === k.id).forEach(x => { x.titel = titel; if (x.d) x.d = d; }); sBewerk = ''; // een ingeplande kopie gaat mee
+ bewaar(); toast(`${kort(titel)} is aangepast`, terug); return; }
   if (e.target.id === 'bForm') bewaarBewerk(new FormData(e.target));
 });
 let zoekRes = [];
@@ -3237,7 +3287,7 @@ function diag() {
 function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd zijn, en de oude tempometingen
   let anders = false;
   (S.taken || []).forEach(k => { if (k.af || k.afspraak || !AFSPRAAK.test(k.titel) || !/\d{1,2}[:.]\d{2}/.test(k.titel)) return; const dag = k.d || (k.plan && k.plan.dag); if (!dag) return;
-    try { const t = leesTaak(k.titel, dag); if (t.afspraak && t.plan) { k.titel = t.titel; k.plan = t.plan; k.afspraak = true; delete k.d; delete k.min; anders = true; } } catch (e) { console.warn(e); } });
+    try { const t = leesTaak(k.titel, dag); if (t.afspraak && t.plan && !t.fout) { k.titel = t.titel; k.plan = t.plan; k.afspraak = true; delete k.d; delete k.min; anders = true; } } catch (e) { console.warn(e); } });
   Object.entries(S.duur || {}).forEach(([b, L]) => { const so = SCHAT[b] ? b : 'overig'; (L || []).forEach(f => { (S.duurLog = S.duurLog || []).push({ s: so, t: '', e: vijf(f * SCHAT[so]), d: vandaag(), id: 'oud' }); anders = true; }); delete S.duur[b]; });
   if (roosterOpruimen()) anders = true;
   if (zVastBij()) anders = true;
