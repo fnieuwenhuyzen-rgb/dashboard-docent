@@ -1,8 +1,99 @@
 {
-  "_uitleg": "BB1 lesweek 11-20, indeling akkoord Frans 3-11. Lesweek 21-38, indeling akkoord Frans 4-11. Geen decks: alleen voor de lesmodus. In de leergang via tools/zet-decks-in-leergang.js; materiaal met sp is een pad in de sectiemap.",
+  "_uitleg": "BB1 lesweek 9, voorstel 5-11. Lesweek 11-20, indeling akkoord Frans 3-11. Lesweek 21-38, indeling akkoord Frans 4-11. Geen decks: alleen voor de lesmodus. In de leergang via tools/zet-decks-in-leergang.js; materiaal met sp is een pad in de sectiemap.",
   "bb1": {
     "klas": "BB1",
     "lessen": [
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 9,
+            "slot": "l1"
+          }
+        ],
+        "titel": "Gitaar: tutorials en de eerste akkoorden",
+        "type": "praktijk",
+        "detail": "Met de groep aan de slag in Gitaar voor beginners: goed zitten, aanslaan en de akkoorden Em en Asus2.",
+        "vraag": "Hoe krijg je je eerste akkoorden helder uit de gitaar?",
+        "doel": "Je zit goed met de gitaar, slaat gelijkmatig aan en speelt Em en Asus2 zodat de snaren helder klinken.",
+        "criteria": [
+          "Ik zit goed en houd de gitaar goed vast",
+          "Ik sla gelijkmatig aan, op de tel",
+          "Ik speel Em en Asus2 zodat de snaren helder klinken"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Gitaar en laptop klaar",
+            "stappen": [
+              "Pak een gitaar en ga bij je groep zitten.",
+              "Open Gitaar voor beginners in Musicbox op de laptop van de groep.",
+              "Rug recht, voeten plat, de dikste snaar boven."
+            ],
+            "docent": "Zet de gitaren vooraf op toon, dat kost hier anders de hele start. Geef elke groep een eigen hoek, dan hoor je de groepen beter uit elkaar."
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Twee vingers, twee akkoorden",
+            "stappen": [
+              "Vingers steil, vlak achter de fret.",
+              "Sla rustig aan en luister: klinkt elke snaar?",
+              "Em en Asus2 pak je allebei met twee vingers."
+            ],
+            "beeld": {
+              "soort": "akkoorden",
+              "items": [
+                "Em",
+                "Asus2|x02200"
+              ],
+              "onder": "Bij Asus2 sla je de dikste snaar niet aan."
+            },
+            "docent": "Kort houden: de tutorials doen de rest. Akkoordschema's en D en G komen in lesweek 12 uitgebreid terug."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Oefenen met de tutorials",
+            "stappen": [
+              "Ga verder waar je gebleven bent. Nog niet begonnen? Start bij hoofdstuk 1, niveau 1.",
+              "Kijk eerst, speel daarna zelf mee.",
+              "Bekijk een stuk opnieuw als het nog niet lukt.",
+              "Oefen daarna Em en Asus2: elk akkoord vier tellen."
+            ],
+            "klaar": "Wissel zonder te stoppen tussen Em en Asus2, of ga door naar het volgende hoofdstuk.",
+            "docent": "Loop langs de groepen en let op houding, duim en vingers die een snaar dempen. Te weinig gitaren? Laat om de beurt wisselen: één speelt, de ander kijkt mee en helpt. Hoofdstuk 1 tot en met 4 van niveau 1 sluiten aan op lesweek 11."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Samen spelen",
+            "stappen": [
+              "Tel samen af: vier tellen Em, vier tellen Asus2.",
+              "Lukt het nog niet? Speel alleen Em.",
+              "Duim: klonk het helder?",
+              "Gitaar terug op de plek."
+            ],
+            "docent": "Iedereen speelt tegelijk, niemand alleen voor de klas."
+          }
+        ],
+        "formatief": {
+          "soort": "duimen",
+          "tekst": "Klinken Em en Asus2 helder? Duim omhoog, opzij of omlaag."
+        },
+        "benodigd": [
+          "Gitaren, gestemd",
+          "Plectrums",
+          "Een laptop per groep, ingelogd op Musicbox"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Gitaar voor beginners",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3"
+          }
+        ]
+      },
       {
         "koppel": [
           {
