@@ -96,7 +96,10 @@ main{max-width:var(--wrap);margin:0 auto;padding-block:1.2rem 4rem;display:grid;
 .doel{margin:0}
 .fasen{margin:0;padding-left:1.1rem;font-size:.95rem}
 .mats{display:flex;gap:.35rem;flex-wrap:wrap}
-.vorige{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:.6rem}
+.vorige{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:.6rem;white-space:pre-line}
+.kaart>.vorige{margin:.5rem 0}
+.vorige.kort{cursor:pointer}
+.vorige.kort:not(.open){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 .klaarzet ul{margin:.3rem 0 0;padding-left:1.1rem}
 .lokaalblok h3{display:flex;gap:.5rem;align-items:baseline}
 details.meer summary{cursor:pointer;font-family:var(--lees);font-size:.9rem;color:var(--paars)}
