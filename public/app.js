@@ -2748,6 +2748,37 @@ function bmGroepjesKaart(m, T, lijst) {
     <div class="knoppen" style="margin:.5rem 0"><button class="btn" data-bm="gnieuw">Nieuw groepje</button><button class="btn hoofd" data-bm="dicht">Klaar</button></div>
     <h3 class="bm-groep">Nog niet ingedeeld (${los.length})</h3><div class="bm-chips">${los.map(x => `<button class="bm-chip" data-bmgin="${x.id}" ${bmActiefG ? '' : 'disabled'}>${esc(x.naam)}</button>`).join('')}</div></div>`;
 }
+/* ---------- inleverbak: alleen op dit apparaat (map en koppelingen in IndexedDB, niets in S, dus niet naar D1) ---------- */
+const bmInl = {}; const BM_AUDIO = /^(mp3|m4a|wav|wma|aif|mpa)$/; const BM_VIDEO = /^(mp4|mov|webm|m4v|avi|wmv|mpg|3gp)$/;
+async function bmInlScan(k) { const I = bmInl[k]; const f = []; const loop = async (d, pad, diep) => { for await (const [n, h] of d.entries()) { if (h.kind === 'directory') { if (diep < 3) await loop(h, pad + n + '/', diep + 1); } else if (!/^(\.|~|desktop\.ini$)/i.test(n)) f.push({ naam: n, pad: pad + n, h }); } };
+  await loop(I.h, '', 0); I.bestanden = f.sort((a, b) => a.pad.localeCompare(b.pad, 'nl')); I.staat = 'ok'; }
+async function bmInlLaden(k) { const I = bmInl[k] = { staat: 'geen', bestanden: [], koppel: {} };
+  try { const r = await bmIdb('kv', 'readonly', s => s.get('inlever|' + k)); if (!r) return; I.h = r.h; I.koppel = r.koppel || {}; const p = await I.h.queryPermission({ mode: 'read' }); I.staat = p === 'granted' ? 'ok' : 'toestemming'; if (p === 'granted') await bmInlScan(k); }
+  catch (e) { console.warn(e); I.staat = 'fout'; }
+  const c = bmHuidig(); const a = document.activeElement; if (c && c.k === k && !(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) render(); }
+const bmInlBewaar = k => bmIdb('kv', 'readwrite', s => s.put({ h: bmInl[k].h, koppel: bmInl[k].koppel }, 'inlever|' + k)).catch(e => console.warn(e));
+function bmInlKnop(b) { return `<button class="btn klein" data-bm="inlspeel" data-pad="${esc(b.pad)}" title="${esc(b.naam)}">▶ ${esc(b.origineel || b.naam)}${b.ext ? '.' + esc(b.ext) : ''}${(n => n ? ` (${+n[1] + 1})` : '')(/\s(\d+)\.[^.]+$/.exec(b.naam))}</button>`; }
+function bmInlRegel(k, T, lijst, ids) { const I = bmInl[k]; if (!I || I.staat !== 'ok' || bmConcertAan()) return ''; const per = BMR.koppelInlever(I.bestanden, lijst, T, I.koppel).per; const gezien = new Set(); const b = ids.flatMap(id => per[id] || []).filter(x => !gezien.has(x.pad) && gezien.add(x.pad));
+  return `<div class="bm-opnames"><b>Opname</b>${b.length ? b.map(bmInlKnop).join('') : '<span class="bm-nog">nog niet ingeleverd</span>'}</div>`; }
+function bmInlKaart(g, T, lijst, k) {
+  const I = bmInl[k] || { staat: 'geen', bestanden: [] };
+  let h = `<div class="kaart bm"><h2>Inleverbak</h2><p class="lead">Leerlingen leveren hun opname in via een Forms-formulier met een uploadvraag. Forms zet de bestanden in je eigen OneDrive: Apps, Microsoft Forms, de naam van het formulier. Kies die map één keer voor deze toets. Lesdag leest de map alleen en bewaart de koppeling op dit apparaat. Zet de uploadvraag op 1 GB, standaard is het 10 MB.</p>`;
+  if (!bmKanMap()) return h + '<p class="bm-waarsch">De inleverbak werkt alleen op de laptop, in Edge of Chrome.</p><div class="knoppen"><button class="btn" data-bm="dicht">Terug</button></div></div>';
+  if (I.staat !== 'ok') return h + `${I.staat === 'fout' ? '<p class="bm-waarsch">De map is niet te lezen. Staat hij nog op deze plek?</p>' : ''}<div class="knoppen">${I.staat === 'toestemming' ? `<button class="btn hoofd" data-bm="inltoe">Map ${esc(I.h.name)} toestaan</button>` : ''}<button class="btn ${I.staat === 'geen' ? 'hoofd' : ''}" data-bm="inlkies">Map kiezen</button><button class="btn" data-bm="dicht">Terug</button></div></div>`;
+  const R = BMR.koppelInlever(I.bestanden, lijst, T, I.koppel); const n = lijst.filter(x => R.per[x.id].length).length;
+  h += `<div class="regel"><b>${n} van ${lijst.length} ingeleverd</b><span class="chip">map ${esc(I.h.name)}</span><button class="btn klein" data-bm="inlscan">Vernieuwen</button><button class="btn klein" data-bm="inlkies">Andere map</button><button class="btn klein" data-bm="dicht">Terug</button></div>`;
+  if (R.onbekend.length) h += `<h3 class="bm-groep">Niet herkend (${R.onbekend.length})</h3>${R.onbekend.map(o => `<label class="bm-koppel"><span>${esc(o.naam)}</span><select data-bminlk="${esc(o.pad)}"><option value="">Kies later</option>${lijst.map(x => `<option value="${x.id}" ${o.voorstel === x.id ? 'selected' : ''}>${esc(x.naam)}</option>`).join('')}<option value="x">Niet meetellen</option></select></label>`).join('')}<div class="knoppen"><button class="btn hoofd" data-bm="inlkoppel">Koppelen</button></div>`;
+  h += `<table class="bm-kolom bm-inl"><thead><tr><th>Leerling</th><th>Opname</th></tr></thead><tbody>${lijst.map(x => { const b = R.per[x.id]; return `<tr><td>${esc(x.naam)}</td><td>${b.length ? b.map(q => bmInlKnop(q) + (q.via ? ` <small>ingeleverd door ${esc(q.via)}</small>` : '') + (q.hand ? ` <button class="btn klein" data-bm="inlwis" data-pad="${esc(q.pad)}">Koppeling wissen</button>` : '')).join(' ') : '<span class="bm-nog">nog niet</span>'}</td></tr>`; }).join('')}</tbody></table>`;
+  if (R.genegeerd) h += `<p class="lead">${R.genegeerd} ${R.genegeerd === 1 ? 'bestand telt' : 'bestanden tellen'} niet mee. <button class="btn klein" data-bm="inlalles">Weer meetellen</button></p>`;
+  return h + '</div>';
+}
+// de speler staat buiten het scherm dat render() vervangt: scoren mag de opname niet stoppen
+function bmSpelerSluit() { const d = $('#bmSpeler'); if (!d) return; const v = d.querySelector('audio,video'); if (v) { v.pause(); URL.revokeObjectURL(v.src); } d.remove(); }
+async function bmSpeel(b) { let bestand; try { bestand = await b.h.getFile(); } catch (e) { console.warn(e); toast('Dit bestand is niet te openen. Staat het nog in de map?'); return; }
+  const q = BMR.leesInlever(b.naam); const url = URL.createObjectURL(bestand); if (!BM_AUDIO.test(q.ext) && !BM_VIDEO.test(q.ext)) { window.open(url, '_blank', 'noopener'); return; }
+  bmSpelerSluit(); const tag = BM_AUDIO.test(q.ext) ? 'audio' : 'video'; const d = document.createElement('div'); d.id = 'bmSpeler'; d.innerHTML = `<div class="regel"><b>${esc(b.naam)}</b><button class="btn klein" data-bm="inlstop">Sluiten</button></div><${tag} controls autoplay src="${url}"></${tag}>`; document.body.appendChild(d);
+  d.querySelector(tag).addEventListener('error', () => { const p = document.createElement('p'); p.className = 'bm-waarsch'; p.innerHTML = `De browser speelt dit bestand niet af. <a download="${esc(b.naam)}" href="${url}">Bestand opslaan</a>`; d.appendChild(p); }); }
+window.addEventListener('hashchange', () => { if (!location.hash.startsWith('#beoordelen')) bmSpelerSluit(); });
 function bmKlasKaart(m, T, lijst) {
   const R = bmKlasRes; const min = +m.klasgenotenMin || 3;
   let h = `<div class="kaart bm"><h2>Klasgenoten</h2><p class="lead">Open de antwoorden van Forms in Excel, selecteer de hele tabel met de kolomkoppen, kopieer en plak hier. Een nieuwe plak vervangt de vorige; papieren cijfers blijven staan. Minimaal ${min} inzendingen per leerling, anders geen eindcijfer.</p>
@@ -2821,11 +2852,13 @@ function viewBeoordelen() {
   if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
   const lijst = S.beoord.lijsten[g] || []; const heeft = lijst.length > 0;
   let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
-    <div class="knoppen">${heeft ? '<button class="btn" data-bm="concert">Concertstand</button>' : ''}<button class="btn" data-bm="lijst">Klassenlijst</button>${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="#vandaag">Klaar</a></div></div>
+    <div class="knoppen">${heeft ? '<button class="btn" data-bm="concert">Concertstand</button>' : ''}<button class="btn" data-bm="lijst">Klassenlijst</button>${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="inlever">Inleverbak</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="#vandaag">Klaar</a></div></div>
     <div class="bm-status" id="bmStatus">${bmStatusHtml()}</div>`;
   if (bmPaneel === 'koppel' && bmKoppel) return h + bmKoppelKaart(g);
   if (!heeft || bmPaneel === 'lijst') return h + bmLijstKaart(g, lijst);
   const T = bmToets(m.id, g);
+  const inlK = m.id + '|' + g; if (bmKanMap() && !bmInl[inlK]) bmInlLaden(inlK);
+  if (bmPaneel === 'inlever') return h + bmInlKaart(g, T, lijst, inlK);
   if (bmPaneel === 'kolom') return h + bmKolomKaart(m, g, T, lijst);
   if (bmPaneel === 'groepjes') return h + bmGroepjesKaart(m, T, lijst);
   if (bmPaneel === 'klasgenoten') return h + bmKlasKaart(m, T, lijst);
@@ -2844,7 +2877,8 @@ function viewBeoordelen() {
     ${L === T && (T.vast || nOpen) ? `<div class="regel">${T.vast ? `<span class="chip">${nVast} afgerond · ${esc(bmTijd(T.vast.laatst))}</span>` : ''}${nOpen ? `<button class="btn klein hoofd" data-bm="afronden">Afronden (${nOpen})</button>` : ''}</div>` : ''}
     <div class="regel"><button class="btn klein" data-bm="pdfalle">Alle feedbackbladen</button></div>
     <ol>${gKop ? [...T.groepjes.map(x => `<li class="bm-gkop ${G === x ? 'nu' : ''}"><button class="bm-naam" data-bmgkies="${x.id}">${esc(x.naam)}${(L.gs || {})[x.id] && Object.keys(L.gs[x.id]).length ? ' ✓' : ''}</button></li>${vol.filter(id => x.leden.includes(id)).map(rijHtml).join('')}`), vol.some(id => !BMR.groepVan(T, id)) ? '<li class="bm-gkop"><span class="bm-naam">Geen groepje</span></li>' + vol.filter(id => !BMR.groepVan(T, id)).map(rijHtml).join('') : ''].join('') : vol.map(rijHtml).join('')}</ol></div>`;
-  return h + (G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur))) + '</div>';
+  const inlR = bmInlRegel(inlK, T, lijst, G ? G.leden : [cur]); const scoor = G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur));
+  return h + (inlR ? `<div class="bm-rechts">${inlR}${scoor}</div>` : scoor) + '</div>';
 }
 // een veld met vaste keuzes (m.keuzes) wordt een keuzelijst; een eerder getypte waarde blijft als eigen keuze staan
 function bmVeldHtml(m, v, w) {
@@ -2910,6 +2944,15 @@ document.addEventListener('click', async e => {
   if (D.bm === 'kterug' || D.bm === 'kwis') { const L = bmLaag(T); const id = bmSelG || bmSel; const c = bmSelG ? 'g' : null; const oud = bmKrabbelVan(L, id, c); if (!oud.length) return; const f = foto(); bmZet(k, T, 'k', id, c, D.bm === 'kwis' ? [] : oud.slice(0, -1)); if (D.bm === 'kwis') toast('Krabbel gewist', f); return; }
   if (D.bm === 'lijst') { bmPaneel = 'lijst'; bmKoppel = null; render(); return; }
   if (D.bm === 'kolom') { bmPaneel = 'kolom'; render(); return; }
+  if (D.bm === 'inlever') { bmPaneel = 'inlever'; render(); return; }
+  if (D.bm === 'inlstop') { bmSpelerSluit(); return; }
+  if (D.bm === 'inlkies') { try { const h = await window.showDirectoryPicker({ id: 'lesdag-inlever', mode: 'read', startIn: 'documents' }); bmInl[k] = { h, koppel: {}, bestanden: [], staat: 'ok' }; await bmInlScan(k); bmInlBewaar(k); } catch (err) { if (err.name !== 'AbortError') { console.warn(err); toast('Deze map is niet te lezen'); } } render(); return; }
+  if (D.bm === 'inltoe') { try { const I = bmInl[k]; if (await I.h.requestPermission({ mode: 'read' }) === 'granted') await bmInlScan(k); } catch (err) { console.warn(err); bmInl[k].staat = 'fout'; } render(); return; }
+  if (D.bm === 'inlscan') { try { await bmInlScan(k); toast('Map opnieuw gelezen'); } catch (err) { console.warn(err); bmInl[k].staat = 'fout'; } render(); return; }
+  if (D.bm === 'inlkoppel') { const I = bmInl[k]; for (const s of document.querySelectorAll('[data-bminlk]')) if (s.value) I.koppel[s.dataset.bminlk] = s.value; bmInlBewaar(k); render(); return; }
+  if (D.bm === 'inlwis') { const I = bmInl[k]; delete I.koppel[D.pad]; bmInlBewaar(k); render(); return; }
+  if (D.bm === 'inlalles') { const I = bmInl[k]; for (const p of Object.keys(I.koppel)) if (I.koppel[p] === 'x') delete I.koppel[p]; bmInlBewaar(k); render(); return; }
+  if (D.bm === 'inlspeel') { const I = bmInl[k]; const b = I && I.bestanden.find(x => x.pad === D.pad); if (b) await bmSpeel(b); return; }
   if (D.bm === 'groepjes') { bmPaneel = 'groepjes'; render(); return; }
   if (D.bm === 'klasgenoten') { bmPaneel = 'klasgenoten'; bmKlasRes = null; render(); return; }
   if (D.bm === 'gnieuw') { T.groepjes = T.groepjes || []; const id = 'g' + Date.now().toString(36); T.groepjes.push({ id, naam: 'Groep ' + (T.groepjes.length + 1), leden: [] }); bmActiefG = id; bewaar(); return; }

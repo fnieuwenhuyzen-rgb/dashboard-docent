@@ -62,4 +62,14 @@ is('komma', R.leesCijfer('7,5'), 7.5); is('tien', R.leesCijfer('10'), 10); is('t
 { const m = model([crit('a', 1)], { speelkeuze: { partijVeld: 'P', niveauVeld: 'Niveau', partijen: [], niveaus: [{ naam: 'Niveau 1', plafond: null }] } }); const T = nieuweT(); T.ll.x = { s: { a: 9 }, v: { Niveau: 'Niveau 1' } }; is('niveau zonder plafond', R.eind(m, T, T, 'x').e, 9); }
 // alle modellen: hebben ze wat de app nodig heeft
 { const dir = __dirname; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const m = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); const D = R.delenVan(m); const som = Object.values(D).reduce((a, b) => a + b, 0); is(f + ' delen 100', som, 100); if (D.klasgenoten) is(f + ' zelfdeel', m.zelfSoort, 'cijfer'); } }
+// inleverbak: verzonnen namen
+{ is('naam gemeten', R.leesInlever('test_Frans Nieuwenhuyzen.mp3'), { origineel: 'test', inzender: 'Frans Nieuwenhuyzen', ext: 'mp3' }); is('dubbele naam', R.leesInlever('test_Frans Nieuwenhuyzen 1.mp3').inzender, 'Frans Nieuwenhuyzen'); is('liggend streepje in origineel', R.leesInlever('les_10_2 opname_Anna de Boer.MP4'), { origineel: 'les_10_2 opname', inzender: 'Anna de Boer', ext: 'mp4' }); is('geen inzender', R.leesInlever('los.mp3').inzender, '');
+  const L = [{ id: 'a', naam: 'Boer, Anna de' }, { id: 'b', naam: 'Jansen, Piet' }, { id: 'c', naam: 'Jansen, Kees' }, { id: 'd', naam: 'Smit, Lot' }];
+  const f = n => ({ naam: n, pad: 'Vraag/' + n });
+  let u = R.koppelInlever([f('x_Anna de Boer.mp4'), f('x_Anna de Boer 1.mp4'), f('x_Onbekend Kind.mp4'), f('los.mp4')], L, {}, {});
+  is('twee van een', u.per.a.length, 2); is('niet herkend', u.onbekend.map(x => x.naam), ['x_Onbekend Kind.mp4', 'los.mp4']); is('niets voor een ander', u.per.b.length, 0);
+  u = R.koppelInlever([f('x_Piet Jansen.mp4')], L, {}, {}); is('juiste Jansen', [u.per.b.length, u.per.c.length], [1, 0]);
+  u = R.koppelInlever([f('x_Jansen.mp4')], L, {}, {}); is('twijfel niet automatisch', [u.per.b.length, u.per.c.length, u.onbekend.length], [0, 0, 1]);
+  u = R.koppelInlever([f('x_Anna de Boer.mp4')], L, { groepjes: [{ id: 'g', naam: 'G', leden: ['a', 'd'] }] }, {}); is('groepje', [u.per.a[0].via, u.per.d[0].via, u.per.b.length], [undefined, 'Boer, Anna de', 0]);
+  u = R.koppelInlever([f('x_Onbekend Kind.mp4'), f('y_Anna de Boer.mp4')], L, {}, { 'Vraag/x_Onbekend Kind.mp4': 'd', 'Vraag/y_Anna de Boer.mp4': 'x' }); is('zelf gekoppeld', [u.per.d[0].hand, u.per.a.length, u.genegeerd, u.onbekend.length], [true, 0, 1, 0]); }
 console.log(fout ? fout + ' fouten' : 'alles goed'); process.exit(fout ? 1 : 0);

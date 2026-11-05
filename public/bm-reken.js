@@ -140,6 +140,27 @@ function leesKlasgenoten(txt, lijst) {
   return uit;
 }
 
-const API = { rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
+/* ---------- inleverbak: bestanden uit de uploadvraag van Forms ---------- */
+// Forms noemt een upload <origineel>_<naam inzender>.<ext>, en bij dezelfde naam <origineel>_<naam inzender> 1.<ext> (gemeten 5-11-2026).
+function leesInlever(naam) {
+  const m = /^(.*)\.([^.]+)$/.exec(String(naam || '')); const stam = m ? m[1] : String(naam || ''); const ext = m ? m[2].toLowerCase() : '';
+  const i = stam.lastIndexOf('_'); if (i < 1) return { origineel: stam, inzender: '', ext };
+  return { origineel: stam.slice(0, i), inzender: stam.slice(i + 1).replace(/\s+\d+$/, '').trim(), ext };
+}
+// alleen een duidelijke, enige beste naam telt automatisch; de rest legt de app voor aan Frans
+function vindInzender(t, lijst) { if (!t) return null; let best = [], s = 0.85; for (const x of lijst) { const q = lijkt(t, x.naam); if (q > s) { s = q; best = [x]; } else if (q === s) best.push(x); } return best.length === 1 ? best[0] : null; }
+// bestanden: [{ naam, pad }]. vast: { pad: leerling-id of 'x' (niet meetellen) }. Een inzender uit een groepje levert in voor het hele groepje.
+function koppelInlever(bestanden, lijst, T, vast) {
+  const uit = { per: {}, onbekend: [], genegeerd: 0 }; lijst.forEach(x => { uit.per[x.id] = []; });
+  for (const b of bestanden) { const q = leesInlever(b.naam); const hand = (vast || {})[b.pad];
+    if (hand === 'x') { uit.genegeerd++; continue; }
+    const x = hand ? lijst.find(y => y.id === hand) : vindInzender(q.inzender, lijst);
+    if (!x) { const v = besteMatch(q.inzender, lijst); uit.onbekend.push(Object.assign({}, b, q, { voorstel: v ? v.id : null })); continue; }
+    uit.per[x.id].push(Object.assign({}, b, q, { hand: !!hand }));
+    const G = groepVan(T || {}, x.id); if (G) for (const id of G.leden) if (id !== x.id && uit.per[id]) uit.per[id].push(Object.assign({}, b, q, { via: x.naam })); }
+  return uit;
+}
+
+const API = { leesInlever, koppelInlever, rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
 if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.BMR = API;
 })(typeof window !== 'undefined' ? window : globalThis);
