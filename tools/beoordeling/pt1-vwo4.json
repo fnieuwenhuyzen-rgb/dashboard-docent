@@ -7,14 +7,13 @@
   "weging": 3,
   "herkansbaar": false,
   "velden": [
-    "Stuk",
     "Mijn partij",
-    "Groep"
+    "Niveau"
   ],
   "vooruit": "Eén punt voor PT2",
   "leerlingTitel": "Zo beoordeel ik ons samenspel en mijn zang",
   "leerlingInstructie": "Gebruik dit direct na de toets. Zet per onderdeel een kruisje bij wat je hoorde en schrijf je score op. Je docent let op dezelfde onderdelen.",
-  "pta": "PTA vwo 4 2026-2027, P1 (in studiewijzer en lesplanning PT1): periode 1 in de les (ma 9 nov), weging 3, 90 minuten, niet herkansbaar. Domein B1 zingen en spelen en B2 improviseren (bluesschema, call-and-response). Beoordeling op presentatie, muzikaliteit en samenspel.",
+  "pta": "PTA vwo 4 2026-2027, P1 (in studiewijzer en lesplanning PT1): periode 1 in de les (ma 9 nov), weging 3, 90 minuten, niet herkansbaar. Domein B1 zingen en spelen en B2 improviseren (bluesschema, call-and-response). Beoordeling op presentatie, muzikaliteit en samenspel. Afgenomen op ma 23 nov, niet op 9 nov (Frans, 4-11).",
   "map": "02 Keuzevak muziek\\VWO\\VWO 4\\P1 Praktijktoets - Samenspel jazz-voorlopers\\Beoordeling",
   "lessen": [
     {
@@ -28,6 +27,14 @@
     {
       "lg": "vwo4",
       "w": 8,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "vwo4",
+      "w": 10,
       "slot": "l2",
       "wat": [
         "leerling"
@@ -97,11 +104,11 @@
         {
           "id": "partij",
           "naam": "Eigen partij in het schema",
-          "uitleg": "twaalf maten, I-IV-V op tijd",
+          "uitleg": "twaalf maten, A-D-E op tijd",
           "weging": 2,
           "docent": [
             "Partij valt vaak weg; raakt de plek in het twaalfmatenschema kwijt.",
-            "Partij grotendeels gespeeld; de wissel in maat 9-10 (V-IV) of het invallen na een fout wiebelt.",
+            "Partij grotendeels gespeeld; de wissel in maat 9-10 (E naar D) of het invallen na een fout wiebelt.",
             "Partij zeker en op tijd; wisselt op de één van de maat en valt na een fout direct weer in.",
             "Partij beheerst en muzikaal; weet steeds waar de groep is en geeft houvast in het schema."
           ],
@@ -114,38 +121,38 @@
         },
         {
           "id": "zang",
-          "naam": "Zang: This old hammer",
-          "uitleg": "call-and-response: zuiver, op de tel, verstaanbaar",
+          "naam": "Zang: Backwater blues",
+          "uitleg": "één couplet: zuiver, op de tel, verstaanbaar",
           "weging": 2,
           "docent": [
-            "Zang vaak onzuiver of te zacht; de response komt te laat of valt weg.",
-            "Overwegend zuiver; de response valt meestal op de tel, de tekst is soms onduidelijk.",
-            "Zuiver en goed verstaanbaar; call en response sluiten strak op elkaar aan.",
-            "Zingt met expressie in de stijl van de blues; call en response hebben drive."
+            "Zang vaak onzuiver of te zacht; de regels komen te laat of vallen weg.",
+            "Overwegend zuiver en op de tel; de tekst is soms onduidelijk.",
+            "Zuiver en goed verstaanbaar; laat ruimte voor het antwoord van de band.",
+            "Zingt met expressie in de stijl van de blues; zang en band hebben drive."
           ],
           "leerling": [
-            "Ik zing vaak onzuiver of te zacht, en mijn response komt te laat.",
+            "Ik zing vaak onzuiver of te zacht, en mijn regels komen te laat.",
             "Ik zing meestal zuiver en op de tel, maar de tekst is soms onduidelijk.",
-            "Ik zing zuiver en verstaanbaar; call en response sluiten strak aan.",
-            "Ik zing met expressie, zoals in de blues, en geef de response drive."
+            "Ik zing zuiver en verstaanbaar en laat ruimte voor het antwoord van de band.",
+            "Ik zing met expressie, zoals in de blues, en mijn couplet heeft drive."
           ]
         },
         {
           "id": "improvisatie",
           "naam": "Improvisatie",
-          "uitleg": "bluestoonladder, in het schema, motief",
+          "uitleg": "bluestoonladder in A, in het schema, motief",
           "weging": 2,
           "docent": [
-            "Stopt bij de solo, of de noten raken los van het schema. Alleen de grondtoon in het ritme van de call: 5.",
-            "Vier maten op de bluestoonladder (C-Es-G is genoeg); blijft in de maat, nog weinig vorm.",
+            "Stopt bij de solo, of de noten raken los van het schema. Alleen de grondtoon in het ritme van de zangregel: 5.",
+            "Vier maten op de bluestoonladder (A-C-E is genoeg); blijft in de maat, nog weinig vorm.",
             "Blijft in het schema, met een motief dat terugkomt en rust tussen de frasen.",
-            "Varieert het motief, gebruikt de blue notes (Es, Fis); de solo heeft een opbouw."
+            "Varieert het motief, gebruikt de blue notes (C, Es); de solo heeft een opbouw."
           ],
           "leerling": [
             "Ik stop bij de solo, of mijn noten passen niet bij het schema. Alleen de grondtoon in het ritme: 5.",
-            "Ik improviseer vier maten op de bluestoonladder (C-Es-G is genoeg) en blijf in de maat.",
+            "Ik improviseer vier maten op de bluestoonladder (A-C-E is genoeg) en blijf in de maat.",
             "Mijn solo blijft in het schema, met een motief dat terugkomt en rust ertussen.",
-            "Ik varieer mijn motief, gebruik de blue notes (Es, Fis) en mijn solo heeft een opbouw."
+            "Ik varieer mijn motief, gebruik de blue notes (C, Es) en mijn solo heeft een opbouw."
           ]
         }
       ]
@@ -195,5 +202,63 @@
       ]
     }
   ],
-  "zelfbeoordeling": 10
+  "zelfbeoordeling": 10,
+  "keuzes": {
+    "Mijn partij": [
+      "Piano",
+      "Bas",
+      "Gitaar",
+      "Drums",
+      "Zang"
+    ],
+    "Niveau": [
+      "Niveau 1",
+      "Niveau 2",
+      "Niveau 3"
+    ]
+  },
+  "speelkeuze": {
+    "partijVeld": "Mijn partij",
+    "niveauVeld": "Niveau",
+    "partijen": [
+      {
+        "naam": "Piano",
+        "soort": "piano"
+      },
+      {
+        "naam": "Bas",
+        "soort": "bas"
+      },
+      {
+        "naam": "Gitaar",
+        "soort": "snaar"
+      },
+      {
+        "naam": "Drums",
+        "soort": "drums"
+      },
+      {
+        "naam": "Zang",
+        "soort": "zang"
+      }
+    ],
+    "niveaus": [
+      {
+        "naam": "Niveau 1",
+        "wat": "Backwater blues, twaalf maten",
+        "plafond": null
+      },
+      {
+        "naam": "Niveau 2",
+        "wat": "Backwater blues, twaalf maten",
+        "plafond": null
+      },
+      {
+        "naam": "Niveau 3",
+        "wat": "Backwater blues, twaalf maten",
+        "plafond": null
+      }
+    ],
+    "opmerking": "Backwater blues uit Musicbox. Niveaus mogen door elkaar. Niveau wordt alleen genoteerd."
+  }
 }

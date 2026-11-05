@@ -1,67 +1,48 @@
-# PT1 vwo 4: checklist (stand 4-11)
+# PT1 vwo 4: checklist (stand 4-11, herzien)
 
-**PT1 staat op ma 23-11 (Frans, 4-11: "Ja, op 23-11"). Ma 9-11 vervalt.** Nog op ma 9-11 staan: `basis.json` (toets in de leergang, lesweek 10), de studiewijzer en het model (dus ook tabblad Rubric van het scoreblad). Het rooster van 23-11 staat nog niet in Zermelo.
+**PT1 is op ma 23-11 in 009.** Eén groep van vijf speelt Backwater blues in A (Musicbox), iedereen zingt één couplet. Besluit Frans, 4-11: "Ja, zo doen". De decks en formulieren staan in de sectiemap, leergang en model staan live (ja van Frans, 4-11).
 
-**Nog niet klaar.** De beoordeling werkt en datum en opstelling staan vast, maar stuk, toonsoort en zang niet.
-
-## Vragen aan Frans
-
-0. **Komen de generale en de uitleg over improviseren er alsnog, nu er tijd is vóór 23-11?** Ma 16 en wo 18-11 staan nu op pop (week 11). Zo ja, dan kloppen deze zinnen in deck en lesmodus niet meer: "generale vervallen", "dit is de enige uitleg die ze krijgen" en de twee minuten uitleg. De rubric van 3-11 (C-Es-G is genoeg) is ook gemaakt omdat de uitleg was vervallen. Ik heb hier niets aan veranderd.
-1. **Welk stuk speelt elke groep, en hoeveel groepen zijn er?** Dat staat nergens. Het deck rekent 2, 3 en 4 groepen voor. Met het aantal kies je het tijdschema op dia 1 (notities).
-2. **In welke toonsoort is er geoefend, A of C?** De bronnen spreken elkaar tegen, zie onder. Dit bepaalt welke uitleg en welk schema maandag op tafel liggen.
-3. **Opstelling: beantwoord.** Frans koos één groep tegelijk. De tekst staat op branch `nooit-voor-de-klas` en gaat met die sessie live, ook in het deck. Nog open: waar staat het drumstel en hoe komt de drummer van een groep daar?
-4. **Hoe klinkt This old hammer als call-and-response, en hoe hoor je de zang per leerling?** De pdf is een canon van 16 maten, zonder call en response erin. De tabel in deck 08.1 legt call en response op het twaalfmatenschema. Zang telt per leerling met weging 2, dus een groep die samen zingt is lastig te scoren. Mogelijkheid: iedereen zingt om de beurt een call.
-5. **Luisteren en balans: per groep of per leerling?** Het model en de app geven een groepsscore (eigen score gaat voor). De notities van het deck zeggen "van de leerling zelf", en de rubric is ook per leerling geschreven. Weging 2, dus het telt.
-
-Kleine keuzes, zonder antwoord blijft het zoals het is:
-- Het format heeft een vak "Tip van een klasgenoot". Zonder publiek wordt dat een groepsgenoot, of het blijft leeg.
-- PT1 houdt het volledige format, geen strookje. Het strookje is nog niet in de klas geprobeerd. De vijf minuten zijn krap, het deck geeft de volgende les als uitwijk.
-
-## Bladmuziek: wat ontbreekt
-
-Niets gedownload of gemaakt.
-
-| Stuk | Waar | Bijzonderheid |
+| Wanneer | Les | Deck |
 |---|---|---|
-| Mo' Better Blues | **Niet gevonden.** Niet in de sectiemap, de oude decks en de Lesdag-bronnen, alleen in `OPEN-PUNTEN.md`. Niet in het deel van de boxenlijst in Musicbox dat ik las (het begin van de lijst, plus Voorlopers van Jazz). | Herkomst onbekend. Frans moet dit aanleveren of laten vallen. |
-| When I walk hand in hand | Alleen `Havo 4/P1.../Jazz/Zingen` | Drie mollen, canon van 12 maten, geen akkoorden, geen bluesschema. Past niet zomaar bij de ladder in C. Gedownload van vrijeschoolliederen.nl. |
-| This old hammer | Alleen `Havo 4/P1.../Jazz/Zingen` | **Ontbreekt ook in de vwo 4-map.** Geen voortekens, canon van 16 maten. |
-| Backwater blues | Musicbox: box Voorlopers van Jazz, drie niveaus | Is het stuk van het huiswerk (N2 blok 5 en 6). Het rondje op de Musicsheets toont "A"; ik lees dat als de toonsoort, de partijen zelf heb ik niet geopend. Staat niet in de les of het deck. |
-| Vwo 4-map, Speelstukken | Boogie Woogie 101, Gospel 101, St. Louis Blues (mscz), 30 licks | Boogie Woogie op de eerste bladzijde in G. Geen van deze is als PT1-stuk aangewezen. |
+| ma 16-11 | 8.2 Improviseren op de bluestoonladder in A: partij en niveau kiezen, uitleg, soloruil | `08.2 Improviseren op de bluestoonladder in A.pptx` (nieuw) |
+| wo 18-11 | 10.2 Generale PT1: Backwater blues | `10.2 Generale PT1 - Backwater blues.pptx` (nieuw) |
+| ma 23-11 | 10.1 PT1 | `10.1 PT1 afnemen - samenspel en zang.pptx` (vervangen) |
+| wo 25-11 | Pop begint | |
 
-**Toonsoort tegenstrijdig.** In C: lesmodus, deck 10.1, deck 08.2, de rubric (Es, Fis) en het schema op dia 5 van deck 08.1. In A: speelkaart BL 1, kaart TL 1a (blue note es) en, zo te zien, Backwater blues. De lijst "klaarzetten" vraagt om het "BL schema op de standaards", en dat staat in A. Is er in C geoefend, print dan dia 5 van deck 08.1 en niet BL 1.
+## Frans moet nog
 
-## In orde
+1. (Live zetten: gedaan.)
+2. **In Jaar bij vwo 4:** staat les 8.2 op overgeslagen of gegeven, klik dan "niet gegeven". Anders schuift de generale naar ma 16-11. Dit staat in je eigen staat en die heb ik niet gezien of gewijzigd.
+3. **Leadsheet nakijken.** Ik zag alleen het begin van de Chordsheet (A, D, E, tempo 100, maat 9-10 E naar D). De Leadsheet kon ik niet lezen, want Musicbox vroeg in het paneel opnieuw om in te loggen. "De band antwoordt in de open maten" is dus algemene bluesvorm, niet afgelezen.
+4. **Bladmuziek:** leerlingen lezen nu vanaf de laptop in Musicbox, want de box zegt dat verspreiden niet mag. Wil je printen, dan is dat jouw keuze.
+5. **Studiewijzer** noemt nog 9 november. Die heb ik niet aangepast.
+6. **Plafond per niveau:** nu geen. Niveau wordt alleen genoteerd, want de leerlingen weten niets van een plafond. Bij het kerstlied is het 7, 8,5 en 10. Zeg het als je dat hier ook wilt.
+7. **Twee keer spelen:** niet afgesproken welke keer telt. In de notities: eerste keer zang en solo's scoren, tweede keer partijen en groepsscores. Pas aan als je het anders wilt.
+8. **Decks even openen:** ze zijn gebouwd en op tekst gecontroleerd, maar niet in PowerPoint bekeken.
 
-- **Formulieren en scoreblad:** docentformulier, format, scoreblad en model hebben dezelfde zes onderdelen en wegingen (1, 2, 2, 2, 1, 2). Ook de grondtoon-5 en "Zang: This old hammer" staan erin. De formule van het scoreblad klopt met het deck. Formulieren en scoreblad zijn tekst en formules nagelezen, niet geopend in Word of Excel.
-- **Deck en lesmodus:** zelfde fasen, stappen, criteria en klaarzetlijst. Tijdschema's en rekenvoorbeeld (7,4 wordt 7,5) nagerekend.
-- **Geen telefoon:** "Telefoon weg", opnameapparaat in de klaarzetlijst en notities, opname zonder beeld. Klopt.
-- **Agenda, alleen zonder de staat van Frans:** met een lege testgroep staat PT1 op ma 9-11, met knop Beoordelen en vier links. **Dat zegt niets over zijn echte agenda**, want het anker naar 23-11 zat niet in de test. Of PT1 daar goed op 23-11 staat, is niet getest (het staat wel zo in zijn anker). Of de links werken, zoekt de sessie links-404 uit.
-- **Beoordelingsmodus, lokaal met verzonnen namen (8 leerlingen, 2 groepen):** plakken met kopregel, nummers, klascodes en datums; groepjes; groepsscore en eigen score die voorgaat; tussenscores; afwezig/inhalen; afronden; cijferkolom voor Magister; scoreblad downloaden; toets 1 tot en met 4 in de concertstand. Cijfers narekend: 7,5, 6,2 en 8,6. Testgegevens opgeruimd.
+## Keuzes die ik maakte
 
-## Hersteld
+- **Generale op les-id 10.2.** Dat was het uitvaluur van de themadag. Zo krijgt de generale een eigen les zonder dat de weekindeling verandert. In Jaar staat hij dus bij lesweek 10. Getest: mits ma 9-11 en wo 11-11 vervallen zijn, zoals Zermelo zegt, valt alles goed.
+- **Luisteren en balans:** blijft groepsscore met eigen score als uitzondering. De notities zeggen dat nu ook.
+- **Messiah in les 8.2:** van tien naar vijf minuten, om tijd te maken voor partijen.
+- **Zelfbeoordeling PT1:** van vijf naar tien minuten; het volledige format blijft. De uitwijk naar de volgende les is weg.
+- **Model:** velden zijn nu partij en niveau, zang heet "Zang: Backwater blues", ladder in A (A-C-E is genoeg, blue notes C en Es). De PTA-tekst houdt 9 nov, met de zin erachter dat het 23 nov wordt.
+- **Weg:** `tools/pt1-vwo4-paren.json`, `zet-pt1-deck.ps1`, `zet-pt1-inhoud.js`. De bron van de drie lessen is nu `tools/inhoud-pt1-23nov.json`. Les 8.1 (26-10) is gegeven en niet veranderd.
 
-In deck 10.1, in de sectiemap (alleen notities; dia's ongewijzigd):
-- "Dit staat ook op kaart TL 1a" klopte niet. Er staat nu dat de kaart dezelfde ladder in A heeft.
-- Bij improvisatie stond de grondtoon-5 uit het besluit van 3-11 nog niet. Die staat er nu.
-- De uitwijk voor de zelfbeoordeling noemde "maandag 16 november", en die datum hing aan 9-11. Er staat nu alleen nog "aan het begin van de volgende les".
+## Getest
 
-Kopie van het deck van vóór deze wijziging: `C:\Users\nwn\AppData\Local\Temp\claude\3126362be3b9924a\b4db6619-c1f5-4d5e-9d48-9328c9938141\scratchpad\deck-voor-4-11`, plus de versiegeschiedenis van OneDrive. Het deck is hierna niet in PowerPoint geopend.
+- **Agenda, lokaal met een testgroep:** 8.2 op 16-11, generale op 18-11, PT1 op 23-11, pop op 25-11, 9-11 en 11-11 vallen uit.
+- **Beoordelen, lokaal met vijf verzonnen namen:** plakken, keuze partij en niveau, scores 8, 8, 7, 6, 8, 8 geven 7,4; zonder zelfbeoordeling meldt de app "mist: zelf". Testgegevens opgeruimd.
+- **Formulieren:** beide pdf's één pagina, zonder oude teksten. **Scoreblad:** kopjes kloppen in Excel, de rekenformule zelf niet opnieuw nagerekend (zelfde script en wegingen als eerder).
+- **Tekstcontrole decks en leergang:** geen This old hammer, C-Es-G, hoeken of "vervallen" meer.
 
-De opstellingstekst is samengevoegd in `nooit-voor-de-klas`: die sessie zet hem in het deck en in `basis.json` bij het ja om live te gaan. Antwoord op vraag 0, 2 of 4 kan nog meer tekst veranderen.
+**Niet getest:** echt plakken uit Magister, tablet, feedbackblad-pdf, je echte agenda, hele les met de klas.
 
-## Niet getest
+## Op de dag zelf
 
-- Echt plakken uit Magister: nagebootst met tabs, zoals de code het verwacht.
-- Tablet en telefoon: alleen 1280×800 gemeten. Geen horizontaal scrollen. Scoren vraagt wel scrollen: de scorekaart is 1729 px hoog, in de concertstand is de pagina 1244 px hoog op een scherm van 800.
-- Feedbackblad als pdf: niet aangeklikt.
-- Hele les met een echte klas, de bladmuziek als beeld (pdf's alleen als tekst gelezen, dus de toonsoort van When I walk is af te lezen aan de drie mollen, niet gecontroleerd op de notenbalk).
-
-## Op de dag van de toets, zelf doen
-
-- [ ] Beoordelingsformulieren per leerling invullen (naam, stuk, partij, groep), formats printen
-- [ ] Klassenlijst in Beoordelen plakken, groepjes maken
-- [ ] Bladmuziek en schema (juiste toonsoort) op de standaards
-- [ ] Volgorde van de groepen en wisseltijden op het bord
+- [ ] Formulieren per leerling invullen (naam, partij, niveau)
+- [ ] Klassenlijst in Beoordelen plakken, alle vijf in één groepje
+- [ ] Drumstel in 009 klaar, Musicbox open op de laptop
 - [ ] Opnameapparaat klaar (batterij, geheugen)
-- [ ] Drumstel vooraf opbouwen
+
+Kopie van de oude decks: `99 Archief/Oud` in de sectiemap en `C:\Users\nwn\AppData\Local\Temp\claude\3126362be3b9924a\b4db6619-c1f5-4d5e-9d48-9328c9938141\scratchpad\deck-voor-herziening`.
