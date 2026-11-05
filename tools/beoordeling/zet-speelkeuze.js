@@ -36,7 +36,7 @@ function keuze(m, velden, partijVeld, partijen, nv, opmerking, extra) {
 // Mavo 3, presentatie 1: C'est la vie of Duurt te lang. Wordt een speelbox-beoordeling.
 { const m = lees('p1a-mavo3-zang'); const nv = niveaus(["C'est la vie: refrein. Duurt te lang: 8 maten", "C'est la vie: couplet, pre-chorus, refrein. Duurt te lang: 8 maten", "C'est la vie: couplet, pre-chorus, refrein. Duurt te lang: 8 maten"]);
   keuze(m, ['Lied', 'Mijn partij', 'Niveau', 'Groep'], 'Mijn partij', T.partijen, nv, "Duurt te lang is een Songbox Light: alle partijen zijn 8 maten en niveaus mogen door elkaar. Op niveau 3 heeft die box alleen bladen voor piano 2 handen en drums.", { Lied: ["C'est la vie", 'Duurt te lang'] });
-  const AF = ' Afwijking (Frans, 4-11-2026): presentatie 1 is een vrije keuze van partij, dus niet altijd zang of melodie.'; if (!m.pta.includes(AF)) m.pta += AF;
+  const AF = ' Afwijking van het PTA (Frans, 4-11-2026): in presentatie 1 kiest de leerling zelf instrument en niveau (1 tot 3) en is het dus niet altijd zang of melodie; de beoordeling sluit aan op die keuze.'; if (!m.pta.includes(AF)) m.pta += AF;
   m.titel = 'Praktijktoets P1, presentatie 1: speelbox'; m.thema = 'Ritme, maat en presentatie 1'; m.leerlingTitel = 'Zo beoordeel ik mijn spel';
   m.leerlingInstructie = 'Tel samen af en begin samen. Fout? Speel of zing door op de tel en pak het volgende stuk.';
   const crit = id => m.onderdelen.flatMap(o => o.criteria).find(c => c.id === id);

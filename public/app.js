@@ -2708,7 +2708,8 @@ function bmBladInfo(m, g, T, L, id, naam) { // alles wat op het feedbackblad kom
   const onderdelen = bmOnderdelen(m, T).map(o => ({ groep: o.groep, opm: (r.opm || {})[o.groep] || '', crit: o.criteria.map(c0 => { const c = BMR.critVoor(m, c0, BMR.veldenVan(L, T, id)); const q = dicht ? (r.vast.s[c.id] || {}) : BMR.scoreVan(L, T, id, c); const v = q.v == null ? null : q.v; return { naam: c.naam, score: v, tekst: tekst(c, v), bron: q.b === 'groep' ? 'groepsscore' : '' }; }) }));
   const cijfers = tus ? [['Tussenstand', u.e == null ? '' : BMR.fmt(u.e), true]] : m.speelkeuze && D.docent === 100 ? [['Cijfer', BMR.fmt(u.e), true]] : D.docent < 100 ? [[`Cijfer docent (${D.docent}%)`, BMR.fmt(u.d)], ...(D.zelf ? [[(m.zelfSoort === 'cijfer' ? 'Eigen cijfer' : 'Zelfbeoordeling') + ` (${D.zelf}%)`, BMR.fmt(u.z)]] : []), ...(D.klasgenoten ? [[`Klasgenoten (${D.klasgenoten}%, ${u.kn} inzendingen)`, BMR.fmt(u.k)]] : []), ['Eindcijfer', BMR.fmt(u.e), true]] : [['Cijfer', BMR.fmt(u.d), true]];
   const velden = (m.velden || []).map(v => (r.v || {})[v] ? `${v}: ${r.v[v]}` : '').filter(Boolean).join(' · ');
-  return { eyebrow: `${m.klas} · ${m.toets}${m.weging ? ' · weging ' + m.weging : ''}`, titel: m.titel, docTitel: `Feedback ${m.toets}`, naam, regel: [`Groep ${g}`, velden].filter(Boolean).join(' · '), banner: tus ? `Tussenstand ${L.naam} (${fmtD(L.op)}): telt niet mee voor het cijfer` : '',
+  const grp = BMR.groepVan(T, id); const krabbels = [['Aantekening met de pen', r.krabbel || []], [`Aantekening met de pen bij de groep${grp && grp.naam ? ' ' + grp.naam : ''}`, grp ? (L.gk || {})[grp.id] || [] : []]].filter(k => k[1].length).map(([kop, strepen]) => ({ kop, strepen }));
+  return { krabbels, eyebrow: `${m.klas} · ${m.toets}${m.weging ? ' · weging ' + m.weging : ''}`, titel: m.titel, docTitel: `Feedback ${m.toets}`, naam, regel: [`Groep ${g}`, velden].filter(Boolean).join(' · '), banner: tus ? `Tussenstand ${L.naam} (${fmtD(L.op)}): telt niet mee voor het cijfer` : '',
     onderdelen, vooruitKop: m.vooruit || 'Eén punt om aan te werken', vooruit: r.vooruit || '', cijfers, voet: `${tus ? 'Tussenstand' : dicht ? 'Afgerond op ' + new Date(r.vast.op).toLocaleString('nl-NL') : 'Nog niet afgerond'} · CSG Prins Maurits, muziek` };
 }
 function bmNiveauTekst(c, v) {
@@ -2727,18 +2728,24 @@ function bmCritHtml(c, L, T, id, r, dicht) {
     <div class="bm-rij">${bmKnoppen(esc(c.id) + '|', 'data-bmscore', eigen, dicht, spook)}${!dicht && eigen != null ? `<button type="button" class="bm-wis" data-bmwis="${esc(c.id)}" aria-label="Score wissen" title="Score wissen">×</button>` : ''}</div>
     <p class="bm-niv">${bron ? `<b>${esc(bron)}.</b> ` : ''}${esc(bmNiveauTekst(c, toon))}</p></div>`;
 }
-/* concertstand: donker en rustig tijdens het spelen; krabbel met de pen, alleen voor jou (niet op het feedbackblad). Keuze per apparaat in AP.concert */
+/* concertstand: donker en rustig tijdens het spelen; krabbel met de pen, komt ook op het feedbackblad (besluit Frans 4-11; streken vereenvoudigd tegen groei van localStorage). Keuze per apparaat in AP.concert */
 function bmConcertAan() { const c = AP.concert && !bmPaneel && bmHuidig(); return !!c && (S.beoord.lijsten[c.g] || []).length > 0; }
 function bmCsMerk() { const C = [...document.querySelectorAll('.bm-cs .bm-crit')]; C.forEach(x => x.classList.remove('actief')); const x = C.find(y => !y.querySelector('[aria-pressed="true"],.spook') && y.querySelector('.bm-knoppen button:not(:disabled)')); if (x) x.classList.add('actief'); return x; }
-const bmKrabbelHtml = (strepen, dicht) => dicht && !strepen.length ? '' : `<div class="bm-krabbel"><svg viewBox="0 0 1000 750" ${dicht ? '' : 'data-bmkrabbel'} role="img" aria-label="Krabbel, alleen voor jou">${strepen.map(s => `<polyline points="${esc(s)}"/>`).join('')}</svg>
-  <div class="regel"><small>Krabbel, alleen voor jou. Komt niet op het feedbackblad.</small>${dicht ? '' : '<span class="knoppen"><button type="button" class="btn klein" data-bm="kterug">Stap terug</button><button type="button" class="btn klein" data-bm="kwis">Wis</button></span>'}</div></div>`;
+const bmKrabbelHtml = (strepen, dicht) => dicht && !strepen.length ? '' : `<div class="bm-krabbel"><svg viewBox="0 0 1000 750" ${dicht ? '' : 'data-bmkrabbel'} role="img" aria-label="Krabbel, komt ook op het feedbackblad">${strepen.map(s => `<polyline points="${esc(s)}"/>`).join('')}</svg>
+  <div class="regel"><small>Krabbel: komt ook op het feedbackblad. Schrijf geen dingen die de leerling niet mag lezen.</small>${dicht ? '' : '<span class="knoppen"><button type="button" class="btn klein" data-bm="kterug">Stap terug</button><button type="button" class="btn klein" data-bm="kwis">Wis</button></span>'}</div></div>`;
 let bmStreep = null; let bmPenGezien = false;
+function bmDun(P, eps) { // Ramer-Douglas-Peucker: minder punten per streek, zelfde uiterlijk; houdt de bewaarde staat klein
+  if (P.length < 3) return P; const keep = new Uint8Array(P.length); keep[0] = keep[P.length - 1] = 1; const stap = [[0, P.length - 1]];
+  while (stap.length) { const [a, b] = stap.pop(); let dm = 0, im = -1; const [x1, y1] = P[a], [x2, y2] = P[b]; const dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy);
+    for (let i = a + 1; i < b; i++) { const d = l ? Math.abs(dy * (P[i][0] - x1) - dx * (P[i][1] - y1)) / l : Math.hypot(P[i][0] - x1, P[i][1] - y1); if (d > dm) { dm = d; im = i; } }
+    if (dm > eps && im > 0) { keep[im] = 1; stap.push([a, im], [im, b]); } }
+  return P.filter((_, i) => keep[i]); }
 function bmPunt(e) { const q = bmStreep; const b = q.v.getBoundingClientRect(); const x = Math.round((e.clientX - b.left) / b.width * 1000); const y = Math.round((e.clientY - b.top) / b.height * 750); const v = q.pt[q.pt.length - 1]; if (v && Math.hypot(x - v[0], y - v[1]) < 4) return; q.pt.push([x, y]); q.p.setAttribute('points', q.pt.join(' ')); }
 document.addEventListener('pointerdown', e => { const v = e.target.closest && e.target.closest('[data-bmkrabbel]'); if (!v || e.button > 0) return;
   if (e.pointerType === 'pen') bmPenGezien = true; else if (e.pointerType === 'touch' && bmPenGezien) return; // de hand die naast de pen op het scherm rust
   e.preventDefault(); const p = document.createElementNS('http://www.w3.org/2000/svg', 'polyline'); v.append(p); bmStreep = { v, p, id: e.pointerId, pt: [] }; try { v.setPointerCapture(e.pointerId); } catch (x) {} bmPunt(e); });
 document.addEventListener('pointermove', e => { if (!bmStreep || e.pointerId !== bmStreep.id) return; const L = e.getCoalescedEvents ? e.getCoalescedEvents() : []; (L.length ? L : [e]).forEach(bmPunt); });
-function bmStreepKlaar(e) { if (!bmStreep || e.pointerId !== bmStreep.id) return; const q = bmStreep; bmStreep = null; const c = bmHuidig(); if (!c || !q.pt.length) return; if (q.pt.length === 1) q.pt.push(q.pt[0]); const w = q.pt.join(' '); q.p.setAttribute('points', w);
+function bmStreepKlaar(e) { if (!bmStreep || e.pointerId !== bmStreep.id) return; const q = bmStreep; bmStreep = null; const c = bmHuidig(); if (!c || !q.pt.length) return; if (q.pt.length === 1) q.pt.push(q.pt[0]); q.pt = bmDun(q.pt, 2); const w = q.pt.join(' '); q.p.setAttribute('points', w);
   const T = bmToets(c.m.id, c.g); if (bmSelG) bmZet(c.k, T, 'k+', bmSelG, 'g', w, true); else if (bmSel) bmZet(c.k, T, 'k+', bmSel, null, w, true); }
 document.addEventListener('pointerup', bmStreepKlaar); document.addEventListener('pointercancel', bmStreepKlaar);
 const bmOnderdelen = (m, T) => { if (!T.vast) return m.onderdelen; const uit = []; for (const c of T.vast.crit) { let o = uit.find(x => x.groep === c.groep); if (!o) uit.push(o = { groep: c.groep, stuk: (m.onderdelen.find(x => x.groep === c.groep) || {}).stuk, criteria: [] }); o.criteria.push(c); } return uit; };
