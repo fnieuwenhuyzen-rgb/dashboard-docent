@@ -61,6 +61,12 @@ function teken(i, fL, fB) {
     if (o.opm) { p.alinea('Opmerking: ' + o.opm, 'L', 8.8, M + 5, B - 10, INKT, 11.4); p.y -= 3; }
     p.y -= 3;
   }
+  for (const k of i.krabbels || []) { // pen-aantekeningen: streken uit een vlak van 1000×750, getekend als lijnen
+    const bb = 250, hh = bb * 0.75; p.y -= 4; p.ruimte(hh + 22); p.alinea(k.kop, 'B', 9.5, M, B, INKT); p.y -= 4;
+    const x0 = M, y0 = p.y - hh; p.c.push(`0.6 0.58 0.55 RG 0.5 w [3 2] 0 d ${getal(x0)} ${getal(y0)} ${getal(bb)} ${getal(hh)} re S [] 0 d`);
+    p.c.push(`${INKT.map(getal).join(' ')} RG 1.1 w 1 J 1 j`);
+    for (const s of k.strepen) { const P = String(s).split(' ').map(t => t.split(',').map(Number)).filter(q => q.length === 2 && isFinite(q[0]) && isFinite(q[1])); if (!P.length) continue; const X = q => getal(x0 + q[0] / 1000 * bb), Y = q => getal(y0 + hh - q[1] / 750 * hh); p.c.push(`${X(P[0])} ${Y(P[0])} m ${P.slice(1).map(q => `${X(q)} ${Y(q)} l`).join(' ')}${P.length === 1 ? ` ${X(P[0])} ${Y(P[0])} l` : ''} S`); }
+    p.y = y0 - 6; }
   if (i.vooruit) { p.y -= 2; p.alinea(i.vooruitKop, 'B', 9.5, M, B, INKT); p.alinea(i.vooruit, 'L', 9.2, M, B, INKT, 12); }
   p.y -= 8; p.ruimte(30 + i.cijfers.length * 15);
   for (const [l, w, sterk] of i.cijfers) { const pt = sterk ? 13 : 10; p.y -= pt + 4; const s = w == null || w === '' ? '–' : String(w); p.tekst(M + 5, p.y, l, sterk ? 'B' : 'L', pt); p.tekst(M + B - 5 - p.f.B.maat(s, pt), p.y, s, 'B', pt, sterk ? ACC : INKT); }

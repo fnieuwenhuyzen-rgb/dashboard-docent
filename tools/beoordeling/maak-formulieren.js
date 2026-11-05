@@ -28,6 +28,7 @@ th { background: ${ACC}; color: white; font-size: 8.5pt; text-align: left; }
 .score { width: 7%; text-align: center; vertical-align: middle; white-space: nowrap; }
 .velden td { border: none; padding: 2pt 0; font-size: 10pt; }
 .lijn { border-bottom: 0.75pt solid #1d1d1b; }
+${M.compact ? '.niv { font-size: 7pt; } td, th { padding: 1.5pt 3pt; } .klein { font-size: 7pt; } .crit b { font-size: 9pt; }' : ''}
 </style><title>${esc(titel)}</title></head><body><div class="Sec">`;
 
 function rubriek(soort) {
