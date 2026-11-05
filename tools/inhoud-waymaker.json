@@ -1,0 +1,141 @@
+{
+  "_uitleg": "Presentatie 11 Way Maker - kennismaken (besluit Frans 4-11-2026): vwo 3 lesweek 30 (45 min, songbox 2) en het Way Maker-deel van havo 3 lesweek 21 (dia's bij luisteren, herkomst en akkoorden, samen 25 min). Maken: node tools/maak-decks.js tools/inhoud-waymaker.json. De lesinhoud zelf staat in tools/inhoud-klas3.json (zet-waymaker.js).",
+  "klas3": {
+    "klas": "havo 3 en vwo 3",
+    "thema": "klas3",
+    "map": "01 Onderbouw muziek\\03 Klas 3\\Lessen 2026-2027",
+    "blok": "Songbox Way Maker",
+    "blokKort": "Way Maker",
+    "lessen": [
+      {
+        "bestand": "11 Way Maker - kennismaken.pptx",
+        "kort": "Way Maker kennismaken",
+        "code": "Way Maker · les 1",
+        "week": 30,
+        "wayMakerMag": true,
+        "koppel": [{ "lg": "vwo3", "w": 30, "slot": "l1" }, { "lg": "havo3", "w": 21, "slot": "l1" }],
+        "bronLes": { "lg": "vwo3", "w": 30, "slot": "l1" },
+        "thuis": {
+          "mb": "de songbox Way Maker: luister het lied drie keer",
+          "learn": "de vier akkoorden: G, D, Em, C",
+          "extra": "Bedenk welk instrument je wilt spelen"
+        },
+        "fotos": {
+          "titel": "handen-zonsondergang.jpg",
+          "doel": "worship-podium.jpg",
+          "fase": [null, "sinach.jpg", null, null, "gitaar-akkoord.jpg", null],
+          "rodeDraad": "kerkdienst-nigeria.jpg"
+        },
+        "voorbereiding": [
+          "Zet het origineel van Way Maker door Sinach klaar en luister het zelf één keer. Let op hoe het begint, waar het refrein komt en hoe het groeit.",
+          "Zet ook een live-versie klaar voor de volgende lessen. Geen tekst op het bord; de tekst bespreek je mondeling.",
+          "Open de songbox Way Maker in Musicbox en kijk welke instrumenten en niveaus erin staan. Controleer of de akkoorden G, D, Em en C kloppen met de versie in de songbox, en pas het vormschema op de dia aan als de box een andere opbouw heeft.",
+          "Wisbordjes, stiften en groepsbladen klaar. Laptops voor Musicbox: één per groep.",
+          "Bij havo 3 geef je alleen het Way Maker-deel (25 min): luisteren, herkomst en vorm, de akkoorden meezingen en de instrumentkeuze. De terugblik op T1 en de rolkeuze zijn voor vwo 3."
+        ],
+        "notitieTitel": [
+          "Vandaag beginnen we met de songbox Way Maker. Een songbox is een lied uit Musicbox dat je met de klas als band leert spelen: iedereen een eigen partij, in groepjes.",
+          "Het lied is Way Maker van Sinach. Vandaag luisteren we, vertel ik waar het vandaan komt, zingen we de vier akkoorden mee en kies je een instrument en een niveau.",
+          "Niemand speelt vandaag voor de klas. In de komende lessen werk je in een groepje en loop ik langs."
+        ],
+        "notitieAgenda": [
+          "Eerst terugkijken op T1. Dan luisteren. Dan het verhaal van het lied en het vormschema. Dan de vier akkoorden meezingen. Tot slot kies je een rol en een niveau, en lever je het groepsblad in."
+        ],
+        "notitieDoel": [
+          "Na deze les weet je wie Sinach is en waar het lied vandaan komt, en je tekent het vormschema van Way Maker.",
+          "Je hebt een rol gekozen die je dit jaar nog niet speelde, en een niveau in de songbox.",
+          "En je weet wat je thuis bekijkt in de tutorial van je partij."
+        ],
+        "notitieRodeDraad": [
+          "Way Maker is een lofprijslied: een lied dat de gemeente zingt om God te eren. De tekst gaat over een God die een weg baant waar wij zelf geen weg zien.",
+          "Dat beeld komt uit de Bijbel. Denk aan de doortocht door de Rode Zee in Exodus 14, en aan Jesaja 43:19, waar God zegt dat Hij een weg legt in de woestijn.",
+          "Voor een band is dat ook een goed beeld. Niemand baant in zijn eentje een weg: samen ontstaat er iets wat een speler alleen niet kan."
+        ],
+        "vragenRodeDraad": [
+          { "v": "Wat betekent het dat God een weg baant waar wij die niet zien?", "a": "Dat Hij helpt in situaties waarin wij geen uitweg zien. Het is een lied van vertrouwen, ook als het moeilijk is." },
+          { "v": "Waarom wordt een lied uit Lagos over de hele wereld gezongen?", "a": "Het is eenvoudig: vier akkoorden en een melodie die je snel kunt meezingen. Daardoor kan elke gemeente het zingen, in elke taal." }
+        ],
+        "notitieThuis": [
+          "Open thuis de songbox Way Maker in Musicbox en luister het lied drie keer.",
+          "Bekijk de vier akkoorden: G, D, Em en C. Bedenk welk instrument je wilt spelen."
+        ],
+        "fasenExtra": {
+          "0": { "notitie": {
+            "vertel": [
+              "T1 is geweest. Vraag kort hoe het ging: wat ging goed, wat was lastig? Je hoeft de cijfers niet te noemen.",
+              "Zeg daarna dat we nu iets anders doen. In dit blok spelen we Way Maker, in groepjes, en dat is geen toets voor de klas."
+            ],
+            "vragen": [ { "v": "Wat ging goed bij T1?", "a": "Open vraag. Laat twee of drie leerlingen vertellen." } ],
+            "letop": [ "Houd het kort, vijf minuten. De les heeft veel te doen." ]
+          } },
+          "1": { "notitie": {
+            "vertel": [
+              "Zeg alleen: luister hoe het lied begint en hoe het eindigt. Niet meezingen, niet meelezen.",
+              "Je draait het origineel van Sinach. Je hoort een rustig begin dat groeit."
+            ],
+            "vragen": [
+              { "v": "Hoe begint het lied?", "a": "Rustig, met weinig instrumenten. Controleer vooraf hoe het begin in jouw versie klinkt." },
+              { "v": "Hoe eindigt het?", "a": "Dat hangt af van de versie. Luister vooraf en noteer het antwoord." }
+            ],
+            "letop": [ "Zet het geluid niet te hard. De volgende fase gaat over het verhaal erachter." ]
+          } },
+          "2": { "notitie": {
+            "vertel": [
+              "Sinach schreef Way Maker in 2015 in Nigeria. Sinach is een Nigeriaanse zangeres en liedschrijver. Het lied kwam uit Lagos en werd binnen een paar jaar over de hele wereld gezongen: in kerken, op straat, in stadions.",
+              "De tekst gaat over God die een weg baant waar wij die niet zien. We lezen de tekst niet voor; we bespreken hem mondeling.",
+              "Het lied heeft maar vier akkoorden en groeit van rustig naar vol. Dat maakt het geschikt voor een klas: iedereen kan een partij spelen.",
+              "Het vormschema op de dia: intro van vier maten, dan couplet en refrein van acht maten, nog een couplet en refrein, een bridge, een laatste refrein en een outro. Laat de leerlingen het schema overtekenen op hun blad."
+            ],
+            "vragen": [
+              { "v": "Wat valt je op aan hoe dit lied is opgebouwd?", "a": "Er zijn weinig akkoorden en veel herhaling. Het refrein komt drie keer terug." },
+              { "v": "Waarom denk je dat een lied met vier akkoorden zo ver komt?", "a": "Omdat het makkelijk mee te zingen en te spelen is, in elke kerk en elke taal." }
+            ],
+            "letop": [
+              "Het vormschema is een voorstel. Pas het aan op de versie die in de songbox staat.",
+              "Laat niemand de tekst zingen of voorlezen. Als een leerling erover begint, bespreek je de betekenis in eigen woorden."
+            ]
+          } },
+          "3": { "notitie": {
+            "vertel": [
+              "Schrijf de vier akkoorden op het bord: G, D, Em, C. Elk akkoord duurt één maat.",
+              "Laat de leerlingen op 'oe' de grondtoon van elk akkoord zingen terwijl jij de akkoorden aanwijst. De grondtonen zijn G, D, E en C.",
+              "Zing eerst langzaam, dan met het origineel erbij. Tel af en wissel samen op de eerste tel."
+            ],
+            "voorbeelden": [ "Gitaar: G, D, Em, C. Keyboard: dezelfde akkoorden als liggende akkoorden, links de grondtoon." ],
+            "vragen": [ { "v": "Welk akkoord is mineur?", "a": "Em. De rest is majeur." } ],
+            "letop": [
+              "Laat ze eerst zonder instrument zingen. Het gaat om het horen van de wissels.",
+              "Gaat het wisselen mis, zing dan eerst alleen de grondtonen zonder tempo."
+            ]
+          } },
+          "4": { "notitie": {
+            "vertel": [
+              "Elke leerling kiest een rol die hij dit jaar nog niet speelde: zang, gitaar, keyboard, bas of drums.",
+              "Open in Musicbox de songbox Way Maker. Je kiest je instrument en je niveau. Niveau 1 is het makkelijkst, hogere niveaus zijn voller. Bekijk daarna het begin van de tutorial van je partij."
+            ],
+            "vragen": [ { "v": "Waarom een rol die je nog niet speelde?", "a": "Je leert er iets nieuws, en je helpt een ander die jouw oude instrument nu speelt." } ],
+            "letop": [
+              "Loop langs: heeft iedereen een nieuwe rol? Zijn er instrumenten te weinig?",
+              "Noteer de niveaus. Leerlingen mogen later van niveau wisselen.",
+              "Niemand speelt voor de klas. Laat ze in hun groepje zachtjes proberen."
+            ]
+          } },
+          "5": { "notitie": {
+            "vertel": [
+              "Deel de groepsbladen uit. Elke groep schrijft de namen, de nieuwe rol van iedereen en het gekozen niveau op en levert het in.",
+              "Zeg tot slot wat ze thuis doen: het lied drie keer beluisteren en de tutorial van hun partij bekijken."
+            ],
+            "letop": [ "Zorg dat de laptops dicht zijn voordat ze weggaan." ]
+          } }
+        },
+        "formatief": {
+          "notitie": {
+            "vertel": [ "De formatieve check is het groepsblad: namen, nieuwe rollen en niveaus. Daarmee zie je wie nog een nieuwe rol nodig heeft." ],
+            "vragen": [ { "v": "Heeft iedereen een rol die nieuw is?", "a": "Zo niet, bespreek het met de groep volgende les." } ],
+            "letop": [ "Leg het ingeleverde blad weg; volgende les gebruik je het om groepen te maken." ]
+          }
+        }
+      }
+    ]
+  }
+}

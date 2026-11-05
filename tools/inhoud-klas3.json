@@ -768,169 +768,6 @@
         "Eventueel: een bovenbouwleerling die iets vertelt"
       ]
     },
-    "Nieuwe songbox: Way Maker (Sinach)": {
-      "vraag": "Wat betekent een lied dat over de hele wereld gezongen wordt?",
-      "doel": "Je kent de herkomst, de vorm en de betekenis van Way Maker en weet wat de PTO-opdracht van dit blok is.",
-      "criteria": [
-        "Ik weet wie Sinach is en waar het lied vandaan komt",
-        "Ik teken het vormschema van Way Maker",
-        "Ik weet wat P1 van mij vraagt"
-      ],
-      "fasen": [
-        {
-          "min": 5,
-          "soort": "luisteren",
-          "kop": "Luister: Way Maker",
-          "stappen": [
-            "Luister naar het origineel van Sinach.",
-            "Let op: hoe begint het, en hoe eindigt het?"
-          ],
-          "docent": "Origineel (Sinach, Lagos, 2015) klaarzetten. Geen tekst op het bord; die bespreken we mondeling."
-        },
-        {
-          "min": 15,
-          "soort": "uitleg",
-          "kop": "Een lied uit Lagos dat de hele wereld zingt",
-          "stappen": [
-            "Sinach schreef Way Maker in 2015 in Nigeria.",
-            "Binnen een paar jaar werd het overal gezongen: in kerken, op straat, in stadions.",
-            "De tekst gaat over God die een weg baant waar wij die niet zien.",
-            "Het lied heeft maar vier akkoorden en groeit van rustig naar vol."
-          ],
-          "beeld": {
-            "soort": "vorm",
-            "items": [
-              {
-                "d": "Intro",
-                "m": 4
-              },
-              {
-                "d": "Couplet",
-                "m": 8
-              },
-              {
-                "d": "Refrein",
-                "m": 8
-              },
-              {
-                "d": "Couplet",
-                "m": 8
-              },
-              {
-                "d": "Refrein",
-                "m": 8
-              },
-              {
-                "d": "Bridge",
-                "m": 8
-              },
-              {
-                "d": "Refrein",
-                "m": 8
-              },
-              {
-                "d": "Outro",
-                "m": 4
-              }
-            ]
-          },
-          "docent": "Vormschema is een voorstel; pas het aan op de versie die je kiest voor de songbox."
-        },
-        {
-          "min": 10,
-          "soort": "doen",
-          "kop": "Zing de vier akkoorden mee",
-          "stappen": [
-            "Zing op 'oe' de grondtoon van elk akkoord mee met het bord.",
-            "Teken het vormschema op je blad."
-          ],
-          "beeld": {
-            "soort": "akkoorden",
-            "items": [
-              "G",
-              "D",
-              "Em",
-              "C"
-            ]
-          }
-        },
-        {
-          "min": 10,
-          "soort": "uitleg",
-          "kop": "Zo werkt het speelstuk (P1)",
-          "stappen": [
-            "Je speelt in een groep voor de docent, niet voor de klas.",
-            "Iedereen krijgt een eigen cijfer.",
-            "Spelen telt dubbel: samenspel, ritme, toon, techniek.",
-            "Reflectie telt één keer: eigen reflectie en feedback op groepsgenoten."
-          ],
-          "beeld": {
-            "soort": "tabel",
-            "rijen": [
-              [
-                "Onderdeel",
-                "Soort",
-                "Telt"
-              ],
-              [
-                "Samenspel",
-                "spelen",
-                "× 2"
-              ],
-              [
-                "Ritme",
-                "spelen",
-                "× 2"
-              ],
-              [
-                "Toon",
-                "spelen",
-                "× 2"
-              ],
-              [
-                "Techniek",
-                "spelen",
-                "× 2"
-              ],
-              [
-                "Eigen reflectie",
-                "reflectie",
-                "× 1"
-              ],
-              [
-                "Feedback op groepsgenoten",
-                "reflectie",
-                "× 1"
-              ]
-            ]
-          }
-        },
-        {
-          "min": 5,
-          "soort": "afsluiten",
-          "kop": "Welk instrument wil je bij dit lied spelen?",
-          "stappen": [
-            "Schrijf je eerste en tweede keus op het wisbordje.",
-            "Volgende week: de akkoorden op gitaar, keyboard en ukelele."
-          ]
-        }
-      ],
-      "formatief": {
-        "soort": "wisbordje",
-        "tekst": "Vormschema van Way Maker en de vier akkoorden op je wisbordje."
-      },
-      "identiteit": "Way Maker wordt gezongen in Lagos, Londen en Middelharnis. De tekst gaat over vertrouwen op God die een weg baant waar wij die niet zien. Wat betekent dat voor jou?",
-      "materiaal": [
-        "pres11",
-        "mb",
-        "leerlingblad"
-      ],
-      "benodigd": [
-        "Origineel en een live-versie klaargezet",
-        "Wisbordjes en stiften",
-        "Leerlingblad speelstuk afronden (per leerling)"
-      ]
-    },
     "Way Maker: akkoorden en begeleiding": {
       "vraag": "Hoe begeleid je Way Maker met vier akkoorden?",
       "doel": "Je speelt de akkoorden G, D, Em en C op gitaar, keyboard of ukelele in een slagpatroon of als liggende akkoorden.",
@@ -2039,13 +1876,13 @@
       "doel": "Je benoemt in een band en een orkest wie het ritme, de melodie en de harmonie verzorgt en past dat toe in je eigen band.",
       "criteria": [
         "Ik wijs in een fragment ritmesectie, melodie en harmonie aan",
-        "Ik weet welke rol mijn eigen partij in Way Maker heeft"
+        "Ik weet welke rol mijn eigen partij in onze song heeft"
       ],
       "fasen": [
         {
           "min": 5,
           "soort": "luisteren",
-          "kop": "Way Maker in een bandversie: wie draagt wat?",
+          "kop": "Een song in een bandversie: wie draagt wat?",
           "stappen": [
             "Wie draagt het ritme?",
             "Wie draagt de melodie?",
@@ -2083,7 +1920,7 @@
         {
           "min": 25,
           "soort": "doen",
-          "kop": "Speel Way Maker en benoem je rol",
+          "kop": "Speel een song en benoem je rol",
           "stappen": [
             "Speel het lied in je eigen band.",
             "Zeg na het spelen welke rol jouw partij had.",
@@ -2112,7 +1949,9 @@
       "benodigd": [
         "Bandinstrumenten klaar",
         "Exit-ticketbriefjes"
-      ]
+      ],
+      "type": "praktijk",
+      "detail": "Ritmesectie, melodie, harmonie: wie doet wat? Daarna in de eigen band een song spelen en per rol uitleggen wat je doet."
     },
     "Oefentoets instrumenten, bands en orkesten · Herhaling en vragen voor T1": {
       "vraag": "Wat ken ik al voor T1, en wat nog niet?",
@@ -2304,73 +2143,6 @@
         "Tien fragmenten klaargezet"
       ]
     },
-    "Songbox 2 kiezen": {
-      "vraag": "Welke song past bij onze klas voor het laatste blok?",
-      "doel": "De klas kiest samen een songbox uit Musicbox voor periode 4 en je kiest een rol die je nog niet speelde.",
-      "criteria": [
-        "Wij hebben als klas een songbox gekozen",
-        "Ik heb een nieuwe rol gekozen",
-        "Ik weet wat ik voor volgende week bekijk in de tutorial"
-      ],
-      "fasen": [
-        {
-          "min": 5,
-          "soort": "start",
-          "kop": "Terugblik T1",
-          "stappen": [
-            "Wat ging goed, wat was lastig?"
-          ]
-        },
-        {
-          "min": 10,
-          "soort": "luisteren",
-          "kop": "Drie songboxen: luister en kies",
-          "stappen": [
-            "We luisteren naar drie songs uit Musicbox.",
-            "Let op: kunnen wij dit spelen, en vinden we het leuk?"
-          ],
-          "docent": "Drie songboxen vooraf kiezen en beluisteren; let op teksten die passen bij de school."
-        },
-        {
-          "min": 10,
-          "soort": "gesprek",
-          "kop": "Stemmen",
-          "stappen": [
-            "Iedereen stemt, de meerderheid beslist.",
-            "De keuze staat vast voor periode 4."
-          ]
-        },
-        {
-          "min": 15,
-          "soort": "doen",
-          "kop": "Nieuwe rollen en de tutorials verkennen",
-          "stappen": [
-            "Kies een rol die je dit jaar nog niet speelde.",
-            "Open de tutorial van je nieuwe partij en bekijk het begin."
-          ],
-          "klaar": "Speel de eerste vier maten van je nieuwe partij."
-        },
-        {
-          "min": 5,
-          "soort": "afsluiten",
-          "kop": "Groepsblad",
-          "stappen": [
-            "Namen en nieuwe rollen inleveren."
-          ]
-        }
-      ],
-      "formatief": {
-        "soort": "groepsblad",
-        "tekst": "Groepsblad met namen en nieuwe rollen inleveren."
-      },
-      "materiaal": [
-        "mb"
-      ],
-      "benodigd": [
-        "Drie songboxen vooraf gekozen en beluisterd",
-        "Groepsbladen"
-      ]
-    },
     "Songbox 2 kiezen en partijen leren": {
       "vraag": "Welke song sluit het jaar af, en welke rol pak ik nu?",
       "doel": "De klas kiest een songbox voor periode 4, je kiest een rol die je nog niet speelde en begint met de tutorial.",
@@ -2430,65 +2202,6 @@
       "benodigd": [
         "Twee of drie songboxen vooraf gekozen",
         "Groepsbladen"
-      ]
-    },
-    "Songbox 2: partijen leren": {
-      "vraag": "Hoe leer ik een partij op een instrument dat nieuw voor mij is?",
-      "doel": "Je speelt je nieuwe partij mee met de tutorial in een langzaam tempo.",
-      "criteria": [
-        "Ik speel mijn partij mee met de tutorial op niveau 1",
-        "Ik weet welk stuk ik nog moet oefenen"
-      ],
-      "fasen": [
-        {
-          "min": 5,
-          "soort": "start",
-          "kop": "Zing de song mee met het origineel",
-          "stappen": [
-            "Iedereen zingt mee, ook op je nieuwe instrument."
-          ]
-        },
-        {
-          "min": 5,
-          "soort": "uitleg",
-          "kop": "Een nieuw instrument leren: klein beginnen",
-          "stappen": [
-            "Eén maat tot het lukt, dan twee.",
-            "Herhalen, herhalen, herhalen.",
-            "Pas daarna het tempo omhoog."
-          ]
-        },
-        {
-          "min": 30,
-          "soort": "doen",
-          "kop": "Oefen je nieuwe partij met de tutorial",
-          "stappen": [
-            "Niveau 1, langzaam.",
-            "Markeer het stuk waar je vastloopt.",
-            "Vraag een ervaren speler in je groep om hulp."
-          ],
-          "klaar": "Help iemand die jouw oude instrument nu speelt.",
-          "docent": "Loop vooral langs leerlingen op een nieuw instrument."
-        },
-        {
-          "min": 5,
-          "soort": "check",
-          "kop": "Duimen: kan ik mijn partij meespelen?",
-          "stappen": [
-            "Omhoog, opzij of omlaag."
-          ]
-        }
-      ],
-      "formatief": {
-        "soort": "duimen",
-        "tekst": "Kan ik mijn partij meespelen met de tutorial? Duim omhoog, opzij, omlaag."
-      },
-      "materiaal": [
-        "mb"
-      ],
-      "benodigd": [
-        "Alle bandinstrumenten",
-        "Laptops voor de tutorials"
       ]
     },
     "Songbox 2: samenspel": {
@@ -4054,6 +3767,1321 @@
       "benodigd": [
         "Opnames van voor de kerst",
         "Leerlingblad speelstuk afronden (per leerling)"
+      ]
+    },
+    "Snaarinstrumenten · Way Maker leren kennen": {
+      "type": "praktijk",
+      "detail": "Eerst snaarinstrumenten (20 min), dan kennismaken met de songbox Way Maker (25 min).",
+      "vraag": "Hoe ontstaat de klank van een snaarinstrument, en wat betekent een lied dat over de hele wereld gezongen wordt?",
+      "doel": "Je herkent strijk- en tokkelinstrumenten en legt uit hoe hun klank ontstaat. Je kent de herkomst en de vorm van Way Maker en hebt een instrument en niveau gekozen.",
+      "criteria": [
+        "Ik noem viool, altviool, cello, contrabas, gitaar en harp",
+        "Ik hoor het verschil tussen strijken en tokkelen",
+        "Ik weet wie Sinach is en teken het vormschema van Way Maker",
+        "Ik heb een instrument gekozen voor Way Maker"
+      ],
+      "fasen": [
+        {
+          "min": 4,
+          "soort": "luisteren",
+          "kop": "Twee fragmenten: welk instrument hoor je?",
+          "stappen": [
+            "Schrijf per fragment je antwoord op.",
+            "We vergelijken na het tweede fragment."
+          ],
+          "docent": "Viool en gitaar. Fragmenten uit de map Instrumenten toets."
+        },
+        {
+          "min": 8,
+          "soort": "uitleg",
+          "kop": "Snaren, klankkast, strijken en tokkelen",
+          "stappen": [
+            "Een snaar trilt; de klankkast maakt het geluid groter.",
+            "Strijken: viool, altviool, cello, contrabas, van hoog naar laag.",
+            "Tokkelen: gitaar, harp, ukelele, basgitaar."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Viool",
+                "t": "hoogste strijker",
+                "kleur": "#fde68a"
+              },
+              {
+                "k": "Altviool",
+                "t": "iets groter, lager",
+                "kleur": "#fde68a"
+              },
+              {
+                "k": "Cello",
+                "t": "tussen de knieën",
+                "kleur": "#fde68a"
+              },
+              {
+                "k": "Contrabas",
+                "t": "laagste strijker, staand",
+                "kleur": "#fcd34d"
+              },
+              {
+                "k": "Gitaar",
+                "t": "tokkelen, zes snaren",
+                "kleur": "#a5b4fc"
+              },
+              {
+                "k": "Harp",
+                "t": "tokkelen, 47 snaren",
+                "kleur": "#a5b4fc"
+              }
+            ]
+          },
+          "docent": "Laat een gitaar en een viool zien als ze in het lokaal zijn; strijk en tokkel op dezelfde snaar."
+        },
+        {
+          "min": 4,
+          "soort": "doen",
+          "kop": "Infoblad: strijken of tokkelen",
+          "stappen": [
+            "Zet bij elk snaarinstrument op je infoblad: strijken of tokkelen.",
+            "Thuis: de Musicbox-opdrachten over snaarinstrumenten."
+          ]
+        },
+        {
+          "min": 4,
+          "soort": "check",
+          "kop": "Luisterquiz: drie snaarinstrumenten",
+          "stappen": [
+            "Antwoord op je wisbordje.",
+            "Omhoog na elk fragment."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: Way Maker",
+          "stappen": [
+            "Luister naar het origineel van Sinach.",
+            "Let op: hoe begint het, en hoe eindigt het?"
+          ],
+          "docent": "Origineel (Sinach, Lagos, 2015) klaarzetten. Geen tekst op het bord; die bespreken we mondeling."
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Een lied uit Lagos dat de hele wereld zingt",
+          "stappen": [
+            "Sinach schreef Way Maker in 2015 in Nigeria.",
+            "Binnen een paar jaar werd het overal gezongen: in kerken, op straat, in stadions.",
+            "De tekst gaat over God die een weg baant waar wij die niet zien.",
+            "Het lied heeft maar vier akkoorden en groeit van rustig naar vol."
+          ],
+          "beeld": {
+            "soort": "vorm",
+            "items": [
+              {
+                "d": "Intro",
+                "m": 4
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Bridge",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Outro",
+                "m": 4
+              }
+            ]
+          },
+          "docent": "Het vormschema is een voorstel; pas het aan op de versie in de songbox."
+        },
+        {
+          "min": 5,
+          "soort": "doen",
+          "kop": "Zing de vier akkoorden mee",
+          "stappen": [
+            "Zing op 'oe' de grondtoon van elk akkoord mee met het bord.",
+            "Teken het vormschema op je blad."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "G",
+              "D",
+              "Em",
+              "C"
+            ]
+          }
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Kies je instrument en je niveau",
+          "stappen": [
+            "Schrijf je eerste en tweede keus op het wisbordje.",
+            "Open thuis de songbox Way Maker in Musicbox en kijk naar de niveaus.",
+            "Volgende week: de akkoorden en de begeleiding."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "wisbordje",
+        "tekst": "Drie snaarinstrumenten op het wisbordje, en het vormschema van Way Maker met de vier akkoorden."
+      },
+      "identiteit": "Way Maker wordt gezongen in Lagos, Londen en Middelharnis. De tekst gaat over vertrouwen op God die een weg baant waar wij die niet zien. Wat betekent dat voor jou?",
+      "materiaal": [
+        "mb",
+        "infoblad"
+      ],
+      "benodigd": [
+        "Fragmenten klaargezet",
+        "Origineel van Way Maker klaargezet",
+        "Wisbordjes en stiften",
+        "Instrumenten infoblad (per leerling, voor het hele blok)"
+      ]
+    },
+    "Houtblazers en koperblazers · Way Maker: akkoorden en begeleiding": {
+      "type": "praktijk",
+      "detail": "Eerst hout en koper (20 min), dan de akkoorden en de begeleiding van Way Maker (25 min).",
+      "vraag": "Wat is het verschil tussen hout en koper, en hoe begeleid je Way Maker met vier akkoorden?",
+      "doel": "Je herkent houtblazers en koperblazers op gehoor en speelt de akkoorden G, D, Em en C van Way Maker op gitaar, keyboard of ukelele.",
+      "criteria": [
+        "Ik deel blaasinstrumenten in bij hout of koper en weet waarom",
+        "Ik herken vier houtblazers en vier koperblazers op gehoor",
+        "Ik speel de vier akkoorden en wissel op de tel"
+      ],
+      "fasen": [
+        {
+          "min": 4,
+          "soort": "luisteren",
+          "kop": "Twee fragmenten: hout of koper?",
+          "stappen": [
+            "Luister en kies.",
+            "Wat is het verschil in klank?"
+          ]
+        },
+        {
+          "min": 8,
+          "soort": "uitleg",
+          "kop": "Hoe ontstaat de toon bij een blazer?",
+          "stappen": [
+            "Hout: lucht over een gat (fluit) of langs een riet (klarinet, hobo, fagot, saxofoon).",
+            "Koper: je lippen trillen in het mondstuk (trompet, hoorn, trombone, tuba).",
+            "De saxofoon is van metaal, maar heeft een riet: dus houtblazer."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Fluit",
+                "t": "hout · lucht over een gat",
+                "kleur": "#bbf7d0"
+              },
+              {
+                "k": "Klarinet",
+                "t": "hout · enkel riet",
+                "kleur": "#bbf7d0"
+              },
+              {
+                "k": "Hobo",
+                "t": "hout · dubbel riet",
+                "kleur": "#bbf7d0"
+              },
+              {
+                "k": "Fagot",
+                "t": "hout · dubbel riet, laag",
+                "kleur": "#bbf7d0"
+              },
+              {
+                "k": "Saxofoon",
+                "t": "hout · enkel riet, metaal",
+                "kleur": "#bbf7d0"
+              },
+              {
+                "k": "Trompet",
+                "t": "koper · hoog",
+                "kleur": "#fdba74"
+              },
+              {
+                "k": "Hoorn",
+                "t": "koper · rond, warm",
+                "kleur": "#fdba74"
+              },
+              {
+                "k": "Trombone",
+                "t": "koper · schuif",
+                "kleur": "#fdba74"
+              },
+              {
+                "k": "Tuba",
+                "t": "koper · laagste",
+                "kleur": "#fdba74"
+              }
+            ]
+          }
+        },
+        {
+          "min": 4,
+          "soort": "doen",
+          "kop": "Eén weetje over één instrument",
+          "stappen": [
+            "Kies in tweetallen één instrument en zoek één weetje op.",
+            "Zet het weetje op je infoblad.",
+            "Thuis: de Musicbox-opdrachten over blazers."
+          ]
+        },
+        {
+          "min": 4,
+          "soort": "check",
+          "kop": "Exit ticket",
+          "stappen": [
+            "Noem twee houtblazers en twee koperblazers.",
+            "Leg uit waarom de saxofoon een houtblazer is."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: de vier akkoorden",
+          "stappen": [
+            "G, D, Em, C: pak ze één voor één.",
+            "Wissel op mijn teken."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "G",
+              "D",
+              "Em",
+              "C"
+            ]
+          }
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Wisselen op de 1, slaan in het ritme",
+          "stappen": [
+            "Elk akkoord duurt één maat; wissel op de eerste tel.",
+            "Gitaar en ukelele: slagpatroon neer, neer, op, op, neer, op.",
+            "Keyboard: liggende akkoorden, links de grondtoon."
+          ],
+          "docent": "Speel het slagpatroon voor; laat eerst op een gedempte snaar meeslaan."
+        },
+        {
+          "min": 12,
+          "soort": "doen",
+          "kop": "Oefen: eerst zonder, dan met het origineel",
+          "stappen": [
+            "Speel de reeks vier keer rond in een langzaam tempo.",
+            "Zet dan het origineel aan en speel mee.",
+            "Lukt het? Maak het slagpatroon in het refrein voller."
+          ],
+          "klaar": "Zoek uit welke tonen in elk akkoord zitten en speel ze als gebroken akkoord.",
+          "docent": "Werk in groepjes; ik loop langs en speel het slagpatroon voor. Zangers, bassisten en drummers zingen of tellen mee."
+        },
+        {
+          "min": 3,
+          "soort": "check",
+          "kop": "Samen één rondje",
+          "stappen": [
+            "Akkoorden, slag en zang tegelijk, ieder in je eigen groepje.",
+            "Duimen: kan ik de reeks op tempo spelen?"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "exit ticket",
+        "tekst": "Noem twee houtblazers en twee koperblazers, leg uit waarom de saxofoon hout is, en duim: kan ik de akkoordenreeks op tempo spelen?"
+      },
+      "materiaal": [
+        "mb",
+        "infoblad"
+      ],
+      "benodigd": [
+        "Fragmenten klaargezet",
+        "Laptops voor Musicbox",
+        "Exit-ticketbriefjes",
+        "Akkoordenschema G D Em C op het bord",
+        "Gitaren, ukeleles, keyboards"
+      ]
+    },
+    "Slagwerk, toetsen en elektronica · Way Maker: partijen voor zang, bas en drums": {
+      "type": "praktijk",
+      "detail": "Eerst slagwerk, toetsen en elektrische instrumenten (20 min), dan de partijen van zang, bas en drums in Way Maker (25 min).",
+      "vraag": "Welke instrumenten geven ritme, en wat doen zang, bas en drums in Way Maker?",
+      "doel": "Je herkent slagwerk, toetsen en elektrische instrumenten en speelt of zingt je partij in Way Maker: zang de melodie, bas de grondtonen, drums een groove die kan groeien.",
+      "criteria": [
+        "Ik onderscheid gestemd en ongestemd slagwerk",
+        "Ik ken de instrumenten van een popband",
+        "Zang: ik zing de melodie van couplet en refrein",
+        "Bas: ik speel de grondtoon van elk akkoord op de tel",
+        "Drums: ik speel een rustige groove en een vollere groove"
+      ],
+      "fasen": [
+        {
+          "min": 4,
+          "soort": "luisteren",
+          "kop": "Drumstel of pauken?",
+          "stappen": [
+            "Twee fragmenten.",
+            "Wat is het verschil in klank en in rol?"
+          ]
+        },
+        {
+          "min": 8,
+          "soort": "uitleg",
+          "kop": "Slagwerk, toetsen en elektrische instrumenten",
+          "stappen": [
+            "Gestemd slagwerk heeft toonhoogte: pauken, xylofoon, buisklokken.",
+            "Ongestemd slagwerk niet: drumstel, tamboerijn, claves, djembé.",
+            "Toetsinstrumenten: piano, orgel, klavecimbel, synthesizer.",
+            "Elektrisch: elektrische gitaar, basgitaar, keyboard."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Gestemd slagwerk",
+                "t": "pauken, xylofoon, buisklokken",
+                "kleur": "#c4b5fd"
+              },
+              {
+                "k": "Ongestemd slagwerk",
+                "t": "drumstel, tamboerijn, djembé",
+                "kleur": "#c4b5fd"
+              },
+              {
+                "k": "Toetsen",
+                "t": "piano, orgel, klavecimbel, synthesizer",
+                "kleur": "#f9a8d4"
+              },
+              {
+                "k": "Elektrisch",
+                "t": "elektrische gitaar, basgitaar, keyboard",
+                "kleur": "#67e8f9"
+              }
+            ]
+          }
+        },
+        {
+          "min": 4,
+          "soort": "doen",
+          "kop": "Percussie uit de kast",
+          "stappen": [
+            "Elk tweetal pakt een instrument uit de kast.",
+            "Benoem het met het infoblad en speel een ritme.",
+            "Wissel na een minuut door."
+          ]
+        },
+        {
+          "min": 4,
+          "soort": "check",
+          "kop": "Luisterquiz: drie fragmenten",
+          "stappen": [
+            "Slagwerk, toetsen of elektrisch?",
+            "Welk instrument precies?"
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Zing het lied mee met het origineel",
+          "stappen": [
+            "Iedereen zingt, ook de drummers.",
+            "Let op waar het refrein hoger gaat."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Zang, bas en drums: ieder een eigen taak",
+          "stappen": [
+            "Zang: de melodie van couplet en refrein, zuiver en op de tekst.",
+            "Bas: de grondtoon van elk akkoord op de tel: G, D, E, C.",
+            "Drums: een rustige groove voor het couplet en een vollere voor het refrein."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Zang",
+                "t": "melodie, zuiver, tekst duidelijk"
+              },
+              {
+                "k": "Bas",
+                "t": "grondtonen G · D · E · C"
+              },
+              {
+                "k": "Drums",
+                "t": "rustige groove, volle groove"
+              }
+            ]
+          }
+        },
+        {
+          "min": 12,
+          "soort": "doen",
+          "kop": "Oefen per partij, dan samen met de akkoorden",
+          "stappen": [
+            "Zangers oefenen met het origineel; bassisten en drummers met de metronoom.",
+            "Na zes minuten: voeg je bij de akkoordspelers van je groep.",
+            "Speel couplet en refrein samen."
+          ],
+          "klaar": "Bas: probeer de kwint erbij. Drums: voeg een fill toe vóór het refrein.",
+          "docent": "Ik loop langs en luister per partij: zuiver, op de tel, groove houdbaar. Noteer wie hulp nodig heeft."
+        },
+        {
+          "min": 3,
+          "soort": "afsluiten",
+          "kop": "Couplet en refrein in je groep",
+          "stappen": [
+            "Eén keer samen, iedereen op zijn eigen partij."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "luisterquiz",
+        "tekst": "Drie fragmenten: welk slagwerk-, toets- of elektrisch instrument? Daarnaast luistert de docent per partij mee bij Way Maker en noteert wie hulp nodig heeft."
+      },
+      "materiaal": [
+        "mb",
+        "infoblad"
+      ],
+      "benodigd": [
+        "Alle kleine percussie uit de kast (tamboerijn, claves, maracas, bongo's, djembé, triangel, woodblock)",
+        "Fragmenten klaargezet",
+        "Laptops voor Musicbox",
+        "Basgitaar en versterker",
+        "Drumstel en percussie",
+        "Microfoon of zangplek"
+      ]
+    },
+    "Het symfonieorkest · Way Maker: samen in je groep": {
+      "type": "praktijk",
+      "detail": "Eerst instrumentgroepen en de dirigent (20 min), dan de partijen van Way Maker samenvoegen in je groep (25 min).",
+      "vraag": "Hoe werken tachtig musici samen als één orkest, en klinken onze partijen samen als één lied?",
+      "doel": "Je kent de instrumentgroepen en de opstelling van het symfonieorkest en voegt in je groep alle partijen van Way Maker samen tot couplet en refrein.",
+      "criteria": [
+        "Ik teken de opstelling van het orkest met de vier groepen",
+        "Ik noem twee taken van de dirigent",
+        "Alle partijen in onze groep klinken tegelijk",
+        "Wij spelen couplet en refrein zonder te stoppen"
+      ],
+      "fasen": [
+        {
+          "min": 4,
+          "soort": "luisteren",
+          "kop": "Kijk: een orkest op het podium",
+          "stappen": [
+            "Wat valt je op aan hoe de musici zitten?",
+            "Wie zit vooraan, wie achteraan?"
+          ],
+          "docent": "Video van een symfonieorkest, bij voorkeur van boven gefilmd."
+        },
+        {
+          "min": 8,
+          "soort": "uitleg",
+          "kop": "Vier groepen en één dirigent",
+          "stappen": [
+            "Strijkers vooraan: zacht, met velen.",
+            "Houtblazers in het midden.",
+            "Koperblazers en slagwerk achteraan: hard, met weinigen.",
+            "De dirigent geeft tempo, inzetten en dynamiek, en luistert naar het geheel."
+          ],
+          "beeld": {
+            "soort": "orkest"
+          }
+        },
+        {
+          "min": 8,
+          "soort": "doen",
+          "kop": "Teken de opstelling en plaats de instrumenten",
+          "stappen": [
+            "In tweetallen: teken de halve cirkel met de vier groepen.",
+            "Zet er zoveel mogelijk instrumenten in op de goede plek.",
+            "Thuis: de Musicbox-box Het orkest, instrumentgroepen."
+          ],
+          "klaar": "Waarom zitten de strijkers vooraan en het slagwerk achteraan? Schrijf het in twee zinnen op."
+        },
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: akkoorden en groove samen",
+          "stappen": [
+            "Eén rondje, iedereen tegelijk."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Slim oefenen",
+          "stappen": [
+            "Eerst langzaam, dan op tempo.",
+            "Eerst zonder zang, dan met.",
+            "Stop bij een fout niet helemaal: speel het stukje opnieuw."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "1 · Langzaam",
+                "t": "dan op tempo"
+              },
+              {
+                "k": "2 · Zonder zang",
+                "t": "dan met zang"
+              },
+              {
+                "k": "3 · Stukje opnieuw",
+                "t": "niet het hele lied"
+              }
+            ]
+          }
+        },
+        {
+          "min": 12,
+          "soort": "doen",
+          "kop": "Oefenen in je groep",
+          "stappen": [
+            "Verdeel je over het lokaal en de ruimtes ernaast.",
+            "Speel couplet en refrein tot het samen klinkt.",
+            "Ik kom bij elke groep langs."
+          ],
+          "klaar": "Speel het lied met de opbouw: couplet rustig, refrein vol.",
+          "docent": "Niemand speelt voor de klas. Loop langs en geef per groep één tip."
+        },
+        {
+          "min": 3,
+          "soort": "afsluiten",
+          "kop": "Opname van de tussenstand",
+          "stappen": [
+            "Neem je groep één minuut op met de laptop van je groep.",
+            "Volgende week krijg je per groep één tip."
+          ],
+          "docent": "Opnemen op de laptop van de groep, geen telefoons. Geef volgende les per groep één tip."
+        }
+      ],
+      "formatief": {
+        "soort": "wisbordje",
+        "tekst": "Teken de orkestopstelling en zet de vier groepen op de goede plek. Daarnaast een korte opname per groep als tussenstand voor Way Maker."
+      },
+      "identiteit": "Een orkest werkt alleen als tachtig mensen naar elkaar en naar de dirigent luisteren. Iedereen speelt een eigen partij, en niemand is de hoofdpersoon.",
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Orkestvideo klaargezet",
+        "Wisbordjes en stiften",
+        "Laptops voor Musicbox, ook één per groep om op te nemen",
+        "Oefenruimtes afspreken"
+      ]
+    },
+    "Bands en ensembles · Way Maker: opbouw en dynamiek": {
+      "type": "praktijk",
+      "detail": "Eerst bezettingen van bands en ensembles (20 min), dan de opbouw en dynamiek van Way Maker (25 min).",
+      "vraag": "Wie speelt er in een band, en hoe bouw je samen een lied op van rustig naar vol?",
+      "doel": "Je kent de bezetting van popband, bigband, jazzcombo, strijkkwartet en koor, en je groep spreekt af waar Way Maker opbouwt en terugvalt.",
+      "criteria": [
+        "Ik noem de instrumenten van een popband en een bigband",
+        "Ik weet wat een ritmesectie is",
+        "Wij beginnen rustig en komen vol uit in het refrein",
+        "Wij hebben één plek waar we terugvallen"
+      ],
+      "fasen": [
+        {
+          "min": 4,
+          "soort": "luisteren",
+          "kop": "Drie fragmenten: welke bezetting?",
+          "stappen": [
+            "Popband, bigband, jazzcombo, strijkkwartet of koor?",
+            "Schrijf je antwoord op."
+          ]
+        },
+        {
+          "min": 8,
+          "soort": "uitleg",
+          "kop": "Wie speelt er, en wat doet elke groep?",
+          "stappen": [
+            "Popband: zang, gitaar, bas, drums, keyboard.",
+            "Bigband: saxen, trompetten, trombones en een ritmesectie.",
+            "Jazzcombo: klein, met solo's om de beurt.",
+            "Strijkkwartet: twee violen, altviool, cello.",
+            "Koor: sopraan, alt, tenor, bas.",
+            "De ritmesectie (drums, bas, akkoordinstrument) is de kern van pop en jazz."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Popband",
+                "t": "zang, gitaar, bas, drums, keys"
+              },
+              {
+                "k": "Bigband",
+                "t": "saxen, trompetten, trombones, ritmesectie"
+              },
+              {
+                "k": "Jazzcombo",
+                "t": "klein, solo's om de beurt"
+              },
+              {
+                "k": "Strijkkwartet",
+                "t": "2 violen, altviool, cello"
+              },
+              {
+                "k": "Koor",
+                "t": "sopraan, alt, tenor, bas"
+              }
+            ]
+          }
+        },
+        {
+          "min": 4,
+          "soort": "doen",
+          "kop": "Begrippenlijst T1 aanvullen",
+          "stappen": [
+            "Vul je begrippenlijst voor T1 aan met de bezettingen.",
+            "Thuis: de Musicbox-opdrachten in de box Het orkest."
+          ]
+        },
+        {
+          "min": 4,
+          "soort": "check",
+          "kop": "Luisterquiz: drie bezettingen",
+          "stappen": [
+            "Drie nieuwe fragmenten.",
+            "Antwoord op je wisbordje."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: waar groeit het lied?",
+          "stappen": [
+            "Een live-versie van Way Maker.",
+            "Steek je hand op waar het voller wordt, en laat hem zakken waar het terugvalt."
+          ],
+          "docent": "Live-versie klaarzetten."
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Opbouwen doe je samen",
+          "stappen": [
+            "Drums: van hihat naar volle groove.",
+            "Gitaar en keyboard: van losse tonen naar volle akkoorden.",
+            "Zang: van één stem naar meer stemmen.",
+            "Eén plek waar je terugvalt, en dan het laatste refrein vol."
+          ],
+          "beeld": {
+            "soort": "opbouw",
+            "items": [
+              {
+                "d": "intro",
+                "v": 1
+              },
+              {
+                "d": "couplet",
+                "v": 2
+              },
+              {
+                "d": "refrein",
+                "v": 3
+              },
+              {
+                "d": "couplet",
+                "v": 2
+              },
+              {
+                "d": "refrein",
+                "v": 4
+              },
+              {
+                "d": "bridge",
+                "v": 1
+              },
+              {
+                "d": "refrein",
+                "v": 4
+              },
+              {
+                "d": "outro",
+                "v": 2
+              }
+            ]
+          }
+        },
+        {
+          "min": 12,
+          "soort": "doen",
+          "kop": "Maak een opbouwplan en oefen het",
+          "stappen": [
+            "Teken op het vormschema per deel: rustig, half, vol.",
+            "Spreek per instrument af wat je doet in elk deel.",
+            "Oefen de overgangen apart, daarna het hele lied."
+          ],
+          "klaar": "Voeg een stilte toe vlak voor het laatste refrein.",
+          "docent": "Loop langs en geef per groep één tip over de opbouw."
+        },
+        {
+          "min": 3,
+          "soort": "check",
+          "kop": "Ik luister bij één groep mee",
+          "stappen": [
+            "Speel je opbouw nog één keer in je groep.",
+            "Noem samen: waar hoor je de opbouw, en is de terugval duidelijk?"
+          ],
+          "docent": "Niemand speelt voor de klas."
+        }
+      ],
+      "formatief": {
+        "soort": "luisterquiz",
+        "tekst": "Drie fragmenten: popband, bigband, jazzcombo, strijkkwartet of koor? Daarnaast benoemt de groep zelf waar de opbouw te horen is en of de terugval duidelijk was."
+      },
+      "identiteit": "Opbouwen betekent wachten op elkaar. Niet iedereen hoeft meteen vol te spelen; samen kom je verder dan alleen.",
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Fragmenten klaargezet",
+        "Live-versie van Way Maker klaargezet",
+        "Laptops voor Musicbox",
+        "Begrippenlijst T1 (per leerling)",
+        "Vormschema per groep om het opbouwplan in te tekenen"
+      ]
+    },
+    "Rollen in een band en orkest · Way Maker doorspelen": {
+      "type": "praktijk",
+      "detail": "Eerst ritmesectie, melodie en harmonie (20 min), dan Way Maker van begin tot eind spelen en opnemen (25 min).",
+      "vraag": "Wie doet wat: ritme, melodie of harmonie, en welke rol heeft mijn partij in Way Maker?",
+      "doel": "Je benoemt in een band en een orkest wie het ritme, de melodie en de harmonie verzorgt, speelt Way Maker met je groep door en weet welke rol jouw partij heeft.",
+      "criteria": [
+        "Ik wijs in een fragment ritmesectie, melodie en harmonie aan",
+        "Wij spelen Way Maker van begin tot eind",
+        "Ik weet welke rol mijn eigen partij in Way Maker heeft"
+      ],
+      "fasen": [
+        {
+          "min": 4,
+          "soort": "luisteren",
+          "kop": "Way Maker in een bandversie: wie draagt wat?",
+          "stappen": [
+            "Wie draagt het ritme?",
+            "Wie draagt de melodie?",
+            "Wie vult de harmonie?"
+          ]
+        },
+        {
+          "min": 8,
+          "soort": "uitleg",
+          "kop": "Drie rollen: ritme, melodie, harmonie",
+          "stappen": [
+            "Ritme: drums en bas houden de band bij elkaar.",
+            "Melodie: zang of een solo-instrument vertelt het verhaal.",
+            "Harmonie: gitaar, keyboard of de strijkers vullen de akkoorden.",
+            "In het orkest is het precies zo, met andere instrumenten."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Ritme",
+                "t": "drums, bas · pauken, contrabas"
+              },
+              {
+                "k": "Melodie",
+                "t": "zang, solo · 1e violen, fluit"
+              },
+              {
+                "k": "Harmonie",
+                "t": "gitaar, keys · 2e violen, hoorns"
+              }
+            ]
+          }
+        },
+        {
+          "min": 8,
+          "soort": "doen",
+          "kop": "Rollen aanwijzen in twee fragmenten",
+          "stappen": [
+            "Luister naar een fragment van een band en een van een orkest.",
+            "Wijs in tweetallen aan wie ritme, melodie en harmonie speelt.",
+            "Schrijf het op je blad."
+          ]
+        },
+        {
+          "min": 3,
+          "soort": "start",
+          "kop": "Opwarmen: de eerste maten",
+          "stappen": [
+            "Aftellen en de eerste vier maten, twee keer."
+          ]
+        },
+        {
+          "min": 17,
+          "soort": "doen",
+          "kop": "Speel Way Maker door, drie keer",
+          "stappen": [
+            "Eén: langzaam en netjes.",
+            "Twee: op tempo.",
+            "Drie: opnemen met de laptop van je groep."
+          ],
+          "klaar": "Wissel één keer van rol en speel het couplet opnieuw.",
+          "docent": "Niemand speelt voor de klas. Ik loop langs en luister: hoor ik ritme, melodie en harmonie? Noteer wie hulp nodig heeft."
+        },
+        {
+          "min": 5,
+          "soort": "gesprek",
+          "kop": "Terugluisteren en je rol benoemen",
+          "stappen": [
+            "Luister de opname in je groep terug.",
+            "Zeg welke rol jouw partij had.",
+            "Wat gebeurt er als die rol wegvalt?"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "exit ticket",
+        "tekst": "Welke rol had jouw partij vandaag, en wat gebeurt er als die rol wegvalt?"
+      },
+      "identiteit": "Zonder ritmesectie valt de band uit elkaar, zonder melodie is er geen lied. Elke rol is nodig, ook de onopvallende.",
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Fragmenten klaargezet",
+        "Bandinstrumenten klaar",
+        "Eén laptop per groep om op te nemen",
+        "Exit-ticketbriefjes"
+      ]
+    },
+    "Way Maker leren kennen": {
+      "type": "praktijk",
+      "detail": "Kennismaken met de songbox Way Maker, songbox 2. Je kiest een rol die je dit jaar nog niet speelde.",
+      "vraag": "Wat betekent een lied dat over de hele wereld gezongen wordt, en welke rol pak ik?",
+      "doel": "Je kent de herkomst en de vorm van Way Maker, kiest een rol die je dit jaar nog niet speelde en kiest je niveau in de songbox.",
+      "criteria": [
+        "Ik weet wie Sinach is en waar het lied vandaan komt",
+        "Ik teken het vormschema van Way Maker",
+        "Ik heb een nieuwe rol en een niveau gekozen",
+        "Ik weet wat ik voor volgende week bekijk in de tutorial"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Terugblik T1",
+          "stappen": [
+            "Wat ging goed, wat was lastig?",
+            "In het laatste blok spelen we Way Maker."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Luister: Way Maker",
+          "stappen": [
+            "Luister naar het origineel van Sinach.",
+            "Let op: hoe begint het, en hoe eindigt het?"
+          ],
+          "docent": "Origineel (Sinach, Lagos, 2015) klaarzetten. Geen tekst op het bord; die bespreken we mondeling."
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Een lied uit Lagos dat de hele wereld zingt",
+          "stappen": [
+            "Sinach schreef Way Maker in 2015 in Nigeria.",
+            "Binnen een paar jaar werd het overal gezongen: in kerken, op straat, in stadions.",
+            "De tekst gaat over God die een weg baant waar wij die niet zien.",
+            "Het lied heeft maar vier akkoorden en groeit van rustig naar vol."
+          ],
+          "beeld": {
+            "soort": "vorm",
+            "items": [
+              {
+                "d": "Intro",
+                "m": 4
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Couplet",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Bridge",
+                "m": 8
+              },
+              {
+                "d": "Refrein",
+                "m": 8
+              },
+              {
+                "d": "Outro",
+                "m": 4
+              }
+            ]
+          },
+          "docent": "Het vormschema is een voorstel; pas het aan op de versie in de songbox."
+        },
+        {
+          "min": 10,
+          "soort": "doen",
+          "kop": "Zing de vier akkoorden mee",
+          "stappen": [
+            "Zing op 'oe' de grondtoon van elk akkoord mee met het bord.",
+            "Teken het vormschema op je blad."
+          ],
+          "beeld": {
+            "soort": "akkoorden",
+            "items": [
+              "G",
+              "D",
+              "Em",
+              "C"
+            ]
+          }
+        },
+        {
+          "min": 10,
+          "soort": "doen",
+          "kop": "Kies je rol en je niveau",
+          "stappen": [
+            "Kies een rol die je dit jaar nog niet speelde.",
+            "Open in Musicbox de songbox Way Maker en kies je instrument en je niveau.",
+            "Bekijk het begin van de tutorial van je nieuwe partij."
+          ],
+          "klaar": "Speel de eerste vier maten van je nieuwe partij.",
+          "docent": "Loop langs: heeft iedereen een rol die nieuw is? Noteer de niveaus."
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Groepsblad",
+          "stappen": [
+            "Namen, nieuwe rollen en niveaus inleveren."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "groepsblad",
+        "tekst": "Groepsblad met namen, nieuwe rollen en niveaus inleveren."
+      },
+      "identiteit": "Way Maker wordt gezongen in Lagos, Londen en Middelharnis. De tekst gaat over vertrouwen op God die een weg baant waar wij die niet zien. Wat betekent dat voor jou?",
+      "benodigd": [
+        "Origineel van Way Maker klaargezet",
+        "Laptops voor Musicbox",
+        "Groepsbladen"
+      ],
+      "materiaal": [
+        "mb"
+      ]
+    },
+    "Way Maker: partijen leren": {
+      "type": "praktijk",
+      "detail": "Tutorials per instrument in de songbox Way Maker; een rol die je nog niet speelde.",
+      "vraag": "Hoe leer ik een partij op een instrument dat nieuw voor mij is?",
+      "doel": "Je speelt je nieuwe partij mee met de tutorial in een langzaam tempo.",
+      "criteria": [
+        "Ik speel mijn partij mee met de tutorial op het niveau dat ik koos",
+        "Ik weet welk stuk ik nog moet oefenen"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Zing Way Maker mee met het origineel",
+          "stappen": [
+            "Iedereen zingt mee, ook op je nieuwe instrument."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Een nieuw instrument leren: klein beginnen",
+          "stappen": [
+            "Eén maat tot het lukt, dan twee.",
+            "Herhalen, herhalen, herhalen.",
+            "Pas daarna het tempo omhoog."
+          ]
+        },
+        {
+          "min": 30,
+          "soort": "doen",
+          "kop": "Oefen je nieuwe partij met de tutorial",
+          "stappen": [
+            "Niveau 1 of 2 van de songbox, langzaam.",
+            "Markeer het stuk waar je vastloopt.",
+            "Vraag een ervaren speler in je groep om hulp."
+          ],
+          "klaar": "Help iemand die jouw oude instrument nu speelt.",
+          "docent": "Loop vooral langs leerlingen op een nieuw instrument."
+        },
+        {
+          "min": 5,
+          "soort": "check",
+          "kop": "Duimen: kan ik mijn partij meespelen?",
+          "stappen": [
+            "Omhoog, opzij of omlaag."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "duimen",
+        "tekst": "Kan ik mijn partij meespelen met de tutorial? Duim omhoog, opzij, omlaag."
+      },
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Alle bandinstrumenten",
+        "Laptops voor de tutorials"
+      ]
+    },
+    "Way Maker: samenspel": {
+      "type": "praktijk",
+      "detail": "Way Maker: samen beginnen, tempo, dynamiek.",
+      "vraag": "Wat hebben we in dit jaar geleerd over samenspelen?",
+      "doel": "Je groep speelt couplet en refrein samen, met een strakke inzet, een vast tempo en dynamiek.",
+      "criteria": [
+        "Wij zetten samen in en houden het tempo",
+        "Ons refrein klinkt voller dan ons couplet"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: inzet en akkoorden",
+          "stappen": [
+            "Aftellen en de eerste vier maten van Way Maker, twee keer."
+          ]
+        },
+        {
+          "min": 5,
+          "soort": "uitleg",
+          "kop": "Alles van dit jaar in één les",
+          "stappen": [
+            "Aftellen en samen inzetten.",
+            "Luisteren naar elkaar.",
+            "Couplet zacht, refrein vol.",
+            "Doorspelen bij een fout."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Aftellen",
+                "t": "samen inzetten"
+              },
+              {
+                "k": "Luisteren",
+                "t": "naar elkaar"
+              },
+              {
+                "k": "Dynamiek",
+                "t": "zacht, dan vol"
+              },
+              {
+                "k": "Doorspelen",
+                "t": "ook na een fout"
+              }
+            ]
+          }
+        },
+        {
+          "min": 30,
+          "soort": "doen",
+          "kop": "Oefenen in je groep",
+          "stappen": [
+            "Couplet en refrein van Way Maker, met metronoom of drumloop.",
+            "Ervaren spelers helpen beginners met hun partij."
+          ],
+          "klaar": "Speel zonder metronoom: houden jullie het tempo?"
+        },
+        {
+          "min": 5,
+          "soort": "check",
+          "kop": "Ik luister bij één groep mee",
+          "stappen": [
+            "Speel couplet en refrein nog één keer in je groep.",
+            "Noem samen één sterk punt bij samenspel, ritme, toon of techniek."
+          ],
+          "docent": "Niemand speelt voor de klas."
+        }
+      ],
+      "formatief": {
+        "soort": "peerfeedback",
+        "tekst": "De groep noemt zelf één sterk punt bij samenspel, ritme, toon of techniek."
+      },
+      "identiteit": "Een nieuwe rol pakken is spannend. In een goede groep helpen de ervaren spelers de beginners.",
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Metronoom of drumloop per groep"
+      ]
+    },
+    "Way Maker: eigen arrangement": {
+      "type": "praktijk",
+      "detail": "Voor Way Maker zelf een intro, break en slot bedenken.",
+      "vraag": "Hoe maken we van Way Maker ons eigen arrangement?",
+      "doel": "Je groep bedenkt een eigen intro, een break en een slot en zet dat in het vormschema.",
+      "criteria": [
+        "Ons arrangement heeft een eigen intro, break en slot",
+        "Ons vormschema is bijgewerkt",
+        "Iedereen weet wat hij in de break doet"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "luisteren",
+          "kop": "Twee versies van één song",
+          "stappen": [
+            "Wat verschilt in de intro?",
+            "Wat verschilt in het slot?"
+          ],
+          "docent": "Origineel van Sinach en een live-versie van Way Maker klaarzetten."
+        },
+        {
+          "min": 10,
+          "soort": "uitleg",
+          "kop": "Maak de song van jezelf",
+          "stappen": [
+            "Intro: begin met één instrument.",
+            "Break: iedereen stopt, één instrument speelt door.",
+            "Slot: herhaal het refrein, sterf uit, of eindig hard op één tel."
+          ],
+          "beeld": {
+            "soort": "kaarten",
+            "items": [
+              {
+                "k": "Intro",
+                "t": "één instrument, dan de rest"
+              },
+              {
+                "k": "Break",
+                "t": "stop, één instrument door"
+              },
+              {
+                "k": "Slot",
+                "t": "uitsterven of hard op één"
+              }
+            ]
+          }
+        },
+        {
+          "min": 25,
+          "soort": "doen",
+          "kop": "Bedenk je arrangement en probeer het uit",
+          "stappen": [
+            "Kies een intro, een break en een slot voor Way Maker.",
+            "Zet ze in je vormschema.",
+            "Oefen de drie plekken apart, dan het hele lied."
+          ],
+          "klaar": "Voeg een extra refrein toe in een andere dynamiek."
+        },
+        {
+          "min": 5,
+          "soort": "afsluiten",
+          "kop": "Elke groep vertelt het plan in drie zinnen",
+          "stappen": [
+            "Onze intro is…",
+            "Onze break is…",
+            "Ons slot is…"
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "vormschema",
+        "tekst": "Bijgewerkt vormschema per groep inleveren, met intro, break en slot."
+      },
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Vormschema's op papier per groep",
+        "Origineel en een live-versie van Way Maker klaargezet"
+      ]
+    },
+    "Way Maker: doorspelen": {
+      "type": "praktijk",
+      "detail": "Het arrangement van Way Maker van begin tot eind.",
+      "vraag": "Staat ons arrangement van Way Maker van begin tot eind?",
+      "doel": "Je groep speelt het eigen arrangement helemaal door en neemt het op als generale repetitie.",
+      "criteria": [
+        "Wij spelen ons arrangement van intro tot slot",
+        "Onze opname staat klaar om terug te luisteren"
+      ],
+      "fasen": [
+        {
+          "min": 5,
+          "soort": "start",
+          "kop": "Opwarmen: intro en slot",
+          "stappen": [
+            "Alleen de intro, dan alleen het slot."
+          ]
+        },
+        {
+          "min": 30,
+          "soort": "doen",
+          "kop": "Generale repetitie: drie keer doorspelen",
+          "stappen": [
+            "Eén: langzaam en netjes.",
+            "Twee: op tempo.",
+            "Drie: opnemen."
+          ],
+          "klaar": "Luister de opname terug en kies één plek die je beter wilt."
+        },
+        {
+          "min": 10,
+          "soort": "gesprek",
+          "kop": "Terugluisteren en één verbeterpunt kiezen",
+          "stappen": [
+            "Luister de opname samen terug.",
+            "Kies één verbeterpunt voor de slotronde."
+          ]
+        }
+      ],
+      "formatief": {
+        "soort": "opname",
+        "tekst": "Generale repetitie opnemen; één verbeterpunt per groep voor de slotronde."
+      },
+      "materiaal": [
+        "mb"
+      ],
+      "benodigd": [
+        "Eén laptop per groep om op te nemen"
       ]
     }
   }
