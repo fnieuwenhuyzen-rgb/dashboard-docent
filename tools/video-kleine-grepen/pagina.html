@@ -1,0 +1,58 @@
+<!doctype html><meta charset=utf-8><body style="margin:0;background:#222;overflow:hidden"><video id=v src=/v.mp4 style="display:none" preload=auto playsinline></video><canvas id=c width=1280 height=720 style="width:100vw;height:auto;display:block"></canvas><button id=start style="position:fixed;left:0;bottom:0;width:100vw;height:60px;font-size:24px">start opname</button>
+<script>
+const v=document.getElementById('v'),c=document.getElementById('c'),x=c.getContext('2d',{willReadFrequently:true});
+const seek=t=>new Promise(r=>{v.onseeked=r;v.currentTime=t;setTimeout(r,2000)});
+const FONT='"Encode Sans","Segoe UI",sans-serif';
+const SY=[212,251,289,328,366,404],FR=[145,274,389,499,604,699,791,880];
+const fx=f=>FR[f]-0.4*(FR[f]-FR[f-1]);
+const K={1:'#F5A623',2:'#E8602C',3:'#9B59D0'},NAAM={1:'wijsvinger',2:'middelvinger',3:'ringvinger'};
+const GR={G:{g:'xxx003',v:{5:3}},C:{g:'xxx010',v:{4:1}},Em:{g:'xxx000',v:{}},D:{g:'xxx230',v:{3:1,4:2}},B7:{g:'xxx202',v:{3:1,5:2}}};
+const T0=6.218,BEAT=60/110,BAR=BEAT*4,PER=7*BAR;
+const START=[0,2,4,8,12,16,20,24]; // tellen binnen het refrein: G C | B7 | Em | D | G | B7 | Em
+const NM=['G','C','B7','Em','D','G','B7','Em'];
+function akk(t){const r=t-T0;if(r<0)return{nu:'G',na:'C',rest:(T0+BEAT*2-t)};if(r>=4*PER-BAR)return{nu:'Em',na:null,rest:9};const k=Math.floor(r/PER),b=(r-k*PER)/BEAT;let i=0;for(let j=0;j<8;j++)if(b>=START[j])i=j;const volg=i<7?START[i+1]:28;const na=i<7?NM[i+1]:(k<3?'G':null);return{nu:NM[i],na,rest:(volg-b)*BEAT};}
+let bord,hdr,pan,tit;
+async function bereid(){await new Promise(r=>{if(v.readyState>=2)r();else{v.onloadeddata=r;setTimeout(r,5000)}});
+ const ts=[];for(let t=8;t<67;t+=1.37)ts.push(t);const lagen=[];const o=new OffscreenCanvas(1280,720),ox=o.getContext('2d',{willReadFrequently:true});
+ for(const t of ts){await seek(t);ox.drawImage(v,0,0);lagen.push(ox.getImageData(0,0,1280,720).data);}
+ const uit=ox.createImageData(1280,720),m=(lagen.length/2)|0,b=new Uint8Array(lagen.length);
+ for(let i=0;i<uit.data.length;i+=4){for(let k=0;k<3;k++){for(let l=0;l<lagen.length;l++)b[l]=lagen[l][i+k];b.sort();uit.data[i+k]=b[m];}uit.data[i+3]=255;}
+ ox.putImageData(uit,0,0);
+ const med=new OffscreenCanvas(1280,720);med.getContext('2d').drawImage(o,0,0);
+ const px=(a,b)=>{const d=ox.getImageData(a,b,1,1).data;return`rgb(${d[0]},${d[1]},${d[2]})`};
+ hdr=px(600,100);pan=px(1235,500);
+ const bx=704,bw=82,y0=188,h=246;
+ for(const[a,w]of[[150,120],[278,107],[393,102]])ox.drawImage(med,bx,y0,bw,h,a,y0,w,h);
+ ox.save();ox.beginPath();ox.arc(443,309,17,0,7);ox.clip();ox.drawImage(med,0,0);ox.restore();
+ bord=o;await seek(1);const q=new OffscreenCanvas(1280,720),qx=q.getContext('2d',{willReadFrequently:true});qx.drawImage(v,0,0);const e=qx.getImageData(420,270,1,1).data;tit=`rgb(${e[0]},${e[1]},${e[2]})`;return{hdr,pan,tit,font:document.fonts.check('20px "Encode Sans"')};}
+function vinger(cx,cy,n,r,sz){x.beginPath();x.arc(cx,cy,r,0,7);x.fillStyle=K[n];x.fill();x.lineWidth=2;x.strokeStyle='#fff';x.stroke();x.fillStyle='#fff';x.font=`700 ${sz}px ${FONT}`;x.textAlign='center';x.textBaseline='middle';x.fillText(n,cx,cy+1);}
+function diagram(n,a,b,sp,fh,k){const g=GR[n];x.strokeStyle='#fff';x.lineWidth=1.3;for(let i=0;i<6;i++){x.beginPath();x.moveTo(a+i*sp,b);x.lineTo(a+i*sp,b+4*fh);x.stroke();}for(let j=0;j<=4;j++){x.lineWidth=j?1.3:5;x.beginPath();x.moveTo(a,b+j*fh);x.lineTo(a+5*sp,b+j*fh);x.stroke();}
+ for(let s=0;s<6;s++){const ch=g.g[s],cx=a+s*sp;if(ch==='x'){x.fillStyle='#ff5a78';x.font=`700 ${k*17}px ${FONT}`;x.textAlign='center';x.textBaseline='middle';x.fillText('×',cx,b-16*k);}else if(ch==='0'){x.lineWidth=2;x.strokeStyle='#fff';x.beginPath();x.arc(cx,b-16*k,6*k,0,7);x.stroke();x.lineWidth=1.3;}else vinger(cx,b+(+ch-.5)*fh,g.v[s],12*k+1,15*k+1);}}
+function teken(t){x.globalAlpha=1;x.drawImage(v,0,0);if(t<4){x.fillStyle=tit;x.fillRect(380,262,520,42);x.fillStyle='#C9A0F0';x.font=`700 30px ${FONT}`;x.textAlign='center';x.textBaseline='middle';x.fillText('Gitaar · niveau 1 · kleine grepen',640,283);return;}
+ const a=akk(t),g=GR[a.nu];
+ x.fillStyle=hdr;x.fillRect(0,20,900,168);x.drawImage(bord,0,188,900,246,0,188,900,246);x.fillStyle=hdr;x.fillRect(0,434,900,70);
+ x.textAlign='left';x.textBaseline='alphabetic';x.fillStyle='#fff';x.font=`800 104px ${FONT}`;x.fillText(a.nu,36,132);x.fillStyle='#C9A0F0';x.font=`600 22px ${FONT}`;x.fillText('gitaar · kleine greep',42,170);
+ x.fillStyle='rgba(14,8,28,.62)';x.fillRect(150,190,732,118);
+ x.textBaseline='middle';x.textAlign='center';
+ for(let s=0;s<6;s++){const ch=g.g[s];if(ch==='x'){x.fillStyle='#ff5a78';x.font=`700 24px ${FONT}`;x.fillText('×',168,SY[s]);}else if(ch==='0'){x.lineWidth=2.5;x.strokeStyle='#fff';x.beginPath();x.arc(168,SY[s],9,0,7);x.stroke();}}
+ if(a.na&&a.rest<.75){x.globalAlpha=Math.min(1,(0.75-a.rest)/.3)*.9;const h=GR[a.na];x.setLineDash([5,5]);x.lineWidth=2;x.strokeStyle='#fff';for(let s=0;s<6;s++){const ch=h.g[s];if(ch>'0'&&ch!=='x'&&g.g[s]!==ch){x.beginPath();x.arc(fx(+ch),SY[s],18,0,7);x.stroke();x.fillStyle='#fff';x.font=`600 18px ${FONT}`;x.fillText(h.v[s],fx(+ch),SY[s]+1);}}x.setLineDash([]);x.globalAlpha=1;}
+ for(let s=0;s<6;s++){const ch=g.g[s];if(ch>'0'&&ch!=='x')vinger(fx(+ch),SY[s],g.v[s],24,24);}
+ const ond={Em:'Em: geen vingers, sla de drie dunste snaren aan',D:'Sla alleen de drie dunste snaren aan (eigenlijk Dsus2)',B7:'Sla alleen de drie dunste snaren aan (zonder D♯)'}[a.nu]||'Sla alleen de drie dunste snaren aan';
+ x.textAlign='left';x.fillStyle='#fff';x.font=`600 24px ${FONT}`;x.fillText(ond,150,470);
+ x.fillStyle=pan;x.beginPath();x.roundRect(909,148,348,372,22);x.fill();
+ x.textAlign='center';x.textBaseline='middle';x.fillStyle='#ff5a78';x.font=`700 15px ${FONT}`;x.fillText('nu',1020,178);x.fillStyle='#fff';x.font=`800 30px ${FONT}`;x.fillText(a.nu,1020,212);diagram(a.nu,945,282,30.2,41.5,1);
+ x.globalAlpha=.65;x.fillStyle='#ddd';x.font=`600 15px ${FONT}`;x.textAlign='center';x.textBaseline='middle';x.fillText('straks',1196,178);if(a.na){x.fillStyle='#fff';x.font=`700 22px ${FONT}`;x.textAlign='center';x.textBaseline='middle';x.fillText(a.na,1196,212);diagram(a.na,1144,282,21,28.75,.7);}x.globalAlpha=1;
+ for(const[n,lx,ly]of[[1,938,472],[2,1090,472],[3,938,500]]){vinger(lx,ly,n,11,14);x.fillStyle='#ddd';x.font=`500 16px ${FONT}`;x.textAlign='left';x.textBaseline='middle';x.fillText(NAAM[n],lx+18,ly+1);}
+}
+window.proef=async t=>{await seek(t);teken(t);return akk(t)};
+async function neemOp(){const ac=new AudioContext();const bron=ac.createMediaElementSource(v);const dst=ac.createMediaStreamDestination();bron.connect(dst);await ac.resume();v.muted=false;
+ await seek(0);teken(0);const st=c.captureStream(30);st.addTrack(dst.stream.getAudioTracks()[0]);const rec=new MediaRecorder(st,{mimeType:'video/mp4;codecs=avc1,mp4a.40.2',videoBitsPerSecond:6000000,audioBitsPerSecond:192000});const delen=[];rec.ondataavailable=e=>{if(e.data.size)delen.push(e.data)};
+ const info=window.info={status:'bezig',frames:0,start:performance.now(),fout:null};
+ const lus=()=>{teken(v.currentTime);info.frames++;};const iv=setInterval(lus,1000/30);
+ rec.start(1000);await v.play();
+ await new Promise(r=>{v.onended=r});clearInterval(iv);teken(v.duration);await new Promise(r=>setTimeout(r,300));
+ await new Promise(r=>{rec.onstop=r;rec.stop()});const blob=new Blob(delen,{type:'video/mp4'});info.grootte=blob.size;info.duur=(performance.now()-info.start)/1000;
+ await fetch('/opname.mp4',{method:'POST',body:blob});info.status='klaar';}
+document.getElementById('start').onclick=()=>neemOp().catch(e=>{window.info=Object.assign(window.info||{},{status:'fout',fout:String(e)})});
+window.bereid=bereid;window.akk=akk;
+</script>
