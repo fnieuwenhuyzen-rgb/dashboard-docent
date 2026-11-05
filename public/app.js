@@ -1809,7 +1809,7 @@ let PAL = null;
 function paletOpen() {
   let el = $('#palet');
   if (!el) { el = document.createElement('div'); el.id = 'palet'; el.className = 'palet'; el.hidden = true;
-    el.innerHTML = `<div class="palet-in" role="dialog" aria-modal="true" aria-label="Opdrachtbalk"><input id="palQ" autocomplete="off" spellcheck="false" enterkeyhint="go" placeholder="Typ wat je wilt doen, of een taak: mail ouders koor morgen 10:30"><div id="palL" class="palet-l" role="listbox"></div><p class="palet-hint">Enter kiest · pijltjes bladeren · Esc sluit · op de tablet kun je inspreken met de microfoon van je toetsenbord</p></div>`;
+    el.innerHTML = `<div class="palet-in" role="dialog" aria-modal="true" aria-label="Opdrachtbalk"><input id="palQ" autocomplete="off" spellcheck="false" enterkeyhint="go" placeholder="Zoek of typ een taak: toets v4, lesweek 20, mail ouders morgen 10:30"><div id="palL" class="palet-l" role="listbox"></div><p class="palet-hint">Enter kiest de bovenste regel · pijltjes bladeren · &quot;taak ...&quot; maakt altijd een taak · help toont wat kan · Esc sluit · op de tablet kun je inspreken met de microfoon van je toetsenbord</p></div>`;
     document.body.appendChild(el); }
   PAL = { acties: paletActies(), q: '', i: 0, L: [] }; el.hidden = false; $('#palQ').value = ''; paletToon(); setTimeout(() => $('#palQ').focus(), 0);
 }
@@ -1831,18 +1831,79 @@ function paletActies() {
   voeg('Open Magister', 'presentie absenten huiswerk logboek', () => window.open(MAGURL(), 'magister'));
   return A;
 }
+/* zoeken: alles wat in de app staat als regels boven "Nieuwe taak", met het antwoord op de regel. Alleen in het geheugen: leerlingnamen gaan nergens heen */
+const palNorm = x => String(x == null ? '' : x).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9:]+/g, ' ').trim();
+const palHooi = x => ' ' + palNorm(x) + ' ';
+const PAL_STOP = new Set(['wanneer', 'wat', 'waar', 'welke', 'is', 'zijn', 'de', 'het', 'een', 'in', 'op', 'er', 'gebeurt', 'doet', 'doen', 'heeft', 'hebben', 'hoe', 'laat', 'van']); // "wanneer is PT1 van v4" zoekt op PT1 en v4
+const palWoorden = q => { const w = palNorm(q).split(' ').filter(Boolean); const z = w.filter(x => !PAL_STOP.has(x)); return z.length ? z : w; };
+const palPast = (h, x) => /^\d+$/.test(x) ? h.includes(' ' + x + ' ') : x.length >= 5 ? h.includes(x) : h.includes(' ' + x); // getallen exact (lesweek 2 is geen lesweek 20), kort vanaf het begin van een woord, lang overal
+const palDag = s => { const d = dOf(s); return `${d.getDate()} ${MND[d.getMonth()]}`; };
+const palKort = x => { const t = String(x || ''); return t.length > 130 ? t.slice(0, 127).trim() + '…' : t; };
+const palRegel = (...x) => palKort(x.filter(Boolean).join(' · '));
+function palGroepen() { // je eigen groepen; zonder rooster alle groepen uit de leergangen
+  const eigen = rooGroepen().filter(g => B.leergangen[leergangVan(g)]); const L = eigen.length ? eigen : alleGroepen().map(x => x.g);
+  return L.map(g => { const lg = leergangVan(g); return { g, lg, z: `${g} ${lgNaam(lg)} ${lg}` }; });
+}
+function paletDag(d, key) { if (d && key) agSel[d] = key; dagKeuze = d || null; if (route.naam !== 'vandaag') location.hash = 'vandaag'; else render(); }
+function paletWeek(d) { weekKeuze = maandagVan(d); if (route.naam !== 'week') location.hash = 'week'; else render(); }
+const paletKlas = g => { location.hash = 'jaar/' + encodeURIComponent(g); };
+function paletIndex() {
+  const I = []; const G = palGroepen();
+  const voeg = (soort, basis, t, sub, z, run, v, e, wk) => I.push({ soort, basis, t, sub: palKort(sub), run, v: v || '', e: e || v || '', wk, n: I.length, h: palHooi(t + ' ' + (z || '')), th: palHooi((soort === 'toets' ? 'toets ' : '') + t), nm: palNorm(t) });
+  const dz = d => d ? palDag(d) : '';
+  const wkDatum = w => (B.kalender.weken.find(k => k.w === w) || {}).datum;
+  PAL.acties.forEach(a => I.push({ soort: 'actie', basis: 85, t: a.t, sub: a.sub, run: a.run, v: '', e: '', n: I.length, h: palHooi(a.z), th: palHooi(a.t) }));
+  G.forEach(({ g, lg, z }) => { const bms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); const gehad = new Set();
+    const beoordeel = (m, d) => voeg('toets', 80, `Beoordelen ${m.toets}: ${g}`, m.titel, `toets beoordelen beoordeling cijfers nakijken rubric ${m.thema || ''} ${m.titel} ${z}`, () => { location.hash = 'beoordelen/' + encodeURIComponent(m.id) + '/' + encodeURIComponent(g); }, d);
+    jaarToetsen(g).forEach(o => { const T = o.t; const y = o.a && (o.a.vast ? o.a.slot : o.a.grens); const d = (y && y.s) || T.datum || wkDatum(o.w);
+      voeg('toets', 80, `${T.id} ${g}: ${T.naam || ''}`, palRegel(o.klaar ? 'geweest' : '', d ? fmtD(d) : '', 'lesweek ' + o.w, T.weging != null ? 'weging ' + T.weging : '', T.waar, T.stof), `toets toetsen ${T.soort || ''} ${z} ${T.stof || ''} ${dz(d)}`, () => paletKlas(g), d, d, o.w);
+      bms.filter(m => m.toets.split(' · ')[0] === T.id).forEach(m => { gehad.add(m); beoordeel(m, d); }); });
+    bms.filter(m => !gehad.has(m)).forEach(m => beoordeel(m)); }); // beoordelingen die bij geen toets horen, zoals een songbox
+  const perLg = {}; G.filter(x => !MEE_MET[x.g]).forEach(x => (perLg[x.lg] = perLg[x.lg] || []).push(x));
+  Object.entries(perLg).forEach(([lg, gs]) => reeks(lg).forEach(x => { const l = les(x); if (!l.titel || l.type === 'leeg' || l.type === 'uitval') return; const st = gs.length === 1 ? status(gs[0].g, x.id).st : '';
+    voeg('les', 40, `${gs.map(k => k.g).join(', ')}: ${l.titel}`, palRegel('lesweek ' + x.w, 'les ' + x.li, st, l.vraag), `les lessen ${gs.map(k => k.z).join(' ')} ${l.vraag || ''} ${(l.kaart || []).join(' ')} ${l.type || ''}`, () => openBewerk(x.id), x.week.datum, x.week.datum, x.w); }));
+  const tw = {}; G.forEach(({ g, lg, z }) => ((B.toetsweken || {})[lg] || []).forEach(k => { const c = `${k.n}|${k.van}|${k.tot}`; (tw[c] = tw[c] || { k, gs: [], z: '' }).gs.push(g); tw[c].z += ' ' + z; }));
+  Object.values(tw).forEach(({ k, gs, z }) => voeg('toetsweek', 70, `Toetsweek ${k.n}`, palRegel(`${fmtD(k.van)} – ${fmtD(k.tot)}`, gs.join(', ')), `tw${k.n} toetsen ${z}`, () => paletWeek(k.van), k.van, k.tot));
+  ((B.koor || {}).agenda || []).forEach(k => voeg('koor', 65, k.type === 'concert' ? koorNaam(k) : 'Koor: ' + k.titel, palRegel(fmtD(k.d), k.tijdTekst, k.plaats), `koor koorrepetitie repetitie ${k.type} ${k.titel} ${k.concert || ''} ${(k.plan || []).map(p => p.stuk).join(' ')} ${dz(k.d)}`, () => paletDag(k.d, 'koor:' + k.d), k.d));
+  ((B.koor || {}).taken || []).forEach(k => voeg('koor', 65, k.titel, palRegel('koortaak', fmtD(k.d), k.sub), `koor taak ${k.sub || ''} ${dz(k.d)}`, () => paletDag(k.d), k.d));
+  sectieItems().filter(i => !/^toetsweek/i.test(i.titel)).forEach(i => voeg('sectie', 55, i.titel, palRegel(i.taak ? 'sectietaak' : 'sectie', fmtD(i.d) + (i.tot ? ' – ' + fmtD(i.tot) : ''), i.tijd, i.info), `sectie ${i.soort || ''} ${i.info || ''} ${dz(i.d)}`, i.taak ? () => { location.hash = 'sectie'; } : () => paletDag(i.d, 'sectie:' + i.id), i.d, i.tot || i.d));
+  (S.taken || []).forEach(k => { const d = k.plan ? k.plan.dag : k.d; voeg('taak', k.af ? 40 : 75, k.titel, palRegel(k.af ? 'af' : '', k.afspraak ? 'afspraak' : 'taak', k.plan ? `${fmtD(k.plan.dag)} ${k.plan.van}` : k.d ? 'deadline ' + fmtD(k.d) : 'zonder datum', BRON[k.bron]), `taak taken ${k.afspraak ? 'afspraak' : ''} ${BRON[k.bron] || ''} ${dz(d)}`, () => paletDag(d, 'taak:' + k.id), d); });
+  Object.entries((S.beoord || {}).lijsten || {}).forEach(([g, L]) => (L || []).forEach(ll => voeg('leerling', 72, ll.naam, `leerling · klas ${g}`, `leerling klas ${g}`, () => paletKlas(g))));
+  return I;
+}
+function paletWeekRegels(q) { // lesweek 20, lw 20, wk 5 (kalenderweek), week 20 (allebei); eventueel met een groep erachter
+  const n = palNorm(q); const m = n.match(/\b(les ?week|lw|wk|week) ?(\d{1,2})\b/); if (!m) return [];
+  const rest = n.replace(m[0], ' ').split(' ').filter(x => x && !PAL_STOP.has(x)); const G = palGroepen();
+  if (!rest.every(x => G.some(k => palPast(palHooi(k.z), x)))) return []; // "lesweek 20 voorbereiden" is een taak
+  const K = B.kalender.weken; const nr = +m[2]; const R = [];
+  if (m[1] !== 'wk') R.push(K.find(k => k.w === nr)); if (m[1] === 'wk' || m[1] === 'week') R.push(K.find(k => k.wk === nr));
+  return [...new Set(R.filter(Boolean))].map(k => { const ev = [...new Set(G.map(x => (((B.leergangen[x.lg] || {}).weken || []).find(w => w.w === k.w) || {}).event).filter(Boolean))];
+    return { soort: 'lesweek', wk: k.w, rest, t: `Lesweek ${k.w}: ${palDag(k.datum)} – ${palDag(addD(k.datum, 4))}`, sub: palRegel('kalenderweek ' + k.wk, ...ev), run: () => paletWeek(k.datum) }; });
+}
+const PAL_HULP = [['Een toets: toets v4', 'toets v4'], ['Een lesweek: lesweek 20', 'lesweek 20'], ['De toetsweken: toetsweek', 'toetsweek'], ['Koor of sectie: generale', 'generale'], ['Beoordelen: beoordelen v4', 'beoordelen v4'], ['Een leerling: typ een naam', 'leerling '], ['Een taak met tijd: mail ouders koor morgen 10:30', 'taak ']];
+function paletZoek(q) {
+  if (!PAL.index) { try { PAL.index = paletIndex(); } catch (e) { console.warn(e); PAL.index = []; } } // een fout in het zoeken mag taken maken nooit in de weg zitten
+  const w = palWoorden(q); const hulp = /^(help|hulp|\?+)$|^wat kan\b/i.test(q) ? PAL_HULP.map(([t, zet]) => ({ soort: 'hulp', t, sub: 'Enter vult dit in', zet })) : [];
+  if (!w.length) return hulp;
+  const wk = paletWeekRegels(q); const s0 = vandaag(); const gezien = new Set(); const per = {}; const MAX = { les: wk.length ? 24 : 6, leerling: 5, koor: 5, sectie: 5, toetsweek: 6 };
+  const weken = new Set(wk.map(k => k.wk)); const z = wk.length ? wk[0].rest : w; // bij een lesweek telt het weeknummer van de regel, niet een los getal in de tekst
+  const treffers = PAL.index.filter(a => (!wk.length || weken.has(a.wk)) && z.every(x => palPast(a.h, x))).map(a => ({ a, sc: a.basis + (z.length && z.every(x => palPast(a.th, x)) ? 60 : 0) + (a.nm === z.join(' ') ? 20 : 0) - (a.e && a.e < s0 ? 25 : 0) }))
+    .sort((p, r) => r.sc - p.sc || (p.a.v || '9').localeCompare(r.a.v || '9') || p.a.n - r.a.n).map(x => x.a)
+    .filter(a => { const c = a.soort === 'toetsweek' ? a.t + a.sub : a.t; if (gezien.has(c)) return false; gezien.add(c); per[a.soort] = (per[a.soort] || 0) + 1; return per[a.soort] <= (MAX[a.soort] || 99); });
+  return hulp.concat(wk, treffers).slice(0, wk.length ? 26 : 12);
+}
 function paletLijst() {
-  const q = PAL.q.trim(); const w = q.toLowerCase().split(/\s+/).filter(Boolean);
-  let L = PAL.acties.filter(a => w.every(x => a.z.includes(x)));
-  if (q) { const t = leesTaak(q); const taak = { t: (t.afspraak ? 'Nieuwe afspraak: ' : 'Nieuwe taak: ') + t.titel, sub: t.uitleg, let: t.waarschuw, run: () => taakUitPalet(t) };
-    L = t.wanneer || /^(taak|zet|plan)\b/i.test(q) || !L.length ? [taak].concat(L) : L.concat([taak]); }
-  return L.slice(0, 8);
+  const q = PAL.q.trim(); if (!q) return PAL.acties.slice(0, 8);
+  const t = leesTaak(q); const taak = { t: (t.afspraak ? 'Nieuwe afspraak: ' : 'Nieuwe taak: ') + t.titel, sub: t.uitleg, let: t.waarschuw, run: () => taakUitPalet(t) };
+  const hits = paletZoek(q); // een treffer gaat voor, zodat Enter niet per ongeluk een taak maakt; wie "taak ..." typt maakt altijd een taak
+  return /^(taak|zet|plan)\b/i.test(q) ? [taak].concat(hits) : hits.concat([taak]);
 }
 function paletToon() {
   PAL.L = paletLijst(); PAL.i = Math.min(PAL.i, Math.max(0, PAL.L.length - 1));
   $('#palL').innerHTML = PAL.L.length ? PAL.L.map((a, j) => `<button type="button" class="palet-a${j === PAL.i ? ' sel' : ''}" role="option" aria-selected="${j === PAL.i}" data-pal="${j}"><b>${esc(a.t)}</b>${a.sub ? `<small>${esc(a.sub)}</small>` : ''}${a.let ? `<small class="let">${esc(a.let)}</small>` : ''}</button>`).join('') : '<p class="leeg" style="padding:.6rem">Typ verder…</p>';
+  const sel = $('#palL .sel'); if (sel) sel.scrollIntoView({ block: 'nearest' });
 }
-function paletKies(j) { const a = PAL && PAL.L[j]; if (!a) return; paletDicht(); a.run(); }
+function paletKies(j) { const a = PAL && PAL.L[j]; if (!a) return; if (a.zet != null) { $('#palQ').value = a.zet; PAL.q = a.zet; PAL.i = 0; paletToon(); $('#palQ').focus(); return; } paletDicht(); a.run(); }
 const DAGW = { zondag: 0, maandag: 1, dinsdag: 2, woensdag: 3, donderdag: 4, vrijdag: 5, zaterdag: 6, ma: 1, di: 2, wo: 3, do: 4, vr: 5 };
 function datumVan(dag, mnd) { const j = dOf(vandaag()).getFullYear(); let x = ymd(new Date(j, mnd, dag, 12)); if (x < vandaag()) x = ymd(new Date(j + 1, mnd, dag, 12)); return x; }
 const AFSPRAAK = /afspraak|gesprek|overleg|vergader|bespreking|meeting|bellen met/i;
