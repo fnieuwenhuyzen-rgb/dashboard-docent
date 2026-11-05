@@ -2147,11 +2147,77 @@ async function syncKlik(D) {
   return false;
 }
 
+/* ---------- agendafeed: Lesdag in Outlook ----------
+   Een lijst toegestane punten (agendaItems), als iCal naar /api/agenda; de worker lesdag-agenda geeft die aan Outlook via een geheime link.
+   Alleen wat hier expliciet staat gaat mee. Eigen taken en afspraken niet: daar kan vrije tekst met namen in staan. Notities en leerlinggegevens nooit.
+   Eén apparaat werkt de feed bij (de vlag staat per apparaat): zonder synchroniseren zou een apparaat zonder rooster de agenda anders leegmaken. */
+const AGF_VLAG = 'lesdag-agendafeed'; let AGF = null;
+const AGF_DAGEN = { terug: 14, vooruit: 42 };
+function agendaItems() {
+  const t = vandaag(), a = addD(t, -AGF_DAGEN.terug), b = addD(t, AGF_DAGEN.vooruit), P = planning(a, b), uit = [];
+  for (let s = a; s <= b; s = addD(s, 1)) {
+    const p = P[s]; if (!p) continue; const A = dagItems(s, p);
+    for (const it of A.items.concat(A.heleDag)) {
+      const k = it.key, uid = s + ':' + k; let v = it.van != null ? it.van : null, w = it.tot != null ? it.tot : null, titel = it.titel, lokaal = it.lokaal || '';
+      if (/^les:/.test(k)) { if (it.soort !== 'les' && it.soort !== 'klaar') continue; const sub = it.sub && it.sub !== 'alles gegeven' ? it.sub : ''; titel = it.titel + (sub ? ': ' + sub : ''); }
+      else if (/^z:/.test(k)) { v = it.z.van; w = it.z.tot; if (it.z.dienst) titel = 'Surveillance: ' + titel; else if (it.z.toets && !it.tz) titel = 'Toets: ' + titel; }
+      else if (/^tw:/.test(k)) { /* toets zonder tijd: hele dag */ }
+      else if (/^koor:/.test(k)) { if (it.soort !== 'koor') continue; const kr = it.koor; v = kr.van ? minuten(kr.van) : null; w = kr.tot ? minuten(kr.tot) : null; titel = koorNaam(kr) + (kr.type === 'concert' ? '' : ': ' + kr.titel); lokaal = kr.plaats || ''; }
+      else if (/^sectie:/.test(k)) { const i = it.i; titel = (i.taak ? 'Sectie, deadline: ' : '') + i.titel; const tm = !i.taak && !i.tot ? sectieTijd(i) : null; v = tm ? tm.van : null; w = tm ? tm.tot : null; lokaal = ''; }
+      else continue; // koffie, vrij, pauze, rust, eigen taken en afspraken, reclame
+      uit.push({ uid, d: s, van: v, tot: w, titel, lokaal });
+    }
+  }
+  return uit;
+}
+const agfCfg = () => (window.LESDAG_CONFIG || {}).agendaFeed || '';
+const agfAan = () => { try { return localStorage.getItem(AGF_VLAG) === '1'; } catch (e) { return false; } };
+const agfLink = () => AGF && AGF.token ? agfCfg() + '/' + AGF.token + '.ics' : '';
+async function agfApi(method, body) {
+  const r = await fetch('/api/agenda', { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, redirect: 'manual' });
+  if (!r.ok) throw new Error(r.status || 'login');
+  return r.json();
+}
+async function agendaBij(forceer) { // true als er iets is verstuurd
+  if (!agfAan() || !navigator.onLine) return false;
+  const punten = agendaItems(); if (!punten.length) return false; // nooit een lege agenda over een goede heen zetten
+  const inhoud = JSON.stringify(punten); let oud = null; try { oud = localStorage.getItem(AGF_VLAG + '-stand'); } catch (e) {}
+  if (!forceer && oud === inhoud) return false;
+  const st = await agfApi('PUT', { ics: AGENDAFEED.ics(punten, Date.now()) });
+  AGF = Object.assign(AGF || {}, st, { punten: punten.length });
+  try { localStorage.setItem(AGF_VLAG + '-stand', inhoud); } catch (e) {}
+  return true;
+}
+function agendaStart() {
+  if (!agfCfg()) return;
+  const beurt = () => { if (agfAan() && !document.hidden && syncMag()) agendaBij(false).catch(() => {}); };
+  setTimeout(beurt, 20000); setInterval(beurt, 10 * 60000);
+}
+function agendaKaart() {
+  if (!agfCfg()) return '';
+  const wat = '<p class="lead">Lessen, toetsen, surveillance, koor en sectiepunten van twee weken terug tot zes weken vooruit, als eigen agenda in Outlook. Eigen taken, afspraken, notities en leerlinggegevens gaan niet mee. Alleen lezen; een wijziging staat vaak pas na enkele uren in Outlook.</p>';
+  if (!agfAan()) return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<div class="knoppen"><button class="btn hoofd" data-agf="maak">Agendalink maken</button></div></div>`;
+  if (!AGF) { AGF = { laden: true }; agfApi('GET').then(st => { AGF = st; }).catch(() => { AGF = { fout: true }; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
+  const stand = AGF.laden ? 'Even kijken…' : AGF.fout ? 'De agenda is nu niet bereikbaar.' : `Bijgewerkt: ${esc(new Date(AGF.bijgewerkt).toLocaleString('nl-NL'))}${AGF.punten ? ', ' + AGF.punten + ' punten' : ''}.`;
+  return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<p class="lead">Dit apparaat werkt de agenda bij als Lesdag open staat. Toevoegen in Outlook op het web: Agenda, Agenda toevoegen, Abonneren via internet, link plakken. Behandel de link als een wachtwoord: wie hem heeft, ziet deze agenda.</p><p class="sub">${stand}</p><div class="knoppen"><button class="btn hoofd" data-agf="kopie">Link kopiëren</button><button class="btn" data-agf="nu">Nu bijwerken</button><button class="btn" data-agf="nieuw">Nieuwe link</button><button class="btn" data-agf="stop">Stoppen</button></div></div>`;
+}
+async function agendaKlik(D) {
+  if (D.agf == null) return false;
+  try {
+    if (D.agf === 'maak') { const st = await agfApi('GET'); AGF = st.aan ? st : await agfApi('POST'); localStorage.setItem(AGF_VLAG, '1'); await agendaBij(true); toast('Agendalink staat klaar'); }
+    else if (D.agf === 'kopie') { if (!agfLink()) AGF = await agfApi('GET'); await navigator.clipboard.writeText(agfLink()); toast('Link gekopieerd'); }
+    else if (D.agf === 'nu') { await agendaBij(true); toast('Agenda bijgewerkt'); }
+    else if (D.agf === 'nieuw') { if (!confirm('Nieuwe link maken? De oude werkt dan niet meer: je moet in Outlook opnieuw abonneren.')) return true; AGF = await agfApi('POST'); await agendaBij(true); toast('Nieuwe link staat klaar'); }
+    else if (D.agf === 'stop') { if (!confirm('Agenda stoppen? De link werkt dan niet meer. Verwijder de agenda ook zelf uit Outlook.')) return true; await agfApi('DELETE'); localStorage.removeItem(AGF_VLAG); localStorage.removeItem(AGF_VLAG + '-stand'); AGF = null; toast('Agenda gestopt'); }
+  } catch (e) { toast('Dat lukt nu niet. Ben je nog ingelogd?'); }
+  render(); return true;
+}
+
 /* ---------- instellingen ---------- */
 function viewInstellingen() {
   const on = M365.enabled(); const acc = M365.account;
   return `<div class="kop"><div><h1>Instellingen</h1></div></div>
-  ${syncKaart()}<div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div>${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
+  ${syncKaart()}${agendaKaart()}<div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div>${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
   <div class="kaart"><h2>Rooster uit Zermelo</h2>${zProxy() ? `<p class="lead">Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie) en plak die hier. Lesdag leest dan vak, groep, lokaal en soort afspraak rechtstreeks uit Zermelo. De koppeling gaat mee met synchroniseren. Verwijderen hier trekt hem niet in: dat doe je in Zermelo bij Koppelingen.</p>
     <form class="form" id="zKoppelForm"><div class="rij"><label style="flex:3 1 18rem">Koppelcode <input id="zCode" type="password" autocomplete="off" placeholder="${zApiToken() ? 'gekoppeld' : '12 cijfers'}"></label><button class="btn hoofd" type="submit">Koppelen</button>${zApiToken() ? '<button class="btn rood" type="button" data-zapiweg="">Koppeling verwijderen</button>' : ''}</div></form>
     <p class="lead">Reserve: als de koppeling niet werkt, gebruikt Lesdag je agendalink. Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
@@ -2450,6 +2516,7 @@ document.addEventListener('click', async e => {
   if (D.logout != null) { M365.logout(); return; }
   if (D.sync != null) { await syncNu(true); return; }
   if (await syncKlik(D)) return;
+  if (await agendaKlik(D)) return;
   if (D.zophalen != null) { await zOphalen(true); return; }
   if (D.zkopie != null) { try { await navigator.clipboard.writeText(zOverzichtTekst()); toast('Gekopieerd. Plak het in de chat bij het nakijken.'); } catch (err) { toast('Kopiëren lukt niet in deze browser'); } return; }
   if (D.zweg != null) { delete S.zermeloToken; if (!zApiToken()) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); return; }
@@ -2986,6 +3053,7 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
   syncStart();
+  agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
 })().catch(e => { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Lesdag start niet</h2><p class="lead">${esc(e && e.message)}</p></div>`; });

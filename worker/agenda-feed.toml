@@ -1,0 +1,9 @@
+# Worker lesdag-agenda, los van Pages. Online zetten: wrangler deploy -c worker/agenda-feed.toml
+name = "lesdag-agenda"
+main = "agenda-feed.js"
+compatibility_date = "2026-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lesdag-agenda"
+database_id = "f3516d9d-c01c-4472-b00f-50dc3f3026e6"

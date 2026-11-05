@@ -14,3 +14,9 @@ binding = "DB"
 database_name = "lesdag-sync"
 database_id = "771e21c8-c23f-404e-b70a-a0b304005a23"
 migrations_dir = "migrations"
+
+# Alleen de agendafeed voor Outlook, zonder leerlinggegevens: de openbare worker lesdag-agenda leest dezelfde database.
+[[env.production.d1_databases]]
+binding = "AGENDA"
+database_name = "lesdag-agenda"
+database_id = "f3516d9d-c01c-4472-b00f-50dc3f3026e6"

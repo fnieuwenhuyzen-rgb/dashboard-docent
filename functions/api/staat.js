@@ -60,7 +60,7 @@ const json = (o, status = 200) => new Response(JSON.stringify(o), { status, head
 /* ---- Access-token controleren (zelfde aanpak als de Koorapp) ---- */
 let keyCache = { at: 0, keys: {} };
 
-async function whoAmI(request, env) {
+export async function whoAmI(request, env) {
   // Alleen lokaal (wrangler pages dev --binding DEV_EMAIL=...) mag een vast testadres gebruikt worden.
   const host = new URL(request.url).hostname;
   if (env.DEV_EMAIL && (host === "localhost" || host === "127.0.0.1")) return env.DEV_EMAIL.toLowerCase();
