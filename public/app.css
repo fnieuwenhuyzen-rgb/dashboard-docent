@@ -146,7 +146,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .zoek button small{display:block;color:var(--muted)}
 
 /* lesmodus: volledig scherm voor het digibord */
-.les{position:fixed;inset:0;z-index:60;background:#17121f;color:#f6f1fa;display:grid;grid-template-rows:auto 1fr auto auto;color-scheme:dark;--c:#5B247F;--z:#d8b8ff;font-family:var(--lees)}
+.les{position:fixed;inset:0;z-index:60;background:#17121f;color:#f6f1fa;display:grid;grid-template-rows:auto 1fr auto auto auto;color-scheme:dark;--c:#5B247F;--z:#d8b8ff;font-family:var(--lees)}
 .les::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 0% 100%,color-mix(in srgb,var(--c) 38%,transparent),transparent 60%),radial-gradient(80% 60% at 100% 0%,color-mix(in srgb,var(--c) 18%,transparent),transparent 60%);pointer-events:none;transition:background .2s}
 .les>*{position:relative}
 .les .lkop{display:flex;gap:1rem;align-items:center;padding:calc(.55rem + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) .55rem max(20px,env(safe-area-inset-left,0px));color:#cbb8db;font-size:1rem;flex-wrap:wrap;border-bottom:1px solid #ffffff14}
@@ -204,8 +204,12 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .les .ring b{font-size:clamp(1.8rem,4.2vw,3.4rem);font-variant-numeric:tabular-nums;color:#fff;line-height:1}
 .les .ring span{position:absolute;bottom:18%;font-size:.9rem;color:#cbb8db}
 .les .ring.bijna .voort{stroke:#f2c063}
-.les .ring.over .voort{stroke:#ff7a93}.les .ring.over b{color:#ff7a93;animation:knip 1s steps(2) infinite}
-@keyframes knip{to{opacity:.3}}
+/* fase om (0:00): ring vol amber, klok telt door, band eronder; rustig, rood blijft voor het opruimsignaal */
+.les .ring.over .voort{stroke:#f2c063;transition:stroke .6s}.les .ring.over .spoor{stroke:#f2c06333}.les .ring.over b{color:#f2c063}
+.les .fase-tijd{background:#f2c063;color:#2b1a00;text-align:center;font-weight:900;font-size:clamp(1.4rem,3.2vw,2.6rem);line-height:1.15;padding:.45rem 1rem;animation:ftIn .8s ease-out}
+.les .fase-tijd[hidden]{display:none}
+@keyframes ftIn{from{opacity:0}to{opacity:1}}
+.les .lm-krap{margin:0;padding:.55rem .8rem;border-left:4px solid #f2c063;background:#f2c0631a;color:#f6e3b8;font-size:1.05rem}
 @media (max-width:760px){.les .timerhoek{position:static;transform:none;width:7rem;margin:0 auto}.les .s-fase .slide{padding-right:max(20px,5vw)}}
 /* check en rode draad */
 .les.s-check h2{max-width:30ch}
@@ -555,6 +559,8 @@ body.bordvenster .top{display:none}
 .rg-klok b{font-family:var(--lees);font-weight:700;font-size:clamp(3rem,9vw,5.5rem);line-height:1;font-variant-numeric:tabular-nums}
 .rg-klok span{font-family:var(--lees);color:var(--muted)}
 .rg-klok.bijna b{color:var(--let)}
+.rg-klok.over b{color:#b07600}.rg-klok.over span{font-weight:700;color:#8a5a00}
+.rg-krap{margin:.2rem 0 .6rem;padding:.45rem .7rem;border-left:4px solid #f2c063;background:#f2c06322;font-size:.95rem}
 .rg-notitie{background:var(--paars-zacht);color:var(--ink);border-radius:8px;padding:.65rem .85rem;margin:.6rem 0;font-size:1.02rem}
 .rg-notitie b{display:block;font-family:var(--lees);font-size:var(--t-klein);text-transform:uppercase;letter-spacing:.06em;color:var(--paars);margin-bottom:.15rem}
 .rg-knoppen{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}

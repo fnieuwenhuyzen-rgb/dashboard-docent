@@ -161,9 +161,27 @@
     S.push({ k: 'af', h: '' });
     return S;
   }
+  // Op 0:00 is de fase om: de ring loopt vol in amber en de klok telt door als uitloop (+0:45).
+  const timerTekst = sec => { const a = Math.abs(sec); return (sec < 0 ? '+' : '') + Math.floor(a / 60) + ':' + (a % 60 < 10 ? '0' : '') + a % 60; };
+  const ringDeel = (sec, tot) => sec <= 0 ? 1 : tot ? Math.max(0, Math.min(1, sec / tot)) : 0;
   function timerRing(sec, tot) {
-    const r = 54, c = 2 * Math.PI * r; const p = tot ? Math.max(0, Math.min(1, sec / tot)) : 0;
-    return `<div class="ring" id="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${r}" class="spoor"/><circle cx="60" cy="60" r="${r}" class="voort" style="stroke-dasharray:${c};stroke-dashoffset:${c * (1 - p)}"/></svg><b id="tl">${Math.floor(sec / 60)}:${(sec % 60 < 10 ? '0' : '') + sec % 60}</b><span id="tlab">${tot ? Math.round(tot / 60) + ' min' : ''}</span></div>`;
+    const r = 54, c = 2 * Math.PI * r; const p = ringDeel(sec, tot);
+    return `<div class="ring${sec <= 0 && tot ? ' over' : sec <= 60 ? ' bijna' : ''}" id="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${r}" class="spoor"/><circle cx="60" cy="60" r="${r}" class="voort" style="stroke-dasharray:${c};stroke-dashoffset:${c * (1 - p)}"/></svg><b id="tl">${timerTekst(sec)}</b><span id="tlab">${tot ? Math.round(tot / 60) + ' min' : ''}</span></div>`;
   }
-  window.LESMODUS = { SOORT, fase, faseTekst, fasenNaarTekst, tekstNaarFasen, beeldHtml, bouwSlides, timerRing, ico };
+
+  // ---------- later begonnen: fasen inkorten (getest in tools/test-lesklok.js) ----------
+  // fasen: [{min, soort}] vanaf de fase die nu begint; sec: wat er nog over is tot het einde van de les.
+  // Past het niet, dan gaat het tekort van de langste fase die nog komt, dan van de volgende, elk hooguit de helft.
+  // Check en afsluiting blijven heel. Een halve minuut speling: wie 20 seconden te laat is, krijgt geen kortere fase.
+  const HEEL = ['check', 'afsluiten'];
+  function inkorten(fasen, sec) {
+    const min = fasen.map(f => +f.min || 0); const gepland = min.reduce((a, b) => a + b, 0);
+    const tekort = Math.max(0, Math.ceil((gepland * 60 - sec - 30) / 60));
+    const uit = min.slice(); let rest = tekort;
+    if (rest) fasen.map((f, i) => i).filter(i => !HEEL.includes(fasen[i].soort) && min[i] >= 2)
+      .sort((a, b) => min[b] - min[a] || a - b)
+      .forEach(i => { const af = Math.min(rest, Math.floor(min[i] / 2)); uit[i] -= af; rest -= af; });
+    return { min: uit, gepland, tekort, past: tekort - rest };
+  }
+  (typeof window !== 'undefined' ? window : globalThis).LESMODUS = { SOORT, fase, faseTekst, fasenNaarTekst, tekstNaarFasen, beeldHtml, bouwSlides, timerRing, timerTekst, ringDeel, inkorten, ico };
 })();

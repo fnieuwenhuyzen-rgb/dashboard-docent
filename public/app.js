@@ -1793,6 +1793,7 @@ function rondAf(s, x, keuze, n) {
   if (keuze === 'niet') { (S.uitval[s] = S.uitval[s] || []).push(x.u.id); if (n) S.voortgang[g][x.item.id] = Object.assign({}, status(g, x.item.id), { n }); }
   else S.voortgang[g][x.item.id] = { st: keuze, d: s, uur: x.u.id, n: n || undefined };
   if (S.afLater[s]) S.afLater[s] = S.afLater[s].filter(v => v !== x.u.id);
+  plekWeg(s, x.u.id); // afgerond: opnieuw openen begint weer vooraan
 }
 
 /* ---------- regie: het bord in een tweede venster, de regie op dit scherm ----------
@@ -1810,12 +1811,13 @@ function bordOpen(uid, s) {
 function bordZeg() {
   if (!LES || !LES.bord) return; const P = LES;
   rgStuur('staat', { uid: P.x.u.id, s: P.s, i: P.i, left: P.left, tot: P.tot, loopt: !!P.timer, groep: P.x.u.groep, start: P.x.u.start, eind: P.x.u.eind, titel: P.l.titel || '',
-    slides: P.slides.map(x => ({ k: x.k, soort: x.soort || '', kop: x.kop || '', min: x.min || 0, docent: typeof x.docent === 'string' ? x.docent : '' })) });
+    krap: krapZin(P), slides: P.slides.map((x, j) => ({ k: x.k, soort: x.soort || '', kop: x.kop || '', min: x.k === 'fase' && x.min ? faseMin(P, j) : x.min || 0, was: x.min || 0, docent: typeof x.docent === 'string' ? x.docent : '' })) });
 }
 if (KAN) KAN.onmessage = e => {
   const m = e.data || {};
-  if (m.t === 'staat') { const nieuw = !RG || RG.i !== m.i || RG.loopt !== m.loopt || RG.uid !== m.uid || RG.tot !== m.tot; RG = Object.assign(m, { tijd: Date.now() });
-    if (route.naam === 'regie') { if (nieuw) render(); else { const el = $('#rgTijd'); if (el) el.textContent = pad(Math.max(0, m.left)); const k = $('#rgKlok'); if (k) k.classList.toggle('bijna', m.left <= 120 && m.tot >= 300); } }
+  if (m.t === 'staat') { const nieuw = !RG || RG.i !== m.i || RG.loopt !== m.loopt || RG.uid !== m.uid || RG.tot !== m.tot || (RG.left > 0) !== (m.left > 0) || RG.krap !== m.krap; const om = RG && RG.uid === m.uid && RG.i === m.i && RG.left > 0 && m.left <= 0; RG = Object.assign(m, { tijd: Date.now() });
+    if (route.naam === 'regie') { if (nieuw) render(); else { const el = $('#rgTijd'); if (el) el.textContent = LESMODUS.timerTekst(m.left); const k = $('#rgKlok'); if (k) k.classList.toggle('bijna', m.left > 0 && m.left <= 120 && m.tot >= 300); } }
+    if (om && route.naam === 'regie') tril(); // de fase is om: één korte tril op de tablet
     if (m.loopt && m.left === 120 && m.tot >= 300) tril(); return; }
   if (m.t === 'dicht') { RG = null; if (route.naam === 'regie') render(); return; }
   if (!LES || !LES.bord) return;
@@ -1823,7 +1825,7 @@ if (KAN) KAN.onmessage = e => {
   else if (m.t === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
   else if (m.t === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
   else if (m.t === 'timer') timer();
-  else if (m.t === 'plus') { LES.left += 60; LES.tot += 60; bordZeg(); }
+  else if (m.t === 'plus') { LES.left += 60; LES.tot += 60; if (LES.eindMs) LES.eindMs += 60000; timerToon(LES.left); bordZeg(); plekBewaar(); }
   else if (m.t === 'vraag') bordZeg();
   else if (m.t === 'sluit') sluitLes();
 };
@@ -1840,12 +1842,12 @@ function viewRegie() {
   const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
   return `<div class="kop"><div><p class="eyebrow">Regie · alleen op dit scherm</p><h1>${esc(RG.groep)} · ${esc(RG.titel)}</h1><div class="sub">${esc(RG.start)}–${esc(RG.eind)}</div></div><div class="knoppen"><button class="btn" data-rg="sluit">Bord sluiten</button></div></div>
   <div class="rg"><div class="kaart"><p class="eyebrow">Op het bord</p><h2>${esc(slideNaam(sl))}</h2>
-    ${sl.min ? `<div class="rg-klok ${RG.left <= 120 && RG.tot >= 300 ? 'bijna' : ''}" id="rgKlok"><b id="rgTijd">${pad(Math.max(0, RG.left))}</b><span>${RG.loopt ? 'loopt' : 'staat stil'}</span></div>` : ''}
+    ${sl.min ? `<div class="rg-klok ${RG.left <= 0 ? 'over' : RG.left <= 120 && RG.tot >= 300 ? 'bijna' : ''}" id="rgKlok"><b id="rgTijd">${LESMODUS.timerTekst(RG.left)}</b><span>${RG.left <= 0 ? 'Tijd · volgende fase' : RG.loopt ? 'loopt' : 'staat stil'}</span></div>${RG.krap ? `<p class="rg-krap">${esc(RG.krap)}</p>` : ''}` : ''}
     ${sl.docent ? `<div class="rg-notitie"><b>Alleen jij ziet dit</b>${esc(sl.docent)}</div>` : ''}
     <div class="rg-knoppen"><button class="btn" data-rg="vorige">‹ Vorige</button><button class="btn hoofd" data-rg="volgende">Volgende ›</button>${sl.min ? `<button class="btn" data-rg="timer">${RG.loopt ? 'Klok stil' : 'Klok aan'}</button><button class="btn" data-rg="plus">+1 min</button>` : ''}</div>
     <p class="sub" style="margin-top:.6rem">Pijltjes en de presenter werken ook als dit venster voorop staat · t = klok</p></div>
   <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
-  <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min</small>` : ''}</button></li>`).join('')}</ol></div></div>
+  <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min${y.was && y.was !== y.min ? ` (was ${y.was})` : ''}</small>` : ''}</button></li>`).join('')}</ol></div></div>
   <div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
     <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Deels, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
     <textarea id="rgNot" placeholder="Notitie voor de volgende les">${x && x.item ? esc(notitieVak(x, s)) : ''}</textarea>
@@ -2446,6 +2448,37 @@ function lesklokUren() {
 }
 /* ---------- lesmodus ---------- */
 let LES = null;
+/* Plek per les onthouden (bevinding 40): sluiten, opnieuw openen of herladen gaat verder op dezelfde dia, met de fasetimer.
+   Alleen voor lessen van vandaag, op dit apparaat (localStorage lesdag-lesplek). De index telt jouw kaart mee, ook in het bordvenster.
+   sessionStorage lesdag-lesopen: dit tabblad had de lesmodus open, dus na herladen gaat hij weer open. */
+const PLEK = 'lesdag-lesplek';
+function plekAlle() { try { return JSON.parse(localStorage.getItem(PLEK) || '{}') || {}; } catch (e) { return {}; } }
+function plekBewaar() {
+  const P = LES; if (!P || P.s !== vandaag()) return;
+  const alle = plekAlle(); for (const k in alle) if (!k.startsWith(P.s + '|')) delete alle[k];
+  const sl = P.slides[P.i]; const i = P.bord ? P.i + 1 : P.i; const klok = sl.k === 'fase' && P.tot > 0;
+  alle[P.s + '|' + P.x.u.id] = { i, klok, left: P.left, tot: P.tot, eind: P.timer ? Date.now() + P.left * 1000 : 0, krap: P.krap };
+  try { localStorage.setItem(PLEK, JSON.stringify(alle)); } catch (e) {}
+}
+function plekWeg(s, uid) { const alle = plekAlle(); if (!alle[s + '|' + uid]) return; delete alle[s + '|' + uid]; try { localStorage.setItem(PLEK, JSON.stringify(alle)); } catch (e) {} }
+/* Later begonnen (bevinding 17): bij de start van elke fase rekent de lesmodus met de eindtijd van de les.
+   Het tekort gaat van de langste fase die nog komt (LESMODUS.inkorten). Op het bord staat gewoon de nieuwe tijd; jij ziet "was 20". */
+function lesKrap(P) {
+  if (P.s !== vandaag()) return null;
+  const van = minuten(P.x.u.start), tot = minuten(P.x.u.eind); const d = new Date(); const nu = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+  if (nu >= tot * 60) return null; const sec = tot * 60 - Math.max(nu, van * 60);
+  const vanaf = P.slides.findIndex((y, j) => j >= P.i && y.k === 'fase'); if (vanaf < 0) return null;
+  const idx = P.slides.map((y, j) => j).filter(j => j >= vanaf && P.slides[j].k === 'fase' && P.slides[j].min);
+  const r = LESMODUS.inkorten(idx.map(j => P.slides[j]), sec); if (!r.past) return null;
+  const min = {}; idx.forEach((j, n) => { if (r.min[n] !== P.slides[j].min) min[j + (P.bord ? 1 : 0)] = r.min[n]; }); // index met jouw kaart, net als de plek
+  return { min, beschikbaar: Math.round(sec / 60), gepland: r.gepland };
+}
+const faseMin = (P, j) => { const k = j + (P.bord ? 1 : 0); return P.krap && P.krap.min[k] != null ? P.krap.min[k] : P.slides[j].min; };
+function krapZin(P) { // alleen voor jou: jouw kaart, de onderbalk en de regie
+  if (!P.krap) return '';
+  const delen = Object.keys(P.krap.min).map(k => { const y = P.slides[+k - (P.bord ? 1 : 0)]; return y ? `${(LESMODUS.SOORT[y.soort] || { naam: 'fase' }).naam.toLowerCase()} ${P.krap.min[k]} min (was ${y.min})` : ''; }).filter(Boolean);
+  return delen.length ? `Je hebt nog ${P.krap.beschikbaar} min, gepland ${P.krap.gepland}: ${delen.join(', ')}.` : '';
+}
 function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de regie zit in het andere venster
   s = s || vandaag(); const p = planning(s, s)[s];
   if (!p || p.reden || !p.uren.length) { toast('Geen lessen op deze dag'); return; }
@@ -2459,7 +2492,14 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
   let slides = LESMODUS.bouwSlides(l, { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml });
   if (bord) slides = slides.filter(y => y.k !== 'klaar'); // jouw kaart hoort niet op het bord
-  LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord };
+  LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null };
+  // verder waar je was; loopt de les al, dan niet op jouw kaart beginnen (die zou op het digibord kunnen staan)
+  const pl = s === vandaag() ? plekAlle()[s + '|' + x.u.id] : null;
+  let i = pl ? pl.i : 0; if (i === 0 && s === vandaag() && nuMin() >= minuten(x.u.start)) i = 1;
+  LES.i = Math.max(0, Math.min(slides.length - 1, bord ? i - 1 : i));
+  if (pl) { LES.krap = pl.krap || null;
+    if (pl.klok && pl.i === LES.i + (bord ? 1 : 0) && slides[LES.i].k === 'fase') LES.herstel = { left: pl.eind ? Math.round((pl.eind - Date.now()) / 1000) : pl.left, tot: pl.tot, loopt: !!pl.eind }; }
+  if (!bord) try { sessionStorage.setItem('lesdag-lesopen', x.u.id + '|' + s); } catch (e) {}
   $('#les').hidden = false; document.body.style.overflow = 'hidden'; waak(true); toonSlide();
 }
 function toonSlide() {
@@ -2467,15 +2507,20 @@ function toonSlide() {
   const body = sl.k === 'af' ? (P.bord ? `<p class="eyebrow">${esc(P.x.u.groep)}</p><h1>Tot de volgende les</h1>` : afrondenHtml()) : sl.h;
   const soort = sl.soort || sl.k; const kl = LESMODUS.SOORT[sl.soort];
   const fasen = P.slides.filter(x => x.k === 'fase'); const fi = fasen.indexOf(sl);
-  if (sl.min) { P.left = sl.min * 60; P.tot = sl.min * 60; } else { P.left = 0; P.tot = 0; }
+  const herstel = P.herstel; delete P.herstel; const fklok = sl.k === 'fase' && !!sl.min;
+  if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
+  else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
+  else { P.left = 0; P.tot = 0; }
+  const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
   $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
-  <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}</div>
-  ${sl.k === 'fase' && sl.min ? timerHtml() : ''}
+  <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
+  ${fklok ? timerHtml() : ''}
+  ${fklok ? `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd · volgende fase</div>` : ''}
   <div class="notities ${P.notities && sl.docent && sl.docent !== true ? 'open' : ''}" id="notities">${sl.docent && sl.docent !== true && !P.bord ? `<b>Docent</b> ${esc(sl.docent)}` : ''}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${sl.docent && sl.docent !== true && !P.bord ? `<button data-l="notities" aria-pressed="${P.notities}">notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
-  if (sl.min) timer(true);
-  bordZeg();
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${sl.docent && sl.docent !== true && !P.bord ? `<button data-l="notities" aria-pressed="${P.notities}">notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
+  if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
+  bordZeg(); plekBewaar();
   LESKLOK.tik(); // de band en de resttijd staan meteen goed op de nieuwe dia
 }
 function klok() { const d = new Date(); return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes(); }
@@ -2491,26 +2536,36 @@ function pad(sec) { const m = Math.floor(sec / 60), s = sec % 60; return m + ':'
 function stopTimer() { if (LES && LES.timer) { clearInterval(LES.timer); LES.timer = null; } }
 function timer(auto) {
   const P = LES; if (!P) return;
-  if (P.timer && !auto) { stopTimer(); const b = $('#tbtn'); if (b) b.textContent = 'start timer'; bordZeg(); return; }
+  if (P.timer && !auto) { stopTimer(); const b = $('#tbtn'); if (b) b.textContent = 'start timer'; bordZeg(); plekBewaar(); return; }
   if (P.timer) return;
-  const r = 54, c = 2 * Math.PI * r;
+  P.eindMs = Date.now() + P.left * 1000; // rekenen met de klok, niet met tikken: een venster op de achtergrond tikt trager
   P.timer = setInterval(() => {
-    P.left--; const el = $('#tl'); const ring = $('#ring'); const k = $('#klok'); if (k) k.textContent = klok();
-    if (el) el.textContent = pad(Math.max(0, P.left));
-    if (ring) { const v = ring.querySelector('.voort'); if (v) v.style.strokeDashoffset = c * (1 - Math.max(0, Math.min(1, P.left / (P.tot || 1)))); if (P.left <= 0) ring.classList.add('over'); else if (P.left <= 60) ring.classList.add('bijna'); }
-    if (P.left === 120 && P.tot >= 300) tril(); // twee minuten voor het eind: alleen voelbaar op de tablet
+    const voor = P.left; P.left = Math.round((P.eindMs - Date.now()) / 1000); if (P.left === voor) return;
+    const k = $('#klok'); if (k) k.textContent = klok();
+    timerToon(voor);
+    if (voor > 120 && P.left <= 120 && P.tot >= 300) tril(); // twee minuten voor het eind: alleen voelbaar op de tablet
     bordZeg();
-  }, 1000);
-  const b = $('#tbtn'); if (b) b.textContent = 'pauze timer'; bordZeg();
+  }, 250);
+  const b = $('#tbtn'); if (b) b.textContent = 'pauze timer'; bordZeg(); plekBewaar();
 }
-function sluitLes() { const bord = LES && LES.bord; stopTimer(); LES = null; waak(false); if (bord) { rgStuur('dicht'); window.close(); } $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
+/* De fasetimer op het scherm. Op 0:00 (bevinding 16): de ring loopt vol in amber, de band "Tijd · volgende fase" komt erbij
+   en de klok telt door als uitloop. Rustig: geen rood, geen knipperen, geen geluid; op de tablet één korte tril. Rood blijft voor het opruimsignaal. */
+function timerToon(voor) {
+  const P = LES; if (!P) return; const c = 2 * Math.PI * 54;
+  const el = $('#tl'); if (el) el.textContent = LESMODUS.timerTekst(P.left);
+  const ring = $('#ring'); if (ring) { const v = ring.querySelector('.voort'); if (v) v.style.strokeDashoffset = c * (1 - LESMODUS.ringDeel(P.left, P.tot));
+    ring.classList.toggle('over', P.left <= 0); ring.classList.toggle('bijna', P.left > 0 && P.left <= 60); }
+  const ft = $('#faseTijd'); if (ft && ft.hidden !== P.left > 0) ft.hidden = P.left > 0;
+  if (voor > 0 && P.left <= 0) tril();
+}
+function sluitLes() { const bord = LES && LES.bord; plekBewaar(); stopTimer(); LES = null; if (!bord) try { sessionStorage.removeItem('lesdag-lesopen'); } catch (e) {} waak(false); if (bord) { rgStuur('dicht'); window.close(); } $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
 function slaLesOp() {
   const P = LES; const g = P.x.u.groep; const n = ($('#lnot') || {}).value || '';
   S.voortgang[g] = S.voortgang[g] || {};
   if (P.keuze === 'niet') { (S.uitval[P.s] = S.uitval[P.s] || []).push(P.x.u.id); if (n.trim()) S.voortgang[g][P.x.item.id] = Object.assign({}, status(g, P.x.item.id), { n: n.trim() }); }
   else S.voortgang[g][P.x.item.id] = { st: P.keuze, d: P.s, uur: P.x.u.id, n: n.trim() || undefined };
   bewaar(true);
-  const s = P.s; const huidig = P.x.u.id; sluitLes();
+  const s = P.s; const huidig = P.x.u.id; sluitLes(); plekWeg(s, huidig);
   const p = planning(s, s)[s]; const idx = p.uren.findIndex(y => y.u.id === huidig);
   const volgende = p.uren.slice(idx + 1).find(y => y.item && !y.klaar && !y.uitval);
   toast(volgende ? `Opgeslagen. Volgende: ${volgende.u.start} ${volgende.u.groep}` : 'Opgeslagen. Geen lessen meer vandaag.');
@@ -3253,11 +3308,16 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   try { BM = await (await fetch('data/beoordeling.json', { cache: 'no-cache' })).json(); } catch (e) { BM = []; }
   try { RC = await (await fetch('data/reclame.json', { cache: 'no-cache' })).json(); } catch (e) { RC = null; }
   herstelStaat();
-  LESKLOK.start({ uren: lesklokUren, vandaag, esc, waak, lesOpen: () => !!LES, route: () => route.naam, klaar: () => !!B });
+  LESKLOK.start({ uren: lesklokUren, vandaag, esc, waak, lesOpen: () => !!LES, route: () => route.naam, klaar: () => !!B,
+    lesTijd: () => LES && LES.s === vandaag() ? { groep: LES.x.u.groep, van: minuten(LES.x.u.start), tot: minuten(LES.x.u.eind) } : null });
   if (route.naam === 'bord') { // dit venster is het digibord
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
   render();
+  try { // herladen midden in de les: de lesmodus gaat weer open, op de plek waar je was
+    const op = sessionStorage.getItem('lesdag-lesopen'); const [uid, s] = (op || '').split('|');
+    if (op && s === vandaag() && ((planning(s, s)[s] || {}).uren || []).some(y => y.u.id === uid && y.item)) startLes(uid, s); else if (op) sessionStorage.removeItem('lesdag-lesopen');
+  } catch (e) { console.warn(e); }
   if (/diag/.test(location.search)) setTimeout(diag, 800);
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }

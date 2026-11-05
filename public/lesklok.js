@@ -32,7 +32,16 @@
   }
   const klokTekst = sec => { const m = Math.floor(sec / 60), s = sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; };
   const hmTekst = min => Math.floor(min / 60) + ':' + ('0' + min % 60).slice(-2);
-  const R = { blokken, blokNu, stand, klokTekst, OPRUIM_SEC, STROOKJE_SEC };
+  // De kopregel van de lesmodus hoort bij de les die open staat, niet bij wat het rooster nu doet.
+  // les: {groep, van, tot} in minuten; aansluitende uren van dezelfde groep tellen mee. Geeft {wat, tekst, rest, blok}.
+  function lesRest(nuSec, les, bl) {
+    const b = bl.find(x => x.groep === les.groep && x.van <= les.van && les.van < x.tot) || { groep: les.groep, van: les.van, tot: les.tot };
+    if (nuSec < b.van * 60) return { wat: 'straks', tekst: 'begint om ' + hmTekst(b.van), blok: b };
+    if (nuSec >= b.tot * 60) return { wat: 'voorbij', tekst: 'les voorbij', blok: b };
+    const rest = b.tot * 60 - nuSec;
+    return { wat: 'loopt', rest, tekst: 'nog ' + Math.ceil(rest / 60) + ' min', blok: b };
+  }
+  const R = { blokken, blokNu, stand, klokTekst, lesRest, OPRUIM_SEC, STROOKJE_SEC };
   if (typeof document === 'undefined') { root.LESKLOK = R; return; }
 
   // ---------- rooster van vandaag ----------
@@ -117,7 +126,12 @@
   function toonBord(st) { // het bord en de les op dit scherm: resttijd in de kopregel, bij het signaal groot en daarna een band
     const les = document.getElementById('les'); const opLes = inLes();
     const rest = document.getElementById('lkRest');
-    if (rest) { const t = st && !st.proef && st.stand !== 'opruimen' && st.stand !== 'toets' ? `nog ${Math.ceil(st.rest / 60)} min` : ''; if (rest.textContent !== t) rest.textContent = t; }
+    if (rest) { // alleen binnen de eigen lestijd een resttijd; daarbuiten "les voorbij" of "begint om"
+      let t = '', wat = ''; const lt = A.lesTijd ? A.lesTijd() : null;
+      if (lt) { const d = new Date(); const lr = lesRest(d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds(), lt, blokkenNu(Date.now()));
+        const zelf = st && !st.proef && st.groep === lr.blok.groep && st.tot === lr.blok.tot;
+        t = lr.wat === 'loopt' && zelf && (st.stand === 'opruimen' || st.stand === 'toets') ? '' : lr.tekst; wat = lr.wat; } // in de laatste minuten staat de band er al
+      if (rest.textContent !== t) rest.textContent = t; if (rest.dataset.wat !== wat) rest.dataset.wat = wat; }
     const sluit = st && (st.stand === 'opruimen' || st.stand === 'toets');
     const groot = !!sluit && st.stand === 'opruimen' && st.rest > OPRUIM_SEC - GROOT_SEC && weg !== st.key;
     let el = document.getElementById('lsBord');

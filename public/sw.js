@@ -1,6 +1,6 @@
 // Offline: de app, de leergangen en de lettertypen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v40';
-const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'lesklok.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'sync.js', 'agendafeed.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js', 'vendor/qrcode.js',
+const CACHE = 'lesdag-v41';
+const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'lesmodus.js', 'lesklok.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'sync.js', 'agendafeed.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js', 'vendor/qrcode.js',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'vendor/fonts/EncodeSans-Light.ttf', 'vendor/fonts/EncodeSans-Bold.ttf', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 // precies dezelfde link als in index.html; daarbij de lettertypebestanden voor Latijnse tekst (latin en latin-ext)
 const LETTERS = 'https://fonts.googleapis.com/css2?family=Encode+Sans:wdth,wght@75..125,400..900&display=swap';
