@@ -28,16 +28,16 @@
           "mb": "eigen kerstbox Mary's Boy Child"
         },
         "fotos": {
-          "titel": "pieterskerk.jpg",
+          "titel": "kribbe-kerk.jpg",
           "doel": "bandles-leerlingen.jpg",
           "fase": [
-            "microfoon-studio.jpg",
+            "steelband-trinidad.jpg",
             null,
             null,
             null,
-            "gitaar-akkoord.jpg"
+            "ukelele-spelen.jpg@0.5,0.4"
           ],
-          "rodeDraad": "handen-zonsondergang.jpg"
+          "rodeDraad": "kaarsen-koor.jpg"
         },
         "voorbereiding": [
           "Zet de opname van Boney M. klaar en luister hem zelf één keer. Let op hoe de intro loopt en waar het couplet overgaat in het refrein. Het ontwerp van de kerstbox zegt dat je dat met de opname moet nagaan.",
@@ -265,12 +265,12 @@
           "slot": "l1"
         },
         "fotos": {
-          "titel": "gitaar-akkoord.jpg",
+          "titel": "capo-gitaar.jpg@0.5,0.45",
           "doel": "mengtafel-leerlingen.jpg",
           "fase": [
             null,
             null,
-            "bandles-leerlingen.jpg",
+            "handen-keyboard.jpg",
             null
           ]
         },
@@ -464,12 +464,12 @@
         },
         "detail": "Vaste groepen, ook voor P1. Het refrein samen spelen; wie klaar is, gaat door naar niveau 2 (couplet en refrein, erbij: Gm en Dm).",
         "fotos": {
-          "titel": "worship-podium.jpg",
+          "titel": "cajon-band.jpg@0.5,0.5",
           "doel": "mengtafel-leerlingen.jpg",
           "fase": [
             "bandles-leerlingen.jpg",
             null,
-            null,
+            "kerstconcert-band.jpg",
             null
           ]
         },
@@ -641,7 +641,7 @@
           "titel": "messiah-koor.jpg",
           "doel": "zangeres-podium.jpg",
           "fase": [
-            "microfoon-studio.jpg",
+            "cajon-band.jpg@0.5,0.55",
             null,
             null,
             "worship-podium.jpg"
@@ -829,7 +829,7 @@
           "slot": "l1"
         },
         "fotos": {
-          "titel": "worship-podium.jpg",
+          "titel": "kerstconcert-band.jpg",
           "doel": "microfoon-studio.jpg",
           "fase": [
             null,
@@ -1187,8 +1187,8 @@
           "mb": "eigen kerstbox God Rest Ye Merry Gentlemen"
         },
         "fotos": {
-          "titel": "pieterskerk.jpg",
-          "doel": "messiah-koor.jpg",
+          "titel": "kaarsen-koor.jpg",
+          "doel": "leech-marley.jpg@0.5,0.4",
           "fase": [
             "zingend-kwartet-1700.jpg",
             null,
@@ -1196,7 +1196,7 @@
             null,
             "gitaar-akkoord.jpg"
           ],
-          "rodeDraad": "handen-zonsondergang.jpg"
+          "rodeDraad": "kribbe-kerk.jpg"
         },
         "voorbereiding": [
           "Zet een traditionele koorversie en een bandversie klaar. In het ontwerp van de kerstbox staat als bandversie: Rend Collective met We The Kingdom, 'God Rest Ye Merry Gentlemen (Hallelujah)' (een stevige bandversie in D met een eigen hallelujah-refrein), en als contrast Pentatonix a cappella. Welke twee je laat horen, kies je zelf.",
@@ -1460,7 +1460,7 @@
           "fase": [
             null,
             null,
-            "mengtafel-leerlingen.jpg",
+            "handen-keyboard.jpg",
             null
           ]
         },
@@ -1663,7 +1663,7 @@
           "fase": [
             "bandles-leerlingen.jpg",
             null,
-            null,
+            "kerstconcert-band.jpg",
             null
           ]
         },
@@ -1835,7 +1835,7 @@
           "fase": [
             "microfoon-studio.jpg",
             null,
-            null,
+            "ukelele-spelen.jpg@0.45,0.45",
             "worship-podium.jpg"
           ],
           "rodeDraad": "bandles-leerlingen.jpg"
@@ -2020,7 +2020,7 @@
           "slot": "l1"
         },
         "fotos": {
-          "titel": "worship-podium.jpg",
+          "titel": "kerstconcert-band.jpg",
           "doel": "microfoon-studio.jpg",
           "fase": [
             null,
