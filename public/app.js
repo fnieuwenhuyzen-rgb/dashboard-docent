@@ -2298,11 +2298,29 @@ function sTaakFout(titel, d, oud) { // lege tekst of een datum die al voorbij is
   return '';
 }
 let sAlles = false, sBewerk = '';
+/* Handelingsdelen en onderhoud: alleen links naar SharePoint en Forms (geen koppeling, geen namen in Lesdag) */
+const HD_LINKS = (() => {
+  const vm = 'https://studentcsgpm.sharepoint.com/sites/VakgroepMuziek/Lists/MeldingenInstrumenten/';
+  const hd = 'https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Lists/Handelingsdeel%204%2020262027/AllItems.aspx';
+  return {
+    hoofd: [['Bord meldingen', vm + 'Bord%20per%20status.aspx'], ['Lijst Handelingsdeel 4', hd],
+      ['Resultaten Forms', 'https://forms.cloud.microsoft/Pages/DesignPageV2.aspx?subpage=design&id=6jlsN-pIK0SlIWuX5D5o5rn3J0sJj0FNh0fuBL0Hhh5UNlFEMkUzWjIxVlBLMTI5WVI1MVMxUTBBSy4u&analysis=true']],
+    filter: [['open meldingen', vm + 'AllItems.aspx?FilterFields1=Status&FilterValues1=Nieuw%3B%23Toegewezen%3B%23Gestopt&FilterTypes1=Choice'],
+      ['verlopen deadlines', vm + 'AllItems.aspx?FilterField1=Status&FilterValue1=Toegewezen&FilterType1=Choice&FilterField2=TeLaatGemeld&FilterValue2=1&FilterType2=Boolean'],
+      ['nog niet gekozen', hd + '?FilterFields1=field_6&FilterValues1=Nog%20kiezen%3B%23Kies%20%C3%A9%C3%A9n&FilterTypes1=Choice'],
+      ['klaar om af te tekenen', hd + '?FilterField1=field_6&FilterValue1=Klaar%20om%20af%20te%20tekenen&FilterType1=Choice']]
+  };
+})();
+function hdKaart() {
+  const a = ([t, u], k) => `<a class="btn${k ? ' klein' : ''}" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`;
+  return `<div class="kaart" style="margin-bottom:1rem"><h2>Handelingsdelen en onderhoud</h2><div class="knoppen">${HD_LINKS.hoofd.map(l => a(l)).join('')}</div><div class="knoppen" style="margin-top:.5rem"><span class="sub">Direct naar:</span>${HD_LINKS.filter.map(l => a(l, 1)).join('')}</div></div>`;
+}
 function viewSectie() {
   const t = vandaag(); const it = sectieItems();
   const open = it.filter(i => i.taak && !S.sectieAf[i.id]);
   const lijst = sAlles ? it : it.filter(i => (i.tot || i.d) >= addD(t, -7) && i.d <= addD(t, 42) || (i.taak && !S.sectieAf[i.id] && i.d < t));
   return `<div class="kop"><div><h1>Sectie</h1><div class="sub">${open.length} open taken · vergaderingen, rapporten, toetsweken en taken uit de jaarplanning</div></div><div class="knoppen"><button class="btn" data-salles="" aria-pressed="${sAlles}">hele jaar</button></div></div>
+  ${hdKaart()}
   <div class="kaart">${lijst.map(sRij).join('') || '<p class="leeg">Niets in deze periode.</p>'}</div>
   <form class="kaart form" id="sForm"><h2>Taak toevoegen</h2><div class="rij"><label style="flex:3 1 16rem">Wat <input id="sT" required></label><label>Datum <input id="sD" type="date" required value="${t}"></label><button class="btn hoofd" type="submit">Toevoegen</button></div></form>`;
 }
