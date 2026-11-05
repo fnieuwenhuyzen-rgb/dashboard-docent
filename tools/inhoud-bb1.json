@@ -1,5 +1,5 @@
 {
-  "_uitleg": "BB1 lesweek 11-20, indeling akkoord Frans 3-11. Geen decks: alleen voor de lesmodus. In de leergang via tools/zet-decks-in-leergang.js; materiaal met sp is een pad in de sectiemap.",
+  "_uitleg": "BB1 lesweek 11-20, indeling akkoord Frans 3-11. Lesweek 21-38, indeling akkoord Frans 4-11. Geen decks: alleen voor de lesmodus. In de leergang via tools/zet-decks-in-leergang.js; materiaal met sp is een pad in de sectiemap.",
   "bb1": {
     "klas": "BB1",
     "lessen": [
@@ -928,6 +928,1781 @@
           {
             "t": "Musicbox (digitaal.musicboxmethode.nl)",
             "u": "https://digitaal.musicboxmethode.nl"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 21,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Memories: luisteren, instrument en niveau kiezen",
+        "detail": "Start van samen spelen. De box Memories leren kennen en met je instrumentkeuze uit de vorige les een partij en niveau kiezen.",
+        "vraag": "Welke partij past bij jou?",
+        "doel": "Je kiest een instrument, een laag en een niveau en speelt de eerste maten van je partij.",
+        "criteria": [
+          "Ik weet welke lagen de song heeft: melodie, akkoorden, bas",
+          "Ik heb een partij en een niveau gekozen",
+          "Ik speel de eerste maten van mijn partij"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "luisteren",
+            "kop": "Wat hoor je?",
+            "stappen": [
+              "Luister naar de begeleidingstrack.",
+              "Wat speelt de melodie, wat de akkoorden, wat de bas?",
+              "Tel mee: 1, 2, 3, 4."
+            ],
+            "docent": "De begeleidingstrack staat bij elke partij in Musicbox. Het origineel staat ook in de box: luister dat eerst zelf."
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Zo werkt een songbox",
+            "stappen": [
+              "Elke partij is 4 maten: het refrein.",
+              "Niveau 1, 2 en 3 passen op elkaar. In één groep mag dus elk niveau.",
+              "Kies een laag en een instrument. Begin op het niveau dat je aankunt.",
+              "Lukt niveau 1? Probeer niveau 2."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Laag",
+                  "Niveau 1"
+                ],
+                [
+                  "Melodie",
+                  "gitaar, piano"
+                ],
+                [
+                  "Akkoorden",
+                  "piano, ukelele"
+                ],
+                [
+                  "Bas",
+                  "basgitaar, piano"
+                ]
+              ]
+            },
+            "docent": "Akkoorden op gitaar staan pas vanaf niveau 2. Wie op gitaar begint, kiest op niveau 1 de melodie (tab). Haal de briefjes met de instrumentkeuze uit lesweek 20 erbij. De box heeft geen ritmelaag: de drummer speelt het basisritme van lesweek 13."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Vind je partij",
+            "stappen": [
+              "Open Memories, Musicsheets, op de laptop. Koptelefoon op.",
+              "Speel eerst zonder track, langzaam.",
+              "Zet de oefentrack aan en speel mee.",
+              "Lukt het? Speel mee met de gewone track."
+            ],
+            "klaar": "Probeer niveau 2, of een tweede laag.",
+            "docent": "Loop langs: past het niveau? Een goed gespeeld niveau 1 is beter dan een rommelig niveau 3."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Wat heb je gekozen?",
+            "stappen": [
+              "Schrijf op: instrument, laag, niveau.",
+              "Welke maat lukt nog niet?",
+              "Lever je briefje in."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "Instrument, laag en niveau op een briefje, met de maat die nog niet lukt."
+        },
+        "benodigd": [
+          "Gitaren, ukeleles, keyboards, basgitaar als die er is",
+          "Drumstel",
+          "Laptops en koptelefoons",
+          "Briefjes instrumentkeuze uit lesweek 20"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Memories",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/a7567191-b6b4-49b9-b966-fbc0d47f105f"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 22,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Keyboard: akkoorden spelen, Memories oefenen",
+        "detail": "Tutorial Hoe speel ik akkoorden? De akkoorden van Memories vinden op het keyboard. Daarna verder met de eigen partij.",
+        "vraag": "Uit welke tonen bestaat een akkoord?",
+        "doel": "Je bouwt een akkoord van drie tonen op het keyboard en oefent je partij van Memories.",
+        "criteria": [
+          "Ik leg uit dat een akkoord drie tonen tegelijk is",
+          "Ik speel C, G en Am op het keyboard",
+          "Mijn partij van Memories gaat vooruit"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Wat weet je nog?",
+            "stappen": [
+              "Waar ligt de c op het keyboard?",
+              "Pak c, e en g tegelijk: dat is akkoord C.",
+              "Hoor je dat het één klank wordt?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Een akkoord bouwen",
+            "stappen": [
+              "Kijk de tutorial Hoe speel ik akkoorden?",
+              "Begin op de naam van het akkoord. Sla een toets over, speel er één. Nog een keer.",
+              "Vingers 1, 3 en 5.",
+              "Memories gebruikt C, G, Am, Em en F."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "C",
+                  "t": "c e g"
+                },
+                {
+                  "k": "G",
+                  "t": "g b d"
+                },
+                {
+                  "k": "Am",
+                  "t": "a c e"
+                },
+                {
+                  "k": "Em",
+                  "t": "e g b"
+                },
+                {
+                  "k": "F",
+                  "t": "f a c"
+                }
+              ]
+            },
+            "docent": "Alle vijf vallen op de witte toetsen. Hier geldt dezelfde b als op de notenbalk van T1."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Twee rondes",
+            "stappen": [
+              "Ronde 1, 10 minuten: iedereen op keyboard. Zoek C, G, Am, Em en F.",
+              "Ronde 2, 15 minuten: terug naar je eigen partij van Memories.",
+              "Speel eerst met de oefentrack, dan met de gewone track."
+            ],
+            "klaar": "Speel de akkoorden in de volgorde van het refrein: C, G, Am, Em, F, C, F, G.",
+            "docent": "Te weinig keyboards? Laat om de beurt wisselen, of werk met twee aan één keyboard. Die volgorde staat bij de ukelele op niveau 1."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Laat je hand zien",
+            "stappen": [
+              "Docent noemt een akkoord.",
+              "Pak het, op het keyboard of in de lucht.",
+              "Noem de drie tonen van Am."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "vragen",
+          "tekst": "Uit welke drie tonen bestaat C? En Am?"
+        },
+        "benodigd": [
+          "Keyboards en koptelefoons",
+          "Instrumenten voor Memories",
+          "Laptops"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Piano",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3"
+          },
+          {
+            "t": "Musicbox: Memories",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/a7567191-b6b4-49b9-b966-fbc0d47f105f"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 23,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Keyboard: C-Am-F-G begeleiden, Memories samen",
+        "detail": "Tutorial Drie begeleidingen op het akkoordenschema C-Am-F-G. Daarna Memories in een groepje samenvoegen, met het basisritme op drums erbij.",
+        "vraag": "Hoe blijf je samen als iedereen iets anders speelt?",
+        "doel": "Je speelt je partij van Memories samen met je groepje, op de tel.",
+        "criteria": [
+          "Ik speel C, Am, F en G na elkaar",
+          "Ik speel mijn partij op de tel met mijn groepje",
+          "Ik val weer in als het misgaat"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Warm spelen",
+            "stappen": [
+              "Pak je instrument.",
+              "Speel je partij één keer met de oefentrack."
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "C, Am, F, G",
+            "stappen": [
+              "Kijk de tutorial Drie begeleidingen.",
+              "Probeer de eerste begeleiding mee op keyboard of in de lucht.",
+              "Deze vier akkoorden hoor je in heel veel songs.",
+              "Onthoud ze: straks heb je ze nodig bij de eindopdracht."
+            ],
+            "docent": "De eindopdracht in Musicbox gaat uit van C, F, G en Am als bekende akkoorden. Op gitaar kennen ze D, G en A uit P1."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Memories in een groepje",
+            "stappen": [
+              "Maak een groepje met melodie, akkoorden en bas. Drums erbij als dat kan.",
+              "Eén telt af, iedereen begint samen.",
+              "Speel het refrein vier keer achter elkaar.",
+              "Gaat het mis? Doorspelen en invallen op de 1."
+            ],
+            "klaar": "Eén iemand gaat een niveau omhoog.",
+            "docent": "Loop langs de groepjes en hoor elk groepje even. Eén drumstel: wissel, de rest op cajon of knieën."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Samen door",
+            "stappen": [
+              "Tel af. Iedereen tegelijk, met de track.",
+              "Eén ding dat goed ging, één ding voor de volgende keer."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "samenspel",
+          "tekst": "Blijft je groepje op de tel? Eén ding dat goed ging, één ding voor de volgende keer."
+        },
+        "benodigd": [
+          "Keyboards, gitaren, ukeleles, basgitaar als die er is",
+          "Drumstel en cajons",
+          "Laptops en koptelefoons",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Piano",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3"
+          },
+          {
+            "t": "Musicbox: Memories",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/a7567191-b6b4-49b9-b966-fbc0d47f105f"
+          },
+          {
+            "t": "Musicbox: Spelen op de drums, Basis, variaties en fills",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/c068fafe-e585-467e-8532-1f5b6183eef6"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 24,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Ukelele terug: Riptide kiezen en leren",
+        "detail": "Box Spelen op de ukelele, Riptide. Akkoorddiagrammen ophalen en Am, G en C op niveau 1 wisselen.",
+        "vraag": "Wat weet je nog van de ukelele?",
+        "doel": "Je speelt Am, G en C op de ukelele en wisselt op de tel.",
+        "criteria": [
+          "Ik lees een akkoorddiagram voor de ukelele",
+          "Ik pak Am, G en C zodat de snaren klinken",
+          "Ik wissel op de tel"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Ukelele in de hand",
+            "stappen": [
+              "Stem met de docent of de tutorial Hoe stem je een ukelele?",
+              "Goed vasthouden, hals iets omhoog.",
+              "Welke akkoorden weet je nog?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Drie akkoorden",
+            "stappen": [
+              "Vier snaren, van boven naar beneden: g, c, e, a.",
+              "De cijfers zijn de frets per snaar. 0 is los.",
+              "Op niveau 1 sla je alleen op tel 1 en 3.",
+              "Lukt het? Niveau 2 en 3 staan klaar."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Am",
+                  "t": "2 0 0 0"
+                },
+                {
+                  "k": "G",
+                  "t": "0 2 3 2"
+                },
+                {
+                  "k": "C",
+                  "t": "0 0 0 3"
+                }
+              ]
+            },
+            "docent": "Deze box heeft alleen ukelelepartijen. Niveau 1: Am op 1, G op 3, C op 1 en 3 van de tweede maat, en dan herhalen. De tutorial Hoe lees je een akkoorddiagram? staat in de box Ukelele."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Am, G, C",
+            "stappen": [
+              "Pak Am, sla aan, check elke snaar. Dan G. Dan C.",
+              "Tel hardop mee en wissel op de tel.",
+              "Open Riptide, niveau 1, op de laptop en bekijk de oefenvideo.",
+              "Speel mee met de video."
+            ],
+            "klaar": "Ga door met niveau 2.",
+            "docent": "Wil iemand gitaar houden? Dezelfde akkoorden op gitaar kan, maar er staat geen blad in de box en Am en C zijn nieuw. Te weinig ukeleles: om de beurt."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Samen wisselen",
+            "stappen": [
+              "Tel af. Am, G, C, zonder stoppen.",
+              "Duim: lukt het op de tel?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "duimen",
+          "tekst": "Lukt het wisselen tussen Am, G en C op de tel? Duim omhoog, opzij of omlaag."
+        },
+        "benodigd": [
+          "Ukeleles, gestemd",
+          "Laptops en koptelefoons"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Spelen op de ukelele, Riptide",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/d7e9e513-5350-4fdb-8250-3fe5b9ded2d6"
+          },
+          {
+            "t": "Musicbox: Ukelele",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/1b3267b6-6933-40ff-8a63-5eed93117369"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 25,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Riptide: samen op de tel",
+        "detail": "Riptide op je eigen niveau spelen en in een groepje op de tel samenspelen. Eerst stil leren doortellen.",
+        "vraag": "Wat doe je als je de tel kwijt bent?",
+        "doel": "Je speelt Riptide met je groepje en blijft op de tel.",
+        "criteria": [
+          "Ik wissel zonder te stoppen",
+          "Ik speel samen met mijn groepje op de tel",
+          "Ik kies een niveau dat ik volhoud"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Tel in je hoofd",
+            "stappen": [
+              "Tel samen hardop vier tellen.",
+              "Tel daarna vier tellen in je hoofd. Tel 1 hardop slaan.",
+              "Klopt het nog met je buur?"
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Blijven tellen",
+            "stappen": [
+              "Tel in stilte door, ook als het misgaat.",
+              "Stap op de volgende 1 weer in.",
+              "Niet stoppen om je hand te bekijken."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Am",
+                  "t": "2 0 0 0"
+                },
+                {
+                  "k": "G",
+                  "t": "0 2 3 2"
+                },
+                {
+                  "k": "C",
+                  "t": "0 0 0 3"
+                }
+              ]
+            }
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "In je groepje",
+            "stappen": [
+              "Maak een groepje van drie of vier.",
+              "Speel elk je eigen niveau.",
+              "Eén telt af. Speel vier keer door.",
+              "Wissel wie aftelt."
+            ],
+            "klaar": "Eén iemand probeert een slagje uit de tutorial Slagjes en tokkelen.",
+            "docent": "Loop langs en hoor elk groepje. Kijk naar wisselen op de tel, niet naar hoe mooi het klinkt."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Samen door",
+            "stappen": [
+              "Iedereen samen, met aftellen.",
+              "Op welk niveau speelde jij? Wat lukte het best?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "samenspel",
+          "tekst": "Blijft je groepje op de tel, ook als iemand misgaat?"
+        },
+        "benodigd": [
+          "Ukeleles, gestemd",
+          "Laptops en koptelefoons",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Spelen op de ukelele, Riptide",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/d7e9e513-5350-4fdb-8250-3fe5b9ded2d6"
+          },
+          {
+            "t": "Musicbox: Ukelele",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/1b3267b6-6933-40ff-8a63-5eed93117369"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 26,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Paasweek: speelstuk Heer U bent mijn leven",
+        "detail": "Losse les in activiteitenweek D. Het lied leren kennen en spelen: melodie op gitaar uit tab, ritmepartijen op kleine percussie. Vervalt de les, dan mist er niets.",
+        "vraag": "Wat zegt dit lied, nu het bijna Pasen is?",
+        "doel": "Je speelt een ritmepartij of de melodie van Heer U bent mijn leven samen met de klas.",
+        "criteria": [
+          "Ik speel mijn partij op de tel",
+          "Ik tel de rusten mee",
+          "Ik vertel waar het lied over gaat"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "luisteren",
+            "kop": "Waar gaat het over?",
+            "stappen": [
+              "Luister naar het lied.",
+              "Wat zegt de titel over God?",
+              "Waarom zou dat bij Pasen passen?"
+            ],
+            "docent": "De sectiemap heeft alleen tabs en ritmepartijen: kies zelf een opname of zing het voor."
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Ritme zeggen",
+            "stappen": [
+              "Zes partijen van vier maten, in 4/4.",
+              "Zeg de partij eerst met de woorden op het blad.",
+              "Dan klappen, dan pas op het instrument.",
+              "Bij een rust speel je niet, maar je telt wel."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Partij",
+                  "Moeilijkheid"
+                ],
+                [
+                  "Beat-ring, djembé, shaker",
+                  "makkelijk"
+                ],
+                [
+                  "Rasp",
+                  "op 2 en 4"
+                ],
+                [
+                  "Cabassa, claves",
+                  "met achtsten"
+                ]
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Partij voor partij",
+            "stappen": [
+              "Kies een partij. Melodie op gitaar? Pak de tab.",
+              "Oefen met wie dezelfde partij heeft.",
+              "Voeg de partijen één voor één samen.",
+              "Wie al klaar is, wisselt van partij."
+            ],
+            "klaar": "Bedenk een eigen ritme op het blad Mijn ritme.",
+            "docent": "De tab is een schermafdruk in Word: print hem vooraf. Tel wat er aan percussie is en verdeel de partijen. Het formulier Presentatie speelstuk in de map gebruik je hier niet: dat gaat uit van een presentatie."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Samen",
+            "stappen": [
+              "Tel af. Iedereen samen, twee keer rond.",
+              "Welke partij hield het geheel bij elkaar?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "samenspel",
+          "tekst": "Blijven alle partijen samen op de tel?"
+        },
+        "identiteit": "De titel zegt het al: dit lied noemt God het leven. In de week voor Pasen kun je vragen wat dat voor gelovigen betekent. Laat leerlingen dat in eigen woorden zeggen.",
+        "benodigd": [
+          "Claves, rasp, beat-ring, cabassa, shakers, djembés: wat er is",
+          "Ritmepartijen geprint",
+          "Tabs geprint",
+          "Gitaren, gestemd",
+          "Opname van het lied"
+        ],
+        "materiaal": [
+          {
+            "t": "Heer U bent mijn leven: ritmepartijen (pdf)",
+            "sp": "01 Onderbouw muziek\\01 Klas 1\\Thema's en extra's\\Speelstuk\\Ritme speelstuk Heer u bent mijn leven.pdf"
+          },
+          {
+            "t": "Heer U bent mijn leven: tabs (Word)",
+            "sp": "01 Onderbouw muziek\\01 Klas 1\\Thema's en extra's\\Speelstuk\\Heer u bent mijn leven tabs.docx"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 27,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Drums: basisritme met achtsten, kennismaken met Birds of a Feather",
+        "detail": "Box Spelen op de drums, Birds of a feather, niveau 1. Onderdelen en houding ophalen, hihat in achtsten, en de ritmepartij leren kennen.",
+        "vraag": "Hoe houdt de drummer de band bij elkaar?",
+        "doel": "Je speelt een basisritme met achtsten op de hihat, op het drumstel of op je knieën.",
+        "criteria": [
+          "Ik noem de onderdelen van het drumstel",
+          "Ik speel achtsten op de hihat, gelijkmatig",
+          "Ik zet er bass drum en snare bij zonder te stoppen"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Wat weet je nog?",
+            "stappen": [
+              "Voet op 1 en 3, klap op 2 en 4.",
+              "Tel nu zo: 1 en 2 en 3 en 4 en.",
+              "Hoeveel achtsten passen er in één maat?"
+            ],
+            "docent": "Sluit aan op lesweek 13. Antwoord: acht."
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Achtsten op de hihat",
+            "stappen": [
+              "Hihat op elke tel en elke en.",
+              "Rechterhand op de hihat, linkerhand op de snare, voet op de bass drum.",
+              "Eerst alleen de hihat. Dan één ding erbij.",
+              "De partij van niveau 1 staat op je laptop."
+            ],
+            "docent": "Tutorials: Introductie, Hoe heten de onderdelen van het drumstel? De box begint met luisteropdrachten bij Smells Like Teen Spirit: kijk zelf of je die wilt, de rest van niveau 1 staat los daarvan. Houding en slagtechniek staat in blok 2."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Om de beurt",
+            "stappen": [
+              "Twee of drie tegelijk: op drumstel, op cajon, op knieën en voet.",
+              "Open Birds of a feather, Ritme, niveau 1.",
+              "Eerst zonder track, langzaam.",
+              "Daarna met de oefentrack."
+            ],
+            "klaar": "Doe blok 2, Houding en slagtechniek, of ga naar niveau 2.",
+            "docent": "Wissel elke paar minuten aan het drumstel. Wie wacht, oefent op knieën en voet met de track op de koptelefoon."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "De klas als drummer",
+            "stappen": [
+              "Tel af. Iedereen achtsten op de knie.",
+              "Voet en klap erbij.",
+              "Lukt het in tempo? Duim."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "duimen",
+          "tekst": "Blijven je achtsten gelijk als de voet erbij komt?"
+        },
+        "benodigd": [
+          "Drumstel en drumstokken",
+          "Cajons als die er zijn",
+          "Laptops en koptelefoons"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Spelen op de drums, Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/702765fa-003b-44da-85fb-262aa176683b"
+          },
+          {
+            "t": "Musicbox: Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/2c8c3a04-f2a9-4526-afb6-727dd1e8e649"
+          },
+          {
+            "t": "Musicbox: Spelen op de drums, Basis, variaties en fills",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/c068fafe-e585-467e-8532-1f5b6183eef6"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 28,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Birds of a Feather: partijen kiezen en loopen",
+        "detail": "Songbox Light: alle partijen zijn 8 maten, staan door elkaar en kun je blijven herhalen. Instrument en niveau kiezen en de eigen partij loopen.",
+        "vraag": "Wat betekent het als partijen door elkaar kunnen?",
+        "doel": "Je kiest een partij en herhaalt die in de maat, zodat anderen erop kunnen spelen.",
+        "criteria": [
+          "Ik heb een instrument, laag en niveau gekozen",
+          "Ik speel mijn 8 maten zonder stoppen",
+          "Ik herhaal mijn partij in hetzelfde tempo"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "luisteren",
+            "kop": "Vier lagen",
+            "stappen": [
+              "Luister naar de begeleidingstrack.",
+              "Hoor je de lagen: melodie, akkoorden, bas, ritme?",
+              "Welke laag trekt jou?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Partij met een nummer",
+            "stappen": [
+              "Elke partij heeft een nummer. Dat staat in de LOOPsheet.",
+              "Melodie 1, akkoorden 6, bas 7, ritme 8.",
+              "Kies een instrument en een niveau. Niveaus mogen door elkaar.",
+              "De toonsoort is D: op gitaar ken je D en A al."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Laag",
+                  "Niveau 1"
+                ],
+                [
+                  "Melodie",
+                  "gitaar, piano, ukelele"
+                ],
+                [
+                  "Akkoorden",
+                  "gitaar, piano, ukelele"
+                ],
+                [
+                  "Bas",
+                  "basgitaar, piano"
+                ],
+                [
+                  "Ritme",
+                  "drums"
+                ]
+              ]
+            },
+            "docent": "Akkoorden niveau 1: D, Bm, Em, Asus4, A, over 8 maten. D, Bm en A vragen op keyboard zwarte toetsen (fis, cis): wijs ze aan, ze hoeven niet in de theorie."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Loopen",
+            "stappen": [
+              "Open je partij op de laptop.",
+              "Speel je 8 maten langzaam, zonder track.",
+              "Zet de oefentrack aan en herhaal.",
+              "Lukt het drie keer? Zet de gewone track aan."
+            ],
+            "klaar": "Pak een hoger niveau of een tweede laag.",
+            "docent": "Zang staat pas op niveau 3. Luister vooraf zelf naar de tekst en beslis of die hier gezongen wordt."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Wat speel jij?",
+            "stappen": [
+              "Noem je nummer en je niveau.",
+              "Welke maat lukt nog niet?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "Nummer, instrument en niveau op een briefje, met de maat die nog niet lukt."
+        },
+        "benodigd": [
+          "Gitaren, ukeleles, keyboards, basgitaar als die er is",
+          "Drumstel en cajons",
+          "Laptops en koptelefoons",
+          "LOOPsheet op het bord"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/2c8c3a04-f2a9-4526-afb6-727dd1e8e649"
+          },
+          {
+            "t": "Musicbox: Spelen op de drums, Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/702765fa-003b-44da-85fb-262aa176683b"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 29,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Birds of a Feather: een eigen arrangement",
+        "detail": "In een groepje de volgorde van de partijen zelf bedenken: wie begint, wie komt erbij, wie stopt.",
+        "vraag": "Hoe maak je van losse partijen een stuk?",
+        "doel": "Je maakt met je groepje een arrangement en speelt het van begin tot eind.",
+        "criteria": [
+          "Ons groepje heeft een afgesproken volgorde",
+          "Ik val op de juiste plek in",
+          "Wij eindigen samen"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Warm spelen",
+            "stappen": [
+              "Pak je instrument.",
+              "Speel je partij twee keer met de track."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Arrangeren",
+            "stappen": [
+              "Spreek af: wie begint, wie komt wanneer erbij.",
+              "Eén iemand geeft de nummers aan.",
+              "Laat niet iedereen altijd spelen: dat geeft contrast.",
+              "Schrijf de volgorde op."
+            ],
+            "beeld": {
+              "soort": "opbouw",
+              "items": [
+                {
+                  "d": "drums",
+                  "v": 1
+                },
+                {
+                  "d": "bas erbij",
+                  "v": 2
+                },
+                {
+                  "d": "akkoorden erbij",
+                  "v": 3
+                },
+                {
+                  "d": "melodie erbij",
+                  "v": 4
+                },
+                {
+                  "d": "samen stoppen",
+                  "v": 1
+                }
+              ]
+            }
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "In je groepje",
+            "stappen": [
+              "Verdeel de partijen.",
+              "Probeer je volgorde, ook als het eerst rommelig is.",
+              "Verander wat niet werkt.",
+              "Speel twee keer helemaal door."
+            ],
+            "klaar": "Neem je arrangement op met de laptop en luister terug.",
+            "docent": "Loop langs en vraag: wie geeft de nummers aan? Eén drumstel: wissel per groepje, of cajon. Opnemen gaat op de laptop."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Wat werkte?",
+            "stappen": [
+              "Schrijf je volgorde op en lever in.",
+              "Welke keuze maakte het stuk beter?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "De volgorde van het groepje op papier, met één keuze die het stuk beter maakte."
+        },
+        "benodigd": [
+          "Gitaren, ukeleles, keyboards, basgitaar als die er is",
+          "Drumstel en cajons",
+          "Laptops",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/2c8c3a04-f2a9-4526-afb6-727dd1e8e649"
+          },
+          {
+            "t": "Musicbox: Spelen op de drums, Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/702765fa-003b-44da-85fb-262aa176683b"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 30,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Speelmoment: je song voor de docent",
+        "detail": "Afsluiting van periode 3. Groepjes kiezen Memories, Riptide of Birds of a Feather en spelen die voor de docent, die langs de groepjes loopt. Met strookje, zonder cijfer.",
+        "vraag": "Wat kun je nu, vergeleken met vorige maand?",
+        "doel": "Je speelt een song uit deze periode met je groepje en benoemt wat lastig was.",
+        "criteria": [
+          "Ik heb een partij gekozen die bij mij past",
+          "Ik speel op de tel met mijn groepje",
+          "Ik speel door als het misgaat"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Kies en stem",
+            "stappen": [
+              "Kies met je groepje één song.",
+              "Verdeel de partijen.",
+              "Stem je instrument."
+            ]
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Oefenen tot de docent komt",
+            "stappen": [
+              "Oefen je song in je eigen hoek.",
+              "Eén telt af, iedereen begint samen.",
+              "Speel voor de docent als die bij je komt.",
+              "Daarna: één werkpunt horen en verder oefenen."
+            ],
+            "klaar": "Pak een tweede song of een hoger niveau.",
+            "docent": "Loop langs alle groepjes en luister één keer door. Noteer per groepje één ding dat goed ging en één werkpunt. Geen cijfer: het PTO heeft voor klas 1 alleen P1 en T1."
+          },
+          {
+            "min": 5,
+            "soort": "gesprek",
+            "kop": "Wat heb je geleerd?",
+            "stappen": [
+              "Welke song lag jou het best?",
+              "Welk instrument wil je verder?"
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Strookje",
+            "stappen": [
+              "Vink de drie zinnen af: nog niet, bijna of ja.",
+              "Schrijf op: wat was het lastigst?",
+              "Schrijf op: wat ga je oefenen?",
+              "Lever in bij de deur."
+            ],
+            "docent": "Hooguit 3 minuten. De drie zinnen zijn de criteria van deze les."
+          }
+        ],
+        "formatief": {
+          "soort": "strookje",
+          "tekst": "Drie zinnen afvinken: nog niet, bijna, ja. Wat was het lastigst en wat ga je oefenen?"
+        },
+        "benodigd": [
+          "Alle instrumenten",
+          "Laptops en koptelefoons",
+          "Strookje geprint, één per leerling",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Memories",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/a7567191-b6b4-49b9-b966-fbc0d47f105f"
+          },
+          {
+            "t": "Musicbox: Spelen op de ukelele, Riptide",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/d7e9e513-5350-4fdb-8250-3fe5b9ded2d6"
+          },
+          {
+            "t": "Musicbox: Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/2c8c3a04-f2a9-4526-afb6-727dd1e8e649"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 31,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Instrumenten herkennen: bingo",
+        "detail": "Losse les in activiteitenweek E, na de meivakantie. Instrumentfamilies en bingo op gehoor. Vervalt de les, dan mist er niets.",
+        "vraag": "Welk instrument hoor je, en bij welke familie hoort het?",
+        "doel": "Je herkent instrumenten op het gehoor en deelt ze in bij een instrumentfamilie.",
+        "criteria": [
+          "Ik herken instrumenten aan hun klank",
+          "Ik noem de families: tokkel, toets, strijk, hout, koper, slag",
+          "Ik noem bij welke familie mijn eigen instrumenten horen"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Vier instrumenten",
+            "stappen": [
+              "Je speelde ukelele, gitaar, drums en keyboard.",
+              "Hoe maak je daarop geluid?",
+              "Tokkelen, slaan of drukken?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "De families",
+            "stappen": [
+              "Bekijk het blad Instrumenten herkennen.",
+              "Hout en koper blaas je. Strijkers strijk je.",
+              "Tokkelinstrumenten tokkel je. Toetsinstrumenten bespeel je met toetsen.",
+              "Slagwerk sla je."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Tokkel",
+                  "t": "ukelele, gitaar"
+                },
+                {
+                  "k": "Toets",
+                  "t": "piano, orgel"
+                },
+                {
+                  "k": "Strijk",
+                  "t": "viool, cello, contrabas"
+                },
+                {
+                  "k": "Hout",
+                  "t": "dwarsfluit, klarinet, saxofoon"
+                },
+                {
+                  "k": "Koper",
+                  "t": "trompet, tuba, hoorn"
+                },
+                {
+                  "k": "Slag",
+                  "t": "drumstel, djembé, marimba"
+                }
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Bingo",
+            "stappen": [
+              "Je krijgt een blad met negen instrumenten.",
+              "Luister naar het fragment.",
+              "Staat dat instrument op je blad? Kruis het aan.",
+              "Drie op een rij: bingo. Noem de instrumenten en hun familie."
+            ],
+            "docent": "Er zijn 25 verschillende bladen. De map heeft geen geluidsfragmenten: kies ze vooraf, bijvoorbeeld uit een instrumentenbox in Musicbox, en print de bladen."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Welke familie?",
+            "stappen": [
+              "Noem een instrument dat je vandaag leerde.",
+              "Bij welke familie hoort het?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "vragen",
+          "tekst": "Noem drie instrumenten uit drie verschillende families."
+        },
+        "benodigd": [
+          "Bingobladen geprint, één per leerling",
+          "Instrumenten herkennen op het bord",
+          "Geluidsfragmenten",
+          "Pennen"
+        ],
+        "materiaal": [
+          {
+            "t": "Bingo instrumenten (Word)",
+            "sp": "01 Onderbouw muziek\\01 Klas 1\\Thema's en extra's\\Luistertoets\\Bingo instrumenten.docx"
+          },
+          {
+            "t": "Instrumenten herkennen (Word)",
+            "sp": "01 Onderbouw muziek\\01 Klas 1\\Thema's en extra's\\Luistertoets\\Instrumenten herkennen.docx"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 32,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Count on Me: instrument en niveau kiezen",
+        "detail": "Laatste box. Refrein in C met ook een ritmelaag op percussie. Kies het instrument dat je het beste ligt, of probeer er een nieuw.",
+        "vraag": "Wat maakt iemand een vriend op wie je kunt rekenen?",
+        "doel": "Je kiest zelf een instrument en niveau en speelt het refrein mee met de track.",
+        "criteria": [
+          "Ik heb zelf instrument en niveau gekozen",
+          "Ik ken de volgorde van de akkoorden of mijn partij",
+          "Ik speel mee met de oefentrack"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "luisteren",
+            "kop": "Wat hoor je?",
+            "stappen": [
+              "Luister naar de begeleidingstrack.",
+              "Welke instrumenten hoor je?",
+              "Waar gaat het lied over, denk je, als je de titel leest?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "Je kent dit al",
+            "stappen": [
+              "C, Em, Am, G, F, C: die akkoorden ken je van Memories.",
+              "Niveau 1 is 4 maten, niveau 2 is 8.",
+              "Kies wat je wilt spelen. Durf iets nieuws."
+            ],
+            "beeld": {
+              "soort": "tabel",
+              "rijen": [
+                [
+                  "Laag",
+                  "Niveau 1"
+                ],
+                [
+                  "Melodie",
+                  "gitaar, piano"
+                ],
+                [
+                  "Akkoorden",
+                  "gitaar, piano, ukelele"
+                ],
+                [
+                  "Bas",
+                  "basgitaar, piano"
+                ],
+                [
+                  "Ritme",
+                  "beat-ring, bongo"
+                ]
+              ]
+            },
+            "docent": "De akkoordpartij op ukelele, niveau 1: C, Em, Am, G, F, C. Geen drumpartij: ritme is beat-ring en bongo."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Vind je partij",
+            "stappen": [
+              "Open Count on me, Musicsheets, op de laptop.",
+              "Speel langzaam zonder track.",
+              "Zet de oefentrack aan.",
+              "Lukt het? Speel mee met de gewone track."
+            ],
+            "klaar": "Ga naar niveau 2 of leer de partij van je buur."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Wat speel je?",
+            "stappen": [
+              "Instrument, laag en niveau op een briefje.",
+              "Welke maat lukt nog niet?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "Instrument, laag en niveau op een briefje, met de maat die nog niet lukt."
+        },
+        "identiteit": "Dit lied gaat over vrienden die er voor elkaar zijn. Daar kun je de vraag naast zetten wat het betekent om er voor een ander te zijn, ook als het je niets oplevert.",
+        "benodigd": [
+          "Gitaren, ukeleles, keyboards, basgitaar als die er is",
+          "Beat-rings en bongo's",
+          "Laptops en koptelefoons"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Count on me",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/77333743-55bf-41e9-a402-99940a9345bb"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 33,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Count on Me: samen spelen",
+        "detail": "Groepjes maken met alle vier de lagen en samen op de tel spelen. Oefening voor de eindopdracht: taken verdelen en elkaar helpen.",
+        "vraag": "Hoe help je elkaar in een groepje?",
+        "doel": "Je speelt Count on Me samen en helpt je groepje als het vastloopt.",
+        "criteria": [
+          "Ons groepje heeft de taken verdeeld",
+          "Ik speel op de tel met mijn groepje",
+          "Ik help of vraag om hulp als het vastloopt"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Warm spelen",
+            "stappen": [
+              "Pak je instrument.",
+              "Speel je partij met de oefentrack."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Goed samenwerken",
+            "stappen": [
+              "Eén telt af, iedereen begint samen.",
+              "Luister naar elkaar: hoor je iedereen?",
+              "Help eerst elkaar, vraag dan de docent."
+            ],
+            "docent": "Hier oefenen ze wat ze in de eindopdracht nodig hebben: zelf afspreken en elkaar helpen."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "In je groepje",
+            "stappen": [
+              "Zorg voor melodie, akkoorden, bas en ritme.",
+              "Speel het refrein vier keer.",
+              "Maak het zachter of harder: wat gebeurt er?",
+              "Twee keer helemaal door zonder stoppen."
+            ],
+            "klaar": "Eén iemand gaat een niveau omhoog of zingt erbij.",
+            "docent": "Loop langs en hoor elk groepje even. Let op wie niet meedoet en geef die een eenvoudige partij."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Terugblik",
+            "stappen": [
+              "Wat deed jouw groepje goed samen?",
+              "Wat neem je mee naar de eindopdracht?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "samenspel",
+          "tekst": "Wat deed je groepje goed samen, en wat neem je mee naar de eindopdracht?"
+        },
+        "identiteit": "Er zijn voor een ander leer je ook in een groepje: wachten op wie het nog niet kan, en iets uitleggen zonder het over te nemen.",
+        "benodigd": [
+          "Gitaren, ukeleles, keyboards, basgitaar als die er is",
+          "Beat-rings en bongo's",
+          "Laptops en koptelefoons",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Count on me",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/77333743-55bf-41e9-a402-99940a9345bb"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 34,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Eindopdracht: groepje maken en lied kiezen",
+        "detail": "Eindopdracht Klas 1 uit Musicbox: in groepjes van 3 zelf een lied of muziekstuk instuderen. Vandaag groepje, lied en taken.",
+        "vraag": "Welk lied kun je met jullie drieën echt laten klinken?",
+        "doel": "Je kiest met je groepje een lied dat past en verdeelt de taken.",
+        "criteria": [
+          "Ons groepje heeft een lied dat de docent heeft goedgekeurd",
+          "Elk heeft een eigen taak",
+          "We hebben de melodie en de akkoorden gevonden"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Wat kun je al?",
+            "stappen": [
+              "Noem de songs van dit jaar.",
+              "Welk instrument ligt je het best?",
+              "Welke akkoorden ken je?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "uitleg",
+            "kop": "De opdracht",
+            "stappen": [
+              "Groepjes van 3, drie lessen de tijd.",
+              "Eén keyboard, één ukelele, één gitaar. Eigen instrument mag ook.",
+              "Met of zonder zang.",
+              "Minimaal: melodie en akkoorden van een couplet of refrein.",
+              "De laatste les speel je voor de docent."
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Makkelijk",
+                  "t": "C, F, G, Am"
+                },
+                {
+                  "k": "Bekend",
+                  "t": "een song van dit jaar"
+                },
+                {
+                  "k": "Uit de school",
+                  "t": "een lied van de jaaropening"
+                }
+              ]
+            },
+            "docent": "De pdf in Musicbox zegt nog: presenteren aan de klas, en akkoorden omzetten met AI. Daarom niet uitdelen; de stappen hier zijn de opdracht. Zoek je zelf ideeën: Vader ik aanbid U en de liederen van de jaaropening."
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Kies en verdeel",
+            "stappen": [
+              "Maak een groepje van 3.",
+              "Noem drie liederen. Kies er één.",
+              "Laat je keuze zien aan de docent.",
+              "Zoek bladmuziek of akkoorden op de laptop.",
+              "Schrijf op: wie speelt wat."
+            ],
+            "klaar": "Probeer de eerste maat samen.",
+            "docent": "Keur elk lied goed voordat ze beginnen: past het bij de school, ook de tekst? Staat het niet in C, zet het dan voor ze om, of laat ze een ander lied kiezen."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Plan op papier",
+            "stappen": [
+              "Lied, wie speelt wat, waar vind je het blad.",
+              "Lever in."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "Plan op papier: lied, wie speelt wat, en waar het blad staat."
+        },
+        "benodigd": [
+          "Keyboards, ukeleles, gitaren",
+          "Laptops en koptelefoons",
+          "Briefjes voor het plan"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Eindopdracht Klas 1 (pdf, docent)",
+            "u": "https://toegang.musicboxmethode.nl/proxy/view?file_id=8e831d03-f7f1-4cb0-80f9-fc4e9fb66210"
+          },
+          {
+            "t": "Liederen jaaropening en open dagen (pdf)",
+            "sp": "05 Activiteiten\\Vieringen\\Liederen dagopening\\csg pm liederen jaaropening en open dagen.pdf"
+          },
+          {
+            "t": "Vader ik aanbid U (pdf)",
+            "sp": "01 Onderbouw muziek\\01 Klas 1\\P1 Praktijktoets - Spelen en presenteren\\vader ik aanbid u.pdf"
+          },
+          {
+            "t": "Musicbox: Memories",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/a7567191-b6b4-49b9-b966-fbc0d47f105f"
+          },
+          {
+            "t": "Musicbox: Count on me",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/77333743-55bf-41e9-a402-99940a9345bb"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 35,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Eindopdracht: melodie en akkoorden instuderen",
+        "detail": "Eerste instudeerles. Iedereen leert zijn eigen partij en het groepje zet een eerste keer samen in.",
+        "vraag": "Wat oefen je alleen en wat samen?",
+        "doel": "Je kent je eigen partij van het gekozen stuk en speelt de eerste regel samen.",
+        "criteria": [
+          "Ik ken mijn eigen partij",
+          "Ik help iemand in mijn groepje of vraag om hulp",
+          "Wij spelen de eerste regel samen"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Plan erbij",
+            "stappen": [
+              "Pak je plan van vorige les.",
+              "Wat is vandaag jouw doel?",
+              "Stem je instrument."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Slim oefenen",
+            "stappen": [
+              "Eerst alleen, langzaam, met koptelefoon.",
+              "Klein stukje, dan pas verder.",
+              "Tutorial nodig? Open die op de laptop."
+            ],
+            "docent": "Tutorials: Gitaar voor beginners, Piano, Ukelele. YouTube mag ook op de laptop."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Instuderen",
+            "stappen": [
+              "15 minuten alleen je eigen partij.",
+              "15 minuten samen: de eerste regel.",
+              "Eén telt af.",
+              "Gaat het mis? Doorspelen en weer invallen."
+            ],
+            "klaar": "Probeer ook de tweede regel of een versiering.",
+            "docent": "Loop langs: past de partij bij wat deze leerling kan? Stuur bij naar iets dat lukt."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Waar sta je?",
+            "stappen": [
+              "Schrijf op: wat lukt al, wat volgende keer?",
+              "Duim voor het groepje."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "zelfcheck",
+          "tekst": "Wat lukt al, en wat doe je de volgende les?"
+        },
+        "benodigd": [
+          "Keyboards, ukeleles, gitaren, eigen instrumenten",
+          "Laptops en koptelefoons",
+          "Plannen van vorige les",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Gitaar voor beginners",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3"
+          },
+          {
+            "t": "Musicbox: Piano",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3"
+          },
+          {
+            "t": "Musicbox: Ukelele",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/1b3267b6-6933-40ff-8a63-5eed93117369"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 36,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Eindopdracht: samenvoegen en opnemen",
+        "detail": "Tweede instudeerles. Het hele stuk samen spelen, opnemen op de laptop en naar aanleiding daarvan één ding verbeteren.",
+        "vraag": "Wat hoor je als je jezelf terugluistert?",
+        "doel": "Je speelt het stuk samen van begin tot eind en verbetert één ding na het terugluisteren.",
+        "criteria": [
+          "Wij spelen van begin tot eind",
+          "Ik speel op de tel",
+          "Wij hebben één ding verbeterd na het terugluisteren"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Warm spelen",
+            "stappen": [
+              "Pak je instrument.",
+              "Speel je partij één keer alleen."
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "uitleg",
+            "kop": "Volgende les",
+            "stappen": [
+              "Je speelt je stuk voor de docent. Niet voor de klas.",
+              "We letten op juiste noten, op de tel, en doorspelen.",
+              "Luister vandaag naar jezelf: neem op met de laptop."
+            ],
+            "docent": "De criteria van lesweek 37 op het bord laten staan."
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Samen en terugluisteren",
+            "stappen": [
+              "Speel het hele stuk door.",
+              "Neem één keer op met de laptop.",
+              "Luister terug: wat is het eerste dat beter kan?",
+              "Oefen alleen dat stuk.",
+              "Neem nog een keer op."
+            ],
+            "klaar": "Bedenk een begin of een einde.",
+            "docent": "Opnamen blijven op de laptop van de groep: niet delen en na de les weggooien."
+          },
+          {
+            "min": 5,
+            "soort": "check",
+            "kop": "Klaar voor volgende les?",
+            "stappen": [
+              "Wat heb je verbeterd?",
+              "Wat oefen je nog?",
+              "Wie telt af?"
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "zelfcheck",
+          "tekst": "Wat heb je verbeterd na het terugluisteren, en wat oefen je nog?"
+        },
+        "benodigd": [
+          "Keyboards, ukeleles, gitaren, eigen instrumenten",
+          "Laptops",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Gitaar voor beginners",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/369206c1-f13f-4695-953d-5cbb8181ffe3"
+          },
+          {
+            "t": "Musicbox: Piano",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/e01a8ac9-2ffe-4ccf-ae0e-bdcbcf94c1b3"
+          },
+          {
+            "t": "Musicbox: Ukelele",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/1b3267b6-6933-40ff-8a63-5eed93117369"
+          }
+        ]
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 37,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Eindopdracht: spelen voor de docent",
+        "detail": "De groepjes spelen hun stuk voor de docent, die langs de groepjes loopt. Met strookje. Formatief, zonder cijfer.",
+        "vraag": "Laat horen wat je met jouw groepje hebt gemaakt.",
+        "doel": "Je speelt met je groepje de melodie en de akkoorden van jullie stuk.",
+        "criteria": [
+          "Mijn partij klopt: juiste noten of grepen",
+          "Ik speel op de tel met mijn groepje",
+          "Ik speel door als het misgaat"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Stem en speel in",
+            "stappen": [
+              "Stem je instrument.",
+              "Speel je stuk één keer zacht."
+            ]
+          },
+          {
+            "min": 30,
+            "soort": "doen",
+            "kop": "Groepje voor groepje",
+            "stappen": [
+              "Oefen door in je eigen hoek.",
+              "Komt de docent bij je? Tel af en speel.",
+              "Hoor één ding dat goed ging, één werkpunt.",
+              "Oefen daarna dat werkpunt."
+            ],
+            "klaar": "Help een ander groepje of speel een tweede stuk.",
+            "docent": "Geen groepje speelt voor de klas. Noteer per groepje een opmerking. Geen cijfer, tenzij je anders beslist: het PTO heeft voor klas 1 alleen P1 en T1."
+          },
+          {
+            "min": 5,
+            "soort": "gesprek",
+            "kop": "Terugblik in je groepje",
+            "stappen": [
+              "Wat ging beter dan je dacht?",
+              "Wie hielp het groepje vooruit?"
+            ]
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Strookje",
+            "stappen": [
+              "Vink de drie zinnen af: nog niet, bijna of ja.",
+              "Schrijf op: wat was het lastigst?",
+              "Schrijf op: wat ga je oefenen?",
+              "Lever in bij de deur."
+            ],
+            "docent": "Hooguit 3 minuten. De drie zinnen zijn de criteria van deze les."
+          }
+        ],
+        "formatief": {
+          "soort": "strookje",
+          "tekst": "Drie zinnen afvinken: nog niet, bijna, ja. Wat was het lastigst en wat ga je oefenen?"
+        },
+        "benodigd": [
+          "Keyboards, ukeleles, gitaren, eigen instrumenten",
+          "Strookje geprint, één per leerling",
+          "Oefenruimtes afspreken"
+        ],
+        "materiaal": []
+      },
+      {
+        "koppel": [
+          {
+            "lg": "bb1",
+            "w": 38,
+            "slot": "l1"
+          }
+        ],
+        "type": "praktijk",
+        "titel": "Terugblik: vier instrumenten, en nu?",
+        "detail": "Laatste les van het jaar. Terugkijken op ukelele, gitaar, drums en keyboard, en nog één keer de song naar keuze spelen.",
+        "vraag": "Wat kun je nu dat je in augustus nog niet kon?",
+        "doel": "Je noemt wat je dit jaar hebt geleerd en welk instrument bij jou past.",
+        "criteria": [
+          "Ik noem drie dingen die ik nu kan",
+          "Ik noem welk instrument bij mij past en waarom"
+        ],
+        "fasen": [
+          {
+            "min": 5,
+            "soort": "start",
+            "kop": "Vier instrumenten",
+            "stappen": [
+              "Noem de songs van dit jaar.",
+              "Welke speelde je het liefst?"
+            ]
+          },
+          {
+            "min": 10,
+            "soort": "gesprek",
+            "kop": "Wat kun je nu?",
+            "stappen": [
+              "Schrijf drie dingen op die je nu kunt.",
+              "Vergelijk met je buur.",
+              "Welk instrument wil je verder?"
+            ],
+            "beeld": {
+              "soort": "kaarten",
+              "items": [
+                {
+                  "k": "Ukelele",
+                  "t": "akkoorden, Riptide"
+                },
+                {
+                  "k": "Gitaar",
+                  "t": "tab, D, G, A"
+                },
+                {
+                  "k": "Drums",
+                  "t": "basisritme, achtsten"
+                },
+                {
+                  "k": "Keyboard",
+                  "t": "noten, C, F, G, Am"
+                }
+              ]
+            }
+          },
+          {
+            "min": 25,
+            "soort": "doen",
+            "kop": "Nog één keer",
+            "stappen": [
+              "Kies een song van dit jaar.",
+              "Pak een instrument dat je nog niet of weinig speelde.",
+              "Speel samen in een groepje.",
+              "Of help iemand die het nieuw is."
+            ],
+            "docent": "Vrij spelen. Instrumenten aan het eind nakijken en opbergen: het is de laatste les."
+          },
+          {
+            "min": 5,
+            "soort": "afsluiten",
+            "kop": "Mee naar volgend jaar",
+            "stappen": [
+              "Schrijf op: dit instrument wil ik verder, omdat…",
+              "Lever in bij de deur."
+            ]
+          }
+        ],
+        "formatief": {
+          "soort": "kaartje",
+          "tekst": "Drie dingen die ik nu kan, en het instrument dat ik verder wil."
+        },
+        "identiteit": "Wat je kunt, heb je ook gekregen en met anderen geleerd. Vraag aan het eind: waar was je dit jaar dankbaar voor, en wie hielp jou daarbij?",
+        "benodigd": [
+          "Alle instrumenten",
+          "Laptops en koptelefoons",
+          "Briefjes"
+        ],
+        "materiaal": [
+          {
+            "t": "Musicbox: Memories",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/a7567191-b6b4-49b9-b966-fbc0d47f105f"
+          },
+          {
+            "t": "Musicbox: Spelen op de ukelele, Riptide",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/d7e9e513-5350-4fdb-8250-3fe5b9ded2d6"
+          },
+          {
+            "t": "Musicbox: Birds of a feather",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/2c8c3a04-f2a9-4526-afb6-727dd1e8e649"
+          },
+          {
+            "t": "Musicbox: Count on me",
+            "u": "https://digitaal.musicboxmethode.nl/teacher/boxes/77333743-55bf-41e9-a402-99940a9345bb"
           }
         ]
       }
