@@ -394,6 +394,8 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 .bm-lijst li.klaar .bm-naam{color:var(--muted)}
 .bm-naam{flex:1;text-align:left;background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:.3rem .2rem}
 .bm-c{font-variant-numeric:tabular-nums;font-weight:700;font-size:.9rem;min-width:2.2rem;text-align:right}
+.bm-c small{font-weight:400;opacity:.75}
+.bm-chip small{opacity:.75;font-variant-numeric:tabular-nums}
 .bm-pijl .btn{padding:.1rem .35rem;font-size:var(--t-klein)}
 .bm-scoor h2{font-size:1.5rem}
 .bm-scoor .kop{display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;align-items:center}

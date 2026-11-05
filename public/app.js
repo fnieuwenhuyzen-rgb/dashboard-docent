@@ -2641,7 +2641,7 @@ const bmKanMap = () => typeof window.showDirectoryPicker === 'function';
 const bmTijd = t => { const d = new Date(t); return `${fmtD(ymd(d))} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
 function bmToets(mid, g) { const k = mid + '|' + g; return S.beoord.toetsen[k] || (S.beoord.toetsen[k] = { ll: {}, volgorde: [], start: vandaag() }); }
 function bmRij(L, id) { return L.ll[id] || (L.ll[id] = { s: {}, v: {}, opm: {} }); }
-const bmLaag = T => (T.tussen || []).find(x => x.id === bmLaagId) || T;
+const bmLaag = T => (bmLaagId === 'herkans' && T.herkans) || (T.tussen || []).find(x => x.id === bmLaagId) || T;
 function bmVolgorde(T, lijst) { const ids = lijst.map(x => x.id); const v = (T.volgorde || []).filter(id => ids.includes(id)); ids.forEach(id => { if (!v.includes(id)) v.push(id); }); T.volgorde = v;
   if (!(T.groepjes || []).length) return v; const rang = id => { const i = T.groepjes.findIndex(g => g.leden.includes(id)); return i < 0 ? T.groepjes.length : i; }; return v.map((id, i) => [rang(id), i, id]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map(x => x[2]); }
 function bmParse(txt) { // Magister: één leerling per regel, kolommen met tabs; nummers, klascodes en een datum vallen weg
@@ -2730,15 +2730,36 @@ function bmKoppelKaart(g) {
     <div class="knoppen"><button class="btn hoofd" data-bm="koppelklaar">Lijst opslaan</button><button class="btn" data-bm="lijst">Terug</button></div></div>`;
 }
 function bmKolomKaart(m, g, T, lijst) {
-  const rij = lijst.map(x => { const r = T.ll[x.id]; const u = BMR.eind(m, T, T, x.id); return { naam: x.naam, r, u, c: r && r.vast ? BMR.fmt(r.vast.e) : '' }; });
-  const open = rij.filter(x => !x.c && x.u.e != null && !(x.r && x.r.af)); const leeg = rij.filter(x => !x.c).length;
-  return `<div class="kaart bm"><h2>Cijferkolom voor Magister</h2><p class="lead">In de volgorde van de klassenlijst, één regel per leerling. Alleen afgeronde cijfers; bij inhalen of zonder cijfer blijft de cel leeg. Klik in Magister op de eerste cel van de kolom en plak.</p>
-    ${open.length ? `<p class="bm-waarsch">${open.length} ${open.length === 1 ? 'leerling heeft' : 'leerlingen hebben'} een cijfer dat nog niet is afgerond. <button class="btn klein hoofd" data-bm="afronden">Nu afronden</button></p>` : ''}
+  const H = T.herkans; const hopen = id => H && (H.wie || []).includes(id) && !(H.ll[id] || {}).vast && BMR.eind(m, H, T, id).e != null;
+  const rij = lijst.map(x => { const r = T.ll[x.id]; const u = BMR.eind(m, T, T, x.id); const p = BMR.poging(T, x.id); return { id: x.id, naam: x.naam, r, u, p, c: BMR.fmt(p.e) }; });
+  const open = rij.filter(x => !(x.r && x.r.vast) && x.u.e != null && !(x.r && x.r.af)); const leeg = rij.filter(x => !x.c).length; const hOpen = rij.filter(x => hopen(x.id));
+  const noot = x => { const f = BMR.fmt, p = x.p; if (p.e2 != null) return p.e1 == null ? 'herkansing telt (eerste poging staat open)' : p.p === 2 ? `herkansing telt (eerste poging: ${f(p.e1)})` : p.e2 === p.e1 ? 'eerste poging telt (herkansing even hoog)' : `eerste poging telt (herkansing: ${f(p.e2)})`; if (hopen(x.id)) return 'herkansing nog afronden'; if (x.c) return H && (H.wie || []).includes(x.id) ? 'herkansing nog niet gescoord' : ''; return x.r && x.r.af ? 'inhalen' : x.u.e != null ? 'nog afronden' : 'geen cijfer'; };
+  return `<div class="kaart bm"><h2>Cijferkolom voor Magister</h2><p class="lead">In de volgorde van de klassenlijst, één regel per leerling. Alleen afgeronde cijfers; bij inhalen of zonder cijfer blijft de cel leeg.${H ? ' Na een herkansing staat hier het hoogste afgeronde cijfer.' : ''} Klik in Magister op de eerste cel van de kolom en plak.</p>
+    ${open.length ? `<p class="bm-waarsch">${open.length} ${open.length === 1 ? 'leerling heeft' : 'leerlingen hebben'} een cijfer dat nog niet is afgerond. <button class="btn klein hoofd" data-bm="afronden" data-laag="toets">Nu afronden</button></p>` : ''}
+    ${hOpen.length ? `<p class="bm-waarsch">${hOpen.length} ${hOpen.length === 1 ? 'herkansing is' : 'herkansingen zijn'} nog niet afgerond en ${hOpen.length === 1 ? 'telt' : 'tellen'} dus nog niet mee. <button class="btn klein hoofd" data-bm="afronden" data-laag="herkans">Nu afronden</button></p>` : ''}
     <div class="knoppen"><button class="btn hoofd" data-bm="kolomkopie" ${rij.some(x => x.c) ? '' : 'disabled'}>Kopieer kolom</button><button class="btn" data-bm="dicht">Terug</button></div>
     <p>${rij.length} regels, ${rij.length - leeg} cijfers, ${leeg} leeg.</p>
     <textarea id="bmKolom" readonly hidden rows="4">${esc(BMR.kolom(T, lijst).join('\n'))}</textarea>
-    <table class="bm-kolom"><thead><tr><th>Leerling</th><th>Cijfer</th><th></th></tr></thead><tbody>${rij.map(x => `<tr><td>${esc(x.naam)}</td><td class="c">${esc(x.c)}</td><td>${x.c ? '' : x.r && x.r.af ? 'inhalen' : x.u.e != null ? 'nog afronden' : 'geen cijfer'}</td></tr>`).join('')}</tbody></table></div>`;
+    <table class="bm-kolom"><thead><tr><th>Leerling</th><th>Cijfer</th><th></th></tr></thead><tbody>${rij.map(x => `<tr><td>${esc(x.naam)}</td><td class="c">${esc(x.c)}</td><td>${esc(noot(x))}</td></tr>`).join('')}</tbody></table></div>`;
 }
+function bmHerkansKaart(m, T, lijst) {
+  const H = T.herkans || { wie: [], ll: {} }; const cijfer = id => BMR.fmt(((T.ll[id] || {}).vast || {}).e);
+  const inn = lijst.filter(x => H.wie.includes(x.id)); const uit = lijst.filter(x => !H.wie.includes(x.id));
+  const kan = uit.filter(x => (T.ll[x.id] || {}).vast).sort((a, b) => T.ll[a.id].vast.e - T.ll[b.id].vast.e); const niet = uit.filter(x => !(T.ll[x.id] || {}).vast);
+  const reden = x => { const r = T.ll[x.id]; return r && r.af ? 'eerst inhalen' : BMR.eind(m, T, T, x.id).e != null ? 'eerst afronden' : 'nog geen cijfer'; };
+  return `<div class="kaart bm"><h2>Wie herkanst?</h2><p class="lead">Tik op de namen. Alleen wie een afgerond cijfer heeft, kan herkansen. Een leerling die afwezig was, haalt eerst in op de tab Toets. De eerste poging blijft bewaard en het hoogste afgeronde cijfer telt.</p>
+    <h3 class="bm-groep">Herkanst (${inn.length})</h3><div class="bm-chips">${inn.map(x => { const v = (H.ll[x.id] || {}).vast; return `<button class="bm-chip in" data-bmhwie="${x.id}" ${v ? 'disabled title="De herkansing is afgerond. Zet hem eerst open met Wijzigen."' : ''}>${esc(x.naam)} <small>${cijfer(x.id)}${v ? ' · afgerond' : ''}</small></button>`; }).join('') || '<small>Nog niemand</small>'}</div>
+    <h3 class="bm-groep">Kan herkansen (${kan.length}) <small>laagste cijfer eerst</small></h3><div class="bm-chips">${kan.map(x => `<button class="bm-chip" data-bmhwie="${x.id}">${esc(x.naam)} <small>${cijfer(x.id)}</small></button>`).join('') || '<small>Niemand</small>'}</div>
+    ${niet.length ? `<h3 class="bm-groep">Nog niet (${niet.length})</h3><div class="bm-chips">${niet.map(x => `<button class="bm-chip" disabled>${esc(x.naam)} <small>${reden(x)}</small></button>`).join('')}</div>` : ''}
+    <div class="knoppen" style="margin-top:.7rem"><button class="btn hoofd" data-bm="herkansklaar">Klaar</button></div></div>`;
+}
+// wat er in de lijst achter de naam staat: het cijfer van deze laag en, zodra er een herkansing is, welke poging telt
+function bmPogCel(L, T, id, u) { const r = L.ll[id]; const f = BMR.fmt; const p = BMR.poging(T, id); const H = L === T.herkans;
+  const nu = BMR.isPoging(L, T) && r && r.vast ? f(u.e) + ' ✓' : r && r.af ? 'inhalen' : u.e != null ? komma(u.e) : u.d != null ? u.mist.join(', ') + '?' : '';
+  if (H) return `<small>1e ${f(p.e1) || 'open'}</small> ${nu}${r && r.vast && p.p === 2 ? ' telt' : ''}`;
+  if (L !== T) return nu;
+  if (p.e2 != null) return p.p === 2 ? `<small>${nu}</small> ${f(p.e2)} telt` : `${nu} telt <small>herk. ${f(p.e2)}</small>`;
+  return T.herkans && (T.herkans.wie || []).includes(id) ? `${nu} <small>herkanst</small>` : nu; }
 function bmGroepjesKaart(m, T, lijst) {
   const G = T.groepjes || []; const naam = id => (lijst.find(x => x.id === id) || {}).naam || ''; const los = lijst.filter(x => !BMR.groepVan(T, x.id));
   if (!G.some(x => x.id === bmActiefG)) bmActiefG = G.length ? G[G.length - 1].id : null;
@@ -2801,13 +2822,14 @@ function bmGroepKaart(m, T, L, G, lijst) {
   return h + `<div class="bm-voet"><div><span>Geldt voor iedereen zonder eigen score</span></div><div class="knoppen"><button class="btn hoofd" data-bm="gverder">Naar de leerlingen</button></div></div></div>`;
 }
 function bmBladInfo(m, g, T, L, id, naam) { // alles wat op het feedbackblad komt
-  const r = L.ll[id] || { s: {}, v: {}, opm: {} }; const u = BMR.eind(m, L, T, id); const D = u.delen; const tus = L !== T; const dicht = !tus && !!r.vast;
+  const r = L.ll[id] || { s: {}, v: {}, opm: {} }; const u = BMR.eind(m, L, T, id); const D = u.delen; const tus = !BMR.isPoging(L, T); const H = L === T.herkans; const dicht = !tus && !!r.vast;
   const tekst = (c, v) => { if (v == null) return ''; const i = [4, 6, 8, 10].indexOf(v); return i >= 0 ? ((c.leerling || c.docent || [])[i] || '') : `Tussen ${v - 1} en ${v + 1}.`; };
   const onderdelen = bmOnderdelen(m, T).map(o => ({ groep: o.groep, opm: (r.opm || {})[o.groep] || '', crit: o.criteria.map(c0 => { const c = BMR.critVoor(m, c0, BMR.veldenVan(L, T, id)); const q = dicht ? (r.vast.s[c.id] || {}) : BMR.scoreVan(L, T, id, c); const v = q.v == null ? null : q.v; return { naam: c.naam, score: v, tekst: tekst(c, v), bron: q.b === 'groep' ? 'groepsscore' : '' }; }) }));
   const cijfers = tus ? [['Tussenstand', u.e == null ? '' : BMR.fmt(u.e), true]] : m.speelkeuze && D.docent === 100 ? [['Cijfer', BMR.fmt(u.e), true]] : D.docent < 100 ? [[`Cijfer docent (${D.docent}%)`, BMR.fmt(u.d)], ...(D.zelf ? [[(m.zelfSoort === 'cijfer' ? 'Eigen cijfer' : 'Zelfbeoordeling') + ` (${D.zelf}%)`, BMR.fmt(u.z)]] : []), ...(D.klasgenoten ? [[`Klasgenoten (${D.klasgenoten}%, ${u.kn} inzendingen)`, BMR.fmt(u.k)]] : []), ['Eindcijfer', BMR.fmt(u.e), true]] : [['Cijfer', BMR.fmt(u.d), true]];
-  const velden = (m.velden || []).map(v => (r.v || {})[v] ? `${v}: ${r.v[v]}` : '').filter(Boolean).join(' · ');
+  if (H) { const p = BMR.poging(T, id); if (p.e1 != null) cijfers.push(['Eerste poging', BMR.fmt(p.e1)]); if (p.e2 != null) cijfers.push(['Telt voor het cijfer', BMR.fmt(p.e), true]); }
+  const rv = H ? BMR.veldenVan(L, T, id) : r.v || {}; const velden = (m.velden || []).map(v => rv[v] ? `${v}: ${rv[v]}` : '').filter(Boolean).join(' · ');
   const grp = BMR.groepVan(T, id); const krabbels = [['Aantekening met de pen', r.krabbel || []], [`Aantekening met de pen bij de groep${grp && grp.naam ? ' ' + grp.naam : ''}`, grp ? (L.gk || {})[grp.id] || [] : []]].filter(k => k[1].length).map(([kop, strepen]) => ({ kop, strepen }));
-  return { krabbels, eyebrow: `${m.klas} · ${m.toets}${m.weging ? ' · weging ' + m.weging : ''}`, titel: m.titel, docTitel: `Feedback ${m.toets}`, naam, regel: [`Groep ${g}`, velden].filter(Boolean).join(' · '), banner: tus ? `Tussenstand ${L.naam} (${fmtD(L.op)}): telt niet mee voor het cijfer` : '',
+  return { krabbels, eyebrow: `${m.klas} · ${m.toets}${m.weging ? ' · weging ' + m.weging : ''}`, titel: m.titel, docTitel: `Feedback ${m.toets}${H ? ' herkansing' : ''}`, naam, regel: [`Groep ${g}`, velden].filter(Boolean).join(' · '), banner: tus ? `Tussenstand ${L.naam} (${fmtD(L.op)}): telt niet mee voor het cijfer` : H ? 'Herkansing: tweede poging, het hoogste cijfer telt' : '',
     onderdelen, vooruitKop: m.vooruit || 'Eén punt om aan te werken', vooruit: r.vooruit || '', cijfers, voet: `${tus ? 'Tussenstand' : dicht ? 'Afgerond op ' + new Date(r.vast.op).toLocaleString('nl-NL') : 'Nog niet afgerond'} · CSG Prins Maurits, muziek` };
 }
 function bmNiveauTekst(c, v) {
@@ -2818,9 +2840,10 @@ function bmNiveauTekst(c, v) {
 const bmKnoppen = (naam, attr, waarde, dicht, spook) => `<div class="bm-knoppen">${[4, 5, 6, 7, 8, 9, 10].map(x => `<button type="button" class="${x % 2 ? 'tussen' : ''} ${spook === x && waarde !== x ? 'spook' : ''}" ${attr}="${naam}${x}" aria-pressed="${waarde === x}" ${dicht ? 'disabled' : ''}>${x}</button>`).join('')}</div>`;
 function bmCritHtml(c, L, T, id, r, dicht) {
   const q = dicht ? ((r.vast.s || {})[c.id] || { v: null, b: null }) : BMR.scoreVan(L, T, id, c); const eigen = dicht ? (q.b === 'eigen' ? q.v : null) : (r.s[c.id] == null ? null : r.s[c.id]);
-  const spook = dicht ? (q.b === 'groep' ? q.v : null) : q.g; const inGroep = !dicht && BMR.groepVan(T, id) && c.groepsscore;
+  const spook = dicht ? (q.b === 'groep' ? q.v : null) : q.g; const H = L === T.herkans; const inGroep = !dicht && !H && BMR.groepVan(T, id) && c.groepsscore;
   let bron = ''; if (inGroep) { if (eigen != null) bron = `Eigen score${q.g != null ? `, groep gaf ${q.g}` : ''}`; else if (q.g != null) bron = c.groepsscore === true ? `Groepsscore ${q.g} geldt` : `Startpunt groep ${q.g}: tik om te bevestigen of wijk af`; else bron = 'Nog geen groepsscore'; }
   else if (dicht && q.b === 'groep') bron = 'Groepsscore';
+  else if (H && eigen == null) { const e = (((T.ll[id] || {}).vast || {}).s || {})[c.id]; if (e && e.b === 'groep') bron = `Eerste poging: groepsscore ${e.v}. Hier telt alleen je eigen score`; }
   const toon = q.v == null ? q.g : q.v;
   return `<div class="bm-crit ${c.groepsscore ? 'grp' : ''}"><div class="bm-cnaam"><b>${esc(c.naam)}</b><small>${esc(c.uitleg || '')} · weegt ${c.weging}×</small></div>
     <div class="bm-rij">${bmKnoppen(esc(c.id) + '|', 'data-bmscore', eigen, dicht, spook)}${!dicht && eigen != null ? `<button type="button" class="bm-wis" data-bmwis="${esc(c.id)}" aria-label="Score wissen" title="Score wissen">×</button>` : ''}</div>
@@ -2860,21 +2883,23 @@ function viewBeoordelen() {
   const inlK = m.id + '|' + g; if (bmKanMap() && !bmInl[inlK]) bmInlLaden(inlK);
   if (bmPaneel === 'inlever') return h + bmInlKaart(g, T, lijst, inlK);
   if (bmPaneel === 'kolom') return h + bmKolomKaart(m, g, T, lijst);
+  if (bmPaneel === 'herkans') return h + bmHerkansKaart(m, T, lijst);
   if (bmPaneel === 'groepjes') return h + bmGroepjesKaart(m, T, lijst);
   if (bmPaneel === 'klasgenoten') return h + bmKlasKaart(m, T, lijst);
-  const L = bmLaag(T); const vol = bmVolgorde(T, lijst); const naam = id => (lijst.find(x => x.id === id) || {}).naam || '';
+  const L = bmLaag(T); const H = L === T.herkans; const volA = bmVolgorde(T, lijst); const vol = H ? volA.filter(id => T.herkans.wie.includes(id)) : volA; const naam = id => (lijst.find(x => x.id === id) || {}).naam || '';
+  if (H && !vol.length) return h + bmHerkansKaart(m, T, lijst);
   const uitk = id => BMR.eind(m, L, T, id); const klaar = id => { const r = L.ll[id]; return (r && r.af) || uitk(id).e != null; };
   const cur = vol.includes(bmSel) ? bmSel : (vol.find(id => !klaar(id)) || vol[0]); bmSel = cur;
-  const cijfers = vol.map(id => uitk(id).e).filter(x => x != null); const nVast = vol.filter(id => T.ll[id] && T.ll[id].vast).length; const nOpen = vol.filter(id => !(T.ll[id] && (T.ll[id].vast || T.ll[id].af)) && BMR.eind(m, T, T, id).e != null).length;
-  h += `<div class="bm-lagen"><button class="btn klein ${L === T ? 'hoofd' : ''}" data-bmlaag="">Toets</button>${(T.tussen || []).map(x => `<button class="btn klein ${L === x ? 'hoofd' : ''}" data-bmlaag="${x.id}">${esc(x.naam)}</button>`).join('')}<button class="btn klein" data-bm="tussennieuw">+ Tussenstand</button>${L !== T ? '<button class="btn klein" data-bm="tussenweg">Verwijder deze</button>' : ''}</div>
-    ${L !== T ? `<p class="bm-vast"><b>Tussenstand ${esc(L.naam)}.</b> Telt niet mee voor het cijfer en krijgt geen kolom in Magister.</p>` : ''}`;
-  const gKop = (T.groepjes || []).length; const G = gKop && bmSelG ? T.groepjes.find(x => x.id === bmSelG) : null; if (!G) bmSelG = null;
+  const cijfers = vol.map(id => uitk(id).e).filter(x => x != null); const A = H ? L : T; const nVast = vol.filter(id => A.ll[id] && A.ll[id].vast).length; const nOpen = vol.filter(id => !(A.ll[id] && (A.ll[id].vast || A.ll[id].af)) && BMR.eind(m, A, T, id).e != null).length; const laatst = H ? L.laatst : T.vast && T.vast.laatst;
+  h += `<div class="bm-lagen"><button class="btn klein ${L === T ? 'hoofd' : ''}" data-bmlaag="">Toets</button>${BMR.magHerkansen(m, T) ? `<button class="btn klein ${H ? 'hoofd' : ''}" data-bmlaag="herkans">Herkansing${T.herkans && T.herkans.wie.length ? ` (${T.herkans.wie.length})` : ''}</button>` : ''}${H ? '<button class="btn klein" data-bm="herkanswie">Wie herkanst?</button>' : ''}${(T.tussen || []).map(x => `<button class="btn klein ${L === x ? 'hoofd' : ''}" data-bmlaag="${x.id}">${esc(x.naam)}</button>`).join('')}<button class="btn klein" data-bm="tussennieuw">+ Tussenstand</button>${L !== T && !H ? '<button class="btn klein" data-bm="tussenweg">Verwijder deze</button>' : ''}</div>
+    ${L !== T && !H ? `<p class="bm-vast"><b>Tussenstand ${esc(L.naam)}.</b> Telt niet mee voor het cijfer en krijgt geen kolom in Magister.</p>` : ''}`;
+  const gKop = H ? 0 : (T.groepjes || []).length; const G = gKop && bmSelG ? T.groepjes.find(x => x.id === bmSelG) : null; if (!G) bmSelG = null;
   if (bmConcertAan()) { const opt = id => `<option value="${id}" ${!G && id === cur ? 'selected' : ''}>${esc(naam(id))}${klaar(id) ? ' ✓' : ''}</option>`;
     const keuze = gKop ? [...T.groepjes.map(x => `<optgroup label="${esc(x.naam)}"><option value="g:${x.id}" ${G === x ? 'selected' : ''}>${esc(x.naam)}: hele groep</option>${vol.filter(id => x.leden.includes(id)).map(opt).join('')}</optgroup>`), vol.filter(id => !BMR.groepVan(T, id)).map(opt).join('')].join('') : vol.map(opt).join('');
-    return `<div class="bm-cs-top"><span>${esc(m.toets)} · ${esc(g)}${L !== T ? ' · tussenstand ' + esc(L.naam) : ''} · ${G ? esc(G.naam) : `speler ${vol.indexOf(cur) + 1} van ${vol.length}`}</span><small class="bm-cs-wenk">Toetsen 1 tot en met 4, Enter voor verder</small><select data-bmcskies aria-label="Kies een leerling of groepje">${keuze}</select><button class="btn klein" data-bm="concert">Uit</button></div><div class="bm-status" id="bmStatus">${bmStatusHtml()}</div><div class="bm-cs">${G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur))}</div>`; }
-  const rijHtml = id => { const r = L.ll[id]; const u = uitk(id); return `<li class="${!G && id === cur ? 'nu' : ''} ${klaar(id) ? 'klaar' : ''}"><button class="bm-naam" data-bmkies="${id}">${esc(naam(id))}</button><span class="bm-c">${L === T && r && r.vast ? BMR.fmt(u.e) + ' ✓' : r && r.af ? 'inhalen' : u.e != null ? komma(u.e) : u.d != null ? u.mist.join(', ') + '?' : ''}</span><span class="bm-pijl"><button class="btn klein" data-bmop="${id}|-1" aria-label="eerder">▲</button><button class="btn klein" data-bmop="${id}|1" aria-label="later">▼</button></span></li>`; };
-  h += `<div class="bm-raster"><div class="kaart bm-lijst"><div class="regel"><b>${vol.filter(klaar).length} van ${vol.length} klaar</b>${cijfers.length ? `<span class="chip">gemiddeld ${komma(BMR.rond1(cijfers.reduce((a, b) => a + b, 0) / cijfers.length))}</span>` : ''}<button class="btn klein" data-bm="loten">Volgorde loten</button></div>
-    ${L === T && (T.vast || nOpen) ? `<div class="regel">${T.vast ? `<span class="chip">${nVast} afgerond · ${esc(bmTijd(T.vast.laatst))}</span>` : ''}${nOpen ? `<button class="btn klein hoofd" data-bm="afronden">Afronden (${nOpen})</button>` : ''}</div>` : ''}
+    return `<div class="bm-cs-top"><span>${esc(m.toets)} · ${esc(g)}${H ? ' · herkansing' : L !== T ? ' · tussenstand ' + esc(L.naam) : ''} · ${G ? esc(G.naam) : `speler ${vol.indexOf(cur) + 1} van ${vol.length}`}</span><small class="bm-cs-wenk">Toetsen 1 tot en met 4, Enter voor verder</small><select data-bmcskies aria-label="Kies een leerling of groepje">${keuze}</select><button class="btn klein" data-bm="concert">Uit</button></div><div class="bm-status" id="bmStatus">${bmStatusHtml()}</div><div class="bm-cs">${G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur))}</div>`; }
+  const rijHtml = id => { const r = L.ll[id]; const u = uitk(id); return `<li class="${!G && id === cur ? 'nu' : ''} ${klaar(id) ? 'klaar' : ''}"><button class="bm-naam" data-bmkies="${id}">${esc(naam(id))}</button><span class="bm-c">${bmPogCel(L, T, id, u)}</span>${H ? '' : `<span class="bm-pijl"><button class="btn klein" data-bmop="${id}|-1" aria-label="eerder">▲</button><button class="btn klein" data-bmop="${id}|1" aria-label="later">▼</button></span>`}</li>`; };
+  h += `<div class="bm-raster"><div class="kaart bm-lijst"><div class="regel"><b>${vol.filter(klaar).length} van ${vol.length} klaar</b>${cijfers.length ? `<span class="chip">gemiddeld ${komma(BMR.rond1(cijfers.reduce((a, b) => a + b, 0) / cijfers.length))}</span>` : ''}${H ? '' : '<button class="btn klein" data-bm="loten">Volgorde loten</button>'}</div>
+    ${BMR.isPoging(L, T) && (laatst || nOpen) ? `<div class="regel">${laatst ? `<span class="chip">${nVast} afgerond · ${esc(bmTijd(laatst))}</span>` : ''}${nOpen ? `<button class="btn klein hoofd" data-bm="afronden">Afronden (${nOpen})</button>` : ''}</div>` : ''}
     <div class="regel"><button class="btn klein" data-bm="pdfalle">Alle feedbackbladen</button></div>
     <ol>${gKop ? [...T.groepjes.map(x => `<li class="bm-gkop ${G === x ? 'nu' : ''}"><button class="bm-naam" data-bmgkies="${x.id}">${esc(x.naam)}${(L.gs || {})[x.id] && Object.keys(L.gs[x.id]).length ? ' ✓' : ''}</button></li>${vol.filter(id => x.leden.includes(id)).map(rijHtml).join('')}`), vol.some(id => !BMR.groepVan(T, id)) ? '<li class="bm-gkop"><span class="bm-naam">Geen groepje</span></li>' + vol.filter(id => !BMR.groepVan(T, id)).map(rijHtml).join('') : ''].join('') : vol.map(rijHtml).join('')}</ol></div>`;
   const inlR = bmInlRegel(inlK, T, lijst, G ? G.leden : [cur]); const scoor = G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur));
@@ -2892,10 +2917,11 @@ function bmSpeelHtml(m, v) {
   return `<p class="bm-niv">${n || !heeftPl ? '' : '<b>Nog geen niveau: er geldt geen plafond.</b> '}${esc(delen.filter(Boolean).join(' '))}</p>`;
 }
 function bmScoorKaart(m, T, L, cur, naam) {
-  const r = bmRij(L, cur); const dicht = L === T && !!r.vast; const u = BMR.eind(m, L, T, cur); const D = u.delen; const zb = D.zelf || 0; const cs = bmConcertAan(); const rv = BMR.veldenVan(L, T, cur);
-  let h = `<div class="kaart bm-scoor"><div class="kop"><h2>${esc(naam)}</h2><div class="knoppen"><button class="btn klein" data-bm="klok"><span id="bmKlok">${bmKlok ? pad(Math.floor((Date.now() - bmKlok) / 1000)) : '0:00'}</span>&nbsp;${bmKlok ? 'stop' : 'start'}</button><label class="chk"><input type="checkbox" data-bmaf ${r.af ? 'checked' : ''} ${dicht ? 'disabled' : ''}><span>afwezig, inhalen</span></label></div></div>
+  const r = bmRij(L, cur); const H = L === T.herkans; const pog = BMR.poging(T, cur); const dicht = BMR.isPoging(L, T) && !!r.vast; const u = BMR.eind(m, L, T, cur); const D = u.delen; const zb = D.zelf || 0; const cs = bmConcertAan(); const rv = BMR.veldenVan(L, T, cur);
+  let h = `<div class="kaart bm-scoor"><div class="kop"><h2>${esc(naam)}</h2><div class="knoppen"><button class="btn klein" data-bm="klok"><span id="bmKlok">${bmKlok ? pad(Math.floor((Date.now() - bmKlok) / 1000)) : '0:00'}</span>&nbsp;${bmKlok ? 'stop' : 'start'}</button>${H ? '' : `<label class="chk"><input type="checkbox" data-bmaf ${r.af ? 'checked' : ''} ${dicht ? 'disabled' : ''}><span>afwezig, inhalen</span></label>`}</div></div>
+    ${H ? `<p class="bm-vast"><b>Herkansing.</b> Eerste poging: ${BMR.fmt(pog.e1) || 'staat open'}. ${pog.e2 == null ? 'Het hoogste afgeronde cijfer telt.' : pog.p === 2 ? `Deze herkansing telt: ${BMR.fmt(pog.e2)}.` : pog.e2 === pog.e1 ? 'Even hoog: de eerste poging blijft staan.' : `De eerste poging blijft tellen: ${BMR.fmt(pog.e1)}.`}</p>` : L === T && pog.e2 != null ? `<p class="bm-vast"><b>Herkansing:</b> ${BMR.fmt(pog.e2)}. ${pog.p === 2 ? 'Die telt.' : 'De eerste poging blijft tellen.'}</p>` : ''}
     ${dicht ? `<p class="bm-vast"><b>Afgerond</b> op ${esc(bmTijd(r.vast.op))} met cijfer ${BMR.fmt(r.vast.e)}. <button class="btn klein" data-bm="heropen">Wijzigen</button></p>` : ''}
-    ${cs ? '<div class="bm-cs-duo"><div>' : ''}<div class="bm-velden">${(cs ? [] : m.velden || []).map(v => bmVeldHtml(m, v, r.v[v])).join('')}</div>${cs ? '' : bmSpeelHtml(m, rv)}`;
+    ${cs ? '<div class="bm-cs-duo"><div>' : ''}<div class="bm-velden">${(cs ? [] : m.velden || []).map(v => bmVeldHtml(m, v, rv[v])).join('')}</div>${cs ? '' : bmSpeelHtml(m, rv)}`;
   for (const o of bmOnderdelen(m, T)) {
     h += `<h3 class="bm-groep">${esc(o.groep)}${o.stuk ? ` <small>${esc(o.stuk)}</small>` : ''}</h3>`;
     for (const c of o.criteria) h += bmCritHtml(BMR.critVoor(m, c, rv), L, T, cur, r, dicht);
@@ -2911,7 +2937,7 @@ function bmScoorKaart(m, T, L, cur, naam) {
     <p class="bm-niv"><b>${u.k != null ? 'Gemiddeld ' + komma(u.k) : 'Nog geen gemiddelde'}</b> uit ${u.kn} ${u.kn === 1 ? 'inzending' : 'inzendingen'}${(k.forms || []).length ? ` (${k.forms.length} uit Forms)` : ''}.${!dicht && u.k == null ? ' Geen eindcijfer zolang dit deel ontbreekt.' : ''}</p>
     <label class="bm-cijfer">Papieren cijfers, met spaties ertussen<input data-bmpapier inputmode="decimal" value="${esc((k.papier || []).map(komma).join(' '))}" ${dicht ? 'disabled' : ''}></label>`; }
   const kr = bmKrabbelHtml(r.krabbel || [], dicht); h += cs ? '</div>' + kr + '</div>' : `<label class="bm-opm">${esc(m.vooruit || 'Eén punt om aan te werken')}<textarea rows="2" data-bmvooruit>${esc(r.vooruit || '')}</textarea></label>` + kr;
-  h += `<div class="bm-voet"><div><span>${L === T ? 'Cijfer docent' : 'Tussenstand'} <b>${u.d != null ? komma(u.d) : '–'}</b></span>${D.docent < 100 || m.speelkeuze ? `<span>Eindcijfer <b>${u.e != null ? komma(u.e) : '–'}</b></span>${u.mist.length && u.d != null ? `<small>mist: ${esc(u.mist.join(', '))}</small>` : ''}${u.ruw != null && u.e < u.ruw ? `<small>${komma(u.ruw)} afgetopt op het plafond</small>` : ''}` : ''}</div>
+  h += `<div class="bm-voet"><div><span>${BMR.isPoging(L, T) ? 'Cijfer docent' : 'Tussenstand'} <b>${u.d != null ? komma(u.d) : '–'}</b></span>${D.docent < 100 || m.speelkeuze ? `<span>Eindcijfer <b>${u.e != null ? komma(u.e) : '–'}</b></span>${u.mist.length && u.d != null ? `<small>mist: ${esc(u.mist.join(', '))}</small>` : ''}${u.ruw != null && u.e < u.ruw ? `<small>${komma(u.ruw)} afgetopt op het plafond</small>` : ''}` : ''}</div>
     <div class="knoppen">${cs ? '' : '<button class="btn" data-bm="pdf">Feedbackblad</button>'}<button class="btn" data-bm="vorige">Vorige</button><button class="btn hoofd" data-bm="volgende">Volgende</button></div></div></div>`;
   return h;
 }
@@ -2920,11 +2946,16 @@ function bmCsv(m, g) {
   const heeftG = C.some(c => c.groepsscore) && (T.groepjes || []).length; const volg = bmVolgorde(T, lijst);
   const kop = ['Leerling', 'Speelvolgorde', ...(heeftG ? ['Groepje'] : []), ...(m.velden || []), ...C.flatMap(c => [`${c.naam} (${c.weging}x)`, ...(heeftG && c.groepsscore ? [`${c.naam}: geldt`] : [])]), D.docent < 100 ? 'Cijfer docent' : 'Cijfer',
     ...(D.zelf ? [`Zelf (${D.zelf}%)`] : []), ...(D.klasgenoten ? [`Klasgenoten (${D.klasgenoten}%)`, 'Inzendingen klasgenoten'] : []), ...(D.docent < 100 || m.speelkeuze ? ['Eindcijfer'] : []), 'Afgerond op', 'Opmerking per onderdeel', m.vooruit || 'Punt om aan te werken'];
+  const H = T.herkans; const heeftH = !!H && ((H.wie || []).length > 0 || Object.values(H.ll).some(r => r.vast)); const nBasis = kop.length;
+  if (heeftH) kop.push(...(m.velden || []).map(v => 'Herkansing: ' + v), ...C.map(c => `Herkansing: ${c.naam} (${c.weging}x)`), D.docent < 100 ? 'Herkansing: cijfer docent' : 'Herkansing: cijfer', ...(D.zelf ? [`Herkansing: zelf (${D.zelf}%)`] : []), ...(D.klasgenoten ? [`Herkansing: klasgenoten (${D.klasgenoten}%)`] : []), ...(D.docent < 100 || m.speelkeuze ? ['Herkansing: eindcijfer'] : []), 'Herkansing: afgerond op', 'Herkansing: opmerking per onderdeel', 'Herkansing: ' + (m.vooruit || 'punt om aan te werken'), 'Cijfer voor Magister', 'Telt');
+  const herkansCel = id => { const r = H.ll[id] || { s: {}, v: {}, opm: {} }; const u = BMR.eind(m, H, T, id); const op = (H.wie || []).includes(id) || r.vast; const p = BMR.poging(T, id); const rv = BMR.veldenVan(H, T, id); const opm = Object.entries(r.opm || {}).filter(([, t]) => t).map(([k, t]) => k + ': ' + t).join(' | ');
+    return [...(m.velden || []).map(v => op ? rv[v] || '' : ''), ...C.map(c => { const q = r.vast ? (r.vast.s[c.id] || {}) : BMR.scoreVan(H, T, id, c); return q.v ?? ''; }), op ? komma(u.d) : '', ...(D.zelf ? [op ? komma(u.z) : ''] : []), ...(D.klasgenoten ? [op ? komma(u.k) : ''] : []), ...(D.docent < 100 || m.speelkeuze ? [op ? komma(u.e) : ''] : []), r.vast ? new Date(r.vast.op).toLocaleString('nl-NL') : '', opm, r.vooruit || '', BMR.fmt(p.e), p.e2 == null ? '' : p.p === 2 ? 'herkansing' : 'eerste poging']; };
+  const metH = (id, rij) => heeftH ? [...rij, ...Array(Math.max(0, nBasis - rij.length)).fill(''), ...herkansCel(id)] : rij;
   const rijen = lijst.map(x => { const id = x.id; const r = T.ll[id] || { s: {}, v: {}, opm: {} }; const G = BMR.groepVan(T, id); const voor = [x.naam, volg.indexOf(id) + 1, ...(heeftG ? [G ? G.naam : ''] : []), ...(m.velden || []).map(v => (r.v || {})[v] || '')];
-    if (r.af && !r.vast) return [...voor, ...C.flatMap(c => ['', ...(heeftG && c.groepsscore ? [''] : [])]), 'inhalen'];
+    if (r.af && !r.vast) return metH(id, [...voor, ...C.flatMap(c => ['', ...(heeftG && c.groepsscore ? [''] : [])]), 'inhalen']);
     const u = BMR.eind(m, T, T, id); const opm = Object.entries(r.opm || {}).filter(([, t]) => t).map(([k, t]) => k + ': ' + t).join(' | ');
-    return [...voor, ...C.flatMap(c => { const q = r.vast ? (r.vast.s[c.id] || {}) : BMR.scoreVan(T, T, id, c); return [q.v ?? '', ...(heeftG && c.groepsscore ? [q.b === 'groep' ? 'groep' : q.b === 'eigen' ? 'eigen' : ''] : [])]; }), komma(u.d),
-      ...(D.zelf ? [komma(u.z)] : []), ...(D.klasgenoten ? [komma(u.k), u.kn] : []), ...(D.docent < 100 || m.speelkeuze ? [komma(u.e)] : []), r.vast ? new Date(r.vast.op).toLocaleString('nl-NL') : '', opm, r.vooruit || '']; });
+    return metH(id, [...voor, ...C.flatMap(c => { const q = r.vast ? (r.vast.s[c.id] || {}) : BMR.scoreVan(T, T, id, c); return [q.v ?? '', ...(heeftG && c.groepsscore ? [q.b === 'groep' ? 'groep' : q.b === 'eigen' ? 'eigen' : ''] : [])]; }), komma(u.d),
+      ...(D.zelf ? [komma(u.z)] : []), ...(D.klasgenoten ? [komma(u.k), u.kn] : []), ...(D.docent < 100 || m.speelkeuze ? [komma(u.e)] : []), r.vast ? new Date(r.vast.op).toLocaleString('nl-NL') : '', opm, r.vooruit || '']); });
   return '﻿' + [kop, ...rijen].map(r => r.map(bmCel).join(';')).join('\r\n');
 }
 function bmExport(m, g) {
@@ -2935,11 +2966,11 @@ function bmLijstOpslaan(g, rij) { S.beoord.weg = S.beoord.weg || {}; const gekoz
   S.beoord.lijsten[g] = rij.map((u, i) => ({ id: u.id || 'l' + Date.now().toString(36) + i, naam: u.naam })); S.beoord.weg[g] = alle.filter(x => !gekozen.has(x.id));
   bmPaneel = null; bmKoppel = null; bewaar(); toast(rij.length + ' leerlingen opgeslagen'); }
 document.addEventListener('click', async e => {
-  const b = e.target.closest('[data-beoordeel],[data-bm],[data-bmkies],[data-bmop],[data-bmscore],[data-bmzelf],[data-bmwis],[data-bmgs],[data-bmgswis],[data-bmgkies],[data-bmgactief],[data-bmgin],[data-bmgruit],[data-bmgweg],[data-bmlaag]'); if (!b) return;
+  const b = e.target.closest('[data-beoordeel],[data-bm],[data-bmkies],[data-bmop],[data-bmscore],[data-bmzelf],[data-bmwis],[data-bmgs],[data-bmgswis],[data-bmgkies],[data-bmgactief],[data-bmgin],[data-bmgruit],[data-bmgweg],[data-bmlaag],[data-bmhwie]'); if (!b) return;
   const D = b.dataset;
   if (D.beoordeel) { const [mid, g] = D.beoordeel.split('|'); bmSel = null; bmPaneel = null; bmLaagId = null; location.hash = 'beoordelen/' + encodeURIComponent(mid) + '/' + encodeURIComponent(g); return; }
   const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); const g = decodeURIComponent(route.arg[1] || ''); if (!m) return;
-  const k = m.id + '|' + g; const T = bmToets(m.id, g); const lijst = S.beoord.lijsten[g] || []; const vol = bmVolgorde(T, lijst);
+  const k = m.id + '|' + g; const T = bmToets(m.id, g); const lijst = S.beoord.lijsten[g] || []; const volA = bmVolgorde(T, lijst); const vol = bmLaag(T) === T.herkans ? volA.filter(id => T.herkans.wie.includes(id)) : volA;
   if (D.bm === 'concert') { AP.concert = !AP.concert; apBewaar(); render(); window.scrollTo(0, 0); return; }
   if (D.bm === 'kterug' || D.bm === 'kwis') { const L = bmLaag(T); const id = bmSelG || bmSel; const c = bmSelG ? 'g' : null; const oud = bmKrabbelVan(L, id, c); if (!oud.length) return; const f = foto(); bmZet(k, T, 'k', id, c, D.bm === 'kwis' ? [] : oud.slice(0, -1)); if (D.bm === 'kwis') toast('Krabbel gewist', f); return; }
   if (D.bm === 'lijst') { bmPaneel = 'lijst'; bmKoppel = null; render(); return; }
@@ -2964,13 +2995,20 @@ document.addEventListener('click', async e => {
   if (D.bmgs) { const [cid, x] = D.bmgs.split('|'); const G = (bmLaag(T).gs || {})[bmSelG] || {}; if (G[cid] !== +x) bmZet(k, T, 'gs', bmSelG, cid, +x); return; }
   if (D.bmgswis) { bmZet(k, T, 'gs', bmSelG, D.bmgswis, null); return; }
   if (D.bm === 'gverder') { const x = T.groepjes.find(y => y.id === bmSelG); const eerste = x && vol.find(id => x.leden.includes(id)); bmSelG = null; if (eerste) bmSel = eerste; render(); window.scrollTo(0, 0); return; }
+  if (D.bmlaag === 'herkans' && !(T.herkans && T.herkans.wie.length)) { bmPaneel = 'herkans'; render(); return; }
   if (D.bmlaag != null) { bmLaagId = D.bmlaag || null; bmSel = null; bmSelG = null; render(); return; }
+  if (D.bm === 'herkanswie') { bmPaneel = 'herkans'; render(); return; }
+  if (D.bm === 'herkansklaar') { const H = T.herkans; if (H && !H.wie.length && !Object.keys(H.ll).length) delete T.herkans; bmPaneel = null; bmLaagId = T.herkans && T.herkans.wie.length ? 'herkans' : null; bmSel = null; bmSelG = null; render(); return; }
+  if (D.bmhwie) { const id = D.bmhwie; const H = T.herkans || (T.herkans = { id: 'herkans', naam: 'Herkansing', op: vandaag(), wie: [], ll: {}, gs: {} }); const i = H.wie.indexOf(id); const rh = H.ll[id];
+    if (i >= 0) { if (rh && rh.vast) return; if (rh && Object.keys(rh.s || {}).length && !confirm('Deze leerling van de herkansingslijst halen? De scores blijven bewaard en komen terug als je de leerling weer aantikt.')) return; H.wie.splice(i, 1); bmLog(k, { a: 'herkansing eraf', id, l: H.id }); }
+    else { if (!(T.ll[id] || {}).vast) return; H.wie.push(id); bmLog(k, { a: 'herkansing erbij', id, l: H.id }); }
+    bmVuil = true; bewaar(); return; }
   if (D.bm === 'tussennieuw') { const naam = prompt('Naam van de tussenstand', 'Generale'); if (!naam || !naam.trim()) return; T.tussen = T.tussen || []; const id = 't' + Date.now().toString(36); T.tussen.push({ id, naam: naam.trim(), op: vandaag(), ll: {}, gs: {} }); bmLaagId = id; bmSel = null; bmSelG = null; bewaar(); return; }
   if (D.bm === 'tussenweg') { const L = bmLaag(T); if (L === T || !confirm(`Tussenstand ${L.naam} verwijderen? Op de toets heeft dit geen invloed.`)) return; bmLog(k, { a: 'tussenweg', w: L.naam }); T.tussen = T.tussen.filter(x => x !== L); bmLaagId = null; bmSel = null; bewaar(); return; }
   if (D.bm === 'klaslees') { bmKlasRes = BMR.leesKlasgenoten($('#bmKlasPlak').value, lijst); render(); return; }
   if (D.bm === 'klasover') { const R = bmKlasRes; for (const s of document.querySelectorAll('[data-bmklask]')) if (s.value) R.per[s.value].push(...R.onbekend[+s.dataset.bmklask].w);
     bmLaagId = null; for (const x of lijst) bmZet(k, T, 'forms', x.id, null, R.per[x.id] || [], true); bmKlasRes = null; bmPaneel = null; bewaar(); toast('Klasgenoten overgenomen'); return; }
-  if (D.bm === 'pdf' || D.bm === 'pdfalle') { const L = bmLaag(T); const nm = id => (lijst.find(x => x.id === id) || {}).naam || ''; const bestand = id => `Feedback ${m.toets}${L === T ? '' : ' tussenstand ' + L.naam} ${nm(id)}.pdf`.replace(/[\\/:*?"<>|]/g, ' ').replace(/\s+/g, ' ');
+  if (D.bm === 'pdf' || D.bm === 'pdfalle') { const L = bmLaag(T); const nm = id => (lijst.find(x => x.id === id) || {}).naam || ''; const bestand = id => `Feedback ${m.toets}${L === T ? '' : L === T.herkans ? ' herkansing' : ' tussenstand ' + L.naam} ${nm(id)}.pdf`.replace(/[\\/:*?"<>|]/g, ' ').replace(/\s+/g, ' ');
     try { if (D.bm === 'pdf') { bmDownload(bestand(bmSel), await BMPDF.blad(bmBladInfo(m, g, T, L, bmSel, nm(bmSel)))); return; }
       const wie = vol.filter(id => BMR.eind(m, L, T, id).d != null); if (!wie.length) { toast('Er is nog niemand met een cijfer'); return; } toast('Bladen maken…'); const f = []; for (const id of wie) f.push({ naam: bestand(id), blob: await BMPDF.blad(bmBladInfo(m, g, T, L, id, nm(id))) });
       bmDownload(bmBestand(m, g, `feedbackbladen${L === T ? '' : ' ' + L.naam}.zip`), await BMPDF.zip(f)); toast(wie.length + ' feedbackbladen gedownload'); } catch (err) { console.warn(err); toast('Het feedbackblad maken lukt niet'); } return; }
@@ -2987,12 +3025,13 @@ document.addEventListener('click', async e => {
   if (D.bm === 'logboek') { const log = await bmLogVan(k); const naam = id => (lijst.find(x => x.id === id) || {}).naam || id; bmDownload(bmBestand(m, g, `logboek ${vandaag()}.csv`), '﻿' + [['Tijd', 'Laag', 'Wat', 'Leerling of groep', 'Onderdeel', 'Waarde'], ...log.map(e => [new Date(e.t).toLocaleString('nl-NL'), e.l || 'toets', e.a, naam(e.id), e.c, Array.isArray(e.w) ? e.w.join(' ') : e.w])].map(r => r.map(bmCel).join(';')).join('\r\n'), 'text/csv;charset=utf-8'); toast(log.length + ' regels in het logboek'); return; }
   if (D.bm === 'loten') { T.volgorde = vol.map(id => [Math.random(), id]).sort((a, c) => a[0] - c[0]).map(x => x[1]); if ((T.groepjes || []).length) T.groepjes = T.groepjes.map(x => [Math.random(), x]).sort((a, c) => a[0] - c[0]).map(x => x[1]); bmSel = null; bewaar(); return; }
   if (D.bm === 'klok') { bmKlok = bmKlok ? null : Date.now(); render(); return; }
-  if (D.bm === 'afronden') { const open = lijst.filter(x => !(T.ll[x.id] && (T.ll[x.id].vast || T.ll[x.id].af)) && BMR.eind(m, T, T, x.id).e != null).length; const rest = lijst.filter(x => !(T.ll[x.id] && T.ll[x.id].vast)).length - open;
-    if (!confirm(`${open} ${open === 1 ? 'cijfer' : 'cijfers'} vastleggen, met de scores en wegingen van nu.${rest ? ` ${rest} ${rest === 1 ? 'leerling heeft' : 'leerlingen hebben'} nog geen cijfer en ${rest === 1 ? 'blijft' : 'blijven'} open.` : ''}`)) return;
-    const af = BMR.afronden(m, T, lijst, Date.now()); bmLog(k, { a: 'afronden', w: af.map(id => id + '=' + T.ll[id].vast.e).join(' ') }); bmVuil = true; bewaar(); toast(af.length + ' cijfers vastgelegd'); await bmReserveNu(m, g); return; }
-  if (D.bm === 'heropen') { if (!confirm('Dit cijfer openzetten om te wijzigen? Het oude cijfer staat in het logboek. Rond daarna opnieuw af en zet het nieuwe cijfer zelf in Magister.')) return; bmLog(k, { a: 'heropen', id: bmSel, w: T.ll[bmSel].vast.e }); BMR.heropen(T, bmSel); bewaar(); return; }
+  if (D.bm === 'afronden') { const isH = T.herkans && (D.laag === 'herkans' || (!D.laag && bmLaag(T) === T.herkans)); const A = isH ? T.herkans : T; const wie = isH ? lijst.filter(x => A.wie.includes(x.id)) : lijst;
+    const open = wie.filter(x => !(A.ll[x.id] && (A.ll[x.id].vast || A.ll[x.id].af)) && BMR.eind(m, A, T, x.id).e != null).length; const rest = wie.filter(x => !(A.ll[x.id] && A.ll[x.id].vast)).length - open;
+    if (!confirm(`${isH ? 'Herkansing: ' : ''}${open} ${open === 1 ? 'cijfer' : 'cijfers'} vastleggen, met de scores en wegingen van nu.${rest ? ` ${rest} ${rest === 1 ? 'leerling heeft' : 'leerlingen hebben'} nog geen cijfer en ${rest === 1 ? 'blijft' : 'blijven'} open.` : ''}`)) return;
+    const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true; bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '')); await bmReserveNu(m, g); return; }
+  if (D.bm === 'heropen') { const A = bmLaag(T); if (!BMR.isPoging(A, T)) return; if (!confirm('Dit cijfer openzetten om te wijzigen? Het oude cijfer staat in het logboek. Rond daarna opnieuw af en zet het nieuwe cijfer zelf in Magister.')) return; bmLog(k, { a: 'heropen', id: bmSel, w: A.ll[bmSel].vast.e, l: A === T ? null : A.id }); BMR.heropen(T, bmSel, A); bewaar(); return; }
   if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
-  if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { const oud = bmSel; bmSel = vol[i]; bmKlok = null; const G = BMR.groepVan(T, bmSel); if (D.bm === 'volgende' && G && G !== BMR.groepVan(T, oud) && !Object.keys((bmLaag(T).gs || {})[G.id] || {}).length) bmSelG = G.id; render(); window.scrollTo(0, 0); if (D.bm === 'volgende') bmNaVolgende(m, g, T, oud, bmSel); } return; } // een nieuwe groep zonder groepsscore begint op de groepskaart
+  if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { const oud = bmSel; bmSel = vol[i]; bmKlok = null; const G = bmLaag(T) === T.herkans ? null : BMR.groepVan(T, bmSel); if (D.bm === 'volgende' && G && G !== BMR.groepVan(T, oud) && !Object.keys((bmLaag(T).gs || {})[G.id] || {}).length) bmSelG = G.id; render(); window.scrollTo(0, 0); if (D.bm === 'volgende') bmNaVolgende(m, g, T, oud, bmSel); } return; } // een nieuwe groep zonder groepsscore begint op de groepskaart
   if (D.bmkies) { bmSel = D.bmkies; bmSelG = null; bmKlok = null; render(); return; }
   if (D.bmop) { const [id, st] = D.bmop.split('|'); const i = vol.indexOf(id), j = i + +st; if (j >= 0 && j < vol.length) { [vol[i], vol[j]] = [vol[j], vol[i]]; T.volgorde = vol; bewaar(); } return; }
   if (D.bmscore) { const [cid, x] = D.bmscore.split('|'); const w = +x; if (bmRij(bmLaag(T), bmSel).s[cid] !== w) bmZet(k, T, 's', bmSel, cid, w); return; } // nog een keer tikken wist niet: dubbel tikken mag nooit een score weghalen

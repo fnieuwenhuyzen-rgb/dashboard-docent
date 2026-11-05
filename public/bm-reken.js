@@ -1,5 +1,5 @@
 // Rekenregels en tekstverwerking van de beoordelingsmodus, zonder scherm en zonder opslag (test: tools/beoordeling/test-reken.js).
-// T = de toets uit S.beoord.toetsen; L = de laag waarin gescoord wordt: T zelf, of een tussenstand uit T.tussen.
+// T = de toets uit S.beoord.toetsen; L = de laag waarin gescoord wordt: T zelf, de herkansing T.herkans (tweede poging, { id, naam, op, wie, ll, gs, laatst }) of een tussenstand uit T.tussen.
 (function (root) {
 'use strict';
 const rond1 = x => Math.round(Math.round(x * 1000) / 1000 * 10) / 10;
@@ -18,7 +18,8 @@ function critVoor(m, c, v) {
   const p = (k.partijen || []).find(x => x.naam === v[k.partijVeld]); const o = p && c.perPartij[p.soort]; if (!o) return c;
   return Object.assign({}, c, o, { leerling: null });
 }
-const veldenVan = (L, T, id) => Object.assign({}, ((T && T.ll && T.ll[id]) || {}).v, ((L && L.ll && L.ll[id]) || {}).v);
+// een leeg veld in een tussenstand of herkansing laat de waarde van de toets staan, dus ook het niveau met zijn plafond
+const veldenVan = (L, T, id) => { const v = Object.assign({}, ((T && T.ll && T.ll[id]) || {}).v); for (const [k, w] of Object.entries(((L && L.ll && L.ll[id]) || {}).v || {})) if (w) v[k] = w; return v; };
 
 /* ---------- cijfers ---------- */
 // geldende score van één criterium. Een eigen score gaat altijd voor; een startpunt-groepsscore telt pas als hij per leerling is bevestigd.
@@ -39,10 +40,19 @@ function klasgenoten(r, min) { // gemiddelde pas vanaf het minimum aantal inzend
   const gem = w.length && w.length >= (min || 1) ? rond1(w.reduce((a, b) => a + b, 0) / w.length) : null;
   return { n: w.length, gem };
 }
+// een poging telt mee voor het cijfer: de toets zelf (T) of de herkansing (T.herkans). Een tussenstand niet.
+const isPoging = (L, T) => L === T || (!!T && L === T.herkans);
+const magHerkansen = (m, T) => m.herkansbaar !== false || !!(T && T.herkans && (T.herkans.wie || []).length); // besluit Frans 5-11: niet bij herkansbaar false
+// de afgeronde cijfers van beide pogingen en welke telt: het hoogste; bij gelijk blijft de eerste staan (p: 0 geen, 1 eerste, 2 herkansing)
+function poging(T, id) {
+  const a = ((T.ll || {})[id] || {}).vast; const b = T.herkans ? ((T.herkans.ll || {})[id] || {}).vast : null;
+  const e1 = a ? a.e : null, e2 = b ? b.e : null; const p = e1 == null && e2 == null ? 0 : e2 == null ? 1 : e1 == null ? 2 : e2 > e1 ? 2 : 1;
+  return { e1, e2, p, e: p === 2 ? e2 : p === 1 ? e1 : null };
+}
 // alle delen van het eindcijfer. Ontbreekt een deel, dan is er geen eindcijfer.
 function eind(m, L, T, id) {
-  const r = L.ll[id]; const D = L === T ? delenVan(m, T) : { docent: 100 }; // een tussenstand kent alleen het docentdeel
-  if (L === T && r && r.vast) { const v = r.vast; return { d: v.d, z: v.z == null ? null : v.z, k: v.k == null ? null : v.k, kn: v.kn || 0, e: v.e, delen: D, mist: [], vast: true }; }
+  const r = L.ll[id]; const D = isPoging(L, T) ? delenVan(m, T) : { docent: 100 }; // een tussenstand kent alleen het docentdeel
+  if (isPoging(L, T) && r && r.vast) { const v = r.vast; return { d: v.d, z: v.z == null ? null : v.z, k: v.k == null ? null : v.k, kn: v.kn || 0, e: v.e, delen: D, mist: [], vast: true }; }
   const d = docentCijfer(m, L, T, id); const mist = []; if (d == null) mist.push('docent');
   const z = r && r.zelf != null ? r.zelf : null; if (D.zelf && z == null) mist.push('zelf');
   const kg = D.klasgenoten ? klasgenoten(r, +m.klasgenotenMin || 3) : { n: 0, gem: null }; if (D.klasgenoten && kg.gem == null) mist.push('klasgenoten');
@@ -51,21 +61,22 @@ function eind(m, L, T, id) {
   return { d, z, k: kg.gem, kn: kg.n, e, ruw, plafond: pl, delen: D, mist, vast: false };
 }
 // legt cijfers, scores, wegingen en tijdstip vast. Later afgeronde leerlingen (inhalen) rekenen met dezelfde vastgelegde wegingen.
-function afronden(m, T, lijst, nu) {
-  const C = critVan(m, T); const klaar = [];
+// L: de poging die wordt afgerond, zonder L de toets zelf.
+function afronden(m, T, lijst, nu, L) {
+  L = L || T; const C = critVan(m, T); const klaar = [];
   for (const x of lijst) {
-    const r = T.ll[x.id]; if (!r || r.vast || r.af) continue;
-    const u = eind(m, T, T, x.id); if (u.e == null) continue;
-    const s = {}; for (const c of C) { const q = scoreVan(T, T, x.id, c); s[c.id] = { v: q.v, b: q.b }; }
+    const r = L.ll[x.id]; if (!r || r.vast || r.af) continue;
+    const u = eind(m, L, T, x.id); if (u.e == null) continue;
+    const s = {}; for (const c of C) { const q = scoreVan(L, T, x.id, c); s[c.id] = { v: q.v, b: q.b }; }
     r.vast = { op: nu, s, d: u.d, z: u.z, k: u.k, kn: u.kn, e: u.e };
     klaar.push(x.id);
   }
-  if (klaar.length) { if (!T.vast) T.vast = { eerst: nu, crit: C, delen: delenVan(m, T), weging: m.weging == null ? null : m.weging, min: +m.klasgenotenMin || 3 }; T.vast.laatst = nu; }
+  if (klaar.length) { if (!T.vast) T.vast = { eerst: nu, crit: C, delen: delenVan(m, T), weging: m.weging == null ? null : m.weging, min: +m.klasgenotenMin || 3 }; if (L === T) T.vast.laatst = nu; else L.laatst = nu; }
   return klaar;
 }
-function heropen(T, id) { const r = T.ll[id]; if (r) delete r.vast; if (T.vast && !Object.values(T.ll).some(x => x.vast)) delete T.vast; }
-// de kolom voor Magister: precies één regel per leerling, in de volgorde van de lijst, leeg als er (nog) geen afgerond cijfer is
-const kolom = (T, lijst) => lijst.map(x => { const r = T.ll[x.id]; return r && r.vast ? fmt(r.vast.e) : ''; });
+function heropen(T, id, L) { const r = (L || T).ll[id]; if (r) delete r.vast; if (T.vast && ![...Object.values(T.ll), ...Object.values((T.herkans || {}).ll || {})].some(x => x.vast)) delete T.vast; }
+// de kolom voor Magister: precies één regel per leerling, in de volgorde van de lijst, het hoogste afgeronde cijfer; leeg als er (nog) geen is
+const kolom = (T, lijst) => lijst.map(x => fmt(poging(T, x.id).e));
 
 /* ---------- getallen ---------- */
 function leesCijfer(t) { // "7,5" of "8": een cijfer van 1 tot en met 10 met hooguit één decimaal, anders null
@@ -161,6 +172,6 @@ function koppelInlever(bestanden, lijst, T, vast) {
   return uit;
 }
 
-const API = { leesInlever, koppelInlever, rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
+const API = { isPoging, magHerkansen, poging, leesInlever, koppelInlever, rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
 if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.BMR = API;
 })(typeof window !== 'undefined' ? window : globalThis);
