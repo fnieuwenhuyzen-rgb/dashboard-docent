@@ -917,12 +917,12 @@ const minVeld = k => `<label class="minveld" title="${esc(k.waarom)}"><input typ
    Een rol is een label (stap 1 van handboek/voorstel-rollen.md): elke les, afspraak en taak hoort bij één rol, met een kleurstreepje in
    Dag en Week. Een potje komt er optioneel bij: uren die verantwoord moeten worden maar geen rol zijn. Alleen AST; PB-taak en Werkdruk zijn verminderingen.
    ROL_SOORT is de standaardrol per soort: agenda-soorten, soorten uit de sectieplanning en de soorten van de minutenregistratie. */
-const ROL_SOORT = { les: 'docent', klaar: 'docent', uitval: 'docent', toets: 'docent', rooster: 'docent', cijfers: 'docent', rapport: 'docent', pres: 'docent', slc: 'docent', mail: 'docent', overig: 'docent',
+const ROL_SOORT = { les: 'docent', klaar: 'docent', uitval: 'docent', toets: 'docent', rooster: 'docent', cijfers: 'docent', rapport: 'docent', pres: 'docent', mail: 'docent', overig: 'docent',
   sectie: 'vakgroep', overleg: 'vakgroep', keuze: 'vakgroep', muziek: 'vakgroep', taak: 'vakgroep',
-  koor: 'dirigent', koorvrij: 'dirigent', koorrep: 'dirigent', reclame: 'dirigent', team: 'team' };
+  koor: 'dirigent', koorvrij: 'dirigent', koorrep: 'dirigent', reclame: 'dirigent', team: 'team', slc: 'inter' }; // SLC hoort bij internationalisering (Frans 6-11)
 // volgorde telt: de eerste die past. Rapportvergaderingen en excursies vallen onder voor- en nawerk (docent); ontwikkeldagen en IPB onder professional
 const ROL_WOORD = [[/rapportvergader|overgangsvergader|excursie/i, 'docent'], [/\bipb\b|ontwikkeldag|\bpdca\b|cursus|nascholing|scholing|training|webinar|congres|vakliteratuur/i, 'prof'],
-  [/teamvergader|team ?v456|\bv456\b|vwo ?4-?5-?6|burgerschap|leerlingbespreking/i, 'team'], [/erasmus|barcelona|internationali|uitwisseling/i, 'inter']];
+  [/teamvergader|team ?v456|\bv456\b|vwo ?4-?5-?6|burgerschap|leerlingbespreking/i, 'team'], [/erasmus|barcelona|internationali|uitwisseling|slc/i, 'inter']];
 const POT_WOORD = [[/teamvergader|personeelsvergader|personeelsviering|viering personeel|jaaropening personeel|open dag|contactavond|diploma-?uitreiking|lokaalverantwoordelijk/i, 'ast']]; // AST: vaste lijst uit het normjaartaakbeleid
 const logRol = x => x.rol || rolStandaard(x.s); // duurLog: oude regels zonder rol vallen terug op de standaardrol van hun soort (voor stap 4)
 const rolLijst = () => (S.rollen || []).filter(r => r && r.id);
@@ -965,7 +965,7 @@ function rolKaart() {
     <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" data-rolerbij="">Rol erbij</button></div>
     <h3>Potjes</h3><div class="tabelscroll"><table class="duurtabel"><thead><tr><th>Potje</th><th>Uren (Foleta)</th><th></th></tr></thead><tbody>${P.map(p => `<tr><td><input class="rolnaam" value="${esc(p.naam)}" data-potveld="${esc(p.id)}|naam" aria-label="Naam van het potje"></td><td><input type="number" inputmode="numeric" min="0" max="2000" step="1" value="${esc(String(p.uren || ''))}" data-potveld="${esc(p.id)}|uren" aria-label="Uren ${esc(p.naam)}"></td><td><button class="btn klein" data-potweg="${esc(p.id)}" title="Potje weghalen">×</button></td></tr>`).join('')}</tbody></table></div>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" data-poterbij="">Potje erbij</button></div>
-    <p class="sub" style="margin-top:.5rem">Standaard: lessen, toetsen, cijfers en rapporten bij Docent; sectie bij Vakgroepleider; koor en concertreclame bij Dirigent; team vwo 4-5-6 bij Teamlid. Bij een eigen taak doet Lesdag een voorstel op trefwoorden: teamvergadering, team V456, burgerschap → Teamlid; IPB, ontwikkeldag, PDCA, cursus, nascholing → Professional; rapportvergadering, excursie → Docent; Erasmus, Barcelona → Internationalisering. Op AST: teamvergadering, personeelsvergadering of -viering, open dag, contactavond, diploma-uitreiking, lokaalverantwoordelijkheid. Je kunt het altijd wijzigen.</p></div>`;
+    <p class="sub" style="margin-top:.5rem">Standaard: lessen, toetsen, cijfers en rapporten bij Docent; sectie bij Vakgroepleider; koor en concertreclame bij Dirigent; team vwo 4-5-6 bij Teamlid; SLC bij Internationalisering. Bij een eigen taak doet Lesdag een voorstel op trefwoorden: teamvergadering, team V456, burgerschap → Teamlid; IPB, ontwikkeldag, PDCA, cursus, nascholing → Professional; rapportvergadering, excursie → Docent; Erasmus, Barcelona → Internationalisering. Op AST: teamvergadering, personeelsvergadering of -viering, open dag, contactavond, diploma-uitreiking, lokaalverantwoordelijkheid. Je kunt het altijd wijzigen.</p></div>`;
 }
 /* na het afvinken: hoe lang duurde het? Eén tik; overslaan mag en telt dan niet mee */
 let DV = null;
