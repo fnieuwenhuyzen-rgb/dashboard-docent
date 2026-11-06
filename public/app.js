@@ -2397,10 +2397,27 @@ function viewSectie() {
    Een item kan een eigen rol hebben: ontwikkeldagen bij professional, excursies en overgangsvergaderingen bij docent. Geen namen van leerlingen of collega's en geen inhoud van gesprekken. Wat er uit de mail van de teamleider bij hoort,
    zet Frans zelf bij een afspraak (S.sectieNotitie, alleen in de eigen staat). */
 let tAlles = false;
-const IPB_STAPPEN = ['IPB: PDCA-actieplan bijwerken', 'IPB: lesbezoek plannen', 'IPB: leerlingenquête afnemen', 'IPB: gesprek met de teamleider voorbereiden'];
+/* toelichting per stap uit de handleiding van de gesprekkencyclus (web.csgpm.nl/handleidingen/gesprekkencyclus_uitgebreid.htm) */
+const GC = 'https://web.csgpm.nl/gesprekkencyclus/', GC_HANDLEIDING = 'https://web.csgpm.nl/handleidingen/gesprekkencyclus_uitgebreid.htm';
+const IPB_STAPPEN = [
+  { titel: 'IPB: PDCA-actieplan bijwerken', url: GC + 'gesprekkencyclus_mijn_documenten.php',
+    notitie: 'Gesprekkencyclus > Mijn documenten > knop PDCA (altijd beschikbaar). Werk je ontwikkeldoelen bij. Rechtsboven in de blauwe of rode balk staat tot wanneer je het PDCA voor het gesprek kunt uploaden. Maak met Printen voor eigen gebruik een PDF (een momentopname) en upload die bij het juiste gesprek: Upload document, kies het juiste soort document. Daarna geven jij en de teamleider akkoord op de ontwikkelafspraken.' },
+  { titel: 'IPB: lesbezoek plannen', url: GC + 'gesprekkencyclus_algemene_documenten.php',
+    notitie: 'Spreek met de teamleider een les af voor het lesbezoek. De teamleider kijkt met de kijkwijzer: het formulier lesobservatie (VWO, HAVO of MAVO) onder Algemene documenten. De teamleider vult het in en uploadt het als PDF bij het gesprek; jij krijgt daarvan een mail.' },
+  { titel: 'IPB: leerlingenquête afnemen', url: GC + 'gesprekkencyclus.php',
+    notitie: 'Zet in overleg met de teamleider twee leerlingenenquêtes uit via KU: vóór het startgesprek en vóór het beoordelingsgesprek. De datacoach uploadt de uitkomsten bij het gesprek.' },
+  { titel: 'IPB: gesprek met de teamleider voorbereiden', url: GC + 'gesprekkencyclus_mijn_documenten.php',
+    notitie: 'De teamleider plant het gesprek; je krijgt een mail. Mijn documenten > kies het gesprek > knop Vragenlijst (niet alle vragen hoeven). Kies onderaan Opslaan als PDF in de map met gespreksdocumenten. Kijk of PDCA, kijkwijzer en enquêtes bij het gesprek staan. Na een beoordelingsgesprek geef je akkoord dat de beoordeling klopt met wat besproken is.' }
+];
 function teamItems() { return (B.team || []).concat((B.sectie || []).filter(i => rolVanSectie(i) === 'team')).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }
-function ipbZet() { // de vaste stappen van de IPB-cyclus als eigen taken bij Professional (IPB-gesprekken tellen als deskundigheidsbevordering); wat al open staat komt er niet dubbel bij
-  let n = 0; IPB_STAPPEN.forEach(titel => { if ((S.taken || []).some(k => k.titel === titel && !k.af)) return; const k = maakTaak('', null, titel, 'overig'); if (k) { zetRol(k, { rol: 'prof', potje: '' }); n++; } }); return n;
+function ipbZet() { // de vaste stappen van de IPB-cyclus als eigen taken bij Professional (IPB-gesprekken tellen als deskundigheidsbevordering); wat al open staat komt er niet dubbel bij, maar krijgt de toelichting als die nog ontbreekt
+  let n = 0, aangevuld = 0;
+  IPB_STAPPEN.forEach(s => {
+    const open = (S.taken || []).find(k => k.titel === s.titel && !k.af);
+    if (open) { if (!open.notitie) { open.notitie = s.notitie; if (!open.url) open.url = s.url; aangevuld++; } return; }
+    const k = maakTaak('', null, s.titel, 'overig'); if (k) { k.notitie = s.notitie; k.url = s.url; zetRol(k, { rol: 'prof', potje: '' }); n++; }
+  });
+  return { n, aangevuld };
 }
 function viewTeam() {
   const t = vandaag(); const it = teamItems(); const lijst = tAlles ? it : it.filter(i => (i.tot || i.d) >= addD(t, -7) && i.d <= addD(t, 63));
@@ -2408,7 +2425,7 @@ function viewTeam() {
   const rij = i => `<div>${sRij(i)}<details class="meer" style="margin:-.2rem 0 .5rem"><summary>${S.sectieNotitie[i.id] ? 'Notitie wijzigen' : 'Notitie uit de mail erbij'}</summary><textarea rows="2" data-teamnoot="${esc(i.id)}" aria-label="Notitie bij ${esc(i.titel)}" placeholder="Wat er van je gevraagd wordt. Geen namen van leerlingen.">${esc(S.sectieNotitie[i.id] || '')}</textarea></details></div>`;
   return `<div class="kop"><div><h1>Team vwo 4-5-6</h1><div class="sub">${rs.naam ? esc(rs.naam) + ' · ' : ''}teamvergaderingen, dagen voor v456 en andere data uit de algemene jaarplanning; elke afspraak met zijn eigen rol</div></div><div class="knoppen"><button class="btn" data-talles="" aria-pressed="${tAlles}">hele jaar</button></div></div>
   <div class="kaart">${lijst.map(rij).join('') || '<p class="leeg">Niets in deze periode.</p>'}</div>
-  <div class="kaart"><h2>IPB-cyclus</h2><p class="lead">De vaste stappen: PDCA-actieplan bijwerken, lesbezoek, leerlingenquête en het gesprek. Zet ze in je takenlijst en plan ze vanuit Dag. Ze staan bij Professional: een IPB-gesprek telt als deskundigheidsbevordering, ook als het team het organiseert. De inhoud van het gesprek komt niet in Lesdag.</p>
+  <div class="kaart"><h2>IPB-cyclus</h2><p class="lead">De vaste stappen: PDCA-actieplan bijwerken, lesbezoek, leerlingenquête en het gesprek. Zet ze in je takenlijst en plan ze vanuit Dag. Ze staan bij Professional: een IPB-gesprek telt als deskundigheidsbevordering, ook als het team het organiseert. De inhoud van het gesprek komt niet in Lesdag. Elke stap krijgt de uitleg uit de <a href="${GC_HANDLEIDING}" target="_blank" rel="noopener">handleiding gesprekkencyclus</a> en een link naar de juiste pagina.</p>
     ${ipb.length ? `<p class="sub">Open: ${ipb.map(k => esc(k.titel.replace(/^IPB: /, ''))).join(', ')}.</p>` : ''}<div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-ipbzet="">IPB-stappen in je takenlijst</button><a class="btn" href="#vandaag">Naar Dag</a></div></div>`;
 }
 
@@ -2890,7 +2907,7 @@ document.addEventListener('click', async e => {
   if (D.weg) { const terug = foto(); S.rooster = S.rooster.filter(u => u.id !== D.weg); bewaar(); toast('Lesuur verwijderd', terug); return; }
   if (D.salles != null) { sAlles = !sAlles; render(); return; }
   if (D.talles != null) { tAlles = !tAlles; render(); return; }
-  if (D.ipbzet != null) { const n = ipbZet(); bewaar(); toast(n ? `${n} IPB-${n === 1 ? 'stap staat' : 'stappen staan'} in je takenlijst, bij Professional. Plan ze vanuit Dag.` : 'De IPB-stappen staan al in je takenlijst'); return; }
+  if (D.ipbzet != null) { const { n, aangevuld } = ipbZet(); bewaar(); toast(n ? `${n} IPB-${n === 1 ? 'stap staat' : 'stappen staan'} in je takenlijst, bij Professional, elk met uitleg. Plan ze vanuit Dag.` : aangevuld ? `Uitleg toegevoegd bij ${aangevuld} IPB-${aangevuld === 1 ? 'stap' : 'stappen'} in je takenlijst` : 'De IPB-stappen staan al in je takenlijst'); return; }
   if (D.rolweg) { const r = rolInfo(D.rolweg); if (!r) return; const terug = foto(); S.rollen = rolLijst().filter(x => x.id !== r.id); bewaar(); toast(`${r.naam} is weggehaald. Taken met deze rol houden hem, zonder kleurstreepje.`, terug); return; }
   if (D.potweg) { const p = potInfo(D.potweg); if (!p) return; const terug = foto(); S.potjes = potLijst().filter(x => x.id !== p.id); bewaar(); toast(`Potje ${p.naam} is weggehaald`, terug); return; }
   if (D.rolerbij != null) { S.rollen = rolLijst().concat({ id: 'r' + Date.now().toString(36), naam: 'Nieuwe rol', kleur: '#6b6b6b', uren: '' }); bewaar(); const v = [...document.querySelectorAll('#rolKaart [data-rolveld$="|naam"]')].pop(); if (v) { v.focus(); v.select(); } return; }
