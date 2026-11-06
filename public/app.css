@@ -934,3 +934,11 @@ a.jr-naam:hover{color:var(--paars)}
 .ls-groot .ls-wat{font-weight:900;font-size:clamp(3.5rem,13vw,11rem);line-height:1}
 .ls-groot .ls-tijd{font-weight:900;font-size:clamp(4.5rem,18vw,15rem);line-height:1}
 .ls-groot .ls-stappen{margin:0;padding-left:1.4em;text-align:left;font-size:clamp(1.3rem,3vw,2.6rem);font-weight:700}
+
+/* ---------- rollen (6-11): een kleurstreepje per rol in Dag en Week, verder niets anders ---------- */
+.ag-it.rol{box-shadow:inset 4px 0 0 var(--rol)}
+.ag-les.nu.rol{box-shadow:inset 4px 0 0 var(--rol),0 0 0 2px var(--paars)}
+.ag-it.bezig.rol{box-shadow:inset 4px 0 0 var(--rol),0 6px 16px rgba(36,28,43,.25)}
+.ag-chip.rol,.ag-band button.rol{box-shadow:inset 3px 0 0 var(--rol);padding-left:.5rem}
+.duurtabel input[type=color]{width:2.6rem;padding:0 .1rem}
+.duurtabel input.rolnaam{width:min(12rem,40vw);text-align:left}
