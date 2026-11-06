@@ -922,7 +922,7 @@ const ROL_SOORT = { les: 'docent', klaar: 'docent', uitval: 'docent', toets: 'do
   koor: 'dirigent', koorvrij: 'dirigent', koorrep: 'dirigent', reclame: 'dirigent', team: 'team', slc: 'inter' }; // SLC hoort bij internationalisering (Frans 6-11)
 // volgorde telt: de eerste die past. Rapportvergaderingen en excursies vallen onder voor- en nawerk (docent); ontwikkeldagen en IPB onder professional
 const ROL_WOORD = [[/rapportvergader|overgangsvergader|excursie/i, 'docent'], [/\bipb\b|ontwikkeldag|\bpdca\b|cursus|nascholing|scholing|training|webinar|congres|vakliteratuur/i, 'prof'],
-  [/teamvergader|team ?v456|\bv456\b|vwo ?4-?5-?6|burgerschap|leerlingbespreking/i, 'team'], [/erasmus|barcelona|internationali|uitwisseling|slc/i, 'inter']];
+  [/teamvergader|team ?v456|\bv456\b|vwo ?4-?5-?6|burgerschap|leerlingbespreking/i, 'team'], [/erasmus|barcelona|internationali|uitwisseling|\bslc\b/i, 'inter']];
 const POT_WOORD = [[/teamvergader|personeelsvergader|personeelsviering|viering personeel|jaaropening personeel|open dag|contactavond|diploma-?uitreiking|lokaalverantwoordelijk/i, 'ast']]; // AST: vaste lijst uit het normjaartaakbeleid
 const logRol = x => x.rol || rolStandaard(x.s); // duurLog: oude regels zonder rol vallen terug op de standaardrol van hun soort (voor stap 4)
 const rolLijst = () => (S.rollen || []).filter(r => r && r.id);
