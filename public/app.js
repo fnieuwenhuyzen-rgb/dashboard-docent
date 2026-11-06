@@ -45,7 +45,7 @@ const maandagVan = s => { const d = dOf(s); const w = (d.getDay() + 6) % 7; retu
 /* rollen en potjes (handboek/voorstel-rollen.md, besluit Frans 6-11). Uren uit Foleta vult Frans zelf in: ze staan alleen in S */
 const ROLLEN_START = [{ id: 'docent', naam: 'Docent', kleur: '#2f6db5' }, { id: 'vakgroep', naam: 'Vakgroepleider', kleur: '#b8770b' }, { id: 'dirigent', naam: 'Dirigent', kleur: '#c0392b' },
   { id: 'team', naam: 'Teamlid vwo 4-5-6', kleur: '#2e8b57' }, { id: 'inter', naam: 'Internationalisering', kleur: '#0e8f9a' }, { id: 'prof', naam: 'Professional', kleur: '#8e44ad' }];
-const POTJES_START = [{ id: 'ast', naam: 'AST' }, { id: 'pb', naam: 'PB-taak' }, { id: 'werkdruk', naam: 'Werkdruk' }];
+const POTJES_START = [{ id: 'ast', naam: 'AST' }]; // PB-taak en Werkdruk zijn verminderingen van de taak, geen potjes (normjaartaakbeleid)
 function nieuweStaat() { return { v: 1, rollen: ROLLEN_START.map(r => Object.assign({ uren: '' }, r)), potjes: POTJES_START.map(p => Object.assign({ uren: '' }, p)), updated: 0, rooster: [], voortgang: {}, les: {}, uitval: {}, sectieAf: {}, sectieNotitie: {}, sectieExtra: [], groepLeergang: {}, taken: [], dagTaken: {}, koorAf: {}, taakNoot: {}, reclame: {}, reclameAf: {}, reclameExtra: [], uitgesteld: {}, afwezig: {}, ankers: {}, afwijkingen: [], extraUren: [], beoord: { lijsten: {}, toetsen: {} },
   pauzes: [], rust: {}, afLater: {}, afgesloten: {}, goed: {}, later: {}, klaarExtra: {}, duur: {}, duurLog: [], schatStart: {}, minuten: {}, mag: {}, magHw: {} }; }
 /* vorm van de staat controleren: een kopie of opgeslagen staat die er geldig uitziet maar kapot is ("rooster":"kapot")
@@ -915,13 +915,15 @@ const schat = (soort, titel, eigen) => eigen || schatting(soort, titel).min;
 const minVeld = k => `<label class="minveld" title="${esc(k.waarom)}"><input type="number" inputmode="numeric" min="5" max="480" step="5" value="${k.min}" data-minv="${esc(k.v)}" aria-label="Minuten voor ${esc(k.titel)}"> min</label>`;
 /* ---------- rollen en potjes ----------
    Een rol is een label (stap 1 van handboek/voorstel-rollen.md): elke les, afspraak en taak hoort bij één rol, met een kleurstreepje in
-   Dag en Week. Een potje (AST, PB-taak, Werkdruk) komt er optioneel bij: uren die verantwoord moeten worden maar geen rol zijn.
+   Dag en Week. Een potje komt er optioneel bij: uren die verantwoord moeten worden maar geen rol zijn. Alleen AST; PB-taak en Werkdruk zijn verminderingen.
    ROL_SOORT is de standaardrol per soort: agenda-soorten, soorten uit de sectieplanning en de soorten van de minutenregistratie. */
 const ROL_SOORT = { les: 'docent', klaar: 'docent', uitval: 'docent', toets: 'docent', rooster: 'docent', cijfers: 'docent', rapport: 'docent', pres: 'docent', slc: 'docent', mail: 'docent', overig: 'docent',
   sectie: 'vakgroep', overleg: 'vakgroep', keuze: 'vakgroep', muziek: 'vakgroep', taak: 'vakgroep',
   koor: 'dirigent', koorvrij: 'dirigent', koorrep: 'dirigent', reclame: 'dirigent', team: 'team' };
-const ROL_WOORD = [[/teamvergader|\bteam\b|teamleider|\bipb\b|ontwikkeldag|\bv456\b|vwo ?4-?5-?6|leerlingbespreking/i, 'team'], [/erasmus|barcelona|internationali|uitwisseling/i, 'inter'], [/cursus|nascholing|scholing|\bpdca\b|training|webinar|congres|vakliteratuur/i, 'prof']];
-const POT_WOORD = [[/contactavond|ouderavond|open dag|diploma-?uitreiking|voorlichtingsavond/i, 'ast']];
+// volgorde telt: de eerste die past. Rapportvergaderingen en excursies vallen onder voor- en nawerk (docent); ontwikkeldagen en IPB onder professional
+const ROL_WOORD = [[/rapportvergader|overgangsvergader|excursie/i, 'docent'], [/\bipb\b|ontwikkeldag|\bpdca\b|cursus|nascholing|scholing|training|webinar|congres|vakliteratuur/i, 'prof'],
+  [/teamvergader|team ?v456|\bv456\b|vwo ?4-?5-?6|burgerschap|leerlingbespreking/i, 'team'], [/erasmus|barcelona|internationali|uitwisseling/i, 'inter']];
+const POT_WOORD = [[/teamvergader|personeelsvergader|personeelsviering|viering personeel|jaaropening personeel|open dag|contactavond|diploma-?uitreiking|lokaalverantwoordelijk/i, 'ast']]; // AST: vaste lijst uit het normjaartaakbeleid
 const logRol = x => x.rol || rolStandaard(x.s); // duurLog: oude regels zonder rol vallen terug op de standaardrol van hun soort (voor stap 4)
 const rolLijst = () => (S.rollen || []).filter(r => r && r.id);
 const potLijst = () => (S.potjes || []).filter(p => p && p.id);
@@ -958,12 +960,12 @@ function rolUitKeuze(tekst, bron, rolW, potW) { // {rol, potje} uit de keuzelijs
 const zetRol = (k, rp) => { k.rol = rp.rol; if (rp.potje) k.potje = rp.potje; else delete k.potje; return k; };
 function rolKaart() {
   const R = rolLijst(), P = potLijst();
-  return `<div class="kaart" id="rolKaart"><h2>Rollen en potjes</h2><p class="lead">Elke les, afspraak en taak hoort bij een rol; in Dag en Week zie je dat aan het kleurstreepje. Een potje (AST, PB-taak, Werkdruk) komt er bij een taak optioneel bij. De uren uit Foleta vul je hier zelf in; ze blijven in je eigen gegevens.</p>
+  return `<div class="kaart" id="rolKaart"><h2>Rollen en potjes</h2><p class="lead">Elke les, afspraak en taak hoort bij een rol; in Dag en Week zie je dat aan het kleurstreepje. Een taak kan daarnaast op het potje AST (algemene schooltaken) staan. PB-taak en Werkdruk zijn verminderingen van je taak, geen potjes. De uren uit Foleta vul je hier zelf in; ze blijven in je eigen gegevens.</p>
     <div class="tabelscroll"><table class="duurtabel"><thead><tr><th>Kleur</th><th>Rol</th><th>Uren (Foleta)</th><th></th></tr></thead><tbody>${R.map(r => `<tr><td><input type="color" value="${esc(kleurOk(r.kleur) || '#888888')}" data-rolveld="${esc(r.id)}|kleur" aria-label="Kleur ${esc(r.naam)}"></td><td><input class="rolnaam" value="${esc(r.naam)}" data-rolveld="${esc(r.id)}|naam" aria-label="Naam van de rol"></td><td><input type="number" inputmode="numeric" min="0" max="2000" step="1" value="${esc(String(r.uren || ''))}" data-rolveld="${esc(r.id)}|uren" aria-label="Uren ${esc(r.naam)}"></td><td><button class="btn klein" data-rolweg="${esc(r.id)}" title="Rol weghalen">×</button></td></tr>`).join('')}</tbody></table></div>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" data-rolerbij="">Rol erbij</button></div>
     <h3>Potjes</h3><div class="tabelscroll"><table class="duurtabel"><thead><tr><th>Potje</th><th>Uren (Foleta)</th><th></th></tr></thead><tbody>${P.map(p => `<tr><td><input class="rolnaam" value="${esc(p.naam)}" data-potveld="${esc(p.id)}|naam" aria-label="Naam van het potje"></td><td><input type="number" inputmode="numeric" min="0" max="2000" step="1" value="${esc(String(p.uren || ''))}" data-potveld="${esc(p.id)}|uren" aria-label="Uren ${esc(p.naam)}"></td><td><button class="btn klein" data-potweg="${esc(p.id)}" title="Potje weghalen">×</button></td></tr>`).join('')}</tbody></table></div>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn klein" data-poterbij="">Potje erbij</button></div>
-    <p class="sub" style="margin-top:.5rem">Standaard: lessen, toetsen, cijfers en rapporten bij Docent; sectie bij Vakgroepleider; koor en concertreclame bij Dirigent; team vwo 4-5-6 bij Teamlid. Bij een eigen taak doet Lesdag een voorstel op trefwoorden (teamvergadering, IPB, ontwikkeldag; Erasmus, Barcelona; cursus, nascholing, PDCA; contactavond en open dag op AST). Je kunt het altijd wijzigen.</p></div>`;
+    <p class="sub" style="margin-top:.5rem">Standaard: lessen, toetsen, cijfers en rapporten bij Docent; sectie bij Vakgroepleider; koor en concertreclame bij Dirigent; team vwo 4-5-6 bij Teamlid. Bij een eigen taak doet Lesdag een voorstel op trefwoorden: teamvergadering, team V456, burgerschap → Teamlid; IPB, ontwikkeldag, PDCA, cursus, nascholing → Professional; rapportvergadering, excursie → Docent; Erasmus, Barcelona → Internationalisering. Op AST: teamvergadering, personeelsvergadering of -viering, open dag, contactavond, diploma-uitreiking, lokaalverantwoordelijkheid. Je kunt het altijd wijzigen.</p></div>`;
 }
 /* na het afvinken: hoe lang duurde het? Eén tik; overslaan mag en telt dan niet mee */
 let DV = null;
@@ -2391,22 +2393,22 @@ function viewSectie() {
 }
 
 /* ---------- Team vwo 4-5-6 (stap 2 van handboek/voorstel-rollen.md) ----------
-   Alleen data en titels uit de algemene jaarplanning (B.team), plus de afspraken uit de sectieplanning met rol team (rapportvergaderingen,
-   ontwikkeldag teams). Geen namen van leerlingen of collega's en geen inhoud van gesprekken. Wat er uit de mail van de teamleider bij hoort,
+   Alleen data en titels uit de algemene jaarplanning (B.team), plus de afspraken uit de sectieplanning met rol team (mentorenoverleg).
+   Een item kan een eigen rol hebben: ontwikkeldagen bij professional, excursies en overgangsvergaderingen bij docent. Geen namen van leerlingen of collega's en geen inhoud van gesprekken. Wat er uit de mail van de teamleider bij hoort,
    zet Frans zelf bij een afspraak (S.sectieNotitie, alleen in de eigen staat). */
 let tAlles = false;
 const IPB_STAPPEN = ['IPB: PDCA-actieplan bijwerken', 'IPB: lesbezoek plannen', 'IPB: leerlingenquête afnemen', 'IPB: gesprek met de teamleider voorbereiden'];
 function teamItems() { return (B.team || []).concat((B.sectie || []).filter(i => rolVanSectie(i) === 'team')).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }
-function ipbZet() { // de vaste stappen van de IPB-cyclus als eigen taken bij Teamlid; wat al open staat komt er niet dubbel bij
-  let n = 0; IPB_STAPPEN.forEach(titel => { if ((S.taken || []).some(k => k.titel === titel && !k.af)) return; const k = maakTaak('', null, titel, 'overig'); if (k) { zetRol(k, { rol: 'team', potje: '' }); n++; } }); return n;
+function ipbZet() { // de vaste stappen van de IPB-cyclus als eigen taken bij Professional (IPB-gesprekken tellen als deskundigheidsbevordering); wat al open staat komt er niet dubbel bij
+  let n = 0; IPB_STAPPEN.forEach(titel => { if ((S.taken || []).some(k => k.titel === titel && !k.af)) return; const k = maakTaak('', null, titel, 'overig'); if (k) { zetRol(k, { rol: 'prof', potje: '' }); n++; } }); return n;
 }
 function viewTeam() {
   const t = vandaag(); const it = teamItems(); const lijst = tAlles ? it : it.filter(i => (i.tot || i.d) >= addD(t, -7) && i.d <= addD(t, 63));
   const ipb = (S.taken || []).filter(k => /^IPB:/.test(k.titel) && !k.af); const rs = rolStijl('team');
   const rij = i => `<div>${sRij(i)}<details class="meer" style="margin:-.2rem 0 .5rem"><summary>${S.sectieNotitie[i.id] ? 'Notitie wijzigen' : 'Notitie uit de mail erbij'}</summary><textarea rows="2" data-teamnoot="${esc(i.id)}" aria-label="Notitie bij ${esc(i.titel)}" placeholder="Wat er van je gevraagd wordt. Geen namen van leerlingen.">${esc(S.sectieNotitie[i.id] || '')}</textarea></details></div>`;
-  return `<div class="kop"><div><h1>Team vwo 4-5-6</h1><div class="sub">${rs.naam ? esc(rs.naam) + ' · ' : ''}teamvergaderingen, rapportvergaderingen, ontwikkeldagen en dagen voor v456 uit de algemene jaarplanning</div></div><div class="knoppen"><button class="btn" data-talles="" aria-pressed="${tAlles}">hele jaar</button></div></div>
+  return `<div class="kop"><div><h1>Team vwo 4-5-6</h1><div class="sub">${rs.naam ? esc(rs.naam) + ' · ' : ''}teamvergaderingen, dagen voor v456 en andere data uit de algemene jaarplanning; elke afspraak met zijn eigen rol</div></div><div class="knoppen"><button class="btn" data-talles="" aria-pressed="${tAlles}">hele jaar</button></div></div>
   <div class="kaart">${lijst.map(rij).join('') || '<p class="leeg">Niets in deze periode.</p>'}</div>
-  <div class="kaart"><h2>IPB-cyclus</h2><p class="lead">De vaste stappen: PDCA-actieplan bijwerken, lesbezoek, leerlingenquête en het gesprek. Zet ze in je takenlijst (rol Teamlid) en plan ze vanuit Dag. De inhoud van het gesprek komt niet in Lesdag.</p>
+  <div class="kaart"><h2>IPB-cyclus</h2><p class="lead">De vaste stappen: PDCA-actieplan bijwerken, lesbezoek, leerlingenquête en het gesprek. Zet ze in je takenlijst en plan ze vanuit Dag. Ze staan bij Professional: een IPB-gesprek telt als deskundigheidsbevordering, ook als het team het organiseert. De inhoud van het gesprek komt niet in Lesdag.</p>
     ${ipb.length ? `<p class="sub">Open: ${ipb.map(k => esc(k.titel.replace(/^IPB: /, ''))).join(', ')}.</p>` : ''}<div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-ipbzet="">IPB-stappen in je takenlijst</button><a class="btn" href="#vandaag">Naar Dag</a></div></div>`;
 }
 
@@ -2888,7 +2890,7 @@ document.addEventListener('click', async e => {
   if (D.weg) { const terug = foto(); S.rooster = S.rooster.filter(u => u.id !== D.weg); bewaar(); toast('Lesuur verwijderd', terug); return; }
   if (D.salles != null) { sAlles = !sAlles; render(); return; }
   if (D.talles != null) { tAlles = !tAlles; render(); return; }
-  if (D.ipbzet != null) { const n = ipbZet(); bewaar(); toast(n ? `${n} IPB-${n === 1 ? 'stap staat' : 'stappen staan'} in je takenlijst, bij Teamlid. Plan ze vanuit Dag.` : 'De IPB-stappen staan al in je takenlijst'); return; }
+  if (D.ipbzet != null) { const n = ipbZet(); bewaar(); toast(n ? `${n} IPB-${n === 1 ? 'stap staat' : 'stappen staan'} in je takenlijst, bij Professional. Plan ze vanuit Dag.` : 'De IPB-stappen staan al in je takenlijst'); return; }
   if (D.rolweg) { const r = rolInfo(D.rolweg); if (!r) return; const terug = foto(); S.rollen = rolLijst().filter(x => x.id !== r.id); bewaar(); toast(`${r.naam} is weggehaald. Taken met deze rol houden hem, zonder kleurstreepje.`, terug); return; }
   if (D.potweg) { const p = potInfo(D.potweg); if (!p) return; const terug = foto(); S.potjes = potLijst().filter(x => x.id !== p.id); bewaar(); toast(`Potje ${p.naam} is weggehaald`, terug); return; }
   if (D.rolerbij != null) { S.rollen = rolLijst().concat({ id: 'r' + Date.now().toString(36), naam: 'Nieuwe rol', kleur: '#6b6b6b', uren: '' }); bewaar(); const v = [...document.querySelectorAll('#rolKaart [data-rolveld$="|naam"]')].pop(); if (v) { v.focus(); v.select(); } return; }
