@@ -38,6 +38,14 @@ Nu begint met één zin die zegt wat er nu telt. De zin komt uit rooster, leerga
 
 Schuingedrukt = alleen als het van toepassing is.
 
+## Magister afronden: statussen en afbouwen (6 november 2026)
+
+- Elke les: **Op tijd** (Afgerond binnen 15 minuten na het begin), **Ingehaald** (later afgerond; telt als gedaan) of **Open**. Code: `magStatus`.
+- **Afbouwen, één regel** (`magHerinnering`): *licht* als de twee laatste afgelopen weken met minstens 4 lessen elk 90% of meer op tijd waren, en deze week hoogstens één les niet op tijd is. Anders *vol*.
+  - Vol: het eerste kwartier staat de kaart Magister afronden voorop; na het kwartier één tril.
+  - Licht: de les staat voorop, Magister afronden is een regel in de kaart; de zin zegt "De absenten staan nog open."; geen tril.
+- De weekterugblik ("Magister deze week: 14 van 18 op tijd, 4 ingehaald.") staat alleen bij Dag afsluiten en in het kompas, nooit in de zin bovenaan (regel 9). Geen reeksen.
+
 ## Nog niet in de zin (later)
 
 - "Loopt deze week" (projecten en toetsen als korte regel onder de zin): wacht tot er projecten als gegevens bestaan.

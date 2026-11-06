@@ -672,6 +672,8 @@ body.bordvenster{padding:0}
 .logform{display:flex;flex-wrap:wrap;gap:8px;margin-top:.5rem}
 .logform select{flex:1 1 10rem}.logform input{flex:3 1 14rem}
 .jarig-rij{margin-top:.8rem}
+.jarig-week{margin-top:.5rem}
+.mag-week{margin-top:.8rem;color:var(--uit)}
 /* kompas: smal venster naast Magister (Android-tablet of laptop) */
 body.kompasvenster{padding:var(--lk-h,0px) 0 0}
 body.kompasvenster .top{display:none}

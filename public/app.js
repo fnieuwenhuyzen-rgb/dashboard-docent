@@ -80,7 +80,7 @@ function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) ret
    verdwijnen zodra ze in Magister staan. */
 const AP_KEY = 'lesdag-apparaat';
 const apLeeg = () => ({ collegas: [], weg: {}, log: {}, felic: {} });
-function laadAP() { try { const a = Object.assign(apLeeg(), JSON.parse(localStorage.getItem(AP_KEY) || '{}')); delete a.jarig; return a; } catch (e) { return apLeeg(); } } // verjaardagen van leerlingen blijven in Magister (besluit 3-11)
+function laadAP() { try { const a = Object.assign(apLeeg(), JSON.parse(localStorage.getItem(AP_KEY) || '{}')); delete a.jarig; const oud = ymd(new Date(Date.now() - 30 * 864e5)); Object.keys(a.felic || {}).forEach(k => { if (k.slice(0, 10) < oud) delete a.felic[k]; }); return a; } catch (e) { return apLeeg(); } } // verjaardagen van leerlingen blijven in Magister (besluit 3-11)
 let AP = laadAP();
 function apBewaar() { try { localStorage.setItem(AP_KEY, JSON.stringify(AP)); } catch (e) {} }
 function bewaar(stil) {
@@ -1542,7 +1542,7 @@ function startKaart(s, p, A, nu) {
     <p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>
     ${L[0] ? vorigeRegel(L[0]) : ''}
     ${pauzeTekst(pz) ? `<div class="melding" style="margin-top:.6rem">${esc(pauzeTekst(pz))}</div>` : ''}
-    ${collegasJarig(s).length ? `<div class="jarig-rij">${collegasJarig(s).map(felicRij).join('')}</div>` : ''}
+    ${collegasJarig(s).length ? `<div class="jarig-rij">${collegasJarig(s).map(felicRij).join('')}</div>` : ''}${weekJarigRij(s)}
     <p class="lead" style="margin-top:.6rem">Om ${hm(AG.werkVan)} begint je eerste werkblok. Tot die tijd heeft Lesdag niets voor je.</p></div>`;
 }
 function voorLesKaart(s, p, x, nu) {
@@ -1678,6 +1678,7 @@ function afsluitKaart(s, p, A, nu) {
     ${open.map(it => rij('Niet af: ' + it.k.titel, '', chips('eigen:' + it.k.id, schat(soortVan(it.k), it.k.titel, it.k.min)) + `<label class="chk"><input type="checkbox" data-taakaf="${esc(it.k.id)}"><span>klaar</span></label>`)).join('')}
     ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min))).join('')}
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
+    ${s === vandaag() && magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}
     <!--dok--><button class="btn hoofd" data-afsluiten="${s}">Dag afsluiten</button><!--/dok--></div>`;
 }
 function stilKaart(s) {
@@ -1715,13 +1716,13 @@ function voorstellen(s, p, A, m, nu) {
 function nogOpen(s, p, A, m, nu) {
   const hier = m.m === 'les' ? m.it.x : m.m === 'naLes' ? m.x : null; // die staat al op de nu-kaart
   const M = s !== vandaag() || m.m === 'werkblok' ? [] : magOpen(s).filter(o => !hier || magKey(o.s, o.x) !== magKey(s, hier));
-  const C = collegasJarig(s).filter(j => !AP.felic[s + '|' + j.c.naam]);
+  const C = collegasJarig(s);
   const V = voorstellen(s, p, A, m, nu); const n = M.length + C.length + (V.match(/class="vs"/g) || []).length;
   return `<p class="eyebrow">Nog open${n ? ' · ' + n : ''}</p>` + (n ? magLijst(M, 4) + C.map(felicRij).join('') + V : '<p class="lead">Niets. Alles is rond.</p>');
 }
 /* ---------- Magister zonder koppeling ----------
    Er is geen open koppeling: Lesdag kijkt niet in Magister en tikt er niets in. Per les houdt Lesdag drie vakken bij: presentie,
-   huiswerk en logboek. S.mag['datum|uur'] = {p: tijdstip gemeld, l: tijdstip logboek erin, tril: 1}; het huiswerk per groep en lesweek
+   huiswerk en logboek. S.mag['datum|uur'] = {p: tijdstip afgerond (status: magStatus), l: tijdstip logboek erin, tril: 1}; het huiswerk per groep en lesweek
    in S.magHw (twee lessen in één lesweek delen hetzelfde "thuis"). Lessen van vóór S.magVanaf tellen niet mee. Absenten meldt Frans in
    Magister zelf; Lesdag herinnert alleen. De logboeknotities (AP.log) staan alleen op dit apparaat, tot ze in Magister staan. */
 const MAGURL = () => (window.LESDAG_CONFIG || {}).magister || 'https://csgpm.magister.net/op/#/vandaag';
@@ -1752,20 +1753,49 @@ function magOpen(s0) { // alles wat nog in Magister moet, van de afgelopen week 
   return out;
 }
 function volgendeLesVan(g, s) { let d = s; for (let i = 0; i < 21; i++) { d = addD(d, 1); const p = planning(d, d)[d]; if (!p.reden && p.uren.some(y => y.u.groep === g && !y.uitval)) return d; } return null; }
-const presVoorop = (s, x, nu) => s === vandaag() && magTelt(s, x) && !magVan(s, x).p && nu - minuten(x.u.start) < 15;
+/* Magister afronden: drie statussen per les (6-11). Op tijd = Afgerond binnen een kwartier na het begin van de les; Ingehaald = later
+   afgerond, telt gewoon als gedaan; Open = nog niet. Bron is het tijdstip in S.mag[k].p, dus het gaat mee met synchroniseren zoals de rest
+   van S.mag (geen leerlinggegevens). Lesdag rondt Magister nooit zelf af. Geen reeksen, geen schuld. */
+const OP_TIJD = 15;
+const lesBegin = (s, x) => new Date(s + 'T00:00').getTime() + minuten(x.u.start) * 60000;
+function magStatus(s, x) { const p = magVan(s, x).p; return !p ? 'open' : p <= lesBegin(s, x) + OP_TIJD * 60000 ? 'optijd' : 'ingehaald'; }
+const magLaat = (s, x) => Date.now() >= lesBegin(s, x) + OP_TIJD * 60000; // het kwartier is voorbij: afronden heet nu inhalen
+function magWeek(s) { // de week van s tot nu: lessen die al een kwartier bezig zijn of afgerond, per status
+  const R = { optijd: 0, ingehaald: 0, open: 0, n: 0 }; const ma = maandagVan(s); const t = vandaag();
+  for (let i = 0; i < 5; i++) { const d = addD(ma, i); if (d > t) break; const p = planning(d, d)[d]; if (p.reden) continue;
+    p.uren.forEach(x => { if (!magTelt(d, x)) return; const st = magStatus(d, x); if (st === 'open' && !magLaat(d, x)) return; R[st]++; R.n++; }); }
+  return R;
+}
+/* afbouwen, één regel: licht als de twee laatste afgelopen weken (met minstens 4 lessen) elk 90% of meer op tijd waren, en deze week
+   hoogstens één les niet op tijd is. Anders vol. Vol = de kaart Magister afronden staat het eerste kwartier voorop en na een kwartier
+   trilt het één keer. Licht = de les staat voorop, met Magister afronden als regel in de kaart; geen tril. */
+let magHerC = '';
+function magHerinnering(s) {
+  const sl = s + '|' + nuMin() + '|' + JSON.stringify(S.mag || {}).length; if (magHerC && magHerC.k === sl) return magHerC.v;
+  let v = 'vol'; const W = magWeek(s);
+  if (W.n - W.optijd < 2) { const goed = []; let d = addD(maandagVan(s), -7);
+    for (let i = 0; i < 8 && goed.length < 2; i++, d = addD(d, -7)) { const w = magWeek(d); if (w.n >= 4) goed.push(w.optijd / w.n >= 0.9); }
+    if (goed.length === 2 && goed.every(Boolean)) v = 'licht'; }
+  magHerC = { k: sl, v }; return v;
+}
+function magWeekZin(s) { const W = magWeek(s); if (!W.n) return '';
+  return `Magister deze week: ${W.optijd} van ${W.n} op tijd${W.ingehaald ? ', ' + W.ingehaald + ' ingehaald' : ''}${W.open ? ', ' + W.open + ' nog open' : ''}.${magHerinnering(s) === 'licht' ? ' De herinnering staat op licht.' : ''}`; }
+const magStChip = st => st === 'optijd' ? '<span class="ok">✓ <span class="sub">op tijd</span></span>' : '<span class="ok">✓ <span class="sub">ingehaald</span></span>';
+const magKnop = (s, x) => magLaat(s, x) ? 'Nu ingehaald' : 'Afgerond';
+const presVoorop = (s, x, nu) => s === vandaag() && magTelt(s, x) && !magVan(s, x).p && nu - minuten(x.u.start) < OP_TIJD && magHerinnering(s) === 'vol';
 const magOpenKnop = (k, klein) => `<a class="btn mag${klein ? ' klein' : ''}" href="${esc(MAGURL())}" target="magister" rel="noopener" data-magopen="${esc(k)}">Open Magister</a>`;
 function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de presentie voorop
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
-  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Absenten melden · ${esc(x.u.groep)}</h2>
-    <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is. Lesdag kijkt daar zelf niet in.</p>
-    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Gemeld</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok--></div>`;
+  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>
+    <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is en rond de les daar af. Tik daarna op Afgerond; Lesdag kijkt zelf niet in Magister.</p>
+    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok--></div>`;
 }
 function magBlok(s, x) { // Magister in het oog, tijdens en na de les: presentie, huiswerk bij de bel, logboek
   if (!magTelt(s, x)) return ''; const k = magKey(s, x); const v = magVakken(s, x); const R = [];
   const hw = hwTekst(x);
   if (hw && v.hw === false) R.push(hwRij(s, x));
-  if (v.pres === false) R.push(`<div class="nu-rij"><span><b>Presentie</b> · nog niet gemeld</span><span class="tb">${magOpenKnop(k, true)}<button class="btn klein${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Gemeld</button></span></div>`);
-  else if (v.pres) R.push(`<div class="nu-rij"><span><b>Presentie</b> · gemeld om ${tijdVan(v.pres)}</span><span class="ok">✓ <span class="sub">rond</span></span></div>`);
+  if (v.pres === false) R.push(`<div class="nu-rij"><span><b>Magister afronden</b> · ${magLaat(s, x) ? 'nog open' : 'nog niet afgerond'}</span><span class="tb">${magOpenKnop(k, true)}<button class="btn klein${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">${magKnop(s, x)}</button></span></div>`);
+  else if (v.pres) R.push(`<div class="nu-rij"><span><b>Magister afronden</b> · om ${tijdVan(v.pres)}</span>${magStChip(magStatus(s, x))}</div>`);
   if (hw && v.hw === null) R.push(`<div class="nu-rij"><span><b>Huiswerk</b> · klaar voor bij de bel<div class="sub">uit "thuis" in je leergang</div></span><span></span></div>`);
   else if (hw && v.hw) R.push(`<div class="nu-rij"><span><b>Huiswerk</b> · staat erin</span><span class="ok">✓ <span class="sub">rond</span></span></div>`);
   return `<div class="mag-blok"><p class="eyebrow">Magister</p>${R.join('')}${logRijen(s, x)}${logForm(s, x)}</div>`;
@@ -1779,7 +1809,7 @@ function logForm(s, x) { const L = S.beoord.lijsten[x.u.groep] || []; if (!L.len
   return `<details class="meer" style="margin-top:.6rem"><summary>Logboek: notitie over een leerling</summary><div class="logform"><select id="lgLl" aria-label="Leerling">${L.map(ll => `<option value="${esc(ll.id)}">${esc(ll.naam)}</option>`).join('')}</select><input id="lgT" placeholder="Bijvoorbeeld: had zijn gitaar niet bij zich" aria-label="Notitie"><button class="btn" data-log="add|${esc(k)}">Bewaar</button></div><p class="sub" style="margin-top:.3rem">Blijft op dit apparaat tot het in Magister staat.</p></details>`; }
 function magRij(o, kompas) { // één regel in werkblok, afsluiten, Nog open en het kompas
   const { s, x } = o; const k = magKey(s, x); const wanneer = (s === vandaag() ? '' : fmtD(s) + ' ') + x.u.start; const chip = kompas ? '' : '<span class="chip mag">Magister</span> ';
-  if (o.soort === 'pres') return `<div class="nu-rij"><span>${chip}Presentie ${esc(x.u.groep)} van ${esc(wanneer)}</span><span class="tb">${kompas ? '' : magOpenKnop(k, true)}<button class="btn klein" data-mag="p|${esc(k)}">Gemeld</button></span></div>`;
+  if (o.soort === 'pres') return `<div class="nu-rij"><span>${chip}Presentie en afronden ${esc(x.u.groep)} van ${esc(wanneer)}</span><span class="tb">${kompas ? '' : magOpenKnop(k, true)}<button class="btn klein" data-mag="p|${esc(k)}">${magKnop(s, x)}</button></span></div>`;
   if (o.soort === 'hw') { const vl = volgendeLesVan(x.u.groep, s);
     return `<div class="nu-rij"><span>${chip}Huiswerk ${esc(x.u.groep)}${vl ? ' voor ' + esc(fmtD(vl)) : ''}<div class="sub">${kompas ? esc(hwTekst(x)) : 'tekst staat klaar'}</div></span><span class="tb"><button class="btn klein mag" data-magcopy="${kompas ? 'hwk' : 'hw'}|${s}|${esc(x.u.id)}">${kompas ? 'Kopieer' : 'Kopieer en open'}</button><button class="btn klein" data-mag="h|${esc(hwKey(x))}">Staat erin</button></span></div>`; }
   const n = (AP.log[k] || []).length;
@@ -1798,16 +1828,25 @@ const tril1 = () => { try { if (navigator.vibrate) navigator.vibrate(250); } cat
 const MAANDEN = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
 const mdUit = (m, d) => m >= 1 && m <= 12 && d >= 1 && d <= [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1] ?String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0') : '';
 const mdTekst = md => +md.slice(3) + ' ' + MAANDEN[+md.slice(0, 2) - 1];
-function jarigDagen(s) { const out = []; for (let d = addD(volgendeLesdag(s, -1), 1); d <= s; d = addD(d, 1)) out.push(d); return out; }
-const wanneerJarig = (d, s) => d === s ? 'is vandaag jarig' : 'was ' + DAGLANG[dOf(d).getDay()] + ' jarig';
-function collegasJarig(s) { const D = jarigDagen(s); return (AP.collegas || []).map(c => ({ c, d: D.find(d => c.md === d.slice(5)) })).filter(j => j.d); }
-function felicUrl(c) {
-  const vn = /,/.test(c.naam) ? c.naam.split(',')[1].trim().split(/\s+/)[0] : c.naam.split(/\s+/)[0];
-  return ((window.LESDAG_CONFIG || {}).outlookNieuw || 'https://outlook.office.com/mail/deeplink/compose') + '?' + [c.mail ? 'to=' + encodeURIComponent(c.mail) : '', 'subject=' + encodeURIComponent('Gefeliciteerd!'),
-    'body=' + encodeURIComponent(`Beste ${vn},\n\nVan harte gefeliciteerd met je verjaardag! Een fijne dag gewenst.\n\nGroet,\nFrans`)].filter(Boolean).join('&');
+const FELIC_DAGEN = 3; // tot drie dagen na de verjaardag blijft de collega staan, met Alsnog feliciteren
+function jarigDagen(s) { const out = []; for (let d = [addD(volgendeLesdag(s, -1), 1), addD(s, -FELIC_DAGEN)].sort()[0]; d <= s; d = addD(d, 1)) out.push(d); return out; }
+const wanneerJarig = (d, s) => d === s ? 'is vandaag jarig' : 'was ' + (d >= addD(s, -6) ? DAGLANG[dOf(d).getDay()] : fmtD(d)) + ' jarig';
+const felicKey = j => j.d + '|' + j.c.naam; // per verjaardag, niet per dag: gefeliciteerd blijft gefeliciteerd
+function collegasJarig(s) { const D = jarigDagen(s); return (AP.collegas || []).map(c => ({ c, d: D.find(d => c.md === d.slice(5)) })).filter(j => j.d && !AP.felic[felicKey(j)]); }
+function collegasDezeWeek(s) { // maandag (of de eerste werkdag van de week): wie is de rest van deze week jarig, ook in het weekend
+  if (volgendeLesdag(s, -1) >= maandagVan(s)) return []; const zo = addD(maandagVan(s), 6); const out = [];
+  for (let d = addD(s, 1); d <= zo; d = addD(d, 1)) (AP.collegas || []).forEach(c => { if (c.md === d.slice(5)) out.push({ c, d }); });
+  return out;
 }
-const felicRij = ({ c, d }) => { const s = vandaag(); const af = AP.felic[s + '|' + c.naam];
-  return `<div class="nu-rij"><span><span class="chip out">Outlook</span> <b>${esc(c.naam)}</b> ${wanneerJarig(d, s)}</span><span class="tb">${af ? '<span class="ok">✓ <span class="sub">mail geopend</span></span>' : `<a class="btn klein out" href="${esc(felicUrl(c))}" target="_blank" rel="noopener" data-felic="${esc(s + '|' + c.naam)}">Feliciteer in Outlook</a>`}</span></div>`; };
+const voornaam = c => /,/.test(c.naam) ? c.naam.split(',')[1].trim().split(/\s+/)[0] : c.naam.split(/\s+/)[0];
+function felicUrl(c, laat) {
+  const vn = voornaam(c);
+  return ((window.LESDAG_CONFIG || {}).outlookNieuw || 'https://outlook.office.com/mail/deeplink/compose') + '?' + [c.mail ? 'to=' + encodeURIComponent(c.mail) : '', 'subject=' + encodeURIComponent(laat ? 'Alsnog gefeliciteerd!' : 'Gefeliciteerd!'),
+    'body=' + encodeURIComponent(laat ? `Beste ${vn},\n\nWat laat, maar van harte gefeliciteerd met je verjaardag!\n\nGroet,\nFrans` : `Beste ${vn},\n\nVan harte gefeliciteerd met je verjaardag! Een fijne dag gewenst.\n\nGroet,\nFrans`)].filter(Boolean).join('&');
+}
+const felicRij = j => { const { c, d } = j; const s = vandaag(); const laat = d < s; const k = felicKey(j);
+  return `<div class="nu-rij"><span><span class="chip out">Outlook</span> <b>${esc(c.naam)}</b> ${wanneerJarig(d, s)}</span><span class="tb"><a class="btn klein out" href="${esc(felicUrl(c, laat))}" target="_blank" rel="noopener" data-felic="${esc(k)}">${laat ? 'Alsnog feliciteren' : 'Feliciteer in Outlook'}</a><button class="btn klein" data-felicaf="${esc(k)}">${laat ? 'Alsnog gefeliciteerd' : 'Gefeliciteerd'}</button></span></div>`; };
+const weekJarigRij = s => { const W = collegasDezeWeek(s); return W.length ? `<p class="sub jarig-week">Deze week jarig: ${W.map(j => esc(j.c.naam) + ' (' + esc(fmtD(j.d)) + ')').join(', ')}.</p>` : ''; };
 function collegaParse(txt) { // een collega per regel met de datum ("12 november Jan Jansen", "Jan Jansen 12-11"); een regel met alleen een datum geldt voor de regels eronder
   let nu = ''; const out = []; const mis = []; // mis: regels die niet lukten, met de reden
   for (const r0 of String(txt).split(/\r?\n/)) { let r = ' ' + r0.replace(/\t/g, ' ') + ' ', md = '', mail = '', datum = ''; // datum: wat er als datum stond, ook als die niet bestaat
@@ -1834,16 +1873,16 @@ function viewKompas() {
   const s = vandaag(); const nu = nuMin(); const L = magOpen(s);
   const i = L.findIndex(o => o.soort === 'pres' && o.s === s && minuten(o.x.u.start) <= nu && nu < minuten(o.x.u.eind)); if (i > 0) L.unshift(L.splice(i, 1)[0]); // de les van nu eerst
   let h = `<div class="kompas"><div class="kp-kop"><b>Lesdag · kompas</b><a href="#nu">Naar Nu</a></div>`;
-  if (!L.length) return h + `<div class="kaart kp-leeg"><p class="eyebrow" style="color:var(--ok)">Nu in Magister</p><p class="kp-groot">Niets</p><p class="lead">Alles wat je in Lesdag afvinkte, staat erin. Lesdag kijkt zelf niet in Magister.</p></div></div>`;
+  if (!L.length) return h + `<div class="kaart kp-leeg"><p class="eyebrow" style="color:var(--ok)">Nu in Magister</p><p class="kp-groot">Niets</p><p class="lead">Alles wat je in Lesdag afvinkte, staat erin. Lesdag kijkt zelf niet in Magister.</p></div>${magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}</div>`;
   const [o, ...rest] = L; const { x } = o; const k = magKey(o.s, x); const wanneer = (o.s === s ? 'vandaag ' : fmtD(o.s) + ' ') + x.u.start + '–' + x.u.eind;
   h += `<div class="kaart kp-nu"><p class="eyebrow mag">Nu in Magister · ${esc(wanneer)}</p>`;
-  if (o.soort === 'pres') h += `<p class="kp-groot">Absenten ${esc(x.u.groep)}</p><p class="lead">Zet ze in Magister en tik daarna op Gemeld. Kijk daar meteen bij Jarig.</p><div class="knoppen" style="margin-top:.8rem"><button class="btn mag" data-mag="p|${esc(k)}">Gemeld</button></div>`;
+  if (o.soort === 'pres') h += `<p class="kp-groot">Afronden ${esc(x.u.groep)}</p><p class="lead">Zet de absenten in Magister, rond de les af en tik daarna op ${magKnop(o.s, x)}. Kijk daar meteen bij Jarig.</p><div class="knoppen" style="margin-top:.8rem"><button class="btn mag" data-mag="p|${esc(k)}">${magKnop(o.s, x)}</button></div>`;
   else if (o.soort === 'hw') { const vl = volgendeLesVan(x.u.groep, o.s);
     h += `<p class="kp-groot">Huiswerk ${esc(x.u.groep)}${vl ? ' voor ' + esc(fmtD(vl)) : ''}</p><div class="mag-tekst">${esc(hwTekst(x))}</div><div class="knoppen" style="margin-top:.8rem"><button class="btn" data-magcopy="hwk|${o.s}|${esc(x.u.id)}">Kopieer</button><button class="btn mag" data-mag="h|${esc(hwKey(x))}">Staat erin</button></div>`; }
   else h += `<p class="kp-groot">Logboek ${esc(x.u.groep)}</p>${logRijen(o.s, x, true)}`;
   h += '</div>';
   if (rest.length) h += `<div class="kaart"><p class="eyebrow mag">Daarna · ${rest.length}</p>${rest.map(r => magRij(r, true)).join('')}</div>`;
-  return h + '</div>';
+  return h + (magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : '') + '</div>';
 }
 
 /* afronden zonder lesmodus: dezelfde regels als het afrondscherm van de lesmodus */
@@ -2707,7 +2746,8 @@ document.addEventListener('click', async e => {
   if (D.recweg) { S.reclameExtra = (S.reclameExtra || []).filter(x => x.id !== D.recweg); if (S.reclame) delete S.reclame[D.recweg]; bewaar(); return; }
   if (D.terug != null) { terugZetten(); return; }
   if (D.magopen) { const k = D.magopen; setTimeout(() => { GEOPEND[k] = 1; render(); }, 0); return; } // de link opent Magister zelf; daarna is Gemeld de volgende stap
-  if (D.felic) { AP.felic[D.felic] = 1; apBewaar(); setTimeout(render, 0); return; } // de link opent een nieuwe mail in Outlook; versturen doe je daar zelf
+  if (D.felic || D.felicaf) { const terug = foto(); const k = D.felic || D.felicaf; AP.felic[k] = 1; apBewaar(); setTimeout(render, 0); // de link opent een nieuwe mail in Outlook; versturen doe je daar zelf
+    toast(`${k.slice(k.indexOf('|') + 1)} staat als gefeliciteerd`, terug); return; }
   if (D.pal != null) { paletKies(+D.pal); return; }
   if (e.target.closest('#les')) {
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
@@ -2744,7 +2784,8 @@ document.addEventListener('click', async e => {
   if (D.bord) { const [u, s] = D.bord.split('|'); bordOpen(u, s); return; }
   if (D.rg) { if (D.rg === 'ga') rgStuur('ga', { i: +D.i }); else if (D.rg === 'sluit') { rgStuur('sluit'); RG = null; location.hash = 'nu'; } else rgStuur(D.rg); return; }
   if (D.mag) { const i = D.mag.indexOf('|'); const w = D.mag.slice(0, i), k = D.mag.slice(i + 1); const terug = foto();
-    if (w === 'p') { magZet(k, { p: Date.now() }); delete AP.weg[k]; apBewaar(); bewaar(); toast('Presentie gemeld', terug); }
+    if (w === 'p') { magZet(k, { p: Date.now() }); delete AP.weg[k]; apBewaar(); bewaar(); const j = k.indexOf('|'); const x = uurOp(k.slice(0, j), k.slice(j + 1));
+      toast(x && magStatus(k.slice(0, j), x) === 'ingehaald' ? 'Ingehaald. Telt als gedaan.' : 'Afgerond, op tijd', terug); }
     else if (w === 'h') { S.magHw = S.magHw || {}; S.magHw[k] = Date.now(); bewaar(); toast('Huiswerk staat in Magister', terug); }
     else if (w === 'l') { magZet(k, { l: Date.now() }); delete AP.log[k]; apBewaar(); bewaar(); toast('Logboek staat in Magister; de notities zijn van dit apparaat weg', terug); }
     return; }
@@ -3382,7 +3423,7 @@ setInterval(() => { const a = document.activeElement; if (!LES && !PAL && ['vand
 // presentie na een kwartier nog niet gemeld: één keer trillen. Alleen tijdens een les, dus nooit in een pauze of 's avonds; niet op het bord
 setInterval(() => {
   if (document.hidden || LES || !B || document.body.classList.contains('bordvenster')) return; const s = vandaag(); const nu = nuMin(); const p = planning(s, s)[s]; if (p.reden) return;
-  const x = p.uren.find(y => magTelt(s, y) && minuten(y.u.start) + 15 <= nu && nu < minuten(y.u.eind)); if (!x) return; const m = magVan(s, x); if (m.p || m.tril) return;
+  const x = p.uren.find(y => magTelt(s, y) && minuten(y.u.start) + 15 <= nu && nu < minuten(y.u.eind)); if (!x) return; const m = magVan(s, x); if (m.p || m.tril || magHerinnering(s) !== 'vol') return;
   magZet(magKey(s, x), { tril: 1 }); bewaar(true); tril1(); if (['nu', 'kompas', 'regie'].includes(route.naam) && !PAL) render();
 }, 20000);
 // een tweede venster (bord, kompas) bewaarde iets: neem het over, zodat dit venster het niet overschrijft
