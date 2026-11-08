@@ -1472,13 +1472,13 @@ function viewNu() {
   let h = `<div class="nu-scherm nu-ens" data-moment="${mom}"><div class="ens-kop"><span class="ens-dag">${esc(cap(fmtLang(s)))}${lesweekVan(s) ? ' · lesweek ' + lesweekVan(s) : ''}</span>
     ${A.items.length && m.m !== 'pauze' ? `<span class="nb-stap"><button class="nb-knop" data-stap="-1" aria-label="Vorig moment">‹</button><button class="nb-knop nb-nu${kijk ? '' : ' verborgen'}" data-kijk=""${kijk ? '' : ' tabindex="-1" aria-hidden="true"'}>Nu</button><button class="nb-knop" data-stap="1" aria-label="Volgend moment">›</button></span>` : ''}<span class="ens-klok">${hm(nu)}</span></div>`;
   if (m.m === 'pauze' && !kijk) return h + `<div class="ens-pauze"><p class="ens-zin">${esc(Z.zin)}</p><p class="ens-sub">${esc(Z.sub)}</p><a class="ens-stil" href="#vandaag">Toch iets opzoeken</a></div></div>`; // in de pauze: alleen de tijd
-  if (!rustig && A.werkdag && A.pz && A.pz.onbekend) h += pauzeVraag();
+  const pzVraag = !rustig && A.werkdag && A.pz && A.pz.onbekend && !pauzeVraagWeg() ? pauzeVraag() : ''; // onderaan, niet bovenaan (bevinding 21)
   const twijfel = rustig || stil ? '' : zinTwijfel(A);
   const meld = rustig || stil ? '' : nuMeldingen(s);
   h += `<div class="ens${rustig ? ' zonder' : ''}${meld ? ' met-meld' : ''}"><div class="ens-links">${Z.lab ? `<p class="ens-lab">${kijk ? 'Ander moment · ' : ''}${esc(Z.lab)}</p>` : ''}<h1 class="ens-zin">${esc(Z.zin)}</h1>${twijfel ? `<p class="ens-twijfel">${esc(twijfel)}</p>` : ''}
     ${acties || Z.knop ? `<div class="ens-acties">${acties || Z.knop}</div>` : ''}<div class="nu-kaart">${kaart}</div></div>${meld}`;
   if (!rustig) h += `<aside class="ens-rechts"><p class="eyebrow">Vandaag</p>${vandaagLijst(s, A, nu, kijk || live)}${stil || geenVoorstel ? '' : `<div class="ens-open">${nogOpen(s, p, A, m, nu)}</div>`}</aside>`;
-  h += '</div>';
+  h += '</div>' + pzVraag;
   if (!rustig && !stil) h += `<div class="dok"><div class="dok-in"><button class="dok-zoek" data-palet="" aria-label="Vraag of zoek iets, of typ een taak">${ICO.zoek}<span>Vraag of zoek iets, of typ een taak</span><kbd>Ctrl K</kbd></button></div></div>`;
   return h + '</div>';
 }
@@ -1606,7 +1606,7 @@ function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${
 function startKaart(s, p, A, nu) {
   const L = lesUren(p); const kr = A.items.find(it => it.soort === 'koor'); const pz = A.pz;
   const pzT = pz && !pz.onbekend && pz.vrij.length ? ` Pauze: ${pz.vrij.map(x => hm(x.van) + '–' + hm(x.tot)).join(' en ')}.` : '';
-  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>Goedemorgen</h2>
+  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>Je dag</h2>
     <p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>
     ${L[0] ? vorigeRegel(L[0]) : ''}
     ${pauzeTekst(pz) ? `<div class="melding" style="margin-top:.6rem">${esc(pauzeTekst(pz))}</div>` : ''}
@@ -1760,9 +1760,11 @@ function vrijeDagKaart(s, p) {
   return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${esc(cap(p.reden || 'Vrij'))}</h2><p class="lead">Lesdag heeft vandaag niets voor je.</p>
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
 }
+const PZ_WEG = 'lesdag-pauzevraag-weg'; // per apparaat: de kaart is weggeklikt
+const pauzeVraagWeg = () => { try { return !!localStorage.getItem(PZ_WEG); } catch (e) { return false; } };
 function pauzeVraag() {
   return `<div class="kaart nu-vraag"><h2>Je pauzes</h2><p class="lead">${ZC && ZC.events ? 'In je rooster vond Lesdag geen vaste pauzes.' : 'Lesdag haalt je pauzes uit je rooster in Zermelo. Plak daarvoor je Zermelo-link bij Instellingen.'} Daarna houdt Lesdag ze vrij.</p>
-    <div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#instellingen">Naar Instellingen</a></div></div>`;
+    <div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#instellingen">Naar Instellingen</a><button class="btn kaal" data-pzvraagweg="">Niet meer tonen</button></div></div>`;
 }
 /* voorstellen: hoogstens drie, nooit in een pauze; Frans zegt ja of later. Nooit iets uit een les halen. */
 function voorstellen(s, p, A, m, nu) {
@@ -2842,6 +2844,7 @@ document.addEventListener('click', async e => {
   const b = e.target.closest('button,[data-week],[data-magopen],[data-felic],[data-jaarklas]'); if (!b) return;
   const D = b.dataset;
   if (agNegeer) { agNegeer = false; return; }
+  if (D.pzvraagweg != null) { try { localStorage.setItem(PZ_WEG, '1'); } catch (er) {} render(); return; }
   if (D.nwnieuw != null) { nwNieuw(); return; }
   if (D.nwzet != null) { nwZet(); return; }
   if (D.nwdicht != null) { nwDicht(); return; }
