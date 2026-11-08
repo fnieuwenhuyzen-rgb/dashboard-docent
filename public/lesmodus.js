@@ -86,7 +86,7 @@
     return iv.map(x => NOTEN[(i + x) % 12]);
   }
   function akkoordSvg(item) { // 'G' of met eigen greep 'G|xxx003'
-    const [naam, eigen] = String(item).split('|'); const g = eigen || GIT[naam]; const tonen = akkoordTonen(naam).join(' · ');
+    const [naam, eigen] = String(item).split('|'); const g = /^[x0-9]{6}$/i.test(eigen || '') ? eigen : GIT[naam]; const tonen = akkoordTonen(naam).join(' · ');
     if (!g) return `<figure class="akk"><div class="geen">${esc(naam)}</div><figcaption>${esc(naam)}${tonen ? '<small>' + esc(tonen) + '</small>' : ''}</figcaption></figure>`;
     const fr = g.split('').map(c => c === 'x' ? -1 : +c); const max = Math.max(...fr); const base = max > 4 ? Math.min(...fr.filter(x => x > 0)) : 1;
     let s = `<svg viewBox="0 0 70 86" aria-label="${esc(naam)}">`;
