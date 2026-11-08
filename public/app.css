@@ -945,3 +945,6 @@ a.jr-naam:hover{color:var(--paars)}
 .ag-chip.rol,.ag-band button.rol{box-shadow:inset 3px 0 0 var(--rol);padding-left:.5rem}
 .duurtabel input[type=color]{width:2.6rem;padding:0 .1rem}
 .duurtabel input.rolnaam{width:min(12rem,40vw);text-align:left}
+
+/* vinkjes: groot genoeg voor een duim (bevinding 46) */
+@media (pointer:coarse),(max-width:640px){.chk{align-items:center;min-height:44px}.chk input{width:24px;height:24px;flex:none}}
