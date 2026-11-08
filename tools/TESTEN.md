@@ -7,7 +7,7 @@ Eén opdracht draait alles: `node tools/test-alles.js` (±40 s; `--snel` ±20 s;
 | Bestanden | `test-bestanden.js` | syntaxfout in een script, ontbrekend bestand in `index.html` of de `SHELL`-lijst van `sw.js` |
 | Gegevens | `controleer-gegevens.js` | kapotte JSON, **minder** sectietaken/leergangen/lessen/presentaties/formulieren dan `HEAD`, leerlingnamen-achtige velden |
 | Rekenregels, lesklok, agendafeed, samenvoegen | `beoordeling/test-reken.js`, `test-lesklok.js`, `test-agendafeed.js`, `test-sync.js` | rekenfouten |
-| Schermen | `test-schermen.js` | "Dit scherm lukt nu niet", consolefouten, horizontale overloop; 14 schermen × 7 tijden × 1280/375 px, met verzonnen rooster |
+| Schermen | `test-schermen.js` | "Dit scherm lukt nu niet", consolefouten, horizontale overloop; 14 schermen × 7 tijden × 1280/375 px, met verzonnen rooster. Plus (8-11) zes formaten (375×812, 412×915, tablet 800×1280 en 1280×800 met aanraking, laptop 1366×768 en 1920×1080): overloop en tikdoelen onder 44 px, en het toetsenbord (Enter opent, focus erin, Esc sluit, focus terug); `--formaten=geen` slaat dat over, `--snel` doet er twee |
 
 ## Eenmalig: Playwright buiten de repo
 
