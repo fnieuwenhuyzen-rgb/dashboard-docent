@@ -415,9 +415,17 @@ function uitvalReden(g) { // waarom een klas achterloopt, voor de lijst met afwi
   const L = [y.s]; for (let d = addD(y.s, -1); S.afwezig[d] || dOf(d).getDay() % 6 === 0; d = addD(d, -1)) if (S.afwezig[d]) L.unshift(d);
   return { kort: 'afwezig ' + dagenTekst(L), s: y.s };
 }
+function afwezigPeriode(s) { // alle aaneengesloten afwezige dagen rond s (weekenden zijn een brug)
+  if (!S.afwezig[s]) return [];
+  const L = [s]; const brug = d => S.afwezig[d] || dOf(d).getDay() % 6 === 0;
+  for (let d = addD(s, -1), n = 0; brug(d) && n < 400; d = addD(d, -1), n++) if (S.afwezig[d]) L.unshift(d);
+  for (let d = addD(s, 1), n = 0; brug(d) && n < 400; d = addD(d, 1), n++) if (S.afwezig[d]) L.push(d);
+  return L;
+}
 function zetAfwezig(van, tot) {
+  if (tot > addD(van, 366)) { toast('Kies een periode van hooguit een jaar; maak bij langer twee periodes'); return; }
   const P = planBasis(); const dagen = [];
-  for (let s = van; s <= tot && dagen.length < 40; s = addD(s, 1)) { if (dOf(s).getDay() % 6 === 0) continue; dagen.push(s); const rec = S.afwezig[s] = S.afwezig[s] || { herstel: {} };
+  for (let s = van; s <= tot; s = addD(s, 1)) { if (dOf(s).getDay() % 6 === 0) continue; dagen.push(s); const rec = S.afwezig[s] = S.afwezig[s] || { herstel: {} };
     for (const g of Object.keys(P.slots)) { const lg = leergangVan(g); if (!lg) continue; // "op de planning" gezette lessen van deze dag zijn dus niet gegeven
       for (const y of P.slots[g]) { if (y.s !== s || !y.li) continue; const id = lesId(lg, y); const st = status(g, id); if (st.auto) { (rec.herstel[g] = rec.herstel[g] || {})[id] = st; delete S.voortgang[g][id]; } } } }
   afwezigOpen = false; bewaar();
@@ -594,7 +602,7 @@ function viewVandaag() {
     <div class="knoppen"><button class="btn" data-dag="${voor}">‹ ${esc(dagLabel(voor))}</button>${s !== t && voor !== t && na !== t ? `<button class="btn" data-dag="${t}">vandaag</button>` : ''}<button class="btn" data-dag="${na}">${esc(dagLabel(na))} ›</button>
     <button class="btn kaal" data-afwezigopen="" aria-pressed="${afwezigOpen}">Ik ben er niet</button><button class="btn" data-nwnieuw="">+ Nieuw</button>${s === t && !p.reden && p.uren.length ? '<button class="btn hoofd" data-start="">▶ Lesmodus</button>' : ''}</div></div>`;
   if (afwezigOpen) h += afwezigForm(s);
-  if (S.afwezig[s]) h += `<div class="melding info afwezigrij">Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door. <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig</button></div>`;
+  if (S.afwezig[s]) { const per = afwezigPeriode(s); h += `<div class="melding info afwezigrij">${per.length > 1 ? `Je bent afwezig ${dagenTekst(per)} (${per.length} lesdagen). Al je lessen in die periode vervallen en schuiven door.` : 'Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door.'} <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig${per.length > 1 ? ' op deze dag' : ''}</button>${per.length > 1 ? ` <button class="btn klein" data-afwezigperiode="${s}">Hele periode ongedaan</button>` : ''}</div>`; }
   if (!S.rooster.length && !ZC) h += `<div class="kaart" style="margin-bottom:1rem"><h2>Eerst je rooster</h2><p class="lead">Vul één keer je weekrooster in: per lesuur de groep en het lokaal. Daarna staan je lessen hier in de agenda, met wat er klaar moet staan.</p><p><a class="btn hoofd" href="#rooster">Rooster invullen</a></p></div>`;
   const achter = rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
   let wacht = ''; // op een telefoon staan de lessen bovenaan; wat kan wachten komt eronder (bevinding 46)
@@ -765,6 +773,8 @@ async function recBestand(a, soort) { return soort === 'bord' ? RECLAME.pptx(a, 
 async function recMail(soort, aid, mid) {
   const a = reclameActs().find(x => x.id === aid); if (!a) return;
   const M = reclameMomenten(a); const m = M.find(x => x.id === mid) || M.find(x => x.soort === soort && !x.af && !x.verlopen) || M.find(x => x.soort === soort);
+  const mis = recWaarschuwingen(a); // ontbrekende gegevens: eerst vragen, de mail gaat dan pas klaar als Frans het zo wil
+  if (mis.length && !confirm(`Bij "${a.titel}" klopt nog niet alles:\n\n- ${mis.join('\n- ')}\n\nToch de mail klaarzetten? Kies Annuleren om eerst de gegevens aan te vullen.`)) { toast('Mail niet klaargezet. Vul de gegevens aan en probeer opnieuw'); return; }
   const naam = RECLAME.bestand(a, soort);
   try { recDownload(naam, await recBestand(a, soort)); } catch (e) { console.warn(e); toast('De bijlage maken lukt niet'); return; }
   const ml = soort === 'bord' ? RECLAME.mailBord(a, RC.afzender) : RECLAME.mailWeekinfo(a, m && m.soort === 'wi' ? m.maandag : maandagVan(addD(vandaag(), 7)), recTekst(a), RC.afzender);
@@ -2218,7 +2228,7 @@ function viewWeek() {
   const t = vandaag(); const ma = weekKeuze || maandagVan(t); const vr = addD(ma, 4);
   const p = planning(ma, vr); const lw = lesweekVan(ma) || lesweekVan(addD(ma, 2));
   const dezeWeek = maandagVan(t);
-  let h = `<div class="kop"><div><h1>Week van ${esc(fmtD(ma))}</h1><div class="sub">${lw ? 'Lesweek ' + lw : 'Geen lesweek'}</div></div><div class="knoppen"><button class="btn" data-week="${addD(ma, -7)}">‹ vorige week</button>${ma !== dezeWeek ? `<button class="btn" data-week="${dezeWeek}">deze week</button>` : ''}<button class="btn" data-week="${addD(ma, 7)}">volgende week ›</button><button class="btn hoofd" data-nwnieuw="">+ Nieuw</button></div></div>`;
+  let h = `<div class="kop"><div><h1>Week van ${esc(fmtD(ma))}</h1><div class="sub">${lw ? 'Lesweek ' + lw : 'Geen lesweek'}</div></div><div class="knoppen"><button class="btn" data-week="${addD(ma, -7)}">‹ vorige week</button>${ma !== dezeWeek ? `<button class="btn" data-week="${dezeWeek}">deze week</button>` : ''}<button class="btn" data-week="${addD(ma, 7)}">volgende week ›</button><form class="weeksprong" id="weekSprong"><label class="sr-only" for="wsNr">Lesweek</label><input id="wsNr" type="number" min="1" max="${B.kalender.weken[B.kalender.weken.length - 1].w}" inputmode="numeric" placeholder="lesweek" aria-label="Lesweek"><button class="btn" type="submit">Ga naar</button></form><button class="btn hoofd" data-nwnieuw="">+ Nieuw</button></div></div>`;
   const dagen = []; for (let i = 0; i < 5; i++) { const s = addD(ma, i); const A = dagItems(s, p[s]); dagen.push({ s, items: A.items, heleDag: A.heleDag, reden: p[s].reden }); }
   const vrijMin = dagen.reduce((a, d) => a + d.items.filter(x => x.soort === 'vrij').reduce((b, x) => b + x.tot - x.van, 0), 0);
   const perKey = {}; dagen.forEach((d, i) => d.heleDag.forEach(it => { (perKey[it.key] = perKey[it.key] || { it, L: [] }).L.push(i); }));
@@ -2290,8 +2300,9 @@ function jaarBalk(g, lg, lw) {
 function jaarAs(lw, metMaand) {
   const P = jaarSlots(); let h = '', m = '';
   if (metMaand) for (const k of B.kalender.weken) { const mn = dOf(addD(k.datum, 3)).toLocaleDateString('nl-NL', { month: 'short' }).replace('.', ''); if (mn !== m) { h += `<span class="m" style="left:${jaarPct(P.per[k.w])}">${esc(mn)}</span>`; m = mn; } }
-  for (const w of [1, 5, 10, 15, 20, 25, 30, 35, 38]) if (Math.abs(w - lw) > 1) h += `<span class="w" style="left:${jaarPct(P.per[w] + .5)}">${w}</span>`;
-  if (lw in P.per) h += `<span class="w nu" style="left:${jaarPct(P.per[lw] + .5)}">${lw}</span>`;
+  const wkKnop = (w, nu) => { const k = B.kalender.weken.find(k => k.w === w); return `<button type="button" class="w${nu ? ' nu' : ''}" data-jaarweek="${k ? k.datum : ''}" title="Naar lesweek ${w}" aria-label="Naar lesweek ${w}" style="left:${jaarPct(P.per[w] + .5)}">${w}</button>`; };
+  for (const w of [1, 5, 10, 15, 20, 25, 30, 35, 38]) if (Math.abs(w - lw) > 1 && w in P.per) h += wkKnop(w, false);
+  if (lw in P.per) h += wkKnop(lw, true);
   return `<div class="jr-as">${h}</div>`;
 }
 const JAAR_UITLEG = [['<i class="jr-noot"></i>', 'gegeven'], ['<i class="jr-noot open"></i>', 'komt nog'], ['<i class="jr-noot mis"></i>', 'achter: open, links van de rode lijn'], ['<i class="jr-noot half"></i>', 'half gegeven'], ['<i class="jr-noot over"></i>', 'overgeslagen'], ['<i class="jr-noot leeg"></i>', 'les nog in te vullen'], ['<i class="jr-rust"></i>', 'geen les: vakantie, toetsweek of uitval'],
@@ -2909,6 +2920,7 @@ document.addEventListener('click', async e => {
     return;
   }
   if (D.afwezigopen != null) { afwezigOpen = !afwezigOpen; render(); return; }
+  if (D.afwezigperiode) { const per = afwezigPeriode(D.afwezigperiode); afwezigTerug(per); toast(`Je bent er weer ${dagenTekst(per)}; de lessen staan terug`); return; }
   if (D.afwezigterug) { afwezigTerug([D.afwezigterug]); toast('Je bent er weer; de lessen staan terug'); return; }
   if (D.krapopen) { krapOpen = D.krapopen; krapKeuze = ''; render(); return; }
   if (D.krapoptie) { krapKeuze = D.krapoptie; render(); return; }
@@ -2973,6 +2985,7 @@ document.addEventListener('click', async e => {
   if (D.ontplan) { const terug = foto(); const k = (S.taken || []).find(k => k.id === D.ontplan); if (k) { agSel[k.plan.dag] = ''; delete k.plan; } bewaar(); toast('Uit de agenda gehaald; de taak staat nog in je lijst', terug); return; }
   if (D.dag != null && route.naam !== 'vandaag') { dagKeuze = D.dag; location.hash = 'vandaag'; return; }
   if (D.dag != null) { dagKeuze = D.dag; render(); return; }
+  if (D.jaarweek) { paletWeek(D.jaarweek); return; }
   if (D.week != null) { weekKeuze = D.week; render(); return; }
   if (D.start != null) { const [u, s] = D.start.split('|'); startLes(u || null, s || vandaag()); return; }
   if (D.uitval) { const [s, u] = D.uitval.split('|'); (S.uitval[s] = S.uitval[s] || []).push(u); bewaar(); toast('Les valt uit; de volgende les schuift door', () => { S.uitval[s] = (S.uitval[s] || []).filter(x => x !== u); bewaar(); }); return; }
@@ -3045,6 +3058,7 @@ document.addEventListener('change', e => {
 document.addEventListener('submit', e => {
   e.preventDefault();
   if (e.target.id === 'afwezigForm') { const v = $('#afVan').value, w = $('#afTot').value; if (v && w && w >= v) zetAfwezig(v, w); else toast('Kies een einddatum op of na de begindatum'); return; }
+  if (e.target.id === 'weekSprong') { const n = +$('#wsNr').value; const k = B.kalender.weken.find(k => k.w === n); if (k) paletWeek(k.datum); else toast('Lesweek ' + ($('#wsNr').value || '?') + ' bestaat niet; kies 1 t/m ' + B.kalender.weken[B.kalender.weken.length - 1].w); return; }
   if (e.target.id === 'krapForm') { const g = e.target.dataset.g; const R = ruimte(g).find(d => d.id === e.target.dataset.id); if (R && krapKeuze) voerKrapUit(R, krapKeuze); return; }
   if (e.target.id === 'ankerForm') { const g = e.target.dataset.g; const a = ankersVan(g).find(x => x.id === e.target.dataset.id); const reden = ($('#avReden') || {}).value || ''; if (!a || !$('#avUur') || !reden.trim()) { toast('Geef een korte reden'); return; }
     const id = verplaatsAnker(g, a, $('#avUur').value, reden.trim()); if (id) { ankerOpen = ''; bewaar(); toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id)); } return; }
@@ -3073,7 +3087,7 @@ document.addEventListener('submit', e => {
   if (e.target.id === 'pzForm') { const T = [...e.target.querySelectorAll('[name=tot]')].map(x => x.value); S.pauzes = [...e.target.querySelectorAll('[name=van]')].map((x, i) => ({ van: x.value.replace(/^0/, ''), tot: (T[i] || '').replace(/^0/, '') })).filter(p => p.van && p.tot && minuten(p.tot) > minuten(p.van)); bewaar(); toast('Pauzes opgeslagen'); return; }
   if (e.target.id === 'kForm') { bewaarTaakBewerk(new FormData(e.target)); return; }
   if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; const lt = leesTaak(titel, $('#tD').value); if (lt.fout) { toast(lt.fout); return; } const rp = rolUitKeuze(titel, $('#tB').value, $('#tR').value, $('#tP').value); if (lt.afspraak && lt.plan) { taakUitPalet(lt, rp); return; } (S.taken = S.taken || []).push(zetRol({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }, rp)); bewaar(); return; }
-  if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel || !d) return; const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
+  if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel || !d) return; if (d < vandaag()) { toast(`${fmtD(d)} ligt in het verleden. Kies een datum vanaf vandaag; een oude activiteit staat niet in de lijst`); return; } const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
   if (e.target.id === 'sForm') { const titel = $('#sT').value.trim(), d = $('#sD').value; const f = sTaakFout(titel, d); if (f) { toast(f); $(titel ? '#sD' : '#sT').focus(); return; }
     S.sectieExtra.push(zetRol({ id: 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d, titel, soort: 'taak', taak: true }, rolUitKeuze(titel, 'sectie', $('#sR').value, $('#sP').value))); bewaar(); toast(`${kort(titel)} staat erbij op ${fmtDJ(d)}`); return; }
   if (e.target.id === 'sEdit') { const k = sEigen(e.target.dataset.id); if (!k) return; const titel = $('#seT').value.trim(), d = $('#seD').value; const f = sTaakFout(titel, d, k.d); if (f) { toast(f); $(titel ? '#seD' : '#seT').focus(); return; }
