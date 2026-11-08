@@ -2910,7 +2910,7 @@ document.addEventListener('click', async e => {
   if (D.kompas != null) { kompasOpen(); return; }
   if (D.klasopen) { klasOpen = D.klasopen; klasScroll = true; const h = 'jaar/' + encodeURIComponent(D.klasopen); if (location.hash.slice(1) !== h) location.hash = h; else render(); return; }
   if (D.klas) { const i = D.klas.indexOf('|'); const w = D.klas.slice(0, i), g = D.klas.slice(i + 1); klasOpen = null;
-    if (w === 'opslaan') { const terug = foto(); const t = lijstOpslaan(g, $('#bmLijst').value); bewaar(); toast(t, terug); } else render(); return; }
+    if (w === 'opslaan') { if (!bmLijstOk(bmParse($('#bmLijst').value))) return; const terug = foto(); const t = lijstOpslaan(g, $('#bmLijst').value); bewaar(); toast(t, terug); } else render(); return; }
   if (D.colopslaan != null) { const terug = foto(); const L = collegaParse(($('#colLijst') || {}).value || ''); colMis = L.mis; AP.collegas = L.slice(); apBewaar(); render();
     toast(`${AP.collegas.length} collega's opgeslagen op dit apparaat${colMis.length ? `. ${colMis.length === 1 ? 'Eén regel lukte' : colMis.length + ' regels lukten'} niet; die staan onder de lijst.` : ''}`, terug); return; }
   if (D.rgaf) { const uid = decodeURIComponent(route.arg[0] || ''); const s = route.arg[1] || vandaag(); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
@@ -3113,16 +3113,18 @@ function bmVolgorde(T, lijst) { const ids = lijst.map(x => x.id); const v = (T.v
 function bmParse(txt) { // Magister: één leerling per regel, kolommen met tabs; nummers, klascodes en een datum vallen weg
   return String(txt).split(/\r?\n/).filter(r => !r.split('\t').some(x => /^(nr\.?|nummer|naam|leerlingen|leerling|achternaam|roepnaam|voornaam|tussenvoegsel|stamnummer|klas|groep)$/i.test(x.trim()))).map(r => {
     r = r.replace(/(^|\s)\d{1,2}[-\/.]\d{1,2}[-\/.](\d{4}|\d{2})(?=\s|$)/g, '$1').replace(/(^|\s)\d{4}-\d{2}-\d{2}(?=\s|$)/g, '$1');
-    return r.split('\t').map(x => x.trim()).filter(x => x && !/^\d+$/.test(x) && !/^[a-z]{0,2}\d[a-z0-9]{0,3}$/i.test(x)).join(' ').replace(/\s+/g, ' ').trim(); })
+    return r.split('\t').map(x => x.trim()).filter(x => x && !/^\d+$/.test(x) && !/^[a-z]{0,2}\d[a-z0-9]{0,3}$/i.test(x)).join(' ').replace(/\s+/g, ' ').trim()
+      .replace(/(^|\s)\(?\d{3,}\)?(?=\s|$)/g, '$1').replace(/^\d{1,3}[.)]?\s+/, '').replace(/\s+\(?[a-z]{0,2}\d[a-z0-9]{0,3}\)?$/i, '').replace(/^\(?[a-z]{0,2}\d[a-z0-9]{0,3}\)?\s+/i, '').trim(); }) // ook zonder tabs: stamnummer, lijstnummer en klascode (h3a, (h3a)) vooraan of achteraan
     .filter(naam => naam && !/^(naam|leerling|leerlingen|klas|groep)\b/i.test(naam) && !/\b(roepnaam|voornaam|achternaam|tussenvoegsel|stamnr|stamnummer|leerlingnummer|geboortedatum)\b/i.test(naam)); // kopregels
 }
+const bmLijstOk = namen => { const w = BMR.lijstWaarschuwing(namen); return !w.length || confirm(`Let op, deze regels vallen op:\n\n${w.slice(0, 8).join('\n')}${w.length > 8 ? `\n… en ${w.length - 8} meer` : ''}\n\nToch opslaan?`); };
 function lijstOpslaan(g, txt) { // namen in S.beoord.lijsten (gaat mee met synchroniseren); bekende namen houden hun id en dus hun scores
   const oud = [...(S.beoord.lijsten[g] || []), ...((S.beoord.weg || {})[g] || [])]; const rij = bmParse(txt);
   S.beoord.lijsten[g] = rij.map((naam, i) => oud.find(o => o.naam === naam) || { id: 'l' + Date.now().toString(36) + i, naam });
   return `${rij.length} leerlingen opgeslagen`;
 }
 function lijstKaart(g, lijst) {
-  return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de lijst uit Magister en plak hem hieronder, één leerling per regel. Nummers en klascodes haalt Lesdag er zelf uit. De namen staan op dit apparaat en, met synchroniseren aan, op de server achter je login.</p>
+  return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de lijst uit Magister en plak hem hieronder, één leerling per regel. Nummers en klascodes haalt Lesdag er zelf uit; dubbele of vreemde namen meldt Lesdag voor het opslaan. De namen staan op dit apparaat en, met synchroniseren aan, op de server achter je login.</p>
     <textarea id="bmLijst" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
     <div class="knoppen"><button class="btn hoofd" data-klas="opslaan|${esc(g)}">Opslaan</button><button class="btn" data-klas="dicht|${esc(g)}">Annuleren</button></div></div>`;
 }
@@ -3183,7 +3185,7 @@ function bmStatusVervers() { const el = document.getElementById('bmStatus'); if 
 
 /* panelen */
 function bmLijstKaart(g, lijst) {
-  return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de namen uit Magister en plak ze hieronder, één leerling per regel. Nummers en klascodes haalt de app er zelf uit. De namen staan op dit apparaat en, met synchroniseren aan, op de server achter je login. De cijferkolom voor Magister volgt de volgorde van deze lijst.</p>
+  return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de namen uit Magister en plak ze hieronder, één leerling per regel. Nummers en klascodes haalt de app er zelf uit; dubbele of vreemde namen meldt de app voor het opslaan. De namen staan op dit apparaat en, met synchroniseren aan, op de server achter je login. De cijferkolom voor Magister volgt de volgorde van deze lijst.</p>
     <textarea id="bmLijst" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
     <div class="knoppen"><button class="btn hoofd" data-bm="lijstopslaan">Opslaan</button>${lijst.length ? '<button class="btn" data-bm="dicht">Annuleren</button>' : ''}</div></div>`;
 }
@@ -3480,7 +3482,7 @@ document.addEventListener('click', async e => {
       const wie = vol.filter(id => BMR.eind(m, L, T, id).d != null); if (!wie.length) { toast('Er is nog niemand met een cijfer'); return; } toast('Bladen maken…'); const f = []; for (const id of wie) f.push({ naam: bestand(id), blob: await BMPDF.blad(bmBladInfo(m, g, T, L, id, nm(id))) });
       bmDownload(bmBestand(m, g, `feedbackbladen${L === T ? '' : ' ' + L.naam}.zip`), await BMPDF.zip(f)); toast(wie.length + ' feedbackbladen gedownload'); } catch (err) { console.warn(err); toast('Het feedbackblad maken lukt niet'); } return; }
   if (D.bm === 'dicht') { bmPaneel = null; render(); return; }
-  if (D.bm === 'lijstopslaan') { const namen = bmParse($('#bmLijst').value); if (!namen.length) { toast('Er staan geen namen in het veld'); return; }
+  if (D.bm === 'lijstopslaan') { const namen = bmParse($('#bmLijst').value); if (!namen.length) { toast('Er staan geen namen in het veld'); return; } if (!bmLijstOk(namen)) return;
     S.beoord.weg = S.beoord.weg || {}; const v = BMR.vergelijkLijst(namen, [...lijst, ...S.beoord.weg[g] || []]);
     if (v.rij.some(u => !u.id) && v.vrij.length) { bmKoppel = v; bmPaneel = 'koppel'; render(); return; }
     bmLijstOpslaan(g, v.rij); return; }
