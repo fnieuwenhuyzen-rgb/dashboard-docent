@@ -44,6 +44,15 @@ is('komma', R.leesCijfer('7,5'), 7.5); is('tien', R.leesCijfer('10'), 10); is('t
   is('exact', u.rij[0].id, 'a'); is('hoofdletters', u.rij[1].id, 'b'); is('accenten', u.rij[3].id, 'd'); is('nieuw', [u.rij[4].id, u.rij[4].voorstel], [null, null]);
   const v = R.vergelijkLijst(['De Vries, Pieter'], oud); is('volgorde omgedraaid', v.rij[0].voorstel, 'b');
   const w = R.vergelijkLijst(['Twee, Tom', 'Twee, Tom'], [{ id: 'p', naam: 'Twee, Tom' }, { id: 'q', naam: 'Twee, Tom' }]); is('dubbele naam twee ids', w.rij.map(x => x.id), ['p', 'q']); }
+// bevinding 14: broers en zussen krijgen niet hetzelfde voorstel
+{ const oud = [{ id: 'a', naam: 'Jansen, Anna' }];
+  const x = R.vergelijkLijst(['Jansen, Piet', 'Jansen, Pim'], oud); is('twee nieuwe namen, één oude: geen dubbel voorstel', x.rij.map(r => r.voorstel).filter(Boolean).length <= 1, true);
+  const y = R.vergelijkLijst(['Jansen, Anne'], oud); is('typfout: wel een voorstel', y.rij[0].voorstel, 'a');
+  const oud2 = [{ id: 'a', naam: 'Jansen, Anna' }, { id: 'b', naam: 'Jansen, Anja' }]; const z = R.vergelijkLijst(['Jansen, Anka'], oud2); is('twee even goede kandidaten: geen voorstel', z.rij[0].voorstel, null); }
+// bevinding 13: waarschuwing bij dubbele en vreemde namen
+is('waarschuwing: schoon', R.lijstWaarschuwing(['Jansen, Anna', 'De Vries, Pieter']), []);
+is('waarschuwing: dubbel', R.lijstWaarschuwing(['Jansen, Anna', 'jansen, anna']).length, 1);
+is('waarschuwing: vreemd', R.lijstWaarschuwing(['12 x', 'x', 'Ömer Yılmaz', "D'Hondt, Jan-Willem"]).length, 2);
 // plakken uit Excel
 { const lijst = [{ id: 'a', naam: 'Anna Jansen' }, { id: 'b', naam: 'Bram de Boer' }, { id: 'c', naam: 'Cas Dijk' }];
   const breed = 'ID\tBegintijd\tNaam\tAnna Jansen\tBram de Boer\tCas Dijk\tDirk Niemand\n1\t2-11\tAnna Jansen\t10\t7\t8,5\t6\n2\t2-11\tBram de Boer\t8\t\t7\t\n3\t2-11\tCas Dijk\t6\tgoed\t\t';
