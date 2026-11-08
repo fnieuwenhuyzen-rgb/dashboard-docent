@@ -1,0 +1,16 @@
+# Tests zonder browser bij elke push en pull request. De schermtest draait niet in CI (geen browser nodig voor deze stappen);
+# lokaal draai je alles met: node tools/test-alles.js
+name: test
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      # Gegevens vergeleken met de vorige stand van de branch: minder sectietaken, formulieren of presentaties dan voorheen faalt.
+      - run: node tools/test-alles.js --zonder-browser --tegen=HEAD~1

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Lesdag pre-commit: controleert de gegevensbestanden die live gaan (zie tools/controleer-gegevens.js).
+# Aanzetten (eenmalig, in de hoofdmap van de repo):  node tools/zet-hook-aan.js
+# Bewust minder erin? LESDAG_AANTALLEN_OK=1 git commit ...   Overslaan kan met git commit --no-verify (liever niet).
+dir="$(git rev-parse --show-toplevel)"
+NODE="node"
+command -v node >/dev/null 2>&1 || { [ -x "$LOCALAPPDATA/Programs/node/node.exe" ] && NODE="$LOCALAPPDATA/Programs/node/node.exe"; }
+# Alleen als er gegevens in de commit zitten
+git diff --cached --name-only | grep -qE '^(public/data/(basis|beoordeling)\.json|bron/leergang-data\.json)$' || exit 0
+"$NODE" "$dir/tools/controleer-gegevens.js" --staged
