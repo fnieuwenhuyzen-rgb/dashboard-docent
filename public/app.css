@@ -256,6 +256,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 /* notities en balk */
 .les .notities{display:none;margin:0 max(20px,5vw) .5rem;padding:.6rem .9rem;background:#fff;color:#241c2b;border-radius:10px;font-family:var(--lees);font-size:1.05rem;line-height:1.35}
 .les .notities.open{display:block}.les .notities b{font-family:var(--lees);color:#5B247F;margin-right:.4rem}
+.les .notities{max-height:38vh;overflow:auto}.sp-tekst h4{margin:.7rem 0 .15rem;font:700 .8rem var(--lees);text-transform:uppercase;letter-spacing:.06em;color:#5B247F}.sp-tekst h4:first-child{margin-top:.2rem}.sp-tekst p{margin:.2rem 0}.sp-vragen{margin:.1rem 0;padding-left:1.1rem}.sp-vragen li{margin:.25rem 0}.sp-vragen li b{display:block;color:inherit;margin:0}.sp-vragen li span{display:block;color:#5a4a68}.rg-spreker{max-height:48vh;overflow:auto}.rg-spreker .sp-tekst h4{color:var(--paars)}
 .les .lbalk{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;padding:.55rem max(20px,env(safe-area-inset-right,0px)) calc(.55rem + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));background:#0f0b14;font-family:var(--lees)}
 .les .lbalk .sp{flex:1}.les .lbalk .waar{color:#8f8099;font-size:.95rem;margin:0 .4rem}
 .les .lbalk button,.les .lbalk a{background:transparent;border:1px solid #4a3a58;color:#f6f1fa;border-radius:6px;padding:.4rem .8rem;font-family:var(--lees);font-size:1rem;cursor:pointer;text-decoration:none}

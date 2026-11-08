@@ -1,6 +1,6 @@
 // Zet de uitgewerkte lesinhoud uit de deckbestanden (schema: tools/inhoud-decks-LEESMIJ.md) in public/data/basis.json en bron/leergang-data.json.
 // Gebruik: node tools/zet-decks-in-leergang.js [--droog]
-// Koppeling op het veld koppel, niet op lestitel. Sprekersnotities (notitie) blijven in de decks: de lesmodus toont ze niet. Mag vaker draaien; draai het ook na merge-inhoud.js --force.
+// Koppeling op het veld koppel, niet op lestitel. Sprekersnotities (notitie) gaan niet naar basis.json maar naar public/data/notities.json via tools/zet-notities.js (draai die ook). Mag vaker draaien; draai het ook na merge-inhoud.js --force.
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 const droog = process.argv.includes('--droog');

@@ -2011,10 +2011,13 @@ function viewRegie() {
   }
   const sl = RG.slides[RG.i] || {};
   const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
+  if (!NOT) notitiesLaad().then(j => { if (j && route.naam === 'regie') render(); });
+  const spreek = NOT && x && x.item ? notHtml(x.item, les(x.item), sl, RG.slides.slice(0, RG.i).filter(y => y.k === 'fase').length) : '';
   return `<div class="kop"><div><p class="eyebrow">Regie · alleen op dit scherm</p><h1>${esc(RG.groep)} · ${esc(RG.titel)}</h1><div class="sub">${esc(RG.start)}–${esc(RG.eind)}</div></div><div class="knoppen"><button class="btn" data-rg="sluit">Bord sluiten</button></div></div>
   <div class="rg"><div class="kaart"><p class="eyebrow">Op het bord</p><h2>${esc(slideNaam(sl))}</h2>
     ${sl.min ? `<div class="rg-klok ${RG.left <= 0 ? 'over' : RG.left <= 120 && RG.tot >= 300 ? 'bijna' : ''}" id="rgKlok"><b id="rgTijd">${LESMODUS.timerTekst(RG.left)}</b><span>${RG.left <= 0 ? 'Tijd · volgende fase' : RG.loopt ? 'loopt' : 'staat stil'}</span></div>${RG.krap ? `<p class="rg-krap">${esc(RG.krap)}</p>` : ''}` : ''}
     ${sl.docent ? `<div class="rg-notitie"><b>Alleen jij ziet dit</b>${esc(sl.docent)}</div>` : ''}
+    ${spreek ? `<div class="rg-notitie rg-spreker"><b>Sprekersnotities · alleen jij ziet dit</b>${spreek}</div>` : ''}
     <div class="rg-knoppen"><button class="btn" data-rg="vorige">‹ Vorige</button><button class="btn hoofd" data-rg="volgende">Volgende ›</button>${sl.min ? `<button class="btn" data-rg="timer">${RG.loopt ? 'Klok stil' : 'Klok aan'}</button><button class="btn" data-rg="plus">+1 min</button>` : ''}</div>
     <p class="sub" style="margin-top:.6rem">Pijltjes en de presenter werken ook als dit venster voorop staat · t = klok</p></div>
   <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
@@ -2740,6 +2743,21 @@ function krapZin(P) { // alleen voor jou: jouw kaart, de onderbalk en de regie
   const delen = Object.keys(P.krap.min).map(k => { const y = P.slides[+k - (P.bord ? 1 : 0)]; return y ? `${(LESMODUS.SOORT[y.soort] || { naam: 'fase' }).naam.toLowerCase()} ${P.krap.min[k]} min (was ${y.min})` : ''; }).filter(Boolean);
   return delen.length ? `Je hebt nog ${P.krap.beschikbaar} min, gepland ${P.krap.gepland}: ${delen.join(', ')}.` : '';
 }
+/* sprekersnotities: data/notities.json (tools/zet-notities.js), los van basis.json en pas geladen als je een les geeft of de regie opent.
+   Het bordvenster laadt het bestand nooit en stuurt er niets van door: alleen het venster van de docent toont de notities. */
+let NOT = null, notLaad = null;
+function notitiesLaad() {
+  if (NOT) return Promise.resolve(NOT);
+  if (!notLaad) notLaad = fetch('data/notities.json').then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))).then(j => { NOT = j; return j; }).catch(() => null).then(j => { notLaad = null; return j; });
+  return notLaad;
+}
+const notHtml = (item, l, sl, fi) => NOT && item && sl ? LESMODUS.notitieHtml(NOT[item.id], sl, fi, l) : '';
+function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwerken, de timer blijft ongemoeid
+  const P = LES; if (!P || P.bord) return; const sl = P.slides[P.i]; const el = $('#notities'); if (!el || !sl) return;
+  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '';
+  el.innerHTML = d + nh; const b = document.querySelector('#les [data-l="notities"]'); if (b) b.hidden = !(d || nh);
+  el.classList.toggle('open', !!(P.notities && (d || nh)));
+}
 function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de regie zit in het andere venster
   s = s || vandaag(); const p = planning(s, s)[s];
   if (!p || p.reden || !p.uren.length) { toast('Geen lessen op deze dag'); return; }
@@ -2762,6 +2780,7 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
     if (pl.klok && pl.i === LES.i + (bord ? 1 : 0) && slides[LES.i].k === 'fase') LES.herstel = { left: pl.eind ? Math.round((pl.eind - Date.now()) / 1000) : pl.left, tot: pl.tot, loopt: !!pl.eind }; }
   if (!bord) try { sessionStorage.setItem('lesdag-lesopen', x.u.id + '|' + s); } catch (e) {}
   $('#les').hidden = false; document.body.style.overflow = 'hidden'; waak(true); toonSlide();
+  if (!bord && !NOT) notitiesLaad().then(() => notVul());
 }
 function toonSlide() {
   const P = LES; const sl = P.slides[P.i]; stopTimer();
@@ -2772,14 +2791,15 @@ function toonSlide() {
   if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
   else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
   else { P.left = 0; P.tot = 0; }
+  const notInh = P.bord ? '' : (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
   $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
   <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
   ${fklok ? timerHtml() : ''}
   ${fklok ? `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd · volgende fase</div>` : ''}
-  <div class="notities ${P.notities && sl.docent && sl.docent !== true ? 'open' : ''}" id="notities">${sl.docent && sl.docent !== true && !P.bord ? `<b>Docent</b> ${esc(sl.docent)}` : ''}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${sl.docent && sl.docent !== true && !P.bord ? `<button data-l="notities" aria-pressed="${P.notities}">notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
+  <div class="notities ${P.notities && notInh ? 'open' : ''}" id="notities">${notInh}</div>
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
   if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
   bordZeg(); plekBewaar();
   LESKLOK.tik(); // de band en de resttijd staan meteen goed op de nieuwe dia
