@@ -9,6 +9,8 @@ Eén opdracht draait alles: `node tools/test-alles.js` (±40 s; `--snel` ±20 s;
 | Rekenregels, lesklok, agendafeed, samenvoegen | `beoordeling/test-reken.js`, `test-lesklok.js`, `test-agendafeed.js`, `test-sync.js` | rekenfouten |
 | Schermen | `test-schermen.js` | "Dit scherm lukt nu niet", consolefouten, horizontale overloop; 14 schermen × 7 tijden × 1280/375 px, met verzonnen rooster |
 
+Routes door de lesmodus (niet in `test-alles`, ±17 min voor alle lessen, `--snel` ±4 min): `node tools/test-routes-lesmodus.js [--leergang=vwo4] [--onderdeel=6] [--rapport=pad]`. Loopt elke les van elke leergang door op 1280×800 en 1920×1080, plus kapotte lesvelden, timers, lesklok op alle tijden, afronden en regie met bord in twee vensters. Lesinhoud die niet past komt in het rapport, niet in de exitcode.
+
 ## Eenmalig: Playwright buiten de repo
 
 ```
