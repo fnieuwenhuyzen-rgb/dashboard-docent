@@ -764,7 +764,7 @@ async function recMail(soort, aid, mid) {
 }
 function dagItems(s, p) {
   const t = vandaag(); const items = []; const heleDag = []; const G = geplandeSleutels();
-  const werkdag = !(p.reden && /vakantie|weekend/i.test(p.reden)) && !S.afwezig[s]; // afwezig: geen koffie en geen werkblokken
+  const werkdag = !(p.reden && /vakantie|weekend|lesweek/i.test(p.reden)) && !S.afwezig[s]; // afwezig: geen koffie en geen werkblokken
   if (werkdag) items.push({ key: 'start', van: AG.van, tot: AG.werkVan, soort: 'start', titel: 'Koffie en opstarten' });
   for (const x of p.uren || []) {
     const l = x.item ? les(x.item) : null; const verleden = s < t && !x.klaar;
@@ -826,7 +826,7 @@ function zetBanen(items) { // overlappende items naast elkaar (vrije blokken ove
 }
 /* de zin boven Dag: kort, wat de dag vraagt (regels: handboek/nu-zinnen.md) */
 function dagZin(s, p, A) {
-  if (!A.werkdag) return `${cap(p.reden || 'Vrij')}.`;
+  if (!A.werkdag) return buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}.`;
   const L = A.items.filter(it => it.soort === 'les' || it.soort === 'klaar'); const V = A.items.filter(it => it.soort === 'uitval').length;
   const af = A.items.filter(it => ['toets', 'rooster', 'sectie', 'afspraak'].includes(it.soort) && it.sub !== 'in je pauze'); const kr = A.items.find(it => it.soort === 'koor');
   const naam = it => `${it.soort === 'toets' ? (it.z && it.z.dienst ? 'surveillance ' : 'de toets ') : ''}${titel(it.titel)}${it.lokaal ? ' in ' + it.lokaal : ''}`;
@@ -1502,7 +1502,7 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
   if (kIt) return kijkZin(s, kIt, nu);
   const it = m.it; const x = m.x;
   switch (m.m) {
-    case 'vrijedag': return { lab: '', zin: `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
+    case 'vrijedag': return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
     case 'stil': return { lab: '', zin: S.afgesloten[s] ? 'Je dag is afgesloten. Morgen staat klaar.' : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
     case 'start': { const L = lesUren(p); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
       return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan),
@@ -1756,8 +1756,9 @@ function stilKaart(s) {
     ${S.goed[s] ? `<blockquote class="nu-goed">${esc(S.goed[s])}</blockquote>` : ''}
     <!--dok-->${dicht ? `<button class="btn" data-heropen="${s}">Toch nog iets doen</button>` : '<button class="btn hoofd" data-kijk="afsluiten">Dag afsluiten</button>'}<button class="btn" data-dag="${volgendeLesdag(s, 1)}">Morgen bekijken</button><!--/dok--></div>`;
 }
+const buitenJaar = p => p.reden === 'na de laatste lesweek' ? { kop: 'Het schooljaar zit erop', zin: 'Het schooljaar zit erop. Lesdag heeft tot het nieuwe schooljaar niets voor je.' } : p.reden === 'nog geen lesweek' ? { kop: 'Het schooljaar begint nog', zin: 'Het schooljaar is nog niet begonnen. Lesdag heeft tot de eerste lesweek niets voor je.' } : null; // zomer: geen werk voorgeschoteld (bevinding 51)
 function vrijeDagKaart(s, p) {
-  return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${esc(cap(p.reden || 'Vrij'))}</h2><p class="lead">Lesdag heeft vandaag niets voor je.</p>
+  return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${esc(buitenJaar(p) ? buitenJaar(p).kop : cap(p.reden || 'Vrij'))}</h2><p class="lead">${buitenJaar(p) ? 'Lesdag heeft tot het ' + (p.reden === 'nog geen lesweek' ? 'begin van het schooljaar' : 'nieuwe schooljaar') + ' niets voor je.' : 'Lesdag heeft vandaag niets voor je.'}</p>
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
 }
 const PZ_WEG = 'lesdag-pauzevraag-weg'; // per apparaat: de kaart is weggeklikt
