@@ -511,12 +511,12 @@ function benodigd(l) {
 
 /* ---------- weergave: algemeen ---------- */
 const SVG = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
-const ICO = { nu: SVG('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'), vandaag: SVG('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M8 14h3"/>'),
+const ICO = { beoordelen: SVG('<path d="M4.5 7l1.8 1.8L9.5 5.5M4.5 16l1.8 1.8 3.2-3.3M13 7.5h7M13 16.5h7"/>'), nu: SVG('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'), vandaag: SVG('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M8 14h3"/>'),
   week: SVG('<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M8 10v10M13 10v10M18 10v10"/>'), jaar: SVG('<path d="M3 6h18M3 10h18M3 14h18M3 18h18"/><ellipse cx="15" cy="16" rx="2.4" ry="1.8" transform="rotate(-18 15 16)" fill="currentColor"/>'),
   rooster: SVG('<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9.3h16M4 14.6h16M9.3 4v16M14.6 4v16"/>'), sectie: SVG('<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>'),
   team: SVG('<circle cx="9" cy="9" r="3"/><circle cx="16.5" cy="10" r="2.4"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 19a4 4 0 0 1 7 0"/>'),
   reclame: SVG('<path d="M4 10v4l11 4V6z"/><path d="M15 9.5a3 3 0 0 1 0 5M7 15l1 4h3l-1-3"/>'), instellingen: SVG('<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>'), zoek: SVG('<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>') };
-const ROUTES = [['nu', 'Nu'], ['vandaag', 'Dag'], ['week', 'Week'], ['jaar', 'Jaar'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['team', 'Team'], ['reclame', 'Reclame'], ['instellingen', 'Instellingen']];
+const ROUTES = [['nu', 'Nu'], ['vandaag', 'Dag'], ['week', 'Week'], ['beoordelen', 'Beoordelen'], ['jaar', 'Jaar'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['team', 'Team'], ['reclame', 'Reclame'], ['instellingen', 'Instellingen']];
 function render() {
   document.body.classList.toggle('kompasvenster', route.naam === 'kompas');
   const concert = bmConcertAan(); document.body.classList.toggle('bm-concert', concert);
@@ -3338,8 +3338,19 @@ function bmStreepKlaar(e) { if (!bmStreep || e.pointerId !== bmStreep.id) return
   const T = bmToets(c.m.id, c.g); if (bmSelG) bmZet(c.k, T, 'k+', bmSelG, 'g', w, true); else if (bmSel) bmZet(c.k, T, 'k+', bmSel, null, w, true); }
 document.addEventListener('pointerup', bmStreepKlaar); document.addEventListener('pointercancel', bmStreepKlaar);
 const bmOnderdelen = (m, T) => { if (!T.vast) return m.onderdelen; const uit = []; for (const c of T.vast.crit) { let o = uit.find(x => x.groep === c.groep); if (!o) uit.push(o = { groep: c.groep, stuk: (m.onderdelen.find(x => x.groep === c.groep) || {}).stuk, criteria: [] }); o.criteria.push(c); } return uit; };
+function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daaronder per klas
+  const t = vandaag(); const p = planning(t, t)[t]; const vandaagM = [];
+  for (const x of (p && p.uren) || []) if (x.item && !x.uitval) for (const m of bmVoor(x.item)) if (!vandaagM.some(y => y.m === m && y.g === x.u.groep)) vandaagM.push({ m, g: x.u.groep, u: x.u });
+  const knop = (m, g) => bmRegel(m, g, `${m.toets} · ${m.titel.replace(/^[^:]*:\s*/, '')}`);
+  const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
+  const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b></span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
+  return `<div class="kop"><div><p class="eyebrow">Beoordelen</p><h1>Kies een toets</h1></div></div>
+    <div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
+    ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}`;
+}
 function viewBeoordelen() {
   const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); const g = decodeURIComponent(route.arg[1] || '');
+  if (!route.arg[0]) return viewBeoordelenKeuze();
   if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
   const lijst = S.beoord.lijsten[g] || []; const heeft = lijst.length > 0;
   let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
