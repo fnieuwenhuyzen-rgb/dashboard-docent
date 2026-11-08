@@ -86,6 +86,7 @@
       if (!r.ok) throw new Stop(r.status === 413 ? 'tegroot' : 'fout');
       return r.json();
     }
+    function controleer(doc) { if (app.fouten && app.fouten(doc).length) throw new Stop('kapot'); }
     const haalAlles = async () => { const a = await vraag(''); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc: samen(a.onderdelen) }; };
     const stuur = (basis, gewijzigd, keepalive) => { const body = JSON.stringify({ basis, gewijzigd }); return vraag('', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body, keepalive: !!keepalive && body.length < 60000 }); };
     function meld(e) {
@@ -93,6 +94,8 @@
       if (e.soort === 'offline') app.status('', 'Offline, staat op dit apparaat');
       else if (e.soort === 'login') app.status('fout login', 'Opnieuw inloggen');
       else if (e.soort === 'uit') app.status('', 'Op dit apparaat');
+      else if (e.soort === 'leeg') app.status('fout', 'Die back-up is leeg, er is niets teruggezet');
+      else if (e.soort === 'kapot') app.status('fout', 'Gegevens op de server zijn beschadigd, niets overgenomen');
       else if (e.soort === 'tegroot') app.status('fout', 'Te groot om te synchroniseren, staat op dit apparaat');
       else app.status('fout', 'Server niet bereikbaar, staat op dit apparaat');
     }
@@ -163,7 +166,8 @@
       } catch (e) { meld(e); }
     }
     const backups = async () => (await vraag('?backups=1')).dagen;
-    const backup = async dag => samen((await vraag('?backup=' + encodeURIComponent(dag))).onderdelen);
+    /* een back-up die leeg of beschadigd is mag nooit als staat terugkomen: de app zet hem op al je apparaten neer */
+    const backup = async dag => { const d = samen((await vraag('?backup=' + encodeURIComponent(dag))).onderdelen); if (leeg(d)) throw new Stop('leeg'); controleer(d); return d; };
     return { nu, later, gewijzigd, aanzetten, start, backups, backup, meld, aan: () => vlag.aan() };
   }
 
