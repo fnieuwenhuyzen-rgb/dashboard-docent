@@ -101,8 +101,19 @@ function vergelijkLijst(namen, oud) {
   const rij = namen.map(naam => ({ naam, id: null, voorstel: null }));
   for (const u of rij) { const x = vrij.find(o => o.naam === u.naam); if (x) u.id = neem(x).id; }
   for (const u of rij) if (!u.id) { const x = vrij.find(o => kaal(o.naam) === kaal(u.naam)); if (x) u.id = neem(x).id; }
-  for (const u of rij) if (!u.id) { const x = besteMatch(u.naam, vrij); if (x) u.voorstel = x.id; }
+  // voorstel alleen bij een duidelijke match: een oude leerling wordt hooguit één keer voorgesteld (aan de beste), en een nieuwe naam met twee even goede kandidaten (broers, zussen) krijgt niets
+  const paren = []; for (const u of rij) if (!u.id) for (const x of vrij) { const q = lijkt(u.naam, x.naam); if (q >= 0.6) paren.push({ u, x, q }); }
+  const duidelijk = p => !paren.some(o => o.u === p.u && o.x !== p.x && o.q >= p.q - 0.05);
+  paren.sort((a, b) => b.q - a.q); const gebruikt = new Set();
+  for (const p of paren) if (!p.u.voorstel && !gebruikt.has(p.x) && duidelijk(p)) { p.u.voorstel = p.x.id; gebruikt.add(p.x); }
   return { rij, vrij };
+}
+// meldingen vóór het opslaan van een geplakte klassenlijst: dubbele namen en regels die geen naam lijken
+function lijstWaarschuwing(namen) {
+  const w = []; const tel = {}; for (const n of namen) { const k = kaal(n); tel[k] = (tel[k] || 0) + 1; }
+  for (const n of namen) { const k = kaal(n); if (tel[k] > 1) { w.push(`Dubbel: ${n}`); tel[k] = 0; } }
+  for (const n of namen) if (/\d/.test(n) || kaal(n).length < 3 || /[^\p{L}\s'’.,()-]/u.test(n)) w.push(`Lijkt geen naam: ${n}`);
+  return w;
 }
 
 /* ---------- plakken uit Excel (Microsoft Forms) ---------- */
@@ -172,6 +183,6 @@ function koppelInlever(bestanden, lijst, T, vast) {
   return uit;
 }
 
-const API = { isPoging, magHerkansen, poging, leesInlever, koppelInlever, rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, leesTabel, leesKlasgenoten };
+const API = { isPoging, magHerkansen, poging, leesInlever, koppelInlever, rond1, fmt, niveauVan, plafondVan, critVoor, veldenVan, critVan, delenVan, groepVan, scoreVan, docentCijfer, klasgenoten, eind, afronden, heropen, kolom, leesCijfer, kaal, lijkt, besteMatch, vergelijkLijst, lijstWaarschuwing, leesTabel, leesKlasgenoten };
 if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.BMR = API;
 })(typeof window !== 'undefined' ? window : globalThis);
