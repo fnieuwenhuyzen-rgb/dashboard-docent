@@ -415,9 +415,17 @@ function uitvalReden(g) { // waarom een klas achterloopt, voor de lijst met afwi
   const L = [y.s]; for (let d = addD(y.s, -1); S.afwezig[d] || dOf(d).getDay() % 6 === 0; d = addD(d, -1)) if (S.afwezig[d]) L.unshift(d);
   return { kort: 'afwezig ' + dagenTekst(L), s: y.s };
 }
+function afwezigPeriode(s) { // alle aaneengesloten afwezige dagen rond s (weekenden zijn een brug)
+  if (!S.afwezig[s]) return [];
+  const L = [s]; const brug = d => S.afwezig[d] || dOf(d).getDay() % 6 === 0;
+  for (let d = addD(s, -1), n = 0; brug(d) && n < 400; d = addD(d, -1), n++) if (S.afwezig[d]) L.unshift(d);
+  for (let d = addD(s, 1), n = 0; brug(d) && n < 400; d = addD(d, 1), n++) if (S.afwezig[d]) L.push(d);
+  return L;
+}
 function zetAfwezig(van, tot) {
+  if (tot > addD(van, 366)) { toast('Kies een periode van hooguit een jaar; maak bij langer twee periodes'); return; }
   const P = planBasis(); const dagen = [];
-  for (let s = van; s <= tot && dagen.length < 40; s = addD(s, 1)) { if (dOf(s).getDay() % 6 === 0) continue; dagen.push(s); const rec = S.afwezig[s] = S.afwezig[s] || { herstel: {} };
+  for (let s = van; s <= tot; s = addD(s, 1)) { if (dOf(s).getDay() % 6 === 0) continue; dagen.push(s); const rec = S.afwezig[s] = S.afwezig[s] || { herstel: {} };
     for (const g of Object.keys(P.slots)) { const lg = leergangVan(g); if (!lg) continue; // "op de planning" gezette lessen van deze dag zijn dus niet gegeven
       for (const y of P.slots[g]) { if (y.s !== s || !y.li) continue; const id = lesId(lg, y); const st = status(g, id); if (st.auto) { (rec.herstel[g] = rec.herstel[g] || {})[id] = st; delete S.voortgang[g][id]; } } } }
   afwezigOpen = false; bewaar();
@@ -586,7 +594,7 @@ function viewVandaag() {
     <div class="knoppen"><button class="btn" data-dag="${voor}">‹ ${esc(dagLabel(voor))}</button>${s !== t && voor !== t && na !== t ? `<button class="btn" data-dag="${t}">vandaag</button>` : ''}<button class="btn" data-dag="${na}">${esc(dagLabel(na))} ›</button>
     <button class="btn kaal" data-afwezigopen="" aria-pressed="${afwezigOpen}">Ik ben er niet</button><button class="btn" data-nwnieuw="">+ Nieuw</button>${s === t && !p.reden && p.uren.length ? '<button class="btn hoofd" data-start="">▶ Lesmodus</button>' : ''}</div></div>`;
   if (afwezigOpen) h += afwezigForm(s);
-  if (S.afwezig[s]) h += `<div class="melding info afwezigrij">Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door. <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig</button></div>`;
+  if (S.afwezig[s]) { const per = afwezigPeriode(s); h += `<div class="melding info afwezigrij">${per.length > 1 ? `Je bent afwezig ${dagenTekst(per)} (${per.length} lesdagen). Al je lessen in die periode vervallen en schuiven door.` : 'Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door.'} <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig${per.length > 1 ? ' op deze dag' : ''}</button>${per.length > 1 ? ` <button class="btn klein" data-afwezigperiode="${s}">Hele periode ongedaan</button>` : ''}</div>`; }
   if (!S.rooster.length && !ZC) h += `<div class="kaart" style="margin-bottom:1rem"><h2>Eerst je rooster</h2><p class="lead">Vul één keer je weekrooster in: per lesuur de groep en het lokaal. Daarna staan je lessen hier in de agenda, met wat er klaar moet staan.</p><p><a class="btn hoofd" href="#rooster">Rooster invullen</a></p></div>`;
   const achter = rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
   if (achter.length) h += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
@@ -2872,6 +2880,7 @@ document.addEventListener('click', async e => {
     return;
   }
   if (D.afwezigopen != null) { afwezigOpen = !afwezigOpen; render(); return; }
+  if (D.afwezigperiode) { const per = afwezigPeriode(D.afwezigperiode); afwezigTerug(per); toast(`Je bent er weer ${dagenTekst(per)}; de lessen staan terug`); return; }
   if (D.afwezigterug) { afwezigTerug([D.afwezigterug]); toast('Je bent er weer; de lessen staan terug'); return; }
   if (D.krapopen) { krapOpen = D.krapopen; krapKeuze = ''; render(); return; }
   if (D.krapoptie) { krapKeuze = D.krapoptie; render(); return; }
