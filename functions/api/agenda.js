@@ -15,6 +15,9 @@ export async function onRequest({ request, env }) {
   let email;
   try { email = await whoAmI(request, env); } catch (e) { return json({ fout: "niet ingelogd" }, 401); }
   if (email !== String(env.EIGENAAR || env.DEV_EMAIL).toLowerCase()) return json({ fout: "geen toegang" }, 403);
+  // Een andere website mag hier niets wijzigen: een POST gaat zonder CORS-vooronderzoek en de Access-cookie kan meekomen.
+  const herkomst = request.headers.get("Origin");
+  if (request.method !== "GET" && herkomst && herkomst !== new URL(request.url).origin) return json({ fout: "geen toegang" }, 403);
   const db = env.AGENDA;
   await db.prepare(TABEL).run();
   const stand = async () => {
