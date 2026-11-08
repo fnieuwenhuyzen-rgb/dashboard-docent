@@ -426,6 +426,7 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 .opslagfout{position:sticky;top:var(--lk-h,0px);z-index:50;background:#8C2332;color:#fff;padding:.6rem 1rem;font-family:var(--lees)}
 .opslagfout .btn{margin-left:.5rem}
 .bm-status{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin:.4rem 0 0;font-family:var(--lees);font-size:.85rem}
+.bm-status .bm-vastuitleg{flex-basis:100%;color:var(--muted)}
 .chip.rood{background:#8C2332;color:#fff}
 .bm-rij{display:flex;gap:.3rem;align-items:center;flex-wrap:wrap}
 .bm-knoppen button{touch-action:manipulation}
