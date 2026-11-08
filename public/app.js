@@ -427,9 +427,17 @@ function afwezigTerug(dagen) {
   for (const s of dagen) { const rec = S.afwezig[s]; if (!rec) continue; for (const [g, m] of Object.entries(rec.herstel || {})) Object.assign(S.voortgang[g] = S.voortgang[g] || {}, m); delete S.afwezig[s]; }
   bewaar();
 }
+function toetsWeken(a) { // lesweken waar de toets staat of stond: het uur waar hij nu op staat (verplaatst, of het uur uit de leergang) en de datum in basis.json (besluit Frans)
+  const w = []; const y = a.slot || a.grens; if (y) w.push(y.w);
+  const d = a.t.datum; const k = d && B.kalender.weken.find(k => k.datum > d || addD(k.datum, 6) >= d); if (k) w.push(k.w);
+  return w;
+}
+function verplaatsGrens(g, a) { // [eerste, laatste] lesweek: de periode (vanaf de week uit de leergang), uitgebreid tot waar de toets nu of volgens basis.json staat, zodat die plek altijd een keuze blijft
+  const w = toetsWeken(a); return [Math.min(a.item.w, ...w), Math.max(periodeEind(leergangVan(g), a), ...w)];
+}
 function verplaatsUren(g, a) { // uren waar een toets heen kan (keuze Frans 5-11): niet vóór de week waarin de leergang hem zet, niet na het einde van zijn periode (ook een PTA-toets), zodat de tijd tussen lesstof en toets klein blijft
-  const t = vandaag(); const lg = leergangVan(g); const eind = periodeEind(lg, a);
-  return (planBasis().slots[g] || []).filter(y => y.s > t && y.w >= a.item.w && y.w <= eind && !y.anker && !y.geplandUit && !isUitval(y.s, y.u));
+  const t = vandaag(); const [van, eind] = verplaatsGrens(g, a);
+  return (planBasis().slots[g] || []).filter(y => y.s > t && y.w >= van && y.w <= eind && !y.anker && !y.geplandUit && !isUitval(y.s, y.u));
 }
 function verplaatsAnker(g, a, sleutel, reden) { // lessen van dezelfde toets (P2, P2 vervolg) gaan samen mee
   const [s, uur] = sleutel.split('|'); const lg = leergangVan(g); const oud = a.slot || a.grens;
@@ -1361,7 +1369,7 @@ function ankerForm(g, a) { // een toets verplaatsen: Frans beslist, met een rede
 }
 function verplaatsVelden(g, a, uren) {
   const lg = leergangVan(g);
-  if (!uren.length) return `<p class="lead">Er is geen lesuur meer vrij tussen lesweek ${a.item.w} en het einde van de periode (lesweek ${periodeEind(lg, a)}).</p>`;
+  if (!uren.length) return `<p class="lead">Er is geen lesuur meer vrij tussen lesweek ${verplaatsGrens(g, a)[0]} en lesweek ${verplaatsGrens(g, a)[1]} (einde van de periode).</p>`;
   return `<div class="rij"><label>Naar <select id="avUur">${uren.slice(0, 10).map(y => `<option value="${esc(y.s + '|' + y.u.id)}">${esc(fmtD(y.s))} ${esc(y.u.start)}</option>`).join('')}</select></label><label style="flex:3 1 16rem">Reden (voor de lijst met afwijkingen) <input id="avReden" required placeholder="Bijvoorbeeld: twee lessen uitgevallen"></label></div>`;
 }
 function krapOpties(R) {
