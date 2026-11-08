@@ -34,6 +34,7 @@ Nu begint met één zin die zegt wat er nu telt. De zin komt uit rooster, leerga
 | Dag afsluiten | Dag afsluiten · een paar minuten | Tijd om af te sluiten. 3 dingen staan nog open; elk krijgt een moment. |
 | Na het afsluiten | (geen) | Je dag is afgesloten. Morgen staat klaar. |
 | Vrije dag | (geen) | Herfstvakantie. Vandaag heeft Lesdag niets voor je. |
+| Na het schooljaar | (geen) | Het schooljaar zit erop. Lesdag heeft tot het nieuwe schooljaar niets voor je. |
 | Ander moment bekeken (‹ ›) | Ander moment · 9:20–10:10 · v3 | v3: Songbox 1. Nog niet afgerond. |
 
 Schuingedrukt = alleen als het van toepassing is.
