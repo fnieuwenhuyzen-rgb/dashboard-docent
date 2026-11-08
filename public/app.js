@@ -1163,7 +1163,7 @@ function agPaneel(s, p, A, sel) {
   if (!it) return `<div class="kaart"><p class="lead">${A.werkdag ? 'Niets in de agenda op deze dag.' : 'Vrij.'}</p></div>`;
   const t = vandaag(); const tijd = it.van != null ? `${hm(it.van)}–${hm(it.tot)}` : '';
   if (it.x) return uurKaart(s, it.x, s === t && nuMin() >= it.van - 5 && nuMin() < it.tot);
-  if (it.soort === 'start') { const eerste = A.items.find(x => x.soort === 'les'); return `<div class="kaart"><p class="eyebrow">${tijd}</p><h2>Koffie en opstarten</h2><p class="lead">${eerste ? `Eerste les om ${hm(eerste.van)}: ${esc(eerste.titel)}.` : 'Geen lessen vandaag.'} Om 8:30 begint je eerste werkblok.</p></div>`; }
+  if (it.soort === 'start') { const eerste = A.items.find(x => x.soort === 'les'); return `<div class="kaart"><p class="eyebrow">${tijd}</p><h2>Koffie en opstarten</h2><p class="lead">${eerste ? `Eerste les om ${hm(eerste.van)}: ${esc(eerste.titel)}.` : 'Geen lessen vandaag.'}${startDaarna(A) ? ' ' + esc(startDaarna(A)) : ''}</p></div>`; }
   if (it.soort === 'vrij') return planKaart(s, p, it);
   if (it.soort === 'pauze' || it.soort === 'rust') return rustKaart(s, it, A, false);
   if (it.koor) return koorKaart(s, it.koor);
@@ -1431,6 +1431,7 @@ function afwijkingenKaart(g) {
 let nuKijk = null; // gekozen blok in de partituur; anders volgt het scherm de klok
 const cap = t => String(t).charAt(0).toUpperCase() + String(t).slice(1);
 const lesUren = p => (p.uren || []).filter(x => x.item && !x.uitval);
+const startDaarna = A => { const it = A.items.filter(x => !['start', 'uitval'].includes(x.soort) && x.tot > AG.werkVan).sort((x, y) => x.van - y.van)[0]; if (!it || it.x || it.soort === 'les') return ''; return `Om ${hm(it.van)} begint ${it.soort === 'vrij' ? 'je eerste werkblok' : it.soort === 'koor' ? 'het koor' : it.soort === 'pauze' ? 'je pauze' : it.soort === 'rust' ? 'een rustblok' : it.titel}.`; }; // wat er na het opstarten komt; bij een les noemt de tekst die al zelf
 const teAfronden = (s, p, nu) => lesUren(p).filter(x => !x.klaar && minuten(x.u.eind) <= nu);
 function moment(s, p, A, nu) {
   if (S.afgesloten[s]) return { m: 'stil' };
@@ -1608,7 +1609,7 @@ function startKaart(s, p, A, nu) {
     ${L[0] ? vorigeRegel(L[0]) : ''}
     ${pauzeTekst(pz) ? `<div class="melding" style="margin-top:.6rem">${esc(pauzeTekst(pz))}</div>` : ''}
     ${collegasJarig(s).length ? `<div class="jarig-rij">${collegasJarig(s).map(felicRij).join('')}</div>` : ''}${weekJarigRij(s)}
-    <p class="lead" style="margin-top:.6rem">Om ${hm(AG.werkVan)} begint je eerste werkblok. Tot die tijd heeft Lesdag niets voor je.</p></div>`;
+    <p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p></div>`;
 }
 function voorLesKaart(s, p, x, nu) {
   const l = les(x.item); const ben = klaarLijst(s, l);
