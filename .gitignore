@@ -1,6 +1,10 @@
 # Lokaal
 .wrangler/
 node_modules/
+# Sleutels nooit in Git
+.dev.vars*
+.env*
+*.pem
 *.log
 Thumbs.db
 .DS_Store
