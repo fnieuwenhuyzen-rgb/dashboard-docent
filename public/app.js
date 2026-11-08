@@ -1925,10 +1925,11 @@ const FELIC_DAGEN = 3; // tot drie dagen na de verjaardag blijft de collega staa
 function jarigDagen(s) { const out = []; for (let d = [addD(volgendeLesdag(s, -1), 1), addD(s, -FELIC_DAGEN)].sort()[0]; d <= s; d = addD(d, 1)) out.push(d); return out; }
 const wanneerJarig = (d, s) => d === s ? 'is vandaag jarig' : 'was ' + (d >= addD(s, -6) ? DAGLANG[dOf(d).getDay()] : fmtD(d)) + ' jarig';
 const felicKey = j => j.d + '|' + j.c.naam; // per verjaardag, niet per dag: gefeliciteerd blijft gefeliciteerd
-function collegasJarig(s) { const D = jarigDagen(s); return (AP.collegas || []).map(c => ({ c, d: D.find(d => c.md === d.slice(5)) })).filter(j => j.d && !AP.felic[felicKey(j)]); }
+const jarigOp = (c, d) => c.md === d.slice(5) || (c.md === '02-29' && d.slice(5) === '02-28' && !(+d.slice(0, 4) % 4 === 0 && (+d.slice(0, 4) % 100 !== 0 || +d.slice(0, 4) % 400 === 0))); // 29 februari: in een jaar zonder schrikkeldag op 28 februari
+function collegasJarig(s) { const D = jarigDagen(s); return (AP.collegas || []).map(c => ({ c, d: D.find(d => jarigOp(c, d)) })).filter(j => j.d && !AP.felic[felicKey(j)]); }
 function collegasDezeWeek(s) { // maandag (of de eerste werkdag van de week): wie is de rest van deze week jarig, ook in het weekend
   if (volgendeLesdag(s, -1) >= maandagVan(s)) return []; const zo = addD(maandagVan(s), 6); const out = [];
-  for (let d = addD(s, 1); d <= zo; d = addD(d, 1)) (AP.collegas || []).forEach(c => { if (c.md === d.slice(5)) out.push({ c, d }); });
+  for (let d = addD(s, 1); d <= zo; d = addD(d, 1)) (AP.collegas || []).forEach(c => { if (jarigOp(c, d)) out.push({ c, d }); });
   return out;
 }
 const voornaam = c => /,/.test(c.naam) ? c.naam.split(',')[1].trim().split(/\s+/)[0] : c.naam.split(/\s+/)[0];
