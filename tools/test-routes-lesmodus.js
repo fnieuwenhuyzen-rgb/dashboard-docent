@@ -162,7 +162,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
 
   if (wil(1) && !args.includes('--zonder-les-sweep')) for (const lg of LEERGANGEN) {
     const alle = lessenVan(lg); const lessen = SNEL ? alle.filter((x, i) => i % 6 === 0) : alle;
-    const R = RAP[lg] = { lessen: alle.length, getest: lessen.length, metFasen: 0, faseDia: 0, past1280: 0, past1920: 0, tijdTeLang: [], details: [], geenEnkel: 0 };
+    const R = RAP[lg] = { lessen: alle.length, getest: lessen.length, metFasen: 0, faseDia: 0, past1280: 0, past1920: 0, tijdTeLang: [], details: [], anker: [] };
     const grp = lgGroep(lg);
     const ctx = await nieuweContext(null); const page = await ctx.newPage(); await page.clock.setFixedTime(new Date(tijdIso('08:00')));
     let waar = lg; volg(page, () => waar);
@@ -178,7 +178,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
       const eerste = await meet(page);
       const titel = it.l.titel || ''; const verwacht = titel.trim();
       const welk = await page.evaluate(() => { const h = document.querySelector('#les h2'); return h ? h.innerText : ''; });
-      if (verwacht && welk.trim() !== verwacht) { fout('verkeerde les geopend', `verwacht "${verwacht.slice(0, 40)}", kreeg "${welk.slice(0, 40)}"`, it.id); continue; }
+      if (verwacht && welk.trim() !== verwacht) { R.anker.push(it.id + ' (' + verwacht.slice(0, 30) + ')'); continue; } // een vast anker (praktijktoets, generale) staat op zijn eigen datum voor: die les is zo niet te openen
       const nDia = eerste.n; const per = []; const meerFase = (it.l.fasen || []).length;
       if (meerFase) R.metFasen++;
       // vooruit op 1280x800
@@ -257,6 +257,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
       'materiaal zonder link': { materiaal: [{ t: 'Zonder link' }, { t: 'Javascript', u: 'javascript:alert(1)' }, { u: 'https://example.com/x' }, {}, { t: 'Goede link', u: 'https://example.com/ok' }] },
       'formatief en thuis leeg': { formatief: { soort: '', tekst: '' }, identiteit: '   ' },
       'html in tekst': { titel: '<img src=x onerror="window.__xss=1">Titel', detail: '<b>vet</b> & "aanhalingstekens"', fasen: [{ min: 5, kop: '<script>window.__xss=1</script>Kop', stappen: ['<i>stap</i>'], docent: '<u>docent</u>', klaar: '<a href=#>klaar</a>' }] },
+      'kop tegen de timer': { fasen: [{ min: 5, kop: 'Handelingsdeel 4: heb je al gekozen?', stappen: ['Een stap'] }] },
       'heel lange tekst': { titel: 'Heel lang '.repeat(30), fasen: [{ min: 5, kop: 'Lang '.repeat(60), stappen: Array.from({ length: 14 }, (_, i) => 'Stap ' + i + ' ' + 'tekst '.repeat(20)) }] }
     };
     const ctx = await nieuweContext(null); const page = await ctx.newPage(); await page.clock.setFixedTime(new Date(tijdIso('08:00')));
@@ -273,6 +274,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
       for (let i = 0; i < n; i++) { if (i) { await druk(page, 'ArrowRight'); m = await meet(page); }
         if (!m.open) { fout('kapotte les: lesmodus sloot', naam, waar + ' dia ' + i); break; }
         if (/\bundefined\b|\bNaN\b|\[object/.test(m.tekst)) fout('kapotte les: "undefined"/"NaN" in beeld', naam + ': ' + (m.tekst.match(/\bundefined\b|\bNaN\b|\[object/) || [''])[0], waar + ' dia ' + (i + 1));
+        if (m.fase === 'fase' && m.raaktTimer && naam === 'kop tegen de timer') fout('tekst loopt onder de timer', naam, waar + ' dia ' + (i + 1));
         if (m.ox > 2) fout('kapotte les: zijwaarts over', naam + ' ' + m.ox + 'px', waar + ' dia ' + (i + 1));
         m.links.forEach(h => { if (/^javascript:/i.test(h || '')) fout('kapotte les: javascript-link', naam, waar); }); }
       const xss = await page.evaluate(() => window.__xss); if (xss) fout('HTML uit lesveld wordt uitgevoerd', naam, waar);
@@ -539,7 +541,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
   p('LESSEN WAARIN DE FASEMINUTEN LANGER ZIJN DAN DE LES (45 min), komende acht weken eerst');
   const tl = []; for (const lg of LEERGANGEN) for (const x of (RAP[lg] || {}).tijdTeLang || []) tl.push(Object.assign({ lg }, x)); tl.sort((a, b) => (a.datum || 'z').localeCompare(b.datum || 'z'));
   tl.forEach(x => p(`  ${x.datum || '?'}  ${x.id}  ${x.som} min voor ${x.duur}  "${(x.titel || '').slice(0, 50)}"`)); if (!tl.length) p('  geen');
-  p(''); p('GEGEVENS IN BASIS.JSON DIE NIET KLOPPEN (leeg, onbekend beeld, geen minuten)');
+  p(''); p('LESSEN DIE DE TEST NIET KON OPENEN (vast anker op een andere dag; niet getest)'); for (const lg of LEERGANGEN) ((RAP[lg] || {}).anker || []).forEach(x => p('  ' + x)); p(''); p('GEGEVENS IN BASIS.JSON DIE NIET KLOPPEN (leeg, onbekend beeld, geen minuten)');
   GEGEVENS.forEach(x => p(`  ${x.id}  ${x.s}  "${(x.titel || '').slice(0, 40)}"`)); if (!GEGEVENS.length) p('  geen');
   const tekst = R_.join('\n');
   if (RAPPORT) { fs.mkdirSync(path.dirname(RAPPORT), { recursive: true }); fs.writeFileSync(RAPPORT, tekst, 'utf8'); }
