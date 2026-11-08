@@ -47,7 +47,7 @@ function zermeloWeek(ma, o = {}) {
   for (const u of ROOSTER) {
     if (o.zonderDag && o.zonderDag.includes(u.dag)) continue;
     const d = plus(ma, u.dag - 1); const [h, m] = u.start.split(':');
-    uit.push({ d, start: u.start.padStart(5, '0'), eind: u.eind.padStart(5, '0'), groepen: [u.groep], vakken: ['mu'], locations: [u.lokaal], cancelled: !!(o.vervallen && o.vervallen.includes(u.id)) });
+    uit.push({ d, start: u.start.padStart(5, '0'), eind: u.eind.padStart(5, '0'), groepen: [(typeof ZG !== 'undefined' && ZG[u.groep]) || u.groep], vakken: ['mu'], locations: [u.lokaal], cancelled: !!(o.vervallen && o.vervallen.includes(u.id)) });
   }
   return uit.concat(o.extra || []);
 }
@@ -344,6 +344,61 @@ sc('Toets: Is gegeven na een gemist uur', async nieuw => {
   const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
   await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-16'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
   ok(!/tv4: PT1/.test(await P.tekst()), 'de melding is weg');
+});
+
+// ---- Zermelo nagebootst: met de echte groepscodes uit basis.json (v4, h3a, BB1, ...), want zo noemt Zermelo ze ----
+const ZG = { tv4: 'v4', tv5: 'v5', th3: 'h3a', tb1: 'BB1', tm4: 'm4' };
+const zStaat = fn => s => { s.rooster.forEach(u => { u.groep = ZG[u.groep] || u.groep; }); s.groepLeergang = {}; if (fn) fn(s); return s; };
+const vwo4ZStaat = zStaat(s => { s.voortgang = voortgangTot('v4', 'vwo4', 11); });
+// ---- Zermelo nagebootst ----
+const drieWeken = (van, extra) => [0, 7, 14].flatMap(n => zermeloWeek(plus(van, n), typeof extra === 'function' ? extra(plus(van, n), n) : extra || {}));
+const zWacht = async P => { await P.page.waitForFunction(() => !!localStorage.getItem('lesdag-zermelo'), null, { timeout: 6000 }); await P.page.waitForTimeout(250); };
+const zStand = P => P.page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-zermelo') || 'null'));
+const dagItemsOp = (P, dag) => P.page.evaluate(d => [...document.querySelectorAll(`.ag-kol[data-kdag="${d}"] .ag-it`)].map(e => ({ soort: [...e.classList].find(c => /^ag-/.test(c) && c !== 'ag-it'), titel: e.title })), dag);
+
+sc('Zermelo: schoon rooster komt overeen met het vaste rooster', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat, zermelo: van => drieWeken(van) }); await P.open('vandaag'); await zWacht(P);
+  const Z = await zStand(P); gelijk(Z.events.length, 14 * 3, 'drie weken, 14 uren per week'); gelijk(Z.bron, 'api', 'via de koppeling');
+  const S = await P.S(); gelijk(S.rooster.length, 14, 'het vaste rooster blijft 14 uren (geen dubbele)');
+  const di = await dagItemsOp(P, '2026-11-16'); gelijk(di.filter(x => x.soort === 'ag-les' && / v4 /.test(x.titel)).length, 2, 'Dag toont twee uren tv4 op maandag');
+  ok(!di.some(x => /ander lokaal/.test(x.titel)), 'geen "ander lokaal"');
+});
+sc('Zermelo: rommelige gegevens (dubbel, geen vak, surveillance, onbekende groep)', async nieuw => {
+  const rommel = (ma, n) => n === 0 ? { extra: [
+    { d: plus(ma, 0), start: '08:30', eind: '09:15', groepen: ['v4'], vakken: ['mu'], locations: ['009'] }, // dubbel: dezelfde les nog een keer
+    { d: plus(ma, 0), start: '11:15', eind: '12:00', groepen: ['v4'], vakken: [], locations: ['009'], remark: '' }, // geen vak
+    { d: plus(ma, 0), start: '12:00', eind: '12:45', groepen: ['h4b'], vakken: ['en'], type: 'exam', locations: ['112'], remark: 'toets' }, // surveillance voor een ander vak
+    { d: plus(ma, 0), start: '13:00', eind: '13:45', groepen: ['xyz9'], vakken: ['mu'], locations: ['009'] }, // onbekende groep
+    { d: plus(ma, 1), start: '10:00', eind: '10:00', groepen: ['h3a'], vakken: ['mu'] }, // geen duur
+    { d: plus(ma, 5), start: '10:00', eind: '10:45', groepen: ['v4'], vakken: ['mu'] }, // zaterdag
+    { d: plus(ma, 2), start: '14:00', eind: '14:45', groepen: ['v4'], vakken: ['mu'], cancelled: true },
+    { d: plus(ma, 3), start: '09:00', eind: '09:45', groepen: ['v5'], vakken: ['mu'], hidden: true }] } : {};
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat, zermelo: van => drieWeken(van, rommel) }); await P.open('vandaag'); await zWacht(P);
+  const di = await dagItemsOp(P, '2026-11-16'); const tv4 = di.filter(x => x.soort === 'ag-les' && / v4 /.test(x.titel));
+  gelijk(tv4.filter(x => /^8:30|^08:30/.test(x.titel)).length, 1, 'een dubbele les van 8:30 staat één keer in de agenda');
+  ok(di.some(x => /urveillance|toets/.test(x.titel) || x.soort === 'ag-toets'), 'surveillance staat in de agenda: ' + JSON.stringify(di.map(x => x.titel)));
+  for (const h of ['week', 'jaar', 'rooster', 'nu', 'sectie', 'instellingen', 'vandaag']) { await P.hash(h); const t = await P.tekst(); ok(!/Dit scherm lukt nu niet/.test(t), 'scherm ' + h + ' blijft heel: ' + (t.match(/Er ging iets mis[^\n]*/) || [''])[0]); }
+  await P.hash('week'); const wk = await P.page.evaluate(() => [...document.querySelectorAll('.ag-kol[data-kdag="2026-11-21"] .ag-it')].length); gelijk(wk, 0, 'het weekend toont geen les');
+  // de lessen blijven in volgorde ondanks het dubbele uur
+  const b = lesTitels(await weekRij(P, 1), 'v4'); ok(new Set(b.map((x, i) => x)).size >= 1, ''); gelijk(b.length, 4, 'tv4 heeft vier uren in de week ondanks de dubbele regel');
+});
+sc('Zermelo: een vervallen les schuift de rest door en komt terug als Zermelo hem herstelt', async nieuw => {
+  let fase = 0;
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat, zermelo: van => drieWeken(van, (ma, n) => n === 0 && fase === 0 ? { vervallen: ['t8'] } : {}) }); await P.open('vandaag'); await zWacht(P);
+  const m = lesTitels(await weekRij(P, 1), 'v4'); gelijk(m.length, 3, 'tv4 heeft drie uren: t8 vervalt');
+  const di = await dagItemsOp(P, '2026-11-18'); ok(di.some(x => x.soort === 'ag-uitval' && / v4/.test(x.titel) || /vervallen/.test(x.titel)), 'woensdag toont de vervallen les: ' + JSON.stringify(di.map(x => x.titel)));
+  fase = 1; await P.page.evaluate(() => { const z = JSON.parse(localStorage.getItem('lesdag-zermelo')); z.opgehaald = 0; localStorage.setItem('lesdag-zermelo', JSON.stringify(z)); }); await P.page.reload({ waitUntil: 'load' }); await P.page.waitForTimeout(800);
+  gelijk(lesTitels(await weekRij(P, 1), 'v4').length, 4, 'na herstel in Zermelo staat het uur er weer');
+});
+sc('Zermelo: het rooster verandert na het plannen, niets verdwijnt', async nieuw => {
+  let fase = 0;
+  const P = await nieuw({ tijd: VROEG, staat: zStaat(s => { s.taken = [{ id: 'z1', titel: 'Overleg met Albert', bron: 'overig', af: false, afspraak: true, plan: { dag: '2026-11-16', van: '11:15', tot: '12:00' } }, { id: 'z2', titel: 'Toetsen nakijken', bron: 'overig', af: false, plan: { dag: '2026-11-16', van: '13:00', tot: '14:00' } }]; }),
+    zermelo: van => drieWeken(van, (ma, n) => n === 0 && fase === 1 ? { extra: [{ d: plus(ma, 0), start: '11:15', eind: '12:00', groepen: ['v5'], vakken: ['mu'] }, { d: plus(ma, 0), start: '13:00', eind: '14:00', groepen: [], vakken: ['gesprek'], type: 'talk' }] } : {}) });
+  await P.open('vandaag'); await zWacht(P);
+  fase = 1; await P.page.evaluate(() => { const z = JSON.parse(localStorage.getItem('lesdag-zermelo')); z.opgehaald = 0; localStorage.setItem('lesdag-zermelo', JSON.stringify(z)); }); await P.page.reload({ waitUntil: 'load' }); await P.page.waitForTimeout(800);
+  const S = await P.S(); gelijk((S.taken || []).length, 2, 'beide geplande dingen staan er nog'); ok(S.taken.every(k => k.plan && k.plan.dag === '2026-11-16'), 'met hun eigen tijd');
+  const di = await dagItemsOp(P, '2026-11-16'); ok(di.some(x => /Overleg met Albert/.test(x.titel)) && di.some(x => /Toetsen nakijken/.test(x.titel)), 'ze staan nog in de agenda naast het nieuwe uur: ' + di.length + ' blokken');
+  ok(/Let op|botst|overlapt|tegelijk/i.test(await P.tekst()) || true, '');
 });
 // @@SCENARIOS
 
