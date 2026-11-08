@@ -3034,6 +3034,7 @@ document.addEventListener('click', async e => {
   if (D.zweg != null) { delete S.zermeloToken; if (!zApiToken()) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); return; }
   if (D.zapiweg != null) { try { localStorage.removeItem(Z_API); } catch (e) {} if (!S.zermeloToken) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); if (S.zermeloToken) await zOphalen(false); return; }
   if (D.zovernemen != null) { const terug = foto(); roosterUitZermelo(); bewaar(); toast('Rooster overgenomen uit Zermelo', terug); return; }
+  if (D.nieuweversie != null) { if (!LES) location.reload(); return; }
   if (D.logkopie != null) { logKopieer(); return; }
   if (D.logwis != null) { if (confirm('Het foutlogboek op dit apparaat wissen?')) { LOGBOEK.wis(); render(); } return; }
   if (D.export != null) { const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lesdag-' + vandaag() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return; }
@@ -3668,11 +3669,27 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   if (zVastBij()) anders = true;
   if (anders) bewaar(true);
 }
+/* ---------- nieuwe versie ----------
+   sw.js neemt direct over (skipWaiting + claim), maar het scherm draait nog op de oude code. Dat melden we (balk onderin, nooit in de lesmodus) en we laden pas
+   opnieuw als niemand er last van heeft: pagina op de achtergrond én geen lesmodus, geen typen, geen beoordelen, geen regie of bord, geen open paneel.
+   De knop Nu bijwerken doet het op verzoek. Controle op een nieuwe versie: bij terugkeer naar de app en elk kwartier. */
+let NIEUW = false;
+const versieVeilig = () => syncMag() && !['beoordelen', 'bord'].includes(route.naam) && !bmConcertAan();
+function versieToon() { const el = $('#nieuweversie'); if (el) el.hidden = !(NIEUW && !LES && route.naam !== 'bord'); }
+function versieStart() {
+  if (!('serviceWorker' in navigator)) return;
+  let had = !!navigator.serviceWorker.controller; // de eerste installatie (nog geen controller) is geen nieuwe versie
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!had) { had = true; return; } NIEUW = true; versieToon(); });
+  const check = () => navigator.serviceWorker.getRegistration().then(r => r && r.update()).catch(() => {});
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { if (NIEUW && versieVeilig()) location.reload(); } else check(); });
+  setInterval(() => { if (!document.hidden) check(); }, 15 * 60000);
+  setInterval(() => { versieToon(); if (NIEUW && document.hidden && versieVeilig()) location.reload(); }, 2000);
+}
 /* ---------- start ---------- */
 /* gegevens: index.html start het ophalen al (VOORAF), tegelijk met het laden van dit script en alle drie naast elkaar */
 const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n + '.json', { cache: 'no-cache' }).then(r => r.json());
 (async function start() {
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) { versieStart(); navigator.serviceWorker.register('sw.js').catch(() => {}); } // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
   const kapot = staatFouten(S); if (kapot.length) { if (window.LOGBOEK) LOGBOEK.noteer('start', 'staat beschadigd: ' + kapot.join(', ')); herstelScherm('Je opgeslagen gegevens zijn beschadigd. Niet in orde: ' + kapot.join(', ') + '.'); return; } // vóór bewaren en synchroniseren: niets kapots doorgeven
   try { const ruw = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); if (ruw && ruw.schema !== S.schema) localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} // de gemigreerde vorm ook opslaan, zonder `updated` te veranderen

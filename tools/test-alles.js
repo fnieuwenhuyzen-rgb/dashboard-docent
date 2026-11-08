@@ -16,11 +16,12 @@ const STAPPEN = [
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
   ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
   ['Foutlogboek', 'test-logboek.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
+  ['Nieuwe versie (service worker)', 'test-nieuwe-versie.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
 ];
 const uitslag = []; const t0 = Date.now();
 for (const [naam, f, extra] of STAPPEN) {
-  if (f === 'test-schermen.js' && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
+  if (['test-schermen.js', 'test-nieuwe-versie.js', 'test-autokopie.js'].includes(f) && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
   const s = Date.now(); const r = cp.spawnSync(process.execPath, [t(f), ...extra], { cwd: root, encoding: 'utf8', env: process.env, maxBuffer: 1 << 26 });
   const uit = ((r.stdout || '') + (r.stderr || '')).trim(); const sec = (Date.now() - s) / 1000;
   const st = r.status === 0 ? 'goed' : r.status === 2 ? 'overgeslagen' : 'FAALT';
