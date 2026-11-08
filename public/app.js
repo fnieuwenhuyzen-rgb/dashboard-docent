@@ -589,8 +589,9 @@ function viewVandaag() {
   if (S.afwezig[s]) h += `<div class="melding info afwezigrij">Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door. <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig</button></div>`;
   if (!S.rooster.length && !ZC) h += `<div class="kaart" style="margin-bottom:1rem"><h2>Eerst je rooster</h2><p class="lead">Vul één keer je weekrooster in: per lesuur de groep en het lokaal. Daarna staan je lessen hier in de agenda, met wat er klaar moet staan.</p><p><a class="btn hoofd" href="#rooster">Rooster invullen</a></p></div>`;
   const achter = rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
-  if (achter.length) h += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
-  if (s >= t) h += uitvalBlok(s) + liggenBlok();
+  let wacht = ''; // op een telefoon staan de lessen bovenaan; wat kan wachten komt eronder (bevinding 46)
+  if (achter.length) wacht += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
+  if (s >= t) { h += uitvalBlok(s); wacht += liggenBlok(); }
   const onder = [...zonderTijd.map(it => `${it.tz ? `Toets ${(B.groepen[it.tz.lg] || [it.tz.lg]).join(', ')} ${it.tz.t.id}` : it.titel} staat in je leergang, maar niet in het rooster. Klopt dat?`), pauzeTekst(A.pz)].filter(Boolean);
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu
   h += `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -600,7 +601,7 @@ function viewVandaag() {
   const perLokaal = {};
   (p.uren || []).forEach(x => { if (!x.item || x.uitval || x.klaar) return; const l = les(x.item); const k = x.u.lokaal || '009'; (perLokaal[k] = perLokaal[k] || []).push({ x, ben: benodigd(l), l }); });
   if (Object.keys(perLokaal).length) h += `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben }) => `<div><b style="font-family:var(--lees)">${esc(x.u.start)} ${esc(x.u.groep)}</b><div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
-  return h + dagExtra(s, p);
+  return h + wacht + dagExtra(s, p);
 }
 /* ---------- agenda: lessen, afspraken en geplande taken op hun tijd; vrije blokken voor taken ---------- */
 const AG = { van: 8 * 60, tot: 17 * 60, werkVan: 8 * 60 + 30, werkTot: 16 * 60 + 30 };
