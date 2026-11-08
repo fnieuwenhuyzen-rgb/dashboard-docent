@@ -980,7 +980,7 @@ a.jr-naam:hover{color:var(--paars)}
   .chk input[type=checkbox]:focus-visible{outline:none}
   .chk input[type=checkbox]:focus-visible::before{outline:2px solid var(--paars);outline-offset:2px}
   /* dichte rasters: het tikvlak groeit onzichtbaar mee, zonder dat het raster verspringt */
-  .ag-dag,.ag-chip,.jr-as button.w,.jr-naam,.chk .taak-open{position:relative}
+  .ag-dag,.ag-chip,.jr-naam,.chk .taak-open{position:relative}
   .jr-toets{position:absolute}
   .ag-dag::after,.ag-chip::after,.jr-as button.w::after,.jr-naam::after,.jr-toets::after{content:"";position:absolute;inset:-8px -4px}
   .ag-dag::after{inset:-6px -2px}
@@ -1004,21 +1004,11 @@ a.jr-naam:hover{color:var(--paars)}
 html{scroll-padding-top:6rem;scroll-padding-bottom:9.5rem}
 input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid var(--paars);outline-offset:2px}
 
-/* ---------- voorstel menu op de telefoon (bevinding 45, 8-11): Meer-knop; terugdraaien = deze commit terugdraaien ---------- */
-.nav-meer,.nav-blad{display:none}
-@media (max-width:520px){
-  .nav a.meer-uit{display:none}
-  .nav-meer{display:block;flex:1 1 0;min-width:0;min-height:54px;text-align:center;padding:.4rem .1rem .3rem;font:inherit;font-family:var(--lees);font-weight:600;font-size:var(--t-klein);color:var(--muted);background:none;border:0;border-radius:10px;cursor:pointer}
-  .nav-meer .ico{display:block;width:22px;height:22px;margin:0 auto .2rem}.nav-meer .ico svg{display:block;width:100%;height:100%}
-  .nav-meer.actief,.nav-meer[aria-expanded="true"]{background:var(--paars-zacht);color:var(--paars)}
-  .nav a,.nav-meer{flex:1 1 auto;min-width:0;font-size:13px;padding-inline:.3rem}
-  .nav-blad:not([hidden]){display:grid;grid-template-columns:1fr 1fr;gap:.3rem;position:fixed;z-index:30;left:8px;right:8px;bottom:calc(70px + env(safe-area-inset-bottom,0px));padding:.4rem;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(36,28,43,.25)}
-  .nav-blad a{display:flex;align-items:center;gap:.6rem;min-height:52px;padding:.4rem .7rem;border-radius:10px;font-family:var(--lees);font-weight:600;font-size:var(--t);color:var(--ink);text-decoration:none}
-  .nav-blad a[aria-current="page"]{background:var(--paars-zacht);color:var(--paars)}
-  .nav-blad .ico{display:block;width:22px;height:22px;flex:none}.nav-blad .ico svg{display:block;width:100%;height:100%}
-}
 /* aanraakscherm heeft geen tooltip: een titel in de weekkolom mag over twee regels (de rest van het blokje blijft afgekapt) */
 @media (pointer:coarse){.ag-it b,.ag-it .ag-s{white-space:normal;overflow-wrap:break-word;text-overflow:clip}.ag-it .ag-s{-webkit-line-clamp:2}}
 @media (max-width:640px){.ag-scroll>*{min-width:900px}} /* telefoon: weekkolommen breed genoeg voor twee afspraken naast elkaar */
 @media (pointer:coarse){.ag-seg button,.nw-sug button{min-height:44px}.les .lbalk button,.les .lbalk a{min-height:44px;min-width:44px}.les .vink{min-width:44px;min-height:44px}}
 @media (max-width:560px){.bm-cs .bm-knoppen{gap:2px}} /* concertstand op de telefoon: de cijferknoppen halen zo 44 px */
+.jr-as button.w{position:absolute;white-space:nowrap} /* de weeknummers staan bij hun week (stonden als knop op een hoop links) */
+/* bovenbalk op laptop: alle onderdelen blijven zichtbaar, de opslagmelding krimpt (stond achter een onzichtbare schuifbalk: Instellingen viel weg) */
+@media (min-width:900px){.nav{flex:1 1 auto;flex-wrap:wrap;overflow:visible}.sync{flex:0 20 auto;min-width:1.2rem;margin-left:auto}.sync span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
