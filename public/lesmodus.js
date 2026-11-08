@@ -32,7 +32,8 @@
   function fase(f) {
     if (f && typeof f === 'object') {
       const o = Object.assign({ min: 0, stappen: [], docent: '', klaar: '' }, f);
-      if (!o.soort) o.soort = soortVan((o.kop || '') + ' ' + (o.docent || ''));
+      o.min = Math.max(0, +o.min || 0); // geen tekst of negatief getal als minuten: dat gaf NaN in de timer
+      if (!o.soort || !SOORT[o.soort]) o.soort = soortVan((o.kop || '') + ' ' + (o.docent || '')); // een onbekende soort liet de hele les niet openen
       if (!o.kop) o.kop = o.docent || '';
       o.tekst = `${o.min} min · ${SOORT[o.soort] ? SOORT[o.soort].naam.toLowerCase() : o.soort}: ${o.kop}`;
       return o;
