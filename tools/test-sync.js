@@ -48,8 +48,10 @@ console.log('kapotte kopie geweigerd: goed');
   const { DatabaseSync } = require('node:sqlite');
   const dbMap = path.join(wortel, '.wrangler/state/v3/d1/miniflare-D1DatabaseObject');
   const dbBestand = fs.readdirSync(dbMap).find(f => f.endsWith('.sqlite') && f !== 'metadata.sqlite');
-  const sql = fn => { const d = new DatabaseSync(path.join(dbMap, dbBestand)); try { return fn(d); } finally { d.close(); } };
-  const reset = () => sql(d => { d.exec("DELETE FROM onderdeel; DELETE FROM back_up; UPDATE meta SET versie = 0, bijgewerkt = 0, schrijver = NULL WHERE id = 1;"); });
+  const sql = fn => { const d = new DatabaseSync(path.join(dbMap, dbBestand)); d.exec('PRAGMA busy_timeout = 5000'); try { return fn(d); } finally { d.close(); } };
+  const alle = []; // elk apparaat dat een scenario aanmaakt; een verdwaalde timer van een eerder scenario zou anders oude staat terugzetten
+  const reset = () => { alle.splice(0).forEach(o => o.sync.stop()); resetDb(); };
+  const resetDb = () => sql(d => { d.exec("DELETE FROM onderdeel; DELETE FROM back_up; UPDATE meta SET versie = 0, bijgewerkt = 0, schrijver = NULL WHERE id = 1;"); });
   const serverRijen = () => sql(d => d.prepare('SELECT sleutel, waarde FROM onderdeel').all());
   const stuk = () => sql(d => d.prepare('SELECT COUNT(*) n FROM onderdeel').get().n);
   const echt = (u, i) => fetch(u, i);
@@ -61,7 +63,7 @@ console.log('kapotte kopie geweigerd: goed');
       vlag: { aan: () => o.aanV, zet: () => { o.aanV = true; } },
       opslag: { haal: async k => o.kv[k] && JSON.parse(o.kv[k]), zet: async (k, v) => { o.kv[k] = JSON.stringify(v); } },
       app: { haal: () => o.staat, zet: x => { o.staat = x; }, mag: () => o.mag, status: (s, t) => { o.st = s; o.tekst = t; }, nieuwer: ms => o.updated > ms, kopie: async () => { o.kopie = true; }, fouten: staatFouten } });
-    return o;
+    alle.push(o); return o;
   }
   const leegDoc = () => ({ v: 1, magVanaf: '2026-11-03', taken: [], beoord: { lijsten: {}, toetsen: {} } });
   const ll = (n, k = 'Testleerling') => Array.from({ length: n }, (_, i) => ({ id: 'l' + i, naam: `${k} ${i}` }));
@@ -71,7 +73,7 @@ console.log('kapotte kopie geweigerd: goed');
   // twee apparaten die elkaar kennen
   async function paar() {
     reset(); const a = apparaat(basisStaat()), b = apparaat(leegDoc()); a.updated = Date.now() - 1e4;
-    await a.sync.aanzetten(); await b.sync.start(); assert.ok(b.aanV && gelijk(a.staat, b.staat), 'paar start gelijk'); return [a, b];
+    await a.sync.aanzetten(); await b.sync.start(); assert.ok(b.aanV && gelijk(a.staat, b.staat), 'paar start gelijk ' + JSON.stringify([b.aanV, b.tekst, Object.keys(a.staat), Object.keys(b.staat)])); return [a, b];
   }
 
   const uitslag = [];

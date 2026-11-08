@@ -112,7 +112,12 @@
         const lokaal = kloon(app.haal());
         const kort = await vraag('?sinds=' + basis.versie);
         const server = kort.versie === basis.versie ? { versie: basis.versie, bijgewerkt: kort.bijgewerkt, doc: basis.doc } : await haalAlles();
-        const doc = samenvoegen(basis.doc, lokaal, server.doc, { lokaalNieuwer: app.nieuwer(server.bijgewerkt) });
+        /* twee situaties waarin "wat de ander weghaalde" een ramp is, geen wens:
+           - dit apparaat is zijn eigen staat kwijt (leeg beginnen, wissen) maar de basis weet nog beter: de server geeft alles terug, er wordt niets weggehaald;
+           - de server is leeg of ouder dan de basis (nieuwe of teruggezette database): dan telt de basis niet en blijft alles van dit apparaat bewaard, ook wat de server mist. */
+        const kwijt = leeg(lokaal) && !leeg(basis.doc);
+        const serverTerug = !kwijt && !leeg(basis.doc) && (leeg(server.doc) || server.versie < basis.versie);
+        const doc = kwijt ? server.doc : samenvoegen(serverTerug ? {} : basis.doc, lokaal, server.doc, { lokaalNieuwer: serverTerug || app.nieuwer(server.bijgewerkt), zonderBasis: serverTerug });
         const g = verschil(doc, server.doc);
         let versie = server.versie;
         if (Object.keys(g).length) { const r = await stuur(server.versie, g, keepalive); if (r.conflict) continue; versie = r.versie; }
@@ -168,7 +173,8 @@
     const backups = async () => (await vraag('?backups=1')).dagen;
     /* een back-up die leeg of beschadigd is mag nooit als staat terugkomen: de app zet hem op al je apparaten neer */
     const backup = async dag => { const d = samen((await vraag('?backup=' + encodeURIComponent(dag))).onderdelen); if (leeg(d)) throw new Stop('leeg'); controleer(d); return d; };
-    return { nu, later, gewijzigd, aanzetten, start, backups, backup, meld, aan: () => vlag.aan() };
+    const stop = () => { clearTimeout(timer); nogEens = false; }; // voor de tests: geen verdwaalde timer na afloop
+    return { stop, nu, later, gewijzigd, aanzetten, start, backups, backup, meld, aan: () => vlag.aan() };
   }
 
   /* kleine opslag in IndexedDB: de basis kan even groot zijn als de staat zelf en past dan niet meer naast de staat in localStorage */
