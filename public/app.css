@@ -245,9 +245,9 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .les .orkest{width:100%;max-width:46rem}.les .orkest svg{width:100%;max-height:48vh;height:auto;display:block}
 .les .orkest .legenda{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.4rem;font-size:.95rem;color:#e6dcef}
 .les .orkest .legenda span::before{content:"";display:inline-block;width:.8rem;height:.8rem;border-radius:3px;background:var(--c);margin-right:.35rem;vertical-align:-1px}
-.les .kaarten{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.7rem;width:100%}
+.les .kaarten{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.7rem;width:100%}
 .les .kaartje{background:color-mix(in srgb,var(--c,#5B247F) 35%,#1c1424);border:1px solid #ffffff22;border-radius:12px;padding:.8rem .9rem;display:grid;gap:.2rem}
-.les .kaartje b{font-size:clamp(1.1rem,2.1vw,1.6rem);line-height:1.1;color:#fff}.les .kaartje span{font-family:var(--lees);font-size:clamp(.95rem,1.6vw,1.2rem);color:#e6dcef}
+.les .kaartje b{font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.1;color:#fff}.les .kaartje span{font-family:var(--lees);font-size:clamp(1.15rem,2.2vw,1.75rem);color:#e6dcef}
 .les .btabel{border-collapse:collapse;font-size:clamp(1rem,1.9vw,1.45rem);font-family:var(--lees)}
 .les .btabel th{font-family:var(--lees);text-align:left;color:var(--z);padding:.3rem .9rem .3rem 0;border-bottom:2px solid #ffffff33}
 .les .btabel td{padding:.35rem .9rem .35rem 0;border-bottom:1px solid #ffffff1a}
