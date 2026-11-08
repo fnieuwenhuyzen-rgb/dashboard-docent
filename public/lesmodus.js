@@ -183,5 +183,27 @@
       .forEach(i => { const af = Math.min(rest, Math.floor(min[i] / 2)); uit[i] -= af; rest -= af; });
     return { min: uit, gepland, tekort, past: tekort - rest };
   }
-  (typeof window !== 'undefined' ? window : globalThis).LESMODUS = { SOORT, fase, faseTekst, fasenNaarTekst, tekstNaarFasen, beeldHtml, bouwSlides, timerRing, timerTekst, ringDeel, inkorten, ico };
+  // ---------- sprekersnotities (alleen voor de docent; data/notities.json, pas geladen als er een les wordt gegeven) ----------
+  // n: de notities van deze les; sl: de slide; fi: index van de fase; l: de les (voor de koppen van de fasen).
+  // Een fase toont zijn notities alleen als de kop nog dezelfde is als toen de notities werden gemaakt: Frans kan fasen aanpassen.
+  const NOTKOP = { vertel: 'Vertel', voorbeelden: 'Voorbeelden', leerlingen: 'Leerlingen doen', letop: 'Let op', voor: 'Klaarzetten en bekijken', titel: 'Opening', agenda: 'Verloop', doel: 'Doel', rode: 'Rode draad', thuis: 'Thuis' };
+  const alinea = a => (a || []).map(x => `<p>${esc(x)}</p>`).join('');
+  const vragenHtml = v => (v || []).length ? `<h4>Vragen</h4><ul class="sp-vragen">${v.map(x => `<li><b>${esc(x.v)}</b>${x.a ? `<span>${esc(x.a)}</span>` : ''}</li>`).join('')}</ul>` : '';
+  function notitieHtml(n, sl, fi, l) {
+    if (!n || !sl) return '';
+    const stuk = (k, a) => (a || []).length ? `<h4>${NOTKOP[k]}</h4>${alinea(a)}` : '';
+    let h = '';
+    if (sl.k === 'klaar') h = stuk('voor', n.voor);
+    else if (sl.k === 'welkom') h = stuk('titel', n.titel) + stuk('agenda', n.agenda);
+    else if (sl.k === 'doel') h = stuk('doel', n.doel);
+    else if (sl.k === 'check') { const f = n.formatief || {}; h = stuk('vertel', f.vertel) + vragenHtml(f.vragen) + stuk('letop', f.letop); }
+    else if (sl.k === 'id') h = stuk('rode', n.rode) + vragenHtml(n.vragenRode);
+    else if (sl.k === 'thuis') h = stuk('thuis', n.thuis);
+    else if (sl.k === 'fase') {
+      const f = (n.fasen || [])[fi]; const eigen = l && (l.fasen || [])[fi]; const kop = eigen && typeof eigen === 'object' ? eigen.kop || '' : '';
+      if (f && (!l || f.kop === kop)) h = stuk('vertel', f.vertel) + stuk('voorbeelden', f.voorbeelden) + vragenHtml(f.vragen) + stuk('leerlingen', f.leerlingen) + stuk('letop', f.letop);
+    }
+    return h ? `<div class="sp-tekst">${h}</div>` : '';
+  }
+  (typeof window !== 'undefined' ? window : globalThis).LESMODUS = { SOORT, fase, faseTekst, fasenNaarTekst, tekstNaarFasen, beeldHtml, bouwSlides, timerRing, timerTekst, ringDeel, inkorten, ico, notitieHtml };
 })();
