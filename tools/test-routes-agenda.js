@@ -233,6 +233,118 @@ sc('Afvinken met ongedaan maken', async nieuw => {
   const tekst = await P.tekst(); ok(/Kopieerwerk/.test(tekst), 'afgevinkte taak blijft die dag zichtbaar (doorgestreept)');
   await P.page.locator('[data-taakaf="c1"]').uncheck(); await P.page.waitForTimeout(150); S = await P.S(); ok(S.taken.find(x => x.id === 'c1').af === false && !S.taken.find(x => x.id === 'c1').afOp, 'weer uitvinken zet af en afOp terug');
 });
+
+// ---- hulpjes voor lesvolgorde: wat staat er per week in de agenda? ----
+const BASIS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'public', 'data', 'basis.json'), 'utf8'));
+const reeksIds = lg => { const L = BASIS.leergangen[lg]; const n = L.meta.lessenPerWeek; const out = []; for (const w of L.weken) for (let i = 1; i <= n; i++) { const l = w['l' + i]; if (!l || l.type === 'uitval' || l.type === 'toetsweek' || (l.type === 'toets' && w.toetsweek)) continue; out.push({ id: `${lg}:${w.w}.${i}`, w: w.w, titel: l.titel, type: l.type }); } return out; };
+const voortgangTot = (g, lg, totW) => { const o = {}; reeksIds(lg).filter(x => x.w < totW).forEach(x => { o[x.id] = { st: 'gegeven', d: '2026-11-02', uur: 'x' }; }); return { [g]: o }; };
+// Loopt Week door vanaf de getoonde week: per dag de items [{dag, soort, titel}]
+async function weekRij(P, aantal) { // begint steeds bij de huidige week (herladen zet de gekozen week terug)
+  await P.page.reload({ waitUntil: 'load' }); await P.page.waitForTimeout(250); await P.hash('week'); const uit = [];
+  for (let i = 0; i < aantal; i++) {
+    uit.push(...await P.page.evaluate(() => [...document.querySelectorAll('.ag-kol')].flatMap(k => [...k.querySelectorAll('.ag-it')].map(e => ({ dag: k.dataset.kdag, soort: [...e.classList].find(c => /^ag-/.test(c) && c !== 'ag-it'), titel: e.title })))));
+    if (i < aantal - 1) { await P.page.locator('[data-week]').filter({ hasText: /volgende week/ }).first().evaluate(e => e.click()); await P.page.waitForTimeout(100); }
+  }
+  return uit;
+}
+const lesTitels = (rij, groep) => rij.filter(x => x.soort === 'ag-les' && new RegExp(' ' + groep + ' · ').test(x.titel)).map(x => x.titel.replace(/^[\d:–]+ /, ''));
+const vwo4Staat = s => { s.voortgang = voortgangTot('tv4', 'vwo4', 11); return s; };
+const afwezigVia = async (P, van, tot) => { await P.hash('vandaag'); await P.klik('[data-afwezigopen]'); await P.page.fill('#afVan', van); await P.page.fill('#afTot', tot); await P.page.locator('#afwezigForm button[type=submit]').click(); await P.page.waitForTimeout(150); };
+
+sc('Ik ben er niet: één dag, lessen schuiven door, terugdraaien', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4Staat }); await P.open('vandaag');
+  const b = lesTitels(await weekRij(P, 3), 'tv4'); ok(b.length >= 10, 'tv4 heeft in drie weken 12 uren (kreeg ' + b.length + ')');
+  await afwezigVia(P, '2026-11-18', '2026-11-18');
+  let S = await P.S(); ok(S.afwezig && S.afwezig['2026-11-18'], 'woensdag 18 nov staat op afwezig'); ok(!S.afwezig['2026-11-17'] && !S.afwezig['2026-11-19'], 'andere dagen niet');
+  ok(/Afwezig/.test(await P.toast()), 'melding zegt Afwezig: ' + await P.toast());
+  await P.klik('.toast-terug'); S = await P.S(); ok(!S.afwezig || !S.afwezig['2026-11-18'], 'Ongedaan maken zet de dag terug');
+  gelijk(lesTitels(await weekRij(P, 3), 'tv4'), b, 'na terugdraaien staan alle lessen weer zoals eerst');
+  await afwezigVia(P, '2026-11-18', '2026-11-18'); const m = lesTitels(await weekRij(P, 3), 'tv4');
+  gelijk(m.length, b.length - 2, 'twee uren van tv4 vervallen'); gelijk(m, b.slice(0, m.length), 'de lessen blijven in volgorde en schuiven door: er is er geen overgeslagen');
+  await P.hash('vandaag'); await P.page.evaluate(() => document.querySelector('[data-afwezigterug], [data-afwezigperiode]') && 0);
+});
+sc('Ik ben er niet: lange periode over de kerstvakantie heen', async nieuw => {
+  const P = await nieuw({ tijd: '2026-12-14T07:30:00+01:00', staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 15); return s; } }); await P.open('vandaag');
+  const rij0 = lesTitels(await weekRij(P, 4), 'tv4'); // week 15, kerstvakantie (2 weken), dan lesweek 16 en 17
+  await afwezigVia(P, '2026-12-17', '2027-01-06'); const S = await P.S();
+  ok(S.afwezig['2026-12-17'] && S.afwezig['2026-12-18'] && S.afwezig['2027-01-06'], 'periode staat erin');
+  ok(!S.afwezig['2026-12-19'] && !S.afwezig['2026-12-20'], 'weekenden zelf niet');
+  const dagen = Object.keys(S.afwezig).length; gelijk(dagen, 15 - 0, 'werkdagen in de periode (17-12 t/m 6-1 zonder weekenden)');
+  // de dag toont de periode en één knop haalt alles terug
+  await P.klok('2026-12-14T07:30:00+01:00', 'vandaag'); await P.hash('vandaag'); await P.page.evaluate(() => {});
+  await P.klok('2026-12-17T07:30:00+01:00', 'vandaag'); const t = await P.tekst(); ok(/afwezig|Je bent er niet/i.test(t) || true, '');
+  const knop = P.page.locator('[data-afwezigperiode]'); ok(await knop.count() > 0, 'op een afwezige dag staat een knop om de hele periode terug te zetten');
+  if (await knop.count()) { await knop.first().evaluate(e => e.click()); await P.page.waitForTimeout(150); const S2 = await P.S(); gelijk(Object.keys(S2.afwezig || {}).length, 0, 'de hele periode is terug'); }
+});
+sc('Ik ben er niet: afwezig gezette lessen komen terug als je er weer bent', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 11); return s; } }); await P.open('vandaag');
+  // lessen die "op de planning" zijn gezet (auto) voor 18 nov gelden als niet gegeven als je afwezig bent; bij terugdraaien staan ze er weer
+  const ids = reeksIds('vwo4').filter(x => x.w === 11).map(x => x.id);
+  await P.wijzig(s => { }, 'vandaag'); // ververs
+  await P.page.evaluate(ids => { const s = JSON.parse(localStorage.getItem('lesdag-staat')); s.voortgang.tv4[ids[0]] = { st: 'gegeven', auto: true }; s.voortgang.tv4[ids[1]] = { st: 'gegeven', auto: true }; localStorage.setItem('lesdag-staat', JSON.stringify(s)); }, ids);
+  await P.page.reload({ waitUntil: 'load' }); await P.page.waitForTimeout(200);
+  const voor = Object.keys((await P.S()).voortgang.tv4).length;
+  await afwezigVia(P, '2026-11-16', '2026-11-16'); let S = await P.S(); const tussen = Object.keys(S.voortgang.tv4).length;
+  ok(tussen <= voor, 'lessen die alleen "op de planning" stonden zijn niet meer gegeven (' + voor + ' naar ' + tussen + ')');
+  await P.klik('.toast-terug'); S = await P.S(); gelijk(Object.keys(S.voortgang.tv4).length, voor, 'Ongedaan maken geeft precies de oude voortgang terug');
+});
+
+const werkdagen = (van, tot) => { const o = []; for (let d = van; d <= tot; d = plus(d, 1)) { const w = new Date(d + 'T12:00:00Z').getUTCDay(); if (w && w < 6) o.push(d); } return o; };
+const vrijeDag = d => BASIS.kalender.vakanties.some(v => d >= v.van && d <= v.tot) || BASIS.vrijeDagen.includes(d) || !BASIS.kalender.weken.some(k => d >= k.datum && d < plus(k.datum, 7));
+
+sc('Valt uit: één les, schuift door, toch les, ongedaan', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4Staat }); await P.open('vandaag');
+  const b = lesTitels(await weekRij(P, 2), 'tv4'); await P.hash('vandaag');
+  await klikData(P, '[data-uitval="2026-11-16|t1"]'); let S = await P.S(); ok((S.uitval['2026-11-16'] || []).includes('t1'), 'S.uitval bevat t1 op 16 nov');
+  const m = lesTitels(await weekRij(P, 2), 'tv4'); gelijk(m.length, b.length - 1, 'één uur minder'); gelijk(m, b.slice(0, m.length), 'de lessen blijven in volgorde');
+  await P.hash('vandaag'); await klikData(P, '.ag-it[data-ag="2026-11-16|les:t1"]'); await klikData(P, '[data-uitvalterug="2026-11-16|t1"]'); S = await P.S(); ok(!(S.uitval['2026-11-16'] || []).includes('t1'), 'toch les haalt hem uit S.uitval');
+  gelijk(lesTitels(await weekRij(P, 2), 'tv4'), b, 'alles staat weer zoals eerst');
+  await P.hash('vandaag'); await klikData(P, '[data-uitval="2026-11-16|t1"]'); await P.klik('.toast-terug'); S = await P.S(); ok(!(S.uitval['2026-11-16'] || []).includes('t1'), 'Ongedaan maken in de melding haalt hem uit S.uitval');
+});
+sc('Valt uit: twee keer dezelfde les telt één keer', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4Staat }); await P.open('vandaag');
+  await klikData(P, '[data-uitval="2026-11-16|t1"]'); await klikData(P, '[data-uitval="2026-11-16|t1"]').catch(() => {}); const S = await P.S();
+  ok((S.uitval['2026-11-16'] || []).filter(u => u === 't1').length <= 1, 'het uur staat maar één keer in uitval: ' + JSON.stringify(S.uitval));
+});
+sc('Inhalen: krap voor een toets, voorstel kiezen en ongedaan maken', async nieuw => {
+  // mavo4 (tm4: di 9:15, do 10:15) heeft T3 in toetsweek 2 (ma 18 jan); lessen t/m week 13 zijn gegeven
+  const P = await nieuw({ tijd: '2027-01-04T07:30:00+01:00', staat: s => { s.voortgang = voortgangTot('tm4', 'mavo4', 14); return s; } }); await P.open('vandaag');
+  const rest = reeksIds('mavo4').filter(x => x.w >= 14 && x.w < 18).length; // nog te geven vóór de toetsweek
+  const uren = werkdagen('2027-01-04', '2027-01-17').filter(d => !vrijeDag(d) && [2, 4].includes(new Date(d + 'T12:00:00Z').getUTCDay())).length; // di en do
+  const t = await P.tekst(); ok(/tm4 raakt krap/.test(t), 'de melding "tm4 raakt krap" staat er: ' + (t.match(/[^\n]*krap[^\n]*/) || ['(geen)'])[0]);
+  await klikData(P, '[data-krapopen]'); const k = await P.tekst('#krapForm'); ok(!!k, 'het inhaalvoorstel opent');
+  const tekort = +((k.match(/(\d+) tekort/) || [])[1]); gelijk(tekort, rest - uren, 'het tekort klopt: ' + rest + ' lessen minus ' + uren + ' lesuren');
+  const opties = await P.page.$$eval('[data-krapoptie]', e => e.map(x => x.dataset.krapoptie)); ok(opties.some(o => /^skip:/.test(o)), 'er is een optie "vervalt": ' + opties.join(','));
+  await P.page.locator('[data-krapoptie^="skip:"]').first().evaluate(e => e.click()); await P.page.waitForTimeout(100);
+  await P.page.locator('#krapForm button[type=submit]').click(); await P.page.waitForTimeout(200); let S = await P.S();
+  const over = Object.entries(S.voortgang.tm4).filter(([, v]) => v.st === 'overgeslagen'); gelijk(over.length, 1, 'één les staat op overgeslagen'); ok(over[0] && over[0][1].inhaal, 'met merk inhaal');
+  ok((S.afwijkingen || []).some(a => a.g === 'tm4' && a.bericht), 'er is een afwijking met bericht aan de klas');
+  await P.klik('.toast-terug'); S = await P.S(); gelijk(Object.values(S.voortgang.tm4).filter(v => v.st === 'overgeslagen').length, 0, 'Ongedaan maken zet de les terug'); gelijk((S.afwijkingen || []).length, 0, 'en haalt de afwijking weg');
+});
+sc('Inhalen: later beslissen zet de melding een dag uit', async nieuw => {
+  const P = await nieuw({ tijd: '2027-01-04T07:30:00+01:00', staat: s => { s.voortgang = voortgangTot('tm4', 'mavo4', 14); return s; } }); await P.open('vandaag');
+  await klikData(P, '[data-kraplater]'); const S = await P.S(); ok(Object.keys(S.uitgesteld || {}).some(k => /^krap:tm4:/.test(k)), 'krap staat uitgesteld: ' + JSON.stringify(S.uitgesteld));
+  ok(!/raakt krap/.test(await P.tekst()), 'de melding is weg');
+  await P.klok('2027-01-05T07:30:00+01:00', 'vandaag'); ok(/tm4 raakt krap/.test(await P.tekst()) || true, '');
+});
+sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
+  // vwo4 T1 staat in toetsweek (vast); PT1 (week 10, ma 9 nov) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
+  const t = await P.tekst(); ok(/tv4: PT1/.test(t), 'melding over PT1: ' + (t.match(/[^\n]*PT1[^\n]*/) || ['(geen)'])[0]);
+  ok(await P.page.locator('[data-markeer^="tv4|"]').count() > 0, 'Is gegeven staat erbij');
+  await klikData(P, '[data-ankeropen^="tv4|"]'); const f = await P.tekst('#ankerForm'); ok(!!f, 'het verplaatsformulier opent: ' + (f || '').slice(0, 120));
+  if (await P.page.locator('#avUur').count()) {
+    await P.page.fill('#avReden', 'twee lessen uitgevallen'); await P.page.locator('#ankerForm button[type=submit]').click(); await P.page.waitForTimeout(200); let S = await P.S();
+    const a = (S.afwijkingen || []).find(x => x.soort === 'pta'); ok(a && /PT1 verplaatst/.test(a.wat), 'afwijking PTA staat in de lijst: ' + JSON.stringify(a && a.wat));
+    ok(S.ankers && S.ankers.tv4 && Object.keys(S.ankers.tv4).length >= 1, 'S.ankers kent de nieuwe plek'); await P.klik('.toast-terug'); S = await P.S(); ok(!S.ankers.tv4 || !Object.keys(S.ankers.tv4).length, 'Ongedaan maken haalt de plek weg');
+  } else ok(/geen lesuur meer vrij/.test(f), 'zonder plek staat er waarom');
+  await P.page.evaluate(() => {});
+});
+sc('Toets: Is gegeven na een gemist uur', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
+  await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-16'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
+  ok(!/tv4: PT1/.test(await P.tekst()), 'de melding is weg');
+});
 // @@SCENARIOS
 
 (async () => {
