@@ -291,7 +291,7 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 .taak.af .taak-open{text-decoration:line-through;color:var(--muted)}
 .taak-open small{color:var(--muted);font-size:var(--t-klein)}
 .taak-klaar{display:flex;margin:.4rem 0 1rem}
-.nav-tel{display:inline-block;min-width:1.2em;padding:0 .3em;border-radius:1em;background:var(--rood);color:#fff;font-size:.72rem;line-height:1.35;text-align:center}
+.nav-tel{display:inline-block;min-width:1.2em;padding:0 .3em;border-radius:1em;background:var(--rood);color:var(--op);font-size:.72rem;line-height:1.35;text-align:center}
 /* uitval: melding, inhaalvoorstel, bericht aan de klas */
 .uitvalblok{display:grid;gap:.6rem;margin-bottom:1rem}
 .uitvalrij{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem .8rem}
@@ -944,3 +944,12 @@ a.jr-naam:hover{color:var(--paars)}
 .ag-chip.rol,.ag-band button.rol{box-shadow:inset 3px 0 0 var(--rol);padding-left:.5rem}
 .duurtabel input[type=color]{width:2.6rem;padding:0 .1rem}
 .duurtabel input.rolnaam{width:min(12rem,40vw);text-align:left}
+
+/* Digibord (1600 px en breder): bijzaken in de lesmodus (kopbalk, klok, fase 'min', 'fase x van y', overzicht) niet kleiner dan 18 px, leesbaar vanaf de achterste tafel */
+@media (min-width:1600px){
+  .les .lkop{font-size:1.2rem}.les .lkop b{font-size:1.4rem}
+  .les .lbalk .waar,.les .tot,.les .hint,.les .agenda .tot,.les .ring span{font-size:1.15rem}
+  .les .fasekop span,.les .fasekop small{font-size:inherit}
+  .les .agenda li{font-size:1.4rem}
+  .les .tk b{font-size:1.15rem}
+}

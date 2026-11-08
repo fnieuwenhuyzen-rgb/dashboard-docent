@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wdth,wght@75..125,400..900&display=swap">
 <link rel="stylesheet" href="app.css">
+<script>/* gegevens meteen ophalen, naast de scripts; app.js pakt ze op (laadJson) */window.VOORAF={};["basis","beoordeling","reclame"].forEach(function(n){var p=fetch("data/"+n+".json",{cache:"no-cache"}).then(function(r){return r.json()});p.catch(function(){});window.VOORAF[n]=p});</script>
 </head>
 <body>
 <div class="lk" id="lesklok" role="status" hidden></div>
@@ -32,7 +33,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <noscript>Lesdag heeft JavaScript nodig.</noscript>
 <script src="config.js"></script>
-<script src="vendor/msal-browser.min.js"></script>
+<script>/* Microsoft-bibliotheek (283 kB) alleen laden als er een clientId is ingevuld; zonder staat Microsoft 365 uit */if(window.LESDAG_CONFIG&&window.LESDAG_CONFIG.clientId)document.write('<script src="vendor/msal-browser.min.js"><\/script>');</script>
 <script src="m365.js"></script>
 <script src="lesmodus.js"></script>
 <script src="bm-reken.js"></script>
