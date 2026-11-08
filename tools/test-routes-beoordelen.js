@@ -94,6 +94,7 @@ const waar = (wat, ok, uitleg) => { controles++; if (!ok) fouten.push({ model: h
     if (TOON) console.error('  ' + m.id + '…');
     try { await Promise.race([routeVoor(browser, basis, m, idx), new Promise((_, nee) => setTimeout(() => nee(new Error('meer dan 150 s bezig (vastgelopen)')), 150000))]); } catch (e) { fouten.push({ model: m.id, wat: 'route afgebroken', echt: String(e.message).split('\n')[0].slice(0, 300), verwacht: 'doorlopen' }); }
   }
+  for (const [idx, m] of MODELLEN.entries()) { if (!['p1-bb1-gitaar', 'p4-havo5', 'p1a-mavo3-zang'].includes(m.id) || (FILTER && !FILTER.includes(m.id))) continue; if (TOON) console.error('  ' + m.id + ' randgevallen…'); try { await Promise.race([randgevallen(browser, basis, m, idx), new Promise((_, nee) => setTimeout(() => nee(new Error('randgevallen: meer dan 150 s bezig')), 150000))]); } catch (e) { fouten.push({ model: m.id + ' (randgevallen)', wat: 'route afgebroken', echt: String(e.message).slice(0, 300), verwacht: 'doorlopen' }); } }
   await browser.close(); server.kill();
   console.log(`Routetest Beoordelen: ${nModellen} modellen, ${controles} controles in ${((Date.now() - t0) / 1000).toFixed(0)} s.`);
   if (!fouten.length) { console.log('Alle routes in orde.'); process.exit(0); }
@@ -493,5 +494,113 @@ async function routeVoor(browser, basis, m, idx) {
     waar('logboek: tijd leesbaar', /\d/.test(body[0][0]));
   });
   waar('geen console- of scriptfouten', consoleFouten.length === 0, consoleFouten.slice(0, 3).join(' || '));
+  await ctx.close();
+}
+
+/* ---------------- randgevallen: andere lijstvormen, bijzondere letters, lange tekst, herladen, groepje weg, ongeldige invoer, wijzigen in de herkansing ---------------- */
+async function randgevallen(browser, basis, m, idx) {
+  const GROEP = 'tr1'; const hash = `#beoordelen/${m.id}/${GROEP}`; const D = delenM(m); const C = crits(m); huidig = m.id + ' (randgevallen)';
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block', acceptDownloads: true, permissions: ['clipboard-read', 'clipboard-write'] });
+  await ctx.route(u => !u.href.startsWith(basis), r => r.fulfill({ status: 200, contentType: r.request().resourceType() === 'stylesheet' ? 'text/css' : 'text/plain', body: '' }));
+  await ctx.route(u => u.pathname.startsWith('/api/'), r => r.fulfill({ status: 404, contentType: 'application/json', body: '{}' }));
+  await ctx.addInitScript(() => { try { if (!sessionStorage.getItem('lesdag-test-ingesteld')) { localStorage.setItem('lesdag-staat', JSON.stringify({ v: 1, rooster: [], groepLeergang: {}, magVanaf: '2026-08-01', beoord: { toetsen: {}, lijsten: {} } })); sessionStorage.setItem('lesdag-test-ingesteld', '1'); } } catch (e) {} });
+  const page = await ctx.newPage(); page.setDefaultTimeout(5000); const dialogen = []; const meldingen = [];
+  page.on('pageerror', e => fouten.push({ model: huidig, wat: 'uitzondering', echt: String(e.message).slice(0, 200), verwacht: 'geen' }));
+  page.on('dialog', d => { dialogen.push(d.message()); (/Toch opslaan\?/.test(d.message()) ? d.dismiss() : d.accept()).catch(() => {}); });
+  await page.goto(basis + '#nu', { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('#main') && !/Lesdag laden/.test(document.querySelector('#main').textContent), null, { timeout: 8000 });
+  const stap = async (naam, f) => { try { await f(); } catch (e) { fouten.push({ model: huidig, wat: 'stap ' + naam, echt: String(e.message).split('\n').slice(0, 2).join(' / ').slice(0, 300), verwacht: 'uitgevoerd' }); } };
+  const staat = () => page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')).beoord); const klik = s => page.click(s);
+  const toast = () => page.evaluate(() => (document.querySelector('#toast') || {}).textContent || '');
+  const download = async f => { const [d] = await Promise.all([page.waitForEvent('download', { timeout: 8000 }), f()]); return { naam: d.suggestedFilename(), buf: fs.readFileSync(await d.path()) }; };
+  const plak = async tekst => { await page.evaluate(h => { if (location.hash !== h) location.hash = h; }, hash); await page.waitForSelector('#bmLijst, [data-bm="lijst"]'); if (!(await page.$('#bmLijst'))) await klik('[data-bm="lijst"]'); await page.fill('#bmLijst', tekst); await klik('[data-bm="lijstopslaan"]'); await page.waitForSelector('[data-bm="concert"], [data-bm="koppelklaar"]');
+    if (await page.$('[data-bm="koppelklaar"]')) { for (const s of await page.$$('[data-bmkop]')) await s.selectOption(''); await klik('[data-bm="koppelklaar"]'); await page.waitForSelector('[data-bm="concert"]'); } // nieuwe namen: alles nieuwe leerlingen
+    return (await staat()).lijsten[GROEP].map(x => x.naam); };
+
+  /* A. andere vormen van een Magister-lijst */
+  await stap('lijstvormen', async () => {
+    const gevallen = [
+      ['regels met nummer en klas', '12345\tAnna de Vries\t4a\n12346\tBram Bakker\t4a', ['Anna de Vries', 'Bram Bakker']],
+      ['klas tussen haakjes achter de naam', 'Anna de Vries (4a)\nBram Bakker (4a)', ['Anna de Vries', 'Bram Bakker']],
+      ['klas voor de naam', '4a Anna de Vries\n4a Bram Bakker', ['Anna de Vries', 'Bram Bakker']],
+      ['lijstnummer met punt', '1. Anna de Vries\n2. Bram Bakker', ['Anna de Vries', 'Bram Bakker']],
+      ['ISO-datum en tabs', 'Anna de Vries\t2009-04-12\nBram Bakker\t2009-05-02', ['Anna de Vries', 'Bram Bakker']],
+      ['losse kolommen achternaam, tussenvoegsel, roepnaam', 'Achternaam\tTussenvoegsel\tRoepnaam\nVries\tde\tAnna\nBakker\t\tBram', ['Vries de Anna', 'Bakker Bram']],
+      ['apostrof, streepje en accenten', "Zoë O'Brien-Jansen\nÇiğdem Şahin\nŁukasz Wójcik", ["Zoë O'Brien-Jansen", 'Çiğdem Şahin', 'Łukasz Wójcik']],
+      ['lege regels en spaties', '\n  Anna de Vries  \n\n\tBram Bakker\t\n', ['Anna de Vries', 'Bram Bakker']],
+      ['Windows-regeleinden', 'Anna de Vries\r\nBram Bakker\r\n', ['Anna de Vries', 'Bram Bakker']],
+    ];
+    for (const [naam, tekst, verwacht] of gevallen) check('lijstvorm: ' + naam, await plak(tekst), verwacht);
+  });
+
+  /* B. bijzondere letters in feedbackblad, csv en kolom */
+  const NB = ['Çiğdem Şahin', 'Łukasz Wójcik', "Zoë O'Brien-Jansen", 'Renée Müller', 'Sjors Ǆurić'];
+  await stap('bijzondere letters', async () => {
+    check('lijst met bijzondere letters', await plak(NB.join('\n')), NB); const b = await staat(); const lid = b.lijsten[GROEP];
+    for (const x of lid) { await klik(`[data-bmkies="${x.id}"]`); for (const c of C) { if (c.groepsscore === true || true) await klik(`.bm-scoor button[data-bmscore="${c.id}|8"]`).catch(() => {}); } if (D.zelf) await (m.zelfSoort === 'cijfer' ? page.fill('input[data-bmzelfc]', '7,5').then(() => page.locator('input[data-bmzelfc]').blur()) : klik('.bm-scoor button[data-bmzelf="8"]')); if (D.klasgenoten) { await page.fill('input[data-bmpapier]', '7 8 9'); await page.locator('input[data-bmpapier]').blur(); } }
+    await klik(`[data-bmkies="${lid[0].id}"]`); const d = await download(() => klik('.bm-scoor [data-bm="pdf"]')); const pdf = pdfLees(d.buf);
+    waar('pdf: bijzondere naam staat er goed in (geen ontbrekende letters)', pdf.alle.includes(NB[0]), pdf.alle.slice(0, 5).join(' | '));
+    const d2 = await download(() => klik('.bm-lijst [data-bm="pdfalle"]')); const z = zipLees(d2.buf); check('zip: aantal bladen bij bijzondere namen', z.length, NB.length);
+    for (const f of z) { const i = NB.findIndex(n => f.naam.includes(n.replace(/[\\/:*?"<>|]/g, ' '))); waar('zip-bestandsnaam bevat de naam: ' + f.naam, i >= 0, f.naam); if (i >= 0) waar('pdf-tekst bevat de naam ' + NB[i], pdfLees(f.data).alle.includes(NB[i]), pdfLees(f.data).alle.slice(0, 4).join('|')); }
+    const dc = await download(() => klik('[data-bm="export"]')); check('csv: namen met bijzondere letters', csvLees(dc.buf.toString('utf8')).slice(1).filter(r => r.length > 1).map(r => r[0]), NB);
+  });
+
+  /* C. lange tekst: het blad mag over twee bladzijden gaan, maar niets mag ontbreken */
+  await stap('lange tekst', async () => {
+    const b = await staat(); const lid = b.lijsten[GROEP]; await klik(`[data-bmkies="${lid[0].id}"]`); const lang = 'Dit is een lange opmerking over het spelen, het samenwerken en het luisteren naar elkaar tijdens de uitvoering van het stuk. '.repeat(6);
+    for (const o of m.onderdelen) { await page.fill(`textarea[data-bmopm="${o.groep}"]`, lang); await page.locator(`textarea[data-bmopm="${o.groep}"]`).blur(); }
+    await page.fill('textarea[data-bmvooruit]', lang); await page.locator('textarea[data-bmvooruit]').blur();
+    const d = await download(() => klik('.bm-scoor [data-bm="pdf"]')); const pdf = pdfLees(d.buf); waar('lange tekst: pdf is geldig en heeft 1 of 2 bladzijden', pdf.paginas >= 1 && pdf.paginas <= 3, pdf.paginas);
+    const alles = pdf.alle.join(' '); waar('lange tekst: laatste zin van het punt om aan te werken staat op het blad', alles.includes('tijdens de uitvoering van het stuk.'), alles.slice(-120));
+    waar('lange tekst: eindcijfer staat op het blad', pdf.alle.includes(D.docent < 100 ? 'Eindcijfer' : 'Cijfer'), pdf.alle.slice(-8).join('|'));
+    if (pdf.paginas > 1) waar('lange tekst: voet noemt blad x van y', pdf.alle.some(t => /blad 1 van \d/.test(t)), pdf.alle.filter(t => /blad/.test(t)).join('|'));
+  });
+
+  /* D. herladen: alles blijft staan, scoren gaat gewoon door */
+  await stap('herladen', async () => {
+    const voor = JSON.stringify(await staat()); await page.reload({ waitUntil: 'load' }); await page.waitForSelector('[data-bm="concert"]'); check('staat na herladen gelijk', JSON.stringify(await staat()), voor);
+    const lid = (await staat()).lijsten[GROEP]; await klik(`[data-bmkies="${lid[1].id}"]`); const c = C[0]; await klik(`.bm-scoor button[data-bmscore="${c.id}|6"]`); await klik(`.bm-scoor button[data-bmscore="${c.id}|9"]`);
+    check('score na herladen', (await staat()).toetsen[m.id + '|' + GROEP].ll[lid[1].id].s[c.id], 9);
+  });
+
+  /* E. ongeldige invoer bij eigen cijfer en papieren cijfers */
+  if (D.zelf && m.zelfSoort === 'cijfer') await stap('ongeldig eigen cijfer', async () => {
+    const lid = (await staat()).lijsten[GROEP]; await klik(`[data-bmkies="${lid[2].id}"]`);
+    for (const [invoer, verwacht] of [['11', null], ['abc', null], ['0', null], ['7,55', 7.6], ['7.5', 7.5], ['10', 10], ['', null]]) { await page.fill('input[data-bmzelfc]', invoer); await page.locator('input[data-bmzelfc]').blur(); const z = (await staat()).toetsen[m.id + '|' + GROEP].ll[lid[2].id].zelf; check(`eigen cijfer "${invoer}"`, z === undefined ? null : z, verwacht); }
+  });
+  if (D.klasgenoten) await stap('ongeldig papier', async () => {
+    const lid = (await staat()).lijsten[GROEP]; await klik(`[data-bmkies="${lid[2].id}"]`); await page.fill('input[data-bmpapier]', '7 x 9,5 11 6,25'); await page.locator('input[data-bmpapier]').blur();
+    check('papier: alleen geldige cijfers', ((await staat()).toetsen[m.id + '|' + GROEP].ll[lid[2].id].klas || {}).papier, [7, 9.5, 6.3]);
+  });
+
+  /* F. groepje verwijderen na groepsscores (alleen modellen met groepsscore) */
+  if (C.some(c => c.groepsscore)) await stap('groepje verwijderen', async () => {
+    await plak(NAMEN.join('\n')); const b = await staat(); const lid = b.lijsten[GROEP]; await klik('[data-bm="groepjes"]'); await klik('[data-bm="gnieuw"]'); const T0 = (await staat()).toetsen[m.id + '|' + GROEP]; const gid = T0.groepjes[0].id;
+    for (const i of [0, 1]) await klik(`[data-bmgin="${lid[i].id}"]`); await klik('[data-bm="dicht"]');
+    for (const c of C.filter(c => c.groepsscore)) { await klik(`[data-bmgkies="${gid}"]`); await klik(`.bm-scoor button[data-bmgs="${c.id}|8"]`); }
+    await klik(`[data-bmkies="${lid[1].id}"]`); for (const c of C) await klik(`.bm-scoor button[data-bmscore="${c.id}|7"]`); // Bram eigen alles
+    await klik(`[data-bmkies="${lid[0].id}"]`); for (const c of C.filter(c => !c.groepsscore || c.groepsscore === 'start')) await klik(`.bm-scoor button[data-bmscore="${c.id}|${c.groepsscore === 'start' ? 8 : 6}"]`); // Anna: groep + eigen
+    if (D.zelf) for (const i of [0, 1]) { await klik(`[data-bmkies="${lid[i].id}"]`); if (m.zelfSoort === 'cijfer') { await page.fill('input[data-bmzelfc]', '7'); await page.locator('input[data-bmzelfc]').blur(); } else await klik('.bm-scoor button[data-bmzelf="7"]'); }
+    if (D.klasgenoten) for (const i of [0, 1]) { await klik(`[data-bmkies="${lid[i].id}"]`); await page.fill('input[data-bmpapier]', '7 7 7'); await page.locator('input[data-bmpapier]').blur(); }
+    const cel = async i => (await page.locator(`li:has([data-bmkies="${lid[i].id}"]) .bm-c`).innerText()).trim();
+    const voorAnna = await cel(0); const voorBram = await cel(1); waar('Anna heeft een cijfer via de groepsscore', /\d/.test(voorAnna) && !/\?/.test(voorAnna), voorAnna);
+    await klik('[data-bm="groepjes"]'); dialogen.length = 0; await klik(`[data-bmgweg="${gid}"]`); await page.waitForTimeout(150); waar('verwijderen vraagt bevestiging', dialogen.some(t => /verwijderen/.test(t)), JSON.stringify(dialogen)); await klik('[data-bm="dicht"]');
+    check('Bram (alles eigen) houdt zijn cijfer', await cel(1), voorBram); const na = await cel(0);
+    const T = (await staat()).toetsen[m.id + '|' + GROEP]; check('groepje weg uit staat', T.groepjes.length, 0); check('groepsscores weg', Object.keys(T.gs || {}), []);
+    if (C.some(c => c.groepsscore === true)) waar('Anna verliest haar cijfer als haar groepsscore vervalt (onderdeel ontbreekt)', !/^\d/.test(na) || /\?/.test(na), na);
+  });
+
+  /* G. wijzigen in de herkansing (alleen herkansbare modellen) */
+  if (m.herkansbaar !== false) await stap('wijzigen in de herkansing', async () => {
+    await plak(NAMEN.join('\n')); const lid = (await staat()).lijsten[GROEP]; const T0 = () => page.evaluate(k => JSON.parse(localStorage.getItem('lesdag-staat')).beoord.toetsen[k], m.id + '|' + GROEP);
+    const scoorAlles = async (v, zelf) => { for (const c of C) await klik(`.bm-scoor button[data-bmscore="${c.id}|${v}"]`); if (D.zelf) await klik(`.bm-scoor button[data-bmzelf="${zelf}"]`); };
+    await klik(`[data-bmkies="${lid[0].id}"]`); await scoorAlles(6, 6); await klik('.bm-lijst [data-bm="afronden"]'); await page.waitForTimeout(200);
+    await klik('[data-bmlaag="herkans"]'); await klik(`[data-bmhwie="${lid[0].id}"]`); await klik('[data-bm="herkansklaar"]'); await klik(`[data-bmkies="${lid[0].id}"]`); await scoorAlles(9, 9); await klik('.bm-lijst [data-bm="afronden"]'); await page.waitForTimeout(200);
+    let t = await T0(); const e2 = t.herkans.ll[lid[0].id].vast.e; waar('herkansing afgerond', e2 > t.ll[lid[0].id].vast.e, e2 + ' vs ' + t.ll[lid[0].id].vast.e);
+    await klik('.bm-scoor [data-bm="heropen"]'); t = await T0(); waar('herkansing openzetten haalt alleen de herkansing open', !t.herkans.ll[lid[0].id].vast && !!t.ll[lid[0].id].vast, JSON.stringify([!!t.herkans.ll[lid[0].id].vast, !!t.ll[lid[0].id].vast]));
+    await klik('.bm-lijst [data-bmlaag=""]').catch(() => klik('[data-bmlaag=""]')); await klik('[data-bm="kolom"]'); const rij = await page.$$eval('.bm-kolom tbody tr', r => r.map(x => [...x.cells].map(c => c.textContent.trim()))); waar('cijferkolom: eerste poging telt zolang de herkansing openstaat', rij[0][1] === toon(t.ll[lid[0].id].vast.e * 10) && /herkansing/.test(rij[0][2]), JSON.stringify(rij[0]));
+    await klik('.kaart.bm [data-bm="dicht"]'); await klik('[data-bmlaag="herkans"]'); await klik(`[data-bmkies="${lid[0].id}"]`); await scoorAlles(4, 4); await klik('.bm-lijst [data-bm="afronden"]'); await page.waitForTimeout(200); t = await T0();
+    waar('na opnieuw afronden met laag cijfer telt de eerste poging', t.herkans.ll[lid[0].id].vast.e < t.ll[lid[0].id].vast.e, t.herkans.ll[lid[0].id].vast.e + ' vs ' + t.ll[lid[0].id].vast.e);
+    await klik('[data-bmlaag=""]'); await klik('[data-bm="kolom"]'); const rij2 = await page.$$eval('.bm-kolom tbody tr', r => r.map(x => [...x.cells].map(c => c.textContent.trim()))); check('cijferkolom: eerste poging telt', rij2[0][1], toon(t.ll[lid[0].id].vast.e * 10));
+  });
   await ctx.close();
 }
