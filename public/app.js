@@ -366,7 +366,7 @@ function planBasis() { // alle lesuren per groep over het hele jaar, met de les 
   return PLAN;
 }
 const lesId = (lg, y) => `${lg}:${y.w}.${y.li}`;
-const periodeEind = (lg, a) => { const b = (B.leergangen[lg].blokken || []).find(b => b.id === a.t.blok); return b && b.weken ? b.weken[1] : a.item.w; };
+const periodeEind = (lg, a) => { const id = String(a.t.blok || '').split('+').pop(); const b = (B.leergangen[lg].blokken || []).find(b => b.id === id); return b && b.weken ? Math.max(b.weken[1], a.item.w) : a.item.w; }; // PTA-toetsen hebben meerdere blokken ("B1+B2"): de laatste telt
 function ankersVan(g) { // de toetsen van een groep met hun lesuur. a.vast: staat op zijn uur; anders schuift hij mee tot a.grens, het laatste uur in zijn periode
   const P = planBasis(); if (P.ank[g]) return P.ank[g];
   const lg = leergangVan(g); const slots = P.slots[g] || []; const verpl = (S.ankers || {})[g] || {};
@@ -427,9 +427,9 @@ function afwezigTerug(dagen) {
   for (const s of dagen) { const rec = S.afwezig[s]; if (!rec) continue; for (const [g, m] of Object.entries(rec.herstel || {})) Object.assign(S.voortgang[g] = S.voortgang[g] || {}, m); delete S.afwezig[s]; }
   bewaar();
 }
-function verplaatsUren(g, a) { // uren waar een toets heen kan; een PTO-toets blijft in zijn periode
-  const t = vandaag(); const lg = leergangVan(g); const eind = ONDERBOUW.test(lg) ? periodeEind(lg, a) : 99;
-  return (planBasis().slots[g] || []).filter(y => y.s > t && y.w <= eind && !y.anker && !y.geplandUit && !isUitval(y.s, y.u));
+function verplaatsUren(g, a) { // uren waar een toets heen kan (keuze Frans 5-11): niet vóór de week waarin de leergang hem zet, niet na het einde van zijn periode (ook een PTA-toets), zodat de tijd tussen lesstof en toets klein blijft
+  const t = vandaag(); const lg = leergangVan(g); const eind = periodeEind(lg, a);
+  return (planBasis().slots[g] || []).filter(y => y.s > t && y.w >= a.item.w && y.w <= eind && !y.anker && !y.geplandUit && !isUitval(y.s, y.u));
 }
 function verplaatsAnker(g, a, sleutel, reden) { // lessen van dezelfde toets (P2, P2 vervolg) gaan samen mee
   const [s, uur] = sleutel.split('|'); const lg = leergangVan(g); const oud = a.slot || a.grens;
@@ -1361,7 +1361,7 @@ function ankerForm(g, a) { // een toets verplaatsen: Frans beslist, met een rede
 }
 function verplaatsVelden(g, a, uren) {
   const lg = leergangVan(g);
-  if (!uren.length) return `<p class="lead">${ONDERBOUW.test(lg) ? `Er is geen lesuur meer vrij in deze periode (tot en met lesweek ${periodeEind(lg, a)}).` : 'Er is geen lesuur meer vrij.'}</p>`;
+  if (!uren.length) return `<p class="lead">Er is geen lesuur meer vrij tussen lesweek ${a.item.w} en het einde van de periode (lesweek ${periodeEind(lg, a)}).</p>`;
   return `<div class="rij"><label>Naar <select id="avUur">${uren.slice(0, 10).map(y => `<option value="${esc(y.s + '|' + y.u.id)}">${esc(fmtD(y.s))} ${esc(y.u.start)}</option>`).join('')}</select></label><label style="flex:3 1 16rem">Reden (voor de lijst met afwijkingen) <input id="avReden" required placeholder="Bijvoorbeeld: twee lessen uitgevallen"></label></div>`;
 }
 function krapOpties(R) {
