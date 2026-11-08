@@ -2158,7 +2158,7 @@ function paletToon() {
   const sel = $('#palL .sel'); if (sel) sel.scrollIntoView({ block: 'nearest' });
 }
 function paletKies(j) { const a = PAL && PAL.L[j]; if (!a) return; if (a.zet != null) { $('#palQ').value = a.zet; PAL.q = a.zet; PAL.i = 0; paletToon(); $('#palQ').focus(); return; } paletDicht(); a.run(); }
-const DAGW = { zondag: 0, maandag: 1, dinsdag: 2, woensdag: 3, donderdag: 4, vrijdag: 5, zaterdag: 6, ma: 1, di: 2, wo: 3, do: 4, vr: 5 };
+const DAGW = { zondag: 0, maandag: 1, dinsdag: 2, woensdag: 3, donderdag: 4, vrijdag: 5, zaterdag: 6, ma: 1, di: 2, wo: 3, do: 4, vr: 5, za: 6 };
 function datumVan(dag, mnd) { // de eerstvolgende keer; '' als de datum niet bestaat (31 februari)
   const j = dOf(vandaag()).getFullYear();
   for (let y = j; y <= j + 4; y++) { const D = new Date(y, mnd, dag, 12); if (D.getMonth() !== mnd || D.getDate() !== dag) continue; const x = ymd(D); if (x >= vandaag()) return x; }
@@ -2186,7 +2186,7 @@ function leesTaak(q, dagHint, los) { // los: in de agenda telt 11-12 als tijd en
   if (pak(/\s(?:eer)?gisteren(?=\s)/i)) fouten.push('Gisteren is al voorbij. Kies vandaag of een dag die nog komt.');
   if ((m = pak(/\s(vandaag|morgen|overmorgen)(?=\s)/i))) dag = addD(s0, { vandaag: 0, morgen: 1, overmorgen: 2 }[m[1].toLowerCase()]);
   const vw = pak(/\svolgende\s+week(?=\s)/i);
-  if ((m = pak(/\s(maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|ma|di|wo|do|vr)(?=\s)/i))) { const wd = DAGW[m[1].toLowerCase()]; let d = s0; while (dOf(d).getDay() !== wd) d = addD(d, 1); if (vw && d < addD(maandagVan(s0), 7)) d = addD(d, 7); dag = d; }
+  if ((m = pak(/\s(maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|ma|di|wo|do|vr|za)(?=\s)/i))) { const wd = DAGW[m[1].toLowerCase()]; let d = s0; while (dOf(d).getDay() !== wd) d = addD(d, 1); if (vw && d < addD(maandagVan(s0), 7)) d = addD(d, 7); dag = d; }
   else if (vw) dag = addD(maandagVan(s0), 7);
   const geenDatum = (d, mn) => fouten.push(`${d} ${MAANDEN[mn] || 'van maand ' + (mn + 1)} bestaat niet. Kies een datum die bestaat.`);
   if (!dag && (m = pak(/\s(\d{1,2})[-\/](\d{1,2})(?=\s)/))) { dag = +m[2] >= 1 && +m[2] <= 12 ? datumVan(+m[1], +m[2] - 1) : ''; if (!dag) geenDatum(+m[1], +m[2] - 1); }
@@ -3072,6 +3072,7 @@ document.addEventListener('submit', e => {
     if (!u.groep) return;
     const a = minuten(u.start), b = minuten(u.eind);
     if (!u.start || !u.eind || b <= a) { toast(b === a ? 'Begin en eind zijn gelijk. Kies een eindtijd na de begintijd.' : `Het uur eindigt (${u.eind}) vóór het begint (${u.start}). Kies een eindtijd na de begintijd.`); return; }
+    if (S.rooster.some(x => +x.dag === u.dag && minuten(x.start) === a && x.groep === u.groep)) { toast(`${u.groep} heeft ${DAGLANG[u.dag]} om ${u.start} al les. Een uur kan niet twee keer.`); return; } // dezelfde klas op dezelfde tijd is een dubbel uur
     const over = S.rooster.filter(x => +x.dag === u.dag && minuten(x.start) < b && minuten(x.eind) > a); // waarschuwen, niet weigeren: twee groepen in één uur kan
     const waar = [over.length ? `het overlapt met ${lijstTxt(over.map(x => `${x.groep} ${x.start.replace(/^0/, '')}-${x.eind.replace(/^0/, '')}`))}` : '', b - a > 120 ? `het duurt ${Math.floor((b - a) / 60)} uur${(b - a) % 60 ? ' en ' + (b - a) % 60 + ' min' : ''}` : ''].filter(Boolean);
     const terug = foto(); S.rooster.push(u); bewaar(); toast(`${DAGLANG[u.dag]} ${u.start} ${u.groep} toegevoegd${waar.length ? ". Let op: " + waar.join(' en ') + '.' : ''}`, waar.length ? terug : undefined);
