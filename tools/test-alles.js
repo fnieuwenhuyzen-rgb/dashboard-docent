@@ -14,6 +14,7 @@ const STAPPEN = [
   ['Lesklok', 'test-lesklok.js', []],
   ['Agendafeed', 'test-agendafeed.js', []],
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
+  ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
 ];
 const uitslag = []; const t0 = Date.now();

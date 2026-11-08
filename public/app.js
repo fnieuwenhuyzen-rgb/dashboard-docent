@@ -78,7 +78,9 @@ function staatRepareer(d) { // kapotte onderdelen leeg, de rest blijft
   return r;
 }
 const VOOR_KOPIE = 'lesdag-staat-voor-kopie'; // de stand van vóór de laatst teruggezette kopie, voor als de melding al weg is
-function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
+/* alles wat binnenkomt (opslag, kopie, server, automatische kopie) gaat door de migratieketen in staat.js. Is een hoofdonderdeel kapot, dan blijft de staat zoals hij is: staatFouten en het herstelscherm beslissen dan. */
+function staatIn(d) { const raw = Object.assign(nieuweStaat(), d); try { const l = nieuweStaat(); for (const k of Object.keys(l)) if (Array.isArray(l[k]) && Array.isArray(raw[k])) raw[k] = raw[k].filter(isObj); if (isObj(raw.beoord)) for (const k of ['lijsten', 'toetsen']) if (raw.beoord[k] == null) delete raw.beoord[k]; } catch (e) {} if (!window.STAAT || staatFouten(raw).length) return raw; try { return STAAT.migreer(raw, nieuweStaat()).staat; } catch (e) { return raw; } }
+function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return staatIn(JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 /* alleen op dit apparaat: jarige collega's, wie er absent is en logboeknotities over
    leerlingen. Een eigen sleutel die nooit naar OneDrive gaat, niet in de kopie zit en nooit naar de server. Absenten en logboeknotities
    verdwijnen zodra ze in Magister staan. */
@@ -568,12 +570,12 @@ async function kopieTerug(file) {
   const wanneer = d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum';
   if (!confirm(`Kopie van ${wanneer} terugzetten?\n\nDaarin: ${kopieOmvang(d)}.\nNu op dit apparaat: ${kopieOmvang(S)}.\n\nAlles op dit apparaat wordt vervangen${SY && SY.aan() ? ', en via synchroniseren ook op je andere apparaten' : ''}.`)) return;
   const terug = foto(); try { localStorage.setItem(VOOR_KOPIE, JSON.stringify({ tijd: Date.now(), foto: terug })); } catch (e) {}
-  S = Object.assign(nieuweStaat(), d); bewaar(); toast('Kopie teruggezet', terug);
+  S = staatIn(d); bewaar(); toast('Kopie teruggezet', terug);
 }
 function terugZetten() {
   if (!TERUG) return; const o = TERUG; TERUG = null;
   if (typeof o === 'function') { $('#toast').hidden = true; o(); return; }
-  const f = JSON.parse(o); S = Object.assign(nieuweStaat(), f.S); AP = Object.assign(apLeeg(), f.AP); apBewaar(); bewaar();
+  const f = JSON.parse(o); S = staatIn(f.S); AP = Object.assign(apLeeg(), f.AP); apBewaar(); bewaar();
   if (zGekoppeld() && !ZC) zOphalen(false);
   toast('Teruggezet');
 }
@@ -2507,7 +2509,7 @@ let syncUit = '';
 function syncDoc() { const { updated, ...d } = S; const t = zApiToken(); if (t) d._zermeloApi = t; return d; } // de Zermelo-koppeling staat buiten S maar gaat wel mee
 function syncZet(d) {
   const { _zermeloApi: t, ...rest } = d; const upd = S.updated; const had = zGekoppeld();
-  S = Object.assign(nieuweStaat(), rest); S.beoord = Object.assign({ lijsten: {}, toetsen: {} }, S.beoord); S.updated = upd;
+  S = staatIn(rest); S.beoord = Object.assign({ lijsten: {}, toetsen: {} }, S.beoord); S.updated = upd;
   roosterOpruimen(); // twee apparaten die apart overnamen geven na samenvoegen dubbele lesuren
   try { localStorage.setItem(LS_KEY, JSON.stringify(S)); if (t) localStorage.setItem(Z_API, t); else localStorage.removeItem(Z_API); opslagMelding(null); } catch (e) { opslagMelding(e); }
   if (!had && zGekoppeld() && zProxy() && navigator.onLine) zOphalen(false);
@@ -3602,7 +3604,7 @@ async function syncNu(melden) {
   setSync('bezig', 'Synchroniseren…');
   try {
     const r = await M365.loadState();
-    if (r && r.v && (r.updated || 0) > (S.updated || 0)) { S = Object.assign(nieuweStaat(), r); try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} render(); }
+    if (r && r.v && (r.updated || 0) > (S.updated || 0)) { S = staatIn(r); try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} render(); }
     else if (!r || (S.updated || 0) > (r.updated || 0)) await M365.saveState(S);
     setSync('ok', 'Opgeslagen in OneDrive'); if (melden) toast('Gesynchroniseerd');
   } catch (e) { setSync('fout', 'OneDrive niet bereikbaar, staat op dit apparaat'); console.warn(e); if (melden) toast('Synchroniseren lukt niet'); }
@@ -3616,7 +3618,7 @@ setInterval(() => {
 }, 20000);
 // een tweede venster (bord, kompas) bewaarde iets: neem het over, zodat dit venster het niet overschrijft
 window.addEventListener('storage', e => {
-  if (e.key === LS_KEY && e.newValue) { try { S = Object.assign(nieuweStaat(), JSON.parse(e.newValue)); } catch (x) { return; } if (SY) SY.gewijzigd(); }
+  if (e.key === LS_KEY && e.newValue) { try { S = staatIn(JSON.parse(e.newValue)); } catch (x) { return; } if (SY) SY.gewijzigd(); }
   else if (e.key === AP_KEY) AP = laadAP(); else return;
   const a = document.activeElement; if (B && !LES && !PAL && !(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName))) render();
 });
@@ -3658,6 +3660,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
   const kapot = staatFouten(S); if (kapot.length) { herstelScherm('Je opgeslagen gegevens zijn beschadigd. Niet in orde: ' + kapot.join(', ') + '.'); return; } // vóór bewaren en synchroniseren: niets kapots doorgeven
+  try { const ruw = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); if (ruw && ruw.schema !== S.schema) localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} // de gemigreerde vorm ook opslaan, zonder `updated` te veranderen
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
   try { B = await laadJson('basis'); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
@@ -3707,6 +3710,6 @@ function herstelScherm(reden) { // Lesdag start niet: altijd een uitweg zonder s
   };
   el.onchange = async ev => { const t = ev.target; if (t.dataset.h !== 'imp' || !t.files[0]) return; let d = null; try { d = JSON.parse(await t.files[0].text()); } catch (e) {} t.value = '';
     const f = staatFouten(d); if (f.length) { alert('Deze kopie is ook niet in orde (' + f.join(', ') + '). Kies een andere.'); return; }
-    zet(Object.assign(nieuweStaat(), d), `Kopie van ${d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum'} terugzetten? Daarin: ${kopieOmvang(d)}.`); };
+    zet(staatIn(d), `Kopie van ${d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum'} terugzetten? Daarin: ${kopieOmvang(d)}.`); };
 }
 })();
