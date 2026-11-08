@@ -2519,7 +2519,7 @@ function syncStart() {
   if (!window.SYNC) return;
   SY = SYNC.maak({ fetch: (u, i) => fetch(u, i), opslag: SYNC.idbOpslag(), slot: navigator.locks ? fn => navigator.locks.request('lesdag-sync', fn) : null,
     vlag: { aan: () => { try { return localStorage.getItem(SYNC_VLAG) === '1'; } catch (e) { return false; } }, zet: () => { localStorage.setItem(SYNC_VLAG, '1'); } },
-    app: { haal: syncDoc, zet: syncZet, mag: syncMag, status: syncStatus, nieuwer: ms => (S.updated || 0) > ms, kopie: async () => { $('#opslagfout [data-export]').click(); } } });
+    app: { haal: syncDoc, zet: syncZet, mag: syncMag, status: syncStatus, nieuwer: ms => (S.updated || 0) > ms, kopie: async () => { $('#opslagfout [data-export]').click(); }, fouten: staatFouten } });
   SY.start().then(() => { if (route.naam === 'instellingen' && !PAL) render(); });
   setInterval(() => { if (!document.hidden) SY.nu(); }, 60000);
   window.addEventListener('online', () => SY.nu());

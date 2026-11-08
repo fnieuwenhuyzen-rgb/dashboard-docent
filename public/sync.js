@@ -15,7 +15,7 @@
 
   /* b: laatst gemeenschappelijk; l: dit apparaat; s: server. opt.lokaalNieuwer beslist bij hetzelfde veld op twee plekken.
      opt.zonderBasis: twee bronnen die elkaar nog nooit zagen (Edge, Chrome, tablet): dan wint aan (true) van uit, zodat afgevinkte taken niet terugkomen. */
-  function samenvoegen(b, l, s, opt = {}) {
+  function samenvoegen(b, l, s, opt = {}, pad = '') {
     if (gelijk(l, s)) return l;
     if (gelijk(l, b)) return s;
     if (gelijk(s, b)) return l;
@@ -23,12 +23,12 @@
     if (s === undefined) return l;
     if (isObj(l) && isObj(s)) {
       const u = {}, B = isObj(b) ? b : {};
-      for (const k of new Set([...Object.keys(l), ...Object.keys(s)])) { const v = samenvoegen(B[k], l[k], s[k], opt); if (v !== undefined) u[k] = v; }
+      for (const k of new Set([...Object.keys(l), ...Object.keys(s)])) { const v = samenvoegen(B[k], l[k], s[k], opt, pad + '/' + k); if (v !== undefined) u[k] = v; }
       return u;
     }
     if (heeftIds(l) && heeftIds(s)) {
       const B = heeftIds(b) ? b : [], vind = (L, id) => L.find(x => x.id === id), u = [];
-      for (const x of [...l, ...s.filter(y => !vind(l, y.id))]) { const v = samenvoegen(vind(B, x.id), vind(l, x.id), vind(s, x.id), opt); if (v !== undefined) u.push(v); }
+      for (const x of [...l, ...s.filter(y => !vind(l, y.id))]) { const v = samenvoegen(vind(B, x.id), vind(l, x.id), vind(s, x.id), opt, pad + '/' + x.id); if (v !== undefined) u.push(v); }
       return u;
     }
     if (Array.isArray(l) && Array.isArray(s)) { // lijst zonder ids (minutenlog, krabbels): bewaar wat erbij kwam, haal weg wat de ander weghaalde
@@ -36,6 +36,8 @@
       return [...l.filter(x => !(in_(B, x) && !in_(s, x))), ...s.filter(x => !in_(B, x) && !in_(l, x))];
     }
     if (opt.zonderBasis && typeof l === 'boolean' && typeof s === 'boolean') return l || s;
+    /* hetzelfde veld op twee plekken verschillend gewijzigd: één waarde wint, de andere wordt niet stil weggegooid maar genoteerd (opt.botsingen) */
+    if (opt.botsingen) opt.botsingen.push({ pad, lokaal: l, server: s, gekozen: opt.lokaalNieuwer ? 'lokaal' : 'server' });
     return opt.lokaalNieuwer ? l : s;
   }
 
@@ -83,16 +85,23 @@
       if (r.type === 'opaqueredirect' || r.status === 401 || r.status === 403 || (r.status >= 300 && r.status < 400)) throw new Stop('login');
       if (r.status === 503) throw new Stop('uit');
       if (r.status === 409) return { conflict: true };
-      if (!r.ok) throw new Stop(r.status === 413 ? 'tegroot' : 'fout');
+      if (!r.ok) {
+        if (r.status === 500) { let b = null; try { b = await r.json(); } catch (e) {} if (b && b.fout === 'beschadigd') throw new Stop('kapot'); }
+        throw new Stop(r.status === 413 ? 'tegroot' : 'fout');
+      }
       return r.json();
     }
-    const haalAlles = async () => { const a = await vraag(''); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc: samen(a.onderdelen) }; };
+    function controleer(doc) { if (app.fouten && app.fouten(doc).length) throw new Stop('kapot'); }
+    /* wat van de server komt wordt gecontroleerd voordat het ergens in terechtkomt: een beschadigd onderdeel (rooster als tekst) mag niet in de staat of in een basis belanden */
+    const haalAlles = async () => { const a = await vraag(''); const doc = samen(a.onderdelen); if (!leeg(doc)) controleer(doc); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc }; };
     const stuur = (basis, gewijzigd, keepalive) => { const body = JSON.stringify({ basis, gewijzigd }); return vraag('', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body, keepalive: !!keepalive && body.length < 60000 }); };
     function meld(e) {
       if (!(e instanceof Stop)) { console.warn(e); app.status('fout', 'Synchroniseren mislukt, staat op dit apparaat'); return; }
       if (e.soort === 'offline') app.status('', 'Offline, staat op dit apparaat');
       else if (e.soort === 'login') app.status('fout login', 'Opnieuw inloggen');
       else if (e.soort === 'uit') app.status('', 'Op dit apparaat');
+      else if (e.soort === 'leeg') app.status('fout', 'Die back-up is leeg, er is niets teruggezet');
+      else if (e.soort === 'kapot') app.status('fout', 'Gegevens op de server zijn beschadigd, niets overgenomen');
       else if (e.soort === 'tegroot') app.status('fout', 'Te groot om te synchroniseren, staat op dit apparaat');
       else app.status('fout', 'Server niet bereikbaar, staat op dit apparaat');
     }
@@ -103,19 +112,33 @@
       if (!gelijk(nu, d)) app.zet(d);
     }
 
+    /* botsingen blijven op dit apparaat bewaard (laatste 200, grote waarden ingekort), zodat een overschreven score terug te vinden is */
+    const kort_ = x => { const t = JSON.stringify(x); return t === undefined || t.length < 2000 ? x : t.slice(0, 2000) + '…'; };
+    async function noteer(lijst) {
+      if (!lijst.length) return;
+      const oud = (await opslag.haal('botsingen')) || [], op = Date.now();
+      await opslag.zet('botsingen', [...oud, ...lijst.map(x => ({ ...x, lokaal: kort_(x.lokaal), server: kort_(x.server), op }))].slice(-200));
+    }
     async function ronde(keepalive) {
       for (let poging = 0; poging < 4; poging++) {
         const basis = (await opslag.haal('basis')) || { versie: 0, doc: {} };
         const lokaal = kloon(app.haal());
         const kort = await vraag('?sinds=' + basis.versie);
         const server = kort.versie === basis.versie ? { versie: basis.versie, bijgewerkt: kort.bijgewerkt, doc: basis.doc } : await haalAlles();
-        const doc = samenvoegen(basis.doc, lokaal, server.doc, { lokaalNieuwer: app.nieuwer(server.bijgewerkt) });
+        /* twee situaties waarin "wat de ander weghaalde" een ramp is, geen wens:
+           - dit apparaat is zijn eigen staat kwijt (leeg beginnen, wissen) maar de basis weet nog beter: de server geeft alles terug, er wordt niets weggehaald;
+           - de server is leeg of ouder dan de basis (nieuwe of teruggezette database): dan telt de basis niet en blijft alles van dit apparaat bewaard, ook wat de server mist. */
+        const botsingen = [];
+        const kwijt = leeg(lokaal) && !leeg(basis.doc);
+        const serverTerug = !kwijt && !leeg(basis.doc) && (leeg(server.doc) || server.versie < basis.versie);
+        const doc = kwijt ? server.doc : samenvoegen(serverTerug ? {} : basis.doc, lokaal, server.doc, { lokaalNieuwer: serverTerug || app.nieuwer(server.bijgewerkt), zonderBasis: serverTerug, botsingen });
         const g = verschil(doc, server.doc);
         let versie = server.versie;
         if (Object.keys(g).length) { const r = await stuur(server.versie, g, keepalive); if (r.conflict) continue; versie = r.versie; }
         await opslag.zet('basis', { versie, doc });
+        await noteer(botsingen);
         pasToe(lokaal, doc);
-        return;
+        return botsingen.length;
       }
       throw new Error('te veel botsingen');
     }
@@ -125,7 +148,7 @@
       if (!app.mag()) { later(10000); return; }
       await opSlot(async () => {
         app.status('bezig', 'Synchroniseren…');
-        try { await ronde(keepalive); app.status('ok', 'Gesynchroniseerd'); }
+        try { const n = await ronde(keepalive); app.status('ok', n ? `Gesynchroniseerd; ${n} ${n === 1 ? 'wijziging' : 'wijzigingen'} op twee apparaten botsten, de laatste is bewaard` : 'Gesynchroniseerd'); }
         catch (e) { meld(e); }
       });
       if (nogEens) { nogEens = false; later(1000); }
@@ -138,9 +161,9 @@
       return opSlot(async () => {
         const lokaal = kloon(app.haal());
         const server = await haalAlles();
-        const hadData = !leeg(lokaal);
+        const hadData = !leeg(lokaal), botsingen = [];
         if (hadData) { await opslag.zet('voor-sync', { op: Date.now(), doc: lokaal }); await app.kopie(); }
-        const doc = !hadData ? server.doc : leeg(server.doc) ? lokaal : samenvoegen({}, lokaal, server.doc, { zonderBasis: true, lokaalNieuwer: app.nieuwer(server.bijgewerkt) });
+        const doc = !hadData ? server.doc : leeg(server.doc) ? lokaal : samenvoegen({}, lokaal, server.doc, { zonderBasis: true, lokaalNieuwer: app.nieuwer(server.bijgewerkt), botsingen });
         const g = verschil(doc, server.doc);
         const r = Object.keys(g).length ? await stuur(server.versie, g) : { versie: server.versie };
         if (r.conflict) throw new Stop('fout');
@@ -148,6 +171,7 @@
         if (!gelijk(delen(terug.doc), delen(kloon(doc)))) throw new Error('de server gaf iets anders terug');
         await opslag.zet('basis', { versie: terug.versie, doc: terug.doc });
         vlag.zet();
+        await noteer(botsingen);
         pasToe(lokaal, doc);
         app.status('ok', 'Gesynchroniseerd');
         return { hier: telling(lokaal), server: telling(server.doc), samen: telling(doc) };
@@ -162,9 +186,12 @@
         app.status('', s.versie > 0 || !leeg(kloon(app.haal())) ? 'Nog niet gekoppeld' : 'Op dit apparaat');
       } catch (e) { meld(e); }
     }
+    const botsingen = async () => (await opslag.haal('botsingen')) || [];
     const backups = async () => (await vraag('?backups=1')).dagen;
-    const backup = async dag => samen((await vraag('?backup=' + encodeURIComponent(dag))).onderdelen);
-    return { nu, later, gewijzigd, aanzetten, start, backups, backup, meld, aan: () => vlag.aan() };
+    /* een back-up die leeg of beschadigd is mag nooit als staat terugkomen: de app zet hem op al je apparaten neer */
+    const backup = async dag => { const d = samen((await vraag('?backup=' + encodeURIComponent(dag))).onderdelen); if (leeg(d)) throw new Stop('leeg'); controleer(d); return d; };
+    const stop = () => { clearTimeout(timer); nogEens = false; }; // voor de tests: geen verdwaalde timer na afloop
+    return { stop, nu, later, gewijzigd, aanzetten, start, backups, backup, botsingen, meld, aan: () => vlag.aan() };
   }
 
   /* kleine opslag in IndexedDB: de basis kan even groot zijn als de staat zelf en past dan niet meer naast de staat in localStorage */
