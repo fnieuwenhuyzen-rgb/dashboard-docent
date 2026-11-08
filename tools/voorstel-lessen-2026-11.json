@@ -1,0 +1,2938 @@
+{
+ "_uitleg": "Voorstel (niet in basis.json gezet) voor lessen zonder fase-objecten die nog moeten komen, uit de controle van 8-9 nov 2026 (handboek/controle-pta-lesinhoud-2026-11.md). Per klas een eigen blok onder 'klassen', elk in de vorm van tools/inhoud-*.json (sleutel = lestitel, '_les' = les-id, '_bron' = waarop het steunt). merge-inhoud.js verwacht één 'lessen'-object per bestand: knip een klas eruit naar een eigen inhoud-bestand voor je merget. Alles wat 'eigen controle' heet moet Frans nalopen. Klassen zonder voorstel: havo3, vwo3, bb1, kmu3 (niets uit te werken), mavo4 en vwo5 (lessen leeg: alleen toetsles/uitval/toetsweek), havo5 (alleen optioneel).",
+ "klassen": {
+  "mavo3": {
+   "_uitleg": "Voorstel voor de enige mavo 3-les die nog echt leeg is: lesweek 37, Loopbaanopdracht H1 (nu alleen 'De vorm volgt nog'). Niet uitgewerkt, want bewust leeg, toetsles of uitval: lesweek 10 (uitval activiteitenweek A), 28 (toetsles T1), 29 en 38 (toetsweek), 31 (uitval excursie), 36 (P1 vaststellen en inhaalpresentaties, toetsles). Het PTA noemt voor H1 alleen: 'Presentatie op welke manier muziek een rol speelt in het (toekomstige) werkveld', weging 0, niet herkansbaar, uiterste inleverdatum 2 juli 2027. Duur, vorm en beoordeling staan niet in het PTA: dit is een voorstel voor de vorm (in groepjes voor de docent, niet voor de klas, besluit 4 november). Vorm laten bevestigen door Frans.",
+   "_klas": "mavo3",
+   "lessen": {
+    "Loopbaanopdracht H1 (vorm nog vaststellen)": {
+     "vraag": "Welke rol speelt muziek in het werkveld dat jij kiest?",
+     "doel": "Je laat zien hoe muziek een rol speelt in het werkveld dat jou interesseert.",
+     "criteria": [
+      "Ik vertel welk werkveld ik koos en waarom",
+      "Ik leg uit welke rol muziek daar speelt",
+      "Ik geef een voorbeeld"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Zo gaat het vandaag",
+       "stappen": [
+        "Je presenteert in je groepje van drie of vier, voor de docent. Niet voor de klas.",
+        "Jouw beurt duurt ongeveer twee minuten.",
+        "Pak je opzet uit les 33 erbij."
+       ],
+       "docent": "Handelingsdeel H1: weging 0, niet herkansbaar (PTA). Niet voor de klas (besluit Frans, 4-11). Twee minuten en groepjes van drie of vier zijn een voorstel (eigen keuze, niet uit het PTA). Toetsweek 4 begint woensdag 23 juni: de les kan uitvallen, afhankelijk van de lesdag van de klas."
+      },
+      {
+       "min": 10,
+       "soort": "doen",
+       "kop": "Nog even oefenen",
+       "stappen": [
+        "Loop je presentatie in gedachten door: werkveld, rol van muziek, een voorbeeld.",
+        "Vertel hem één keer aan je buur.",
+        "Heb je nog een vraag? Steek je hand op."
+       ],
+       "docent": "Leerlingen die hun opzet uit les 33 niet af hebben, krijgen nu tijd. De functies van muziek uit de syllabus (K8) helpen: achtergrondmuziek, filmmuziek, religieuze muziek, muziek als therapie (zie lesweek 20 en 33 in basis.json)."
+      },
+      {
+       "min": 25,
+       "soort": "doen",
+       "kop": "Presenteren in je groepje",
+       "stappen": [
+        "De docent komt langs bij elk groepje en luistert.",
+        "Jij vertelt: welk werkveld, welke rol muziek daar speelt, een voorbeeld.",
+        "De anderen in je groepje luisteren en stellen één vraag.",
+        "Wissel daarna van beurt."
+       ],
+       "klaar": "Klaar? Schrijf op wat je van een ander in je groepje hebt geleerd.",
+       "docent": "Loop langs de groepjes, ongeveer vijf tot zes minuten per groepje, en luister mee. Noteer per leerling of H1 is gedaan; er is geen cijfer. Past een groepje niet in de tijd, plan de rest in week 38 (toetsweek 4; PTA-inleverdatum 2 juli 2027). Geen leerling presenteert voor de klas. Geen telefoons; de laptop alleen als de leerling iets wil laten zien."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Wat neem je mee?",
+       "stappen": [
+        "Schrijf op een strookje: de rol van muziek in jouw werkveld, in één zin.",
+        "Zet je naam erop en lever het in."
+       ],
+       "docent": "Strookje, maximaal drie minuten. Samen met je eigen aantekening laat het zien dat H1 is gedaan."
+      }
+     ],
+     "formatief": {
+      "soort": "exit ticket",
+      "tekst": "Noem in één zin de rol van muziek in jouw werkveld."
+     },
+     "_les": "mavo3:37.1",
+     "_bron": "PTA m3 H1 (PTA_M3 r.908-912): 'Presentatie op welke manier muziek een rol speelt in het (toekomstige) werkveld'; weging 0, niet herkansbaar, uiterste inleverdatum 02-07-2027. Besluit Frans 4-11: niet voor de klas. Duur, groepjes en strookje zijn eigen voorstel."
+    }
+   }
+  },
+  "mavo4": {
+   "_uitleg": "Mavo 4: geen les uit te werken. Alle lessen van lesweek 1 t/m 30 met inhoud (theorie en praktijk) hebben al fasen in basis.json (3 tot 5 fasen, 45 minuten), uitgewerkt via tools/inhoud-mavo4-theorie.json en inhoud-mavo4-praktijk.json. Lessen zonder fasen zijn alleen uitval (mavo4:10.1 en 10.2, activiteitenweek A, 9-13 nov), toetsweken (mavo4:18.2, 19.1, 19.2, 28.1, 28.2, 29.1, 29.2) en toetsles (mavo4:18.1 T3, 22.1 P2 examenconcert, 27.1 P3 inleveren). Dat is bewust leeg. Voor T3-les 18.1 en P3-les 27.1 moet eerst de datum beslist worden (zie vraag 1 en 2 in mavo4.md). De sleutel 'Tussenstand: voorspelen met feedback' in inhoud-mavo4-praktijk.json is verouderd: de les heet in basis.json 'Tussenstand: meeluisteren met feedback'.",
+   "_klas": "mavo4",
+   "lessen": {}
+  },
+  "havo4": {
+   "_uitleg": "Voorstel voor havo 4 (2026-2027): 27 lessen vanaf lesweek 17 waarvan basis.json alleen korte tekstfasen heeft. Het zijn de 23 lessen met 1 of 2 tekstfasen plus 22.1, 25.1, 26.1 en 27.1 (voorbereiding op P3). De tekstfasen zijn uitgeschreven met dezelfde minuten en volgorde (waar een blok is gesplitst, tellen de delen op tot het oude blok); samen 45 minuten. Niet uitgewerkt, bewust: toetslessen (17.2, 17.3, 18.1, 27.2, 27.3, 28.1, 38.1), uitvallessen (lesweek 10, 26.2-3, 31, 37.2-3), toetsweek-lessen en 35.2 en 36.2 (hebben al fase-objecten). Niet uitgewerkt, nog te doen: 34 lessen met 3 tot 5 tekstfasen (lijst in havo4.md, punt 4). Regels: niemand presenteert voor de klas (groepjes spelen voor de docent), geen telefoon (opnemen en MusicBox op de laptop van de groep), geen songteksten overnemen, songboxen en bandwerk zijn speelwerk met eigen keuze van instrument en niveau (gitaar niveau 1: de 3 dunste snaren, kleine grepen), zelfbeoordeling is een strookje van hooguit 3 minuten. Feiten komen uit PTA_H4_2026-2027, Studiewijzer_Muziek_H4_2026-2027 en de leergang; wat daar niet staat is gemarkeerd als eigen controle. Open vragen: welke popsong in 29.2 gezongen wordt, welk opnameprogramma op de laptops staat, wat het programma van de concerten van 15 okt en 18 feb is, waar de melodieen voor P2 en de fragmenten voor P3 staan (mappen in de sectiemap zijn leeg).",
+   "_klas": "havo4",
+   "lessen": {
+    "Proeftoets T1 in MusicBox en nabespreken": {
+     "vraag": "Hoe scoor ik op de proeftoets?",
+     "doel": "Je maakt de proeftoets T1 in MusicBox en maakt een foutenlijst waarmee je de laatste week oefent.",
+     "criteria": [
+      "Ik heb elk onderdeel van de proeftoets geprobeerd",
+      "Mijn foutenlijst staat erop: wat ging fout en hoe zit het goed",
+      "Ik weet welk onderdeel ik de komende week eerst oefen"
+     ],
+     "fasen": [
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "De proeftoets in MusicBox",
+       "stappen": [
+        "Laptop open, inloggen in MusicBox, koptelefoon op.",
+        "Maak de proeftoets T1 in je eigen tempo, onderdeel voor onderdeel.",
+        "Onderdelen: notatie volgen, ontbrekende noten invullen, ritme noteren, intervallen, toonladders, drieklanken en bluesschema, begrippen.",
+        "Klaar? Zet je antwoorden vast en wacht op de nabespreking."
+       ],
+       "docent": "Zet de proeftoets vooraf klaar in MusicBox. T1 zelf duurt 90 minuten, deze proef 30 minuten: kies per onderdeel van T1 een paar opdrachten (PTA noemt: notatie volgen, noten invullen, ritme noteren, intervallen t/m octaaf, toonsoorten en toonladders t/m drie voortekens, grote en kleine drieklanken, bluesschema, begrippen jazz en barok). Geen telefoon. Loop langs bij het onderdeel ritme noteren: daar loopt het vaak vast."
+      },
+      {
+       "min": 15,
+       "soort": "check",
+       "kop": "Nabespreken en foutenlijst",
+       "stappen": [
+        "Bekijk je score per onderdeel.",
+        "Schrijf op je foutenlijst: wat ging fout, en hoe zit het goed.",
+        "Kies je zwakste onderdeel. Dat oefen je thuis eerst, elke dag 10 minuten in MusicBox."
+       ],
+       "docent": "Bespreek de drie vaakst gemaakte fouten met de klas, met een kort fragment of een voorbeeld op het bord. De foutenlijst staat ook in de studiewijzer (Toets T1 voorbereiden, punt 5). Herkansing T1: di 9 maart (studiewijzer en basis; PTA noemt TW2, zie rapport vraag 3), noem alleen de datum uit de studiewijzer."
+      }
+     ],
+     "formatief": {
+      "soort": "foutenlijst",
+      "tekst": "Foutenlijst met je zwakste onderdeel erbovenaan."
+     },
+     "_les": "havo4:17.1",
+     "_bron": "Studiewijzer lesweek 17 (les 1) en Toets T1 voorbereiden; PTA T1 (Wat moet je doen, MusicBox)"
+    },
+    "Messiah: nieuwe koren": {
+     "vraag": "Hoe klinkt The Lord gave the word, en hoe zet mijn stemgroep in?",
+     "doel": "Je zingt Messiah nr. 15 en 16 in je eigen stem en herhaalt nr. 13.",
+     "criteria": [
+      "Ik zet in op mijn eigen inzet in nr. 15",
+      "Ik hoor in nr. 16 hoe de stemmen na elkaar inzetten",
+      "Ik herhaal nr. 13 en weet waar vraag en antwoord zit"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Inzingen met nr. 13",
+       "stappen": [
+        "Sta bij je stemgroep.",
+        "We zingen Lift up your heads: let op de vraag en het antwoord tussen hoge en lage stemmen.",
+        "Wie begint, en wie antwoordt?"
+       ],
+       "docent": "Studiewijzer bij nr. 13: vraag en antwoord tussen de hoge en de lage stemmen. Laat eerst alleen de hoge stemmen de vraag zingen en de lage het antwoord, dan omgekeerd luisteren."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Nieuw: nr. 15 en nr. 16",
+       "stappen": [
+        "Luister eerst naar de opname: nr. 15 The Lord gave the word.",
+        "Nr. 15 begint kort en krachtig. Daarna komen lange melismen. Zing je eigen stem mee met de opname.",
+        "Nr. 16 Their sound is gone out is kort. Let op hoe de stemmen na elkaar inzetten.",
+        "Per stemgroep eerst alleen, dan samen."
+       ],
+       "docent": "Beschrijving uit de studiewijzer: nr. 15 korte, krachtige opening, daarna lange melismen; nr. 16 kort koor, de stemmen zetten na elkaar in. Thuis 10 minuten per dag met de opname van de eigen stem (zo staat het in de studiewijzer). Controleer bij het rondlopen vooral de inzet van de stemgroep die het eerst begint."
+      },
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Eerdere koren herhalen",
+       "stappen": [
+        "Je krijgt twee eerdere koren. Zing ze zonder opname.",
+        "Welk stuk ging vorige keer nog niet goed? Dat zingen we nu opnieuw.",
+        "Stemgroepen zingen om de beurt alleen, de rest luistert en wijst de plek aan waar het nog hapert."
+       ],
+       "docent": "Kies zelf de twee koren die het zwakst klinken uit nr. 2, 6, 4, 18, 8, 9, 10, 11, 7, 12 en 13 (alles wat tot nu toe is gedaan). Laat stemgroepen elkaar horen: dat oefent ook het zelfstandig uitvoeren van een eigen partij, wat P1 toetst."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Thuis oefenen",
+       "stappen": [
+        "Vandaag nieuw: nr. 15 en nr. 16.",
+        "Thuis: elke dag 10 minuten. Eerst met de opname van je stem, dan zachter, dan zonder.",
+        "Wie kent de inzet van nr. 15? Hand omhoog."
+       ],
+       "docent": "Handen-omhoog-check: tel hoeveel leerlingen de inzet van nr. 15 durven. Noteer welke stemgroep het onzeker vindt, dan begin je daar volgende week mee."
+      }
+     ],
+     "formatief": {
+      "soort": "hand omhoog",
+      "tekst": "Wie kent de inzet van nr. 15?"
+     },
+     "_les": "havo4:20.2",
+     "_bron": "Studiewijzer Rode draad: De Messiah (tabel, nr. 13, 15, 16, week 19-20); lesweek 20 les 2"
+    },
+    "Ostinato-compositie uitwerken": {
+     "vraag": "Hoe werk ik mijn ostinato uit tot een eigen stuk?",
+     "doel": "Je werkt je ostinato-compositie uit tot acht maten melodie boven de ostinato.",
+     "criteria": [
+      "Mijn ostinato blijft in elke maat doorlopen",
+      "Er staan acht maten melodie boven",
+      "Ik kan het stuk één keer helemaal spelen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Waar was ik gebleven?",
+       "stappen": [
+        "Pak het ostinato van de vorige les.",
+        "Speel het twee keer door.",
+        "Lees het doel: acht maten boven de ostinato."
+       ],
+       "docent": "Ga kort bij elke groep na of het ostinato van twee maten er nog is. Wie het kwijt is, krijgt eerst vijf minuten om het opnieuw vast te leggen."
+      },
+      {
+       "min": 35,
+       "soort": "doen",
+       "kop": "Acht maten boven je ostinato",
+       "stappen": [
+        "Speel je ostinato in een lus. Dat kan op je instrument of laat een klasgenoot het spelen.",
+        "Bedenk een melodie erboven. Probeer korte stukjes en bewaar wat past.",
+        "Leg vast wat je hebt: schrijf het op of neem het op de laptop van je groep op.",
+        "Heb je vier maten? Ga door tot acht."
+       ],
+       "docent": "Het ostinato blijft liggen, de melodie moet erboven bewegen. Vraag: welke tonen passen goed bij wat het ostinato speelt? Wie alleen één toon gebruikt, krijgt als opdracht ook een andere toon en een andere ritmische waarde te proberen. Opnemen op de laptop van de groep, niet op een telefoon."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Oefenlog",
+       "stappen": [
+        "Schrijf op: wat is af, wat nog niet?",
+        "Hoeveel maten staan er boven het ostinato?"
+       ],
+       "docent": "Een strookje van hooguit 3 minuten, geen cijfer. Gebruik de lescriteria van boven."
+      }
+     ],
+     "formatief": {
+      "soort": "oefenlog",
+      "tekst": "Wat is af, wat nog niet?"
+     },
+     "_les": "havo4:20.3",
+     "_bron": "Studiewijzer lesweek 20 (les 3: ostinato-compositie uitwerken); leergang vorige les 19.3 (ostinato van twee maten)"
+    },
+    "Melodie noteren bij je ostinato": {
+     "vraag": "Kan ik mijn melodie opschrijven, zodat iemand anders hem kan spelen?",
+     "doel": "Je noteert de melodie bij je ostinato in noten, zodat een klasgenoot hem kan spelen.",
+     "criteria": [
+      "Ostinato en melodie staan op papier",
+      "De tellen in elke maat kloppen",
+      "Een partner kan mijn notatie spelen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Speel wat je hebt",
+       "stappen": [
+        "Speel je ostinato met de melodie uit de vorige les.",
+        "Welke noten zijn het? Welke lengtes?"
+       ],
+       "docent": "Wie de melodie niet meer weet, speelt hem eerst opnieuw terug of luistert zijn opname."
+      },
+      {
+       "min": 35,
+       "soort": "doen",
+       "kop": "Noteren",
+       "stappen": [
+        "Schrijf eerst de maten: kloppen de tellen per maat?",
+        "Zet de noten in de goede sleutel op de balk.",
+        "Controleer elke maat: tel hardop mee en speel hem terug.",
+        "Pas aan wat niet klopt."
+       ],
+       "docent": "Dit sluit aan op wat in T1 getoetst is: noten lezen en schrijven. Veelgemaakte fouten: ontbrekende of te veel tellen in een maat, noot op de verkeerde plek op de balk. Loop langs en laat bij twijfel één maat hardop tellen."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Partnercheck",
+       "stappen": [
+        "Geef je blad aan een partner.",
+        "Je partner speelt jouw notatie.",
+        "Klopt het met wat je bedoelde?"
+       ],
+       "docent": "Partnercheck in tweetallen, niet voor de klas."
+      }
+     ],
+     "formatief": {
+      "soort": "partnercheck",
+      "tekst": "Partner speelt jouw notatie: klopt het?"
+     },
+     "_les": "havo4:21.3",
+     "_bron": "Studiewijzer lesweek 21 (les 3: melodie noteren bij je ostinato); PTA T1 (noten lezen en schrijven)"
+    },
+    "Concert voorbereiden: programma beluisteren met een luisteropdracht": {
+     "vraag": "Wat hoor ik donderdag in De Doelen, en waarop let ik?",
+     "doel": "Je beluistert het concertprogramma met een luisteropdracht en bedenkt één vraag voor je half A4.",
+     "criteria": [
+      "Ik schrijf per fragment bezetting, klank, vorm en ritme op",
+      "Ik noem uit welke tijd het fragment lijkt te komen en waarom",
+      "Ik heb één vraag voor het concert"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "luisteren",
+       "kop": "Luisterstart",
+       "stappen": [
+        "Je hoort drie fragmenten uit eerdere weken.",
+        "Schrijf bij elk fragment één woord over de klank."
+       ],
+       "docent": "Elke les 1 begint met de luisterstart (studiewijzer). Kies drie fragmenten uit eerdere weken."
+      },
+      {
+       "min": 30,
+       "soort": "luisteren",
+       "kop": "Het programma met een luisteropdracht",
+       "stappen": [
+        "Je luistert naar fragmenten uit het programma van donderdag 18 februari.",
+        "Schrijf per fragment op: welke instrumenten of stemmen, hoe klinkt het, hoe is het opgebouwd, wat doet het ritme.",
+        "Waaruit zou deze muziek komen: welke tijd?",
+        "Waarvoor was zij bedoeld: kerk, concertzaal of feest?"
+       ],
+       "docent": "Het programma van 18 februari (H2) staat niet in de bronnen: zet zelf de fragmenten klaar (rapport vraag 8). De vragen komen uit PTA P3: tijd plaatsen, waarvoor bedoeld, vaktermen. Laat de leerlingen redeneren vanuit wat ze horen, zoals bij de mondeling. Geen jaartal nodig."
+      },
+      {
+       "min": 10,
+       "soort": "gesprek",
+       "kop": "Eén vraag voor donderdag",
+       "stappen": [
+        "Kies uit je aantekeningen één vraag voor het concert.",
+        "Schrijf hem op: die komt op je half A4 voor P3.",
+        "Vertel hem in tweetallen aan je partner."
+       ],
+       "docent": "De vraag is een kleine onderzoeksvraag, bijvoorbeeld wat ze willen horen of zien. Bedoeld voor het half A4 dat uiterlijk ma 22 maart wordt ingeleverd (PTA: één vraag per activiteit)."
+      }
+     ],
+     "formatief": {
+      "soort": "luisteropdracht",
+      "tekst": "Per fragment vier woorden: bezetting, klank, vorm, ritme."
+     },
+     "_les": "havo4:22.1",
+     "_bron": "Studiewijzer lesweek 22 (les 1) en handelingsdeel H2; PTA P3 (waarop word je beoordeeld); PTA H2"
+    },
+    "Compositie opnemen": {
+     "vraag": "Hoe klinkt mijn compositie op een opname?",
+     "doel": "Je neemt je compositie op en benoemt één verbeterpunt.",
+     "criteria": [
+      "Mijn compositie is minstens één keer helemaal opgenomen",
+      "Ik hoor terug wat ik wilde laten horen",
+      "Ik noem één verbeterpunt"
+     ],
+     "fasen": [
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Oefenen",
+       "stappen": [
+        "Speel je compositie met je groep helemaal door.",
+        "Spreek af: wie begint, wie speelt wat.",
+        "Doe het nog een keer, nu zonder te stoppen."
+       ],
+       "docent": "Zonder opname is dit gewoon doorspelen. Laat het oefenen eindigen met een 'klaar voor opname'-vinger omhoog."
+      },
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Opname klaarzetten",
+       "stappen": [
+        "Zet de opname op de laptop van je groep aan.",
+        "Test even het geluid: te zacht, te hard?"
+       ],
+       "docent": "Opnemen op de laptop van de groep, niet op een telefoon. Welk opnameprogramma erop staat is niet in de bronnen vastgelegd (rapport vraag 18); wijs daarom het programma aan dat je gewend bent."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Opnemen",
+       "stappen": [
+        "Neem je compositie van begin tot slot op.",
+        "Maak twee opnames als de eerste niet goed is.",
+        "Geef je opname een naam: groep en titel."
+       ],
+       "docent": "Maximaal twee opnames per groep: er is maar één les. Wie klaar is, schrijft alvast bij de opname op wat opviel."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Terugluisteren",
+       "stappen": [
+        "Luister je opname.",
+        "Schrijf één verbeterpunt op."
+       ],
+       "docent": "Eén verbeterpunt per groep, geen lijstje. Dit sluit aan op de formatieve opdracht uit de leergang."
+      }
+     ],
+     "formatief": {
+      "soort": "opname",
+      "tekst": "Opname; één verbeterpunt."
+     },
+     "_les": "havo4:22.3",
+     "_bron": "Studiewijzer lesweek 22 (les 3: compositie opnemen)"
+    },
+    "Messiah: generale in de klas, alle koren": {
+     "vraag": "Staan alle koren, voor vrijdag in Leiden?",
+     "doel": "Je zingt alle Messiah-koren van de lijst in je eigen stem, op volgorde.",
+     "criteria": [
+      "Ik zing alle koren in mijn eigen stem mee",
+      "Ik zet goed in na het orkest of na een andere stemgroep",
+      "Ik weet welk koor ik nog oefen voor vrijdag"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Inzingen en opstellen",
+       "stappen": [
+        "Sta bij je stemgroep.",
+        "Zing je opwarming.",
+        "Vandaag de generale: alle koren van de lijst."
+       ],
+       "docent": "Studiewijzer: vrijdag 12 maart is de hele dag repeteren in Leiden en 's avonds het concert (handelingsdeel H3). Noem dat kort."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Alle koren op volgorde",
+       "stappen": [
+        "We zingen de koren van de lijst op volgorde van het nummer.",
+        "Niet elk koor helemaal: begin, de lastigste plek en het slot.",
+        "Houd je blik bij de docent voor inzetten en afslagen."
+       ],
+       "docent": "De lijst uit de studiewijzer: nr. 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 18, 19, 20, 21, 22 (18 koren, ongeveer anderhalve minuut per koor). Volgorde op nummer is een aanname (eigen controle). Zet de lastigste plek per koor vooraf op een lijstje: nr. 4 en 3 hebben melismen, nr. 10, 12 en 22 zijn fuga's, nr. 19 gaat van langzaam en a capella naar snel met orkest."
+      },
+      {
+       "min": 10,
+       "soort": "check",
+       "kop": "Welk koor oefen ik nog?",
+       "stappen": [
+        "Schrijf het koor op waar je het meest onzeker over bent.",
+        "Schrijf op hoe je het gaat oefenen: opname, zachter, zonder.",
+        "Schrijf ook op wat je al goed kunt."
+       ],
+       "docent": "Strookje van hooguit 3 minuten. Gebruik het om in de volgende les de zwakke plekken per stemgroep te kiezen."
+      }
+     ],
+     "formatief": {
+      "soort": "zelfcheck",
+      "tekst": "Welk koor oefen ik nog voor vrijdag?"
+     },
+     "_les": "havo4:24.2",
+     "_bron": "Studiewijzer Rode draad: De Messiah (tabel met 18 koren); lesweek 24 (Generale in de klas: alle koren); handelingsdeel H3"
+    },
+    "Messiah: zwakke plekken per stemgroep": {
+     "vraag": "Waar zitten de zwakke plekken van mijn stemgroep?",
+     "doel": "Je oefent samen met je stemgroep de zwakke plekken uit de generale.",
+     "criteria": [
+      "Mijn stemgroep heeft twee zwakke plekken gekozen",
+      "Die twee plekken klinken beter dan aan het begin",
+      "Ik weet wat ik thuis nog oefen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Zwakke plekken kiezen",
+       "stappen": [
+        "Ga in je stemgroep zitten.",
+        "Lees de strookjes van de generale.",
+        "Kies twee plekken die jullie het vaakst noemen."
+       ],
+       "docent": "Verdeel de klas in de vier stemgroepen zoals die bij de Messiah zijn. Leg de strookjes van de vorige les klaar."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Oefenen per stemgroep",
+       "stappen": [
+        "Zing de eerste zwakke plek langzaam, dan in tempo.",
+        "Doe hetzelfde met de tweede plek.",
+        "Zing de plek aan de docent voor, in jullie eigen hoek.",
+        "Pas aan wat nog niet klopt."
+       ],
+       "docent": "Loop langs de hoeken. Elke stemgroep zingt de twee plekken één keer voor jou, niet voor de klas. Geef één concrete tip: inzet, ademhaling, melisme op één klinker, of tempo van de opname. Neem de hoeken om beurten, 5 minuten per stemgroep, de rest oefent."
+      },
+      {
+       "min": 10,
+       "soort": "afsluiten",
+       "kop": "Samen zingen",
+       "stappen": [
+        "Alle stemgroepen terug in de klas.",
+        "We zingen de lastige plekken nog één keer samen.",
+        "Schrijf op wat je thuis nog oefent."
+       ],
+       "docent": "Alle groepen samen, geen losse optredens. Strookje van hooguit 3 minuten."
+      }
+     ],
+     "formatief": {
+      "soort": "stemgroepcheck",
+      "tekst": "Stemgroep zingt de zwakke plek voor de docent; de rest oefent."
+     },
+     "_les": "havo4:24.3",
+     "_bron": "Studiewijzer lesweek 24 (les 3: zwakke plekken per stemgroep); studiewijzer thuis: elke dag 10 minuten met de oefenopname"
+    },
+    "Variatie: ritmisch, melodisch, harmonisch; Messiah nabespreken voor P3": {
+     "vraag": "Wat is variatie, en wat viel mij op bij de drie avonden?",
+     "doel": "Je herkent ritmische, melodische en harmonische variatie en bespreekt de drie avonden (twee concerten en de Messiah) na voor je half A4.",
+     "criteria": [
+      "Drie soorten variatie bij fragmenten",
+      "Eén alinea over Leiden met twee vaktermen",
+      "Ik vergelijk de drie avonden: tijd, bedoeling, wat viel op"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "luisteren",
+       "kop": "Luisterstart",
+       "stappen": [
+        "Je hoort drie fragmenten uit eerdere weken.",
+        "Wat herken je terug?"
+       ],
+       "docent": "Elke les 1 begint met de luisterstart. Kies fragmenten uit het jaar."
+      },
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Variatie: drie soorten",
+       "stappen": [
+        "Ritmische variatie: dezelfde melodie, een ander ritme.",
+        "Melodische variatie: de melodie verandert of wordt versierd.",
+        "Harmonische variatie: andere akkoorden onder dezelfde melodie.",
+        "Je hoort drie fragmenten. Welke soort is het?"
+       ],
+       "docent": "Syllabus l (variatie). De korte uitleg per soort is eigen controle, de studiewijzer noemt alleen 'variatie: ritmisch, melodisch, harmonisch'. Gebruik fragmenten uit MusicBox die het verschil duidelijk laten horen."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Leiden en de twee concerten",
+       "stappen": [
+        "In groepjes van drie: wat deed het om de Messiah samen te zingen?",
+        "Vergelijk de drie avonden: uit welke tijd kwam de muziek, waarvoor was ze bedoeld?",
+        "Gebruik minstens twee vaktermen."
+       ],
+       "docent": "Dit is de enige les waarin de drie avonden worden vergeleken, terwijl PTA P3 daar naar vraagt: Wat viel je op als je de drie avonden vergelijkt? Luister mee in groepjes. Gevoelens zijn welkom, laat ze erbij zeggen wat ze hoorden."
+      },
+      {
+       "min": 10,
+       "soort": "doen",
+       "kop": "Aantekeningen voor P3",
+       "stappen": [
+        "Schrijf één alinea over Leiden met twee vaktermen.",
+        "Zet er per activiteit kort bij wat je hoorde, en één vraag.",
+        "Het half A4 lever je uiterlijk maandag 22 maart in."
+       ],
+       "docent": "Een half A4 per leerling: per activiteit wat je hoorde en één vraag (PTA). Deze les is de eerste ruwe versie."
+      }
+     ],
+     "formatief": {
+      "soort": "reflectie",
+      "tekst": "Eén alinea over Leiden met twee vaktermen."
+     },
+     "_les": "havo4:25.1",
+     "_bron": "Studiewijzer lesweek 25 (les 1: variatie; Messiah nabespreken voor P3; half A4); PTA P3 (Deel 1, half A4)"
+    },
+    "Van blad: onvoorbereid zingen en ritme klappen (proef voor P2)": {
+     "vraag": "Hoe gaat het als ik een melodie niet ken en toch moet inzetten?",
+     "doel": "Je oefent P2: een onbekende melodie treffen, zingen of spelen met begeleiding en een ritme van vier maten klappen.",
+     "criteria": [
+      "Ik hoor de grondtoon en zet de eerste noot zuiver in",
+      "Ik klap het ritme van vier maten in de maat",
+      "Ik ga door als ik een foutje maak"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Zo gaat P2",
+       "stappen": [
+        "Je krijgt een melodie die je niet kent, 8 tot 16 maten, in C, F of G.",
+        "Je hebt tien minuten voorbereiding.",
+        "Je hoort de grondtoon en zet zelf de eerste noot in.",
+        "Daarna klap je een ritme van vier maten: kwarten, achtsten en een syncope."
+       ],
+       "docent": "Letterlijk uit de PTA (P2). Dit is een proef: het cijfer telt niet, de feedback wel."
+      },
+      {
+       "min": 35,
+       "soort": "doen",
+       "kop": "In tweetallen oefenen, docent hoort aan de piano",
+       "stappen": [
+        "Je krijgt een nieuwe melodie. Tien minuten voorbereiding.",
+        "Je partner geeft de grondtoon aan en luistert mee.",
+        "Zing of speel de melodie. Je partner speelt de begeleiding of neemt de melodie op de laptop op.",
+        "Wissel van rol met een nieuwe melodie."
+       ],
+       "docent": "Een proef per leerling duurt rond de vier minuten: in 35 minuten hoor je er dus niet allemaal. Kies een deel van de klas voor jou aan de piano (eigen berekening, de bronnen noemen geen groepsgrootte), de rest oefent in tweetallen met melodiebladen. Wie nu niet aan de beurt komt, doet dat de volgende keer. Melodieen en ritmes voor P2 staan niet in de sectiemap (rapport vraag 9): zet ze zelf klaar. Neem op de laptop van de groep op, niet op een telefoon."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Strookje: wat ging goed?",
+       "stappen": [
+        "Vink af welke criteria lukten.",
+        "Schrijf op: het eerste dat ik de komende weken oefen."
+       ],
+       "docent": "Zelfbeoordeling P2 (model p2-havo4, les 25.2) is een strookje van hooguit 3 minuten: lescriteria afvinken, geen cijfer."
+      }
+     ],
+     "formatief": {
+      "soort": "proef",
+      "tekst": "Proef P2; feedback op inzet en doorgaan."
+     },
+     "_les": "havo4:25.2",
+     "_bron": "PTA P2 (Wat moet je doen, Waarop word je beoordeeld); Studiewijzer lesweek 25 (les 2) en Toets P2 voorbereiden (wk 25); beoordeling.json p2-havo4"
+    },
+    "Compositie afronden": {
+     "vraag": "Is mijn compositie af?",
+     "doel": "Je rondt je compositie af: een begin, een slot en alles genoteerd.",
+     "criteria": [
+      "Mijn compositie heeft een begin en een slot",
+      "Alle maten staan genoteerd",
+      "Ik kan hem helemaal spelen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Wat ontbreekt nog?",
+       "stappen": [
+        "Pak je compositie en je notatie.",
+        "Loop de criteria langs: begin, slot, notatie."
+       ],
+       "docent": "Laat de leerling zelf bedenken wat nog mist, voordat je tips geeft."
+      },
+      {
+       "min": 35,
+       "soort": "doen",
+       "kop": "Afronden",
+       "stappen": [
+        "Werk af wat ontbreekt.",
+        "Speel de compositie helemaal door.",
+        "Pas de laatste maten aan als het slot niet klinkt als een slot."
+       ],
+       "docent": "De compositielessen van blok 3 leiden niet naar een toets in de PTA: stuur op afronden, niet op perfectie."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Compleet?",
+       "stappen": [
+        "Vink af: begin, slot, notatie.",
+        "Schrijf op wat je nog zou veranderen."
+       ],
+       "docent": "Zelfcheck van hooguit 3 minuten."
+      }
+     ],
+     "formatief": {
+      "soort": "zelfcheck",
+      "tekst": "Compleet? Begin, slot, notatie?"
+     },
+     "_les": "havo4:25.3",
+     "_bron": "Studiewijzer lesweek 25 (les 3: compositie afronden)"
+    },
+    "Maandagles: P2 en P3 voorbereiden": {
+     "vraag": "Wat zeg ik bij P3, en kan ik P2 van blad?",
+     "doel": "Je oefent P3 in tweetallen, oefent P2 en levert je half A4 in.",
+     "criteria": [
+      "Ik vertel in drie minuten over één avond",
+      "Ik zet bij P2-oefening de eerste noot zuiver in",
+      "Mijn half A4 is ingeleverd"
+     ],
+     "fasen": [
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "P3 oefenen in tweetallen",
+       "stappen": [
+        "Kies één avond: concert 1, concert 2 of de Messiah.",
+        "Vertel je partner in drie minuten: uit welke tijd was de muziek, waarvoor was ze bedoeld, wat viel je op.",
+        "Je partner stelt één vervolgvraag.",
+        "Wissel."
+       ],
+       "docent": "Studiewijzer Toets P3 voorbereiden, week 27: hardop oefenen, vertel in drie minuten over één avond. De mondeling zelf is 15 minuten. Luister mee bij enkele tweetallen. Niemand vertelt voor de klas."
+      },
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "P2 oefenen",
+       "stappen": [
+        "Je krijgt een korte melodie. Hoor de grondtoon en zet de eerste noot in.",
+        "Zing of speel de melodie. Ga door als je een foutje maakt.",
+        "Klap daarna een ritme van vier maten."
+       ],
+       "docent": "Melodieen en ritmes voor P2 zijn niet in de sectiemap gevonden (rapport vraag 9), zet ze zelf klaar. Tien minuten voorbereidingstijd past hier niet voor iedereen: laat de tijd per ronde korter zijn."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Half A4 inleveren en strookje",
+       "stappen": [
+        "Lever je half A4 voor P3 in. Daarop staat per activiteit kort wat je hebt gehoord, en één vraag.",
+        "Vul het strookje in: wat gaat goed, wat oefen ik nog voor P3."
+       ],
+       "docent": "Vandaag is de deadline (ma 22 maart). Alleen op maandag is er les in lesweek 26 (studiewijzer). Strookje van hooguit 3 minuten: lescriteria afvinken (model p3-havo4, les 26.1)."
+      }
+     ],
+     "formatief": {
+      "soort": "oefenmondeling",
+      "tekst": "Drie minuten vertellen over één avond."
+     },
+     "_les": "havo4:26.1",
+     "_bron": "PTA P3 (Vooraf: half A4 uiterlijk lesweek 26) en P2; Studiewijzer lesweek 26 (ma 22 mrt), Toets P3 voorbereiden; beoordeling.json p3-havo4 (26.1)"
+    },
+    "Onbekende fragmenten plaatsen en beargumenteren (oefenen voor P3)": {
+     "vraag": "Waar komt dit fragment vandaan, en waarom denk ik dat?",
+     "doel": "Je plaatst onbekende fragmenten en beargumenteert dat vanuit wat je hoort.",
+     "criteria": [
+      "Ik noem wat ik hoor: bezetting, klank, vorm, ritme",
+      "Ik beargumenteer waar het fragment vandaan komt",
+      "Ik gebruik de juiste vaktermen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Zo ga je te werk",
+       "stappen": [
+        "Eerst horen: welke bezetting, welke klank, welke vorm, welk ritme?",
+        "Dan plaatsen: uit welke tijd of stijl denk je dat het komt?",
+        "Dan beargumenteren: waarom? Zeg het in vaktermen.",
+        "Een jaartal hoef je niet te noemen."
+       ],
+       "docent": "Volgens PTA P3, deel 2: redeneren vanuit wat je hoort, niet vanuit wat je uit je hoofd hebt geleerd. De stappen horen, plaatsen, beargumenteren zijn een didactische vertaling (eigen controle)."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Fragmenten plaatsen in tweetallen",
+       "stappen": [
+        "Je hoort een fragment dat je niet kent.",
+        "Beargumenteer hardop aan je partner waar het vandaan komt.",
+        "Je partner stelt een vervolgvraag: hoe weet je dat?",
+        "Wissel van rol bij het volgende fragment."
+       ],
+       "docent": "Kies fragmenten uit alle stijlen van het jaar: jazz, barok, classicisme, romantiek, 20e eeuw en pop (MusicBox of eigen selectie; fragmenten voor P3 staan niet in de sectiemap, rapport vraag 9). Christelijke school: kies geen fragmenten met ruwe teksten. Het gaat om hoe ze redeneren, niet of ze het goede antwoord noemen. Loop langs en stel zelf vervolgvragen."
+      },
+      {
+       "min": 10,
+       "soort": "gesprek",
+       "kop": "Twee fragmenten bespreken",
+       "stappen": [
+        "We bespreken samen twee fragmenten.",
+        "Welke argumenten hoorden jullie het meest?",
+        "Welke vakterm ontbrak nog?"
+       ],
+       "docent": "Bespreek twee fragmenten waar de tweetallen verschillende uitkomsten hadden. Wijs de sterkste redenering aan, zonder een leerling aan te wijzen die het fout had."
+      }
+     ],
+     "formatief": {
+      "soort": "oefenmondeling",
+      "tekst": "Fragment plaatsen met argumenten."
+     },
+     "_les": "havo4:27.1",
+     "_bron": "PTA P3 (Deel 2: onbekend fragment; Waarop word je beoordeeld); Studiewijzer lesweek 27 (les 1) en Toets P3 voorbereiden"
+    },
+    "Bandspel uitbouwen": {
+     "vraag": "Welke partij voeg ik toe aan ons bandspel?",
+     "doel": "Je voegt een nieuwe partij toe aan het bandspel van je groep.",
+     "criteria": [
+      "Er is een nieuwe partij bijgekomen",
+      "De nieuwe partij klinkt mee met de rest",
+      "Ik speel op mijn eigen niveau"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Waar zijn we gebleven?",
+       "stappen": [
+        "Zet jullie instrumenten klaar.",
+        "Speel jullie popsong van vorige week één keer door.",
+        "Wie speelt wat? Schrijf het op."
+       ],
+       "docent": "Leerlingen kiezen zelf instrument en niveau. Gitaar niveau 1: de drie dunste snaren, kleine grepen. Welke popsong in 29.2 gezongen is staat niet in de bronnen (rapport vraag 18)."
+      },
+      {
+       "min": 35,
+       "soort": "doen",
+       "kop": "Eén partij erbij",
+       "stappen": [
+        "Bedenk welke partij nog ontbreekt: drums, bas, gitaar, toetsen of zang.",
+        "Oefen die partij apart, dan met de groep erbij.",
+        "Speel het stuk met de nieuwe partij door.",
+        "Hoor je dat de nieuwe partij meeklinkt?"
+       ],
+       "docent": "Elke groep speelt voor jou in de eigen hoek als je langskomt, nooit voor de klas. Drie minuten, dan één tip."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Oefenlog",
+       "stappen": [
+        "Wat is er vandaag bijgekomen?",
+        "Wat doen we volgende keer?"
+       ],
+       "docent": "Strookje van hooguit 3 minuten."
+      }
+     ],
+     "formatief": {
+      "soort": "oefenlog",
+      "tekst": "Oefenlog band."
+     },
+     "_les": "havo4:30.2",
+     "_bron": "Studiewijzer lesweek 30 (les 2: bandspel uitbouwen); lesweek 29 (popsong zingen, bandspel)"
+    },
+    "Couplet en refrein schrijven": {
+     "vraag": "Hoe klinkt het verschil tussen couplet en refrein?",
+     "doel": "Je schrijft een couplet en een refrein bij het akkoordenschema van je song.",
+     "criteria": [
+      "Er is een couplet en een refrein",
+      "Couplet en refrein klinken hoorbaar anders",
+      "Mijn eigen tekst gaat over iets wat ik zelf wil zeggen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Terugkijken op het vormschema",
+       "stappen": [
+        "Pak je vormschema van les 1 deze week.",
+        "Waar komt het couplet, waar het refrein?",
+        "Pak je akkoordenschema van vier akkoorden."
+       ],
+       "docent": "Les 1 van deze week gaf het vormschema: intro, couplet, prechorus, refrein, bridge, coda (studiewijzer). Het akkoordenschema komt van les 3 van vorige week."
+      },
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Het couplet schrijven",
+       "stappen": [
+        "Bedenk een melodie op je akkoordenschema.",
+        "Schrijf een tekst in eigen woorden. Waar gaat jouw song over?",
+        "Zing of speel het couplet één keer."
+       ],
+       "docent": "Eigen tekst, niets van een bestaand nummer overnemen. Christelijke school: let op taalgebruik, geen ruwe of seksuele teksten. Vraag: waar gaat jouw tekst over, en wat wil je ermee zeggen?"
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Het refrein schrijven",
+       "stappen": [
+        "Het refrein moet anders klinken dan het couplet: hoger, korter of met een andere ritme.",
+        "Schrijf een korte tekst die blijft hangen.",
+        "Speel couplet en refrein achter elkaar."
+       ],
+       "docent": "Vraag: waar hoor je dat dit het refrein is? Het refrein is het deel dat de luisteraar mee wil zingen (eigen controle)."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Hoor je het verschil?",
+       "stappen": [
+        "Speel je couplet en refrein voor je partner.",
+        "Je partner zegt waar hij het verschil hoort.",
+        "Wissel."
+       ],
+       "docent": "Peerfeedback in tweetallen, niet voor de klas."
+      }
+     ],
+     "formatief": {
+      "soort": "peerfeedback",
+      "tekst": "Hoor je het verschil couplet en refrein?"
+     },
+     "_les": "havo4:30.3",
+     "_bron": "Studiewijzer lesweek 30 (les 3: couplet en refrein schrijven; les 1: vorm in pop); lesweek 29 les 3 (songidee: akkoordenschema)"
+    },
+    "Groove: drums en bas": {
+     "vraag": "Lopen drums en bas samen, zonder gaten?",
+     "doel": "Je speelt een groove met drums en bas die zonder gaten doorloopt.",
+     "criteria": [
+      "Drums en bas beginnen samen",
+      "De groove loopt vier maten door zonder gaten",
+      "Ik hoor het backbeat-accent op tel 2 en 4"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "luisteren",
+       "kop": "Luister naar de groove",
+       "stappen": [
+        "Je hoort een popfragment.",
+        "Tel mee: waar zit de snaredrum?",
+        "Welke tellen horen bij de kickbeat, welke bij de backbeat?"
+       ],
+       "docent": "Les 1 van deze week: kickbeat, fill, break, backbeat. Backbeat: accent op tel 2 en 4, vaak op de snaredrum (Jazz-studiewijzer, begrippenlijst). Kickbeat: de bron geeft geen definitie, zie de leergangkaart RM 1b. Fragment uit MusicBox kiezen."
+      },
+      {
+       "min": 25,
+       "soort": "doen",
+       "kop": "Drums en bas samen",
+       "stappen": [
+        "Drummer en bassist spelen samen vier maten.",
+        "Houd de puls. Geen gaten.",
+        "De rest van de band luistert en speelt mee als de groove staat.",
+        "Wisselen mag: ieder kiest drums, bas of een ander instrument."
+       ],
+       "docent": "Leerlingen kiezen instrument en niveau. Wie nog nooit drums heeft gespeeld, begint met één eenvoudig patroon. Basgitaar of toetsen voor de basnoten. Loop langs en klap de puls mee bij groepen die uit de maat raken."
+      },
+      {
+       "min": 10,
+       "soort": "doen",
+       "kop": "Opnemen en terugluisteren",
+       "stappen": [
+        "Neem de groove op de laptop van je groep op.",
+        "Luister terug: loopt hij door?",
+        "Zoek de plek waar het misgaat."
+       ],
+       "docent": "Opnemen op de laptop van de groep, niet op een telefoon. Welk programma: rapport vraag 18."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Wat klopt, wat niet?",
+       "stappen": [
+        "Schrijf op: waar was de groove het sterkst?",
+        "Wat oefenen we volgende keer?"
+       ],
+       "docent": "Strookje van hooguit 3 minuten."
+      }
+     ],
+     "formatief": {
+      "soort": "opname",
+      "tekst": "Groove opnemen; loopt hij?"
+     },
+     "_les": "havo4:32.2",
+     "_bron": "Studiewijzer lesweek 32 (les 2: groove: drums en bas; les 1: ritme in pop: kickbeat, fill, break, backbeat); Studiewijzer Jazz (docx), begrippenlijst beat en backbeat"
+    },
+    "Bridge toevoegen": {
+     "vraag": "Wat voegt een bridge toe aan mijn song?",
+     "doel": "Je voegt een bridge toe die anders klinkt dan het couplet en het refrein.",
+     "criteria": [
+      "Mijn song heeft een bridge",
+      "De bridge klinkt anders dan couplet en refrein",
+      "De bridge staat in mijn vormschema"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Wat doet een bridge?",
+       "stappen": [
+        "Kijk naar je vormschema: intro, couplet, prechorus, refrein, bridge, coda.",
+        "Waar komt de bridge in jouw schema?"
+       ],
+       "docent": "Vormschema volgens de studiewijzer (les 1, week 30). Laat leerlingen eerst zelf zeggen waar een bridge in de muziek die ze kennen meestal komt. Voorbeelden uit MusicBox kiezen, geen songtekst op het bord."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Een bridge maken",
+       "stappen": [
+        "Bedenk een bridge die anders klinkt dan het couplet.",
+        "Kies een ander akkoord, een ander ritme, of speel zachter of luider.",
+        "Speel de bridge één keer door.",
+        "Speel het stuk met de bridge erin."
+       ],
+       "docent": "Contrast is het doel: contrastwerking is in les 16.1 behandeld, hier toepassen op pop (eigen controle). Vraag per groep: wat verandert er in de bridge?"
+      },
+      {
+       "min": 5,
+       "soort": "doen",
+       "kop": "Bridge in het vormschema",
+       "stappen": [
+        "Zet de bridge in je vormschema.",
+        "Schrijf bij de bridge in een zin wat hij toevoegt."
+       ],
+       "docent": "Vormschema is de studiewijzer-vorm, geen nieuw ontwerp."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Contrasteert de bridge?",
+       "stappen": [
+        "Speel couplet, refrein en bridge voor je partner.",
+        "Je partner zegt of hij het contrast hoort."
+       ],
+       "docent": "Peerfeedback in tweetallen, niet voor de klas."
+      }
+     ],
+     "formatief": {
+      "soort": "peerfeedback",
+      "tekst": "Contrasteert de bridge?"
+     },
+     "_les": "havo4:32.3",
+     "_bron": "Studiewijzer lesweek 32 (les 3: bridge toevoegen); lesweek 30 les 1 (vorm in pop)"
+    },
+    "Eigen song spelen": {
+     "vraag": "Klinkt onze song als een geheel?",
+     "doel": "Je speelt je eigen song met de band van begin tot slot.",
+     "criteria": [
+      "We spelen de song één keer helemaal door",
+      "Iedereen weet wanneer hij begint en eindigt",
+      "Ik krijg één tip van de docent"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Opstellen",
+       "stappen": [
+        "Zet jullie instrumenten klaar en stem ze.",
+        "Spreek af: wie telt in?"
+       ],
+       "docent": "Gitaar niveau 1: de drie dunste snaren, kleine grepen. Leerlingen kiezen zelf instrument en niveau."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "De song doorspelen",
+       "stappen": [
+        "Speel de song door tot de docent langskomt.",
+        "Komt de docent langs? Dan spelen jullie van begin tot slot.",
+        "Stoppen na een fout mag niet: ga door.",
+        "Daarna oefenen jullie wat beter kan."
+       ],
+       "docent": "Elke groep speelt één keer voor jou in de eigen hoek, nooit voor de klas. Geef één tip per groep: inzet, tempo, balans of afsluiting."
+      },
+      {
+       "min": 5,
+       "soort": "gesprek",
+       "kop": "De tip",
+       "stappen": [
+        "Schrijf je tip op.",
+        "Wat doen jullie er volgende week mee?"
+       ],
+       "docent": "De tip komt in het oefenlog."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Opruimen en terugkijken",
+       "stappen": [
+        "Instrumenten opruimen.",
+        "Schrijf op: wat ging goed?"
+       ],
+       "docent": "Strookje van hooguit 3 minuten."
+      }
+     ],
+     "formatief": {
+      "soort": "generale",
+      "tekst": "Doorloop; één tip."
+     },
+     "_les": "havo4:33.2",
+     "_bron": "Studiewijzer lesweek 33 (les 2: eigen song spelen)"
+    },
+    "Song arrangeren": {
+     "vraag": "Wie speelt wat, en wanneer?",
+     "doel": "Je schrijft een arrangement op papier: per vormdeel wie speelt en wie zwijgt.",
+     "criteria": [
+      "Elk vormdeel staat in het arrangement",
+      "Per vormdeel staat wie speelt",
+      "Een partner kan mijn arrangement lezen"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Het vormschema erbij",
+       "stappen": [
+        "Pak het vormschema van je song.",
+        "Welke delen heeft je song?"
+       ],
+       "docent": "Vormdelen volgens de studiewijzer: intro, couplet, prechorus, refrein, bridge, coda."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Arrangement op papier",
+       "stappen": [
+        "Maak een tabel: de vormdelen onder elkaar, de instrumenten naast elkaar.",
+        "Zet in elk vakje wie speelt en wie zwijgt.",
+        "Bedenk waar het stiller of juist voller wordt.",
+        "Speel het arrangement één keer door met de band."
+       ],
+       "docent": "Zorg dat elke leerling in elk vormdeel iets te doen heeft, of bewust zwijgt. Laat niet iedereen altijd tegelijk spelen: dat is geen arrangement."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Partnercheck",
+       "stappen": [
+        "Geef je arrangement aan een partner.",
+        "Je partner leest het en zegt wie waar speelt."
+       ],
+       "docent": "Partnercheck in tweetallen."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Wat moet nog?",
+       "stappen": [
+        "Wat is af, wat niet?",
+        "Wat oefen je nog voor de opnames?"
+       ],
+       "docent": "De opnames volgen in lesweek 34 (bandopname en song opnemen)."
+      }
+     ],
+     "formatief": {
+      "soort": "partnercheck",
+      "tekst": "Partner leest het arrangement."
+     },
+     "_les": "havo4:33.3",
+     "_bron": "Studiewijzer lesweek 33 (les 3: song arrangeren)"
+    },
+    "Luistertraining: jazz en barok": {
+     "vraag": "Herken ik jazz en barok aan wat ik hoor?",
+     "doel": "Je benoemt fragmenten uit jazz en barok met vaktermen, volgens de lijst van T2.",
+     "criteria": [
+      "Ik noem ritme, maat en tempo",
+      "Ik hoor majeur of mineur, consonant of dissonant",
+      "Ik noem dynamiek, instrumenten of stemmen en de vorm"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Je luisterlijst",
+       "stappen": [
+        "Bij elk fragment beantwoord je dezelfde vragen.",
+        "Ritme, maat, tempo. Majeur of mineur. Consonant of dissonant.",
+        "Dynamiek en speeltechniek. Instrumenten, stemmen, ensemble.",
+        "De vorm: wat wordt herhaald, waar komt een contrast?"
+       ],
+       "docent": "Dit is de lijst uit PTA T2 (Wat moet je doen). Consonant en dissonant en dynamiek komen in de les-tekst van de leergang niet terug (rapport punt 2): leg ze hier kort uit met een hoorbaar voorbeeld (eigen controle). Fragmenten in de MusicBox-luistertraining."
+      },
+      {
+       "min": 35,
+       "soort": "luisteren",
+       "kop": "Jazz en barok luisteren",
+       "stappen": [
+        "Je hoort fragmenten uit jazz en barok.",
+        "Schrijf bij elk fragment je antwoorden op de luisterlijst.",
+        "Kijk daarna samen het antwoord na."
+       ],
+       "docent": "Kies zes tot acht fragmenten: jazz en de barok (de Messiah-koren die ze zelf zingen horen bij de barok). Geen fragmenten met ruwe teksten. Antwoorden vooraf op papier. Let op: de leerlingen werken op de manier van T2: in MusicBox met koptelefoon."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Foutenlijst",
+       "stappen": [
+        "Schrijf op: wat ging fout?",
+        "Hoe zit het goed?",
+        "Welke stijl ken je het slechtst?"
+       ],
+       "docent": "De foutenlijst staat in de studiewijzer (Toets T2 voorbereiden, punt 5)."
+      }
+     ],
+     "formatief": {
+      "soort": "luistertraining",
+      "tekst": "Fragmenten jazz en barok; foutenlijst."
+     },
+     "_les": "havo4:34.1",
+     "_bron": "PTA T2 (Wat moet je doen); Studiewijzer lesweek 34 (les 1) en Toets T2 voorbereiden"
+    },
+    "Bandopname": {
+     "vraag": "Hoe klinkt onze band op een opname?",
+     "doel": "Je neemt de band op en hoort terug of de balans klopt.",
+     "criteria": [
+      "We hebben de song helemaal opgenomen",
+      "Ik hoor alle partijen terug",
+      "We noemen één verbeterpunt voor de balans"
+     ],
+     "fasen": [
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Inspelen",
+       "stappen": [
+        "Zet jullie instrumenten klaar en speel de song door.",
+        "Let op de balans: is iemand te hard, te zacht?",
+        "Speel nog een keer, nu zonder te stoppen."
+       ],
+       "docent": "Zonder opname is dit een generale. Gitaar niveau 1: de drie dunste snaren, kleine grepen."
+      },
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Opname klaarzetten",
+       "stappen": [
+        "Zet de opname op de laptop van je groep aan.",
+        "Test het geluid.",
+        "Spreek af wie telt in."
+       ],
+       "docent": "Opnemen op de laptop van de groep, niet op een telefoon. Welk programma: rapport vraag 18."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Opnemen",
+       "stappen": [
+        "Neem de song van begin tot slot op.",
+        "Maximaal twee opnames.",
+        "Geef de opname een naam: groep en titel."
+       ],
+       "docent": "Twee opnames per groep is genoeg: er is maar één les."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Terugluisteren",
+       "stappen": [
+        "Luister de opname.",
+        "Hoor je alle partijen?",
+        "Schrijf één verbeterpunt op voor de balans."
+       ],
+       "docent": "Eén verbeterpunt per groep."
+      }
+     ],
+     "formatief": {
+      "soort": "opname",
+      "tekst": "Bandopname; balans?"
+     },
+     "_les": "havo4:34.2",
+     "_bron": "Studiewijzer lesweek 34 (les 2: bandopname); lesweek 33 (song arrangeren)"
+    },
+    "Song opnemen": {
+     "vraag": "Hoe klinkt mijn song op een opname?",
+     "doel": "Je neemt je eigen song op, met de opbouw van je vormschema.",
+     "criteria": [
+      "Mijn song is helemaal opgenomen",
+      "De opbouw uit mijn vormschema is te horen",
+      "Ik heb de opname bewaard met een naam"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Opname voorbereiden",
+       "stappen": [
+        "Pak je vormschema en je arrangement.",
+        "Zet de opname op de laptop van je groep klaar.",
+        "Test het geluid."
+       ],
+       "docent": "Opnemen op de laptop van de groep, niet op een telefoon. Welk programma: rapport vraag 18."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Opnemen",
+       "stappen": [
+        "Neem je song van intro tot coda op.",
+        "Neem opnieuw op als iets niet klopt.",
+        "Bewaar de opname met je groep en de titel."
+       ],
+       "docent": "Maximaal drie opnames. Leerlingen die klaar zijn, luisteren de opname terug en tellen of de vorm klopt."
+      },
+      {
+       "min": 10,
+       "soort": "check",
+       "kop": "Terugluisteren met je vormschema",
+       "stappen": [
+        "Luister de opname terug met je vormschema erbij.",
+        "Zet bij elk vormdeel een vinkje als je het hoort.",
+        "Noteer één verbeterpunt."
+       ],
+       "docent": "Zo wordt de opname ook een vormoefening: dit helpt bij T2 (vorm horen)."
+      }
+     ],
+     "formatief": {
+      "soort": "opname",
+      "tekst": "Song opgenomen; vormdelen terug te horen."
+     },
+     "_les": "havo4:34.3",
+     "_bron": "Studiewijzer lesweek 34 (les 3: song opnemen); PTA T2 (vorm horen)"
+    },
+    "Luistertraining: classicisme, romantiek, 20e eeuw": {
+     "vraag": "Herken ik classicisme, romantiek en 20e eeuw aan wat ik hoor?",
+     "doel": "Je benoemt fragmenten uit classicisme, romantiek en 20e eeuw met vaktermen, volgens de lijst van T2.",
+     "criteria": [
+      "Ik noem ritme, maat en tempo",
+      "Ik hoor majeur of mineur, consonant of dissonant",
+      "Ik noem instrumenten, stemmen en ensemble",
+      "Ik ken mijn zwakste stijl"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Je luisterlijst",
+       "stappen": [
+        "Dezelfde vragen als vorige week.",
+        "Ritme, maat, tempo. Majeur of mineur. Consonant of dissonant.",
+        "Dynamiek en speeltechniek. Instrumenten, stemmen, ensemble. De vorm."
+       ],
+       "docent": "Lijst uit PTA T2. Dit is de tweede luistertraining; de eerste (jazz en barok) was in lesweek 34."
+      },
+      {
+       "min": 35,
+       "soort": "luisteren",
+       "kop": "Classicisme, romantiek, 20e eeuw",
+       "stappen": [
+        "Je hoort fragmenten uit classicisme, romantiek en 20e eeuw.",
+        "Beantwoord bij elk fragment de luisterlijst.",
+        "Kijk daarna samen het antwoord na."
+       ],
+       "docent": "Kies zes tot acht fragmenten. Zorg voor klankkleur-voorbeelden (symfonieorkest), atonaliteit en maatwisseling uit les 19, 21 en 23. Antwoorden vooraf op papier. Fragmenten uit de MusicBox-luistertraining."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Foutenlijst en zwakste stijl",
+       "stappen": [
+        "Schrijf op: wat ging fout, hoe zit het goed?",
+        "Kies je zwakste stijl van het hele jaar: jazz, barok, classicisme, romantiek, 20e eeuw of pop.",
+        "Die oefen je thuis eerst."
+       ],
+       "docent": "De zwakste stijl komt ook uit Toets T2 voorbereiden in de studiewijzer (wk 33: welke stijl ken je het slechtst?)."
+      }
+     ],
+     "formatief": {
+      "soort": "luistertraining",
+      "tekst": "Fragmenten; zwakste stijl kiezen."
+     },
+     "_les": "havo4:35.1",
+     "_bron": "PTA T2 (Wat moet je doen); Studiewijzer lesweek 35 (les 1) en Toets T2 voorbereiden"
+    },
+    "Song afronden": {
+     "vraag": "Is mijn song af?",
+     "doel": "Je rondt je song af voor de slotronde in je groep.",
+     "criteria": [
+      "Mijn song heeft alle vormdelen",
+      "We spelen hem helemaal door",
+      "Ik weet wat ik oefen voor de slotronde"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Wat ontbreekt nog?",
+       "stappen": [
+        "Pak je vormschema, arrangement en opname.",
+        "Loop het langs: wat ontbreekt?"
+       ],
+       "docent": "Leerlingen werken in hun eigen groep. De slotronde (lesweek 36) is voor de docent in de groep, niet voor de klas."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Afronden",
+       "stappen": [
+        "Werk af wat ontbreekt: een vormdeel, een partij, de afsluiting.",
+        "Speel de song helemaal door.",
+        "Pas aan wat niet klopt."
+       ],
+       "docent": "Geef elke groep minstens één keer een korte tip als je langskomt. Stuur op afronden, niet op perfectie."
+      },
+      {
+       "min": 5,
+       "soort": "check",
+       "kop": "Compleet?",
+       "stappen": [
+        "Vink af: vormschema, arrangement, doorgespeeld.",
+        "Wat doe je nog voor de slotronde?"
+       ],
+       "docent": "Zelfcheck van hooguit 3 minuten."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Opruimen",
+       "stappen": [
+        "Instrumenten opruimen.",
+        "Noteer wat jullie thuis oefenen."
+       ],
+       "docent": "T2 komt eraan: studiewijzer toont zelfcheck T2 in lesweek 36 en proeftoets T2 in lesweek 36."
+      }
+     ],
+     "formatief": {
+      "soort": "zelfcheck",
+      "tekst": "Song compleet?"
+     },
+     "_les": "havo4:35.3",
+     "_bron": "Studiewijzer lesweek 35 (les 3: song afronden); lesweek 36 (slotronde)"
+    },
+    "Proeftoets T2 op de manier van het CE; nabespreken": {
+     "vraag": "Ben ik klaar voor T2?",
+     "doel": "Je maakt de proeftoets T2 in MusicBox, op de manier van het centraal examen, en bespreekt na.",
+     "criteria": [
+      "Ik heb de proeftoets helemaal gemaakt",
+      "Mijn foutenlijst staat erop",
+      "Ik weet welke stijl ik nog het meest moet oefenen"
+     ],
+     "fasen": [
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Proeftoets T2",
+       "stappen": [
+        "Laptop open, inloggen in MusicBox, koptelefoon op.",
+        "Je hoort fragmenten uit alle stijlen van dit jaar.",
+        "Benoem wat je hoort: ritme, maat, tempo, toonsoort, samenklank, dynamiek, klankkleur, vorm.",
+        "Maak de proeftoets zoals de echte toets: alleen, in stilte, met koptelefoon."
+       ],
+       "docent": "T2 zelf duurt 135 minuten, deze proeftoets 30 minuten: kies fragmenten uit alle stijlen, elk één keer. Zet de proeftoets vooraf klaar. De regels van de toetsomgeving (hoe vaak een fragment te horen is) staan niet in de bronnen: controleer ze zelf in MusicBox."
+      },
+      {
+       "min": 15,
+       "soort": "check",
+       "kop": "Nabespreken en foutenlijst",
+       "stappen": [
+        "Bekijk je score per fragment.",
+        "Schrijf op je foutenlijst: wat ging fout, hoe zit het goed.",
+        "Welke stijl ging het slechtst? Die herhaal je thuis."
+       ],
+       "docent": "Bespreek de drie meest gemaakte fouten. Verwijs naar het studiewijzerschema voor de laatste weken: foutenlijst en je zwakste stijl herhalen."
+      }
+     ],
+     "formatief": {
+      "soort": "proeftoets",
+      "tekst": "Proeftoets T2; foutenlijst."
+     },
+     "_les": "havo4:36.1",
+     "_bron": "PTA T2; Studiewijzer lesweek 36 (les 1) en Toets T2 voorbereiden"
+    },
+    "Terugblik: wat kun je nu?": {
+     "vraag": "Wat kan ik nu dat ik in september niet kon?",
+     "doel": "Je kijkt terug op het jaar en benoemt drie dingen die je nu kunt.",
+     "criteria": [
+      "Ik noem drie dingen die ik nu kan",
+      "Ik geef bij elk één bewijs: een toets, een opname of een stuk",
+      "Ik zing of speel mee in het slot"
+     ],
+     "fasen": [
+      {
+       "min": 10,
+       "soort": "gesprek",
+       "kop": "Terugkijken per blok",
+       "stappen": [
+        "Pak je studiewijzer. Lees per blok wat je kunt: jazz en blues, barok en classicisme, romantiek en 20e eeuw, pop en luistertraining.",
+        "Vink af wat je kunt.",
+        "Wat vond je het mooiste van het jaar?"
+       ],
+       "docent": "Studiewijzer: elk blok heeft een lijstje 'Aan het eind van dit blok'. Laat ze dat gebruiken."
+      },
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Drie dingen die ik nu kan",
+       "stappen": [
+        "Schrijf drie dingen op die je nu kunt en in september niet kon.",
+        "Zoek bij elk een bewijs: een opname, een stuk, een toets.",
+        "Vertel ze in een groepje van drie."
+       ],
+       "docent": "In groepjes van drie, niet voor de klas. Loop langs en geef een compliment bij iets concreets."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Samen zingen of spelen",
+       "stappen": [
+        "We sluiten het jaar samen af.",
+        "Kies met de klas een lied of een Messiah-koor dat iedereen kent.",
+        "Zing of speel het samen."
+       ],
+       "docent": "De studiewijzer zet hier 'Optreden in de klas'; in Lesdag is dat vervangen door samen zingen of spelen (leerlingen presenteren nooit voor de klas). Als de klas dat leuk vindt: Hallelujah of Worthy is the Lamb uit de Messiah."
+      }
+     ],
+     "formatief": {
+      "soort": "reflectie",
+      "tekst": "Wat kun je nu dat je in september niet kon?"
+     },
+     "_les": "havo4:36.3",
+     "_bron": "Studiewijzer lesweek 36 (les 3: terugblik: wat kun je nu?) en 'Aan het eind van dit blok' per blok"
+    },
+    "Laatste vragen over T2": {
+     "vraag": "Welke vragen heb ik nog voor T2?",
+     "doel": "Je stelt je laatste vragen over T2, oefent laatste fragmenten en weet hoe T2 verloopt.",
+     "criteria": [
+      "Mijn foutenlijst is korter dan vorige week",
+      "Mijn laatste vragen zijn gesteld",
+      "Ik weet hoe T2 verloopt: MusicBox, 135 minuten, koptelefoon"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Foutenlijst erbij",
+       "stappen": [
+        "Pak je foutenlijst.",
+        "Welke drie punten staan er het vaakst op?"
+       ],
+       "docent": "Leerlingen hebben de foutenlijst uit de proeftoets (lesweek 36) en uit de luistertrainingen (lesweek 34 en 35)."
+      },
+      {
+       "min": 25,
+       "soort": "luisteren",
+       "kop": "Laatste fragmenten",
+       "stappen": [
+        "Je hoort fragmenten uit alle stijlen van dit jaar.",
+        "Benoem wat je hoort.",
+        "Kijk samen na. Wat valt op?"
+       ],
+       "docent": "Kies fragmenten van de stijl die de proeftoets het slechtst maakte (kijk in de antwoorden van de proeftoets). Alle stijlen: jazz, barok, classicisme, romantiek, 20e eeuw en pop."
+      },
+      {
+       "min": 10,
+       "soort": "gesprek",
+       "kop": "Laatste vragen",
+       "stappen": [
+        "Heb je een vraag over een begrip of een fragment?",
+        "Stel hem nu.",
+        "Schrijf op wat je nog moet oefenen."
+       ],
+       "docent": "Laat vragen eerst door de klas beantwoorden voordat je zelf antwoordt."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Zo verloopt T2",
+       "stappen": [
+        "T2 is in toetsweek 4, van 23 juni tot 2 juli.",
+        "Je maakt hem in MusicBox. Neem een koptelefoon mee.",
+        "De toets duurt 135 minuten en is niet herkansbaar."
+       ],
+       "docent": "Het rooster van toetsweek 4 staat niet in de bronnen (dag en uur: rapport vraag 1). Vermeld alleen wat PTA en studiewijzer zeggen."
+      }
+     ],
+     "formatief": {
+      "soort": "luistertraining",
+      "tekst": "Laatste fragmenten."
+     },
+     "_les": "havo4:37.1",
+     "_bron": "PTA T2; Studiewijzer lesweek 37 (les 1) en Toets T2 voorbereiden"
+    }
+   }
+  },
+  "havo5": {
+   "_uitleg": "Havo 5, lessen zonder fasen die nog moeten komen (lesdatum vanaf ma 9 nov 2026). Het zijn allemaal toetslessen, toetsweken of uitval, en die werk ik volgens de opdracht niet uit: 10.1-10.3 (uitval; ma 9 nov is T3, zie havo5.md), 16.2/16.3 (uitval 4 jan), 18.1-19.3 (toetsweek 2, geen muziektoets; ma 18 jan vrije dag), 27.2/27.3 (uitval Tweede Paasdag), 28.1-29.3 (toetsweek 3, T4 proefexamen 135 min). 21.3 (P4, datum volgt) blijft leeg: de productie voor publiek duurt 180 min volgens de PTA en past niet in een les van 45 min; uitwerken kan pas als de datum vaststaat. Alleen de P3-uitvoeringslessen 17.2 en 17.3 staan hieronder als optioneel voorstel (sleutel _optioneel_toetslessen, wordt door de merge-tools genegeerd). Verplaats ze naar 'lessen' als Frans de lesmodus voor deze toetslessen wil vullen. Alle lessen in de leergang die geen toets, toetsweek of uitval zijn hebben al fasen (als tekst of als object); 'Nog in te vullen' komt in havo 5 nergens voor.",
+   "_klas": "havo5",
+   "lessen": {},
+   "_optioneel_toetslessen": {
+    "P3 (15%): uitvoering en toelichting": {
+     "_les": "havo5:17.2",
+     "_bron": "PTA havo 5 P3 (Per.2 in les, 15%, niet herkansbaar, 90 min; 'Wat moet je doen' en 'Waarop word je beoordeeld'); Studiewijzer Muziek H5 2026-2027 pdf, p. 3 (P3) en p. 10 (lesweek 17: 'Messiah: kort herhalen: 7, 10 en 18', P3 uitvoering en toelichting); beoordelingsmodel p3-havo5. P3 duurt volgens de PTA 90 minuten: lessen 17.2 en 17.3 samen (ma 11 jan, dubbeluur).",
+     "vraag": "Klinkt mijn stuk zoals ik het heb opgeschreven, en kan ik uitleggen hoe het de muzikale vraag oplost?",
+     "doel": "Je voert je P3-stuk uit voor de docent en vertelt kort hoe je de muzikale vraag hebt opgelost.",
+     "criteria": [
+      "Mijn stuk duurt minstens twee minuten en heeft minstens drie partijen",
+      "Mijn stuk geeft hoorbaar antwoord op de muzikale vraag",
+      "De uitvoering klinkt zoals ik het heb opgeschreven",
+      "Ik kan uitleggen waarom ik deze muzikale middelen heb gekozen"
+     ],
+     "fasen": [
+      {
+       "min": 8,
+       "soort": "start",
+       "kop": "Messiah kort herhalen",
+       "stappen": [
+        "Zing 7 His yoke is easy, 10 And with his stripes en 18 Hallelujah, ieder een stuk.",
+        "Daarna zet je instrument en bladmuziek klaar voor je eigen uitvoering."
+       ],
+       "docent": "Studiewijzer lesweek 17: 'Messiah: kort herhalen: 7, 10 en 18'. De studiewijzer laat niet zien of dat in les 1 of les 2 staat; hier gezet in les 2. Controleer dit."
+      },
+      {
+       "min": 5,
+       "soort": "uitleg",
+       "kop": "Zo gaat de toets",
+       "stappen": [
+        "Je speelt of zingt je stuk voor de docent, alleen of met klasgenoten. Er is geen publiek: de andere leerlingen werken stil verder.",
+        "Daarna vertel je in twee of drie zinnen hoe je de muzikale vraag hebt opgelost en waarom je deze middelen koos.",
+        "Je bladmuziek heb je op vrijdag 8 januari ingeleverd; hij ligt klaar op de lessenaar."
+       ],
+       "docent": "Volgorde van de uitvoeringen vooraf op het bord. Per leerling het scoreblad havo 5 en het P3-model (antwoord op de vraag, samenhang en vorm, bewuste keuzes, bladmuziek, uitvoering, toelichting)."
+      },
+      {
+       "min": 27,
+       "soort": "doen",
+       "kop": "Uitvoeringen voor de docent",
+       "stappen": [
+        "Het groepje dat aan de beurt is komt bij de docent. Jullie spelen het stuk, daarna volgt de toelichting.",
+        "Wacht je? Dan werk je stil op de laptop met een koptelefoon in MusicBox: Examentraining Pop en Jazz.",
+        "Geen telefoon: opnemen en MusicBox doe je op de laptop van de groep."
+       ],
+       "docent": "Eén groepje tegelijk. Het scoreblad invullen tijdens het luisteren; de toelichting na afloop kort bevragen: welke vraag, welk middel, waarom. Wie niet aan bod komt, speelt in 17.3."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Strookje: zo beoordeel ik mijn eigen compositie",
+       "stappen": [
+        "Vul het strookje in: een kruisje per onderdeel en je eigen score. Maximaal drie minuten.",
+        "Lever het strookje in bij de docent."
+       ],
+       "docent": "Het leerlingmodel 'Zo beoordeel ik mijn eigen compositie' is bedoeld voor gebruik na de toets (leerlingInstructie in p3-havo5)."
+      }
+     ],
+     "formatief": {
+      "soort": "strookje",
+      "tekst": "Zelfbeoordeling P3 op het strookje, maximaal drie minuten."
+     }
+    },
+    "P3: uitvoeringen, vervolg": {
+     "_les": "havo5:17.3",
+     "_bron": "PTA havo 5 P3 (90 min in de les); Studiewijzer Muziek H5 2026-2027 pdf, p. 3 en p. 10 (lesweek 17, les 3: 'P3: uitvoeringen, vervolg'; thuis 'P4: publiciteit en uitnodigingen de deur uit'); beoordelingsmodel p3-havo5.",
+     "vraag": "Heb ik mijn stuk uitgevoerd en toegelicht, en wat neem ik mee naar de productie?",
+     "doel": "Je rondt de P3-uitvoeringen af en bekijkt wat je eigen stuk betekent voor de productie (P4).",
+     "criteria": [
+      "Mijn uitvoering en toelichting zijn gedaan",
+      "Ik weet wanneer mijn P3-stuk in de productie kan"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Wie is nog niet geweest?",
+       "stappen": [
+        "De docent noemt wie nog moet uitvoeren, ook wie in de vorige les afwezig was.",
+        "De anderen zetten zich klaar met MusicBox op de laptop (Examentraining) met koptelefoon."
+       ],
+       "docent": "Afwezigen en inhaal: de PTA vraagt dat een gemiste praktijktoets in overleg wordt ingehaald, alles vóór 16 april (studiewijzer p. 18)."
+      },
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Uitvoeringen, vervolg",
+       "stappen": [
+        "Zelfde werkwijze als de vorige les: groepje bij de docent, uitvoering, toelichting.",
+        "De anderen werken stil door aan MusicBox."
+       ],
+       "docent": "Scoreblad invullen. Daarna de strookjes van beide lessen bij elkaar leggen."
+      },
+      {
+       "min": 10,
+       "soort": "gesprek",
+       "kop": "Jullie P3-stukken in de productie",
+       "stappen": [
+        "De P3-stukken komen in het programma van P4 (eigen werk uit de klas).",
+        "Strookje invullen als je dat nog niet deed: maximaal drie minuten.",
+        "Thuis: publiciteit en uitnodigingen voor P4 de deur uit."
+       ],
+       "docent": "Studiewijzer blok 2: 'Jullie P3-stukken komen in het programma.' Week 18 en 19 is toetsweek 2 (geen muziektoets); in lesweek 20 staat 'P4: eigen werk uit de klas arrangeren'."
+      }
+     ],
+     "formatief": {
+      "soort": "strookje",
+      "tekst": "Zelfbeoordeling P3 op het strookje, maximaal drie minuten."
+     }
+    }
+   }
+  },
+  "vwo4": {
+   "_uitleg": "Voorstel voor de vier theorielessen van vwo 4 die nog moeten komen en nog geen fasen hebben: 15.1 (ma 14 dec), 21.1 (ma 8 feb), 30.1 (ma 19 apr) en 32.2 (wo 19 mei). Vraag, doel en formatief komen uit basis.json; criteria en fasen zijn nieuw (45 min per les). Feiten komen uit de studiewijzer vwo 4 en de PTA (Muziek, v4); wat daar niet staat is in de docentnotitie gemarkeerd als 'eigen controle'. Bewust niet uitgewerkt: toetslessen 28.1 (T1 op de computer in toetsweek 3), 35.1 en 35.2 (PT2, uitvoeringen; de beoordeling loopt via model pt2-vwo4) en 38.1 (T2 in toetsweek 4), en alle toetsweek- en uitvalsdagen. Lessen 2.2 en 3.1 (verleden) hebben ook geen fasen en blijven buiten dit voorstel. Afwijking van de leergang: in 15.1 lichten leerlingen hun standpunt toe in groepjes aan de docent, niet voor de klas.",
+   "_klas": "vwo4",
+   "lessen": {
+    "Rhythm & blues (2): de kerk en de straat": {
+     "vraag": "Mag je muziek uit de kerk meenemen naar het podium?",
+     "doel": "Je legt uit hoe gospel en blues samen rhythm & blues werden en je neemt een standpunt in over kerk en straat.",
+     "criteria": [
+      "Ik leg uit hoe gospel en blues samen rhythm & blues werden",
+      "Ik noem bij een fragment wat uit de kerk komt en wat van de straat",
+      "Ik geef met een argument aan of ik muziek uit de kerk mag meenemen naar het podium"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Terugblik: de bluestoonladder",
+       "stappen": [
+        "Schrijf op je wisbordje de bluestoonladder vanaf C.",
+        "Welke noten zijn de blue notes?",
+        "Houd het omhoog. We kijken samen na."
+       ],
+       "docent": "Studiewijzer 15.1 vraagt: hoe is de bluestoonladder opgebouwd? Blue notes volgens de studiewijzer (les 2): verlaagde 3, 5 en 7. Vanaf C zijn dat Es, Ges en Bes (afgeleid, eigen controle). Wie het niet weet, kijkt op kaart TL 1a."
+      },
+      {
+       "min": 10,
+       "soort": "luisteren",
+       "kop": "Twee fragmenten: wat is kerk, wat is straat?",
+       "stappen": [
+        "Luister naar Sister Rosetta Tharpe, Strange Things Happening Every Day (1944).",
+        "Luister naar Ray Charles, I Got a Woman (1954).",
+        "Maak twee kolommen: kerk en straat. Wat hoor je in welke kolom?"
+       ],
+       "docent": "Digibord, laptop klaar in lokaal 009. Per fragment hooguit twee minuten; kies het begin en één couplet. Laat eerst luisteren, dan pas bespreken. Geen teksten uitschrijven of citeren, alleen titel en artiest noemen. Beide fragmenten staan in de studiewijzer bij les 15.1."
+      },
+      {
+       "min": 10,
+       "soort": "uitleg",
+       "kop": "Van gospel en blues naar rhythm & blues",
+       "stappen": [
+        "Gospel en blues komen samen in rhythm & blues.",
+        "Sister Rosetta Tharpe speelde elektrische gitaar in de kerk, en ook in de nachtclub.",
+        "Ray Charles maakte van een gospellied een r&b-hit.",
+        "De vraag voor straks: wat vonden de kerken daarvan?"
+       ],
+       "docent": "Alles uit de studiewijzer en de leergang (identiteit bij 15.1). De bronnen geven geen antwoord op de vraag wat de kerken ervan vonden. Beweer daar dus niets over; laat het open en laat leerlingen zelf redeneren. Eigen controle nodig als je meer wilt zeggen. Verbind terug naar 14.1: r&b is de eerste elektrisch versterkte pop. Verbind vooruit: dit is A3 in de PTA (geestelijke achtergrond, muziek als geloofsexpressie).",
+       "beeld": {
+        "soort": "kaarten",
+        "items": [
+         {
+          "k": "Gospel",
+          "t": "geloofsmuziek van de kerk"
+         },
+         {
+          "k": "Blues",
+          "t": "muziek van de straat, twaalfmatenschema en blue notes"
+         },
+         {
+          "k": "Rhythm & blues",
+          "t": "beide samen, elektrisch versterkt"
+         }
+        ]
+       }
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Stellinglijn: Ray Charles had gelijk",
+       "stappen": [
+        "Eén kant van het lokaal is eens, de andere oneens. Kies je plek.",
+        "Praat in je groepje van vier: waarom sta je daar? Eén argument per persoon.",
+        "Ik kom langs en luister mee."
+       ],
+       "docent": "Leerlingen presenteren niet voor de klas, dus geen toelichting door twee leerlingen aan iedereen (zoals de leergang noemt) maar groepjes van vier, gemengd uit beide kanten. Loop langs met één vraag: wat zou iemand aan de andere kant zeggen? Identiteit uit de leergang: Tharpe speelde in de kerk én in de nachtclub. Kan muziek allebei zijn, heilig en gewoon? Geen oordeel van jouw kant; neem de vraag serieus, ook van wie vindt dat het niet mag."
+      },
+      {
+       "min": 5,
+       "soort": "afsluiten",
+       "kop": "Eén zin en thuis",
+       "stappen": [
+        "Schrijf op: wat kwam uit de kerk en wat van de straat? Eén zin.",
+        "Thuis: Rhythm & rebels N2 b2 afmaken en Pop na 1945 (1), onderdeel Rhythm & blues, in MusicBox.",
+        "Herhaal pentatoniek en blue notes."
+       ],
+       "docent": "Briefjes ophalen en bij de deur laten inleveren. De volgende les (15.2) is improviseren met call-and-response op de bluestoonladder. Dit is de laatste week voor de kerstvakantie (di herkansingen, vr kerstviering): het huiswerk kort houden."
+      }
+     ],
+     "formatief": {
+      "soort": "gesprek",
+      "tekst": "Stellinglijn in het lokaal: eens of oneens met 'Ray Charles had gelijk'. Leerlingen lichten hun keuze toe in groepjes van vier; de docent loopt langs en luistert."
+     },
+     "_les": "vwo4:15.1",
+     "_bron": "Studiewijzer vwo 4, week 15 les 1 (Rhythm & blues (2), luisteren Tharpe en Charles, kaart TL 1a en SW pop, thuis); PTA V4 Muziek T1 (A3, christelijke historisch-culturele lijn: spirituals, worksongs, gospel, geloofsexpressie); basis.json vwo4 week 15 (vraag, doel, formatief, identiteit)."
+    },
+    "De barok en het oratorium": {
+     "vraag": "Waarom schreef Händel een oratorium en geen opera?",
+     "doel": "Je benoemt het verschil tussen oratorium en opera en je weet uit welke drie delen de Messiah bestaat.",
+     "criteria": [
+      "Ik noem het verschil tussen een oratorium en een opera",
+      "Ik noem de drie delen van de Messiah",
+      "Ik leg uit wat de barok is: kerk en hof, pracht en contrast"
+     ],
+     "fasen": [
+      {
+       "min": 10,
+       "soort": "start",
+       "kop": "Terugblik en wisbordje: oratorium of opera?",
+       "stappen": [
+        "Eerst een vraag over vorige keer: wat is een walking bass, en in welke twee stijlen hoorde je die?",
+        "Dan drie fragmenten. Schrijf op je wisbordje: oratorium of opera?",
+        "Het mag een gok zijn. Straks horen we het verschil."
+       ],
+       "docent": "Antwoord terugblik (studiewijzer): swing en rock-'n-roll (lessen 6.1, 16.2 en 17.2). Fragmenten kies je zelf; de bronnen noemen geen operafragment. Voorstel, eigen controle: een koor en een aria uit de Messiah en een operaaria van Händel zelf, zodat dezelfde componist in beide vormen klinkt. Laat de wisbordjes bewaren: aan het eind van de les opnieuw dezelfde fragmenten."
+      },
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "De barok en Händel",
+       "stappen": [
+        "Barok: kunststroming van ca. 1600 tot 1750, met kerk en hof, pracht en contrast.",
+        "Affectenleer: muziek brengt gevoelens over.",
+        "Händel leefde in Londen. Een oratorium is een opera zonder toneel, over een bijbels verhaal.",
+        "De Messiah heeft drie delen: geboorte, lijden en opstanding, verlossing."
+       ],
+       "docent": "Tijdvak, kerk en hof, pracht en contrast, Händel in Londen, oratorium als opera zonder toneel en de drie delen komen uit de studiewijzer (week 21). Affectenleer is in de bronnen alleen genoemd; eigen controle voor de uitleg: de gedachte dat muziek bepaalde gemoedstoestanden (affecten) kan opwekken en uitbeelden. Waarom en voor wie Händel een oratorium schreef staat niet in de bronnen; de studiewijzer vraagt dat wel als eindterm van blok 3. Zeg alleen wat je zeker weet, of laat het bij 'opera zonder toneel over een bijbels verhaal' (bron).",
+       "beeld": {
+        "soort": "tabel",
+        "rijen": [
+         [
+          "",
+          "Opera",
+          "Oratorium"
+         ],
+         [
+          "Toneel",
+          "ja",
+          "nee"
+         ],
+         [
+          "Verhaal",
+          "",
+          "bijbels verhaal"
+         ],
+         [
+          "Voorbeeld",
+          "zie fragmenten",
+          "Messiah, in drie delen"
+         ]
+        ],
+        "kol": [
+         0.25,
+         0.35,
+         0.4
+        ]
+       }
+      },
+      {
+       "min": 10,
+       "soort": "luisteren",
+       "kop": "De Pastoral Symphony (Pifa)",
+       "stappen": [
+        "Luister naar de Pifa uit de Messiah: herders bij Bethlehem.",
+        "Wat hoor je in de bas? Een bourdon: een lange aangehouden toon.",
+        "Welke sfeer past bij herders bij Bethlehem?"
+       ],
+       "docent": "Pifa, bourdon in de bas: studiewijzer 21.1. Houd het bij wat de leerlingen horen. Laat de Pifa circa twee minuten klinken."
+      },
+      {
+       "min": 10,
+       "soort": "afsluiten",
+       "kop": "Comfort ye lezen, en nog een keer de fragmenten",
+       "stappen": [
+        "Lees samen Jesaja 40:1-5. Dit is de tekst van Comfort ye, het begin van de Messiah.",
+        "Dezelfde drie fragmenten: oratorium of opera? Nu met je uitleg erbij.",
+        "Eén zin op je briefje: waarom een oratorium en geen opera?",
+        "Thuis: Barok N2 b1 en Herhaling theorie N1 (1.1); Barok, onderdeel Algemeen; overhoor jezelf met JZ 2."
+       ],
+       "docent": "Identiteit uit de leergang: de Messiah vertelt het evangelie van belofte tot Amen. Händel zelf zou over het Hallelujah hebben gezegd 'I did think I did see all Heaven before me' (zoals in de leergang staat). Vergelijk de wisbordjes van het begin met nu; wie eerst fout zat en nu goed, hoef je niet te corrigeren. Messiah dagelijks 10 minuten met de oefentrack blijft thuis staan."
+      }
+     ],
+     "formatief": {
+      "soort": "wisbordje",
+      "tekst": "Drie fragmenten: oratorium of opera? Antwoord op het wisbordje, daarna uitleg; aan het eind dezelfde fragmenten nog eens."
+     },
+     "_les": "vwo4:21.1",
+     "_bron": "Studiewijzer vwo 4, week 21 les 1 (De barok en het oratorium, Pifa, kaart SW barok, thuis Barok N2 b1); PTA V4 Muziek T2 (A3 historische, culturele en religieuze context van de barok; barokorkest); basis.json vwo4 week 21 (vraag, doel, formatief, identiteit)."
+    },
+    "Concerteren (1): het concerto grosso": {
+     "vraag": "Hoe hoor je dat een klein groepje tegenover het hele orkest speelt?",
+     "doel": "Je hoort het verschil tussen concertino en tutti en wijst de wissels aan.",
+     "criteria": [
+      "Ik steek mijn hand op bij elke wissel tussen concertino en tutti",
+      "Ik leg uit wat een concertino is en wat een tutti is",
+      "Ik noem Corelli, op. 6 nr. 8, het kerstconcert, en wat de Pastorale daarin doet"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Terugblik: de sequens",
+       "stappen": [
+        "Wat is een sequens?",
+        "Zing of speel er een: een motief van vier noten, steeds een toon lager.",
+        "Zie je het ook in je eigen schets?"
+       ],
+       "docent": "Studiewijzer 30.1: wat is een sequens, zing of speel er een. Antwoord: een motief dat telkens een stap hoger of lager herhaald wordt (studiewijzer week 29). Dit sluit aan bij compositie schets 1 in les 30.2."
+      },
+      {
+       "min": 10,
+       "soort": "uitleg",
+       "kop": "Concertino tegenover tutti",
+       "stappen": [
+        "Concerteren: spelen tegenover elkaar.",
+        "Concertino: een kleine groep solisten.",
+        "Tutti: het hele orkest.",
+        "Een concerto grosso wisselt steeds tussen die twee."
+       ],
+       "docent": "Definitie uit de studiewijzer: een kleine groep solisten (concertino) tegenover het hele orkest (tutti). Dit is PTA T2 A1 en A2, en syllabusonderwerp m (concerterende structuren). Eigen controle: bij Corelli bestaat het concertino uit twee violen en een cello; kijk dat na in de uitvoering die je gebruikt voordat je het zegt.",
+       "beeld": {
+        "soort": "kaarten",
+        "items": [
+         {
+          "k": "Concertino",
+          "t": "kleine groep solisten"
+         },
+         {
+          "k": "Tutti",
+          "t": "het hele orkest"
+         },
+         {
+          "k": "Concerto grosso",
+          "t": "wisselt tussen concertino en tutti"
+         }
+        ]
+       }
+      },
+      {
+       "min": 20,
+       "soort": "luisteren",
+       "kop": "Hand op bij elke wissel",
+       "stappen": [
+        "Luister naar Corelli, Concerto grosso op. 6 nr. 8, het kerstconcert.",
+        "Steek je hand op bij elke wissel tussen concertino en tutti.",
+        "Tweede keer: tel de wissels met je vingers. Vergelijk met je buurman.",
+        "Dan een fragment uit Händel, Concerto grosso op. 6. Zelfde opdracht."
+       ],
+       "docent": "Luister met een vaste opdracht, steeds twee tot drie minuten per fragment. De docent ziet direct wie de wissel hoort. Hoort een leerling de wissels niet: speel het stuk nog eens en wijs de wissels op het digibord aan. Fragmenten: Corelli op. 6 nr. 8 en Händel op. 6, zoals in de studiewijzer. Kaart SW barok bij de hand.",
+       "klaar": "Zet een streepje bij elke wissel en vergelijk je aantal met je buurman."
+      },
+      {
+       "min": 10,
+       "soort": "afsluiten",
+       "kop": "De kerststal in muziek, en thuis",
+       "stappen": [
+        "Corelli schreef dit concert voor de kerstnacht.",
+        "De Pastorale uit dit concert is een muzikale kerststal. Welk beeld past erbij?",
+        "Thuis: Barok N2 b4, Orkestmuziek (4.1 tot 4.14), en Barok, onderdeel Orkestmuziek, Concerto grosso."
+       ],
+       "docent": "Identiteit uit de leergang: Corelli op. 6 nr. 8 is 'fatto per la notte di Natale', een kerstconcert; de Pastorale is de muzikale kerststal. Houd het bij wat de leerlingen horen, geen aanname over wat Corelli bedoelde. Les 30.2 vandaag: compositie schets 1."
+      }
+     ],
+     "formatief": {
+      "soort": "hand omhoog",
+      "tekst": "Hand op bij elke wissel concertino en tutti; de docent ziet meteen wie het hoort."
+     },
+     "_les": "vwo4:30.1",
+     "_bron": "Studiewijzer vwo 4, week 30 les 1 (Concerteren (1), Corelli op. 6 nr. 8, Händel op. 6, kaart SW barok, thuis Barok N2 b4); PTA V4 Muziek T2 (concerteren: concerto grosso, concertino en tutti); basis.json vwo4 week 30 (doel, formatief, identiteit)."
+    },
+    "Dubbelkorigheid en vocale vormen": {
+     "vraag": "Voor wie schreef Bach?",
+     "doel": "Je onderscheidt cantate, passie, oratorium, opera en suite en je legt uit wat dubbelkorigheid is.",
+     "criteria": [
+      "Ik leg uit wat dubbelkorigheid is en hoor het in een fragment",
+      "Ik vul de tabel met cantate, passie, oratorium, opera en suite in",
+      "Ik noem bij elke vorm een voorbeeld uit de les"
+     ],
+     "fasen": [
+      {
+       "min": 5,
+       "soort": "start",
+       "kop": "Terugblik: welk solo-instrument hoor je?",
+       "stappen": [
+        "Je hoort een fragment. Welk instrument is de solist?",
+        "Is het een concerto grosso of een soloconcert?"
+       ],
+       "docent": "Studiewijzer 32.2: welk solo-instrument hoor je (fragment). Gebruik een fragment uit 31.1: Bach, Brandenburgs concert nr. 5, waar het klavecimbel de solist is (studiewijzer 31.1). Antwoord: klavecimbel, soloconcert."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Twee koren tegenover elkaar",
+       "stappen": [
+        "Dubbelkorigheid: twee koren of groepen tegenover elkaar.",
+        "Luister naar Giovanni Gabrieli, Sonata pian' e forte (1597). Hoor je de twee groepen?",
+        "Luister naar het openingskoor van Bach, Matthäus-Passion, Kommt, ihr Töchter.",
+        "Dan de cantate Wachet auf, BWV 140."
+       ],
+       "docent": "Definitie en fragmenten uit de studiewijzer (kaart SK 3). Per fragment twee tot drie minuten. Bij Gabrieli: laat leerlingen een hand links of rechts opsteken bij welke groep speelt. Bij Wachet auf: de cantate gaat over de gelijkenis van de wijze meisjes, Matteüs 25 (leergang, identiteit). De Matthäus-Passion is de passie die je in de tabel gebruikt."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Tabel: cantate, passie, oratorium, opera, suite",
+       "stappen": [
+        "Vul de tabel in met je buurman: bezetting, plaats, tekst.",
+        "Gebruik de voorbeelden die we hoorden en je aantekeningen van eerdere lessen.",
+        "Wat is hetzelfde en wat is anders bij de vijf vormen?"
+       ],
+       "docent": "Formatief uit de leergang: leerlingen vullen de tabel (bezetting, plaats, tekst), jij bespreekt een steekproef. Het studiewijzer-doel is dat leerlingen overeenkomsten en verschillen kunnen noemen. De bronnen geven alleen voorbeelden: Wachet auf (cantate), Matthäus-Passion (passie), Messiah (oratorium; 'opera zonder toneel over een bijbels verhaal', les 21.1), Händel sarabande uit de suite in d, HWV 437 (suite; les 34.1). Eigen controle voor de rest: een passie vertelt het lijdensverhaal van Christus in muziek; een cantate is een meerdelig kerkstuk voor solisten, koor en orkest; een opera is een muziekdrama met toneel; een suite is een reeks instrumentale dansen.",
+       "beeld": {
+        "soort": "tabel",
+        "rijen": [
+         [
+          "Vorm",
+          "Bezetting",
+          "Plaats",
+          "Tekst",
+          "Voorbeeld"
+         ],
+         [
+          "Cantate",
+          "",
+          "",
+          "",
+          "Wachet auf"
+         ],
+         [
+          "Passie",
+          "",
+          "",
+          "",
+          "Matthäus-Passion"
+         ],
+         [
+          "Oratorium",
+          "",
+          "",
+          "",
+          "Messiah"
+         ],
+         [
+          "Opera",
+          "",
+          "",
+          "",
+          ""
+         ],
+         [
+          "Suite",
+          "",
+          "",
+          "",
+          "Sarabande, HWV 437"
+         ]
+        ],
+        "kol": [
+         0.18,
+         0.2,
+         0.18,
+         0.2,
+         0.24
+        ]
+       }
+      },
+      {
+       "min": 10,
+       "soort": "afsluiten",
+       "kop": "Soli Deo Gloria, en thuis",
+       "stappen": [
+        "Bach schreef 'Soli Deo Gloria' onder zijn partituren.",
+        "Praat in tweetallen: kan muziek maken een dienst zijn?",
+        "Thuis: de tabel afmaken, en je compositie voor PT2 netjes noteren, met de hand of in een notatieprogramma.",
+        "Herhaal Barok N2 b5, Vocale muziek, in MusicBox."
+       ],
+       "docent": "Identiteit uit de leergang. De ingeleverde notatie van PT2 telt mee in de beoordeling (PTA); de notatie moet in lesweek 34 binnen zijn (leergang en studiewijzer). Controleer of de tabel van elke leerling in hun map zit; die komt terug in T2. Studiewijzer: nog 3 lesweken tot PT2."
+      }
+     ],
+     "formatief": {
+      "soort": "tabel",
+      "tekst": "Leerlingen vullen de tabel vocale vormen in (bezetting, plaats, tekst); de docent bespreekt een steekproef."
+     },
+     "_les": "vwo4:32.2",
+     "_bron": "Studiewijzer vwo 4, week 32 les 2 (Dubbelkorigheid en vocale vormen, Gabrieli, Matthäus-Passion, Wachet auf, kaart SK 3, thuis); PTA V4 Muziek T2 (concerteren: dubbelkorigheid; A3 religieuze context van de barok); studiewijzer T2-afvinklijst (cantate, passie, oratorium, opera, suite); basis.json vwo4 week 32 (vraag, doel, formatief, identiteit)."
+    }
+   }
+  },
+  "vwo5": {
+   "_uitleg": "Geen uitgewerkte lessen voor vwo 5. Gezocht is naar lessen met lesweek 10 of hoger (datum vanaf ma 9 nov 2026) zonder fasen of met 'Nog in te vullen'. 'Nog in te vullen' komt niet voor. Alle lessen zonder fasen zijn toetsles, toetsweek of uitval en worden bewust niet uitgewerkt: uitval 10.3, 16.1, 16.2, 19.1, 19.2, 20.1, 20.2, 27.1, 27.2, 29.1, 29.2, 32.1, 32.2, 37.3; toetsweek 18.2, 18.3, 28.1, 28.2, 28.3, 38.2, 38.3; toetsles 18.1 (T5), 35.1 en 35.3 (P10), 38.1 (T6). Alle andere komende lessen hebben fasen (tekststrings of fase-objecten, 45 minuten). Open punten die eerst een besluit van Frans vragen staan in vwo5.md onder 'Vragen aan Frans': P9 op ma 23 nov (lessen 12.1 en 12.2 en de bestaande decks in tools/inhoud-p9-23nov.json), ma 9 nov (10.1 en 10.2 uitval of niet) en ma 18 jan (T5 en vrije dag).",
+   "_klas": "vwo5",
+   "lessen": {}
+  },
+  "vwo6": {
+   "_uitleg": "Voorstel voor vwo 6, lesweken 11 tot en met 17 (les 2 en 3 van week 11 t/m les 2 van week 17): 18 lessen die in basis.json alleen tekstfasen hebben (\"15 min · ...\"), zodat de lesmodus ze als fase-objecten kan tonen. Lessen 10.2, 10.3 en 11.1 hebben al fase-objecten. Niet uitgewerkt: week 9 (toetsweek), 10.1, 16.1 (uitval), 17.3 (P19 examenconcert), 18 en 19 (toetsweek 2), 26.3 (P20), 27.3 (uitval), 28 en 29 (toetsweek 3) en de tekstfasenlessen van week 20 tot en met 30 (25 lessen: 20.1 t/m 25.3, 26.1, 26.2, 27.1, 27.2 en 30.1 t/m 30.3). Leerlingen presenteren nooit voor de klas: presentaties zijn in groepjes voor de docent. Geen telefoons: opnemen en software op de laptop van de groep. Voorbeelden en jaartallen met \"eigen controle\" staan niet in de PTA of leergang: Frans controleert ze voor de les. Programma voor beatmaking en locatie van generale en concert staan in geen bron.",
+   "_klas": "vwo6",
+   "lessen": {
+    "Holy hiphop en christian rap": {
+     "vraag": "Wat is de boodschap van holy hiphop, en hoe verhoudt die zich tot seculiere hiphop?",
+     "doel": "Je vergelijkt holy hiphop met seculiere hiphop en analyseert in een fragment de boodschap en de manier waarop die wordt gebracht.",
+     "criteria": [
+      "Ik noem twee verschillen in boodschap tussen holy hiphop en seculiere hiphop",
+      "Ik noem één muzikaal kenmerk dat beide gemeen hebben",
+      "Ik geef met een argument mijn mening over de stelling"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Holy hiphop: waar komt het vandaan?",
+       "stappen": [
+        "Hiphop komt uit de straat. Christelijke rappers gebruiken dezelfde vorm: beat, flow, rijm.",
+        "Verschil zit in de boodschap: geloof, hoop, schuld en genade in plaats van status en geld.",
+        "Twee namen voor hetzelfde: holy hiphop en christian rap.",
+        "Zelfde middelen, andere boodschap: noteer wat jou opvalt."
+       ],
+       "docent": "Korte uitleg met één luisterfragment van een christelijke rapper en één seculier fragment met dezelfde soort beat. Fragmenten kiezen en vooraf beluisteren: geen ruwe taal in de klas (eigen controle)."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Vergelijk twee fragmenten",
+       "stappen": [
+        "Je hoort twee fragmenten met een vergelijkbare beat.",
+        "Schrijf per fragment op: wat is de boodschap, voor wie is het bedoeld, wat voel je erbij?",
+        "Welk muzikaal middel hoor je in beide: sample, flow, refrein?"
+       ],
+       "docent": "Loop rond en laat leerlingen tekstfragmenten niet overschrijven maar in eigen woorden samenvatten. Leerlingen werken in tweetallen, op papier."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Stellinglijn: de vorm is neutraal, de tekst telt",
+       "stappen": [
+        "Sta je bij eens, oneens of ertussenin? Loop naar jouw plek op de lijn.",
+        "Geef één argument. Kan een genre uit de straat drager zijn van het evangelie?",
+        "Mag je van een stijl afblijven omdat de herkomst niet past bij je geloof?"
+       ],
+       "docent": "Laat verschillende standpunten staan. Vraag door: wat blijft er over van het genre als je de tekst weghaalt? Sluit af met de stelling in één zin per leerling."
+      }
+     ],
+     "formatief": {
+      "soort": "gesprek",
+      "tekst": "Stellinglijn: de vorm is neutraal, de tekst telt."
+     },
+     "_les": "vwo6:11.2",
+     "_bron": "basis.json vwo6 w11 l2 (doel, detail, identiteit); PTA T9: aandacht voor christelijke stromingen binnen de moderne pop (holy hiphop / christian rap); fragmentkeuze is eigen controle"
+    },
+    "Flow en ritme; beatmaking en arrangement; workshop songwriting/lyrics": {
+     "vraag": "Hoe bouw je een beat, en hoe laat je een tekst erop vallen?",
+     "doel": "Je oefent flow en ritme, maakt een beat van acht maten en schrijft vier regels tekst die erop passen.",
+     "criteria": [
+      "Acht maten beat staat op de laptop",
+      "Vier regels eigen tekst passen in het ritme",
+      "Ik leg uit wat flow is"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Flow en ritme",
+       "stappen": [
+        "Klap een ritme van vier tellen en zeg er een zin op.",
+        "Flow is hoe je tekst over de beat valt: waar je nadruk legt, waar je rust neemt.",
+        "Maak met je groep één zin die eerst op de tel valt, en daarna tussen de tellen."
+       ],
+       "docent": "Zelf voordoen met één regel. Start met tel en klap, pas daarna met beat."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Beatmaking",
+       "stappen": [
+        "Je werkt in een groepje op de laptop, met koptelefoon.",
+        "Bouw acht maten: kick op 1 en 3, snare op 2 en 4, hi-hat erboven.",
+        "Voeg een bas- of akkoordloop toe.",
+        "Sla je beat op onder de naam van je groep."
+       ],
+       "docent": "Het programma voor beatmaking staat in geen enkele bron: zet vooraf op elke groepslaptop klaar wat de sectie gebruikt. Geen telefoons."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Workshop songwriting en lyrics",
+       "stappen": [
+        "Schrijf vier regels over een onderwerp dat ertoe doet voor jou.",
+        "Houd het rustig en respectvol: geen ruwe of beledigende taal.",
+        "Zing of rap de regels op je beat.",
+        "Neem je beat met tekst op de laptop op."
+       ],
+       "docent": "Rondlopen, per groep één tip. Opname blijft in het groepje en wordt niet voor de klas afgespeeld."
+      }
+     ],
+     "formatief": {
+      "soort": "opname",
+      "tekst": "Beat met tekst opnemen op de groepslaptop."
+     },
+     "_les": "vwo6:11.3",
+     "_bron": "basis.json vwo6 w11 l3 (doel, criteria); kaart RM 1b; programma voor beatmaking onbekend (vraag aan Frans)"
+    },
+    "Musical: ontwikkeling en vertelstructuur": {
+     "vraag": "Hoe vertelt een musical een verhaal in muziek?",
+     "doel": "Je beschrijft de ontwikkeling van de musical en de vertelstructuur, en je benoemt de functie van drie soorten nummers.",
+     "criteria": [
+      "Ik noem drie soorten nummers en wat ze doen in het verhaal",
+      "Ik leg uit hoe tekst en muziek samen het verhaal dragen",
+      "Ik noem één verschil tussen twee musicalstijlen"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Geschiedenis van de musical",
+       "stappen": [
+        "Uit operette, revue en toneel groeit in de twintigste eeuw de musical.",
+        "Het verhaal wordt belangrijker dan de show: lied en verhaal horen bij elkaar.",
+        "Belangrijke werken: Oklahoma! (1943), West Side Story (1957), The Sound of Music (1959).",
+        "Zet de drie op een tijdlijn."
+       ],
+       "docent": "Jaartallen zijn eigen controle, controleer ze voor de les. Houd het bij drie werken."
+      },
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Vertelstructuur",
+       "stappen": [
+        "Dialoog en lied wisselen: het lied begint waar spreken niet genoeg meer is.",
+        "Openingsnummer: de wereld en de hoofdpersoon.",
+        "I want-song: de hoofdpersoon vertelt wat hij of zij wil.",
+        "Ballade, ensemble, finale: rust, drukte en afsluiting.",
+        "Een terugkerend motief (reprise) bindt het verhaal."
+       ],
+       "docent": "Laat bij elk type kort een fragment horen (max 45 seconden). Gebruik voorbeelden uit musicals die bij de school passen, zoals Joseph and the Amazing Technicolor Dreamcoat of The Sound of Music (eigen controle)."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Vergelijk twee stijlen",
+       "stappen": [
+        "Je hoort twee nummers uit twee verschillende musicals.",
+        "Noteer: tempo, begeleiding, zangstijl, welke rol het nummer heeft.",
+        "Noem één verschil dat je hoort."
+       ],
+       "docent": "Vraag: welk nummer vertelt iets en welk nummer laat vooral een gevoel horen?"
+      }
+     ],
+     "formatief": {
+      "soort": "exit ticket",
+      "tekst": "Wat doet een I want-song in het verhaal?"
+     },
+     "_les": "vwo6:12.1",
+     "_bron": "basis.json vwo6 w12 l1 (detail, vraag, formatief); lesleerlijn module 2 week 3 les 1; jaartallen en werken eigen controle"
+    },
+    "Vocale technieken in musicals": {
+     "vraag": "Welke stemtechnieken hoor je in een musical, en wat doen ze met het verhaal?",
+     "doel": "Je herkent vocale technieken in musicals, probeert er twee zelf uit en analyseert een nummer naar keuze.",
+     "criteria": [
+      "Ik herken belt en legit in een fragment",
+      "Ik noem twee technieken en wat ze doen",
+      "Ik analyseer één nummer op stemgebruik"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Vocale technieken",
+       "stappen": [
+        "Belt: krachtig, borstklank, veel lucht onder controle.",
+        "Legit: klassiek geschoold en rond van klank.",
+        "Mix: ertussenin. Steunademhaling en dictie dragen alles.",
+        "Je hoort het verschil tussen een nummer vol energie en een nummer vol warmte."
+       ],
+       "docent": "Twee korte fragmenten: één belt, één legit. Zelf voordoen op een toon die je aankunt. Termen zijn algemeen vakkennis (eigen controle)."
+      },
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Workshop stemtechniek",
+       "stappen": [
+        "Ademhaling: vier tellen in, zes tellen uit op ssss.",
+        "Dictie: een tekst eerst gesproken, dan gezongen.",
+        "Probeer twee technieken uit op een korte frase.",
+        "Doe mee, ook als het nog onwennig klinkt."
+       ],
+       "docent": "In de leergang staat een gastdocent voor deze workshop. Is die er niet, geef de workshop dan zelf."
+      },
+      {
+       "min": 10,
+       "soort": "luisteren",
+       "kop": "Analyseer een nummer naar keuze",
+       "stappen": [
+        "Kies met je buur een nummer uit een musical.",
+        "Schrijf op welke techniek je hoort en waarom die past bij de scène.",
+        "Noteer je antwoord kort: twee zinnen."
+       ],
+       "docent": "Keuze goedkeuren: geen ruwe teksten, geen thema's die niet passen bij de school. Je hoeft het nummer niet te laten horen."
+      }
+     ],
+     "formatief": {
+      "soort": "peerfeedback",
+      "tekst": "Belt of legit? Luister naar elkaar en geef één tip."
+     },
+     "_les": "vwo6:12.2",
+     "_bron": "basis.json vwo6 w12 l2 (detail: workshop stemtechniek met gastdocent); lesleerlijn module 2 week 3 les 2; technieken eigen controle"
+    },
+    "Musicalnummer repeteren; improvisatie in musicalstijl; presentaties projectvoorstellen": {
+     "vraag": "Hoe breng je een musicalnummer tot leven, en hoe leg je je projectidee uit?",
+     "doel": "Je repeteert een musicalnummer, improviseert in musicalstijl en presenteert je projectvoorstel aan de docent.",
+     "criteria": [
+      "Ik zing of speel mijn partij in het nummer zonder te stoppen",
+      "Ik improviseer vier maten in musicalstijl",
+      "Ik leg mijn projectvoorstel in twee minuten uit aan de docent"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Musicalnummer repeteren",
+       "stappen": [
+        "Repeteer in je groepje je musicalnummer.",
+        "Let op samen beginnen, samen eindigen en de tekst verstaanbaar.",
+        "Eén keer zonder stoppen doorspelen."
+       ],
+       "docent": "Groepjes verdelen over de ruimte. Rondlopen, per groep één punt. Geen opnames voor de klas."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Improviseren in musicalstijl",
+       "stappen": [
+        "Kies vier akkoorden uit het nummer.",
+        "Improviseer vier maten: één voor één, anderen houden de begeleiding aan.",
+        "Houd het eenvoudig: herhaal een motief en verander één noot."
+       ],
+       "docent": "Zelf voordoen. Wie niet wil, mag een ritme improviseren."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Projectvoorstellen in groepjes",
+       "stappen": [
+        "Je legt je projectvoorstel in twee minuten uit aan de docent, in een groepje.",
+        "Zeg: wat wil je maken, welke stijl, wat is jouw rol.",
+        "De anderen in het groepje geven één tip."
+       ],
+       "docent": "De presentatie is aan de docent, in groepjes van drie tot vier, niet voor de klas. Zit zelf aan een tafel en luister om de beurt. De andere groepen werken door aan hun nummer."
+      }
+     ],
+     "formatief": {
+      "soort": "presentatie voorstel",
+      "tekst": "Feedback van groepje en docent: één top en één tip."
+     },
+     "_les": "vwo6:12.3",
+     "_bron": "basis.json vwo6 w12 l3; lesleerlijn module 2 week 3 les 3 (presentaties persoonlijke projectvoorstellen); werkvorm aangepast: niet voor de klas"
+    },
+    "Pop 3: nieuwe stromingen, productietechniek, sounddesign, muziekindustrie": {
+     "vraag": "Hoe klinkt popmuziek nu, en wie maakt hem?",
+     "doel": "Je beschrijft nieuwe popstromingen, noemt productiekenmerken en legt uit hoe de muziekindustrie veranderd is.",
+     "criteria": [
+      "Ik noem twee productiekenmerken van hedendaagse pop",
+      "Ik leg uit wat sounddesign is",
+      "Ik noem één verandering in de muziekindustrie door streaming"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Nieuwe stromingen en digitale ontwikkelingen",
+       "stappen": [
+        "Popmuziek verandert met de techniek: computer, samples, internet.",
+        "Muziek maak je nu op een laptop. Je hoeft geen studio meer.",
+        "Streaming en social media veranderen hoe muziek zich verspreidt.",
+        "Dit is ook stof van T9: invloed van streaming en social media."
+       ],
+       "docent": "Verwijs naar de PTA-tekst bij T9 (A3). Houd voorbeelden herkenbaar en passend bij de school."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Productie en sounddesign",
+       "stappen": [
+        "Je hoort één fragment drie keer. Elke keer let je op iets anders.",
+        "Eerst de ritmesectie, dan de stem, dan de ruimte.",
+        "Sounddesign: de klankkleur bewust kiezen en bewerken.",
+        "Noem twee dingen die je hoort: bijvoorbeeld galm, laag dichtgeknepen, gelaagde stemmen."
+       ],
+       "docent": "Begrippen uit de syllabus: opname- en productietechniek (r). Een fragment kiezen met duidelijke productie."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "De muziekindustrie in verandering",
+       "stappen": [
+        "Hoe verdient een artiest nu geld, en hoe was dat vroeger?",
+        "Wat betekent het als iedereen alles kan streamen?",
+        "Wat is voor jou het verschil tussen luisteren en kopen?"
+       ],
+       "docent": "Gesprek in tweetallen, daarna kort klassikaal. Geen cijfers noemen die je niet gecontroleerd hebt."
+      }
+     ],
+     "formatief": {
+      "soort": "exit ticket",
+      "tekst": "Wat is sounddesign? Eén zin met een voorbeeld."
+     },
+     "_les": "vwo6:13.1",
+     "_bron": "basis.json vwo6 w13 l1 (detail, doel, syllabus r en i, kaart SW P3); PTA T9 A3 (invloed van streaming en social media)"
+    },
+    "Internationalisering en lokale identiteit": {
+     "vraag": "Mag je muziek uit een andere cultuur gebruiken, en wanneer is dat respectvol?",
+     "doel": "Je bespreekt wereldmuziekinvloeden in pop, benoemt authenticiteit en appropriatie en neemt een onderbouwd standpunt in.",
+     "criteria": [
+      "Ik noem een voorbeeld van een wereldmuziekinvloed in pop",
+      "Ik leg uit wat authenticiteit en appropriatie betekenen",
+      "Ik geef een standpunt met een argument"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Invloeden van wereldmuziek",
+       "stappen": [
+        "Popmuziek leent al lang uit andere culturen.",
+        "Voorbeelden: Afrikaanse ritmes in de pop, sitar bij de Beatles.",
+        "Lenen kan verrijken, maar ook uithollen.",
+        "Twee begrippen: authenticiteit en appropriatie."
+       ],
+       "docent": "Voorbeelden en jaartallen zijn eigen controle, houd het bij twee. Leg uit: appropriatie is het overnemen van een element uit een andere cultuur zonder de herkomst te eren of te benoemen."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Casus: pop en een andere cultuur",
+       "stappen": [
+        "Je hoort een stuk waarin twee culturen samenkomen, bijvoorbeeld Paul Simon, Graceland (1986).",
+        "Wie maakt het mee, wie verdient eraan, wie wordt genoemd?",
+        "Wat hoor je van elke cultuur?"
+       ],
+       "docent": "Graceland is een bekende casus over samenwerking en kritiek (eigen controle). Laat een fragment van maximaal een minuut horen."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Stellinglijn: lenen uit andere culturen is altijd goed",
+       "stappen": [
+        "Loop naar jouw plek: eens, oneens of ertussenin.",
+        "Geef één argument.",
+        "Wat zou jij doen als je zelf een stuk uit een andere cultuur wilt gebruiken?"
+       ],
+       "docent": "Laat meerdere standpunten staan. Vraag door naar voorwaarden: toestemming, vermelding, samenwerking."
+      }
+     ],
+     "formatief": {
+      "soort": "gesprek",
+      "tekst": "Stellinglijn: lenen uit andere culturen is altijd goed."
+     },
+     "_les": "vwo6:13.2",
+     "_bron": "basis.json vwo6 w13 l2 (detail, doel, formatief); lesleerlijn module 2 week 4 les 2; voorbeelden eigen controle"
+    },
+    "Popsong repeteren voor het examenconcert; workshop arrangeren; feedback op projecten": {
+     "vraag": "Wat maakt van mijn popsong een nummer dat bij het examenconcert past?",
+     "doel": "Je repeteert de popsong voor het examenconcert, oefent een eenvoudig arrangement en verwerkt feedback op je project.",
+     "criteria": [
+      "Ik speel of zing mijn partij van de popsong zonder te stoppen",
+      "Ik verander één ding aan het arrangement en leg uit waarom",
+      "Ik verwerk één tip uit de feedback"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Popsong repeteren",
+       "stappen": [
+        "Repeteer in je groepje de popsong voor het examenconcert.",
+        "Eerst alles samen, dan de moeilijkste plek apart.",
+        "Iedereen speelt een eigen partij: zang, instrument, slagwerk of improvisatie.",
+        "Eén keer zonder stoppen."
+       ],
+       "docent": "Songboxen zijn speelboxen: leerling kiest instrument en niveau. Gitaar niveau 1: de drie dunste snaren, kleine grepen. Geen songteksten kopiëren in de les."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Workshop arrangeren",
+       "stappen": [
+        "Kies één ding aan je song dat je anders doet: begin, tussenstuk, slot of instrumentatie.",
+        "Schrijf het in twee zinnen op: wat verander je en waarom.",
+        "Probeer het uit."
+       ],
+       "docent": "Houd het klein: één wijziging per groepje. Laat het hoorbaar maken en daarna beslissen."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Feedback op de projecten",
+       "stappen": [
+        "Speel je gewijzigde stuk voor aan de docent, in je groepje.",
+        "De docent geeft één tip per project.",
+        "Schrijf je tip bovenaan je partij."
+       ],
+       "docent": "Per groepje vijf minuten aan de tafel van de docent. Niet voor de klas."
+      }
+     ],
+     "formatief": {
+      "soort": "feedbackgesprek",
+      "tekst": "Eén tip per project."
+     },
+     "_les": "vwo6:13.3",
+     "_bron": "basis.json vwo6 w13 l3; PTA P19 (gevarieerd programma, zang, instrument, slagwerk, improvisatie); speelboxregels uit afspraken Frans"
+    },
+    "Cross-overs: genre-overstijgende muziek": {
+     "vraag": "Wat gebeurt er als twee genres samenkomen?",
+     "doel": "Je analyseert hybride stijlen en genrefusies en benoemt in een fragment welke twee genres je hoort.",
+     "criteria": [
+      "Ik herken twee genres in één fragment",
+      "Ik leg uit wat de fusie nieuw maakt",
+      "Ik noem één reden waarom artiesten genres combineren"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Hybride stijlen",
+       "stappen": [
+        "Een hybride stijl combineert elementen van twee of meer genres.",
+        "Voorbeelden: jazz en hiphop, gospel en funk, metal en orkest.",
+        "Het levert nieuwe klank op en nieuw publiek.",
+        "Let op: wat komt van welk genre?"
+       ],
+       "docent": "Hybride stijlen kwamen in 10.3 en 10.2 al langs (fusion, wortels). Haal die terug."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Drie fusies beluisteren",
+       "stappen": [
+        "Je hoort drie fragmenten, elk een mengvorm.",
+        "Schrijf per fragment twee genres op.",
+        "Wat hoor je van het ene genre, wat van het andere?"
+       ],
+       "docent": "Voorbeelden: Guru, Jazzmatazz (1993); Kirk Franklin, Stomp (1997); Metallica met orkest, S&M (1999). Alle drie zijn eigen controle: luister vooraf en kies op passendheid."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Waarom mixen artiesten genres?",
+       "stappen": [
+        "Praat in je groepje: waarom zou iemand twee genres mengen?",
+        "Wanneer klinkt een fusie geforceerd?",
+        "Welke combinatie zou jij willen horen?"
+       ],
+       "docent": "Laat de groepjes kort rapporteren: één reden per groep."
+      }
+     ],
+     "formatief": {
+      "soort": "wisbordje",
+      "tekst": "Welke twee genres hoor je?"
+     },
+     "_les": "vwo6:14.1",
+     "_bron": "basis.json vwo6 w14 l1 (detail, doel, formatief); lesleerlijn module 2 week 5 les 1; voorbeelden eigen controle"
+    },
+    "Muziek en andere disciplines: visuele media, technologie": {
+     "vraag": "Hoe versterkt muziek beeld, beweging en verhaal?",
+     "doel": "Je onderzoekt hoe muziek samenwerkt met visuele media en technologie en bedenkt een eigen creatieve combinatie.",
+     "criteria": [
+      "Ik noem twee dingen die muziek doet bij beeld",
+      "Ik noem één technologie die muziekproductie veranderd heeft",
+      "Ik bedenk één creatieve combinatie en leg die uit"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Muziek bij beeld",
+       "stappen": [
+        "Je ziet een korte scène twee keer: met en zonder muziek.",
+        "Wat verandert er? Sfeer, spanning, tempo van het verhaal?",
+        "Noem twee functies van muziek bij beeld."
+       ],
+       "docent": "Kies een korte, rechtenvrije of eigen scène zonder geweld of ruwe inhoud. Digibord, geluid vooraf testen (lokaal 009)."
+      },
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Technologie in muziekproductie",
+       "stappen": [
+        "Samples, loops, synthesizers en opnameprogramma's: ze maken nieuwe klanken mogelijk.",
+        "Wat kan nu waar je vroeger een orkest voor nodig had?",
+        "Koppel dit aan wat je in 13.1 zag over sounddesign."
+       ],
+       "docent": "Kort houden, maximaal twee voorbeelden."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Workshop: creatieve integratie",
+       "stappen": [
+        "Kies in je groepje een beeld, een gedicht of een dansbeweging.",
+        "Bedenk welke muziek erbij past: stijl, instrumenten, tempo.",
+        "Pitch je idee in drie zinnen aan je buurgroepje."
+       ],
+       "docent": "Pitchen in tweetallen of kleine groepjes, niet voor de klas."
+      }
+     ],
+     "formatief": {
+      "soort": "peerfeedback",
+      "tekst": "Idee pitchen in tweetallen; de ander geeft één tip."
+     },
+     "_les": "vwo6:14.2",
+     "_bron": "basis.json vwo6 w14 l2 (detail: workshop creatieve integratie); lesleerlijn module 2 week 5 les 2"
+    },
+    "Technologieworkshop productietechnieken; multi-genre medley repeteren": {
+     "vraag": "Wat kan ik met opnametechniek, en klinkt mijn medley als één geheel?",
+     "doel": "Je doet de technologieworkshop, repeteert een multi-genre medley en geeft een update over je project.",
+     "criteria": [
+      "Ik gebruik één productietechniek in mijn eigen fragment",
+      "De medley gaat één keer door zonder stoppen",
+      "Ik vertel in één minuut waar mijn project staat"
+     ],
+     "fasen": [
+      {
+       "min": 20,
+       "soort": "doen",
+       "kop": "Technologieworkshop",
+       "stappen": [
+        "Je werkt in je groepje op de laptop, met koptelefoon.",
+        "Neem vier maten op, doe er een loop onder en voeg één effect toe, bijvoorbeeld galm.",
+        "Beluister het resultaat en bepaal wat je behoudt.",
+        "Sla je werk op."
+       ],
+       "docent": "Programma staat niet in de bronnen (vraag aan Frans). Geen telefoons. Groepen van drie of vier."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Medley repeteren",
+       "stappen": [
+        "Je medley heeft drie stukjes in drie verschillende stijlen.",
+        "Oefen de overgangen: tempo, toonsoort, begin.",
+        "Eén keer zonder stoppen."
+       ],
+       "docent": "Rondlopen. Let op de overgangen en de balans."
+      },
+      {
+       "min": 10,
+       "soort": "gesprek",
+       "kop": "Projectupdate aan de docent",
+       "stappen": [
+        "Per groepje één minuut: wat is af, wat nog niet, wat heb je van mij nodig?",
+        "Schrijf op wat je volgende les gaat doen."
+       ],
+       "docent": "Aan de docent, aan tafel. Niet voor de klas."
+      }
+     ],
+     "formatief": {
+      "soort": "oefenlog",
+      "tekst": "Projectupdate in het oefenlog."
+     },
+     "_les": "vwo6:14.3",
+     "_bron": "basis.json vwo6 w14 l3 (fasen 20-15-10); lesleerlijn module 2 week 5 les 3"
+    },
+    "Praise & worship: ontwikkeling, kenmerken, invloed op mainstream": {
+     "vraag": "Wat maakt een worship-nummer tot worship?",
+     "doel": "Je beschrijft de ontwikkeling en kenmerken van praise & worship en legt uit hoe worship de mainstream heeft beïnvloed.",
+     "criteria": [
+      "Ik noem drie kenmerken van een worship-nummer",
+      "Ik noem een verschil tussen worship en een gewone popsong",
+      "Ik noem één invloed van worship op de mainstream"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Ontwikkeling van praise & worship",
+       "stappen": [
+        "Gemeentezang verandert met de tijd: van koraal naar band.",
+        "Opwekking in Nederland, Hillsong in Australië, wereldwijd gedeeld.",
+        "Worship is gemaakt om samen te zingen.",
+        "Vergelijk: zing je naar het publiek, of met elkaar naar God?"
+       ],
+       "docent": "Hillsong United, Oceans (2013) of Matt Redman, 10,000 Reasons (2011) als voorbeeld (eigen controle). Geen teksten overnemen op papier."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Analyse van worship",
+       "stappen": [
+        "Je hoort één worship-nummer twee keer.",
+        "Eerst de muziek: tempo, begeleiding, opbouw, refrein, bridge.",
+        "Dan de tekst: wie spreekt, wie wordt aangesproken?",
+        "Noteer drie kenmerken."
+       ],
+       "docent": "Kenmerken in de les: eenvoudige melodie die je meezingt, veel herhaling, opbouw naar een hoogtepunt, tekst gericht tot God. Eigen controle."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Invloed op de mainstream",
+       "stappen": [
+        "Hoor je worship terug in popmuziek? Waar?",
+        "Wat nemen popmuzikanten over: klank, opbouw, de stadiongalm?",
+        "Wat verliest worship als het op de radio komt?"
+       ],
+       "docent": "Open gesprek. Geen oordeel over personen of kerken."
+      }
+     ],
+     "formatief": {
+      "soort": "exit ticket",
+      "tekst": "Wat maakt een worship-nummer tot worship?"
+     },
+     "_les": "vwo6:15.1",
+     "_bron": "basis.json vwo6 w15 l1 (vraag, identiteit, doel); PTA T9 (praise & worship); lesleerlijn module 2 week 6 les 1; voorbeelden eigen controle"
+    },
+    "Spiritualiteit in verschillende genres": {
+     "vraag": "Wat hebben spirituele muziektradities gemeen, en wat is voor ons uniek?",
+     "doel": "Je vergelijkt spirituele elementen in verschillende genres en tradities en noemt één overeenkomst en één verschil.",
+     "criteria": [
+      "Ik noem één overeenkomst tussen twee tradities",
+      "Ik noem één verschil",
+      "Ik zeg in eigen woorden wat voor mij uniek is in het christelijk geloof"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "uitleg",
+       "kop": "Spiritualiteit in muziek",
+       "stappen": [
+        "In bijna elke traditie hoort muziek bij gebed en lof.",
+        "Gemeenschappelijke thema's: lof, klacht, verlangen, vertrouwen.",
+        "Vergelijk met wat je al kent: gregoriaans (week 1), gospel, Bach.",
+        "Let op hoe muziek helpt om stil te worden of samen te zingen."
+       ],
+       "docent": "Wees respectvol bij andere tradities: beschrijf wat je hoort, geen oordeel. Eigen controle voor de voorbeelden."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Drie tradities beluisteren",
+       "stappen": [
+        "Je hoort drie korte fragmenten, bijvoorbeeld gospel, Taizé en een traditie van buiten het christendom.",
+        "Schrijf per fragment op: wat hoor je, wanneer wordt het gezongen, door wie?",
+        "Wat is gelijk, wat verschilt?"
+       ],
+       "docent": "Kies zelf fragmenten van maximaal een minuut: een spiritual of gospel, een Taizé-gezang en een voorbeeld uit een andere traditie, zoals een Joodse synagogezang. Vooraf beluisteren. Eigen controle."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Wat is voor ons uniek?",
+       "stappen": [
+        "Bespreek in je groepje: wat is anders aan christelijke lofzang?",
+        "Wie wordt aangesproken, en wat is de reden voor het lied?",
+        "Schrijf één zin op die jouw groep wil delen."
+       ],
+       "docent": "Het gesprek mag persoonlijk zijn. Geef zelf een eerlijke inbreng uit jouw eigen geloof. Uit de leergang: vergelijk wat voor ons uniek is in het christelijk geloof."
+      }
+     ],
+     "formatief": {
+      "soort": "gesprek",
+      "tekst": "Wat is voor ons uniek in het christelijk geloof?"
+     },
+     "_les": "vwo6:15.2",
+     "_bron": "basis.json vwo6 w15 l2 (detail, identiteit, formatief); lesleerlijn module 2 week 6 les 2"
+    },
+    "Worship-nummer repeteren; improvisatie op spirituele thema's; workshop persoonlijke reflectieve muziek": {
+     "vraag": "Hoe klinkt mijn eigen gebed, dank of vraag in muziek?",
+     "doel": "Je repeteert een worship-nummer, improviseert op een spiritueel thema en maakt een eerste schets van een persoonlijk reflectief stuk.",
+     "criteria": [
+      "Ik speel of zing mijn partij van het worship-nummer",
+      "Ik improviseer vier maten op een vaste akkoordenreeks",
+      "Mijn schets heeft een tekst of melodie van minstens vier maten"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Worship-nummer repeteren",
+       "stappen": [
+        "Repeteer in je groepje het worship-nummer.",
+        "Kies je partij: zang, gitaar, toetsen, bas of slagwerk.",
+        "Eén keer zonder stoppen, gericht op samen zingen."
+       ],
+       "docent": "Songboxen zijn speelboxen: kies instrument en niveau. Gitaar niveau 1: de drie dunste snaren, kleine grepen. Geen songteksten in de les overnemen."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Improviseren op spirituele thema's",
+       "stappen": [
+        "Kies een thema: lof, dank, vraag of stilte.",
+        "Speel of zing vier maten dat bij het thema past, boven vier vaste akkoorden.",
+        "Houd het rustig. Herhaling is goed."
+       ],
+       "docent": "Voorbeeldreeks: G, D, Em, C (grepen G, D, Em, C). Zelf voordoen op gitaar of keyboard. Wie niet wil improviseren, speelt een ritme."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Workshop: persoonlijke reflectieve muziek",
+       "stappen": [
+        "Schrijf vier regels: een gebed, een dank of een vraag.",
+        "Zet er een melodie of ritme bij, of neem een stukje op de laptop op.",
+        "Wat je schrijft blijft van jezelf. Je laat het alleen horen als je dat wilt."
+       ],
+       "docent": "Opnemen op de laptop van de groep, niet op de telefoon. Niets voor de klas. De schets wordt in week 16 en 17 verder gebruikt (eigen controle: bij persoonlijk project)."
+      }
+     ],
+     "formatief": {
+      "soort": "opname",
+      "tekst": "Schets opnemen op de laptop."
+     },
+     "_les": "vwo6:15.3",
+     "_bron": "basis.json vwo6 w15 l3 (doel, identiteit: schrijf een kort stuk of lied als persoonlijke reflectie); lesleerlijn module 2 week 6 les 3"
+    },
+    "Muziek als sociaal commentaar; muziek en identiteitsvorming": {
+     "vraag": "Wat kan muziek zeggen over de samenleving, en wat zegt jouw muziek over jou?",
+     "doel": "Je analyseert protestmuziek en activistische hiphop en reflecteert in een alinea op je eigen muzikale identiteit.",
+     "criteria": [
+      "Ik noem één voorbeeld van protestmuziek en wat het wil bereiken",
+      "Ik herken één activistisch element in hiphop",
+      "Mijn alinea beantwoordt: wat voor muziek past bij wie ik ben"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Protestmuziek",
+       "stappen": [
+        "Muziek kan een stem geven aan wie niet gehoord wordt.",
+        "Je hoort fragmenten uit de burgerrechtenbeweging en het liedprotest.",
+        "Wat vraagt het lied van de luisteraar?",
+        "Wie zingt het, en voor wie?"
+       ],
+       "docent": "Bijvoorbeeld We Shall Overcome (spiritual, burgerrechten), Bob Dylan, Blowin' in the Wind (1963). Eigen controle, vooraf beluisteren. Geen ruwe teksten."
+      },
+      {
+       "min": 15,
+       "soort": "luisteren",
+       "kop": "Activisme in hiphop",
+       "stappen": [
+        "Hiphop is vanaf het begin ook commentaar op wat er in de buurt gebeurt.",
+        "Je hoort één fragment. Waar gaat het over, en wat wil de rapper?",
+        "Wat is het verschil met een lied dat alleen vrolijk wil zijn?"
+       ],
+       "docent": "Kies een fragment zonder grove taal, bijvoorbeeld Grandmaster Flash and the Furious Five, The Message (1982) in een fragment van een minuut (eigen controle). Koppel aan 11.1 en 11.2."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Reflectie: mijn muzikale identiteit",
+       "stappen": [
+        "Schrijf één alinea: welke muziek hoort bij jou, en waarom?",
+        "Gebruik drie begrippen uit de afgelopen weken.",
+        "Wat zegt jouw muziek over wie je bent en waar je voor staat?"
+       ],
+       "docent": "Schrijven in stilte. Het blijft van de leerling; ophalen is niet verplicht."
+      }
+     ],
+     "formatief": {
+      "soort": "reflectie",
+      "tekst": "Eén alinea over mijn muzikale identiteit."
+     },
+     "_les": "vwo6:16.2",
+     "_bron": "basis.json vwo6 w16 l2 (detail, doel, formatief); lesleerlijn module 2 week 7 lessen 1 en 2 (samengevoegd in 16.2 omdat 16.1 uitvalt); voorbeelden eigen controle"
+    },
+    "Doorloop examenconcert-repertoire; peerfeedback op persoonlijke projecten": {
+     "vraag": "Staat mijn programma, en weet ik wat ik nog moet doen voor het examenconcert?",
+     "doel": "Je doorloopt het repertoire voor het examenconcert, geeft en krijgt feedback en verfijnt je concept.",
+     "criteria": [
+      "Mijn onderdeel loopt van begin tot eind zonder stoppen",
+      "Ik geef een tip en een top aan een ander groepje",
+      "Ik weet wat mijn rol in de organisatie is"
+     ],
+     "fasen": [
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Doorloop repertoire",
+       "stappen": [
+        "Speel je onderdelen door in de volgorde van het concert.",
+        "Let op de overgangen en op wie wanneer klaarstaat.",
+        "Eén keer zonder stoppen."
+       ],
+       "docent": "Rondlopen. Controleer ook de rolverdeling: begroting, uitnodiging, publiciteit, locatie, aankleding, programmaboekje, presentatie (PTA P19)."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Peerfeedback: tip en top",
+       "stappen": [
+        "Je speelt een stuk voor in een groepje van twee groepen.",
+        "De ander geeft één top en één tip.",
+        "Wissel daarna."
+       ],
+       "docent": "Geen presentatie voor de hele klas. Per groepje twee groepen koppelen."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Concept verfijnen en zelfbeoordeling",
+       "stappen": [
+        "Verwerk de tip in je stuk of in je plan.",
+        "Kijk in het format voor zelfbeoordeling van P19: waar sta je nu?",
+        "Schrijf op wat je nog moet regelen vóór het concert."
+       ],
+       "docent": "Het zelfbeoordelingsformat staat bij de les. De zelfbeoordeling is een strookje van hooguit drie minuten met de lescriteria."
+      }
+     ],
+     "formatief": {
+      "soort": "peerfeedback",
+      "tekst": "Tip en top per project."
+     },
+     "_les": "vwo6:16.3",
+     "_bron": "basis.json vwo6 w16 l3; beoordeling.json p19-vwo6 (zelfbeoordeling leerling, w16 l3); PTA P19 (organisatie, feedbackformulieren)"
+    },
+    "Concepten examenconcert presenteren (deel 1 en 2), feedback, artistieke coherentie": {
+     "vraag": "Is mijn concept sterk, en passen alle onderdelen bij elkaar?",
+     "doel": "Je presenteert het concept van je groep voor het examenconcert aan de docent, krijgt feedback en beoordeelt de samenhang van het programma.",
+     "criteria": [
+      "Mijn groep legt het concept in vijf minuten uit",
+      "Ons programma is gevarieerd: zang, instrument, slagwerk, improvisatie en compositie komen aan bod",
+      "We verwerken één punt uit de feedback"
+     ],
+     "fasen": [
+      {
+       "min": 30,
+       "soort": "gesprek",
+       "kop": "Concepten presenteren aan de docent",
+       "stappen": [
+        "Elke groep legt het concept uit aan de docent, aan tafel: volgorde, rolverdeling, sfeer.",
+        "Zeg ook wat er voor de organisatie geregeld is: uitnodiging, programmaboekje, aankleding.",
+        "De andere groepen werken ondertussen door aan het draaiboek.",
+        "Na de uitleg krijg je één top en één tip."
+       ],
+       "docent": "Niet voor de klas. Zet een tafel aan de zijkant, roep de groepen één voor één. Reken zes minuten per groep: dat past bij vier à vijf groepen. Zijn er meer groepen, dan schuift een deel door naar 16.3 of 17.2 (vraag aan Frans)."
+      },
+      {
+       "min": 15,
+       "soort": "doen",
+       "kop": "Artistieke samenhang",
+       "stappen": [
+        "Verwerk de feedback in je programma.",
+        "Controleer: is er een rode draad, zijn de overgangen helder, komt elke vaardigheid aan bod?",
+        "Pas de volgorde of het slot aan als dat sterker is.",
+        "Noteer je wijziging."
+       ],
+       "docent": "Rondlopen en vragen: wat is de rode draad van jullie programma? Controleer dat er zang, instrument, slagwerk, improvisatie en compositie in zitten (PTA P19)."
+      }
+     ],
+     "formatief": {
+      "soort": "feedbacksessie",
+      "tekst": "Feedback op samenhang: één top en één tip."
+     },
+     "_les": "vwo6:17.1",
+     "_bron": "basis.json vwo6 w17 l1; lesleerlijn module 2 week 8 lessen 1 en 2 (deel 1 en 2 samengevoegd); PTA P19 (gevarieerd programma, organisatie)"
+    },
+    "Generale repetitie examenprogramma; soundcheck en staging": {
+     "vraag": "Loopt het hele programma, van soundcheck tot slot?",
+     "doel": "Je speelt de generale repetitie van het examenprogramma, regelt soundcheck en staging en verwerkt de laatste feedback.",
+     "criteria": [
+      "De generale gaat door zonder stoppen",
+      "Soundcheck en opstelling kloppen met het programma",
+      "Ik weet wat ik moet aanpassen voor het concert"
+     ],
+     "fasen": [
+      {
+       "min": 30,
+       "soort": "doen",
+       "kop": "Generale repetitie",
+       "stappen": [
+        "Eerst de soundcheck: instrumenten, microfoons, balans.",
+        "Daarna het hele programma, in de echte volgorde.",
+        "Aankondigingen en overgangen horen erbij.",
+        "Je stopt niet als er iets misgaat."
+       ],
+       "docent": "Controleer vooraf de locatie voor de generale: in de bronnen staat geen locatie van het examenconcert (vraag aan Frans). Laptop en geluid klaar."
+      },
+      {
+       "min": 15,
+       "soort": "gesprek",
+       "kop": "Finale feedback en aanpassingen",
+       "stappen": [
+        "Wat ging goed, wat pas je nog aan?",
+        "Schrijf één verbeterpunt per groep op.",
+        "Vul de zelfbeoordeling aan: één strookje, hooguit drie minuten.",
+        "Controleer wie wat meeneemt naar het concert."
+       ],
+       "docent": "Het zelfbeoordelingsformat P19 staat bij de les. De beoordeling zelf volgt bij het concert (17.3)."
+      }
+     ],
+     "formatief": {
+      "soort": "generale",
+      "tekst": "Laatste aanpassingen voor het concert."
+     },
+     "_les": "vwo6:17.2",
+     "_bron": "basis.json vwo6 w17 l2; lesleerlijn module 2 week 8 les 3 (generale 30 min, finale feedback 15 min); beoordeling.json p19-vwo6 (zelfbeoordeling w17 l2)"
+    }
+   }
+  }
+ }
+}
