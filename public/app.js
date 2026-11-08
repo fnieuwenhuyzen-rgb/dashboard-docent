@@ -539,6 +539,7 @@ function render() {
   const concert = bmConcertAan(); document.body.classList.toggle('bm-concert', concert);
   const liggen = blijftLiggen().length; const recNu = reclameOpen(vandaag()).length;
   $('#nav').innerHTML = ROUTES.map(([k, n]) => `<a href="#${k}" ${route.naam === k || (k === 'nu' && route.naam === 'regie') ? 'aria-current="page"' : ''}><span class="ico" aria-hidden="true">${ICO[k] || ''}</span><span class="nl">${n}${k === 'nu' && liggen ? ` <span class="nav-tel" title="${liggen} ${liggen === 1 ? 'taak blijft' : 'taken blijven'} liggen">${liggen}</span>` : ''}${k === 'reclame' && recNu ? ` <span class="nav-tel" title="${recNu} reclame vandaag of eerder">${recNu}</span>` : ''}</span></a>`).join('');
+  navMeerBouw();
   if (concert) waak(true); else if (route.naam !== 'regie' && !LES && !LESKLOK.loopt()) waak(false);
   const f = { nu: viewNu, regie: viewRegie, vandaag: viewVandaag, week: viewWeek, jaar: viewJaar, rooster: viewRooster, sectie: viewSectie, team: viewTeam, reclame: viewReclame, instellingen: viewInstellingen, beoordelen: viewBeoordelen, kompas: viewKompas }[route.naam] || viewNu;
   try { $('#main').innerHTML = f(); }
@@ -3114,6 +3115,21 @@ function kiesBestand(i) {
   toast('Toegevoegd aan materiaal');
 }
 $('#scrim').addEventListener('click', sluit);
+/* Voorstel menu op de telefoon (bevinding 45, 8-11): onder 521 px vier vaste onderdelen en een knop Meer met de rest; erboven staat alles in de balk. Terugdraaien = deze commit terugdraaien. */
+const NAV_MEER = ['jaar', 'rooster', 'sectie', 'team', 'reclame', 'instellingen'];
+function navMeerBouw() {
+  const nav = $('#nav'); let blad = $('#navMeer');
+  if (!blad) { blad = document.createElement('div'); blad.id = 'navMeer'; blad.className = 'nav-blad'; blad.setAttribute('role', 'group'); blad.setAttribute('aria-label', 'Meer onderdelen'); document.body.appendChild(blad); }
+  blad.hidden = true; blad.innerHTML = ''; let actief = false, tel = 0;
+  nav.querySelectorAll('a').forEach(a => {
+    if (!NAV_MEER.includes(a.getAttribute('href').slice(1))) return; a.classList.add('meer-uit'); const c = a.cloneNode(true); c.classList.remove('meer-uit'); blad.appendChild(c);
+    if (a.getAttribute('aria-current')) actief = true; const t = a.querySelector('.nav-tel'); if (t) tel += +t.textContent || 0;
+  });
+  nav.insertAdjacentHTML('beforeend', `<button type="button" class="nav-meer${actief ? ' actief' : ''}" aria-expanded="false" aria-controls="navMeer"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span><span class="nl">Meer${tel ? ` <span class="nav-tel">${tel}</span>` : ''}</span></button>`);
+}
+function navMeerZet(open, focus) { const b = $('#navMeer'), k = document.querySelector('.nav-meer'); if (!b || !k) return; b.hidden = !open; k.setAttribute('aria-expanded', open); if (open && focus) { const a = b.querySelector('a'); if (a) a.focus(); } if (!open && focus) k.focus(); }
+document.addEventListener('click', e => { const k = e.target.closest('.nav-meer'); if (k) { const b = $('#navMeer'); navMeerZet(b.hidden, true); return; } if (!e.target.closest('#navMeer')) navMeerZet(false, false); else if (e.target.closest('#navMeer a')) navMeerZet(false, false); });
+document.addEventListener('keydown', e => { const b = $('#navMeer'); if (e.key === 'Escape' && b && !b.hidden) { e.preventDefault(); navMeerZet(false, true); } });
 /* Toetsenbord (8-11): de focus gaat een paneel in en komt na het sluiten terug bij de knop waarmee het openging; na het opnieuw tekenen blijft de focus op dezelfde plek. */
 let LAATSTE = null; // laatste focus buiten een paneel: { el, k }
 function focusSig(x) { return x.tagName + '|' + x.id + '|' + [...x.attributes].filter(a => /^(data-|aria-label$|name$|href$|type$)/.test(a.name)).map(a => a.name + '=' + a.value).join(',') + '|' + (x.type === 'checkbox' ? '' : (x.textContent || '').trim().slice(0, 40)); }
