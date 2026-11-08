@@ -2503,10 +2503,13 @@ function viewTeam() {
 
 /* ---------- synchroniseren tussen apparaten (sync.js) ---------- */
 const SYNC_VLAG = 'lesdag-sync-aan';
+const SYNC_LLN = 'lesdag-sync-leerlingen'; // per apparaat; alleen '1' neemt klassenlijsten en scores mee. Standaard veilig: niet.
+const leerlingenMee = () => { try { return localStorage.getItem(SYNC_LLN) === '1'; } catch (e) { return false; } };
 let syncUit = '';
 function syncDoc() { const { updated, ...d } = S; const t = zApiToken(); if (t) d._zermeloApi = t; return d; } // de Zermelo-koppeling staat buiten S maar gaat wel mee
 function syncZet(d) {
   const { _zermeloApi: t, ...rest } = d; const upd = S.updated; const had = zGekoppeld();
+  if (!leerlingenMee()) rest.beoord = S.beoord; // zonder leerlinggegevens in de sync blijft wat hier staat precies zoals het is
   S = Object.assign(nieuweStaat(), rest); S.beoord = Object.assign({ lijsten: {}, toetsen: {} }, S.beoord); S.updated = upd;
   roosterOpruimen(); // twee apparaten die apart overnamen geven na samenvoegen dubbele lesuren
   try { localStorage.setItem(LS_KEY, JSON.stringify(S)); if (t) localStorage.setItem(Z_API, t); else localStorage.removeItem(Z_API); opslagMelding(null); } catch (e) { opslagMelding(e); }
@@ -2519,7 +2522,7 @@ function syncStart() {
   if (!window.SYNC) return;
   SY = SYNC.maak({ fetch: (u, i) => fetch(u, i), opslag: SYNC.idbOpslag(), slot: navigator.locks ? fn => navigator.locks.request('lesdag-sync', fn) : null,
     vlag: { aan: () => { try { return localStorage.getItem(SYNC_VLAG) === '1'; } catch (e) { return false; } }, zet: () => { localStorage.setItem(SYNC_VLAG, '1'); } },
-    app: { haal: syncDoc, zet: syncZet, mag: syncMag, status: syncStatus, nieuwer: ms => (S.updated || 0) > ms, kopie: async () => { $('#opslagfout [data-export]').click(); }, fouten: staatFouten } });
+    app: { haal: syncDoc, zet: syncZet, mag: syncMag, status: syncStatus, nieuwer: ms => (S.updated || 0) > ms, kopie: async () => { $('#opslagfout [data-export]').click(); }, fouten: staatFouten, leerlingen: leerlingenMee } });
   SY.start().then(() => { if (route.naam === 'instellingen' && !PAL) render(); });
   setInterval(() => { if (!document.hidden) SY.nu(); }, 60000);
   window.addEventListener('online', () => SY.nu());
@@ -2528,14 +2531,15 @@ function syncStart() {
 function syncKaart() {
   if (!SY) return '';
   const uit = syncUit ? `<div style="margin-top:.6rem">${syncUit}</div>` : '';
-  if (!SY.aan()) return `<div class="kaart"><h2>Synchroniseren</h2><p class="lead">Taken, afspraken, planning, klassenlijsten, scores en de Zermelo-koppeling op al je apparaten. De eerste keer downloadt Lesdag een kopie, voegt samen met wat er al op de server staat en controleert het resultaat. Verjaardagen, absenten en logboeknotities blijven op dit apparaat.</p><div class="knoppen"><button class="btn hoofd" data-syncaan="">Synchroniseren aanzetten</button></div>${uit}</div>`;
-  return `<div class="kaart"><h2>Synchroniseren</h2><p class="lead">Staat aan. Taken, afspraken, planning, klassenlijsten, scores en de Zermelo-koppeling gaan vanzelf mee. Verjaardagen, absenten en logboeknotities blijven op dit apparaat.</p><p class="sub" id="syncTekst">${esc($('#sync span').textContent)}</p><div class="knoppen"><button class="btn" data-syncnu="">Nu synchroniseren</button><button class="btn" data-syncback="">Back-ups</button></div>${uit}</div>`;
+  if (!SY.aan()) return `<div class="kaart"><h2>Synchroniseren</h2><p class="lead">Taken, afspraken, planning en de Zermelo-koppeling op al je apparaten${leerlingenMee() ? ', met klassenlijsten en scores' : ' (klassenlijsten en scores blijven op dit apparaat, tenzij je dat bij Leerlinggegevens anders kiest)'}. De eerste keer downloadt Lesdag een kopie, voegt samen met wat er al op de server staat en controleert het resultaat. Verjaardagen, absenten en logboeknotities blijven op dit apparaat.</p><div class="knoppen"><button class="btn hoofd" data-syncaan="">Synchroniseren aanzetten</button></div>${uit}</div>`;
+  return `<div class="kaart"><h2>Synchroniseren</h2><p class="lead">Staat aan. Taken, afspraken, planning en de Zermelo-koppeling gaan vanzelf mee${leerlingenMee() ? ', en ook klassenlijsten en scores' : '; klassenlijsten en scores niet'}. Verjaardagen, absenten en logboeknotities blijven op dit apparaat.</p><p class="sub" id="syncTekst">${esc($('#sync span').textContent)}</p><div class="knoppen"><button class="btn" data-syncnu="">Nu synchroniseren</button><button class="btn" data-syncback="">Back-ups</button></div>${uit}</div>`;
 }
 const syncRegel = (n, x) => `${n}: ${x.taken} taken, ${x.rooster} lesuren, ${x.klassen} klassenlijsten, ${x.toetsen} toetsen`;
 async function syncKlik(D) {
+  if (await leerlingKlik(D)) return true;
   if (D.syncnu != null) { await SY.nu(); toast(syncState === 'ok' ? 'Gesynchroniseerd' : 'Synchroniseren lukt nu niet'); return true; }
   if (D.syncaan != null) {
-    if (!confirm('Je gegevens gaan naar de Lesdag-server achter je login, ook klassenlijsten, scores en de Zermelo-koppeling. Eerst downloadt Lesdag een kopie. Doorgaan?')) return true;
+    if (!confirm('Je gegevens gaan naar de Lesdag-server achter je login, ook de Zermelo-koppeling' + (leerlingenMee() ? ', klassenlijsten en scores' : ' (klassenlijsten en scores niet)') + '. Eerst downloadt Lesdag een kopie. Doorgaan?')) return true;
     try { const u = await SY.aanzetten(); syncUit = `<p class="sub">${syncRegel('Dit apparaat had', u.hier)}.<br>${syncRegel('De server had', u.server)}.<br><b>${syncRegel('Nu overal', u.samen)}.</b></p>`; toast('Synchroniseren staat aan'); }
     catch (e) { SY.meld(e); syncUit = `<p class="sub">Dat lukte niet: ${esc($('#sync span').textContent)}. Er is niets veranderd op dit apparaat.</p>`; }
     render(); return true;
@@ -2554,6 +2558,101 @@ async function syncKlik(D) {
   return false;
 }
 
+/* ---------- leerlinggegevens, bewaartermijn en botsingen (Instellingen) ----------
+   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard niet), en hoe lang blijven ze staan (standaard altijd).
+   Het beoordelingslogboek staat in IndexedDB en gaat nooit naar de server. Rekenwerk in sync.js (bewaarPlan, padZet); tests: tools/test-sync.js. */
+const BEWAAR_KEY = 'lesdag-bewaartermijn'; // maanden; leeg of 0 = niets verdwijnt vanzelf
+const BEWAAR_DAG = 'lesdag-bewaar-dag';
+const bewaarMaanden = () => { try { return Math.max(0, +localStorage.getItem(BEWAAR_KEY) || 0); } catch (e) { return 0; } };
+let LLN = { server: null, eerste: null, voorbeeld: null }, BOTS = null;
+const bewaarPlan = () => SYNC.bewaarPlan(S.beoord, rooGroepen(), Date.now(), bewaarMaanden());
+async function bewaarLogGrens() { return { grens: Date.now() - bewaarMaanden() * 30.44 * 864e5, sleutels: new Set(bewaarPlan().toetsen) }; }
+async function bewaarVoorbeeld() { // wat zou er nu weg gaan: { p, log }
+  if (!bewaarMaanden()) return null; const p = bewaarPlan(); const { grens, sleutels } = await bewaarLogGrens(); let log = 0;
+  try { log = (await bmIdb('log', 'readonly', s => s.getAll())).filter(x => x.t < grens || sleutels.has(x.k)).length; } catch (e) {}
+  return { p, log };
+}
+const bewaarTekst = v => !v ? '' : SYNC.planTelt(v.p) + v.log === 0 ? 'Met deze termijn gaat er nu niets weg.' : `Met deze termijn gaat er nu weg: ${v.p.toetsen.length} toetsen met scores, ${v.p.lijsten.length} klassenlijsten${v.p.lijsten.length ? ' (' + v.p.lijsten.map(esc).join(', ') + ')' : ''}, ${v.p.weg.length} leerlingen die uit een lijst zijn gehaald en ${v.log} logboekregels.`;
+async function bewaarUitvoeren(stil) { // haalt weg wat bewaarPlan aanwijst; terug = foto van daarvoor (het logboek komt niet terug)
+  const m = bewaarMaanden(); if (!m) return false; const v = await bewaarVoorbeeld(); if (!v || SYNC.planTelt(v.p) + v.log === 0) { if (!stil) toast('Er is niets om op te ruimen'); return false; }
+  const terug = foto(), { grens, sleutels } = await bewaarLogGrens();
+  SYNC.bewaarToepassen(S.beoord, v.p);
+  try { await bmIdb('log', 'readwrite', s => { const q = s.openCursor(); q.onsuccess = () => { const c = q.result; if (!c) return; if (c.value.t < grens || sleutels.has(c.value.k)) c.delete(); c.continue(); }; return q; }); } catch (e) { console.warn(e); }
+  bewaar(true); LLN.voorbeeld = null; toast(`Opgeruimd: ${v.p.toetsen.length} toetsen, ${v.p.lijsten.length} klassenlijsten, ${v.log} logboekregels`, terug); if (route.naam === 'instellingen') render(); return true;
+}
+function bewaarStart() { // hooguit één keer per dag, en alleen als er een termijn is gekozen
+  setTimeout(() => { try { const d = vandaag(); if (!bewaarMaanden() || localStorage.getItem(BEWAAR_DAG) === d || !syncMag()) return; localStorage.setItem(BEWAAR_DAG, d); bewaarUitvoeren(true).catch(() => {}); } catch (e) {} }, 30000);
+}
+const waardeTekst = x => { const t = x === undefined ? '(weg)' : typeof x === 'string' ? x : JSON.stringify(x); return t.length > 110 ? t.slice(0, 110) + '…' : t; };
+function padLeesbaar(pad) {
+  const sg = String(pad).split('/').slice(1); if (sg[0] === '_zermeloApi') return 'De Zermelo-koppeling';
+  const x = SYNC.padHaal(syncDoc(), pad.split('/').slice(0, -1).join('/')); const naam = x && (x.titel || x.naam) ? ` (${kort(String(x.titel || x.naam))})` : '';
+  return sg.map(esc).join(' › ') + esc(naam);
+}
+function botsKaart() {
+  if (!BOTS) return `<p class="sub" style="margin-top:.6rem">Als twee apparaten hetzelfde veld tegelijk wijzigen, wint één waarde en bewaart Lesdag de andere. Hier zie je ze en kies je per botsing.</p><div class="knoppen"><button class="btn" data-bots="open">Botsingen bekijken</button></div>`;
+  const L = BOTS.map((b, i) => ({ b, i })).reverse().slice(0, 50);
+  const huidig = b => JSON.stringify(SYNC.padHaal(syncDoc(), b.pad));
+  const rij = ({ b, i }) => { const nu = huidig(b), welke = nu === JSON.stringify(b.lokaal) ? 'lokaal' : nu === JSON.stringify(b.server) ? 'server' : '', kan = !b.ingekort && b.lokaal !== undefined;
+    const knop = (w, t) => `<button class="btn klein" data-bots="kies" data-bi="${i}" data-bw="${w}">${t}</button>`;
+    return `<div class="kaart" style="margin-top:.5rem"><b>${padLeesbaar(b.pad)}</b> <span class="sub">${esc(new Date(b.op).toLocaleString('nl-NL'))}</span><p class="sub">Dit apparaat: <code>${esc(waardeTekst(b.lokaal))}</code>${welke === 'lokaal' ? ' ← nu in gebruik' : ''}<br>Andere apparaat: <code>${esc(waardeTekst(b.server))}</code>${welke === 'server' ? ' ← nu in gebruik' : ''}${welke ? '' : '<br>Inmiddels is er iets anders ingevuld.'}</p>
+      <div class="knoppen">${kan ? knop('lokaal', 'Neem die van dit apparaat') + knop('server', 'Neem die van het andere') : ''}<button class="btn klein" data-bots="klaar" data-bi="${i}">Zo laten, weghalen uit de lijst</button></div></div>`; };
+  return `<p class="sub" style="margin-top:.6rem">${BOTS.length ? BOTS.length + ' botsingen bewaard (de laatste 50 staan hier).' : 'Geen botsingen.'}</p>${L.map(rij).join('')}<div class="knoppen" style="margin-top:.5rem">${BOTS.length ? '<button class="btn" data-bots="alles">Alles zo laten</button>' : ''}<button class="btn" data-bots="dicht">Sluiten</button></div>`;
+}
+function leerlingKaart() {
+  const mee = leerlingenMee(), m = bewaarMaanden(); const opties = [[0, 'Uit'], [6, '6 maanden'], [12, '1 jaar'], [24, '2 jaar']];
+  const server = !SY ? '' : `<p class="lead"><b>Synchroniseren:</b> klassenlijsten, scores en reserve-kopieën daarvan ${mee ? 'gaan <b>wel</b> naar de server (achter je login)' : 'gaan <b>niet</b> naar de server'}. Het beoordelingslogboek en absenten blijven altijd op het apparaat. Dit geldt per apparaat.</p>
+    <div class="knoppen">${mee ? '<button class="btn" data-lln="uit">Niet meer meenemen</button>' : '<button class="btn" data-lln="aan">Wel meenemen…</button>'}<button class="btn" data-lln="kijk">Wat staat er op de server?</button></div>
+    ${LLN.server ? (LLN.server.fout ? '<p class="sub">De server is nu niet bereikbaar.</p>' : `<p class="sub">Op de server: ${LLN.server.onderdelen} onderdelen en ${LLN.server.back_ups} back-up-rijen met klassenlijsten of scores. Wat al op de server staat, blijft daar tot je het wist.</p>${LLN.server.onderdelen + LLN.server.back_ups ? '<div class="knoppen"><button class="btn rood" data-lln="wis">Leerlinggegevens van de server wissen…</button></div>' : ''}`) : ''}
+    ${LLN.eerste ? `<p class="sub">Back-up “eerste upload”: ${LLN.eerste.rijen ? LLN.eerste.rijen + ' rijen, de leeftijd is niet bekend.' : 'bestaat niet (meer).'}</p>${LLN.eerste.rijen ? '<div class="knoppen"><button class="btn rood" data-lln="eerstewis">Back-up “eerste upload” wissen…</button></div>' : ''}` : (mee ? '' : '<div class="knoppen"><button class="btn klein" data-lln="eerstekijk">Back-up “eerste upload” bekijken</button></div>')}`;
+  if (m && !LLN.voorbeeld) { LLN.voorbeeld = { laden: true }; bewaarVoorbeeld().then(v => { LLN.voorbeeld = v || {}; }).catch(() => { LLN.voorbeeld = {}; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
+  const voorb = !m ? 'Er verdwijnt niets vanzelf.' : LLN.voorbeeld && LLN.voorbeeld.laden ? 'Even kijken wat er weg zou gaan…' : bewaarTekst(LLN.voorbeeld && LLN.voorbeeld.p ? LLN.voorbeeld : null) || 'Met deze termijn gaat er nu niets weg.';
+  return `<div class="kaart"><h2>Leerlinggegevens</h2>${server}
+    <h3 style="margin-top:.8rem">Bewaartermijn</h3><p class="lead">Hoe lang klassenlijsten, toetsen met scores, verwijderde leerlingen en het beoordelingslogboek op dit apparaat blijven. Een toets telt vanaf zijn startdatum; een klassenlijst gaat pas weg als de klas niet meer in je rooster staat. Met een termijn kijkt Lesdag hooguit één keer per dag; na het opruimen kun je het via de melding nog terugzetten (het logboek niet).</p>
+    <div class="knoppen">${opties.map(([n, t]) => `<button class="btn${n === m ? ' hoofd' : ''}" data-bew="${n}" aria-pressed="${n === m}">${t}</button>`).join('')}</div>
+    <p class="sub">${voorb}</p>${m ? '<div class="knoppen"><button class="btn" data-bew="nu">Nu opruimen…</button></div>' : ''}
+    <h3 style="margin-top:.8rem">Botsingen tussen apparaten</h3>${SY ? botsKaart() : '<p class="sub">Synchroniseren is niet beschikbaar.</p>'}</div>`;
+}
+async function leerlingKlik(D) {
+  if (D.lln != null) {
+    try {
+      if (D.lln === 'aan') { if (!confirm('Klassenlijsten en scores gaan dan naar de Lesdag-server achter je login, en komen ook in de dagelijkse back-ups te staan. Weet je zeker dat dit mag?')) return true; localStorage.setItem(SYNC_LLN, '1'); if (SY.aan()) SY.nu(); toast('Klassenlijsten en scores gaan mee'); }
+      else if (D.lln === 'uit') { localStorage.removeItem(SYNC_LLN); toast('Klassenlijsten en scores gaan niet meer mee. Wat al op de server staat blijft daar tot je het wist.'); }
+      else if (D.lln === 'kijk') LLN.server = await SY.leerlingenOpServer().catch(() => ({ fout: true }));
+      else if (D.lln === 'wis') {
+        const n = await SY.leerlingenOpServer();
+        if (!confirm(`${n.onderdelen} onderdelen en ${n.back_ups} back-up-rijen met klassenlijsten en scores worden van de server gewist, ook uit de dagelijkse back-ups. Op je apparaten blijft alles staan. Dit kan niet ongedaan worden gemaakt.${leerlingenMee() ? '\n\nLesdag zet daarna ook het meenemen op dit apparaat uit.' : ''}\n\nDoorgaan?`)) return true;
+        localStorage.removeItem(SYNC_LLN); const r = await SY.leerlingenWissen(); LLN.server = await SY.leerlingenOpServer(); toast(`Gewist: ${r.onderdelen} onderdelen en ${r.back_ups} back-up-rijen`);
+      }
+      else if (D.lln === 'eerstekijk') LLN.eerste = await SY.eersteOpServer().catch(() => ({ rijen: 0 }));
+      else if (D.lln === 'eerstewis') { if (!confirm('De back-up van de eerste upload wordt van de server gewist. Dat kan niet ongedaan worden gemaakt. Doorgaan?')) return true; await SY.eersteWissen(); LLN.eerste = { rijen: 0 }; toast('Back-up gewist'); }
+    } catch (e) { SY.meld(e); toast('Dat lukt nu niet'); }
+    render(); return true;
+  }
+  if (D.bew != null) {
+    if (D.bew === 'nu') { const v = await bewaarVoorbeeld(); if (!v || SYNC.planTelt(v.p) + v.log === 0) { toast('Er is niets om op te ruimen'); return true; } if (!confirm(bewaarTekst(v) + '\n\nOpruimen? Na afloop kun je het via de melding nog terugzetten (het logboek niet).')) return true; await bewaarUitvoeren(); return true; }
+    try { if (+D.bew) localStorage.setItem(BEWAAR_KEY, String(+D.bew)); else localStorage.removeItem(BEWAAR_KEY); localStorage.removeItem(BEWAAR_DAG); } catch (e) {}
+    LLN.voorbeeld = null; render(); return true;
+  }
+  if (D.bots != null) {
+    try {
+      if (D.bots === 'open') BOTS = await SY.botsingen();
+      else if (D.bots === 'dicht') BOTS = null;
+      else if (D.bots === 'alles') { if (!confirm('Alle bewaarde botsingen weghalen? De waarden die nu gelden blijven staan.')) return true; await SY.botsingenLeeg(); BOTS = [];
+      } else { const b = BOTS[+D.bi]; if (!b) return true;
+        if (D.bots === 'kies') {
+          const w = D.bw === 'lokaal' ? b.lokaal : b.server, terug = foto(); const doc = JSON.parse(JSON.stringify(syncDoc())); const ok = SYNC.padZet(doc, b.pad, JSON.parse(JSON.stringify(w)));
+          if (!ok) toast('Dat veld bestaat niet meer; de botsing is weggehaald');
+          else { const { _zermeloApi, ...rest } = doc; const upd = S.updated; S = Object.assign(nieuweStaat(), rest); S.updated = upd; bewaar(true); toast('Waarde overgenomen', terug); }
+        }
+        await SY.botsingWeg(b.op, b.pad); BOTS = await SY.botsingen();
+      }
+    } catch (e) { console.warn(e); toast('Dat lukt nu niet'); }
+    render(); return true;
+  }
+  return false;
+}
+
 /* ---------- agendafeed: Lesdag in Outlook ----------
    Een lijst toegestane punten (agendaItems), als iCal naar /api/agenda; de worker lesdag-agenda geeft die aan Outlook via een geheime link.
    Alleen wat hier expliciet staat gaat mee. Eigen taken en afspraken niet: daar kan vrije tekst met namen in staan. Notities en leerlinggegevens nooit.
@@ -2566,8 +2665,8 @@ function agendaItems() {
     const p = P[s]; if (!p) continue; const A = dagItems(s, p);
     for (const it of A.items.concat(A.heleDag)) {
       const k = it.key, uid = s + ':' + k; let v = it.van != null ? it.van : null, w = it.tot != null ? it.tot : null, titel = it.titel, lokaal = it.lokaal || '';
-      if (/^les:/.test(k)) { if (it.soort !== 'les' && it.soort !== 'klaar') continue; const sub = it.sub && it.sub !== 'alles gegeven' ? it.sub : ''; titel = it.titel + (sub ? ': ' + sub : ''); }
-      else if (/^z:/.test(k)) { v = it.z.van; w = it.z.tot; if (it.z.dienst) titel = 'Surveillance: ' + titel; else if (it.z.toets && !it.tz) titel = 'Toets: ' + titel; }
+      if (/^les:/.test(k)) { if (it.soort !== 'les' && it.soort !== 'klaar') continue; const sub = AGENDAFEED.lesSub(it.x, it.x && it.x.item ? (les(it.x.item) || {}).titel : '', agfRuim(), it.sub && it.sub !== 'alles gegeven' ? it.sub : ''); titel = it.titel + (sub ? ': ' + sub : ''); }
+      else if (/^z:/.test(k)) { v = it.z.van; w = it.z.tot; const vast = AGENDAFEED.zTitel(it.z, it.tz, agfRuim()); if (vast) titel = vast; else if (it.z.dienst) titel = 'Surveillance: ' + titel; else if (it.z.toets && !it.tz) titel = 'Toets: ' + titel; }
       else if (/^tw:/.test(k)) { /* toets zonder tijd: hele dag */ }
       else if (/^koor:/.test(k)) { if (it.soort !== 'koor') continue; const kr = it.koor; v = kr.van ? minuten(kr.van) : null; w = kr.tot ? minuten(kr.tot) : null; titel = koorNaam(kr) + (kr.type === 'concert' ? '' : ': ' + kr.titel); lokaal = kr.plaats || ''; }
       else if (/^sectie:/.test(k)) { const i = it.i; if (sEigen(i.id)) continue; /* zelf getypte sectiepunten zijn vrije tekst, net als eigen taken */ titel =(i.taak ? 'Sectie, deadline: ' : '') + i.titel; const tm = !i.taak && !i.tot ? sectieTijd(i) : null; v = tm ? tm.van : null; w = tm ? tm.tot : null; lokaal = ''; }
@@ -2577,6 +2676,8 @@ function agendaItems() {
   }
   return uit;
 }
+const AGF_RUIM = 'lesdag-agendafeed-ruim'; // '1' = Zermelo-titels en lessubtitels zoals ze zijn; standaard de veilige stand met vaste titels
+const agfRuim = () => { try { return localStorage.getItem(AGF_RUIM) === '1'; } catch (e) { return false; } };
 const agfCfg = () => (window.LESDAG_CONFIG || {}).agendaFeed || '';
 const agfAan = () => { try { return localStorage.getItem(AGF_VLAG) === '1'; } catch (e) { return false; } };
 const agfLink = () => AGF && AGF.token ? agfCfg() + '/' + AGF.token + '.ics' : '';
@@ -2602,11 +2703,12 @@ function agendaStart() {
 }
 function agendaKaart() {
   if (!agfCfg()) return '';
-  const wat = '<p class="lead">Lessen, toetsen, surveillance, koor en sectiepunten van twee weken terug tot zes weken vooruit, als eigen agenda in Outlook. Eigen taken, afspraken, notities en leerlinggegevens gaan niet mee. Alleen lezen; een wijziging staat vaak pas na enkele uren in Outlook.</p>';
+  const wat = `<p class="lead">Lessen, toetsen, surveillance, koor en sectiepunten van twee weken terug tot zes weken vooruit, als eigen agenda in Outlook. Eigen taken, afspraken, notities en leerlinggegevens gaan niet mee. ${agfRuim() ? 'Zermelo-afspraken staan er met hun eigen titel in (met vak en groep) en lessen met de tekst uit het rooster.' : 'Zermelo-afspraken staan er met een vaste titel (Surveillance, Toets, Afspraak), zonder vak of groep, en bij een les alleen de lestitel uit de leergang.'} Alleen lezen; een wijziging staat vaak pas na enkele uren in Outlook.</p>`;
   if (!agfAan()) return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<div class="knoppen"><button class="btn hoofd" data-agf="maak">Agendalink maken</button></div></div>`;
   if (!AGF) { AGF = { laden: true }; agfApi('GET').then(st => { AGF = st; }).catch(() => { AGF = { fout: true }; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
   const stand = AGF.laden ? 'Even kijken…' : AGF.fout ? 'De agenda is nu niet bereikbaar.' : `Bijgewerkt: ${esc(new Date(AGF.bijgewerkt).toLocaleString('nl-NL'))}${AGF.punten ? ', ' + AGF.punten + ' punten' : ''}.`;
-  return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<p class="lead">Dit apparaat werkt de agenda bij als Lesdag open staat. Toevoegen in Outlook op het web: Agenda, Agenda toevoegen, Abonneren via internet, link plakken. Behandel de link als een wachtwoord: wie hem heeft, ziet deze agenda.</p><p class="sub">${stand}</p><div class="knoppen"><button class="btn hoofd" data-agf="kopie">Link kopiëren</button><button class="btn" data-agf="nu">Nu bijwerken</button><button class="btn" data-agf="nieuw">Nieuwe link</button><button class="btn" data-agf="stop">Stoppen</button></div></div>`;
+  return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<p class="lead">Dit apparaat werkt de agenda bij als Lesdag open staat. Toevoegen in Outlook op het web: Agenda, Agenda toevoegen, Abonneren via internet, link plakken. Behandel de link als een wachtwoord: wie hem heeft, ziet deze agenda.</p><p class="sub">${stand}</p><div class="knoppen"><button class="btn hoofd" data-agf="kopie">Link kopiëren</button><button class="btn" data-agf="nu">Nu bijwerken</button><button class="btn" data-agf="nieuw">Nieuwe link</button><button class="btn" data-agf="stop">Stoppen</button></div>
+    <p class="sub" style="margin-top:.6rem">Titels in de agenda: <b>${agfRuim() ? 'ruim' : 'veilig'}</b>.</p><div class="knoppen"><button class="btn klein" data-agf="${agfRuim() ? 'veilig' : 'ruim'}">${agfRuim() ? 'Terug naar de veilige stand' : 'Zermelo-titels toch meenemen…'}</button></div></div>`;
 }
 async function agendaKlik(D) {
   if (D.agf == null) return false;
@@ -2615,6 +2717,8 @@ async function agendaKlik(D) {
     else if (D.agf === 'kopie') { if (!agfLink()) AGF = await agfApi('GET'); await navigator.clipboard.writeText(agfLink()); toast('Link gekopieerd'); }
     else if (D.agf === 'nu') { await agendaBij(true); toast('Agenda bijgewerkt'); }
     else if (D.agf === 'nieuw') { if (!confirm('Nieuwe link maken? De oude werkt dan niet meer: je moet in Outlook opnieuw abonneren.')) return true; AGF = await agfApi('POST'); await agendaBij(true); toast('Nieuwe link staat klaar'); }
+    else if (D.agf === 'ruim') { if (!confirm('In Outlook komen dan de titels uit Zermelo te staan, met vak en groep, en bij lessen ook de tekst uit het rooster. Wie de agendalink heeft, ziet dat. Doorgaan?')) return true; localStorage.setItem(AGF_RUIM, '1'); await agendaBij(true); toast('Agenda bijgewerkt met ruime titels'); }
+    else if (D.agf === 'veilig') { localStorage.removeItem(AGF_RUIM); await agendaBij(true); toast('Agenda bijgewerkt met vaste titels'); }
     else if (D.agf === 'stop') { if (!confirm('Agenda stoppen? De link werkt dan niet meer. Verwijder de agenda ook zelf uit Outlook.')) return true; await agfApi('DELETE'); localStorage.removeItem(AGF_VLAG); localStorage.removeItem(AGF_VLAG + '-stand'); AGF = null; toast('Agenda gestopt'); }
   } catch (e) { toast('Dat lukt nu niet. Ben je nog ingelogd?'); }
   render(); return true;
@@ -2624,7 +2728,7 @@ async function agendaKlik(D) {
 function viewInstellingen() {
   const on = M365.enabled(); const acc = M365.account;
   return `<div class="kop"><div><h1>Instellingen</h1></div></div>
-  ${syncKaart()}${agendaKaart()}<div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div>${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
+  ${syncKaart()}${leerlingKaart()}${agendaKaart()}<div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div>${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
   <div class="kaart"><h2>Rooster uit Zermelo</h2>${zProxy() ? `<p class="lead">Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie) en plak die hier. Lesdag leest dan vak, groep, lokaal en soort afspraak rechtstreeks uit Zermelo. De koppeling gaat mee met synchroniseren. Verwijderen hier trekt hem niet in: dat doe je in Zermelo bij Koppelingen.</p>
     <form class="form" id="zKoppelForm"><div class="rij"><label style="flex:3 1 18rem">Koppelcode <input id="zCode" type="password" autocomplete="off" placeholder="${zApiToken() ? 'gekoppeld' : '12 cijfers'}"></label><button class="btn hoofd" type="submit">Koppelen</button>${zApiToken() ? '<button class="btn rood" type="button" data-zapiweg="">Koppeling verwijderen</button>' : ''}</div></form>
     <p class="lead">Reserve: als de koppeling niet werkt, gebruikt Lesdag je agendalink. Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
@@ -3679,6 +3783,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
   syncStart();
+  bewaarStart();
   agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);

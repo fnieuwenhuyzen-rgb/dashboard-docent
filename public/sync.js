@@ -41,6 +41,51 @@
     return opt.lokaalNieuwer ? l : s;
   }
 
+  /* Bewaartermijn voor leerlinggegevens. Alleen rekenwerk: wat zou er weg gaan, en het weghalen zelf. Niets verdwijnt zonder dat de app dit aanroept.
+     - toets (met scores): als de startdatum ouder is dan de termijn;
+     - klassenlijst: als de klas niet meer in het rooster staat en er geen toets van die klas overblijft (zonder rooster blijft elke lijst staan);
+     - beoord.weg (leerlingen die uit een lijst gehaald zijn): als ze zelf ouder zijn dan de termijn (het id bevat de aanmaaktijd; zonder leesbare tijd blijft de rij staan), of bij een verwijderde klas. */
+  const MS_MAAND = 30.44 * 864e5;
+  function idTijd(id) { const t = /^l([0-9a-z]{8})/.exec(String(id)); const ms = t ? parseInt(t[1], 36) : NaN; return ms > 1.5e12 && ms < 4.2e12 ? ms : null; }
+  function bewaarPlan(beoord, groepen, nu, maanden) {
+    const plan = { toetsen: [], lijsten: [], weg: [] };
+    if (!isObj(beoord) || !(maanden > 0)) return plan;
+    const grens = nu - maanden * MS_MAAND, dag = new Date(grens).toISOString().slice(0, 10);
+    const T = isObj(beoord.toetsen) ? beoord.toetsen : {}, Ls = isObj(beoord.lijsten) ? beoord.lijsten : {}, W = isObj(beoord.weg) ? beoord.weg : {};
+    plan.toetsen = Object.keys(T).filter(k => isObj(T[k]) && typeof T[k].start === 'string' && T[k].start < dag);
+    const blijft = g => Object.keys(T).some(k => k.split('|')[1] === g && !plan.toetsen.includes(k));
+    if (groepen && groepen.length) plan.lijsten = Object.keys(Ls).filter(g => !groepen.includes(g) && !blijft(g));
+    for (const g of Object.keys(W)) for (const x of Array.isArray(W[g]) ? W[g] : []) { const t = idTijd(x && x.id); if (plan.lijsten.includes(g) || (t != null && t < grens)) plan.weg.push({ g, id: x.id }); }
+    return plan;
+  }
+  function bewaarToepassen(beoord, plan) {
+    const T = beoord.toetsen || {}, Ls = beoord.lijsten || {}, W = beoord.weg || {};
+    plan.toetsen.forEach(k => delete T[k]); plan.lijsten.forEach(g => delete Ls[g]);
+    for (const g of Object.keys(W)) { const rest = (W[g] || []).filter(x => !plan.weg.some(w => w.g === g && w.id === x.id)); if (rest.length) W[g] = rest; else delete W[g]; }
+  }
+  const planTelt = p => p.toetsen.length + p.lijsten.length + p.weg.length;
+
+  /* waarde zetten op een pad uit samenvoegen() ('/taken/12/titel'): lijsten met ids worden op id gevonden. Geeft false als het pad niet meer bestaat. */
+  function padZet(doc, pad, waarde) {
+    const sg = String(pad).split('/').slice(1); if (!sg.length) return false;
+    let x = doc;
+    for (let i = 0; i < sg.length - 1; i++) {
+      if (Array.isArray(x)) x = x.find(y => isObj(y) && String(y.id) === sg[i]); else if (isObj(x)) x = x[sg[i]]; else return false;
+      if (x === undefined || x === null) return false;
+    }
+    const k = sg[sg.length - 1];
+    if (Array.isArray(x)) { const i = x.findIndex(y => isObj(y) && String(y.id) === k); if (i < 0) return false; if (waarde === undefined) x.splice(i, 1); else x[i] = waarde; return true; }
+    if (!isObj(x)) return false;
+    if (waarde === undefined) delete x[k]; else x[k] = waarde;
+    return true;
+  }
+
+  function padHaal(doc, pad) {
+    let x = doc;
+    for (const k of String(pad).split('/').slice(1)) { if (Array.isArray(x)) x = x.find(y => isObj(y) && String(y.id) === k); else if (isObj(x)) x = x[k]; else return undefined; if (x === undefined) return undefined; }
+    return x;
+  }
+
   /* per onderdeel een rij op de server: alleen wat wijzigde gaat over de lijn, en de toetsen (met krabbels) blijven elk onder de rijlimiet */
   const TOETS = 'beoord.toetsen.';
   function delen(doc) {
@@ -75,8 +120,15 @@
 
   /* app: { haal(): doc, zet(doc), mag(): mag er nu gesynchroniseerd worden, status(soort, tekst), nieuwer(ms): is de staat nieuwer dan ms, kopie(): download }
      opslag: { haal(k), zet(k, v) } voor de basis; vlag: { aan(), zet() } onthoudt op dit apparaat dat synchroniseren aanstaat */
+  /* leerlinggegevens (klassenlijsten, scores, beoord.weg) zitten allemaal onder beoord; het beoordelingslogboek staat in IndexedDB en is nooit onderdeel van de staat */
+  const zonderLeerlingen = doc => { if (!isObj(doc) || !('beoord' in doc)) return doc; const { beoord, ...rest } = doc; return rest; };
+
+  /* app.leerlingen(): true = klassenlijsten en scores gaan mee. Ontbreekt de functie, dan gaat alles mee (zoals voorheen); de app geeft standaard false. */
   function maak({ app, opslag, vlag, fetch: f, url = 'api/staat', slot }) {
     let timer = null, nogEens = false;
+    const mee = () => !app.leerlingen || !!app.leerlingen();
+    const filter = doc => mee() ? doc : zonderLeerlingen(doc);
+    const haalL = () => filter(kloon(app.haal()));
     class Stop extends Error { constructor(soort) { super(soort); this.soort = soort; } }
     async function vraag(pad, init = {}) {
       let r;
@@ -93,7 +145,7 @@
     }
     function controleer(doc) { if (app.fouten && app.fouten(doc).length) throw new Stop('kapot'); }
     /* wat van de server komt wordt gecontroleerd voordat het ergens in terechtkomt: een beschadigd onderdeel (rooster als tekst) mag niet in de staat of in een basis belanden */
-    const haalAlles = async () => { const a = await vraag(''); const doc = samen(a.onderdelen); if (!leeg(doc)) controleer(doc); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc }; };
+    const haalAlles = async () => { const a = await vraag(''); const doc = filter(samen(a.onderdelen)); if (!leeg(doc)) controleer(doc); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc }; };
     const stuur = (basis, gewijzigd, keepalive) => { const body = JSON.stringify({ basis, gewijzigd }); return vraag('', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body, keepalive: !!keepalive && body.length < 60000 }); };
     function meld(e) {
       if (!(e instanceof Stop)) { console.warn(e); app.status('fout', 'Synchroniseren mislukt, staat op dit apparaat'); return; }
@@ -107,8 +159,8 @@
     }
     // wat er tijdens het netwerkverkeer op dit apparaat veranderde, blijft staan
     function pasToe(voor, doc) {
-      const nu = kloon(app.haal()); if (!gelijk(nu, voor)) nogEens = true;
-      const d = gelijk(nu, voor) ? doc : samenvoegen(voor, nu, doc, { lokaalNieuwer: true });
+      const nu = filter(kloon(app.haal())), v = filter(voor); if (!gelijk(nu, v)) nogEens = true;
+      const d = gelijk(nu, v) ? doc : samenvoegen(v, nu, doc, { lokaalNieuwer: true });
       if (!gelijk(nu, d)) app.zet(d);
     }
 
@@ -117,12 +169,13 @@
     async function noteer(lijst) {
       if (!lijst.length) return;
       const oud = (await opslag.haal('botsingen')) || [], op = Date.now();
-      await opslag.zet('botsingen', [...oud, ...lijst.map(x => ({ ...x, lokaal: kort_(x.lokaal), server: kort_(x.server), op }))].slice(-200));
+      const verberg = x => x.pad.startsWith('/_'); // de Zermelo-koppeling (_zermeloApi) is een wachtwoord: nooit in de lijst
+      await opslag.zet('botsingen', [...oud, ...lijst.map(x => verberg(x) ? { ...x, lokaal: '(verborgen)', server: '(verborgen)', ingekort: true, op } : { ...x, lokaal: kort_(x.lokaal), server: kort_(x.server), ingekort: kort_(x.lokaal) !== x.lokaal || kort_(x.server) !== x.server, op })].slice(-200));
     }
     async function ronde(keepalive) {
       for (let poging = 0; poging < 4; poging++) {
-        const basis = (await opslag.haal('basis')) || { versie: 0, doc: {} };
-        const lokaal = kloon(app.haal());
+        const b0 = (await opslag.haal('basis')) || { versie: 0, doc: {} }, basis = { ...b0, doc: filter(b0.doc) };
+        const lokaal = haalL(), lokaalRuw = kloon(app.haal());
         const kort = await vraag('?sinds=' + basis.versie);
         const server = kort.versie === basis.versie ? { versie: basis.versie, bijgewerkt: kort.bijgewerkt, doc: basis.doc } : await haalAlles();
         /* twee situaties waarin "wat de ander weghaalde" een ramp is, geen wens:
@@ -137,7 +190,7 @@
         if (Object.keys(g).length) { const r = await stuur(server.versie, g, keepalive); if (r.conflict) continue; versie = r.versie; }
         await opslag.zet('basis', { versie, doc });
         await noteer(botsingen);
-        pasToe(lokaal, doc);
+        pasToe(lokaalRuw, doc);
         return botsingen.length;
       }
       throw new Error('te veel botsingen');
@@ -159,7 +212,7 @@
     /* eerste keer op dit apparaat: eerst een kopie, dan samenvoegen, terugvragen en vergelijken. Pas daarna staat het aan. */
     async function aanzetten() {
       return opSlot(async () => {
-        const lokaal = kloon(app.haal());
+        const lokaalRuw = kloon(app.haal()), lokaal = filter(lokaalRuw);
         const server = await haalAlles();
         const hadData = !leeg(lokaal), botsingen = [];
         if (hadData) { await opslag.zet('voor-sync', { op: Date.now(), doc: lokaal }); await app.kopie(); }
@@ -172,7 +225,7 @@
         await opslag.zet('basis', { versie: terug.versie, doc: terug.doc });
         vlag.zet();
         await noteer(botsingen);
-        pasToe(lokaal, doc);
+        pasToe(lokaalRuw, doc);
         app.status('ok', 'Gesynchroniseerd');
         return { hier: telling(lokaal), server: telling(server.doc), samen: telling(doc) };
       });
@@ -182,16 +235,24 @@
       if (vlag.aan()) return nu();
       try {
         const s = await vraag('?sinds=0');
-        if (s.versie > 0 && leeg(kloon(app.haal()))) { await aanzetten(); return; }
-        app.status('', s.versie > 0 || !leeg(kloon(app.haal())) ? 'Nog niet gekoppeld' : 'Op dit apparaat');
+        if (s.versie > 0 && leeg(haalL())) { await aanzetten(); return; }
+        app.status('', s.versie > 0 || !leeg(haalL()) ? 'Nog niet gekoppeld' : 'Op dit apparaat');
       } catch (e) { meld(e); }
     }
     const botsingen = async () => (await opslag.haal('botsingen')) || [];
+    /* een botsing afhandelen: de lijst houdt de rest; op = tijdstip, pad = plek in de staat */
+    const botsingWeg = async (op, pad) => { const L = (await opslag.haal('botsingen')) || []; await opslag.zet('botsingen', L.filter(x => !(x.op === op && x.pad === pad))); };
+    const botsingenLeeg = async () => { await opslag.zet('botsingen', []); };
+    /* wat er van leerlinggegevens op de server staat, en wissen (ook de back-ups) */
+    const leerlingenOpServer = () => vraag('?leerlingen=1');
+    const leerlingenWissen = () => vraag('?leerlingen=1', { method: 'DELETE' });
+    const eersteWissen = () => vraag('?eerste=1', { method: 'DELETE' });
+    const eersteOpServer = () => vraag('?eerste=1');
     const backups = async () => (await vraag('?backups=1')).dagen;
     /* een back-up die leeg of beschadigd is mag nooit als staat terugkomen: de app zet hem op al je apparaten neer */
     const backup = async dag => { const d = samen((await vraag('?backup=' + encodeURIComponent(dag))).onderdelen); if (leeg(d)) throw new Stop('leeg'); controleer(d); return d; };
     const stop = () => { clearTimeout(timer); nogEens = false; }; // voor de tests: geen verdwaalde timer na afloop
-    return { stop, nu, later, gewijzigd, aanzetten, start, backups, backup, botsingen, meld, aan: () => vlag.aan() };
+    return { stop, nu, later, gewijzigd, aanzetten, start, backups, backup, botsingen, botsingWeg, botsingenLeeg, leerlingenOpServer, leerlingenWissen, eersteOpServer, eersteWissen, meld, aan: () => vlag.aan() };
   }
 
   /* kleine opslag in IndexedDB: de basis kan even groot zijn als de staat zelf en past dan niet meer naast de staat in localStorage */
@@ -201,5 +262,5 @@
     const tx = (modus, fn) => db().then(d => new Promise((ok, nee) => { const t = d.transaction('kv', modus); const r = fn(t.objectStore('kv')); t.oncomplete = () => ok(r.result); t.onerror = () => nee(t.error); }));
     return { haal: k => tx('readonly', s => s.get(k)), zet: (k, v) => tx('readwrite', s => s.put(v, k)) };
   }
-  return { samenvoegen, gelijk, delen, samen, verschil, leeg, telling, maak, idbOpslag };
+  return { padHaal, bewaarPlan, bewaarToepassen, planTelt, idTijd, zonderLeerlingen, padZet, samenvoegen, gelijk, delen, samen, verschil, leeg, telling, maak, idbOpslag };
 });
