@@ -1498,7 +1498,7 @@ function viewNu() {
     ${acties || Z.knop ? `<div class="ens-acties">${acties || Z.knop}</div>` : ''}<div class="nu-kaart">${kaart}</div></div>${meld}`;
   if (!rustig) h += `<aside class="ens-rechts"><p class="eyebrow">Vandaag</p>${vandaagLijst(s, A, nu, kijk || live)}${stil || geenVoorstel ? '' : `<div class="ens-open">${nogOpen(s, p, A, m, nu)}</div>`}</aside>`;
   h += '</div>' + pzVraag;
-  if (!rustig && !stil) h += `<div class="dok"><div class="dok-in"><button class="dok-zoek" data-palet="" aria-label="Vraag of zoek iets, of typ een taak">${ICO.zoek}<span>Vraag of zoek iets, of typ een taak</span><kbd>Ctrl K</kbd></button></div></div>`;
+  if (!rustig && !stil) h += `<div class="dok"><div class="dok-in"><button class="dok-zoek" data-palet="" aria-label="Vraag of zoek iets, of typ een taak">${ICO.zoek}<span>Zoek iets of typ een taak</span><kbd>Ctrl K</kbd></button></div></div>`;
   return h + '</div>';
 }
 function nuMeldingen(s) { // wat aandacht vraagt, ook als je niet op Dag kijkt
@@ -2377,7 +2377,7 @@ function roosterRaster(L) { // de week als raster: rijen zijn de lestijden die o
     if (!r) { r = { t: u.start, m, c: {} }; rijen.push(r); }
     (r.c[d] = r.c[d] || []).push(`<a class="ro-les" href="${esc(klasUrl(u.groep))}" title="${esc(lgNaam(leergangVan(u.groep)) || '')}">${esc(klasLabel(u.groep))}${r.t !== u.start ? `<small>${esc(u.start)}</small>` : ''}${u.lokaal && u.lokaal !== lokaal ? `<small>${esc(u.lokaal)}</small>` : ''}</a>`); });
   rijen.sort((a, b) => a.m - b.m);
-  return `<table class="ro-raster"><thead><tr><th></th>${dagen.map(d => `<th scope="col">${esc(cap(DAGLANG[d]))}</th>`).join('')}</tr></thead><tbody>${rijen.map(r => `<tr><th scope="row" class="num">${esc(r.t)}</th>${dagen.map(d => `<td>${(r.c[d] || []).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  return `<table class="ro-raster"><thead><tr><th></th>${dagen.map(d => `<th scope="col"><span class="lang">${esc(cap(DAGLANG[d]))}</span><span class="kort" aria-hidden="true">${esc(cap(DAGLANG[d]).slice(0, 2))}</span></th>`).join('')}</tr></thead><tbody>${rijen.map(r => `<tr><th scope="row" class="num">${esc(r.t)}</th>${dagen.map(d => `<td>${(r.c[d] || []).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 }
 function roosterAfwijkingen() { // wat de komende opgehaalde weken anders is dan de vaste week
   if (!ZC || !ZC.events) return ''; const t = vandaag(); const sleutel = (d, st, g) => d + '|' + st + '|' + g;

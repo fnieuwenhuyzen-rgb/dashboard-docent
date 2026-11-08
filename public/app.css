@@ -960,3 +960,41 @@ a.jr-naam:hover{color:var(--paars)}
   .les .agenda li{font-size:1.4rem}
   .les .tk b{font-size:1.15rem}
 }
+
+/* ---------- formaten en bediening (8-11): tikdoelen van 44 px op aanraakschermen, niets valt weg, niets bedekt ---------- */
+@media (pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select{min-height:44px}
+  input[type=color]{min-height:44px;min-width:44px}
+  summary{padding-block:10px;cursor:pointer}
+  .btn,.btn.klein{min-width:44px;justify-content:center}
+  .lk .lk-geluid{min-height:44px;min-width:44px}
+  .taak-open{min-height:44px;display:inline-flex;align-items:center}
+  a.sub{display:inline-flex;align-items:center;min-height:44px}
+  .bm-naam{min-height:44px}
+  .ro-les{min-height:44px}
+  /* vinkje: het hele vlak van 44 px is het tikdoel; het getekende vakje blijft 24 px */
+  .chk input[type=checkbox]{appearance:none;-webkit-appearance:none;width:44px;height:44px;margin:0;padding:0;border:0;background:transparent;position:relative;flex:none;cursor:pointer}
+  .chk input[type=checkbox]::before{content:"";position:absolute;left:10px;top:10px;width:20px;height:20px;border:2px solid var(--muted);border-radius:5px;background:var(--surface)}
+  .chk input[type=checkbox]:checked::before{background:var(--paars);border-color:var(--paars)}
+  .chk input[type=checkbox]:checked::after{content:"";position:absolute;left:17px;top:15px;width:5px;height:10px;border:solid var(--op);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  .chk input[type=checkbox]:focus-visible{outline:none}
+  .chk input[type=checkbox]:focus-visible::before{outline:2px solid var(--paars);outline-offset:2px}
+  /* dichte rasters: het tikvlak groeit onzichtbaar mee, zonder dat het raster verspringt */
+  .ag-dag,.ag-chip,.jr-as button.w,.jr-naam,.chk .taak-open{position:relative}
+  .jr-toets{position:absolute}
+  .ag-dag::after,.ag-chip::after,.jr-as button.w::after,.jr-naam::after,.jr-toets::after{content:"";position:absolute;inset:-8px -4px}
+  .ag-dag::after{inset:-6px -2px}
+  .jr-toets::after{inset:-11px -7px}
+}
+.ag-chip{overflow-wrap:anywhere}
+.ro-raster thead th .kort{display:none}
+@media (max-width:640px){.ro-raster thead th .lang{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.ro-raster thead th .kort{display:inline}}
+/* tabbalk op tablet staand: elk label past op zijn eigen breedte, zo nodig schuift de balk (nooit afgekapt) */
+@media (max-width:899.98px){.nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}.nav a{flex:1 0 auto;padding-inline:.5rem}.nav .nl{overflow:visible}}
+/* telefoon: overzicht van Nu laat de hele titel zien in plaats van die af te kappen */
+@media (max-width:600px){.nl-r span{white-space:normal;overflow:visible;overflow-wrap:anywhere}.nl-r{align-items:start}}
+@media (pointer:coarse){.ag-chip{overflow:visible}.ag-chip::after{inset:-10px -4px!important}.jr-toets::after{inset:-13px -8px!important}}
+@media (pointer:coarse) and (min-width:900px){.nav a{min-height:44px;display:inline-flex;align-items:center}.brand{min-height:44px;display:inline-flex;align-items:center}}
+@media (pointer:coarse){.nl-r span{white-space:normal;overflow:visible;overflow-wrap:anywhere}.nl-r{align-items:start}}
+@media (min-width:900px){.nu-scherm{padding-bottom:7.5rem}}
+.ens-dag{flex:1 1 12rem}.ens-kop .nb-stap{margin-left:auto}
