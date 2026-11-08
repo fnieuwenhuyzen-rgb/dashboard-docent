@@ -1097,7 +1097,7 @@ function nwZet() {
   if (g.soort === 'les') { nwZetLes(g); return; }
   if (!g.titel) { const l = $('#nwLet'); l.textContent = 'Typ nog wat het is.'; l.hidden = false; $('#nwQ').focus(); return; }
   const terug = foto(); const k = maakTaak('', { dag: g.dag, van: hm(g.van), tot: hm(g.tot) }, g.titel, g.bron); if (!k) return; if (g.soort === 'afspraak') k.afspraak = true;
-  nwDicht(); agSel[g.dag] = 'taak:' + k.id; if (route.naam === 'vandaag') dagKeuze = g.dag; else weekKeuze = maandagVan(g.dag);
+  nwDicht(); agSel[g.dag] = 'taak:' + k.id; if (route.naam !== 'vandaag') weekKeuze = maandagVan(g.dag); // Dag blijft op de dag waar je kijkt (bevinding 54)
   bewaar(); toast(`${k.titel} staat op ${fmtD(g.dag)} om ${hm(g.van)}`, terug);
 }
 function nwZetLes(g) {
@@ -1108,7 +1108,7 @@ function nwZetLes(g) {
   if (RUIL_WOORD.test(NW.tekst) && !weg) return stop('Kies welk uur er vervalt.', '#nwRuil');
   const waarom = g.titel ? cap(g.titel.replace(klasRe(g.klas), ' ').replace(LES_WOORD, ' ').replace(/\s+/g, ' ').trim()) : ''; // wat je er verder bij typte, bijvoorbeeld de reden
   const id = extraMaak({ g: g.klas, s: g.dag, start, eind: hm(g.tot), lokaal: g.lokaal.trim(), weg, waarom }); const a = S.afwijkingen.find(x => x.id === id);
-  nwDicht(); agSel[g.dag] = 'les:' + a.extraId; if (route.naam === 'vandaag') dagKeuze = g.dag; else weekKeuze = maandagVan(g.dag);
+  nwDicht(); agSel[g.dag] = 'les:' + a.extraId; if (route.naam !== 'vandaag') weekKeuze = maandagVan(g.dag);
   bewaar(); toast(`${g.klas}: ${a.wat.toLowerCase()}`, () => maakOngedaan(id));
 }
 function nwNieuw() { // + Nieuw en de toets N: op de getoonde dag, of vandaag als die in de getoonde week valt
@@ -3093,7 +3093,7 @@ document.addEventListener('keydown', e => {
 });
 function leesRoute() { if (/^#groepen(\/|$)/.test(location.hash)) history.replaceState(null, '', '#jaar'); // oude links
   const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; }
-window.addEventListener('hashchange', () => { leesRoute(); sluit(); if (NW) nwDicht();
+window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
   if (route.naam === 'bord' && !LES) { document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true); return; } // opent de browser het bord in hetzelfde venster
   render(); window.scrollTo(0, 0); });
 
