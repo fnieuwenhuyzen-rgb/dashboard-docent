@@ -1,87 +1,78 @@
 # Lesdag
 
-Lesdag is een webapp om je muzieklessen voor te bereiden en te geven. De app werkt met je weekrooster, je leergangen en de lessen per groep.
+Lesdag is een webapp om je muzieklessen voor te bereiden en te geven. De app werkt met je weekrooster, je leergangen en de lessen per groep. Het menu bovenin heeft: Nu, Dag, Week, Jaar, Rooster, Sectie, Team, Reclame en Instellingen.
 
-- **Vandaag**: je lessen van de dag in volgorde. Per lesuur zie je de groep, het lokaal, welke les het wordt, het lesdoel en het materiaal, en wat je er vorige keer over noteerde. Daarbij staat per lokaal wat er klaar moet staan. Na 16.00 uur laat de app alvast de volgende lesdag zien.
+- **Nu**: het scherm voor het moment. Wat er nu speelt, wat daarna komt en wat nog open staat. Vanuit Nu start je de **Lesmodus**.
+- **Dag**: je lessen van de dag in volgorde, met je agenda. Per lesuur zie je de groep, het lokaal, welke les het wordt, het lesdoel en het materiaal, en wat je er vorige keer over noteerde. Daarbij staat per lokaal wat er klaar moet staan. Hier staat ook **Ik ben er niet** (voor een dag of een hele periode) en **+ Nieuw** voor een taak, afspraak of eenmalig extra lesuur.
 - **Lesmodus**: een volledig scherm voor het digibord. Je ziet de titel, het doel, de lesfasen met timer, de check, de rode draad en het materiaal. Na de les kies je "gegeven", "half af" of "niet gegeven" en zet je er een notitie bij. Daarna gaat de app door naar je volgende lesuur.
-- **Week**: welke les je deze week in welk lesuur geeft.
-- **Groepen**: de voortgang per groep. Parallelklassen delen een leergang, maar elke groep houdt zijn eigen plek bij.
-- **Rooster**: je vaste weekrooster, één keer invullen.
+- **Week**: je week als agenda, met de lessen, afspraken en taken. Met "Ga naar" typ je een lesweek en spring je er direct heen.
+- **Jaar**: alle klassen over het schooljaar, met toetsen, toetsweken en wat er nog te geven is. Tik op een weeknummer boven het overzicht om naar die week te gaan, of op een klas voor het klasblad (de voortgang van die groep). Parallelklassen delen een leergang, maar elke groep houdt zijn eigen plek bij.
+- **Rooster**: je vaste weekrooster, één keer invullen of overnemen uit Zermelo.
 - **Sectie**: vergaderingen, rapporten, toetsweken en je taken als sectievoorzitter.
+- **Team**: de teamvergaderingen en data voor vwo 4-5-6.
+- **Reclame**: weekinfo en borden voor concerten, excursies en andere activiteiten. Lesdag rekent uit wanneer je wat moet inleveren en zet de tekst en de bijlage klaar. De mail verstuurt Lesdag nooit zelf: hij opent een nieuw bericht in je mailprogramma en jij verstuurt het. Ontbreken er gegevens (aanvangstijd, plaats, prijs), dan vraagt Lesdag eerst of je toch door wilt gaan.
+- **Instellingen**: synchroniseren, agenda in Outlook, Zermelo, pauzes, een kopie maken en meer.
 
 De leergangen staan in `public/data/basis.json` en komen uit het dashboard Leergang muziek.
 
-## 1. Online zetten met Cloudflare Pages (zonder Microsoft-koppeling)
+## 1. Online zetten met Cloudflare Pages
 
-1. Log in op dash.cloudflare.com en ga naar **Workers & Pages**, dan **Create**, dan **Pages**, dan **Upload assets**.
-2. Geef het project een naam, bijvoorbeeld `lesdag-muziek`. Je adres wordt dan `https://lesdag-muziek.pages.dev`.
-3. Sleep de hele map `lesdag` (of het zipbestand) erin en kies **Deploy**.
-4. Open het adres in Edge of Chrome. Kies **App installeren** in de adresbalk, dan staat Lesdag als app op je laptop.
+Lesdag staat op `https://lesdag-muziek.pages.dev`. Het Pages-project is gekoppeld aan de GitHub-repository: **elke push naar `main` staat binnen een minuut live**. Het adres zit achter Cloudflare Access, dus alleen een aangemeld account komt erin (een code per mail).
 
-De app werkt nu al: alles wordt opgeslagen in de browser van dat apparaat. Met **Instellingen, Kopie downloaden** kun je een kopie maken.
+1. Wijzig iets in de map `public/` en commit het.
+2. Push naar `main`. Cloudflare Pages zet de nieuwe versie vanzelf online.
+3. Open het adres in Edge of Chrome. Kies **App installeren** in de adresbalk, dan staat Lesdag als app op je laptop.
 
-Een nieuwe versie zet je online door in hetzelfde Pages-project opnieuw te uploaden (**Create deployment**).
+Zonder iets aan te zetten wordt alles opgeslagen in de browser van dat apparaat. Met **Instellingen, Kopie downloaden** maak je een kopie.
 
-## 2. Microsoft 365 koppelen (aanvraag bij de ICT)
+## 2. Gegevens op meer apparaten: synchroniseren
 
-Met de koppeling log je in met je schoolaccount. Dan:
+Ga naar **Instellingen, Synchroniseren** en kies **Synchroniseren aanzetten**. Dat doe je op elk apparaat zelf. De eerste keer downloadt Lesdag eerst een kopie, voegt samen met wat er al op de server staat en controleert het resultaat. Een leeg apparaat neemt de server vanzelf over.
 
-- staan je gegevens in je eigen OneDrive (map Apps), zodat je op elk apparaat dezelfde stand hebt;
-- zoek je bij een les direct naar een presentatie in OneDrive of SharePoint en koppel je die;
-- toont de lesmodus een PowerPoint uit SharePoint in de app zelf ("toon hier").
+Wat meegaat: taken, afspraken, planning, klassenlijsten, scores en de Zermelo-koppeling. De gegevens staan op de Lesdag-server achter je login. Wat op het apparaat blijft: verjaardagen, absenten en logboeknotities. Er zijn back-ups van de laatste dertig dagen.
 
-Daarvoor moet de ICT de app registreren in Microsoft Entra ID. Je kunt deze tekst doorsturen:
-
-> Ik wil een eigen webapp voor mijn muzieklessen laten inloggen met mijn schoolaccount. Kunnen jullie daarvoor een app-registratie aanmaken in Entra ID?
->
-> - Naam: Lesdag muziek
-> - Accounttype: alleen accounts in deze organisatie (single tenant)
-> - Platform: Single-page application, redirect-URI: `https://lesdag-muziek.pages.dev/auth.html`
-> - Gedelegeerde Microsoft Graph-machtigingen: `User.Read`, `Files.ReadWrite.AppFolder`, `Files.Read.All`, `Sites.Read.All`
-> - Graag beheerderstoestemming (admin consent) voor deze machtigingen, of toestemming dat ik zelf mag instemmen.
->
-> De app slaat geen leerlinggegevens op. Hij leest alleen bestanden waar ik zelf al bij kan, en schrijft alleen in de eigen appmap in mijn OneDrive.
->
-> Ik heb van jullie het **Application (client) ID** en het **Directory (tenant) ID** nodig.
-
-Als je die twee gegevens hebt:
-
-1. Open `public/config.js` en vul ze in bij `clientId` en `tenantId`.
-2. Zet de wijziging op GitHub (commit en push); Cloudflare Pages rolt hem vanzelf uit.
-3. Ga in Lesdag naar **Instellingen** en kies **Inloggen met schoolaccount**.
-
-Staat er al iets in Lesdag op dit apparaat? Bij de eerste keer inloggen gaat die stand naar OneDrive.
+Er is geen koppeling met een schoolaccount via Microsoft (Entra ID) of OneDrive. De bestanden `m365.js`, `auth.html` en `config.js` (`clientId`) bestaan nog, maar die koppeling is niet in gebruik en hoef je niet in te richten.
 
 ## 3. Rooster uit Zermelo
 
-Lesdag kan je rooster uit Zermelo halen, met roosterwijzigingen, een ander lokaal en vervallen lessen. De browser mag de Zermelo-link niet zelf lezen. Daarom gaat het via een klein doorgeefprogramma (een Cloudflare Worker).
+Lesdag kan je rooster uit Zermelo halen, met roosterwijzigingen, een ander lokaal en vervallen lessen. De browser mag Zermelo niet zelf lezen. Daarom gaat het via een klein doorgeefprogramma (een Cloudflare Worker, `worker/rooster-proxy.js`). Die staat al online en het adres staat in `public/config.js` bij `roosterProxy`.
 
-1. Ga in Cloudflare naar **Workers & Pages**, dan **Create**, dan **Create Worker**. Noem hem `lesdag-rooster` en kies **Deploy**.
-2. Kies **Edit code**, vervang alle code door de inhoud van `worker/rooster-proxy.js` en kies **Deploy**.
-3. Staat je Lesdag op een ander adres dan `https://lesdag-muziek.pages.dev`? Pas dan bovenaan in de Worker het adres bij `LESDAG` aan.
-4. Kopieer het adres van de Worker, bijvoorbeeld `https://lesdag-rooster.jouwnaam.workers.dev`, en zet het in `public/config.js` bij `roosterProxy`. Commit en push.
-5. Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie). Ga in Lesdag naar **Instellingen, Rooster uit Zermelo**, plak de code en kies **Koppelen**. Een code werkt één keer. Op een ander apparaat maak je een nieuwe. Plak daar ook je Zermelo-agendalink: die gebruikt Lesdag als de koppeling niet werkt.
-6. Ga naar **Rooster** en kies **Overnemen als vast rooster**.
+1. Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie).
+2. Ga in Lesdag naar **Instellingen, Rooster uit Zermelo**, plak de code en kies **Koppelen**. Een code werkt één keer. Plak daar eventueel ook je Zermelo-agendalink: die gebruikt Lesdag als de koppeling niet werkt.
+3. Ga naar **Rooster** en kies **Overnemen als vast rooster**.
 
-Daarna haalt Lesdag het rooster op als je de app opent, en elk halfuur als je ernaar terugkeert. Voor de komende drie weken gebruikt Vandaag dan het echte Zermelo-rooster. Vervallen lessen schuiven vanzelf door. Een ander lokaal krijgt een rood label.
+Daarna haalt Lesdag het rooster op als je de app opent, en elk halfuur als je ernaar terugkeert. Vervallen lessen schuiven vanzelf door. Een ander lokaal krijgt een rood label.
 
-De Zermelo-link werkt als een wachtwoord voor je rooster. Lesdag bewaart hem alleen in je browser en in je eigen OneDrive. De koppeling is strenger: daarmee kan iemand alles wat jij in Zermelo mag. Die blijft alleen in de browser van dit apparaat. De Worker geeft beide door aan Zermelo, bewaart niets en leest met de koppeling alleen je eigen afspraken. Is de link of de koppeling ergens terechtgekomen waar die niet hoort, trek hem dan in Zermelo in en maak een nieuwe aan.
+De Zermelo-link en de koppelcode werken als een wachtwoord. Wie de koppeling heeft, kan alles wat jij in Zermelo mag. Lesdag bewaart ze in je browser en, als je synchroniseren aanzet, ook op de Lesdag-server achter je login. De Worker geeft ze door aan Zermelo en bewaart zelf niets. Is een link of koppeling ergens terechtgekomen waar die niet hoort, trek hem dan in Zermelo in en maak een nieuwe aan.
 
-## 4. Eerste keer gebruiken
+## 4. Agenda in Outlook
+
+Onder **Instellingen, Agenda in Outlook** maak je een agendalink. Lesdag zet dan je lessen, toetsen, surveillance, koor en sectiepunten van twee weken terug tot zes weken vooruit in een eigen agenda in Outlook. Alleen lezen. Eigen taken, afspraken, notities en leerlinggegevens gaan niet mee. Een wijziging staat vaak pas na enkele uren in Outlook.
+
+In Outlook op het web voeg je hem toe via Agenda, Agenda toevoegen, Abonneren via internet, en plak je de link. Behandel de link als een wachtwoord.
+
+## 5. Eerste keer gebruiken
 
 1. **Rooster**: neem het rooster over uit Zermelo (stap 3), of vul per lesuur de dag, de tijden, de groep (bijvoorbeeld h3a) en het lokaal in.
-2. **Vandaag**: staan je groepen nog op les 1? Kies **Zet ze op de planning**. Dan gelden alle lessen vóór deze lesweek als gegeven.
-3. **Groepen**: controleer per groep of de volgende les klopt. Met "gegeven" en "niet gegeven" schuif je een les heen en terug.
+2. **Dag**: staan je groepen nog op les 1? Kies **Zet ze op de planning**. Dan gelden alle lessen vóór deze lesweek als gegeven.
+3. **Jaar**: tik op een klas voor het klasblad en controleer of de volgende les klopt. Met "gegeven" en "niet gegeven" schuif je een les heen en terug.
+
+## Ik ben er niet
+
+Op **Dag** kies je **Ik ben er niet** en geef je een begin- en einddatum, ook voor een lange periode (tot een jaar). Al je lessen in die periode vervallen en schuiven door. Direct na het invullen kun je het in een keer ongedaan maken. Later staat op elke afwezige dag **Toch aanwezig op deze dag** en **Hele periode ongedaan**.
 
 ## Wat er waar staat
 
 | Bestand | Inhoud |
 |---|---|
-| `public/` | de app zelf (`index.html`, `app.css`, `app.js`); Cloudflare Pages publiceert deze map |
-| `m365.js`, `auth.html`, `config.js` | de Microsoft-koppeling en het adres van de roosterproxy |
+| `public/` | de app zelf (`index.html`, `app.css`, `app.js` en meer); Cloudflare Pages publiceert deze map |
+| `public/sync.js`, `functions/api/staat.js` | synchroniseren |
+| `public/m365.js`, `public/auth.html`, `public/config.js` | de Microsoft-koppeling (niet in gebruik) en de adressen van de Workers |
 | `worker/rooster-proxy.js` | de Cloudflare Worker voor Zermelo (apart online zetten, niet in Pages) |
-| `public/data/basis.json` | de leergangen, de kalender 2026-2027 en de sectiedata |
-| `sw.js`, `manifest.webmanifest`, `icons/` | installeren en offline gebruiken |
-| `public/vendor/` | Microsoft Authentication Library (MSAL) 5.23.0, MIT-licentie |
+| `worker/agenda-feed.js` | de Cloudflare Worker voor de agenda in Outlook (apart online zetten) |
+| `public/data/basis.json` | de leergangen, de kalender en de sectiedata |
+| `public/data/beoordeling.json` | de beoordelingsmodellen |
+| `public/sw.js`, `public/manifest.webmanifest`, `public/icons/` | installeren en offline gebruiken |
+| `public/vendor/` | gebruikte bibliotheken (MSAL, pptxgenjs, qrcode) en lettertypen |
 
 Je gegevens (rooster, voortgang, notities, je eigen aanpassingen aan lessen) staan apart van de leergangen. Een nieuwe versie van `data/basis.json` overschrijft je eigen werk dus niet.
