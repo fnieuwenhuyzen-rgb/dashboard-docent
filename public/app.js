@@ -2540,7 +2540,7 @@ function agendaItems() {
       else if (/^z:/.test(k)) { v = it.z.van; w = it.z.tot; if (it.z.dienst) titel = 'Surveillance: ' + titel; else if (it.z.toets && !it.tz) titel = 'Toets: ' + titel; }
       else if (/^tw:/.test(k)) { /* toets zonder tijd: hele dag */ }
       else if (/^koor:/.test(k)) { if (it.soort !== 'koor') continue; const kr = it.koor; v = kr.van ? minuten(kr.van) : null; w = kr.tot ? minuten(kr.tot) : null; titel = koorNaam(kr) + (kr.type === 'concert' ? '' : ': ' + kr.titel); lokaal = kr.plaats || ''; }
-      else if (/^sectie:/.test(k)) { const i = it.i; titel = (i.taak ? 'Sectie, deadline: ' : '') + i.titel; const tm = !i.taak && !i.tot ? sectieTijd(i) : null; v = tm ? tm.van : null; w = tm ? tm.tot : null; lokaal = ''; }
+      else if (/^sectie:/.test(k)) { const i = it.i; if (sEigen(i.id)) continue; /* zelf getypte sectiepunten zijn vrije tekst, net als eigen taken */ titel =(i.taak ? 'Sectie, deadline: ' : '') + i.titel; const tm = !i.taak && !i.tot ? sectieTijd(i) : null; v = tm ? tm.van : null; w = tm ? tm.tot : null; lokaal = ''; }
       else continue; // koffie, vrij, pauze, rust, eigen taken en afspraken, reclame
       uit.push({ uid, d: s, van: v, tot: w, titel, lokaal });
     }
