@@ -871,7 +871,10 @@ a.jr-naam:hover{color:var(--paars)}
 .jr-as span{position:absolute;white-space:nowrap}
 .jr-as .m{top:0;font-weight:700}
 .jr-as .w{top:21px;transform:translateX(-50%)}
-.jr-as .nu{color:var(--rood);font-weight:700}
+.jr-as button.w{background:none;border:0;padding:2px 4px;font:inherit;font-stretch:inherit;color:inherit;cursor:pointer;border-radius:4px;text-decoration:underline dotted}
+.jr-as button.w:hover,.jr-as button.w:focus-visible{background:var(--surface);outline:1px solid var(--line)}
+.weeksprong{display:inline-flex;gap:6px;align-items:center}.weeksprong input{width:4.2rem}
+.jr-as .nu,.jr-as button.nu{color:var(--rood);font-weight:700}
 .jr-vel.klein .jr-as{height:24px}
 .jr-vel.klein .jr-as .w{top:0}
 .jr-info{margin:0;font-size:.95rem;min-height:1.5em}

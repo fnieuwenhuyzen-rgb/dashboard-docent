@@ -2207,7 +2207,7 @@ function viewWeek() {
   const t = vandaag(); const ma = weekKeuze || maandagVan(t); const vr = addD(ma, 4);
   const p = planning(ma, vr); const lw = lesweekVan(ma) || lesweekVan(addD(ma, 2));
   const dezeWeek = maandagVan(t);
-  let h = `<div class="kop"><div><h1>Week van ${esc(fmtD(ma))}</h1><div class="sub">${lw ? 'Lesweek ' + lw : 'Geen lesweek'}</div></div><div class="knoppen"><button class="btn" data-week="${addD(ma, -7)}">‹ vorige week</button>${ma !== dezeWeek ? `<button class="btn" data-week="${dezeWeek}">deze week</button>` : ''}<button class="btn" data-week="${addD(ma, 7)}">volgende week ›</button><button class="btn hoofd" data-nwnieuw="">+ Nieuw</button></div></div>`;
+  let h = `<div class="kop"><div><h1>Week van ${esc(fmtD(ma))}</h1><div class="sub">${lw ? 'Lesweek ' + lw : 'Geen lesweek'}</div></div><div class="knoppen"><button class="btn" data-week="${addD(ma, -7)}">‹ vorige week</button>${ma !== dezeWeek ? `<button class="btn" data-week="${dezeWeek}">deze week</button>` : ''}<button class="btn" data-week="${addD(ma, 7)}">volgende week ›</button><form class="weeksprong" id="weekSprong"><label class="sr-only" for="wsNr">Lesweek</label><input id="wsNr" type="number" min="1" max="${B.kalender.weken[B.kalender.weken.length - 1].w}" inputmode="numeric" placeholder="lesweek" aria-label="Lesweek"><button class="btn" type="submit">Ga naar</button></form><button class="btn hoofd" data-nwnieuw="">+ Nieuw</button></div></div>`;
   const dagen = []; for (let i = 0; i < 5; i++) { const s = addD(ma, i); const A = dagItems(s, p[s]); dagen.push({ s, items: A.items, heleDag: A.heleDag, reden: p[s].reden }); }
   const vrijMin = dagen.reduce((a, d) => a + d.items.filter(x => x.soort === 'vrij').reduce((b, x) => b + x.tot - x.van, 0), 0);
   const perKey = {}; dagen.forEach((d, i) => d.heleDag.forEach(it => { (perKey[it.key] = perKey[it.key] || { it, L: [] }).L.push(i); }));
@@ -2279,8 +2279,9 @@ function jaarBalk(g, lg, lw) {
 function jaarAs(lw, metMaand) {
   const P = jaarSlots(); let h = '', m = '';
   if (metMaand) for (const k of B.kalender.weken) { const mn = dOf(addD(k.datum, 3)).toLocaleDateString('nl-NL', { month: 'short' }).replace('.', ''); if (mn !== m) { h += `<span class="m" style="left:${jaarPct(P.per[k.w])}">${esc(mn)}</span>`; m = mn; } }
-  for (const w of [1, 5, 10, 15, 20, 25, 30, 35, 38]) if (Math.abs(w - lw) > 1) h += `<span class="w" style="left:${jaarPct(P.per[w] + .5)}">${w}</span>`;
-  if (lw in P.per) h += `<span class="w nu" style="left:${jaarPct(P.per[lw] + .5)}">${lw}</span>`;
+  const wkKnop = (w, nu) => { const k = B.kalender.weken.find(k => k.w === w); return `<button type="button" class="w${nu ? ' nu' : ''}" data-jaarweek="${k ? k.datum : ''}" title="Naar lesweek ${w}" aria-label="Naar lesweek ${w}" style="left:${jaarPct(P.per[w] + .5)}">${w}</button>`; };
+  for (const w of [1, 5, 10, 15, 20, 25, 30, 35, 38]) if (Math.abs(w - lw) > 1 && w in P.per) h += wkKnop(w, false);
+  if (lw in P.per) h += wkKnop(lw, true);
   return `<div class="jr-as">${h}</div>`;
 }
 const JAAR_UITLEG = [['<i class="jr-noot"></i>', 'gegeven'], ['<i class="jr-noot open"></i>', 'komt nog'], ['<i class="jr-noot mis"></i>', 'achter: open, links van de rode lijn'], ['<i class="jr-noot half"></i>', 'half gegeven'], ['<i class="jr-noot over"></i>', 'overgeslagen'], ['<i class="jr-noot leeg"></i>', 'les nog in te vullen'], ['<i class="jr-rust"></i>', 'geen les: vakantie, toetsweek of uitval'],
@@ -2945,6 +2946,7 @@ document.addEventListener('click', async e => {
   if (D.ontplan) { const terug = foto(); const k = (S.taken || []).find(k => k.id === D.ontplan); if (k) { agSel[k.plan.dag] = ''; delete k.plan; } bewaar(); toast('Uit de agenda gehaald; de taak staat nog in je lijst', terug); return; }
   if (D.dag != null && route.naam !== 'vandaag') { dagKeuze = D.dag; location.hash = 'vandaag'; return; }
   if (D.dag != null) { dagKeuze = D.dag; render(); return; }
+  if (D.jaarweek) { paletWeek(D.jaarweek); return; }
   if (D.week != null) { weekKeuze = D.week; render(); return; }
   if (D.start != null) { const [u, s] = D.start.split('|'); startLes(u || null, s || vandaag()); return; }
   if (D.uitval) { const [s, u] = D.uitval.split('|'); (S.uitval[s] = S.uitval[s] || []).push(u); bewaar(); toast('Les valt uit; de volgende les schuift door', () => { S.uitval[s] = (S.uitval[s] || []).filter(x => x !== u); bewaar(); }); return; }
@@ -3017,6 +3019,7 @@ document.addEventListener('change', e => {
 document.addEventListener('submit', e => {
   e.preventDefault();
   if (e.target.id === 'afwezigForm') { const v = $('#afVan').value, w = $('#afTot').value; if (v && w && w >= v) zetAfwezig(v, w); else toast('Kies een einddatum op of na de begindatum'); return; }
+  if (e.target.id === 'weekSprong') { const n = +$('#wsNr').value; const k = B.kalender.weken.find(k => k.w === n); if (k) paletWeek(k.datum); else toast('Lesweek ' + ($('#wsNr').value || '?') + ' bestaat niet; kies 1 t/m ' + B.kalender.weken[B.kalender.weken.length - 1].w); return; }
   if (e.target.id === 'krapForm') { const g = e.target.dataset.g; const R = ruimte(g).find(d => d.id === e.target.dataset.id); if (R && krapKeuze) voerKrapUit(R, krapKeuze); return; }
   if (e.target.id === 'ankerForm') { const g = e.target.dataset.g; const a = ankersVan(g).find(x => x.id === e.target.dataset.id); const reden = ($('#avReden') || {}).value || ''; if (!a || !$('#avUur') || !reden.trim()) { toast('Geef een korte reden'); return; }
     const id = verplaatsAnker(g, a, $('#avUur').value, reden.trim()); if (id) { ankerOpen = ''; bewaar(); toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id)); } return; }
