@@ -451,7 +451,7 @@ sc('Tijd: over de kerstvakantie en de jaarwisseling heen', async nieuw => {
 sc('Tijd: zomertijd (28 maart 2027) en einde zomertijd (25 oktober 2026)', async nieuw => {
   const maakZ = fase => van => drieWeken(van);
   const P = await nieuw({ tijd: nlIso('2027-03-22', '07:30'), staat: zStaat(s => { s.voortgang = voortgangTot('v4', 'vwo4', 26); }), zermelo: van => drieWeken(van) }); await P.open('vandaag'); await zWacht(P);
-  for (const dag of ['2027-03-25', '2027-03-30', '2027-03-31']) { // do vóór, di en wo na de omschakeling
+  for (const dag of ['2027-03-24', '2027-03-30', '2027-03-31']) { // wo vóór, di en wo na de omschakeling
     await P.klok(nlIso(dag, '07:30'), 'vandaag'); const di = await dagItemsOp(P, dag); const eerste = di.find(x => x.soort === 'ag-les'); ok(eerste && /^(08|8):30–/.test(eerste.titel), dag + ': de eerste les begint om 8:30: ' + (eerste ? eerste.titel : '(geen les)'));
   }
   // zondag op maandag over de omschakeling: de week verspringt niet
@@ -624,6 +624,60 @@ sc('Jaar en klasblad: tellers kloppen met de voortgang', async nieuw => {
 sc('Taak uitstellen en afspraak verwijderen met ongedaan maken', async nieuw => {
   const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [{ id: 'u1', titel: 'Afspraak oudergesprek', bron: 'overig', af: false, afspraak: true, plan: { dag: '2026-11-17', van: '15:00', tot: '15:30' } }]; return s; } }); await P.open('vandaag'); await P.hash('week');
   await klikData(P, '.ag-it[data-kid="u1"]'); await P.waitForTimeout; await klikData(P, '[data-taakweg="u1"]'); ok(!(await P.S()).taken.length, 'verwijderd'); ok(/Afspraak verwijderd/.test(await P.toast()), 'melding'); await P.klik('.toast-terug'); ok((await P.S()).taken.length === 1, 'Ongedaan maken zet hem terug');
+});
+
+// ---- ronde 2 ----
+sc('Nieuw: korte dagnamen (za) worden begrepen', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('vandaag'); await P.klik('[data-nwnieuw]');
+  await P.page.fill('#nwQ', 'vr 11-12 met Albert'); await P.page.waitForTimeout(100); ok(/vr 20 nov/.test(await P.tekst('#nwUit')), 'vr: ' + await P.tekst('#nwUit'));
+  await P.page.fill('#nwQ', 'za 11-12 met Albert'); await P.page.waitForTimeout(100); ok(/za 21 nov/.test(await P.tekst('#nwUit')), 'za wordt zaterdag 21 nov (kreeg: ' + await P.tekst('#nwUit') + ')');
+});
+sc('Nieuw: botsing met een les of afspraak wordt gemeld maar mag', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [{ id: 'b1', titel: 'Overleg Piet', bron: 'overig', af: false, afspraak: true, plan: { dag: '2026-11-16', van: '13:00', tot: '14:00' } }]; return s; } }); await P.open('vandaag'); await P.klik('[data-nwnieuw]');
+  await P.page.fill('#nwQ', 'maandag 8:30-9:00 met Albert'); await P.page.waitForTimeout(100); ok(/geef je les/.test(await P.tekst('#nwLet')), 'botsing met les: ' + await P.tekst('#nwLet'));
+  await P.page.fill('#nwQ', 'maandag 13:30-14:00 met Albert'); await P.page.waitForTimeout(100); ok(/al je heeft|dan heb je al/.test(await P.tekst('#nwLet')), 'botsing met afspraak: ' + await P.tekst('#nwLet'));
+  await P.klik('[data-nwzet]'); gelijk(((await P.S()).taken || []).length, 2, 'het mag toch (waarschuwen, niet weigeren)');
+});
+sc('Rooster: uur toevoegen en weghalen, dubbel uur', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat }); await P.open('rooster'); await P.page.evaluate(() => { const d = document.querySelector('details[data-jaarblok="rooster"]'); if (d) d.open = true; });
+  const n0 = (await P.S()).rooster.length;
+  await P.page.selectOption('#rDag', '5'); await P.page.fill('#rVan', '14:00'); await P.page.fill('#rTot', '14:45'); await P.page.fill('#rGroep', 'v5'); await P.page.locator('#rForm button[type=submit]').click(); await P.page.waitForTimeout(150);
+  let S = await P.S(); gelijk(S.rooster.length, n0 + 1, 'uur toegevoegd');
+  await P.page.selectOption('#rDag', '5'); await P.page.fill('#rVan', '14:00'); await P.page.fill('#rTot', '14:45'); await P.page.fill('#rGroep', 'v5'); await P.page.locator('#rForm button[type=submit]').click(); await P.page.waitForTimeout(150);
+  S = await P.S(); ok(S.rooster.length === n0 + 1, 'hetzelfde uur voor dezelfde klas nog eens toevoegen levert geen tweede uur op: ' + S.rooster.length + ' ipv ' + (n0 + 1));
+  await P.page.reload({ waitUntil: 'load' }); S = await P.S(); ok(S.rooster.length === n0 + 1, 'ook na herladen');
+  await P.hash('rooster'); const id = S.rooster.find(u => u.start === '14:00').id; await klikData(P, `[data-weg="${id}"]`); S = await P.S(); gelijk(S.rooster.length, n0, 'weghalen'); await P.klik('.toast-terug'); gelijk((await P.S()).rooster.length, n0 + 1, 'Ongedaan maken zet het terug');
+});
+sc('Zermelo koppelen en weer loskoppelen (Instellingen)', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat, zermelo: van => drieWeken(van), ls: { 'lesdag-zermelo-api': '' } }); await P.open('instellingen');
+  await P.page.fill('#zCode', '123456789012'); await P.page.locator('#zKoppelForm button[type=submit]').click(); await P.page.waitForTimeout(800);
+  ok(await P.page.evaluate(() => localStorage.getItem('lesdag-zermelo-api') === 'testtoken'), 'de token staat in localStorage'); const S = await P.S(); ok(!JSON.stringify(S).includes('testtoken'), 'de token staat niet in de staat (dus ook niet in een kopie)');
+  ok(await zStand(P).then(z => z && z.events.length === 42), 'het rooster is opgehaald (42 afspraken)');
+  await klikData(P, '[data-zapiweg]'); ok(await P.page.evaluate(() => localStorage.getItem('lesdag-zermelo-api') === null), 'loskoppelen haalt de token weg'); ok(await P.page.evaluate(() => localStorage.getItem('lesdag-zermelo') === null), 'en het opgehaalde rooster');
+});
+sc('Zermelo: koppeling kapot, de agendalink (iCal) neemt het over, ook met zomertijd', async nieuw => {
+  const ics = ma => { const d = x => x.replace(/-/g, ''); const ev = (dag, h1, m1, h2, m2, sam, extra) => `BEGIN:VEVENT\r\nUID:${dag}${h1}${sam}\r\nDTSTART:${d(dag)}T${String(h1).padStart(2, '0')}${m1}00Z\r\nDTEND:${d(dag)}T${String(h2).padStart(2, '0')}${m2}00Z\r\nSUMMARY:${sam}\r\n${extra || ''}END:VEVENT\r\n`;
+    // 30 maart 2027 (zomertijd): 06:30Z is 08:30 in Nederland; 26 oktober 2026 (wintertijd): 07:30Z is 08:30
+    return 'BEGIN:VCALENDAR\r\n' + ev('2027-03-30', 6, 30, 7, 15, 'mu v4', '') + ev('2026-11-16', 7, 30, 8, 15, 'mu v4', '') + ev('2026-11-17', 7, 30, 8, 15, 'mu v5 vervalt', 'STATUS:CANCELLED\r\n') + 'END:VCALENDAR\r\n'; };
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat, ls: { 'lesdag-zermelo-api': 'x' } }); await
+  await P.ctx.route('https://lesdag-rooster.f-nieuwenhuyzen.workers.dev/**', r => { const b = JSON.parse(r.request().postData() || '{}'); if (b.actie) return r.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ fout: 'kapot' }) }); r.fulfill({ status: 200, contentType: 'text/calendar', body: ics() }); });
+  await P.open('vandaag'); await P.wijzig(s => { s.zermeloToken = 'linktoken'; }, 'vandaag'); await P.page.waitForTimeout(800);
+  const Z = await zStand(P); ok(Z && Z.bron === 'ical', 'het rooster komt via de agendalink: ' + (Z && Z.bron)); const e = Z && Z.events.find(x => x.d === '2027-03-30'); ok(e && e.start === '08:30', '06:30Z op 30 maart is 08:30 (zomertijd): ' + JSON.stringify(e && [e.start, e.eind]));
+  const w = Z && Z.events.find(x => x.d === '2026-11-16'); ok(w && w.start === '08:30', '07:30Z op 16 november is 08:30 (wintertijd): ' + JSON.stringify(w && [w.start, w.eind])); ok(Z && Z.events.find(x => /vervalt/.test(x.summary)).vervallen === true, 'een vervallen afspraak is vervallen');
+});
+sc('Taak afvinken: duurvraag noteren en bij uitvinken weer weghalen', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [{ id: 'd1', titel: 'Presentatie maken', bron: 'les', af: false }]; return s; } }); await P.open('vandaag');
+  await P.page.locator('[data-taakaf="d1"]').check(); await P.page.waitForTimeout(200); ok(await P.zichtbaar('#duurvraag'), 'de vraag "Hoe lang duurde het?" verschijnt');
+  await P.page.fill('#dvMin', '35'); await klikData(P, '[data-duurok]'); let S = await P.S(); gelijk((S.duurLog || []).map(x => x.e), [35], 'de duur is genoteerd');
+  await P.page.locator('[data-taakaf="d1"]').uncheck(); await P.page.waitForTimeout(200); S = await P.S(); gelijk((S.duurLog || []).length, 0, 'uitvinken haalt de meting weg');
+  await P.page.locator('[data-taakaf="d1"]').check(); await P.page.waitForTimeout(200); await klikData(P, '[data-duurnee]'); gelijk(((await P.S()).duurLog || []).length, 0, 'Nee laat niets noteren');
+});
+sc('Sectietaak plannen via Blijft liggen en afvinken van de ingeplande kopie', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-11-02', '07:30') }); await P.open('vandaag'); const n0 = await P.liggen();
+  ok(n0 >= 1, 'op 2 nov ligt er al iets uit de sectie (' + n0 + ')'); const pl = P.page.locator('[data-liggenplan^="sec:"]'); if (await pl.count()) { const key = await pl.first().getAttribute('data-liggenplan'); await pl.first().evaluate(e => e.click()); await P.page.waitForTimeout(250);
+    ok(await P.zichtbaar('#planForm'), 'Plan opent het planformulier voor een sectietaak'); await P.page.locator('#planForm button[type=submit]').click(); await P.page.waitForTimeout(200); let S = await P.S();
+    const k = S.taken.find(x => x.sectieId === key.slice(4)); ok(k && k.plan, 'er is een ingeplande kopie met sectieId: ' + JSON.stringify(k && k.plan)); gelijk(await P.liggen(), n0 - 1, 'de teller loopt terug');
+    await P.page.locator(`[data-taakaf="${k.id}"]`).first().evaluate(e => e.click()); await P.page.waitForTimeout(200); S = await P.S(); ok(S.sectieAf[k.sectieId], 'het afvinken van de kopie vinkt de sectietaak af'); }
 });
 // @@SCENARIOS
 
