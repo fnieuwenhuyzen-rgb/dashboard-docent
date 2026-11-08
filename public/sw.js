@@ -1,5 +1,6 @@
 // Offline: de app, de leergangen en de lettertypen blijven beschikbaar zonder netwerk.
-const CACHE = 'lesdag-v48';
+const CACHE = 'lesdag-v49';
+const NET_WACHT = 2000; // ms wachten op het netwerk voordat de cache voorgaat
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'lesmodus.js', 'lesklok.js', 'bm-reken.js', 'bm-pdf.js', 'reclame.js', 'sync.js', 'agendafeed.js', 'm365.js', 'config.js', 'auth.html', 'data/basis.json', 'data/beoordeling.json', 'data/notities.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js', 'vendor/qrcode.js',
   'vendor/msal-browser.min.js', 'vendor/msal-redirect-bridge.min.js', 'vendor/fonts/EncodeSans-Light.ttf', 'vendor/fonts/EncodeSans-Bold.ttf', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 // precies dezelfde link als in index.html; daarbij de lettertypebestanden voor Latijnse tekst (latin en latin-ext)
@@ -19,7 +20,11 @@ self.addEventListener('fetch', e => {
   if (u.origin === location.origin && u.pathname.includes('/api/')) return; // de staat nooit in de cache
   if (u.origin === location.origin) {
     // eerst netwerk (nieuwste versie), anders cache. Doorsturen naar de Cloudflare Access-inlog wordt nooit bewaard.
-    e.respondWith(fetch(e.request).then(r => { if (r.ok && r.type === 'basic' && !r.redirected) { const c = r.clone(); caches.open(CACHE).then(x => x.put(e.request, c)); } return r; }).catch(() => caches.match(e.request, { ignoreSearch: true })));
+    // Duurt het netwerk langer dan NET_WACHT (slecht wifi op school) en staat het bestand in de cache, dan komt dat direct; het netwerk loopt door en ververst de cache voor de volgende keer.
+    const net = fetch(e.request).then(r => { if (r.ok && r.type === 'basic' && !r.redirected) { const c = r.clone(); caches.open(CACHE).then(x => x.put(e.request, c)); } return r; });
+    e.waitUntil(net.catch(() => {}));
+    e.respondWith(Promise.race([net.catch(() => null), new Promise(ok => setTimeout(ok, NET_WACHT, null))])
+      .then(r => r || caches.match(e.request, { ignoreSearch: true }).then(m => m || net)));
   } else if (/fonts\.(googleapis|gstatic)\.com/.test(u.host)) {
     // lettertypen eerst uit de cache; Google stuurt Vary-koppen mee, die tellen hier niet
     e.respondWith(caches.match(e.request, { ignoreVary: true }).then(m => m || fetch(e.request).then(r => { if (r.ok || r.type === 'opaque') { const c = r.clone(); caches.open(CACHE).then(x => x.put(e.request, c)); } return r; })));

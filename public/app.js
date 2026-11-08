@@ -2639,7 +2639,7 @@ function viewInstellingen() {
     <div class="knoppen" style="margin-top:.6rem"><button class="btn mag" data-kompas="">Kompas naast Magister</button><a class="btn" href="${esc(MAGURL())}" target="magister" rel="noopener">Open Magister</a></div>
     <p class="sub" style="margin-top:.5rem">Klassenlijsten: ${rooGroepen().map(g => `<button class="btn klein" data-klasopen="${esc(g)}">${esc(g)} ${(S.beoord.lijsten[g] || []).length || 'nog niet'}</button>`).join(' ') || 'nog geen rooster'}</p></div>
   <div class="kaart"><h2>Jarige collega's</h2><p class="lead">Plak de verjaardagen van het intranet: één collega per regel met de datum, bijvoorbeeld "12 november Jan Jansen". Lesdag haalt daar zelf niets op. De lijst staat alleen op dit apparaat. Op de dag zelf staat de collega bij Opstarten, met een knop voor een felicitatie in Outlook.</p>
-    <textarea id="colLijst" rows="6" style="margin-top:.6rem" placeholder="12 november Jan Jansen">${esc((AP.collegas || []).map(c => mdTekst(c.md) + ' ' + c.naam + (c.mail ? ' ' + c.mail : '')).concat(colMis.map(x => x.r)).join('\n'))}</textarea>
+    <textarea id="colLijst" aria-label="Verjaardagen van collega's, een per regel" rows="6" style="margin-top:.6rem" placeholder="12 november Jan Jansen">${esc((AP.collegas || []).map(c => mdTekst(c.md) + ' ' + c.naam + (c.mail ? ' ' + c.mail : '')).concat(colMis.map(x => x.r)).join('\n'))}</textarea>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-colopslaan="">Opslaan op dit apparaat</button><a class="btn" href="https://web.csgpm.nl/home/index.php" target="_blank" rel="noopener">Intranet openen</a></div>
     <p class="sub" style="margin-top:.5rem">${(AP.collegas || []).length ? `${AP.collegas.length} collega's op dit apparaat.` : 'Nog geen lijst.'}</p>
     ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
@@ -3652,15 +3652,17 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   if (anders) bewaar(true);
 }
 /* ---------- start ---------- */
+/* gegevens: index.html start het ophalen al (VOORAF), tegelijk met het laden van dit script en alle drie naast elkaar */
+const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n + '.json', { cache: 'no-cache' }).then(r => r.json());
 (async function start() {
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
   const kapot = staatFouten(S); if (kapot.length) { herstelScherm('Je opgeslagen gegevens zijn beschadigd. Niet in orde: ' + kapot.join(', ') + '.'); return; } // vóór bewaren en synchroniseren: niets kapots doorgeven
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
-  try { B = await (await fetch('data/basis.json', { cache: 'no-cache' })).json(); }
+  try { B = await laadJson('basis'); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
-  try { BM = await (await fetch('data/beoordeling.json', { cache: 'no-cache' })).json(); } catch (e) { BM = []; }
-  try { RC = await (await fetch('data/reclame.json', { cache: 'no-cache' })).json(); } catch (e) { RC = null; }
+  try { BM = await laadJson('beoordeling'); } catch (e) { BM = []; }
+  try { RC = await laadJson('reclame'); } catch (e) { RC = null; }
   herstelStaat();
   LESKLOK.start({ uren: lesklokUren, vandaag, esc, waak, lesOpen: () => !!LES, route: () => route.naam, klaar: () => !!B,
     lesTijd: () => LES && LES.s === vandaag() ? { groep: LES.x.u.groep, van: minuten(LES.x.u.start), tot: minuten(LES.x.u.eind) } : null });
