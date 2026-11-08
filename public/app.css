@@ -164,6 +164,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .les .slide.docentkaart{background:repeating-linear-gradient(135deg,#ffffff06 0 12px,transparent 12px 24px);border:1px dashed #ffffff30;margin:1rem max(20px,3vw);border-radius:14px;justify-content:flex-start}
 .les .eyebrow{text-transform:uppercase;letter-spacing:.09em;color:var(--z);font-size:clamp(.9rem,1.6vw,1.25rem);margin:0;font-weight:700}
 .les h1{font-family:var(--kop);font-size:clamp(2.4rem,6.5vw,5.4rem);line-height:1;color:#fff;font-weight:900;max-width:18ch}
+.les h1,.les h2{overflow-wrap:anywhere}
 .les h2{font-family:var(--kop);font-size:clamp(1.75rem,4.4vw,3.6rem);font-weight:800;color:#fff;max-width:26ch;line-height:1.08}
 .les h3{font-size:clamp(1rem,1.8vw,1.35rem);color:var(--z);text-transform:uppercase;letter-spacing:.06em;margin:.4rem 0 .2rem}
 .les .vraag{font-family:var(--lees);font-size:clamp(1.4rem,3.2vw,2.6rem);font-style:italic;color:#ffd9a6;margin:0;max-width:40ch;line-height:1.25}
