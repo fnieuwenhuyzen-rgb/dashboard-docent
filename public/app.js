@@ -105,7 +105,7 @@ function setSync(st, txt) { syncState = st; const el = $('#sync'); el.className 
 
 /* ---------- groepen en lessen ---------- */
 function alleGroepen() { const out = []; for (const [lg, gs] of Object.entries(B.groepen)) for (const g of gs) out.push({ g, lg }); return out; }
-const leergangVan = g => S.groepLeergang[g] || (alleGroepen().find(x => x.g === g) || {}).lg || null;
+const leergangVan = g => S.groepLeergang[g] ? (B.leergangen[S.groepLeergang[g]] ? S.groepLeergang[g] : null) : (alleGroepen().find(x => x.g === g) || {}).lg || null; // een leergang die niet (meer) bestaat telt als geen leergang (bevinding 52)
 const lgNaam = lg => (B.leergangen[lg] || {}).meta ? B.leergangen[lg].meta.klas : lg;
 const SEQ = {};
 function reeks(lg) { // lessen die je in de klas geeft, in volgorde
