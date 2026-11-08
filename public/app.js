@@ -1755,7 +1755,7 @@ function werkblokKaart(s, p, A, it, nu, live) {
 function afsluitKaart(s, p, A, nu) {
   const af = teAfronden(s, p, nu); const open = A.items.filter(it => it.soort === 'taak' && !it.k.af);
   const blok = vrijeBlokken(volgendeLesdag(s, 1), 0, 6);
-  const chips = (v, min) => { const a = slotVoor(blok, min), b = slotVoor(blok, min); return [a, b].filter(Boolean).map(sl => `<button class="btn klein" data-slot="${esc(v)}|${sl.dag}|${sl.van}|${sl.tot}">${esc(slotTekst(sl))}</button>`).join(''); };
+  const chips = (v, min, dl) => { const tot = dl && dl >= volgendeLesdag(s, 1) ? /* een taak plan je niet na zijn deadline; een verlopen deadline: gewoon het eerste blok */ addD(dl, 1) : null; const a = slotVoor(blok, min, tot), b = slotVoor(blok, min, tot); return [a, b].filter(Boolean).map(sl => `<button class="btn klein" data-slot="${esc(v)}|${sl.dag}|${sl.van}|${sl.tot}">${esc(slotTekst(sl))}</button>`).join(''); };
   const rij = (t, sub, extra) => `<div class="nu-rij"><span>${esc(t)}${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</span><span class="tb">${extra}</span></div>`;
   const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
   const M = s === vandaag() ? magOpen(s) : [];
@@ -1765,8 +1765,8 @@ function afsluitKaart(s, p, A, nu) {
     <h3>${n ? 'Nog open, krijgt een moment' : 'Nog open'}</h3>
     ${magLijst(M, 5)}
     ${af.map(x => afrondRij(s, x)).join('')}
-    ${open.map(it => rij('Niet af: ' + it.k.titel, '', chips('eigen:' + it.k.id, schat(soortVan(it.k), it.k.titel, it.k.min)) + `<label class="chk"><input type="checkbox" data-taakaf="${esc(it.k.id)}"><span>klaar</span></label>`)).join('')}
-    ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min))).join('')}
+    ${open.map(it => rij('Niet af: ' + it.k.titel, '', chips('eigen:' + it.k.id, schat(soortVan(it.k), it.k.titel, it.k.min), it.k.d) + `<label class="chk"><input type="checkbox" data-taakaf="${esc(it.k.id)}"><span>klaar</span></label>`)).join('')}
+    ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min, k.d))).join('')}
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
     ${s === vandaag() && magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}
     <!--dok--><button class="btn hoofd" data-afsluiten="${s}">Dag afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
