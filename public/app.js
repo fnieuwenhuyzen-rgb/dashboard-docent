@@ -1429,6 +1429,7 @@ function afwijkingenKaart(g) {
    Frans zelf ja of later op zegt). In een pauze staat er alleen de tijd; in een rustblok niets over werk.
    Lestijd ligt vast: Lesdag stelt nooit voor om iets uit een les te halen of een les korter te maken. */
 let nuKijk = null; // gekozen blok in de partituur; anders volgt het scherm de klok
+let nuKijkVan = null, nuKijkT = 0; const KIJK_DUUR = 3 * 60000; // na drie minuten kijken volgt Nu de klok weer
 const cap = t => String(t).charAt(0).toUpperCase() + String(t).slice(1);
 const lesUren = p => (p.uren || []).filter(x => x.item && !x.uitval);
 const startDaarna = A => { const it = A.items.filter(x => !['start', 'uitval'].includes(x.soort) && x.tot > AG.werkVan).sort((x, y) => x.van - y.van)[0]; if (!it || it.x || it.soort === 'les') return ''; return `Om ${hm(it.van)} begint ${it.soort === 'vrij' ? 'je eerste werkblok' : it.soort === 'koor' ? 'het koor' : it.soort === 'pauze' ? 'je pauze' : it.soort === 'rust' ? 'een rustblok' : it.titel}.`; }; // wat er na het opstarten komt; bij een les noemt de tekst die al zelf
@@ -1460,6 +1461,7 @@ function moment(s, p, A, nu) {
 function viewNu() {
   const s = vandaag(); const nu = nuMin(); const p = planning(s, s)[s]; const A = dagItems(s, p);
   const m = moment(s, p, A, nu);
+  if (nuKijk !== nuKijkVan) { nuKijkVan = nuKijk; nuKijkT = Date.now(); } else if (nuKijk && Date.now() - nuKijkT > KIJK_DUUR) nuKijk = nuKijkVan = null; // vanzelf terug naar nu (bevinding 20)
   const kijk = nuKijk && (nuKijk === 'afsluiten' || A.items.some(it => it.key === nuKijk)) ? nuKijk : null;
   const rustig = !kijk && (m.m === 'pauze' || m.m === 'rust'); const stil = !kijk && (m.m === 'stil' || m.m === 'vrijedag');
   const geenVoorstel = rustig || stil || (!kijk && (m.m === 'start' || m.m === 'afsluiten' || m.m === 'tussen')); // vóór 8:30 en bij het afsluiten: niets erbij
