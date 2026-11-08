@@ -12,7 +12,7 @@ export async function onRequest({ request, env }) {
   let email;
   try { email = await whoAmI(request, env); } catch (e) { return json({ fout: "niet ingelogd" }, 401); }
   if (email !== String(env.EIGENAAR || env.DEV_EMAIL).toLowerCase()) return json({ fout: "geen toegang" }, 403);
-  if (request.method === "GET") return lees(new URL(request.url).searchParams, env);
+  if (request.method === "GET") { try { return await lees(new URL(request.url).searchParams, env); } catch (e) { if (e instanceof Beschadigd) return json({ fout: "beschadigd", sleutel: e.sleutel }, 500); throw e; } }
   if (request.method === "PUT") return schrijf(await request.json(), env);
   return json({ fout: "methode" }, 405);
 }
@@ -54,7 +54,9 @@ async function schrijf({ basis, gewijzigd }, env) {
   return json(m, res[0].meta.changes === 1 ? 200 : 409);
 }
 
-const rijen = L => Object.fromEntries(L.map(r => [r.sleutel, JSON.parse(r.waarde)]));
+// een rij die geen JSON is: nooit overslaan (de client zou dat als "verwijderd" lezen), maar stoppen met een eigen foutmelding
+class Beschadigd extends Error { constructor(sleutel) { super("beschadigd"); this.sleutel = sleutel; } }
+const rijen = L => Object.fromEntries(L.map(r => { try { return [r.sleutel, JSON.parse(r.waarde)]; } catch (e) { throw new Beschadigd(r.sleutel); } }));
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
 
 /* ---- Access-token controleren (zelfde aanpak als de Koorapp) ---- */

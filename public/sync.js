@@ -83,11 +83,15 @@
       if (r.type === 'opaqueredirect' || r.status === 401 || r.status === 403 || (r.status >= 300 && r.status < 400)) throw new Stop('login');
       if (r.status === 503) throw new Stop('uit');
       if (r.status === 409) return { conflict: true };
-      if (!r.ok) throw new Stop(r.status === 413 ? 'tegroot' : 'fout');
+      if (!r.ok) {
+        if (r.status === 500) { let b = null; try { b = await r.json(); } catch (e) {} if (b && b.fout === 'beschadigd') throw new Stop('kapot'); }
+        throw new Stop(r.status === 413 ? 'tegroot' : 'fout');
+      }
       return r.json();
     }
     function controleer(doc) { if (app.fouten && app.fouten(doc).length) throw new Stop('kapot'); }
-    const haalAlles = async () => { const a = await vraag(''); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc: samen(a.onderdelen) }; };
+    /* wat van de server komt wordt gecontroleerd voordat het ergens in terechtkomt: een beschadigd onderdeel (rooster als tekst) mag niet in de staat of in een basis belanden */
+    const haalAlles = async () => { const a = await vraag(''); const doc = samen(a.onderdelen); if (!leeg(doc)) controleer(doc); return { versie: a.versie, bijgewerkt: a.bijgewerkt, doc }; };
     const stuur = (basis, gewijzigd, keepalive) => { const body = JSON.stringify({ basis, gewijzigd }); return vraag('', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body, keepalive: !!keepalive && body.length < 60000 }); };
     function meld(e) {
       if (!(e instanceof Stop)) { console.warn(e); app.status('fout', 'Synchroniseren mislukt, staat op dit apparaat'); return; }

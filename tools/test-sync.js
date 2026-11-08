@@ -180,7 +180,7 @@ console.log('kapotte kopie geweigerd: goed');
   });
 
   await scenario('5a kapotte JSON in een rij op de server: niets overgenomen of verwijderd, duidelijke melding', async () => {
-    const [a] = await paar(); sql(d => d.exec("UPDATE onderdeel SET waarde = '{kapot' WHERE sleutel = 'taken'"));
+    const [a] = await paar(); sql(d => d.exec("UPDATE onderdeel SET waarde = '{kapot' WHERE sleutel = 'taken'; UPDATE meta SET versie = versie + 1"));
     a.staat.beoord.toetsen['m1|g1'].ll.l0.s.c1 = 1; const lok = snap(a.staat);
     await a.sync.nu(); assert.deepStrictEqual(a.staat, lok, 'lokaal ongewijzigd'); assert.ok(/besch|kapot/i.test(a.tekst), 'melding: ' + a.tekst);
     assert.ok(serverRijen().find(r => r.sleutel === 'taken').waarde === '{kapot', 'server niet overschreven');
