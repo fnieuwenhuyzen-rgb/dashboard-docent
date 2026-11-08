@@ -287,11 +287,13 @@ function zOverzicht() { // in Instellingen: vak- en groepscodes, en alles uit Ze
 function zUren(s) {
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return null;
   const dag = dOf(s).getDay();
-  return ZC.events.filter(e => e.d === s && zLes(e)).map(e => {
+  const per = new Map(); // Zermelo kan dezelfde les twee keer geven (twee roosterversies): dezelfde klas op dezelfde tijd telt één keer, een les die niet vervalt gaat voor
+  ZC.events.filter(e => e.d === s && zLes(e)).map(e => {
     const g = zGroep(e) || e.summary;
     const vast = S.rooster.find(u => +u.dag === dag && u.start === e.start && u.groep === g);
     return { id: vast ? vast.id : `z-${e.start}-${g}`, dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc || (vast && vast.lokaal) || '', zermelo: true, vervallen: e.vervallen, reden: e.reden || '', anderLokaal: !!(vast && e.loc && vast.lokaal && e.loc !== vast.lokaal) };
-  });
+  }).forEach(u => { const k = u.start + '|' + u.groep; const o = per.get(k); if (!o || (o.vervallen && !u.vervallen)) per.set(k, u); });
+  return [...per.values()];
 }
 async function zOphalen(melden) {
   const tok = S.zermeloToken; const px = zProxy();
