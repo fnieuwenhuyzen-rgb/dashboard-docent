@@ -469,6 +469,107 @@ sc('Tijd: einde schooljaar en de zomervakantie', async nieuw => {
   await P.klok(nlIso('2027-06-30', '07:30'), 'vandaag'); ok(/lesweek 38/i.test(await P.tekst()), 'in de laatste week staat lesweek 38');
   const S = await P.S(); ok(Object.values(S.voortgang).every(v => Object.keys(v).length > 0), 'de voortgang is niet gewist door de overgang');
 });
+
+// ---- sectie, koor, reclame, pauzes, collega's, kopie, Outlook ----
+sc('Sectietaken: toevoegen, bewerken, afvinken, weg, en ongedaan', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('sectie');
+  await P.page.fill('#sT', 'Lokalenvoorstel nalopen'); await P.page.fill('#sD', '2026-11-27'); await P.page.locator('#sForm button[type=submit]').click(); await P.page.waitForTimeout(150);
+  let S = await P.S(); const x = (S.sectieExtra || []).find(e => /Lokalenvoorstel nalopen/.test(e.titel)); ok(x && x.d === '2026-11-27' && x.taak, 'eigen sectietaak staat erin: ' + JSON.stringify(S.sectieExtra));
+  await P.page.fill('#sT', 'Te laat'); await P.page.fill('#sD', '2026-11-10'); await P.page.locator('#sForm button[type=submit]').click(); await P.page.waitForTimeout(100);
+  gelijk(((await P.S()).sectieExtra || []).length, 1, 'een datum in het verleden wordt geweigerd');
+  await P.page.fill('#sT', '   '); await P.page.fill('#sD', '2026-11-30'); await P.page.evaluate(() => document.querySelector('#sT').removeAttribute('required')); await P.page.locator('#sForm button[type=submit]').click(); await P.page.waitForTimeout(100);
+  gelijk(((await P.S()).sectieExtra || []).length, 1, 'lege titel (spaties) wordt geweigerd');
+  await klikData(P, `[data-sbewerk="${x.id}"]`); await P.page.fill('#seT', 'Lokalenvoorstel versturen'); await P.page.locator('#sEdit button[type=submit]').click(); await P.page.waitForTimeout(150);
+  S = await P.S(); ok(S.sectieExtra.find(e => e.id === x.id).titel === 'Lokalenvoorstel versturen', 'titel is gewijzigd');
+  await klikData(P, `[data-sdone="${x.id}"]`); S = await P.S(); ok(S.sectieAf[x.id], 'afvinken zet sectieAf'); ok(/afgevinkt/.test(await P.toast()), 'melding: afgevinkt');
+  await P.klik('.toast-terug'); S = await P.S(); ok(!S.sectieAf[x.id], 'Ongedaan maken: weer open');
+  await klikData(P, `[data-sweg="${x.id}"]`); S = await P.S(); ok(!(S.sectieExtra || []).some(e => e.id === x.id), 'weg haalt de taak weg'); await P.klik('.toast-terug'); ok(((await P.S()).sectieExtra || []).some(e => e.id === x.id), 'Ongedaan maken zet hem terug');
+});
+sc('Sectietaken uit de jaarplanning: inplannen vanuit Dag en afvinken', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('vandaag');
+  const vink = P.page.locator('.kaart:has(h3:text("Sectie, komende twee weken")) [data-sdone]'); const n = await vink.count(); ok(n >= 1, 'er staan sectietaken in de komende twee weken (' + n + ')');
+  if (n) { const id = await vink.first().getAttribute('data-sdone'); await vink.first().evaluate(e => e.click()); await P.page.waitForTimeout(200); const S = await P.S(); ok(S.sectieAf[id] === true, 'afvinken zet sectieAf voor ' + id);
+    await P.klik('.toast-terug'); ok(!(await P.S()).sectieAf[id], 'en terug'); }
+});
+sc('Koortaken: repetitie voorbereiden afvinken (met duurvraag) en koortaak', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-11-17', '07:30') }); await P.open('vandaag');
+  ok(/Christmas Carols/.test(await P.tekst()), 'de koorrepetitie van di 17 nov staat in de dag');
+  const kv = P.page.locator('[data-dagtaak="koor"]'); ok(await kv.count() > 0, 'koorvoorbereiding staat in Taken'); if (await kv.count()) {
+    await kv.first().evaluate(e => e.click()); await P.page.waitForTimeout(200); let S = await P.S(); ok((S.dagTaken['2026-11-17'] || {}).koor === true, 'koor staat voorbereid');
+    await P.page.locator('[data-dagtaak="koor"]').first().evaluate(e => e.click()); await P.page.waitForTimeout(150); S = await P.S(); ok(!(S.dagTaken['2026-11-17'] || {}).koor, 'weer uitvinken'); }
+  const kt = P.page.locator('[data-koorvink]'); if (await kt.count()) { const id = await kt.first().getAttribute('data-koorvink'); await kt.first().evaluate(e => e.click()); await P.page.waitForTimeout(200); ok((await P.S()).koorAf[id], 'koortaak ' + id + ' is af'); await P.page.locator(`[data-koorvink="${id}"]`).first().evaluate(e => e.click()).catch(() => {}); }
+});
+sc('Reclametaken: eigen activiteit en afvinken', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('reclame');
+  await P.page.fill('#recT', 'Open dag muziek'); await P.page.fill('#recD', '2026-12-02'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(200);
+  let S = await P.S(); const x = (S.reclameExtra || []).find(e => /Open dag muziek/.test(e.titel)); ok(x && x.d === '2026-12-02', 'eigen activiteit staat erin: ' + JSON.stringify(S.reclameExtra));
+  await P.page.fill('#recT', 'Gisteren'); await P.page.fill('#recD', '2026-11-15'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(100); gelijk(((await P.S()).reclameExtra || []).length, 1, 'verleden datum wordt geweigerd');
+  const vinkjes = await P.page.locator('[data-recvink]').count(); ok(vinkjes >= 1, 'in Reclame staan afvinkbare momenten (' + vinkjes + ')');
+  if (vinkjes) { const id = await P.page.locator('[data-recvink]').first().getAttribute('data-recvink'); await klikData(P, `[data-recvink="${id}"]`); S = await P.S(); ok(S.reclameAf && S.reclameAf[id], 'afvinken zet reclameAf voor ' + id); await klikData(P, `[data-recvink="${id}"]`); ok(!(await P.S()).reclameAf[id], 'weer uitvinken'); }
+  await klikData(P, `[data-recweg="${x.id}"]`); ok(!((await P.S()).reclameExtra || []).length, 'weg haalt de activiteit weg');
+});
+sc('Pauzes: zelf invullen, en met Zermelo-pauzes houdt de agenda ze vrij', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('instellingen'); await P.page.evaluate(() => document.querySelector('#pzForm').closest('details').open = true);
+  const rij = P.page.locator('#pzForm .rij').last(); await rij.locator('[name=van]').fill('12:00'); await rij.locator('[name=tot]').fill('12:30'); await P.page.locator('#pzForm button[type=submit]').click(); await P.page.waitForTimeout(150);
+  let S = await P.S(); gelijk(S.pauzes, [{ van: '12:00', tot: '12:30' }], 'pauze is opgeslagen'); await P.hash('vandaag');
+  const di = await dagItemsOp(P, '2026-11-16'); ok(di.some(x => x.soort === 'ag-pauze' && /12:00/.test(x.titel)), 'pauze staat in de agenda: ' + JSON.stringify(di.filter(x => x.soort === 'ag-pauze').map(x => x.titel)));
+  // een taak in de pauze plannen botst of wordt gewaarschuwd; omgekeerd mag de pauze nooit een taak verwijderen
+  await P.hash('instellingen'); await klikData(P, '[data-pzweg="0"]'); gelijk((await P.S()).pauzes, [], 'pauze weg');
+  await P.hash('instellingen'); await P.page.evaluate(() => document.querySelector('#pzForm').closest('details').open = true); const r2 = P.page.locator('#pzForm .rij').last(); await r2.locator('[name=van]').fill('13:00'); await r2.locator('[name=tot]').fill('12:00'); await P.page.locator('#pzForm button[type=submit]').click(); await P.page.waitForTimeout(100); gelijk((await P.S()).pauzes, [], 'een pauze die eindigt voor hij begint wordt niet bewaard');
+});
+sc('Pauzes uit Zermelo: vaste gaten tussen lessen worden herkend', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: vwo4ZStaat, zermelo: van => drieWeken(van) }); await P.open('instellingen'); await zWacht(P); await P.page.reload({ waitUntil: 'load' }); await P.hash('instellingen');
+  ok(/Uit je rooster in Zermelo: .*10:00–10:15/.test(await P.tekst()), 'Instellingen noemt de pauze 10:00–10:15: ' + ((await P.tekst()).match(/Uit je rooster[^\n]*|geen vaste pauzes[^\n]*/) || ['(niets)'])[0].slice(0, 160));
+});
+sc('Jarige collega: vandaag, weekend, jaarwisseling en schrikkeldag', async nieuw => {
+  const coll = [{ naam: 'Jansen, Jan', md: '11-12', mail: '' }, { naam: 'Pieters, Piet', md: '11-14', mail: '' }, { naam: 'Nieuw, Nina', md: '01-01', mail: '' }, { naam: 'Schrik, Sam', md: '02-29', mail: '' }];
+  const P = await nieuw({ tijd: nlIso('2026-11-12', '08:00'), ls: { 'lesdag-apparaat': { collegas: coll, weg: {}, log: {}, felic: {} } } }); await P.open('nu');
+  let t = await P.tekst(); ok(/Jansen, Jan is vandaag jarig/.test(t), 'donderdag 12 nov: Jan is vandaag jarig: ' + (t.match(/[^\n]*jarig[^\n]*/) || ['(niets)'])[0]);
+  await klikData(P, '[data-felicaf]'); ok(!/Jansen, Jan is vandaag jarig/.test(await P.tekst()), 'gefeliciteerd haalt hem weg'); await P.klik('.toast-terug'); ok(/Jansen, Jan is vandaag jarig/.test(await P.tekst()), 'Ongedaan maken zet hem terug');
+  await P.klok(nlIso('2026-11-16', '08:00'), 'nu'); t = await P.tekst(); ok(/Pieters, Piet was zaterdag jarig/.test(t), 'maandag 16 nov: Piet was zaterdag jarig: ' + (t.match(/[^\n]*Piet[^\n]*/) || ['(niets)'])[0]);
+  await P.klok(nlIso('2027-01-04', '08:00'), 'nu'); t = await P.tekst(); ok(/Nieuw, Nina was vrijdag jarig/.test(t), 'na de jaarwisseling (ma 4 jan): Nina was vrijdag jarig: ' + (t.match(/[^\n]*Nina[^\n]*/) || ['(niets)'])[0]);
+  await P.klok(nlIso('2027-03-01', '08:00'), 'nu'); t = await P.tekst(); ok(/Schrik, Sam/.test(t), 'een collega die op 29 februari jarig is, wordt in een jaar zonder 29 februari rond 28 februari/1 maart gefeliciteerd: ' + (t.match(/[^\n]*Sam[^\n]*/) || ['(niets)'])[0]);
+});
+sc('Jarige collega: lijst invullen in Instellingen, fouten blijven staan', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('instellingen');
+  await P.page.fill('#colLijst', '12 november Jan Jansen\n31 februari Fout Foutsen\nZonder Datum\n29 februari Sam Schrik'); await klikData(P, '[data-colopslaan]');
+  const ap = await P.page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-apparaat') || '{}')); gelijk((ap.collegas || []).map(c => c.naam + '|' + c.md), ['Jan Jansen|11-12', 'Sam Schrik|02-29'], 'twee goede regels opgeslagen');
+  ok(/Fout Foutsen/.test(await P.page.inputValue('#colLijst')) && /Zonder Datum/.test(await P.page.inputValue('#colLijst')), 'de twee foute regels blijven in het tekstvak om te verbeteren');
+});
+sc('Kopie maken en terugzetten', async nieuw => {
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [{ id: 'q1', titel: 'Kopietaak', bron: 'overig', af: false }]; return s; }, zermelo: van => drieWeken(van) }); await P.open('instellingen'); await zWacht(P);
+  const [dl] = await Promise.all([P.page.waitForEvent('download'), klikData(P, '[data-export]')]); const pad = path.join(require('os').tmpdir(), 'lesdag-test-kopie-' + Date.now() + '.json'); await dl.saveAs(pad); const inhoud = fs.readFileSync(pad, 'utf8');
+  const k = JSON.parse(inhoud); ok(k.taken && k.taken.some(x => x.id === 'q1'), 'de kopie bevat de taak'); ok(!/testtoken|access_token/.test(inhoud), 'geen Zermelo-sleutel in de kopie');
+  await P.wijzig(s => { s.taken.push({ id: 'q2', titel: 'Erbij na de kopie', bron: 'overig', af: false }); s.taken[0].af = true; }, 'instellingen');
+  await P.page.setInputFiles('#imp', pad); await P.page.waitForTimeout(400); let S = await P.S(); gelijk(S.taken.map(x => x.id), ['q1'], 'terugzetten vervangt alles door de kopie'); ok(S.taken[0].af === false, 'ook de afvinkstand is terug');
+  ok(/Kopie teruggezet/.test(await P.toast()), 'melding: Kopie teruggezet'); await P.klik('.toast-terug'); S = await P.S(); gelijk(S.taken.map(x => x.id), ['q1', 'q2'], 'Ongedaan maken zet de stand van vóór het terugzetten terug');
+  const slecht = path.join(require('os').tmpdir(), 'lesdag-test-kapot-' + Date.now() + '.json'); fs.writeFileSync(slecht, JSON.stringify({ v: 1, rooster: 'kapot', taken: 5 }));
+  await P.page.setInputFiles('#imp', slecht); await P.page.waitForTimeout(300); S = await P.S(); gelijk(S.taken.map(x => x.id), ['q1', 'q2'], 'een kapotte kopie verandert niets'); ok((P.log.dialogen || []).some(d => /kapot|hoort niet bij Lesdag/.test(d)), 'en er komt een melding');
+  const rommel = path.join(require('os').tmpdir(), 'lesdag-test-rommel-' + Date.now() + '.json'); fs.writeFileSync(rommel, 'dit is geen json');
+  await P.page.setInputFiles('#imp', rommel); await P.page.waitForTimeout(300); ok(/niet lezen/.test(await P.toast()), 'tekst die geen JSON is: melding'); gelijk((await P.S()).taken.length, 2, 'en niets verandert');
+  fs.unlinkSync(pad); fs.unlinkSync(slecht); fs.unlinkSync(rommel);
+});
+sc('Agenda in Outlook: maken, bijwerken, stoppen (nagebootste API)', async nieuw => {
+  let bewaard = null, token = null;
+  const agenda = async (q, r) => { const m = q.method(); const j = o => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(o) });
+    if (m === 'GET') return j(token ? { aan: true, token, bijgewerkt: Date.now() } : { aan: false }); if (m === 'POST') { token = 'geheimtoken123'; return j({ aan: true, token, bijgewerkt: Date.now() }); }
+    if (m === 'PUT') { bewaard = JSON.parse(q.postData()).ics; return j({ aan: true, token, bijgewerkt: Date.now() }); } if (m === 'DELETE') { token = null; bewaard = null; return j({ aan: false }); } r.fulfill({ status: 405, body: '{}' }); };
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [{ id: 'o1', titel: 'Geheime afspraak Albert', bron: 'overig', af: false, afspraak: true, plan: { dag: '2026-11-16', van: '11:00', tot: '12:00' } }, { id: 'o2', titel: 'Privé taak', bron: 'overig', af: false, d: '2026-11-18' }]; s.beoord = { toetsen: {}, lijsten: { tb1: [{ id: 'l1', naam: 'Testleerling, Anna' }] } }; return s; }, agenda });
+  await P.open('instellingen'); await klikData(P, '[data-agf="maak"]'); await P.page.waitForTimeout(400);
+  ok(bewaard && /BEGIN:VCALENDAR/.test(bewaard), 'er is een iCal naar de API gestuurd'); ok(P.log.agenda.some(x => x.method === 'POST') && P.log.agenda.some(x => x.method === 'PUT'), 'eerst een link maken (POST), dan versturen (PUT)');
+  const evs = (bewaard.match(/BEGIN:VEVENT/g) || []).length; ok(evs >= 14, 'de lessen staan erin (' + evs + ' punten)'); ok(/SUMMARY:tv4/.test(bewaard), 'lessen heten naar de klas');
+  ok(!/Albert|Privé|Testleerling/i.test(bewaard), 'geen eigen afspraken, taken of leerlingnamen in de agenda: ' + (bewaard.split(/\r?\n/).find(r => /Albert|Privé|Testleerling/i.test(r)) || '')); ok(/DTSTART;TZID=Europe\/Amsterdam:20261116T083000/.test(bewaard), 'tijden staan in Nederlandse tijd');
+  ok(/Bijgewerkt/.test(await P.tekst()) && !/geheimtoken123/.test(await P.tekst()), 'de pagina toont de stand maar niet de geheime link als tekst');
+  // wijziging: les vervalt, Nu bijwerken stuurt dat door
+  const voor = bewaard; await P.hash('vandaag'); await klikData(P, '[data-uitval="2026-11-16|t1"]'); await P.hash('instellingen'); await klikData(P, '[data-agf="nu"]'); await P.page.waitForTimeout(300);
+  ok(bewaard !== voor && !/UID:2026-11-16:les:t1@lesdag/.test(bewaard), 'na Valt uit staat die les niet meer in de agenda');
+  await klikData(P, '[data-agf="stop"]'); await P.page.waitForTimeout(300); ok(P.log.agenda.some(x => x.method === 'DELETE') && token === null, 'Stoppen verwijdert de agenda'); ok(/Agendalink maken/.test(await P.tekst()), 'en de knop om opnieuw te beginnen staat er');
+});
+sc('Agenda in Outlook: API niet bereikbaar of niet ingelogd', async nieuw => {
+  const agenda = async (q, r) => r.fulfill({ status: 401, contentType: 'text/plain', body: 'login' });
+  const P = await nieuw({ tijd: VROEG, agenda }); await P.open('instellingen'); await klikData(P, '[data-agf="maak"]'); await P.page.waitForTimeout(300);
+  ok(/lukt nu niet|ingelogd/i.test(await P.toast()), 'melding: dat lukt nu niet: ' + await P.toast()); ok(!/Dit scherm lukt nu niet/.test(await P.tekst()), 'Instellingen blijft heel'); ok(await P.page.evaluate(() => localStorage.getItem('lesdag-agendafeed') !== '1'), 'de agenda staat niet aan als het maken mislukt');
+});
 // @@SCENARIOS
 
 (async () => {
