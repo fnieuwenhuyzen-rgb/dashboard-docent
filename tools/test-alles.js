@@ -14,9 +14,10 @@ const STAPPEN = [
   ['Lesklok', 'test-lesklok.js', []],
   ['Agendafeed', 'test-agendafeed.js', []],
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
-  ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
+  ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : a.includes('--snel') ? ['--snel'] : []],
   ['Foutlogboek', 'test-logboek.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
   ['Nieuwe versie (service worker)', 'test-nieuwe-versie.js', []],
+  ['Automatische kopie', 'test-autokopie.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
 ];
 const uitslag = []; const t0 = Date.now();

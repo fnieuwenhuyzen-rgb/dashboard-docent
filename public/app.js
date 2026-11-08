@@ -547,6 +547,7 @@ function render() {
   if (concert) bmCsMerk();
   if (klasScroll && $('#bmLijst')) { klasScroll = false; setTimeout(() => { const v = $('#bmLijst'); if (v) { v.scrollIntoView({ block: 'center' }); v.focus(); } }); }
   if (NW) nwGhost();
+  if (route.naam === 'instellingen') autoKopieVul();
   if (route.naam === 'reclame') { recBeelden(); if (recFocus) { const el = document.getElementById('rec-' + recVeilig(recFocus)); if (el) el.scrollIntoView({ block: 'start' }); recFocus = ''; } }
 }
 /* meldingen onderaan. Na een handeling staat er acht seconden lang Ongedaan maken, in plaats van vooraf "Weet je het zeker?". terug: een foto() of een eigen functie */
@@ -565,12 +566,31 @@ function kopieOmvang(d) { // wat er in een kopie zit, in gewone woorden
 }
 async function kopieTerug(file) {
   let d; try { d = JSON.parse(await file.text()); } catch (e) { toast('Dit bestand kan ik niet lezen. Kies een kopie die Lesdag heeft gedownload.'); return; }
+  return kopieToepas(d);
+}
+function kopieToepas(d) { // dezelfde controle en vraag voor een gedownload bestand en voor een automatische kopie
   const fout = staatFouten(d);
   if (fout.length) { alert(`Deze kopie zet ik niet terug: hij is kapot of hoort niet bij Lesdag.\n\nNiet in orde: ${fout.join(', ')}.\n\nJe gegevens op dit apparaat blijven zoals ze zijn.`); return; }
   const wanneer = d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum';
   if (!confirm(`Kopie van ${wanneer} terugzetten?\n\nDaarin: ${kopieOmvang(d)}.\nNu op dit apparaat: ${kopieOmvang(S)}.\n\nAlles op dit apparaat wordt vervangen${SY && SY.aan() ? ', en via synchroniseren ook op je andere apparaten' : ''}.`)) return;
   const terug = foto(); try { localStorage.setItem(VOOR_KOPIE, JSON.stringify({ tijd: Date.now(), foto: terug })); } catch (e) {}
   S = staatIn(d); bewaar(); toast('Kopie teruggezet', terug);
+}
+/* automatische kopie (kopie.js): één per dag in IndexedDB, de laatste veertien; terugzetten via kopieToepas */
+function autoKopieMaak() {
+  if (!window.AUTOKOPIE || !S || !S.updated || staatFouten(S).length) return; // nooit een kapotte of nog lege staat bewaren
+  AUTOKOPIE.maak(vandaag(), JSON.stringify(S)).then(nieuw => { if (nieuw && route.naam === 'instellingen') autoKopieVul(); }).catch(e => { if (window.LOGBOEK) LOGBOEK.fout(e, 'autokopie'); });
+}
+async function autoKopieVul() {
+  if (!$('#autokopielijst') || !window.AUTOKOPIE) return;
+  let t; try { const L = await AUTOKOPIE.lijst(); t = L.length ? '<ul class="akl" style="list-style:none;padding:0;margin:.3rem 0 0">' + L.map(x => `<li style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;padding:.25rem 0"><span>${esc(fmtLang(x.dag))} <span class="sub">(${Math.max(1, Math.round(x.grootte / 1024))} kB)</span></span><button class="btn klein" data-akterug="${esc(x.dag)}">Terugzetten</button></li>`).join('') + '</ul>' : 'Er is nog geen kopie. Morgen staat de eerste er.'; }
+  catch (e) { t = 'Automatische kopieën zijn op dit apparaat niet beschikbaar (privévenster of opslag geblokkeerd).'; }
+  const el = $('#autokopielijst'); if (el) el.innerHTML = t;
+}
+async function autoKopieTerug(dag) {
+  let d = null; try { d = await AUTOKOPIE.haal(dag); } catch (e) {}
+  if (!d) { toast('Die kopie kan ik niet lezen.'); return; }
+  kopieToepas(d);
 }
 /* foutlogboek (logboek.js): alleen op dit apparaat, zonder leerlinggegevens en tokens; hier alleen de kaart in Instellingen */
 function logboekKaart() {
@@ -2659,6 +2679,7 @@ function viewInstellingen() {
     ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   ${logboekKaart()}
+  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. De kopie is de stand van het begin van die dag. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
 
@@ -3035,6 +3056,7 @@ document.addEventListener('click', async e => {
   if (D.zapiweg != null) { try { localStorage.removeItem(Z_API); } catch (e) {} if (!S.zermeloToken) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); if (S.zermeloToken) await zOphalen(false); return; }
   if (D.zovernemen != null) { const terug = foto(); roosterUitZermelo(); bewaar(); toast('Rooster overgenomen uit Zermelo', terug); return; }
   if (D.nieuweversie != null) { if (!LES) location.reload(); return; }
+  if (D.akterug != null) { autoKopieTerug(D.akterug); return; }
   if (D.logkopie != null) { logKopieer(); return; }
   if (D.logwis != null) { if (confirm('Het foutlogboek op dit apparaat wissen?')) { LOGBOEK.wis(); render(); } return; }
   if (D.export != null) { const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lesdag-' + vandaag() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return; }
@@ -3699,6 +3721,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   try { BM = await laadJson('beoordeling'); } catch (e) { BM = []; }
   try { RC = await laadJson('reclame'); } catch (e) { RC = null; }
   herstelStaat();
+  autoKopieMaak(); document.addEventListener('visibilitychange', () => { if (!document.hidden) autoKopieMaak(); }); setInterval(autoKopieMaak, 3600000);
   LESKLOK.start({ uren: lesklokUren, vandaag, esc, waak, lesOpen: () => !!LES, route: () => route.naam, klaar: () => !!B,
     lesTijd: () => LES && LES.s === vandaag() ? { groep: LES.x.u.groep, van: minuten(LES.x.u.start), tot: minuten(LES.x.u.eind) } : null });
   if (route.naam === 'bord') { // dit venster is het digibord

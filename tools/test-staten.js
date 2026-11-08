@@ -1,4 +1,4 @@
-// node tools/test-staten.js [--zonder-browser] : gegevensversies. Elke staat die binnenkomt gaat door STAAT.migreer (public/staat.js).
+// node tools/test-staten.js [--zonder-browser] [--snel] : gegevensversies. Elke staat die binnenkomt gaat door STAAT.migreer (public/staat.js).
 // Deel 1 (Node): staten uit elk tijdperk van app.js (tools/staten/oud-*.json, gemaakt met maak.js uit de git-geschiedenis), onvolledige en vervuilde staten.
 // Deel 2 (browser): dezelfde staten in de echte app, alle schermen: geen "Dit scherm lukt nu niet", geen uitzondering.
 const fs = require('fs'), path = require('path'), vm = require('vm');
@@ -75,6 +75,7 @@ async function browser() {
     if (k !== 'rooster') { const s = kloon(HUIDIG); delete s[k]; staten.push(['zonder ' + k, s]); }
   }
   staten.push(['onvolledig', { v: 1 }], ['nieuwer schema', Object.assign(kloon(HUIDIG), { schema: 99, nieuwVeld: { a: 1 } })]);
+  if (process.argv.includes('--snel')) { const kort = staten.filter((_, q) => q % 6 === 0 || q < OUD.length + 1); staten.length = 0; staten.push(...kort); } // --snel: de tijdperken en elke zesde variant
   for (const [naam, s] of staten) {
     const ctx = await T.browser.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block' }); await H.sluis(ctx, T.basis);
     const st = Object.assign({ magVanaf: '2026-08-01' }, s); if (!Array.isArray(st.rooster) || !st.rooster.length) st.rooster = H.STAAT.rooster; if (!isObj(st.groepLeergang) || !Object.keys(st.groepLeergang).length) st.groepLeergang = H.STAAT.groepLeergang;
