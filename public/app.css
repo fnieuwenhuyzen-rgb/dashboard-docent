@@ -998,3 +998,8 @@ a.jr-naam:hover{color:var(--paars)}
 @media (pointer:coarse){.nl-r span{white-space:normal;overflow:visible;overflow-wrap:anywhere}.nl-r{align-items:start}}
 @media (min-width:900px){.nu-scherm{padding-bottom:7.5rem}}
 .ens-dag{flex:1 1 12rem}.ens-kop .nb-stap{margin-left:auto}
+/* toetsenbord: een gesloten paneel is niet bereikbaar; het paneel zelf toont geen ring als het de focus krijgt */
+.drawer:not(.open){visibility:hidden;transition:transform .2s,visibility 0s .2s}
+.drawer:focus,.les:focus{outline:none}
+html{scroll-padding-top:6rem;scroll-padding-bottom:9.5rem}
+input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid var(--paars);outline-offset:2px}

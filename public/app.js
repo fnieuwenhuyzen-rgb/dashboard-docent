@@ -14,7 +14,7 @@ const BENODIGD = [[/keyboard|piano|toetsenbord/i, 'Keyboards'], [/gitaar|ukelele
 
 let B = null;               // basisgegevens
 let S = null;               // eigen staat
-let route = { naam: 'vandaag', arg: [] };
+let route = { naam: 'vandaag', arg: [] }; let focusRoute = null;
 let syncState = 'lokaal';
 let remoteT = null;
 let SY = null;               // synchronisatie tussen apparaten, zie syncStart
@@ -534,6 +534,7 @@ const ICO = { beoordelen: SVG('<path d="M4.5 7l1.8 1.8L9.5 5.5M4.5 16l1.8 1.8 3.
   reclame: SVG('<path d="M4 10v4l11 4V6z"/><path d="M15 9.5a3 3 0 0 1 0 5M7 15l1 4h3l-1-3"/>'), instellingen: SVG('<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>'), zoek: SVG('<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>') };
 const ROUTES = [['nu', 'Nu'], ['vandaag', 'Dag'], ['week', 'Week'], ['beoordelen', 'Beoordelen'], ['jaar', 'Jaar'], ['rooster', 'Rooster'], ['sectie', 'Sectie'], ['team', 'Team'], ['reclame', 'Reclame'], ['instellingen', 'Instellingen']];
 function render() {
+  const fk = focusSleutel(document.activeElement), routeWissel = route.naam !== focusRoute; focusRoute = route.naam;
   document.body.classList.toggle('kompasvenster', route.naam === 'kompas');
   const concert = bmConcertAan(); document.body.classList.toggle('bm-concert', concert);
   const liggen = blijftLiggen().length; const recNu = reclameOpen(vandaag()).length;
@@ -542,6 +543,7 @@ function render() {
   const f = { nu: viewNu, regie: viewRegie, vandaag: viewVandaag, week: viewWeek, jaar: viewJaar, rooster: viewRooster, sectie: viewSectie, team: viewTeam, reclame: viewReclame, instellingen: viewInstellingen, beoordelen: viewBeoordelen, kompas: viewKompas }[route.naam] || viewNu;
   try { $('#main').innerHTML = f(); }
   catch (e) { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Dit scherm lukt nu niet</h2><p class="lead">Er ging iets mis bij het tekenen: ${esc(e && e.message)}. De andere onderdelen in het menu werken nog.</p></div>`; } // nooit een leeg scherm
+  if (fk && !LES) { if (fk.w === '#main' && routeWissel) $('#main').focus({ preventScroll: true }); else if (!focusHerstel(fk)) $('#main').focus({ preventScroll: true }); } // focus blijft waar de gebruiker was; bij een ander scherm begint Tab bovenaan de inhoud
   if (concert) bmCsMerk();
   if (klasScroll && $('#bmLijst')) { klasScroll = false; setTimeout(() => { const v = $('#bmLijst'); if (v) { v.scrollIntoView({ block: 'center' }); v.focus(); } }); }
   if (NW) nwGhost();
@@ -1292,7 +1294,7 @@ function taakBron(key) {
 }
 const nootVooruit = n => { const m = /^koor:koor-voor-.*-([^-]+)$/.exec(n); return m ? 'koor-voor:' + m[1] : n; }; // vaste koortaak: feedforward gaat mee naar het volgende concert
 const nootVan = n => ({ fb: ((S.taakNoot || {})[n] || {}).fb || '', ff: ((S.taakNoot || {})[nootVooruit(n)] || {}).ff || '' });
-function taakTitel(key, titel, chk) { const b = taakBron(key); const n = b ? nootVan(b.noot) : {}; return `<span class="chk">${chk}<button type="button" class="taak-open" data-taakopen="${esc(key)}">${esc(titel)}${n.fb || n.ff ? ' <small>· notitie</small>' : ''}</button></span>`; }
+function taakTitel(key, titel, chk) { if (!/aria-label/.test(chk)) chk = chk.replace("<input ", `<input aria-label="Klaar: ${esc(titel)}" `); const b = taakBron(key); const n = b ? nootVan(b.noot) : {}; return `<span class="chk">${chk}<button type="button" class="taak-open" data-taakopen="${esc(key)}">${esc(titel)}${n.fb || n.ff ? ' <small>· notitie</small>' : ''}</button></span>`; }
 function openTaak(key) {
   const b = taakBron(key); if (!b) return; const d = $('#drawer'); const n = nootVan(b.noot); const ligt = !b.af && blijftLiggen().some(x => x.key === key);
   d.innerHTML = `<div class="dkop"><h2>Taak</h2><button class="btn" data-sluit="">Sluiten</button></div>
@@ -1338,7 +1340,7 @@ function takenBlok(s, p) {
   if (sect.length) h += `<h3>Sectie, komende twee weken</h3>` + sect.map(i => rij({ open: 'sec:' + i.id, titel: i.titel, d: i.d, bron: 'sectie', af: false }, `<input type="checkbox" data-sdone="${esc(i.id)}">`)).join('');
   if (afspr.length) h += '<h3>Afspraken</h3>' + afspr.map(k => rij(k, '', `<button class="btn klein" data-taakbewerk="${esc(k.id)}">Aanpassen</button>`)).join('');
   h += `<h3>Eigen taken</h3>` + (eigen.length ? eigen.map(k => rij(Object.assign({ open: 'eigen:' + k.id }, k), `<input type="checkbox" data-taakaf="${esc(k.id)}" ${k.af ? 'checked' : ''}>`, `<button class="btn klein" data-taakbewerk="${esc(k.id)}">Aanpassen</button><button class="btn klein" data-taakweg="${esc(k.id)}" title="verwijderen">×</button>`)).join('') : '<p class="leeg">Nog geen eigen taken. Zet hier wat uit de mail, het koor, SLC of de sectie op je komt.</p>');
-  h += `<form id="tAdd" class="rij taakform"><input id="tT" placeholder="Nieuwe taak" required><select id="tB">${Object.entries(BRON).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select><select id="tR" aria-label="Rol">${rolOpties('', rolStandaard('sectie'))}</select><select id="tP" aria-label="Potje">${potOpties('', '')}</select><input id="tD" type="date"><button class="btn" type="submit">Toevoegen</button></form></div>`;
+  h += `<form id="tAdd" class="rij taakform"><input id="tT" placeholder="Nieuwe taak" required><select id="tB">${Object.entries(BRON).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select><select id="tR" aria-label="Rol">${rolOpties('', rolStandaard('sectie'))}</select><select id="tP" aria-label="Potje">${potOpties('', '')}</select><input id="tD" type="date" aria-label="Datum van de taak"><button class="btn" type="submit">Toevoegen</button></form></div>`;
   return h;
 }
 function volgendeLesdag(s, stap) { let d = s; for (let i = 0; i < 30; i++) { d = addD(d, stap); const r = vrijReden(d); if (r !== 'weekend') return d; } return addD(s, stap); }
@@ -2802,6 +2804,7 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   if (!bord && !NOT) notitiesLaad().then(() => notVul());
 }
 function toonSlide() {
+  const fk = focusSleutel(document.activeElement); // knop blijft bereikbaar met het toetsenbord na elke dia
   const P = LES; const sl = P.slides[P.i]; stopTimer();
   const body = sl.k === 'af' ? (P.bord ? `<p class="eyebrow">${esc(P.x.u.groep)}</p><h1>Tot de volgende les</h1>` : afrondenHtml()) : sl.h;
   const soort = sl.soort || sl.k; const kl = LESMODUS.SOORT[sl.soort];
@@ -2820,6 +2823,7 @@ function toonSlide() {
   <div class="notities ${P.notities && notInh ? 'open' : ''}" id="notities">${notInh}</div>
   <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
   if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
+  if (fk && fk.w === '#les' && !focusHerstel(fk)) $('#les').focus({ preventScroll: true });
   bordZeg(); plekBewaar();
   LESKLOK.tik(); // de band en de resttijd staan meteen goed op de nieuwe dia
 }
@@ -3110,6 +3114,30 @@ function kiesBestand(i) {
   toast('Toegevoegd aan materiaal');
 }
 $('#scrim').addEventListener('click', sluit);
+/* Toetsenbord (8-11): de focus gaat een paneel in en komt na het sluiten terug bij de knop waarmee het openging; na het opnieuw tekenen blijft de focus op dezelfde plek. */
+let LAATSTE = null; // laatste focus buiten een paneel: { el, k }
+function focusSig(x) { return x.tagName + '|' + x.id + '|' + [...x.attributes].filter(a => /^(data-|aria-label$|name$|href$|type$)/.test(a.name)).map(a => a.name + '=' + a.value).join(',') + '|' + (x.type === 'checkbox' ? '' : (x.textContent || '').trim().slice(0, 40)); }
+function focusSleutel(e) {
+  if (!e || e === document.body || e.nodeType !== 1) return null; const w = e.closest('#main,#nav,#drawer,#les'); if (!w) return null; const s = focusSig(e);
+  return { w: '#' + w.id, s, tag: e.tagName, i: Math.max(0, [...w.querySelectorAll(e.tagName)].filter(x => focusSig(x) === s).indexOf(e)) };
+}
+function focusHerstel(k) {
+  const w = k && document.querySelector(k.w); if (!w) return false; const L = [...w.querySelectorAll(k.tag)].filter(x => focusSig(x) === k.s); const t = L[Math.min(k.i, L.length - 1)];
+  if (t) { t.focus({ preventScroll: true }); return document.activeElement === t; } return false;
+}
+function focusTerug() { const l = LAATSTE; if (!l) return; if (l.el.isConnected) { l.el.focus({ preventScroll: true }); return; } focusHerstel(l.k); }
+document.addEventListener('focusin', e => { const t = e.target; if (t && t.nodeType === 1 && !t.closest('#drawer,#palet,#nw,#les')) LAATSTE = { el: t, k: focusSleutel(t) }; });
+const PANELEN = { drawer: () => $('#drawer').classList.contains('open'), palet: () => { const p = $('#palet'); return !!p && !p.hidden; }, nw: () => { const p = $('#nw'); return !!p && !p.hidden; }, les: () => { const p = $('#les'); return !!p && !p.hidden; } };
+const PSTAND = { drawer: false, palet: false, nw: false, les: false };
+['#drawer', '#les'].forEach(s => { const p = $(s); if (p) p.setAttribute('tabindex', '-1'); });
+new MutationObserver(() => {
+  for (const [naam, open] of Object.entries(PANELEN)) {
+    const aan = open(); if (aan === PSTAND[naam]) continue; PSTAND[naam] = aan; const el = $('#' + (naam === 'nw' ? 'nw' : naam === 'palet' ? 'palet' : naam));
+    if (naam === 'drawer' || naam === 'les') document.querySelectorAll('#main,header.top,#lesklok').forEach(x => { if (aan) x.setAttribute('inert', ''); else x.removeAttribute('inert'); }); // achter een scherm vullend paneel is niets bereikbaar
+    if (aan) { if (naam === 'drawer' || naam === 'les') el.focus({ preventScroll: true }); }
+    else { const a = document.activeElement; if (!a || a === document.body || (el && el.contains(a))) focusTerug(); }
+  }
+}).observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class', 'hidden'] });
 document.addEventListener('keydown', e => {
   if (PAL) { if (e.key === 'Escape') { e.preventDefault(); paletDicht(); } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); PAL.i = Math.max(0, Math.min(PAL.L.length - 1, PAL.i + (e.key === 'ArrowDown' ? 1 : -1))); paletToon(); } else if (e.key === 'Enter') { e.preventDefault(); paletKies(PAL.i); } return; }
   if (NW) { if (e.key === 'Escape') { e.preventDefault(); nwDicht(); return; } if (e.key === 'Enter' && (e.target.id === 'nwQ' || e.target.id === 'nwLok')) { e.preventDefault(); nwZet(); return; } if (e.target.id === 'nwQ' || e.target.id === 'nwLok') return; }
@@ -3176,7 +3204,7 @@ function lijstOpslaan(g, txt) { // namen in S.beoord.lijsten (gaat mee met synch
 }
 function lijstKaart(g, lijst) {
   return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de lijst uit Magister en plak hem hieronder, één leerling per regel. Nummers en klascodes haalt Lesdag er zelf uit; dubbele of vreemde namen meldt Lesdag voor het opslaan. De namen staan op dit apparaat en, met synchroniseren aan, op de server achter je login.</p>
-    <textarea id="bmLijst" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
+    <textarea id="bmLijst" aria-label="Klassenlijst, één naam per regel" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
     <div class="knoppen"><button class="btn hoofd" data-klas="opslaan|${esc(g)}">Opslaan</button><button class="btn" data-klas="dicht|${esc(g)}">Annuleren</button></div></div>`;
 }
 function bmDownload(naam, inhoud, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(inhoud instanceof Blob ? inhoud : new Blob([inhoud], { type })); a.download = naam; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 10000); }
@@ -3237,7 +3265,7 @@ function bmStatusVervers() { const el = document.getElementById('bmStatus'); if 
 /* panelen */
 function bmLijstKaart(g, lijst) {
   return `<div class="kaart bm"><h2>Klassenlijst ${esc(g)}</h2><p class="lead">Kopieer de namen uit Magister en plak ze hieronder, één leerling per regel. Nummers en klascodes haalt de app er zelf uit; dubbele of vreemde namen meldt de app voor het opslaan. De namen staan op dit apparaat en, met synchroniseren aan, op de server achter je login. De cijferkolom voor Magister volgt de volgorde van deze lijst.</p>
-    <textarea id="bmLijst" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
+    <textarea id="bmLijst" aria-label="Klassenlijst, één naam per regel" rows="14" style="width:100%;margin:.6rem 0">${esc(lijst.map(x => x.naam).join('\n'))}</textarea>
     <div class="knoppen"><button class="btn hoofd" data-bm="lijstopslaan">Opslaan</button>${lijst.length ? '<button class="btn" data-bm="dicht">Annuleren</button>' : ''}</div></div>`;
 }
 function bmHeeftScores(g, id) { return Object.entries(S.beoord.toetsen).some(([k, T]) => k.endsWith('|' + g) && T.ll[id] && (Object.keys(T.ll[id].s || {}).length || T.ll[id].zelf != null)); }
