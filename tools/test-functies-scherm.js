@@ -23,7 +23,6 @@ const paginaFouten = [];
       ok(await page.evaluate(() => document.querySelector('[data-fnzet="weekAfsluiten"]').checked), 'schakelaar springt terug');
       ok(await page.evaluate(() => !('functies' in JSON.parse(localStorage.getItem('lesdag-staat') || '{}'))), 'schakelaars zitten in de gesynchroniseerde staat');
       await ctx.close(); }
-    //FUNCTIE-SCHERMTESTS
     // 1. Week afsluiten
     const WSTAAT = Object.assign({}, H.STAAT, { goed: { '2026-11-16': 'De alten pakten maat 17.', '2026-11-18': 'Vwo 4 speelde het schema zonder blad.' }, afwijkingen: [{ id: 'af1', g: 'tv4', wat: 'Generale vervallen', bericht: 'De generale komt niet meer.', d: '2026-11-17', soort: 'les' }] });
     const WAAN = { weekAfsluiten: true };
@@ -77,6 +76,19 @@ const paginaFouten = [];
       await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(b => /Ongedaan maken/i.test(b.textContent)); if (b) b.click(); }); await page.waitForTimeout(300);
       const s2 = await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')));
       ok(!(s2.les || {})[A] && !(s2.voortgang.tv4 || {})[Bid] && !(s2.afwijkingen || []).some(a => a.samenA), 'samenvoegen: ongedaan maken herstelt niet');
+      await ctx.close(); }
+    // 3. Jaar: waar is nog lucht
+    { const { ctx, page, tekst } = await open('#jaar', '2026-11-17T10:00:00+01:00', { staat: KSTAAT });
+      const t = await tekst(); ok(await page.evaluate(() => !document.querySelector('.jr-noot.lucht') && !document.querySelector('.jr-stand')), 'jaar: uit, maar groene noten of regel staan er');
+      ok(/heeft nog \d+ lessen te geven/.test(t), 'jaar: uit, maar de melding onder de partituur is veranderd'); await ctx.close(); }
+    { const { ctx, page, tekst } = await open('#jaar', '2026-11-17T10:00:00+01:00', { staat: KSTAAT, functies: { jaarLucht: true } });
+      const t = await tekst();
+      ok(await page.evaluate(() => document.querySelectorAll('.jr-score .jr-noot.lucht').length > 0), 'jaar: geen groene noot voor een les die kan vervallen');
+      ok(await page.evaluate(() => document.querySelectorAll('.jr-stand').length === 1), 'jaar: precies één regel (alleen tv4 zit krap)');
+      ok(/tv4 · Krap voor PT1\. (Eén les kan vervallen|\d+ lessen kunnen vervallen|Geen les kan vervallen)\./.test(t), 'jaar: regel bij de krappe klas ontbreekt: ' + t.slice(0, 300));
+      ok(!/heeft nog \d+ lessen te geven/.test(t), 'jaar: de oude melding onder de partituur staat er nog naast de regel');
+      ok(/kan vervallen \(generale/.test(t), 'jaar: legenda mist de groene noot');
+      ok(await page.evaluate(() => JSON.stringify(JSON.parse(localStorage.getItem('lesdag-staat')).voortgang) === '{"tv4":{"vwo4:2.1":{"st":"gegeven","d":"2026-09-07"}}}'), 'jaar: Jaar heeft de voortgang veranderd (alleen lezen)');
       await ctx.close(); }
     //FUNCTIE-SCHERMTESTS
   } finally { await T.stop(); }
