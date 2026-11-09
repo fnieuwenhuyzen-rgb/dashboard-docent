@@ -3786,7 +3786,9 @@ document.addEventListener('change', async e => {
       await bmDownloadReserve(c.m, c.g); S.beoord.toetsen[c.k] = d.toets; if (d.lijst && d.lijst.length) S.beoord.lijsten[c.g] = d.lijst; S.beoord.weg = S.beoord.weg || {}; if (d.weg) S.beoord.weg[c.g] = d.weg; bmLog(c.k, { a: 'teruggezet', w: d.gemaakt }); bewaar(); toast('Reserve teruggezet; de oude stand staat in je downloads'); } catch (err) { console.warn(err); toast('Dit bestand kan niet worden gelezen'); } return; }
   if (t.dataset.bmcskies != null) { const v = t.value; if (v.startsWith('g:')) bmSelG = v.slice(2); else { bmSelG = null; bmSel = v; } bmKlok = null; render(); window.scrollTo(0, 0); return; }
   if (!bmSel || !t.closest('.bm-scoor')) return;
-  if (t.dataset.bmaf != null) { bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
+  if (t.dataset.bmaf != null) { const r = bmLaag(T).ll[bmSel]; // bevinding 70: afwezig zetten bij een leerling met scores haalt het cijfer uit de kolom; eerst vragen
+    if (t.checked && r && (Object.keys(r.s || {}).length || r.zelf != null) && !confirm('Deze leerling heeft al scores. Als afwezig telt er geen cijfer mee en blijft de cel in de kolom leeg tot de leerling heeft ingehaald. De scores blijven bewaard. Toch op afwezig zetten?')) { t.checked = false; return; }
+    bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
   if (t.dataset.bmzelfc != null) { const w = t.value.trim() === '' ? null : BMR.leesCijfer(t.value); if (t.value.trim() && w == null) { toast('Vul een cijfer van 1 tot en met 10 in, bijvoorbeeld 7,5'); t.value = ''; } bmZet(c.k, T, 'zelf', bmSel, null, w); return; }
   if (t.dataset.bmpapier != null) { const stuk = t.value.trim().split(/\s+/).filter(Boolean); const w = stuk.map(BMR.leesCijfer); if (w.includes(null)) toast('Niet alles is een cijfer van 1 tot en met 10: alleen de goede cijfers tellen mee'); bmZet(c.k, T, 'papier', bmSel, null, w.filter(x => x != null)); return; }
   const soort = t.dataset.bmveld ? ['v', t.dataset.bmveld] : t.dataset.bmopm ? ['opm', t.dataset.bmopm] : t.dataset.bmvooruit != null ? ['vooruit', null] : null;

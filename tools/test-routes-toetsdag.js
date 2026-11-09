@@ -74,6 +74,31 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     await page.waitForSelector('#bmLijst, .bm-status'); waar('na één tik staat de scorekaart van PT1 tv4 open', /PT1/.test(await tekst()), (await tekst()).slice(0, 200));
   });
 
+  /* 4. scoren op de toetsdag: klassenlijst plakken, vier leerlingen scoren, een afwezige (bevinding 70: eerst vragen als er al scores staan) */
+  const scoorAlles = async (v, zelf) => { for (const c of KRITERIA) await klik(`.bm-scoor button[data-bmscore="${c.id}|${v}"]`); await klik(`.bm-scoor button[data-bmzelf="${zelf}"]`); };
+  const lid = {}; // naam -> leerling-id
+  await stap('klas inlezen en scoren', async () => {
+    await op('23-11', '09:16', 'beoordelen/pt1-vwo4/' + G); await page.waitForSelector('#bmLijst');
+    await page.fill('#bmLijst', NAMEN.join('\n')); await klik('[data-bm="lijstopslaan"]'); await page.waitForSelector('[data-bm="concert"]');
+    ((await staat()).beoord.lijsten[G] || []).forEach(x => { lid[x.naam] = x.id; }); check('klassenlijst staat erin', Object.keys(lid), NAMEN);
+    for (const [i, n] of NAMEN.slice(0, 3).entries()) { await klik(`[data-bmkies="${lid[n]}"]`);
+      await page.selectOption('select[data-bmveld="Mijn partij"]', ['Piano', 'Bas', 'Gitaar'][i]); await page.selectOption('select[data-bmveld="Niveau"]', 'Niveau 3');
+      await scoorAlles([5, 8, 6][i], [6, 8, 7][i]); }
+    const T = await toetsStaat(); waar('Anna, Bram en Cato hebben zes scores en een zelfbeoordeling', NAMEN.slice(0, 3).every(n => Object.keys(T.ll[lid[n]].s).length === KRITERIA.length && T.ll[lid[n]].zelf != null), JSON.stringify(T.ll));
+  });
+  await stap('afwezig met scores: eerst vragen', async () => {
+    await klik(`[data-bmkies="${lid[NAMEN[1]]}"]`); // Bram heeft alle scores en wordt per ongeluk op afwezig gezet
+    dialogen.length = 0; h.nee = true; page.removeAllListeners('dialog'); page.on('dialog', d => { dialogen.push({ soort: d.type(), tekst: d.message() }); (h.nee ? d.dismiss() : d.accept()).catch(() => {}); });
+    await page.check('input[data-bmaf]').catch(() => {}); await page.waitForTimeout(150);
+    waar('afwezig bij een leerling met scores vraagt eerst', dialogen.some(d => /al scores/.test(d.tekst)), JSON.stringify(dialogen));
+    let T = await toetsStaat(); waar('na "nee" is Bram niet afwezig en houdt zijn scores', !T.ll[lid[NAMEN[1]]].af && Object.keys(T.ll[lid[NAMEN[1]]].s).length === KRITERIA.length, JSON.stringify(T.ll[lid[NAMEN[1]]]));
+    waar('en het vinkje staat weer uit', !(await page.isChecked('input[data-bmaf]')));
+    // Daan heeft nog niets: afwezig zetten kost geen vraag
+    dialogen.length = 0; await klik(`[data-bmkies="${lid[NAMEN[3]]}"]`); await page.check('input[data-bmaf]'); await page.waitForTimeout(100);
+    waar('afwezig zonder scores vraagt niets', dialogen.length === 0, JSON.stringify(dialogen)); T = await toetsStaat(); waar('Daan staat afwezig', T.ll[lid[NAMEN[3]]].af === true);
+    h.nee = false;
+  });
+
   await h.stop();
   const geen = fouten.length === 0;
   console.log(geen ? `toetsdag: ${nChecks} controles, alles goed (${((Date.now() - t0) / 1000).toFixed(0)} s)` : `toetsdag: ${fouten.length} fout(en) in ${nChecks} controles:\n  - ` + fouten.join('\n  - '));
