@@ -92,6 +92,15 @@ const TOON = process.argv.includes('--toon');
     const b = await kijk('2027-08-02T10:00:00+02:00', 'nu', VG); is('76: Nu zegt dat ook', /Het schooljaar zit erop/.test(b.tekst) && !/Blijft liggen|past niet meer/.test(b.tekst));
     const c = await kijk('2026-11-16T10:00:00+01:00', 'vandaag', VG); is('76: tijdens het schooljaar blijft de melding gewoon', /Blijft liggen/.test(c.tekst)); }
 
+
+  // 73: een les die al loopt (ma 8:40, tv4 8:30–9:15): het welkomdia toont de ingekorte minuten, niet "45 minuten"
+  { let welkom = '', vroeg = '';
+    await kijk('2026-11-16T08:40:00+01:00', 'vandaag', null, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(150); welkom = await page.evaluate(() => (document.querySelector('#les .slide') || {}).innerText || ''); });
+    await kijk('2026-11-16T08:00:00+01:00', 'vandaag', null, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(150); await page.click('#les [data-l="volgende"]'); await page.waitForTimeout(150); vroeg = await page.evaluate(() => document.querySelector('#les .slide').innerText); });
+    const tot = x => +(x.match(/(\d+) minuten\s*$/) || [0, 0])[1];
+    is('73: welkomdia na een late start telt niet 45 minuten', tot(welkom) > 0 && tot(welkom) < 45 && tot(welkom) <= 35, welkom.slice(-120));
+    is('73: vóór de les staat er de geplande tijd', tot(vroeg) === 45, vroeg.slice(-80)); }
+
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
   console.log(`nu-ochtend: ${n} controles, alles goed`);

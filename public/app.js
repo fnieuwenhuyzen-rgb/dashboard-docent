@@ -2973,7 +2973,10 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   const th = x.item.week.thuis || {};
   const vor = vorigeVan(x);
   const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
-  let slides = LESMODUS.bouwSlides(l, { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml });
+  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml };
+  let slides = LESMODUS.bouwSlides(l, kctx);
+  { const kr = lesKrap({ s, x, slides, i: 0, bord: false }); // bevinding 73: loopt de les al, dan staan op het welkomdia de ingekorte minuten, niet de geplande
+    if (kr) { const kort = slides.map((y, j) => ({ y, j })).filter(o => o.y.k === 'fase').map(o => kr.min[o.j] != null ? kr.min[o.j] : null); slides[slides.findIndex(y => y.k === 'welkom')] = LESMODUS.bouwSlides(l, Object.assign(kctx, { kort })).find(y => y.k === 'welkom'); } }
   if (bord) slides = slides.filter(y => y.k !== 'klaar'); // jouw kaart hoort niet op het bord
   LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null };
   LES.vorige = vor; // bevinding 3: loopt de les al, dan staat jouw kaart er niet; de notitie van vorige keer zit dan bij de notities (alleen jij, niet op het bord)
