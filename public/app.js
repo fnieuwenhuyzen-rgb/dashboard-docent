@@ -1670,12 +1670,18 @@ function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${
 function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zegt al hoeveel lessen en de eerste (bevinding 72)
   const L = lesUren(p); const kr = A.items.find(it => it.soort === 'koor'); const pz = A.pz;
   const pzT = pz && !pz.onbekend && pz.vrij.length ? ` Pauze: ${pz.vrij.map(x => hm(x.van) + '–' + hm(x.tot)).join(' en ')}.` : '';
-  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>Je dag</h2>
+  const e = zinNoemt && L[0] && L[0].item && !L[0].klaar ? L[0] : null; // de eerste les staat er vanaf het opstarten: onderwerp, klaarzetten, materiaal (bevinding 57)
+  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>${e ? `Eerste les: ${esc(e.u.groep)} · ${esc(les(e.item).titel || '')}` : 'Je dag'}</h2>
     ${zinNoemt ? (pzT ? `<p class="lead">${esc(pzT.trim())}</p>` : '') : `<p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>`}
-    ${L[0] ? vorigeRegel(L[0]) : ''}
+    ${L[0] ? vorigeRegel(L[0]) : ''}${e ? eersteLesBlok(s, e) : ''}
     ${pauzeTekst(pz) ? `<div class="melding" style="margin-top:.6rem">${esc(pauzeTekst(pz))}</div>` : ''}
     ${collegasJarig(s).length ? `<div class="jarig-rij">${collegasJarig(s).map(felicRij).join('')}</div>` : ''}${weekJarigRij(s)}
-    <p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p></div>`;
+    ${e ? (startDaarna(A) ? `<p class="lead" style="margin-top:.6rem">${esc(startDaarna(A))}</p>` : '') : `<p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p>`}</div>`;
+}
+function eersteLesBlok(s, x) { // doel, klaarzetten en materiaal van de eerste les, zoals de kaart vlak voor de les
+  const l = les(x.item); const ben = klaarLijst(s, l);
+  return `<p class="sub" style="margin-top:.3rem">${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}
+    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}`;
 }
 function voorLesKaart(s, p, x, nu) {
   const l = les(x.item); const ben = klaarLijst(s, l);

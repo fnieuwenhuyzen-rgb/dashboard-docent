@@ -23,6 +23,12 @@ const TOON = process.argv.includes('--toon');
   // 72: de zin "5 lessen, de eerste om 8:30" staat maar één keer op Nu
   { const r = await kijk('2026-11-16T08:10:00+01:00', 'nu'); is('72: zin maar één keer', tel(r.tekst, 'de eerste om 8:30') === 1, 'staat ' + tel(r.tekst, 'de eerste om 8:30') + ' keer'); }
 
+  // 57: maandag 8:10, vijf minuten: onderwerp, wat klaar moet staan, en niet "Lesdag heeft niets voor je"
+  { const r = await kijk('2026-11-16T08:10:00+01:00', 'nu'); const T = r.tekst;
+    is('57: onderwerp van de eerste les', /Eerste les: tv4 · Generieke kenmerken jazz/.test(T));
+    is('57: klaarzetten', /klaarzetten/i.test(T) && /Luisterfragmenten klaarzetten/.test(T));
+    is('57: geen "niets voor je" vóór de eerste les', !/Tot de eerste les heeft Lesdag niets voor je/.test(T)); }
+
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
   console.log(`nu-ochtend: ${n} controles, alles goed`);
