@@ -110,6 +110,17 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
       waar(`${dag} ${hm} ${hash}: geen melding dat PT1 nog niet is afgevinkt`, !/PT1 stond op|nog niet afgevinkt/.test(t), (t.match(/.{0,60}(afgevinkt|stond op).{0,60}/g) || []).join(' // ')); }
   });
 
+  /* 6. inhalen (bevinding 60): Daan was afwezig; een regel blijft op Nu en Dag staan tot hij een cijfer heeft */
+  await stap('inhalen blijft zichtbaar tot het gebeurd is', async () => {
+    for (const [dag, hm, hash] of [['23-11', '16:20', 'nu'], ['24-11', '09:00', 'vandaag'], ['02-12', '08:40', 'nu'], ['07-12', '09:00', 'vandaag']]) { await op(dag, hm, hash); const t = await tekst();
+      waar(`${dag} ${hash}: "1 leerling moet nog inhalen"`, /PT1 1 leerling moet nog inhalen/.test(t), (t.match(/.{0,60}inhalen.{0,60}/g) || []).join(' // ')); }
+    await op('07-12', '09:00', 'nu'); await klik('[data-beoordeel]:has-text("Open")'); await page.waitForSelector('.bm-lijst, [data-bmkies]');
+    await klik(`[data-bmkies="${lid[NAMEN[3]]}"]`); await page.uncheck('input[data-bmaf]'); await scoorAlles(7, 7);
+    await klik('[data-bm="kolom"]'); await page.waitForSelector('[data-bm="kolomkopie"]'); dialogen.length = 0; await klik('.bm-waarsch [data-bm="afronden"]'); await page.waitForTimeout(250);
+    waar('Daan haalt in: 1 cijfer vastgelegd', dialogen.some(d => /1 cijfer vastleggen/.test(d.tekst)), JSON.stringify(dialogen));
+    for (const hash of ['nu', 'vandaag']) { await op('07-12', '09:30', hash); waar(`na het cijfer van Daan staat er op ${hash} geen inhaalregel meer`, !/moet nog inhalen|moeten nog inhalen/.test(await tekst())); }
+  });
+
   await h.stop();
   const geen = fouten.length === 0;
   console.log(geen ? `toetsdag: ${nChecks} controles, alles goed (${((Date.now() - t0) / 1000).toFixed(0)} s)` : `toetsdag: ${fouten.length} fout(en) in ${nChecks} controles:\n  - ` + fouten.join('\n  - '));
