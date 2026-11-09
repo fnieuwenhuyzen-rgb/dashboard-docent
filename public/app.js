@@ -3586,8 +3586,8 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', async e => {
   const t = e.target; const c = bmHuidig(); if (!c) return; const T = bmToets(c.m.id, c.g);
-  if (t.matches('select[data-bmveld]')) { render(); return; }
-  if (t.dataset.bmgnaam) { const x = (T.groepjes || []).find(y => y.id === t.dataset.bmgnaam); if (x && t.value.trim()) { x.naam = t.value.trim(); bewaar(true); } return; }
+  if (t.matches('select[data-bmveld]')) { if (bmSel && t.closest('.bm-scoor')) bmZet(c.k, T, 'v', bmSel, t.dataset.bmveld, t.value, true); render(); return; } // ook een gekozen partij of niveau (het niveau begrenst het cijfer) komt in het logboek
+  if (t.dataset.bmgnaam) { const x = (T.groepjes || []).find(y => y.id === t.dataset.bmgnaam); if (x && t.value.trim()) { const oud = x.naam; x.naam = t.value.trim(); if ((c.m.velden || []).includes('Groep')) for (const lid of x.leden) { const rv = (T.ll[lid] || {}).v; if (rv && rv.Groep === oud) rv.Groep = x.naam; } bewaar(true); } return; } // het veld Groep van de leden volgt de nieuwe naam
   if (t.dataset.bmherstel != null && t.files[0]) { try { const d = JSON.parse(await t.files[0].text()); if (d.soort !== 'lesdag-beoordeling-reserve' || d.model !== c.m.id || d.groep !== c.g || !d.toets) { toast('Dit bestand hoort niet bij deze toets en groep'); return; }
       if (!confirm(`Reserve van ${new Date(d.gemaakt).toLocaleString('nl-NL')} terugzetten? De scores op dit apparaat voor deze toets worden vervangen.`)) return;
       await bmDownloadReserve(c.m, c.g); S.beoord.toetsen[c.k] = d.toets; if (d.lijst && d.lijst.length) S.beoord.lijsten[c.g] = d.lijst; S.beoord.weg = S.beoord.weg || {}; if (d.weg) S.beoord.weg[c.g] = d.weg; bmLog(c.k, { a: 'teruggezet', w: d.gemaakt }); bewaar(); toast('Reserve teruggezet; de oude stand staat in je downloads'); } catch (err) { console.warn(err); toast('Dit bestand kan niet worden gelezen'); } return; }

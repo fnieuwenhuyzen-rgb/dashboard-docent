@@ -10,6 +10,8 @@ Eén opdracht draait alles: `node tools/test-alles.js` (±40 s; `--snel` ±20 s;
 | Toetsdatum en planning | `test-toetsdatum.js`, `test-planning.js` | een toets die niet op zijn datum uit `basis.json` staat (Dag, Week, Jaar, klasblad, tekort, agendafeed); nieuwe afwijking in de data |
 | Schermen | `test-schermen.js` | "Dit scherm lukt nu niet", consolefouten, horizontale overloop; 14 schermen × 7 tijden × 1280/375 px, met verzonnen rooster |
 
+Routetest Beoordelen (`node tools/test-routes-beoordelen.js [--model=<id,id>] [--toon]`, of `test-alles.js --routes`; ±5 minuten): klikt per model uit `beoordeling.json` de hele route door (lijst plakken, koppelen, groepjes, scoren, concertstand, tussenstand, afwezig/inhalen, afronden, wijzigen, herkansing, klasgenoten, inleverbak, cijferkolom, csv, feedbackblad-pdf, reserve, logboek) en rekent elke uitkomst na met een eigen berekening uit het model.
+
 ## Eenmalig: Playwright buiten de repo
 
 ```

@@ -1,6 +1,7 @@
 // node tools/test-alles.js [--snel] [--zonder-browser] [--tegen=<ref>]
 // Draait alle tests van Lesdag en geeft een korte samenvatting. Exitcode 0 = alles goed (of alleen overgeslagen), 1 = iets faalt.
 //   --snel            schermtest met 3 tijden in plaats van 7 (±15 s in plaats van ±35 s)
+//   --routes          ook de routetest Beoordelen (test-routes-beoordelen.js, ±5 minuten)
 //   --zonder-browser  schermtest overslaan (CI zonder browser)
 //   --tegen=<ref>     gegevensvergelijking met die ref in plaats van HEAD
 // Schermtest vraagt Playwright via NODE_PATH, zie tools/TESTEN.md.
@@ -17,10 +18,11 @@ const STAPPEN = [
   ['Planning: toetsen op hun datum', 'test-planning.js', []],
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
+  ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []]] : []),
 ];
 const uitslag = []; const t0 = Date.now();
 for (const [naam, f, extra] of STAPPEN) {
-  if ((f === 'test-schermen.js' || f === 'test-planning.js') && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
+  if (/^test-(schermen|planning|staten|routes-[a-z]+)\.js$/.test(f) && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
   const s = Date.now(); const r = cp.spawnSync(process.execPath, [t(f), ...extra], { cwd: root, encoding: 'utf8', env: process.env, maxBuffer: 1 << 26 });
   const uit = ((r.stdout || '') + (r.stderr || '')).trim(); const sec = (Date.now() - s) / 1000;
   const st = r.status === 0 ? 'goed' : r.status === 2 ? 'overgeslagen' : 'FAALT';
