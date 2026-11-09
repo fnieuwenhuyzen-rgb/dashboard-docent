@@ -99,6 +99,17 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     h.nee = false;
   });
 
+  /* 5. afronden en de dag erna (bevinding 59): de toets is gegeven, er komt geen melding "stond op ma 23 nov en is nog niet afgevinkt" */
+  await stap('afronden en de dag erna', async () => {
+    await op('23-11', '16:20', 'beoordelen/pt1-vwo4/' + G); await klik('[data-bm="kolom"]'); await page.waitForSelector('[data-bm="kolomkopie"]');
+    dialogen.length = 0; await klik('.bm-waarsch [data-bm="afronden"]'); await page.waitForTimeout(250);
+    waar('afronden vraagt om bevestiging met 3 cijfers', dialogen.some(d => /3 cijfers vastleggen/.test(d.tekst)), JSON.stringify(dialogen));
+    const T = await toetsStaat(); waar('drie cijfers staan vast, Daan niet', NAMEN.slice(0, 3).every(n => T.ll[lid[n]].vast) && !T.ll[lid[NAMEN[3]]].vast);
+    const voort = (await staat()).voortgang[G]; waar('de toetsles staat op gegeven', voort['vwo4:10.1'] && voort['vwo4:10.1'].st === 'gegeven', JSON.stringify(voort['vwo4:10.1']));
+    for (const [dag, hm, hash] of [['23-11', '16:20', 'nu'], ['24-11', '09:00', 'nu'], ['24-11', '09:00', 'vandaag']]) { await op(dag, hm, hash); const t = await tekst();
+      waar(`${dag} ${hm} ${hash}: geen melding dat PT1 nog niet is afgevinkt`, !/PT1 stond op|nog niet afgevinkt/.test(t), (t.match(/.{0,60}(afgevinkt|stond op).{0,60}/g) || []).join(' // ')); }
+  });
+
   await h.stop();
   const geen = fouten.length === 0;
   console.log(geen ? `toetsdag: ${nChecks} controles, alles goed (${((Date.now() - t0) / 1000).toFixed(0)} s)` : `toetsdag: ${fouten.length} fout(en) in ${nChecks} controles:\n  - ` + fouten.join('\n  - '));
