@@ -2367,9 +2367,12 @@ function jaarBereik(lg) { // eerste en laatste lesweek die echt bestaan: h5, v6 
   return W.length ? [W[0], W[W.length - 1]] : [1, 0];
 }
 const jaarTw = lg => ((B.toetsweken || {})[lg] || []).flatMap(tw => B.kalender.weken.filter(k => k.datum <= tw.tot && addD(k.datum, 4) >= tw.van).map(k => ({ w: k.w, tw })));
-function jaarNootKlas(g, x, lw) { const st = status(g, x.id).st;
-  return st === 'gegeven' ? '' : st === 'overgeslagen' ? 'over' : st === 'half' ? 'half' : les(x).type === 'leeg' ? 'leeg' : x.w < lw ? 'mis' : 'open'; }
-function jaarNoten(g, lg, lw) {
+/* proeffunctie Jaar: waar is nog lucht (functies.js, keuze jaar.*): een groene noot voor een les die kan vervallen (herkend als generale, afronden, herhaling of oefenen, nog niet gegeven, vóór een komende toets) */
+const luchtAan = () => fnAan('jaarLucht') && FUNCTIES.KEUZES.jaar.lucht === 'groene-noten-en-regel';
+function luchtIds(g) { const s = new Set(); if (MEE_MET[g] || !leergangVan(g)) return s; ruimte(g).forEach(d => d.inhaal.forEach(x => s.add(x.id))); return s; }
+function jaarNootKlas(g, x, lw, lucht) { const st = status(g, x.id).st;
+  return st === 'gegeven' ? '' : st === 'overgeslagen' ? 'over' : st === 'half' ? 'half' : les(x).type === 'leeg' ? 'leeg' : lucht && lucht.has(x.id) ? 'lucht' : x.w < lw ? 'mis' : 'open'; }
+function jaarNoten(g, lg, lw) { const lucht = luchtAan() ? luchtIds(g) : null;
   const P = jaarSlots(); const [van, tot] = jaarBereik(lg); const perWeek = {}; reeks(lg).forEach(x => (perWeek[x.w] = perWeek[x.w] || []).push(x));
   const dagen = S.rooster.filter(u => u.groep === g).sort((a, b) => a.dag - b.dag || minuten(a.start) - minuten(b.start)).map(u => +u.dag);
   let h = '';
@@ -2377,7 +2380,7 @@ function jaarNoten(g, lg, lw) {
     if (!ls) { h += `<i class="jr-rust" style="left:${x}"></i>`; continue; }
     const gezien = {};
     for (const l of ls) { const d = dagen.length ? dagen[(l.li - 1) % dagen.length] : 3; const n = gezien[d] || 0; gezien[d] = n + 1; const y = (d - 3) * 6.5 + (n ? 3.25 : 0);
-      h += `<i class="jr-noot ${jaarNootKlas(g, l, lw)}" style="left:calc(${x} + ${n * 5}px);top:calc(50% + ${y}px)"></i>`; } }
+      h += `<i class="jr-noot ${jaarNootKlas(g, l, lw, lucht)}" style="left:calc(${x} + ${n * 5}px);top:calc(50% + ${y}px)"></i>`; } }
   return h;
 }
 function jaarToetsen(g) { // de toetsen op hun lesuur (ankersVan) en de rest uit de leergang: toetsen in een toetsweek zijn geen les
@@ -2417,13 +2420,14 @@ function viewPartituur() {
   const gs = [...new Set(rooGroepen().concat(Object.keys(MEE_MET).filter(m => rooGroepen().includes(MEE_MET[m]))))].sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
+  const lucht = luchtAan(); const krapD = g => { if (!leergangVan(g) || !B.leergangen[leergangVan(g)] || !Object.keys(S.voortgang[g] || {}).length) return null; const d = ruimte(g)[0]; return d && d.tekort ? d : null; }; // een groep die nog nooit is afgevinkt krijgt eerst de melding op Dag
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
-    return `<div class="jr-rij${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>`; }).join('');
-  const tekort = gs.filter(g => leergangVan(g) && B.leergangen[leergangVan(g)] && Object.keys(S.voortgang[g] || {}).length).map(g => ruimte(g)[0]).filter(d => d && d.tekort); // een groep die nog nooit is afgevinkt krijgt eerst de melding op Dag
+    return `<div class="jr-rij${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>${lucht && krapD(g) ? `<div class="jr-stand"><a href="${esc(klasUrl(g))}">${esc(g)}</a> · ${esc(FUNCTIES.luchtRegel(krapD(g).t.id, krapD(g).inhaal.length))}</div>` : ''}`; }).join('');
+  const tekort = lucht ? [] : gs.map(krapD).filter(Boolean); // met de schakelaar aan staat de melding als regel bij de klas zelf
   h += `<div class="kaart jr-vel"><div class="jr-score"><div class="jr-rij kopregel"><span class="jr-naam"></span>${jaarAs(lw, true)}</div>${rijen}</div></div>`;
   h += tekort.map(d => `<div class="melding"><a href="${esc(klasUrl(d.g))}">${esc(d.g)}</a> heeft nog ${d.nog.length} ${d.nog.length === 1 ? 'les' : 'lessen'} te geven en ${d.uren} ${d.uren === 1 ? 'lesuur' : 'lesuren'} tot ${esc(d.t.id)} ${d.a && !d.a.vast ? 'uiterlijk' : 'op'} ${esc(fmtD(d.s))}: ${d.tekort} tekort.</div>`).join('');
   h += `<p class="jr-info" id="jaarInfo" aria-live="polite">Tik op een klas voor het klasblad, op een toets voor de gegevens.</p>`;
-  h += `<ul class="jr-uitleg">${JAAR_UITLEG.map(([a, b]) => `<li><span class="jr-vb">${a}</span><span>${b}</span></li>`).join('')}</ul>`;
+  h += `<ul class="jr-uitleg">${(lucht ? JAAR_UITLEG.concat([['<i class="jr-noot lucht"></i>', 'kan vervallen (generale, afronden, herhaling, oefenen)']]) : JAAR_UITLEG).map(([a, b]) => `<li><span class="jr-vb">${a}</span><span>${b}</span></li>`).join('')}</ul>`;
   return h;
 }
 function bmRegel(m, g, label) { const T = S.beoord.toetsen[m.id + '|' + g]; const n = T ? Object.keys(T.ll).filter(id => T.ll[id].af || BMR.eind(m, T, T, id).e != null).length : 0;

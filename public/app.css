@@ -1044,3 +1044,8 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 .samenteller .meter i{display:block;height:100%;background:var(--paars)}
 .samenteller .meter i.over{background:var(--let)}
 @media (max-width:640px){.samenkol{grid-template-columns:minmax(0,1fr)}}
+
+/* proeffunctie Jaar: waar is nog lucht */
+.jr-noot.lucht{background:var(--ok);border-color:var(--ok)}
+.jr-stand{position:sticky;left:.85rem;width:max-content;max-width:calc(100vw - 3rem);padding:.05rem 0 .35rem 4.6rem;font-size:.84rem;font-weight:600;color:var(--let)}
+.jr-stand a{color:inherit}
