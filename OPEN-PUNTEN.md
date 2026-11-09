@@ -9,7 +9,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 
 TESTUITSLAG 9-11 (`samengevoegd` 8f83955): `test-alles --routes` slaagt op alle onderdelen na de reparatie van `test-routes-agenda.js` (62 scenario's, 0 fouten). De vijf eerdere fouten waren verouderde tests, geen app-fouten: de teststaat had geen schema en de melding bij Dag afsluiten noemt sinds 9-11 wat open staat. NODE_PATH moet op `_testgereedschap\node_modules` staan, anders slaat test-alles de browsertests stil over.
 
-- `main` en live: cache v55 (8f83955 plus deze overdracht), live gezet op 9-11 na ja van Frans: nachtserie, vier functies, koor versie 69, BB1 lesweek 21-38 en alles van het beslisblad (`beslisblad-app`, `beslisblad-data`, bewaartermijn).
+- `main` en live: cache v55 (8f83955 plus deze overdracht), live gezet op 9-11 na ja van Frans: nachtserie, vier functies, koor versie 71, BB1 lesweek 21-38 en alles van het beslisblad (`beslisblad-app`, `beslisblad-data`, bewaartermijn). Ook live op 9-11: koortaak "Muziek klaarmaken en naar de repro" in `tools/koor-sync.js`, een week voor de eerste repetitie van een periode; staan de repetities nog niet in de koorapp, dan op de dag van het vorige concert.
 - De nachtserie ging om 11:42 live zonder de proefversie die Frans op het beslisblad koos. Frans moet de live versie nog bekijken met zijn echte rooster. [Frans]
 - Testbranch `samengevoegd` is gelijk aan `main`: begin nieuw werk vanaf `main`.
 - App: telefoonmenu transparant, zoekknop rond, tweede kopie bij Dag afsluiten, Ongedaan maken alleen de markering, Periode sluit op Dag in de laatste week, Morgen slaat vakanties over, bewaartermijn.
