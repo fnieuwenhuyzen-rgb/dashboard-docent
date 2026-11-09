@@ -503,6 +503,8 @@ sc('Reclametaken: eigen activiteit en afvinken', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('reclame');
   await P.page.fill('#recT', 'Open dag muziek'); await P.page.fill('#recD', '2026-12-02'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(200);
   let S = await P.S(); const x = (S.reclameExtra || []).find(e => /Open dag muziek/.test(e.titel)); ok(x && x.d === '2026-12-02', 'eigen activiteit staat erin: ' + JSON.stringify(S.reclameExtra));
+  await P.page.fill('#recT', '   '); await P.page.fill('#recD', '2026-12-01'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(100);
+  ok(/Typ wat de activiteit is/.test(await P.toast()), 'lege titel (spaties) geeft een melding: ' + await P.toast()); gelijk(((await P.S()).reclameExtra || []).length, 1, 'lege titel voegt niets toe');
   await P.page.fill('#recT', 'Gisteren'); await P.page.fill('#recD', '2026-11-15'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(100); gelijk(((await P.S()).reclameExtra || []).length, 1, 'verleden datum wordt geweigerd');
   const vinkjes = await P.page.locator('[data-recvink]').count(); ok(vinkjes >= 1, 'in Reclame staan afvinkbare momenten (' + vinkjes + ')');
   if (vinkjes) { const id = await P.page.locator('[data-recvink]').first().getAttribute('data-recvink'); await klikData(P, `[data-recvink="${id}"]`); S = await P.S(); ok(S.reclameAf && S.reclameAf[id], 'afvinken zet reclameAf voor ' + id); await klikData(P, `[data-recvink="${id}"]`); ok(!(await P.S()).reclameAf[id], 'weer uitvinken'); }
