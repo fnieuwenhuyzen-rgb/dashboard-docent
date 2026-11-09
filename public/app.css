@@ -353,6 +353,8 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 .ag-klaar{background:var(--uit-zacht);color:var(--uit)}
 .ag-uitval{background:repeating-linear-gradient(135deg,var(--uit-zacht) 0 6px,var(--surface) 6px 12px);color:var(--uit);text-decoration:line-through}
 .ag-sectie{background:var(--theorie);color:var(--theorie-ink)}
+.ag-meer{background:var(--uit-zacht);color:var(--uit)}
+.ag-it.rij b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ag-taak{background:var(--let-zacht);color:var(--let);border-color:color-mix(in srgb,var(--let) 30%,transparent)}
 .ag-taakaf{background:var(--let-zacht);color:var(--let);text-decoration:line-through}
 .ag-taakgemist{background:var(--rood-zacht);color:var(--rood);border:1px dashed var(--rood)}

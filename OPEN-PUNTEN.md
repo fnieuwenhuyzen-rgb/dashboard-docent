@@ -6,7 +6,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 
-- Alles staat live sinds 9-11 (cache v56, Beoordelen stap 3 inbegrepen). Nieuw werk begint vanaf `main`.
+- Alles staat live sinds 9-11 (cache v57, Beoordelen stap 3 inbegrepen). Nieuw werk begint vanaf `main`.
 - Repo sinds 9-11 in `C:/Projecten/Lesdag`; documenten blijven in OneDrive onder `Dashboard Docent/lesdag project`.
 
 ## Na live, in deze volgorde

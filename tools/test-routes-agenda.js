@@ -190,6 +190,21 @@ sc('Slepen in de agenda: nieuw, verschuiven, verlengen', async nieuw => {
   await m.move(gb.x + gb.width / 2, gb.y + gb.height / 2); await m.down(); await m.move(gb.x + gb.width / 2, gb.y + gb.height / 2 + 30 * g.ppm, { steps: 5 }); await m.up(); await P.page.waitForTimeout(200);
   const k3 = taakIn(await P.S(), /Albert/); ok(k3.plan.van === '14:30' && k3.plan.tot === '16:00', 'verlengen met 30 min: ' + JSON.stringify(k3.plan));
 });
+sc('Korte taken: elk een eigen regel, nooit over elkaar', async nieuw => {
+  const taak = (id, van, tot) => ({ id, titel: 'Korte taak ' + id, bron: 'overig', af: false, d: '2026-11-20', plan: { dag: '2026-11-16', van, tot } });
+  const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [taak('r1', '18:00', '18:15'), taak('r2', '18:15', '18:25'), taak('r3', '18:25', '18:30'), taak('r4', '18:30', '18:35'),
+    Object.assign(taak('L1', '19:00', '20:00')), taak('v1', '20:00', '20:05'), taak('v2', '20:05', '20:10'), taak('v3', '20:10', '20:15'), taak('L2', '20:40', '21:30')]; return s; } });
+  const blokken = () => P.page.evaluate(() => [...document.querySelectorAll('.ag-kol[data-kdag="2026-11-16"] .ag-it')].map(e => { const r = e.getBoundingClientRect(); return { id: e.dataset.kid || '', meer: !!e.dataset.agmeer, x: r.x, y: r.y, b: r.right, o: r.bottom, h: r.height, tekst: e.textContent }; }));
+  const nietOverElkaar = (L, wat) => { L.forEach((a, i) => L.slice(i + 1).forEach(c => ok(a.o <= c.y + .5 || c.o <= a.y + .5 || a.b <= c.x + .5 || c.b <= a.x + .5, `${wat}: ${a.id || a.tekst} en ${c.id || c.tekst} vallen over elkaar`))); };
+  for (const scherm of ['vandaag', 'week']) {
+    await P.open(scherm); const L = await blokken(); nietOverElkaar(L, scherm);
+    for (const id of ['r1', 'r2', 'r3', 'r4']) { const b = L.find(x => x.id === id); ok(b && b.h >= 20, `${scherm}: ${id} is een volle regel (${b && b.h})`); }
+    ok(/^18:25/.test(L.find(x => x.id === 'r3').tekst), `${scherm}: r3 houdt zijn echte tijd: ${L.find(x => x.id === 'r3').tekst}`);
+    const m = L.find(x => x.meer); ok(m && /\+ 2 meer/.test(m.tekst), `${scherm}: wat niet past staat onder + 2 meer: ${m && m.tekst}`); ok(L.some(x => x.id === 'v1') && !L.some(x => x.id === 'v3'), `${scherm}: eerste blijft, laatste valt onder de knop`);
+    await P.klik('[data-agmeer]'); await P.page.waitForTimeout(150); const U = await blokken(); nietOverElkaar(U, scherm + ' uitgeklapt'); ok(['v1', 'v2', 'v3'].every(id => U.some(x => x.id === id)) && !U.some(x => x.meer), `${scherm}: na de klik staan ze er alle drie`);
+    await P.page.reload(); await P.page.waitForTimeout(300);
+  }
+});
 sc('Plannen in een vrij blok (klik in de lege agenda)', async nieuw => {
   const P = await nieuw({ tijd: VROEG, staat: s => { s.taken = [{ id: 'kp1', titel: 'Toetsen nakijken', bron: 'overig', af: false, d: '2026-11-20' }]; return s; } }); await P.open('vandaag');
   const kol = P.page.locator('.ag-kol[data-kdag="2026-11-16"]'); const bb = await kol.boundingBox(); const g = await kol.evaluate(k => { const d = k.closest('.ag-raster').dataset; return { van: +d.van, ppm: +d.ppm }; });

@@ -1109,6 +1109,28 @@ function heleDagRij(s, lijst, max) {
   const rest = max && lijst.length > max ? lijst.length - max + 1 : 0; const toon = rest ? lijst.slice(0, max - 1) : lijst;
   return `<div class="ag-hd">${toon.map(it => { const rs = rolStijl(rolVanItem(it)); return `<button class="ag-chip ag-${it.soort}${rs.cls}"${rs.st ? ` style="${rs.st}"` : ''} data-ag="${s}|${esc(it.key)}" title="${esc(it.titel + (rs.naam ? ' · ' + rs.naam : ''))}">${it.soort === 'deadline' ? 'deadline: ' : ''}${esc(it.titel)}</button>`; }).join('')}${rest ? `<button class="ag-chip ag-deadline" data-dag="${s}">+ ${rest} meer</button>` : ''}</div>`;
 }
+/* korte blokken krijgen een eigen regel: te korte items schuiven op tot ze leesbaar onder elkaar staan, binnen de ruimte tot het volgende vaste blok.
+   Past het niet, dan komen de laatste onder "+ n meer". De tijd op het blok blijft de echte tijd (echtVan, echtTot) */
+const agMeerOpen = new Set();
+function zetRijen(items, o) {
+  const rij = Math.ceil(22 / o.ppm); const isKort = it => !['pauze', 'rust', 'uitval'].includes(it.soort) && it.tot - it.van < rij;
+  const kort = items.filter(isKort); if (!kort.length) return items;
+  const vast = items.filter(it => !isKort(it)); const blok = [];
+  [...vast].sort((a, b) => a.van - b.van).forEach(it => { const l = blok[blok.length - 1]; if (l && it.van < l.tot) l.tot = Math.max(l.tot, it.tot); else blok.push({ van: it.van, tot: it.tot }); });
+  const stukVan = m => blok.find(x => m >= x.van && m < x.tot) || { van: (blok.filter(x => x.tot <= m).pop() || { tot: o.van }).tot, tot: (blok.find(x => x.van > m) || { van: o.tot }).van };
+  const stukken = new Map();
+  [...kort].sort((a, b) => a.van - b.van).forEach(it => { const b = stukVan(it.van); const k = b.van + '-' + b.tot; if (!stukken.has(k)) stukken.set(k, { b, g: [] }); stukken.get(k).g.push(it); });
+  const uit = vast;
+  stukken.forEach(({ b, g }) => {
+    const sl = o.s + '|' + g[0].key; const past = Math.max(1, Math.floor((b.tot - b.van) / rij)); const weg = g.slice(past - 1);
+    const open = g.length <= past || agMeerOpen.has(sl) || weg.some(it => it.key === o.sel);
+    const rijen = open ? g : g.slice(0, past - 1).concat({ key: 'meer:' + sl, soort: 'meer', van: weg[0].van, tot: weg[0].van + rij, titel: `+ ${weg.length} meer`, meer: sl, weg });
+    let cur = -Infinity; const pos = rijen.map(it => { const t = Math.max(it.van, cur); cur = t + rij; return t; });
+    if (rijen.length * rij <= b.tot - b.van) { let grens = b.tot - rij; for (let i = pos.length - 1; i >= 0; i--) { pos[i] = Math.min(pos[i], grens); grens = pos[i] - rij; } } // anders is het uitgeklapt: wat niet past komt naast het volgende blok
+    rijen.forEach((it, i) => uit.push(it.soort === 'meer' ? Object.assign(it, { van: pos[i], tot: pos[i] + rij }) : Object.assign({}, it, { van: pos[i], tot: pos[i] + rij, echtVan: it.van, echtTot: it.echtTot || it.tot, rij: true })));
+  });
+  return uit;
+}
 // dagen: [{s, items, kop?}], opt: {ppm, sel, compact}. Alleen wat aandacht vraagt krijgt een vorm: vrije tijd is leeg en koffie staat er niet in
 function agendaRaster(dagen, opt) {
   const ppm = opt.ppm; const t = vandaag(); const nu = nuMin();
@@ -1124,16 +1146,17 @@ function agendaRaster(dagen, opt) {
     const lijnen = uren.map(m => `<i class="ag-lijn" style="top:${(m - van) * ppm}px"></i>`).join('');
     const nuLijn = d.s === t && nu > van && nu < tot ? `<i class="ag-nu" style="top:${(nu - van) * ppm}px"></i>` : '';
     // een vervallen les is één grijze regel: de rest van dat uur is vrij en klikbaar
-    const blokken = zetBanen(zicht(d).map(it => Object.assign({}, it, it.soort === 'uitval' ? { tot: it.van + Math.ceil(22 / ppm), echtTot: it.tot } : {}))).map(it => {
+    const blokken = zetBanen(zetRijen(zicht(d).map(it => Object.assign({}, it, it.soort === 'uitval' ? { tot: it.van + Math.ceil(22 / ppm), echtTot: it.tot } : {})), { ppm, s: d.s, van, tot, sel: opt.sel })).map(it => {
       const top = (it.van - van) * ppm; const h = Math.max(14, (it.tot - it.van) * ppm - 2);
-      const w = 100 / (it.banen || 1); const kort = h < 38; const eind = it.echtTot || it.tot;
-      const nuCls = d.s === t && nu >= it.van && nu < eind && it.soort === 'les' ? ' nu' : ''; const voorbij = d.s < t || (d.s === t && eind <= nu);
+      const w = 100 / (it.banen || 1); const kort = h < 38; const eind = it.echtTot || it.tot; const echtVan = it.echtVan != null ? it.echtVan : it.van;
+      if (it.soort === 'meer') return `<button class="ag-it ag-meer kort" style="top:${top}px;height:${h}px;left:calc(${(it.baan || 0) * w}% + 2px);width:calc(${w}% - 4px)" data-agmeer="${esc(it.meer)}" title="${esc(it.weg.map(x => hm(x.van) + ' ' + x.titel).join('\n'))}"><b>${esc(it.titel)}</b></button>`;
+      const nuCls = d.s === t && nu >= echtVan && nu < eind && it.soort === 'les' ? ' nu' : ''; const voorbij = d.s < t || (d.s === t && eind <= nu);
       const st = it.x ? magStip(d.s, it.x) : ''; // Magister: oker als er nog iets moet, groen als de les rond is
       const pak = it.k && it.k.plan && !it.k.dagTaak; const lok = it.lokaal && it.lokaal !== '009' && !opt.compact ? ' · ' + esc(it.lokaal) : '';
       const sub = !kort && it.sub && it.sub !== 'afspraak' && !['uitval', 'pauze', 'rust'].includes(it.soort) && h >= (opt.compact ? 62 : 44);
       const rs = rolStijl(rolVanItem(it)); // kleurstreepje per rol
-      return `<button class="ag-it ag-${it.soort}${opt.sel === it.key ? ' sel' : ''}${nuCls}${kort ? ' kort' : ''}${voorbij ? ' voorbij' : ''}${pak ? ' pak' : ''}${it.x && it.x.u.extra ? ' eenmalig' : ''}${rs.cls}" style="${rs.st}top:${top}px;height:${h}px;left:calc(${(it.baan || 0) * w}% + 2px);width:calc(${w}% - 4px)" data-ag="${d.s}|${esc(it.key)}"${pak ? ` data-kid="${esc(it.k.id)}"` : ''} title="${esc(hm(it.van) + '–' + hm(eind) + ' ' + it.titel + (it.sub ? ' · ' + it.sub : '') + (it.x && it.x.u.extra ? ' · eenmalig' : '') + (st ? (st === 'ok' ? ' · Magister rond' : ' · nog iets in Magister') : '') + (rs.naam ? ' · ' + rs.naam : ''))}">${st ? `<i class="st${st === 'ok' ? ' ok' : ''}" aria-hidden="true"></i>` : ''}`
-        + `<span class="ag-rg"><span class="ag-t">${hm(it.van)}${kort || opt.compact ? '' : '–' + hm(eind)}${lok}</span><b>${esc(it.titel)}</b></span>${sub ? `<span class="ag-s">${esc(it.sub)}</span>` : ''}${pak ? '<span class="ag-grip" aria-hidden="true"></span>' : ''}</button>`;
+      return `<button class="ag-it ag-${it.soort}${opt.sel === it.key ? ' sel' : ''}${nuCls}${kort ? ' kort' : ''}${it.rij ? ' rij' : ''}${voorbij ? ' voorbij' : ''}${pak ? ' pak' : ''}${it.x && it.x.u.extra ? ' eenmalig' : ''}${rs.cls}" style="${rs.st}top:${top}px;height:${h}px;left:calc(${(it.baan || 0) * w}% + 2px);width:calc(${w}% - 4px)" data-ag="${d.s}|${esc(it.key)}"${pak ? ` data-kid="${esc(it.k.id)}"` : ''} title="${esc(hm(echtVan) + '–' + hm(eind) + ' ' + it.titel + (it.sub ? ' · ' + it.sub : '') + (it.x && it.x.u.extra ? ' · eenmalig' : '') + (st ? (st === 'ok' ? ' · Magister rond' : ' · nog iets in Magister') : '') + (rs.naam ? ' · ' + rs.naam : ''))}">${st ? `<i class="st${st === 'ok' ? ' ok' : ''}" aria-hidden="true"></i>` : ''}`
+        + `<span class="ag-rg"><span class="ag-t">${hm(echtVan)}${kort || opt.compact ? '' : '–' + hm(eind)}${lok}</span><b>${esc(it.titel)}</b></span>${sub ? `<span class="ag-s">${esc(it.sub)}</span>` : ''}${pak ? '<span class="ag-grip" aria-hidden="true"></span>' : ''}</button>`;
     }).join('');
     return `<div class="ag-kol${d.s === t ? ' vandaag' : ''}" data-kdag="${d.s}" style="height:${hoog}px">${lijnen}${nuLijn}${blokken}</div>`;
   };
@@ -3289,6 +3312,7 @@ document.addEventListener('click', async e => {
   if (D.duurweg != null) { const terug = foto(); S.duurLog.splice(+D.duurweg, 1); bewaar(); toast('Meting telt niet meer mee', terug); return; }
   if (D.taakstart) { const k = (S.taken || []).find(k => k.id === D.taakstart); if (k) { k.start = Date.now(); bewaar(); } return; }
   if (D.pzweg != null) { const terug = foto(); S.pauzes.splice(+D.pzweg, 1); bewaar(); toast('Pauze weg', terug); return; }
+  if (D.agmeer) { agMeerOpen.add(D.agmeer); render(); return; }
   if (D.ag) { const i = D.ag.indexOf('|'); const d = D.ag.slice(0, i); agSel[d] = D.ag.slice(i + 1); dagKeuze = d; if (route.naam !== 'vandaag') location.hash = 'vandaag'; else { render(); if (innerWidth < 820) { const pn = $('.agpaneel'); if (pn) pn.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); } } return; }
   if (D.ontplan) { const terug = foto(); const k = (S.taken || []).find(k => k.id === D.ontplan); if (k) { agSel[k.plan.dag] = ''; delete k.plan; } bewaar(); toast('Uit de agenda gehaald; de taak staat nog in je lijst', terug); return; }
   if (D.dag != null && route.naam !== 'vandaag') { dagKeuze = D.dag; location.hash = 'vandaag'; return; }
