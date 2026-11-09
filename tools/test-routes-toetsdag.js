@@ -57,6 +57,15 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     const k = await page.locator('body').innerText(); waar('16-11 Ctrl K "pt1": een toets van volgende week heet niet geweest', !/geweest/i.test((k.match(/PT1[^\n]*\n?[^\n]*/g) || []).join(' ')), (k.match(/[^\n]*pt1[^\n]*/gi) || []).join(' | '));
   });
 
+  /* 1b. een half ingevuld verplaats-paneel sluit als je van scherm wisselt (bevinding 68) */
+  await stap('verplaats-paneel sluit bij routewissel', async () => {
+    await op('09-11', '09:16', 'jaar/' + G); await klik('[data-ankeropen]'); await page.waitForSelector('#avUur');
+    await page.fill('#avReden', 'half ingevuld'); await page.evaluate(() => { location.hash = '#nu'; }); await page.waitForFunction(() => location.hash === '#nu'); await page.waitForTimeout(100);
+    waar('op Nu staat geen verplaatsformulier', !(await page.$('#avUur, #ankerForm')), (await tekst()).slice(0, 200));
+    await page.evaluate(g => { location.hash = '#jaar/' + g; }, G); await page.waitForTimeout(150);
+    waar('terug op het klasblad is het formulier dicht en leeg', !(await page.$('#avUur')));
+  });
+
   /* 2. de toetsdag: ma 23-11 om 9:05 staat PT1 op Nu en Dag, en in Beoordelen onder Vandaag (bevinding 8 en 56) */
   await stap('toetsdag op Nu, Dag en Beoordelen', async () => {
     await op('23-11', '09:05', 'nu'); let t = await tekst();
