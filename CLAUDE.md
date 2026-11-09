@@ -22,7 +22,8 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 ## Waar alles staat
 
 - Live: https://lesdag-muziek.pages.dev (Cloudflare Pages, Git-gekoppeld). **Elke push naar `main` staat binnen een minuut live.** Achter Cloudflare Access: alleen nwn@csgpm.nl.
-- Repo: deze map, GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). De app staat in `public/`; `tools/`, `bron/`, `worker/`, `handboek/` gaan niet online.
+- Repo: deze map (`C:/Projecten/Lesdag`, sinds 9-11-2026 buiten OneDrive; pushen is de back-up), GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). De app staat in `public/`; `tools/`, `bron/`, `worker/`, `handboek/` gaan niet online.
+- Documenten horen niet in de repo: `decks-herstel-klaar`, `studiewijzers-klaar`, `fotos-kerst-kandidaten`, de PTA-lijst en `rapport ChatGPT.docx` staan in OneDrive, `Dashboard Docent/lesdag project`.
 - Workers `lesdag-rooster` (Zermelo) en `lesdag-agenda` (Outlook) staan los van Pages, bewust niet achter Access. Een push verandert ze niet; alleen `wrangler deploy`. Zie `techniek.md`. Wat in de agendafeed meegaat staat in `agendaItems` in `app.js`: nooit eigen vrije tekst of leerlinggegevens toevoegen zonder dit opnieuw te bekijken.
 - Gegevens: `public/data/basis.json` (één regel; leergangen, kalender, toetsweken, sectie, koor), `public/data/beoordeling.json`. Les-id's zijn `leergang:lesweek.lesnummer`; weekindeling niet wijzigen zonder migratie. Dashboard-artifact "Leergang muziek": https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2 (bron `bron/`).
 - Eigen staat van Frans: localStorage `lesdag-staat` (`S`), `lesdag-apparaat` (`AP`, blijft op het apparaat) en met synchroniseren aan ook D1 `lesdag-sync`. Geen Entra-koppeling (besluit Frans, 3-11); `m365.js` is niet in gebruik. Wat waar staat: `techniek.md`, hoofdstuk 3.

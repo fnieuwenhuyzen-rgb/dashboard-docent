@@ -6,14 +6,14 @@ Stand: 8 november 2026. Techniek: `techniek.md`. Als het misgaat: `noodprocedure
 
 Elke sessie krijgt een **eigen kopie van de code** (een worktree) en een **eigen branch**. Zo raken ze elkaar niet. Eén sessie voegt aan het eind alles samen. Niemand pusht of zet iets live zonder het ja van Frans.
 
-Alles staat in `C:\Users\nwn\lesdag-werk\`. De hoofdmap (`...\Dashboard Docent\lesdag project\lesdag`) blijft op `main` staan en wordt niet bewerkt.
+Alles staat in `C:\Users\nwn\lesdag-werk\`. De hoofdmap (`C:\Projecten\Lesdag`) blijft op `main` staan en wordt niet bewerkt.
 
 ## Een worktree maken
 
 Elke nieuwe taak start vanaf de branch `samengevoegd`, **niet** vanaf `main`. `samengevoegd` heeft alle werk dat klaar is maar nog niet live staat.
 
 ```bash
-cd "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag"
+cd "C:/Projecten/Lesdag"
 git worktree add -b <branchnaam> C:/Users/nwn/lesdag-werk/<korte-naam> samengevoegd
 ```
 
@@ -86,7 +86,7 @@ Dit doet één sessie tegelijk, in de worktree van `samengevoegd` (`C:\Users\nwn
 
 ## Oude werkmappen opruimen
 
-Er staan nu rond de dertig worktrees in `lesdag-werk`. Veel zijn af. Een map ruim je op als de branch **samengevoegd** is.
+Werkmappen staan in `lesdag-werk`. Een map ruim je op als de branch **samengevoegd** is.
 
 1. Overzicht: `git worktree list`
 2. Welke branches zitten al in `samengevoegd`: `git branch --merged samengevoegd`. Welke niet: `git branch --no-merged samengevoegd`. Die laatste hebben nog werk dat nergens anders staat. **Niet opruimen.**

@@ -5,7 +5,7 @@ description: Voeg een beoordelingsmodel toe of wijzig er een (Lesdag tools/beoor
 
 # Beoordelingsmodel toevoegen of wijzigen
 
-Repo: `...\Dashboard Docent\lesdag project\lesdag`. Eén model per toets in `tools/beoordeling/<id>.json`; alles wordt daaruit gemaakt. Voorbeeld van het schema: `tools/beoordeling/p9-vwo5.json`.
+Repo: `C:\Projecten\Lesdag`. Eén model per toets in `tools/beoordeling/<id>.json`; alles wordt daaruit gemaakt. Voorbeeld van het schema: `tools/beoordeling/p9-vwo5.json`.
 
 ## 1. Model schrijven of aanpassen
 

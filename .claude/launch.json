@@ -5,8 +5,8 @@
       "name": "lesdag-proef",
       "runtimeExecutable": "C:/Users/nwn/AppData/Local/Programs/node/node.exe",
       "runtimeArgs": [
-        "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag/tools/serve-lokaal.js",
-        "C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Dashboard Docent/lesdag project/lesdag/public",
+        "C:/Projecten/Lesdag/tools/serve-lokaal.js",
+        "C:/Projecten/Lesdag/public",
         "8732"
       ],
       "port": 8732

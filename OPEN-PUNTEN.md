@@ -9,7 +9,9 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 
 TESTUITSLAG 9-11 (`samengevoegd` 8f83955): `test-alles --routes` slaagt op alle onderdelen na de reparatie van `test-routes-agenda.js` (62 scenario's, 0 fouten). De vijf eerdere fouten waren verouderde tests, geen app-fouten: de teststaat had geen schema en de melding bij Dag afsluiten noemt sinds 9-11 wat open staat. NODE_PATH moet op `_testgereedschap\node_modules` staan, anders slaat test-alles de browsertests stil over.
 
-- `main` en live: cache v55 (8f83955 plus deze overdracht), live gezet op 9-11 na ja van Frans: nachtserie, vier functies, koor versie 71, BB1 lesweek 21-38 en alles van het beslisblad (`beslisblad-app`, `beslisblad-data`, bewaartermijn). Ook live op 9-11: koortaak "Muziek klaarmaken en naar de repro" in `tools/koor-sync.js`, een week voor de eerste repetitie van een periode; staan de repetities nog niet in de koorapp, dan op de dag van het vorige concert.
+- Beoordelen stap 3 live op 9-11 na ja van Frans (0660f6a, cache v56).
+- Repo verhuisd op 9-11 naar `C:/Projecten/Lesdag`; documenten (`lesdag project/...` hieronder) blijven in OneDrive onder `Dashboard Docent`. Werkmappen opgeruimd; drie oude branches bewaard als tag `archief/lesinhoud`, `archief/nooit-voor-de-klas`, `archief/week-9-11`.
+- Eerder op 9-11 live: cache v55 (8f83955 plus deze overdracht), live gezet op 9-11 na ja van Frans: nachtserie, vier functies, koor versie 71, BB1 lesweek 21-38 en alles van het beslisblad (`beslisblad-app`, `beslisblad-data`, bewaartermijn). Ook live op 9-11: koortaak "Muziek klaarmaken en naar de repro" in `tools/koor-sync.js`, een week voor de eerste repetitie van een periode; staan de repetities nog niet in de koorapp, dan op de dag van het vorige concert.
 - De nachtserie ging om 11:42 live zonder de proefversie die Frans op het beslisblad koos. Frans moet de live versie nog bekijken met zijn echte rooster. [Frans]
 - Testbranch `samengevoegd` is gelijk aan `main`: begin nieuw werk vanaf `main`.
 - App: telefoonmenu transparant, zoekknop rond, tweede kopie bij Dag afsluiten, Ongedaan maken alleen de markering, Periode sluit op Dag in de laatste week, Morgen slaat vakanties over, bewaartermijn.
@@ -29,10 +31,8 @@ Alles is live sinds 9-11. Nog te doen, in deze volgorde:
 2. Controle bij commits en snelle test voor live staan aan (9-11).
 3. Controleer dat de migratie van vwo 5 de eigen voortgang goed heeft omgenummerd. [Frans, op de laptop]
 4. Synchroniseren aan, zonder leerlinggegevens. Agendalink maken in Outlook (vaste titels, geen eigen afspraken). [Frans, op de laptop]
-5. Beoordelen stap 3 live zetten: `bouw-stap3` is op 9-11 samengevoegd met `main` op branch `stap3-samen` (worktree `C:/Users/nwn/lesdag-werk/stap3-samen`, cache v56). Getest, niet gepusht. Wacht op een ja van Frans. [Frans] Is `main` intussen verder, dan eerst `main` in `stap3-samen` samenvoegen en het cachenummer opnieuw zetten.
-6. Dashboard verversen: `tools/ververs-dashboard.js`.
-7. Verhuizen naar `C:/Projecten`, dan de werkmappen in `C:/Users/nwn/lesdag-werk` opruimen (alleen als er geen Lesdag-sessie loopt).
-8. Rond 16-11, een week na live: CSP afdwingen, als de meldingen schoon zijn.
+5. Dashboard verversen: `tools/ververs-dashboard.js`.
+6. Rond 16-11, een week na live: CSP afdwingen, als de meldingen schoon zijn.
 
 ## Wacht op Frans
 

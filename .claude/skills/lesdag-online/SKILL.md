@@ -5,7 +5,7 @@ description: Zet wijzigingen in Lesdag live (commit, push naar main = Cloudflare
 
 # Lesdag online zetten
 
-Repo: `C:\Users\nwn\OneDrive - CSG Prins Maurits\Documenten\Dashboard Docent\lesdag project\lesdag`. Push naar `main` = binnen ongeveer een minuut live op https://lesdag-muziek.pages.dev.
+Repo: `C:\Projecten\Lesdag`. Push naar `main` = binnen ongeveer een minuut live op https://lesdag-muziek.pages.dev.
 
 ## 1. Vóór het committen
 
