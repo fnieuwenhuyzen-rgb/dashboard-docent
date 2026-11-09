@@ -364,7 +364,7 @@
         "koppel": [
           {
             "lg": "vwo5",
-            "w": 8,
+            "w": 12,
             "slot": "l1"
           }
         ],
@@ -385,8 +385,8 @@
         "koppel": [
           {
             "lg": "vwo5",
-            "w": 8,
-            "slot": "l3"
+            "w": 12,
+            "slot": "l2"
           }
         ],
         "fasenExtra": {

@@ -20,6 +20,20 @@
       if (Array.isArray(d.rooster)) d.rooster.forEach(u => { if (isObj(u) && u.dag !== undefined && typeof u.dag !== 'number') { const n = Number(u.dag); if (Number.isFinite(n)) u.dag = n; } });
       return d;
     } },
+    { naar: 2, naam: "vwo 5: toetsles P9 van lesweek 8 naar 12.1 en 12.2 (9 nov 2026)", doe(d) {
+      // De lessen 8.1 en 8.3 (P9) wisselden van plek met 12.1 en 12.2 in basis.json. Gegevens van Frans die op een les-id hangen gaan mee:
+      // voortgang, eigen lesbewerkingen, verplaatsingen (ankers), de lessen in een afwijking en sleutels als pres:vwo5:8.1.
+      const WISSEL = { "vwo5:8.1": "vwo5:12.1", "vwo5:12.1": "vwo5:8.1", "vwo5:8.3": "vwo5:12.2", "vwo5:12.2": "vwo5:8.3" };
+      const RE = /(^|[^\w.])(vwo5:(?:8\.1|8\.3|12\.1|12\.2))(?![\w.])/g;
+      const hernoem = s => s.replace(RE, (m, v, id) => v + WISSEL[id]);
+      const sleutels = o => { if (!isObj(o)) return o; const uit = {}; for (const k of Object.keys(o)) uit[hernoem(k)] = o[k]; return uit; };
+      if (isObj(d.voortgang)) for (const g of Object.keys(d.voortgang)) if (isObj(d.voortgang[g])) { d.voortgang[g] = sleutels(d.voortgang[g]); for (const id of Object.keys(d.voortgang[g])) { const st = d.voortgang[g][id]; if (isObj(st) && tekst(st.inToets)) st.inToets = hernoem(st.inToets); } }
+      if (isObj(d.ankers)) for (const g of Object.keys(d.ankers)) d.ankers[g] = sleutels(d.ankers[g]);
+      for (const k of ["les", "uitgesteld", "later", "afLater", "goed", "klaarExtra", "mag", "magHw", "minuten", "reclameAf"]) if (isObj(d[k])) d[k] = sleutels(d[k]);
+      if (isObj(d.pres)) d.pres = sleutels(d.pres);
+      if (Array.isArray(d.afwijkingen)) d.afwijkingen.forEach(a => { if (isObj(a) && Array.isArray(a.lesIds)) a.lesIds = a.lesIds.map(x => tekst(x) ? hernoem(x) : x); });
+      return d;
+    } },
   ];
   const SCHEMA = STAPPEN[STAPPEN.length - 1].naar;
 

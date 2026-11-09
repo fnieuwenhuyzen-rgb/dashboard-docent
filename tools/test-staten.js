@@ -42,7 +42,7 @@ function controleer(naam, invoer) {
 
 // 1. elk tijdperk
 console.log('Deel 1: ' + OUD.length + ' tijdperken, onvolledig en vervuild');
-for (const [naam, s] of OUD) { const r = controleer(naam, s); if (r) { ok(r.van === 0 && r.stappen.length === 1, naam + ': geen oude vorm herkend'); ok(r.staat.rooster.length === 2 && r.staat.voortgang.tv4, naam + ': gegevens kwijt'); } }
+for (const [naam, s] of OUD) { const r = controleer(naam, s); if (r) { ok(r.van === 0 && r.stappen.length === STAAT.STAPPEN.length, naam + ': geen oude vorm herkend'); ok(r.staat.rooster.length === 2 && r.staat.voortgang.tv4, naam + ': gegevens kwijt'); } }
 { const r = STAAT.migreer(OUD[OUD.length - 1][1], leeg()).staat; ok(r.beoord.lijsten.tb1[0].naam === 'Testleerling, Anna', 'klassenlijst verloren'); ok(r.taken.length === 2 && r.taken[1].id, 'taak zonder id kreeg er geen'); ok(r.sectieNotitie.s1 === 'verzonnen notitie', 'notitie verloren'); }
 // 2. onvolledig: elk veld weg, elk veld null, rommel in plaats van een staat
 for (const k of Object.keys(HUIDIG)) { const s = kloon(HUIDIG); delete s[k]; controleer('zonder ' + k, s); const t = kloon(HUIDIG); t[k] = null; if (k !== 'updated' && k !== 'v' && k !== 'schema' && k !== 'magVanaf') controleer('null in ' + k, t); }
@@ -62,6 +62,22 @@ console.log('  ' + vervuild + ' vervuilde varianten');
   STAAT.STAPPEN.push({ naar: was + 1, naam: 'test A', doe: d => { volg.push('A'); d.proef = 1; return d; } }, { naar: was + 2, naam: 'test B', doe: d => { volg.push('B'); d.proef++; return d; } }, { naar: was + 3, naam: 'kapotte stap', doe: () => { throw new Error('x'); } });
   const r = STAAT.migreer(s, leeg()); ok(volg.join('') === 'AB' && r.staat.proef === 2 && r.stappen.length === 2, 'stappen niet in volgorde of een kapotte stap stopt de keten: ' + volg + ' ' + r.stappen);
   STAAT.STAPPEN.length = 0; echt.forEach(x => STAAT.STAPPEN.push(x)); }
+// 4b. stap 2 (9-11-2026): de P9-lessen van vwo 5 wisselden van id; alles wat aan een les-id hangt gaat mee, de rest blijft
+{ const s = kloon(HUIDIG); s.schema = 1;
+  s.voortgang.v5 = { 'vwo5:8.1': { st: 'gegeven', d: '2026-10-26' }, 'vwo5:8.2': { st: 'gegeven' }, 'vwo5:12.1': { st: 'overgeslagen', inToets: 'vwo5:8.3' }, 'vwo5:18.1': { st: 'gegeven' } };
+  s.ankers.v5 = { 'vwo5:8.3': { s: '2026-11-23', uur: 'x', reden: 'proef' } };
+  s.les = { 'vwo5:8.1': { titel: 'eigen titel' }, 'vwo4:8.1': { titel: 'blijft' }, 'vwo5:28.1': { titel: 'blijft ook' } };
+  s.later = { 'pres:vwo5:12.2': 'ok', 's|pres:vwo5:8.1': 'ok' };
+  s.afwijkingen = [{ g: 'v5', lesIds: ['vwo5:8.1', 'vwo5:8.3'], wat: 'P9 verplaatst' }];
+  const r = STAAT.migreer(s, leeg()); const x = r.staat;
+  ok(r.stappen.length === 1 && x.schema === STAAT.SCHEMA, 'stap 2 niet uitgevoerd');
+  ok(x.voortgang.v5['vwo5:12.1'].d === '2026-10-26' && x.voortgang.v5['vwo5:8.1'].st === 'overgeslagen' && x.voortgang.v5['vwo5:8.1'].inToets === 'vwo5:12.2' && x.voortgang.v5['vwo5:8.2'] && x.voortgang.v5['vwo5:18.1'], 'voortgang van vwo 5 niet gewisseld of iets kwijt');
+  ok(x.ankers.v5['vwo5:12.2'] && !x.ankers.v5['vwo5:8.3'], 'anker niet meegegaan');
+  ok(x.les['vwo5:12.1'].titel === 'eigen titel' && x.les['vwo4:8.1'].titel === 'blijft' && x.les['vwo5:28.1'].titel === 'blijft ook' && !x.les['vwo5:8.1'], 'eigen lesbewerking niet goed meegegaan');
+  ok(x.later['pres:vwo5:8.3'] === 'ok' && x.later['pres:vwo5:12.2'] === undefined && x.later['s|pres:vwo5:12.1'] === 'ok', 'sleutel met pres: niet meegegaan');
+  ok(x.afwijkingen[0].lesIds.join() === 'vwo5:12.1,vwo5:12.2' && x.afwijkingen[0].wat === 'P9 verplaatst', 'afwijking niet meegegaan');
+  const r2 = STAAT.migreer(x, leeg()); ok(!r2.stappen.length && JSON.stringify(r2.staat.voortgang) === JSON.stringify(x.voortgang), 'stap 2 draait twee keer');
+}
 console.log(fouten ? '  ' + fouten + ' fout(en)' : '  ' + n + ' controles goed');
 
 // 5. de echte app
