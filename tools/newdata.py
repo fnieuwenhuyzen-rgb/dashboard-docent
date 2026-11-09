@@ -93,7 +93,7 @@ def klas3(niveau, code, p1naam, events, uitval, tw_titel, extra_kmu=False):
     ]
     ts = [
         toets('P1', p1naam, 'praktijk', 10, 19, 'in de les, periode 2 (week nog kiezen)', SPEEL, 'P2'),
-        toets('T1', "Herhaling alle behandelde thema's", 'theorie', 10, 29, 'in de les, periode 3 (week nog kiezen)',
+        toets('T1', "Instrumenten, bands en orkesten", 'theorie', 10, 29, 'in de les, periode 3 (week nog kiezen)',
               'Instrumenten, bands en orkesten (theoriedeel klas 3).', 'P3'),
     ]
     meta = {'klas': niveau, 'klassen': code, 'concept': True,
@@ -148,16 +148,16 @@ m3bl = [
          toetsing='T1 luistertoets begrippen in Musicbox, in toetsweek 3 (PTA, weging 15).'),
     blok('P4', 'Muziek in het werkveld en afronding P1', [31, 38], 'open', 'P1', kennen=M3_KENNEN,
          kunnen=['Presenteren hoe muziek een rol speelt in het werkveld dat je interesseert (loopbaanpresentatie)'],
-         toetsing='P1 is het gemiddelde van minstens drie presentaties (PTA, weging 15, eind jaar). Handelingsdeel: loopbaanpresentatie.'),
+         toetsing='P1 is het gemiddelde van de drie presentaties (zang, akkoordinstrument en slagwerk) (PTA, weging 15, eind jaar). Handelingsdeel: loopbaanpresentatie.'),
 ]
 m3ts = [
     toets('T1', 'Luistertoets begrippen', 'theorie', 15, 28, 'toetsweek 3 (5–13 apr), in Musicbox', M3_KENNEN, 'P1+P2+P3', herk=None, duur=None),
-    toets('P1', 'Praktijk: gemiddelde van minstens drie presentaties', 'praktijk', 15, 36,
+    toets('P1', 'Praktijk: gemiddelde van de drie presentaties (zang, akkoordinstrument en slagwerk)', 'praktijk', 15, 36,
           'eind jaar, in de les (presentaties verspreid over het jaar)', 'Presentaties met zang, akkoordinstrument en slagwerk.', 'P1+P2+P3+P4', herk=None, duur=None),
 ]
 mavo3 = klas({'klas': 'mavo 3', 'klassen': 'm3a, m3b, m3c', 'concept': True,
               'bron': 'Vakwerkplan muziek 2026-2027 (3.3.3 bovenbouw mavo, 5.3 PTA mavo), jaarplanning 2026-2027. In mavo 3 begint het examenprogramma. De verdeling over de blokken is een voorstel; de lessen vul je zelf in.',
-              'seAandeel': 'P1 en T1, elk weging 15 (PTA mavo 3)', 'toetsKop': 'PTA mavo 3 volgens het vakwerkplan: P1 praktijk (gemiddelde van minstens drie presentaties, eind jaar) en T1 luistertoets begrippen in toetsweek 3. Duur en herkansing staan in het PTA.', 'pta': True},
+              'seAandeel': 'P1 en T1, elk weging 15 (PTA mavo 3)', 'toetsKop': 'PTA mavo 3 volgens het vakwerkplan: P1 praktijk (gemiddelde van alle drie de presentaties: zang, akkoordinstrument en slagwerk, eind jaar) en T1 luistertoets begrippen in toetsweek 3. Duur en herkansing staan in het PTA.', 'pta': True},
              m3bl, m3ts, M3_EV, {10: 'activiteitenweek A (profielkeuzeweek)', 31: 'meerdaagse excursie m3'},
              {28: ('TW3', 'Toetsweek 3'), 29: ('TW3', 'Toetsweek 3'), 38: ('TW4', 'Toetsweek 4')},
              hd=[{'id': 'H1', 'naam': 'Loopbaanpresentatie: muziek in het werkveld dat je interesseert', 'datum': None, 'week': None, 'deadline': None}])

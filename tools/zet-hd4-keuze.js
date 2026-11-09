@@ -7,7 +7,7 @@ const FORM = 'https://forms.office.com/Pages/ResponsePage.aspx?id=6jlsN-pIK0SlIW
 const KOP = 'Handelingsdeel 4: kies je muzikale bijdrage';
 const KOP2 = 'Handelingsdeel 4: heb je al gekozen?';
 const KEUZES = 'Kies één: koor, band of ensemble; open dag of viering; coaching; onderhoud en lokaal.';
-const NIET_TEL = 'Invullen doe je op de laptop of thuis, niet op je telefoon. De link staat in je Magister-bericht.';
+const NIET_TEL = 'Invullen doe je op de laptop van de groep of thuis op een computer. De link staat in je Magister-bericht.';
 const WEEK10 = { min: 2, soort: 'gesprek', kop: KOP, stappen: ['Vul vóór 13 november het keuzeformulier in.', KEUZES, NIET_TEL], docent: 'Vraag wie al heeft ingevuld. Daarna halen ze de aftekenkaart van hun keuze bij jou.' };
 const WEEK11 = { min: 2, soort: 'gesprek', kop: KOP2, stappen: ['De keuze moest vóór 13 november binnen zijn. Nog niet gedaan? Doe het vandaag.', KEUZES, NIET_TEL], docent: 'Kijk vóór de les in de lijst Handelingsdeel 4 2026-2027 wie nog op Nog kiezen of Kies één staat. Geef wie gekozen heeft de aftekenkaart.' };
 const LESSEN = [['vwo5', 10, 'l1', WEEK10], ['vwo6', 10, 'l2', WEEK10], ['havo4', 11, 'l1', WEEK11], ['havo5', 11, 'l1', WEEK11], ['vwo4', 11, 'l1', WEEK11], ['vwo5', 11, 'l1', WEEK11], ['vwo6', 11, 'l1', WEEK11]];

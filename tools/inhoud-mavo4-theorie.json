@@ -136,12 +136,10 @@
     {
      "min": 13,
      "soort": "uitleg",
-     "kop": "Stemmen onder elkaar of door elkaar",
+     "kop": "Meerstemmigheid",
      "stappen": [
-      "Homofonie: één stem heeft de melodie, de rest begeleidt. Polyfonie: meerdere stemmen met een eigen melodie, ongeveer even belangrijk.",
-      "Parallelle beweging: de tweede stem gaat dezelfde kant op als de melodie. Tegenbeweging: de ene stem gaat omhoog, de andere omlaag.",
-      "Imitatie: een stem doet de andere na. Canon: alle stemmen zingen dezelfde melodie, om de beurt binnenkomend.",
-      "Tegenmelodie of tegenstem: een tweede melodie naast de hoofdmelodie."
+      "Homofonie of polyfonie?",
+      "Parallel of tegen? Imitatie, canon of tegenmelodie?"
      ],
      "docent": "Uit de sectiemap: homofoon is melodie met begeleiding, polyfoon is een soort canon, imitatie is nadoen, tegenbeweging is stem 1 naar boven en stem 2 naar beneden. Laat de beweging met de handen doen: twee handen tegelijk omhoog (parallel) of één omhoog en één omlaag (tegen). Speel per begrip een stukje van maximaal 20 seconden.",
      "beeld": {
@@ -157,11 +155,11 @@
        },
        {
         "k": "Parallelle beweging",
-        "t": "tweede stem gaat dezelfde kant op"
+        "t": "dezelfde kant op"
        },
        {
         "k": "Tegenbeweging",
-        "t": "de ene stem omhoog, de andere omlaag"
+        "t": "de een omhoog, de ander omlaag"
        },
        {
         "k": "Imitatie",
@@ -169,11 +167,11 @@
        },
        {
         "k": "Canon",
-        "t": "dezelfde melodie, om de beurt binnenkomend"
+        "t": "dezelfde melodie, om de beurt"
        },
        {
         "k": "Tegenmelodie",
-        "t": "tweede melodie naast de hoofdmelodie"
+        "t": "tweede melodie ernaast"
        }
       ]
      }
@@ -483,10 +481,10 @@
      "soort": "uitleg",
      "kop": "Vier begrippen",
      "stappen": [
-      "Opera: een voorstelling waarin alles gezongen wordt, met orkest. De verhaallijn zit in de zang.",
-      "Musical: zang, gesproken tekst en dans door elkaar. De muziek is vaak lichter, met popinvloed.",
-      "Aria: een solozangstuk in klassieke muziek. Song: denk aan een popsong, ook in een musical.",
-      "Op het examen komen aria en song alleen in de vraagstelling voor. Je hoeft ze niet zelf te noemen."
+      "Opera: alles wordt gezongen, met orkest. De verhaallijn zit in de zang.",
+      "Musical: zang, spraak en dans door elkaar, vaak lichter, met popinvloed.",
+      "Aria: solozangstuk in klassieke muziek. Song: popsong, ook in een musical.",
+      "Aria en song staan op het examen alleen in vragen."
      ],
      "docent": "Syllabus: opera en musical zijn begrippen, aria en song hebben een * (niet actief bevraagd). Luistervragen over deze begrippen staan in de syllabus als n.v.t.; ze komen vooral in de tekst van een vraag. Uit de sectiemap: aria is een solozangstuk in klassieke muziek, song is een popsong. Dat opera klassiek gezongen wordt en een musical gesproken tekst en dans bevat, is algemene kennis. Leg het kort uit.",
      "beeld": {
@@ -516,12 +514,12 @@
      "soort": "doen",
      "kop": "Sorteren op wat je hoort",
      "stappen": [
-      "Zes fragmenten, steeds ongeveer een halve minuut. Opera of musical?",
-      "Noteer wat je hoort dat past: klassieke stem, gesproken tekst, orkest, band, popritme, solo of groep.",
-      "Bespreek verschillen met je buur."
+      "Zes fragmenten van een halve minuut: opera of musical?",
+      "Noteer wat past uit de tabel.",
+      "Bespreek met je buur."
      ],
      "docent": "Fragmenten kies je zelf: drie opera en drie musical, zonder ondertiteling. Zorg voor één aria en één song. Antwoorden vooraf. Waar het misgaat: een lichte stem in een opera wordt als musical gehoord. Kijk dan naar het orkest en of er gesproken tekst is. Christelijk repertoire kan: een musical met een Bijbels verhaal is geschikt, kies dan zelf.",
-     "klaar": "Zoek een fragment uit een musical die je kent. Wat is de song, wat is de gesproken tekst?",
+     "klaar": "Zoek een musicalfragment dat je kent: wat is de song, wat de tekst?",
      "beeld": {
       "soort": "tabel",
       "rijen": [

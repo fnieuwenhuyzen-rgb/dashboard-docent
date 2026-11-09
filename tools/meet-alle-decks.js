@@ -140,7 +140,8 @@ async function inhoud(d, bronIndex) {
   // -- vaste regels
   const klasUitgesloten = d.lessen.every(l => !/^(mavo3|havo3|vwo3|kmu3|bb1)$/.test(l.lg)) || false;
   for (const { dia, p, bron } of paragrafen) {
-    for (const re of VERBOD_KLAS) { const m = p.match(re); if (!m) continue; const voor = p.slice(0, m.index); if (NEGEER.test(voor.slice(-60))) continue; if (/^presenteer\w*$/i.test(m[0]) && !/klas|groep|elkaar|leraar|docent/i.test(p)) continue;
+    const examenconcert = /examen-?concert/i.test(p) || d.lessen.some(l => /examen-?concert/i.test(l.titel || '')); // een examenconcert is een echt concert, niet "voor de klas" (besluit Frans 9-11-2026)
+    for (const re of VERBOD_KLAS) { if (examenconcert) break; const m = p.match(re); if (!m) continue; const voor = p.slice(0, m.index); if (NEGEER.test(voor.slice(-60))) continue; if (/^presenteer\w*$/i.test(m[0]) && !/klas|groep|elkaar|leraar|docent/i.test(p)) continue;
       const hard = !/^voor de (hele )?klas$/i.test(m[0]) || /(speel|spelen|zing|zingen|presenteer|presenteren|voordragen|laten horen|laat horen|voorspelen|voorzingen)\w*[^.]{0,40}voor de (hele )?klas|voor de (hele )?klas[^.]{0,30}(spelen|zingen|presenteren|voordragen|laten horen)/i.test(p);
       melding(d, hard ? 'fout' : 'let-op', 'regel-klas', `${hard ? 'Mogelijk' : 'Misschien'} voor de klas, gevonden "${m[0]}" (${plek(bron, dia)}): "${p.slice(0, 140)}"`, `Lees ${plek(bron, dia)}. Niemand speelt, zingt of presenteert voor de klas: laat het in groepjes voor de docent (mavo 3 en klas 3: groepjes, MusicBox of 'Duurt te lang'). Herschrijf de tekst.`, dia); break; }
     for (const m of p.matchAll(TELEFOON)) { const na = p.slice(m.index + m[0].length, m.index + m[0].length + 25); const voor = p.slice(Math.max(0, m.index - 40), m.index); if (/^[\s:,.\-–]*(weg|in de tas|in je tas|op de kluis|opbergen|uit|niet|geen)/i.test(na)) continue; if (/\b(geen|niet|nooit|zonder)\s+\w*$/i.test(voor)) continue;

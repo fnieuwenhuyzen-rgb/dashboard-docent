@@ -241,6 +241,8 @@ for (const M of BM) {
 }
 
 /* ---------- 5. teksten die botsen met vaste regels ---------- */
+// Een examenconcert is een echt concert (besluit Frans 9-11-2026), geen "voor de klas": zo'n tekst of model telt niet mee voor de regel-klas.
+const EXAMENCONCERT = /examen-?concert/i;
 const ONTKEND = /\b(niet|nooit|geen|niemand|zonder|nergens)\b/i;
 /* "voor publiek", "optreden" en "podium" horen bij echte concerten (Messiah, examenconcert, kerstviering) en tellen niet mee:
    de regel gaat over leerlingen die voor de klas spelen, zingen of presenteren */
@@ -261,7 +263,7 @@ function tekstControle(tekst, ctx, wat) {
   const bekend = BEKEND.test(tekst);
   for (const z of zinnen(tekst)) {
     const vdk = VOOR_DE_KLAS.find(r => r.test(z));
-    if (vdk && !ONTKEND.test(z)) meld(Object.assign({ ernst: bekend ? 'info' : 'let op', cat: 'regel-klas', tekst: `leerlingen voor de klas (${wat}${bekend ? ', staat er al als notitie bij' : ''}): "${z.slice(0, 190)}"` }, ctx));
+    if (vdk && !ONTKEND.test(z) && !ctx.examenconcert && !EXAMENCONCERT.test(tekst)) meld(Object.assign({ ernst: bekend ? 'info' : 'let op', cat: 'regel-klas', tekst: `leerlingen voor de klas (${wat}${bekend ? ', staat er al als notitie bij' : ''}): "${z.slice(0, 190)}"` }, ctx));
     const tel = TELEFOON.find(r => r.test(z));
     if (tel && !TELEFOON_TOEGESTAAN.test(z)) meld(Object.assign({ ernst: 'let op', cat: 'regel-telefoon', tekst: `telefoon in de les (${wat}): "${z.slice(0, 190)}"` }, ctx));
   }
@@ -273,10 +275,10 @@ function looptekst(o, ctx, pad) {
 }
 for (const { lg, w, slot, les } of alleLessen()) {
   if (les.type === 'uitval') continue;
-  const ctx = Object.assign(bij(lg, w, slot), { bron: `basis.json, ${lesNaam(lg, w, slot)}` });
+  const ctx = Object.assign(bij(lg, w, slot), { bron: `basis.json, ${lesNaam(lg, w, slot)}`, examenconcert: EXAMENCONCERT.test(les.titel || '') });
   looptekst(les, ctx, '');
 }
-for (const M of BM) { const lgK = lgVanKlas(M.klas, M.lessen); const l0 = (M.lessen || [])[0]; const ctx = Object.assign(l0 && B.leergangen[l0.lg] ? bij(l0.lg, l0.w, l0.slot) : { klas: M.klas, lg: lgK }, { bron: `beoordeling.json, model ${M.id}` }); looptekst(M, ctx, ''); }
+for (const M of BM) { const lgK = lgVanKlas(M.klas, M.lessen); const l0 = (M.lessen || [])[0]; const ctx = Object.assign(l0 && B.leergangen[l0.lg] ? bij(l0.lg, l0.w, l0.slot) : { klas: M.klas, lg: lgK }, { bron: `beoordeling.json, model ${M.id}`, examenconcert: !!M.delen || EXAMENCONCERT.test(`${M.titel} ${M.thema}`) }); looptekst(M, ctx, ''); }
 
 /* ---------- ordenen en uitvoer ---------- */
 const ERNST = { fout: 0, 'let op': 1, info: 2 };

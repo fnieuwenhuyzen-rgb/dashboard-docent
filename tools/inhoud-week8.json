@@ -53,7 +53,7 @@
         "extra": { "1": { "soort": "kaarten", "items": [{ "k": "Toon en zuiverheid", "t": "klinkt het zoals bedoeld?" }, { "k": "Ritme en tempo", "t": "blijft het staan?" }, { "k": "Uitdrukking", "t": "dynamiek, frasering, karakter" }, { "k": "Samenspel", "t": "luisteren en reageren" }] } }
       },
       {
-        "titel": "Inspelen en terugluisteren", "code": "P1 · les 8.2", "bestand": "08.2 Inspelen en terugluisteren.pptx",
+        "titel": "Inspelen en terugluisteren", "code": "P1 · les 8.2", "bestand": "08.2 Inspelen en terugluisteren.pptx", "archief": true,
         "vraag": "Wat neem ik mee naar P10?",
         "doel": "Je speelt in of beoordeelt je eigen uitvoering, en je noteert één ding dat je meeneemt naar P10.",
         "criteria": ["Format ingevuld, of klaar om donderdag te spelen"],

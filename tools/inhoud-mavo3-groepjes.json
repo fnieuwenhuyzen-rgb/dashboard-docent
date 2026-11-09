@@ -42,7 +42,7 @@
               "Dit jaar: P1 (drie presentaties) en T1 (luistertoets begrippen).",
               "Ook dit jaar: de loopbaanpresentatie over muziek in het werkveld."
             ],
-            "docent": "Uit het PTA. P1: praktijk, weging 15, gemiddelde van minstens drie presentaties (zang, akkoordinstrument, slagwerk), verspreid over het jaar. T1: luistertoets in toetsweek 3, weging 15, over ritme, maat, tempo, toonhoogte, dynamiek en klankkleur. P1 en T1 zijn herkansbaar. H1, de loopbaanpresentatie: weging 0, niet herkansbaar. Mavo 4: examenconcert, eindopdracht over muziek in relatie tot een andere kunstvorm, en het centraal examen. Begin met de vraag: wat denk je dat er op een muziekexamen gevraagd wordt?",
+            "docent": "Uit het PTA. P1: praktijk, weging 15, gemiddelde van alle drie de presentaties (zang, akkoordinstrument én slagwerk), verspreid over het jaar. T1: luistertoets in toetsweek 3, weging 15, over ritme, maat, tempo, toonhoogte, dynamiek en klankkleur. P1 en T1 zijn herkansbaar. H1, de loopbaanpresentatie: weging 0, niet herkansbaar. Mavo 4: examenconcert, eindopdracht over muziek in relatie tot een andere kunstvorm, en het centraal examen. Begin met de vraag: wat denk je dat er op een muziekexamen gevraagd wordt?",
             "beeld": {
               "soort": "tabel",
               "rijen": [
@@ -80,7 +80,7 @@
             "kop": "Wat wil je weten?",
             "stappen": [
               "Welke vragen heb je over het vak of over het examen?",
-              "Welke presentatie lijkt je het spannendst: zang, akkoordinstrument of slagwerk?",
+              "Alle drie komen aan bod: zang, akkoordinstrument en slagwerk. Welke lijkt je het spannendst?",
               "Schrijf één verwachting voor dit jaar op."
             ],
             "docent": "Presentatie 1 is in lesweek 8: in groepjes, niet voor de klas. In lesweek 2 kiest elk groepje C'est la vie of Duurt te lang uit de MusicBox."
@@ -1171,7 +1171,7 @@
               "Vul je strookje in. Je hebt 3 minuten.",
               "Lever het in bij de deur. Volgende week stellen we het P1-cijfer vast."
             ],
-            "docent": "Strookje uitdelen, na 3 minuten innemen bij de deur. Score: 4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen. In lesweek 36 stel je het P1-cijfer vast als gemiddelde van presentatie 1, 2 en 3 (PTA: minstens drie praktijkdelen)."
+            "docent": "Strookje uitdelen, na 3 minuten innemen bij de deur. Score: 4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen. In lesweek 36 stel je het P1-cijfer vast als gemiddelde van presentatie 1, 2 en 3 (alle drie de praktijkdelen tellen mee: zang, akkoordinstrument en slagwerk)."
           }
         ],
         "formatief": {
