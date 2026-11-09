@@ -59,12 +59,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 - Synchroniseren tegen de echte D1.
 - Verder (oude lijst): trillen en geluid op de echte tablet, echte Outlook-mail en -agenda, echte mapkiezer en Forms-export, de tril van Magister afronden, QR-code scannen.
 
-## Voorstel opruimen (9-11, nog niets weg) [Frans]
+## Nog op te ruimen
 
-Deze bestanden zetten sessies op het verkeerde spoor of vervuilen zoekresultaten. Git bewaart alles.
-- `handboek/open-punten-archief-2026-11-08.md` (124 kB): 266 van de 269 regels staan ook in het nieuwere archief. Weg.
-- `handboek/open-punten-voorstel.md` (10 kB): voorstel van 8-11, vervangen door de nieuwe `OPEN-PUNTEN.md`. Weg.
-- `handboek/concept-bericht-privacyfunctionaris.md`: besluit 9-11 is geen bericht. Weg, of bewaren als naslag.
-- Naar OneDrive (`lesdag project`): `controle-pta-lesinhoud`, `controle-decks`, `controle-pta-besluiten` en beide `feedback-kritische-docent` (samen ±270 kB).
-- De oude map `Dashboard Docent/lesdag project/lesdag`: Frans verwijdert hem. Tot die tijd laat een sessie daar zich leiden door een verouderde `CLAUDE.md`.
-- Apart bekijken: `public/m365.js`, `auth.html`, `config.js` doen niets meer, maar staan in de app (aparte taak, dat is een wijziging in `public/`).
+- De oude map `Dashboard Docent/lesdag project/lesdag`: Frans verwijdert hem.
+- `public/m365.js`, `auth.html`, `config.js` doen niets meer, maar staan in de app. Weghalen is een aparte taak, dat is een wijziging in `public/`.

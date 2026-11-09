@@ -1,7 +1,7 @@
 // Meet alle presentaties die Lesdag gebruikt, op kopieën in een korte map, en schrijft de uitslag als Markdown.
 // De echte bestanden in de sectiemap worden alleen gelezen (gekopieerd), nooit geopend of overschreven.
 //
-// Gebruik:  node tools/meet-alle-decks.js [--vanaf 2026-11-09] [--weken 8] [--rapport handboek/controle-decks-2026-11.md]
+// Gebruik:  node tools/meet-alle-decks.js [--vanaf 2026-11-09] [--weken 8] [--rapport <pad buiten de repo>]
 //                                         [--json uit.json] [--geen-overloop] [--sectiemap "pad"]
 // Lijst: elke pptx-link in public/data/basis.json (veld materiaal) en tools/presentaties-links.json.
 // Per deck: bestand aanwezig, foto's niet vervormd (tools/meet-deck.js), tekst die buiten het vak valt (tools/meet-overloop.ps1,

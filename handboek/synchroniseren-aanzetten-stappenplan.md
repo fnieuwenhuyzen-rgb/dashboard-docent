@@ -9,7 +9,7 @@ Elk apparaat zet het zelf aan in Instellingen. Het eerste apparaat vult de lege 
 ## 0. Vooraf (10 minuten, één keer)
 
 - [ ] **Tweestapsverificatie op het Cloudflare-account** aanzetten: zie `tweestapsverificatie-cloudflare.md`. Reden: er gaan leerlingnamen en scores naar een database op dat account.
-- [ ] **Bericht aan de privacyfunctionaris** versturen (of ten minste klaar hebben): zie `concept-bericht-privacyfunctionaris.md`. Dat is jouw afweging. Mijn advies: eerst versturen, want na stap 1 staan de namen op de server.
+- Geen bericht aan de privacyfunctionaris: besluit Frans 9-11.
 - [ ] Gebruik op elk apparaat **het live adres** https://lesdag-muziek.pages.dev. De proef (`lesdag-proef`) en andere adressen hebben een eigen staat en doen niet mee.
 - [ ] Op elk apparaat de app **afsluiten en opnieuw openen**, zodat de nieuwste versie draait. In Instellingen moet de kaart "Synchroniseren" met de knop "Synchroniseren aanzetten" staan.
 - [ ] Zet geen les aan tijdens het aanzetten. Synchroniseren wacht tijdens de lesmodus, tijdens typen en bij een open paneel; dat is normaal.

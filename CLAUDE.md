@@ -42,4 +42,4 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent, CSG Prins Maurits). Vanilla JS
 
 - Live: https://lesdag-muziek.pages.dev, achter Cloudflare Access. Repo: GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). Alleen `public/` en `functions/` gaan online.
 - Workers `lesdag-rooster` (Zermelo) en `lesdag-agenda` (Outlook) staan los van Pages; een push verandert ze niet.
-- Documenten staan niet in de repo maar in OneDrive, `Dashboard Docent/lesdag project`.
+- Documenten staan niet in de repo maar in OneDrive, `Dashboard Docent/lesdag project` (controle- en feedbackrapporten in `rapporten`).

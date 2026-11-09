@@ -24,7 +24,7 @@ Deze week:
 - PTA-lijst doorsturen: `lesdag project/PTA-punten muziek 2026-2027 voor PTA-beheerder.docx`.
 - Wo 11-11 na 07:30: geschiedenis Power Automate HD4-stroom bekijken. Na 16-11: stroom HD4 uit en proefantwoord wissen.
 - Meldpunt instrumenten: bewaking faalde op 9-11 (nieuwe sessie).
-- Opruimen in de repo: voorstel onderaan `handboek/werkvoorraad.md`, kiezen wat weg mag.
+- Oude map `lesdag project/lesdag` verwijderen (code staat in `C:/Projecten/Lesdag`).
 
 Voor 23-11, op een echt apparaat:
 - Cijferkolom plakken in Magister. Lesmodus op het digibord. Zermelo met het echte rooster. Concertstand op de tablet. Feedbackblad printen.
