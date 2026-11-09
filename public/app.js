@@ -1581,7 +1581,7 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
       const v = magTelt(s, y) ? magVakken(s, y) : {};
       return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}${daarna}` }; }
     case 'naLes': { const v = magTelt(s, x) ? magVakken(s, x) : {};
-      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, deels of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
+      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, half af of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
     case 'pauze': return { lab: '', zin: 'Pauze.', sub: `Tot ${hm(it.tot)}.` };
     case 'rust': return { lab: 'Rustblok', zin: `Tot ${hm(it.tot)} is van jou.${A.pz && A.pz.weg.length ? ' Je pauze viel weg door ' + lijstTxt([...new Set(A.pz.weg.map(q => q.door))]) + '.' : ''}` };
     case 'koor': return { lab: 'Schoolkoor · tot ' + hm(it.tot), zin: `${titel(it.titel)}.` };
@@ -1671,7 +1671,7 @@ function vorigeAfronden(s, p, x, nu) { // lessen zonder pauze ertussen: de vorig
   const rest = s === vandaag() ? teAfronden(s, p, nu).filter(y => y.u.id !== x.u.id) : []; if (!rest.length) return '';
   return `<div class="kaart" style="margin-top:1rem"><h3>${rest.length === 1 ? 'De vorige les afronden' : 'De vorige lessen afronden'}</h3>${rest.map(y => afrondRij(s, y)).join('')}${rest.length === 1 ? `<details class="meer"><summary>Notitie voor de volgende les van ${esc(rest[0].u.groep)}</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(rest[0], s))}</textarea></details>` : ''}</div>`;
 }
-function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">deels</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
+function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">half af</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
 function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zegt al hoeveel lessen en de eerste (bevinding 72)
   const L = lesUren(p); const kr = A.items.find(it => it.soort === 'koor'); const pz = A.pz;
   const pzT = pz && !pz.onbekend && pz.vrij.length ? ` Pauze: ${pz.vrij.map(x => hm(x.van) + '–' + hm(x.tot)).join(' en ')}.` : '';
@@ -1716,7 +1716,7 @@ function lesZonderKaart(s, x, nu) { // les zonder lesinhoud (klas zonder leergan
 function naLesKaart(s, p, x, nu) {
   const l = les(x.item); const rest = teAfronden(s, p, nu).filter(y => y !== x);
   return `<div class="kaart"><p class="eyebrow">De bel ging · ${esc(x.u.groep)} · ${esc(x.u.start)}–${esc(x.u.eind)}</p><h2>Hoe ging het?</h2><p class="lead">${esc(l.titel || '')}</p>${magBlok(s, x)}
-    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Deels, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
+    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Half af, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
     <details class="meer"><summary>Notitie voor de volgende les</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(x, s))}</textarea></details>
     <p class="sub" style="margin-top:.6rem">De notitie gaat mee naar de volgende les van ${esc(x.u.groep)}. Straks komt terug in je volgende werkblok, niet in je pauze.</p>
     ${rest.length ? `<h3>Ook nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
@@ -2097,7 +2097,7 @@ function viewRegie() {
   <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
   <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min${y.was && y.was !== y.min ? ` (was ${y.was})` : ''}</small>` : ''}</button></li>`).join('')}</ol></div></div>
   <div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
-    <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Deels, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
+    <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Half af, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
     <textarea id="rgNot" placeholder="Notitie voor de volgende les">${x && x.item ? esc(notitieVak(x, s)) : ''}</textarea>
     ${x && x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div></div>`;
 }
@@ -2994,7 +2994,7 @@ function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.l
 function afrondenHtml() {
   const P = LES;
   return `<div class="afronden"><p class="eyebrow">Les afronden · ${esc(P.x.u.groep)}</p><h2>${esc(P.l.titel || '')}</h2>
-  <div class="keuzes">${[['gegeven', 'Gegeven'], ['half', 'Half af, volgende keer verder'], ['niet', 'Niet gegeven']].map(([k, n]) => `<button data-keuze="${k}" aria-pressed="${P.keuze === k}">${n}</button>`).join('')}</div>
+  <div class="keuzes">${[['gegeven', 'Gegeven'], ['half', 'Half af, volgende keer verder'], ['niet', 'Niet aan toegekomen']].map(([k, n]) => `<button data-keuze="${k}" aria-pressed="${P.keuze === k}">${n}</button>`).join('')}</div>
   <label style="font-family:var(--lees);color:#cbb8db">Notitie voor de volgende les<textarea id="lnot">${esc(notitieVak(P.x, P.s))}</textarea></label>
   <div class="keuzes"><button data-l="opslaan">Opslaan en naar de volgende les</button></div></div>`;
 }
@@ -3132,7 +3132,7 @@ document.addEventListener('click', async e => {
     if (!x || !x.item) { toast('Deze les staat niet meer op de planning'); return; }
     const terug = foto(); rondAf(s, x, D.rgaf, ($('#rgNot') || {}).value); bewaar(true); rgStuur('sluit'); RG = null; toast(x.u.groep + ' afgerond', terug); location.hash = 'nu'; return; }
   if (D.rondaf) { const [s, uid, keuze] = D.rondaf.split('|'); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
-    if (x && x.item) { const terug = foto(); rondAf(s, x, keuze, ($('#nNot') || {}).value); nuKijk = null; bewaar(); toast(x.u.groep + ': ' + (keuze === 'gegeven' ? 'gegeven' : keuze === 'half' ? 'deels, volgende keer verder' : 'de les schuift door'), terug); } return; }
+    if (x && x.item) { const terug = foto(); rondAf(s, x, keuze, ($('#nNot') || {}).value); nuKijk = null; bewaar(); toast(x.u.groep + ': ' + (keuze === 'gegeven' ? 'gegeven' : keuze === 'half' ? 'half af, volgende keer verder' : 'de les schuift door'), terug); } return; }
   if (D.aflater) { const terug = foto(); const [s, uid] = D.aflater.split('|'); (S.afLater[s] = S.afLater[s] || []).push(uid); nuKijk = null; bewaar(); toast('Komt terug in je volgende werkblok', terug); return; }
   if (D.rustweg) { const terug = foto(); S.rust[D.rustweg] = 'weg'; bewaar(); toast('Het rustblok is vrijgegeven', terug); return; }
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }

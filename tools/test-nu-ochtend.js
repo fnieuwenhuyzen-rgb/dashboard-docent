@@ -47,6 +47,17 @@ const TOON = process.argv.includes('--toon');
     const b = await kijk('2026-11-16T09:17:00+01:00', 'nu'); is('63: de vraag staat er bij de tweede les', rijen(b.html, 't1') === 3 && /Daarna tv4 afronden/.test(b.tekst), b.tekst.slice(0, 400));
     const c = await kijk('2026-11-16T09:40:00+01:00', 'nu'); is('63: ook later in de les nog', rijen(c.html, 't1') === 3); }
 
+
+  // 74: dezelfde woorden voor hetzelfde: Gegeven, Half af, Niet aan toegekomen, op Nu, in de lesmodus en in de regie
+  { const WOORDEN = ['Gegeven', 'Half af, volgende keer verder', 'Niet aan toegekomen'];
+    const a = await kijk('2026-11-16T10:05:00+01:00', 'nu'); const kn = (a.html.match(/<button[^>]*data-rondaf="[^"]*\|(?:gegeven|half|niet)"[^>]*>[^<]*<\/button>/g) || []).map(x => x.replace(/<[^>]*>/g, ''));
+    is('74: Nu, na de bel', WOORDEN.every(w => kn.includes(w)), kn.join(' / '));
+    is('74: Nu, zin na de bel', /gegeven, half af of niet aan toegekomen/.test(a.tekst));
+    let lm = ''; await kijk('2026-11-16T09:20:00+01:00', 'vandaag', null, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.click('#les [data-l="naaraf"]'); await page.waitForTimeout(150); lm = await page.evaluate(() => [...document.querySelectorAll('#les .keuzes button')].map(b => b.innerText.trim()).join(' / ')); });
+    is('74: lesmodus, afronden', WOORDEN.every(w => lm.includes(w)), lm);
+    const src = fs.readFileSync(path.join(__dirname, '..', 'public', 'app.js'), 'utf8');
+    is('74: nergens "Deels" of "Niet gegeven" als keuze', !/>Deels|'Niet gegeven'|>deels</.test(src)); }
+
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
   console.log(`nu-ochtend: ${n} controles, alles goed`);
