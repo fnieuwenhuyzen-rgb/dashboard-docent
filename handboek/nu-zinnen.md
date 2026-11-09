@@ -59,3 +59,7 @@ Overal dezelfde drie keuzes, op Nu, in de lesmodus en in de regie: **Gegeven**, 
 ## Afwezig (bevinding 62)
 
 Op een dag waarop Frans zich afwezig meldt, leest Nu niet als een vrije dag. Zin: "Afwezig. 3 lessen schuiven door (tv4 en tb1). Toetsweek tm4 loopt door." met de knop **Toch aanwezig**. De kop van Dag noemt dezelfde dingen. Op de eerste lesdag erna staat in de meldingen één regel: "Tijdens je afwezigheid geschoven: 3 lessen (tv4 en tb1), ma 9 nov."
+
+## De eerste lesdag na een vakantie (bevinding 71)
+
+"Blijft liggen" is die ochtend één regel in plaats van een stapel: "Tijdens de kerstvakantie verlopen: 2 taken. 26 lagen er al langer." Eén knop schuift de taken die in de vakantie verliepen door naar de volgende lesdag; de hele lijst staat ingeklapt eronder. De dag erna is het weer de gewone lijst. Code: `naVakantie`, `liggenBlok`.

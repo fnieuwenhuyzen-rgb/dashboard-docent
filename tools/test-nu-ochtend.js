@@ -71,6 +71,17 @@ const TOON = process.argv.includes('--toon');
     const c = await kijk('2026-11-10T07:30:00+01:00', 'nu', AFW); is('62: de dag erna: wat er geschoven is', /Tijdens je afwezigheid geschoven: 3 lessen \(tv4 en tb1\), ma 9 nov\./.test(c.tekst), c.tekst.slice(0, 200));
     const d = await kijk('2026-11-11T07:30:00+01:00', 'nu', AFW); is('62: een dag later is die regel weg', !/Tijdens je afwezigheid/.test(d.tekst)); }
 
+
+  // 71: de eerste lesdag na de kerst (di 5-1-2027): wat is verlopen, één knop, geen lange lijst
+  { const TK = (id, d) => ({ id, titel: 'Testtaak ' + id, bron: 'overig', d, af: false });
+    const KERST = { taken: [TK('v1', '2026-12-28'), TK('v2', '2026-12-30'), TK('o1', '2026-12-10')] };
+    let uitg = null, voor = '', open = null;
+    const a = await kijk('2027-01-05T08:10:00+01:00', 'nu', KERST, async page => { voor = await page.evaluate(() => document.querySelector('#main').innerText); open = await page.evaluate(() => document.querySelector('.liggen details').open); await page.click('[data-liggenvakantie]'); await page.waitForTimeout(300); uitg = await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')).uitgesteld || {}); });
+    is('71: regel over wat verlopen is', /Na de kerstvakantie/.test(voor) && /Tijdens de kerstvakantie verlopen: 2 taken\./.test(voor) && /lagen er al langer/.test(voor), (voor.match(/Na de kerst[\s\S]{0,200}/) || [''])[0]);
+    is('71: de stapel staat ingeklapt', open === false && !/Blijft liggen ·/.test(voor));
+    is('71: één knop schuift de vakantietaken door', uitg && uitg['eigen:v1'] === '2027-01-06' && uitg['eigen:v2'] === '2027-01-06' && !uitg['eigen:o1'], JSON.stringify(uitg));
+    const b = await kijk('2027-01-06T08:10:00+01:00', 'nu', KERST); is('71: een dag later gewoon weer de lijst', /Blijft liggen ·/.test(b.tekst) && !/Na de kerstvakantie/.test(b.tekst)); }
+
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
   console.log(`nu-ochtend: ${n} controles, alles goed`);

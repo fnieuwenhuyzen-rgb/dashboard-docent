@@ -1326,10 +1326,18 @@ function blijftLiggen() {
   reclameOpen(addD(t, -1), G).forEach(m => { if (!op('rec:' + m.id)) out.push({ key: 'rec:' + m.id, titel: m.titel, bron: 'reclame', dag: m.d, vink: `data-recvink="${esc(m.id)}"` }); });
   return out.sort((a, b) => a.dag < b.dag ? -1 : a.dag > b.dag ? 1 : 0);
 }
+function naVakantie(t) { // t is de eerste lesdag na een vakantie: geeft die vakantie (bevinding 71)
+  for (const v of B.kalender.vakanties) { let d = addD(v.tot, 1); for (let i = 0; i < 40 && vrijReden(d); i++) d = addD(d, 1); if (d === t) return v; }
+  return null;
+}
 function liggenBlok() {
   const L = blijftLiggen(); if (!L.length) return '';
   const t = vandaag(); const morgen = volgendeLesdag(t, 1);
   const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
+  const V = naVakantie(t);
+  if (V) { const nw = L.filter(x => x.dag >= V.van).length, oud = L.length - nw; // de eerste dag na een vakantie: één regel en één knop, de stapel ingeklapt
+    return `<div class="kaart liggen"><h2>Na de ${esc(V.naam.toLowerCase())}</h2><p class="lead">${nw ? `Tijdens de ${esc(V.naam.toLowerCase())} verlopen: ${nw} ${nw === 1 ? 'taak' : 'taken'}.` : `Tijdens de ${esc(V.naam.toLowerCase())} is niets verlopen.`}${oud ? ` ${oud} ${oud === 1 ? 'lag' : 'lagen'} er al langer.` : ''}</p>
+      ${nw ? `<div class="knoppen"><button class="btn hoofd" data-liggenvakantie="${morgen}">Schuif de ${nw === 1 ? 'taak' : nw + ' taken'} door naar morgen</button></div>` : ''}<details class="meer"><summary>Bekijk alles wat blijft liggen · ${L.length}</summary>${L.map(rij).join('')}</details></div>`; }
   const rest = L.slice(3);
   return `<div class="kaart liggen"><h2>Blijft liggen · ${L.length}</h2>${L.slice(0, 3).map(rij).join('')}${rest.length ? `<details class="meer"><summary>Nog ${rest.length} ${rest.length === 1 ? 'taak' : 'taken'}</summary>${rest.map(rij).join('')}</details>` : ''}</div>`;
 }
@@ -3113,6 +3121,7 @@ document.addEventListener('click', async e => {
   if (D.afwijkingterug) { maakOngedaan(D.afwijkingterug); toast('Teruggezet'); return; }
   if (D.taakopen) { openTaak(D.taakopen); return; }
   if (D.liggenplan) { sluit(); liggenInPlannen(D.liggenplan); return; }
+  if (D.liggenvakantie) { sluit(); const V = naVakantie(vandaag()); const lijst = V ? blijftLiggen().filter(x => x.dag >= V.van) : []; if (lijst.length) { S.uitgesteld = S.uitgesteld || {}; for (const k of Object.keys(S.uitgesteld)) if (S.uitgesteld[k] <= vandaag()) delete S.uitgesteld[k]; lijst.forEach(x => { S.uitgesteld[x.key] = D.liggenvakantie; }); bewaar(); toast(lijst.length + ' ' + (lijst.length === 1 ? 'taak komt' : 'taken komen') + ' terug op ' + fmtD(D.liggenvakantie)); } return; }
   if (D.liggenlater) { sluit(); const i = D.liggenlater.lastIndexOf('|'); stelUit(D.liggenlater.slice(0, i), D.liggenlater.slice(i + 1)); return; }
   if (D.palet != null) { paletOpen(); return; }
   if (D.stap) { nuStap(+D.stap); return; }
