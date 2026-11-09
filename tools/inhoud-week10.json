@@ -382,14 +382,14 @@
           {
             "min": 25,
             "soort": "doen",
-            "kop": "KC 4a: I, IV en V met zo weinig mogelijk beweging",
+            "kop": "KC 4a: I, IV en V, weinig beweging",
             "stappen": [
               "Begin in C: C, F/C, G/B, C. De bas speelt c, c, b, c.",
-              "Wat kan blijven liggen, blijft liggen. De rest zet een klein stapje.",
-              "Doe dan hetzelfde in G en in F. Zelfde patroon, andere tonen.",
-              "Eerst langzaam kijkend. Dan in tempo en zonder te kijken."
+              "Laat liggen wat kan; de rest zet een klein stapje.",
+              "Doe hetzelfde in G en in F.",
+              "Eerst langzaam, dan in tempo zonder te kijken."
             ],
-            "klaar": "Je wisselt in alle drie de toonsoorten zonder te kijken. Klaar? Speel de akkoorden in een wals: grondnoot op één, akkoord op twee en drie.",
+            "klaar": "Lukt het in alle drie zonder te kijken? Speel een wals: grondnoot op één, akkoord op twee en drie.",
             "beeld": {
               "soort": "tabel",
               "rijen": [
@@ -570,12 +570,9 @@
           {
             "min": 15,
             "soort": "uitleg",
-            "kop": "Overzicht: de stijlen sinds de jaren 60",
+            "kop": "Stijlen sinds de jaren 60",
             "stappen": [
-              "Twee lijnen lopen door elkaar: de jazzlijn en de poplijn.",
-              "Elke stijl komt ergens vandaan. Let op wat er meegaat.",
-              "Twee vragen per stijl: wat hoor je, en waar komt het vandaan?",
-              "R&B van na 1995 is iets anders dan rhythm & blues van 1945."
+              "Twee lijnen: jazz en pop. Per stijl: wat hoor je, waar komt het vandaan?"
             ],
             "beeld": {
               "soort": "tabel",
@@ -627,9 +624,9 @@
                 ]
               ],
               "kol": [
-                0.28,
-                0.24,
-                0.48
+                0.2,
+                0.2,
+                0.6
               ]
             },
             "docent": "Bij elke stijl één kenmerk en één wortel. Deze tabel is een geheugensteun, niet iets om over te schrijven.",
@@ -667,12 +664,11 @@
           {
             "min": 18,
             "soort": "gesprek",
-            "kop": "Gesprek: welke wortels delen deze stijlen?",
+            "kop": "Gesprek: welke wortels delen ze?",
             "stappen": [
-              "Kies met je buur twee stijlen die ver uit elkaar lijken: punk en hiphop, of reggae en dance.",
-              "Loop terug in de tijd: via welke stijlen komen ze bij elkaar uit?",
-              "Noem één muzikaal kenmerk dat is blijven leven.",
-              "Deel met de klas: welke wortel komt overal terug?"
+              "Kies twee stijlen die ver uit elkaar lijken, zoals punk en hiphop.",
+              "Loop terug in de tijd: welke stijlen leiden naar beide?",
+              "Welk kenmerk is blijven leven en welke wortel komt overal terug?"
             ],
             "beeld": {
               "soort": "kaarten",
