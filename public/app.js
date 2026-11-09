@@ -4085,8 +4085,8 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   if (/diag/.test(location.search)) setTimeout(diag, 800);
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
+  await jaarWisselRest(); // eerst de server van oude leerlinggegevens ontdoen, anders zet de eerste synchronisatie ze terug op dit apparaat
   syncStart();
-  jaarWisselRest();
   agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
