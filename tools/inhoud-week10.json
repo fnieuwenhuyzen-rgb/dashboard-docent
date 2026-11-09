@@ -34,6 +34,7 @@
         "fotos": {
           "titel": "brahms.jpg",
           "fase": [
+            null,
             "messiah-koor.jpg",
             "mozart-lange-1782.jpg",
             null,
@@ -47,7 +48,7 @@
           "Messiah-partijen"
         ],
         "voorbereiding": [
-          "Open de koorzetting in de lesmap: Wiegenlied Brahms - SATB met piano (Es groot).pdf (Mutopia Project, vrij te gebruiken). Sopraan en alt zijn de twee stemmen voor de klas; tenor en bas zijn voor wie lager zingt. Kijk vooraf zelf of alt, tenor en bas goed zingbaar zijn: dat is nog niet nagekeken.",
+          "Open de koorzetting in de lesmap: Wiegenlied Brahms - SATB met piano (Es groot).pdf (Mutopia Project, vrij te gebruiken). Sopraan en alt zijn de twee stemmen voor wie hoog zingt; tenor en bas zijn voor wie lager zingt. Kijk vooraf zelf of alt, tenor en bas goed zingbaar zijn: dat is nog niet nagekeken.",
           "De toonsoort is Es groot, zoals Brahms het schreef en zoals de uitgave het heeft. Er is niets getransponeerd. De pianopartij uit de uitgave is voor het keyboard; wie die te moeilijk vindt, speelt alleen de linkerhand: grondtoon op de één, akkoord op twee en drie.",
           "Luister nr. 7 op de oefensite een keer door, zodat je de inzetten paraat hebt: sopraan maat 1, bas maat 5, alt maat 9, tenor maat 10."
         ],
@@ -89,6 +90,27 @@
           "Messiah: elke dag tien minuten met de oefentrack, nu nr. 7 erbij."
         ],
         "fasen": [
+          {
+            "min": 2,
+            "soort": "gesprek",
+            "kop": "Handelingsdeel 4: kies je muzikale bijdrage",
+            "stappen": [
+              "Vul vóór 13 november het keuzeformulier in.",
+              "Kies één: koor, band of ensemble; open dag of viering; coaching; onderhoud en lokaal.",
+              "Invullen doe je op de laptop van de groep of thuis op een computer. De link staat in je Magister-bericht."
+            ],
+            "docent": "Vraag wie al heeft ingevuld. Daarna halen ze de aftekenkaart van hun keuze bij jou.",
+            "notitie": {
+              "vertel": [
+                "Handelingsdeel 4 is de muzikale bijdrage aan school. Iedereen kiest er één: koor, band of ensemble; open dag of viering; coaching; of onderhoud en lokaal. De keuze loopt via het keuzeformulier en moet vóór 13 november binnen zijn. De link staat in het Magister-bericht."
+              ],
+              "letop": [
+                "Invullen op de laptop van de groep of thuis op een computer.",
+                "Vraag wie al heeft ingevuld. Wie klaar is, haalt de aftekenkaart van de gekozen bijdrage bij jou.",
+                "Houd het bij twee minuten: het gaat om de keuze, niet om het gesprek erover."
+              ]
+            }
+          },
           {
             "min": 10,
             "soort": "start",
@@ -164,7 +186,7 @@
             }
           },
           {
-            "min": 25,
+            "min": 23,
             "soort": "doen",
             "kop": "Wiegenlied in twee stemmen: samen ademen",
             "stappen": [
@@ -525,6 +547,27 @@
         ],
         "fasen": [
           {
+            "min": 2,
+            "soort": "gesprek",
+            "kop": "Handelingsdeel 4: kies je muzikale bijdrage",
+            "stappen": [
+              "Vul vóór 13 november het keuzeformulier in.",
+              "Kies één: koor, band of ensemble; open dag of viering; coaching; onderhoud en lokaal.",
+              "Invullen doe je op de laptop van de groep of thuis op een computer. De link staat in je Magister-bericht."
+            ],
+            "docent": "Vraag wie al heeft ingevuld. Daarna halen ze de aftekenkaart van hun keuze bij jou.",
+            "notitie": {
+              "vertel": [
+                "Handelingsdeel 4 is de muzikale bijdrage aan school. Iedereen kiest er één: koor, band of ensemble; open dag of viering; coaching; of onderhoud en lokaal. De keuze loopt via het keuzeformulier en moet vóór 13 november binnen zijn. De link staat in het Magister-bericht."
+              ],
+              "letop": [
+                "Invullen op de laptop van de groep of thuis op een computer.",
+                "Vraag wie al heeft ingevuld. Wie klaar is, haalt de aftekenkaart van de gekozen bijdrage bij jou.",
+                "Houd het bij twee minuten: het gaat om de keuze, niet om het gesprek erover."
+              ]
+            }
+          },
+          {
             "min": 15,
             "soort": "uitleg",
             "kop": "Overzicht: de stijlen sinds de jaren 60",
@@ -622,7 +665,7 @@
             }
           },
           {
-            "min": 20,
+            "min": 18,
             "soort": "gesprek",
             "kop": "Gesprek: welke wortels delen deze stijlen?",
             "stappen": [
