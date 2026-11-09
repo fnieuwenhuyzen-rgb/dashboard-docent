@@ -43,6 +43,31 @@ assert.ok(staatFouten({ ...goedeStaat(), rooster: [{ groep: 'h4' }] }).includes(
 assert.ok(staatFouten({ taken: [] }).length && staatFouten('tekst').length && staatFouten(null).length && staatFouten([]).length, 'geen Lesdag-kopie');
 console.log('kapotte kopie geweigerd: goed');
 
+// padZet / padHaal: een gekozen botsing terugzetten in de staat
+{
+  const doc = { taken: [taak(12), taak(13)], beoord: { toetsen: { 'm1|g1': { ll: { l2: { s: { c1: 3 } } } } } } };
+  assert.strictEqual(SYNC.padHaal(doc, '/taken/12/titel'), 't12'); assert.strictEqual(SYNC.padHaal(doc, '/beoord/toetsen/m1|g1/ll/l2/s/c1'), 3);
+  assert.ok(SYNC.padZet(doc, '/taken/12/titel', 'anders') && doc.taken[0].titel === 'anders', 'taak op id');
+  assert.ok(SYNC.padZet(doc, '/beoord/toetsen/m1|g1/ll/l2/s/c1', 8) && doc.beoord.toetsen['m1|g1'].ll.l2.s.c1 === 8, 'diep pad');
+  assert.ok(!SYNC.padZet(doc, '/taken/99/titel', 'x') && !SYNC.padZet(doc, '/bestaat/niet/x', 1) && !SYNC.padZet(doc, '', 1), 'onbekend pad: false, niets stuk');
+  assert.strictEqual(SYNC.padHaal(doc, '/taken/99/titel'), undefined);
+  // bewaartermijn: wat zou er weg gaan
+  const nu = Date.UTC(2026, 10, 8), oudId = 'l' + Date.UTC(2024, 0, 1).toString(36) + '0', nieuwId = 'l' + Date.UTC(2026, 9, 1).toString(36) + '0';
+  const B = { lijsten: { oud: [{ id: 'a', naam: 'Test A' }], h4: [{ id: 'b', naam: 'Test B' }], h5: [{ id: 'c', naam: 'Test C' }] },
+    toetsen: { 'm|oud': { ll: {}, start: '2025-01-10' }, 'm|h4': { ll: {}, start: '2026-09-01' }, 'm|h5': { ll: {}, start: '2025-02-01' }, 'n|h5': { ll: {}, start: '2026-10-01' } },
+    weg: { h4: [{ id: oudId, naam: 'Weg 1' }, { id: nieuwId, naam: 'Weg 2' }, { id: 'l0', naam: 'Weg 3' }], oud: [{ id: 'x', naam: 'Weg 4' }] } };
+  assert.deepStrictEqual(SYNC.bewaarPlan(B, ['h4', 'h5'], nu, 0), { toetsen: [], lijsten: [], weg: [] }, 'termijn uit: niets');
+  const p = SYNC.bewaarPlan(B, ['h4', 'h5'], nu, 12);
+  assert.deepStrictEqual(p.toetsen.sort(), ['m|h5', 'm|oud'], 'toetsen ouder dan een jaar'); assert.deepStrictEqual(p.lijsten, ['oud'], 'klas die niet meer in het rooster staat en geen toets meer heeft; h5 houdt een recente toets');
+  assert.deepStrictEqual(p.weg.map(w => w.id).sort(), ['x', oudId].sort(), 'oude weg-leerling en weg van verwijderde klas; onleesbaar of recent blijft');
+  assert.deepStrictEqual(SYNC.bewaarPlan(B, [], nu, 12).lijsten, [], 'zonder rooster verdwijnt geen klassenlijst');
+  const kop = JSON.parse(JSON.stringify(B)); SYNC.bewaarToepassen(kop, p);
+  assert.deepStrictEqual(Object.keys(kop.toetsen).sort(), ['m|h4', 'n|h5']); assert.deepStrictEqual(Object.keys(kop.lijsten).sort(), ['h4', 'h5']); assert.deepStrictEqual(kop.weg.h4.map(x => x.id), [nieuwId, 'l0']); assert.ok(!kop.weg.oud);
+  assert.strictEqual(SYNC.planTelt(p), 5);
+  assert.deepStrictEqual(SYNC.zonderLeerlingen({ taken: [1], beoord: { lijsten: {} } }), { taken: [1] }, 'filter haalt beoord weg');
+}
+console.log('padZet en bewaartermijn: goed');
+
 (async () => {
   const url = process.argv[2]; if (!url) return;
   const { DatabaseSync } = require('node:sqlite');
@@ -62,7 +87,8 @@ console.log('kapotte kopie geweigerd: goed');
       fetch: (u, i) => { o.vragen++; return o.hook ? o.hook(u, i, echt, o) : echt(u, i); },
       vlag: { aan: () => o.aanV, zet: () => { o.aanV = true; } },
       opslag: { haal: async k => o.kv[k] && JSON.parse(o.kv[k]), zet: async (k, v) => { o.kv[k] = JSON.stringify(v); } },
-      app: { haal: () => o.staat, zet: x => { o.staat = x; }, mag: () => o.mag, status: (s, t) => { o.st = s; o.tekst = t; }, nieuwer: ms => o.updated > ms, kopie: async () => { o.kopie = true; }, fouten: staatFouten } });
+      app: { leerlingen: () => o.lln !== false, haal: () => o.staat, zet: x => { o.staat = o.lln === false ? { ...x, beoord: o.staat.beoord } : x; }, // net als de app: zonder leerlinggegevens in de sync blijft de eigen beoord staan
+         mag: () => o.mag, status: (s, t) => { o.st = s; o.tekst = t; }, nieuwer: ms => o.updated > ms, kopie: async () => { o.kopie = true; }, fouten: staatFouten } });
     alle.push(o); return o;
   }
   const leegDoc = () => ({ v: 1, magVanaf: '2026-11-03', taken: [], beoord: { lijsten: {}, toetsen: {} } });
@@ -249,6 +275,57 @@ console.log('kapotte kopie geweigerd: goed');
     const a = apparaat(st); a.updated = 1; await a.sync.aanzetten(); a.staat.beoord.toetsen['model3|k5'].ll.l7.s.c1 = 1; const t0 = Date.now(); await a.sync.nu(); assert.strictEqual(a.st, 'ok', a.tekst);
     const n = apparaat({ v: 1 }); await n.sync.start(); assert.strictEqual(Object.keys(n.staat.beoord.toetsen).length, 140); console.log(`       overnemen op een leeg apparaat: gelukt, ronde ${Date.now() - t0} ms`);
     let bytes = 0; a.hook = (u, i, e) => { if (i && i.body) bytes += i.body.length; return e(u, i); }; a.staat.beoord.toetsen['model1|k2'].ll.l1.s.c1 = 9; await a.sync.nu(); console.log(`       één score wijzigen stuurt ${bytes} bytes`); assert.ok(bytes < 20000);
+  });
+
+  const metBeoord = () => serverRijen().filter(x => /^beoord\./.test(x.sleutel)).length;
+  const backupBeoord = () => sql(d => d.prepare("SELECT COUNT(*) n FROM back_up WHERE sleutel LIKE 'beoord.%'").get().n);
+  await scenario('9a zonder leerlinggegevens: alleen de rest gaat naar de server, ook niet in de back-ups; lokaal blijft alles staan', async () => {
+    reset(); const a = apparaat(basisStaat(), { lln: false }); const lok = snap(a.staat.beoord);
+    await a.sync.aanzetten(); assert.ok(a.aanV); assert.strictEqual(metBeoord(), 0, 'geen beoord-rijen op de server'); assert.ok(serverRijen().some(x => x.sleutel === 'taken'), 'taken wel');
+    a.staat.taken.push(taak(9)); a.staat.beoord.toetsen['m1|g1'].ll.l0.s.c1 = 1; await a.sync.nu(); assert.strictEqual(metBeoord(), 0); assert.strictEqual(backupBeoord(), 0, 'ook niet in back-ups');
+    assert.deepStrictEqual(a.staat.beoord.lijsten, lok.lijsten, 'lijsten lokaal intact'); assert.strictEqual(a.staat.beoord.toetsen['m1|g1'].ll.l0.s.c1, 1, 'lokale score intact');
+    const rauw = JSON.stringify(serverRijen()); assert.ok(!/Testleerling|Proefpersoon/.test(rauw), 'geen namen op de server');
+  });
+  await scenario('9b tweede apparaat zonder leerlinggegevens: neemt taken over, krijgt geen klassenlijsten, verliest zijn eigen niet', async () => {
+    reset(); const a = apparaat(basisStaat(), { lln: false }); await a.sync.aanzetten();
+    const b = apparaat({ ...goedeStaat(), taken: [], beoord: { lijsten: { eigen: ll(2) }, toetsen: {} } }, { lln: false }); b.updated = 1; await b.sync.aanzetten();
+    assert.ok(b.staat.taken.some(k => k.id === 1), 'taak overgenomen'); assert.deepStrictEqual(Object.keys(b.staat.beoord.lijsten), ['eigen']); assert.strictEqual(metBeoord(), 0);
+    const c = apparaat({ v: 1 }, { lln: false }); await c.sync.start(); assert.ok(c.aanV && c.staat.taken.length === 1 && !(c.staat.beoord && Object.keys(c.staat.beoord.lijsten || {}).length), 'leeg apparaat: wel taken, geen lijsten');
+  });
+  await scenario('9c server heeft al leerlinggegevens, dit apparaat gaat op veilig: niets gelezen, niets gewist, niets teruggezet', async () => {
+    reset(); const a = apparaat(basisStaat()); await a.sync.aanzetten(); assert.ok(metBeoord() > 0);
+    const b = apparaat({ ...goedeStaat(), beoord: { lijsten: { eigen: ll(1) }, toetsen: {} } }, { lln: false }); b.updated = Date.now() + 1000; await b.sync.aanzetten();
+    assert.deepStrictEqual(Object.keys(b.staat.beoord.lijsten), ['eigen'], 'geen klassenlijsten van de server overgenomen');
+    b.staat.taken.push(taak(31)); await b.sync.nu(); assert.ok(metBeoord() > 0, 'server niet leeggehaald door veilig apparaat'); assert.ok(serverRijen().some(x => x.sleutel === 'taken' && /"id":31/.test(x.waarde)));
+  });
+  await scenario('9d wissen op de server: eerst tellen, dan alles met leerlinggegevens weg, ook uit de back-ups; de rest blijft', async () => {
+    reset(); const a = apparaat(basisStaat()); await a.sync.aanzetten(); a.staat.taken.push(taak(40)); await a.sync.nu();
+    sql(d => d.exec("INSERT OR REPLACE INTO back_up (dag, sleutel, waarde) VALUES ('2026-11-01', 'beoord.lijsten', '{}'), ('2026-11-01', 'taken', '[]')"));
+    const t = await a.sync.leerlingenOpServer(); assert.ok(t.onderdelen >= 3 && t.back_ups >= 3, 'telling ' + JSON.stringify(t)); assert.ok(backupBeoord() > 0 && metBeoord() > 0, 'staat er nu');
+    const versie = sql(d => d.prepare('SELECT versie v FROM meta').get().v); const w = await a.sync.leerlingenWissen();
+    assert.strictEqual(w.onderdelen, t.onderdelen); assert.strictEqual(metBeoord(), 0, 'onderdelen weg'); assert.strictEqual(backupBeoord(), 0, 'ook uit de back-ups, eerste en dagen');
+    assert.ok(serverRijen().some(x => x.sleutel === 'taken'), 'taken blijven'); assert.ok(sql(d => d.prepare("SELECT COUNT(*) n FROM back_up WHERE sleutel = 'taken'").get().n) > 0, 'andere back-uprijen blijven');
+    assert.ok(sql(d => d.prepare('SELECT versie v FROM meta').get().v) > versie, 'versie opgehoogd: andere apparaten zien het');
+    const na = await a.sync.leerlingenOpServer(); assert.deepStrictEqual([na.onderdelen, na.back_ups], [0, 0]);
+    a.lln = false; await a.sync.nu(); assert.strictEqual(metBeoord(), 0, 'na wissen en veilig komt het niet terug'); assert.ok(a.staat.beoord.toetsen['m1|g1'], 'lokaal alles intact');
+    assert.strictEqual((await a.sync.eersteOpServer()).rijen > 0, true, 'eerste bestaat nog (zonder leerlinggegevens)'); await a.sync.eersteWissen(); assert.strictEqual((await a.sync.eersteOpServer()).rijen, 0, 'eerste gewist');
+  });
+  await scenario('9e wissen vanaf een andere website of zonder doel wordt geweigerd', async () => {
+    reset(); const a = apparaat(basisStaat()); await a.sync.aanzetten();
+    const r = await fetch(url + '?leerlingen=1', { method: 'DELETE', headers: { Origin: 'https://kwaad.example' } }); assert.strictEqual(r.status, 403); assert.ok(metBeoord() > 0, 'niets gewist');
+    const r2 = await fetch(url, { method: 'DELETE' }); assert.strictEqual(r2.status, 400, 'zonder doel geen wissen'); assert.ok(metBeoord() > 0);
+  });
+  await scenario('9f botsing bekijken en kiezen: de andere waarde terugzetten, botsing verdwijnt uit de lijst; Zermelo-token verborgen', async () => {
+    const [a, b] = await paar(); a.staat._zermeloApi = 'geheimtoken1'; b.staat._zermeloApi = 'geheimtoken2';
+    a.staat.beoord.toetsen['m1|g1'].ll.l2.s.c1 = 3; b.staat.beoord.toetsen['m1|g1'].ll.l2.s.c1 = 8; b.updated = Date.now() + 5000;
+    await a.sync.nu(); await b.sync.nu(); await a.sync.nu();
+    const L = (await a.sync.botsingen()).concat(await b.sync.botsingen()); const bot = L.find(x => /l2/.test(x.pad)); assert.ok(bot, 'botsing in de lijst');
+    assert.ok(!JSON.stringify(L).includes('geheimtoken'), 'token staat nergens in de botsingen'); assert.ok(L.some(x => x.pad === '/_zermeloApi' && x.lokaal === '(verborgen)'));
+    const doc = snap(a.staat), huidig = SYNC.padHaal(doc, bot.pad), andere = huidig === bot.lokaal ? bot.server : bot.lokaal;
+    assert.ok(SYNC.padZet(doc, bot.pad, andere), 'padZet'); a.staat = doc; a.updated = Date.now() + 9000; await a.sync.nu(); await b.sync.nu();
+    assert.strictEqual(b.staat.beoord.toetsen['m1|g1'].ll.l2.s.c1, andere, 'gekozen waarde bereikt het andere apparaat');
+    const eigenaar = [a, b].find(x => x.kv.botsingen && JSON.parse(x.kv.botsingen).some(y => y.pad === bot.pad)); await eigenaar.sync.botsingWeg(bot.op, bot.pad);
+    assert.ok(!(await eigenaar.sync.botsingen()).some(y => y.pad === bot.pad && y.op === bot.op), 'weggehaald uit de lijst'); await eigenaar.sync.botsingenLeeg(); assert.deepStrictEqual(await eigenaar.sync.botsingen(), []);
   });
 
   const fout = uitslag.filter(r => r[0] === 'FOUT');

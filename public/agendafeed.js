@@ -42,6 +42,20 @@
     return r.map(vouw).join('\r\n') + '\r\n';
   }
 
-  const api = { ics };
+  /* Titels in de veilige stand (standaard). Een Zermelo-afspraak (surveillance, toets, overleg) kan vak, groep of een naam bevatten:
+     die krijgt een vaste titel. Een toets uit de toetsweek van de leergang (z.tz) heeft een eigen titel uit basis.json en mag blijven.
+     Bij een les gaat alleen de lestitel uit de leergang mee, nooit een tekst uit Zermelo of van Frans zelf. */
+  function zTitel(z, tz, ruim) {
+    if (ruim) return null;
+    if (z.dienst) return 'Surveillance';
+    if (z.toets) return tz ? null : 'Toets';
+    return 'Afspraak';
+  }
+  function lesSub(x, leergangTitel, ruim, sub) {
+    if (ruim) return sub;
+    return x && !x.uitval && !x.fout && leergangTitel ? leergangTitel : '';
+  }
+
+  const api = { ics, zTitel, lesSub };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else wereld.AGENDAFEED = api;
 })(typeof window !== 'undefined' ? window : globalThis);

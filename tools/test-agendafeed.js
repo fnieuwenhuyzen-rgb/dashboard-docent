@@ -22,4 +22,13 @@ assert(plat.includes('DTEND;TZID=Europe/Amsterdam:20261110T200000'), 'zonder ein
 assert(plat.includes('SUMMARY:' + 'é'.repeat(60)), 'lange regel met letters van twee bytes blijft heel');
 assert(plat.includes('DTSTAMP:20261105T090000Z'), 'tijdstempel');
 assert.strictEqual((uit.match(/BEGIN:VEVENT/g) || []).length, 3);
+// veilige titels: Zermelo-afspraken zonder vak of groep, alleen lestitels uit de leergang
+const { zTitel, lesSub } = require('../public/agendafeed.js');
+assert.strictEqual(zTitel({ dienst: true }, null, false), 'Surveillance'); assert.strictEqual(zTitel({ toets: true }, null, false), 'Toets');
+assert.strictEqual(zTitel({ titel: 'h3a Overleg met Testleerling' }, null, false), 'Afspraak', 'vrije Zermelo-tekst wordt een vaste titel');
+assert.strictEqual(zTitel({ toets: true }, { t: 1 }, false), null, 'toets uit de toetsweek van de leergang houdt zijn eigen titel');
+for (const z of [{ dienst: true }, { toets: true }, { titel: 'x' }]) assert.strictEqual(zTitel(z, null, true), null, 'ruime stand: titel uit Zermelo blijft');
+assert.strictEqual(lesSub({}, 'Ritme en maat', false, 'iets uit Zermelo'), 'Ritme en maat'); assert.strictEqual(lesSub({ uitval: true }, 'Ritme', false, 'geruild naar vrijdag'), '', 'geen vrije tekst bij uitval');
+assert.strictEqual(lesSub({ fout: 'rooster klopt niet' }, 'Ritme', false, 'x'), ''); assert.strictEqual(lesSub({}, '', false, 'x'), ''); assert.strictEqual(lesSub({}, 'Ritme', true, 'sub uit app'), 'sub uit app');
+
 console.log('agendafeed: alles goed');

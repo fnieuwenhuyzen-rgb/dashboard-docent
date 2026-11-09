@@ -3,6 +3,9 @@
 //   GET  /api/staat?sinds=n    alleen { versie, bijgewerkt }: goedkope controle of er iets nieuws is
 //   GET  /api/staat?backups=1  { dagen: [...] }
 //   GET  /api/staat?backup=d   { onderdelen } van die back-up
+//   GET  /api/staat?leerlingen=1  { onderdelen, back_ups }: hoeveel rijen met klassenlijsten en scores er staan
+//   DELETE /api/staat?leerlingen=1  haalt alle klassenlijsten en scores weg, ook uit de back-ups: { onderdelen, back_ups }
+//   GET  /api/staat?eerste=1  { rijen }: rijen in back-up "eerste";  DELETE ?eerste=1 wist die back-up
 //   PUT  /api/staat            { basis, gewijzigd: { sleutel: waarde of null } } -> { versie }, of 409 als basis niet de laatste versie is
 const MAX_RIJ = 1900000; // D1 staat 2 MB per rij toe
 const BEWAAR_DAGEN = 30;
@@ -14,10 +17,21 @@ export async function onRequest({ request, env }) {
   if (email !== String(env.EIGENAAR || env.DEV_EMAIL).toLowerCase()) return json({ fout: "geen toegang" }, 403);
   if (request.method === "GET") { try { return await lees(new URL(request.url).searchParams, env); } catch (e) { if (e instanceof Beschadigd) return json({ fout: "beschadigd", sleutel: e.sleutel }, 500); throw e; } }
   if (request.method === "PUT") return schrijf(await request.json(), env);
+  if (request.method === "DELETE") {
+    // een andere website mag hier niets wissen: een DELETE met cookie van een andere herkomst wordt geweigerd
+    const herkomst = request.headers.get("Origin");
+    if (herkomst && herkomst !== new URL(request.url).origin) return json({ fout: "geen toegang" }, 403);
+    return wis(new URL(request.url).searchParams, env);
+  }
   return json({ fout: "methode" }, 405);
 }
 
 async function lees(q, env) {
+  if (q.get("leerlingen")) {
+    const [a, b] = await env.DB.batch([env.DB.prepare("SELECT COUNT(*) n FROM onderdeel WHERE sleutel LIKE ?").bind(LEERLING), env.DB.prepare("SELECT COUNT(*) n FROM back_up WHERE sleutel LIKE ?").bind(LEERLING)]);
+    return json({ onderdelen: a.results[0].n, back_ups: b.results[0].n });
+  }
+  if (q.get("eerste")) return json({ rijen: (await env.DB.prepare("SELECT COUNT(*) n FROM back_up WHERE dag = 'eerste'").first()).n });
   if (q.get("backups")) {
     const { results } = await env.DB.prepare("SELECT dag FROM back_up GROUP BY dag ORDER BY dag DESC").all();
     return json({ dagen: results.map(r => r.dag) });
@@ -30,6 +44,24 @@ async function lees(q, env) {
   // in één batch, zodat versie en onderdelen bij elkaar horen
   const [a, b] = await env.DB.batch([env.DB.prepare("SELECT versie, bijgewerkt FROM meta WHERE id = 1"), env.DB.prepare("SELECT sleutel, waarde FROM onderdeel")]);
   return json({ ...a.results[0], onderdelen: rijen(b.results) });
+}
+
+// Alles wat onder beoord valt is leerlinggegevens (lijsten, weg, toetsen.*): sleutels "beoord.%". Wissen telt de versie op, zodat andere apparaten het zien.
+const LEERLING = "beoord.%";
+async function wis(q, env) {
+  const db = env.DB;
+  if (q.get("eerste")) {
+    const n = (await db.prepare("DELETE FROM back_up WHERE dag = 'eerste'").run()).meta.changes;
+    return json({ rijen: n });
+  }
+  if (!q.get("leerlingen")) return json({ fout: "verzoek" }, 400);
+  const nu = Date.now();
+  const res = await db.batch([
+    db.prepare("DELETE FROM onderdeel WHERE sleutel LIKE ?").bind(LEERLING),
+    db.prepare("DELETE FROM back_up WHERE sleutel LIKE ?").bind(LEERLING),
+    db.prepare("UPDATE meta SET versie = versie + 1, bijgewerkt = ?, schrijver = NULL WHERE id = 1").bind(nu)
+  ]);
+  return json({ onderdelen: res[0].meta.changes, back_ups: res[1].meta.changes });
 }
 
 async function schrijf({ basis, gewijzigd }, env) {
