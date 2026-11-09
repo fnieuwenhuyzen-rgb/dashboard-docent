@@ -27,5 +27,20 @@ const T = [{ g: 'vwo 4', soort: 'praktijk', id: 'PT1', s: '2026-11-09', dag: 'ma
 is('regel: eerst op datum, hoogstens drie', F.weekRegel(T.slice().reverse(), 3) === 'Deze week: praktijktoets vwo 4 (ma), toets havo 5 (wo) en toets mavo 3 (do).');
 is('regel: een toets', F.weekRegel(T.slice(0, 1), 3) === 'Deze week: praktijktoets vwo 4 (ma).');
 is('regel: geen toetsen, geen regel', F.weekRegel([], 3) === '');
+// Samenvoegen: minuten tellen, passen, fasen kiezen
+const A = ['5 min · terugblik: clave klappen', '15 min · instructie: danszalen', '15 min · doen: walking bass', '10 min · afsluiting: exit ticket'];
+const Bf = ['5 min · terugblik', { min: 15, soort: 'uitleg', kop: 'Wat bebop anders doet' }, '15 min · doen: luisteren met kaart', '10 min · afsluiting: één verschil'];
+is('minuten uit tekst', F.faseMinuten(A[1]) === 15 && F.faseMinuten('zonder minuten') === 0 && F.faseMinuten(undefined) === 0);
+is('minuten uit object', F.faseMinuten(Bf[1]) === 15 && F.faseMinuten({ min: -3 }) === 0);
+is('tellen', F.telMinuten(A, [0, 1, 3]) === 30 && F.telMinuten(A, []) === 0 && F.telMinuten(A, [9]) === 0);
+let p = F.pastSamen(A, Bf, [0, 1, 3], [1], 45); is('30 + 15 past precies', p.ok && p.som === 45 && p.reden === 'Past precies.');
+p = F.pastSamen(A, Bf, [0, 1], [3], 45); is('20 + 10: 15 minuten over', p.ok && p.reden === '15 minuten over.');
+p = F.pastSamen(A, Bf, [1, 2, 3], [1], 45); is('te veel: past niet', !p.ok && p.som === 55 && /10 minuten te veel/.test(p.reden));
+p = F.pastSamen(A, Bf, [0, 1], [], 45); is('niets uit de tweede les: past niet', !p.ok && /beide lessen/.test(p.reden));
+is('fasen in volgorde, eerst les A', JSON.stringify(F.samenFasen(A, Bf, [3, 0], [2, 1])) === JSON.stringify([A[0], A[3], Bf[1], Bf[2]]));
+is('dubbel aangetikt telt een keer', F.samenFasen(A, Bf, [1, 1], [0]).length === 2);
+is('paar: de laatste twee', JSON.stringify(F.kiesPaar(['a', 'b', 'c'], 'laatste-twee-voor-toets')) === '["b","c"]');
+is('paar: te weinig kandidaten', F.kiesPaar(['a'], 'laatste-twee-voor-toets').length === 0 && F.kiesPaar(['a', 'b'], 'zelf').length === 0);
+is('materiaal: unie zonder dubbelen', JSON.stringify(F.unie(['x', 'y'], ['y', 'z'])) === '["x","y","z"]' && F.unie(undefined, ['q']).length === 1);
 console.log(fouten ? fouten + ' fout(en).' : 'functies: alles goed (' + n + ' controles)');
 process.exit(fouten ? 1 : 0);
