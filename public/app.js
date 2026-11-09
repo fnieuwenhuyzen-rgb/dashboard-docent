@@ -597,13 +597,13 @@ function kopieToepas(d) { // dezelfde controle en vraag voor een gedownload best
   S = staatIn(d); bewaar(); toast('Kopie teruggezet', terug);
 }
 /* automatische kopie (kopie.js): één per dag in IndexedDB, de laatste veertien; terugzetten via kopieToepas */
-function autoKopieMaak() {
+function autoKopieMaak(eind) {
   if (!window.AUTOKOPIE || !S || !S.updated || staatFouten(S).length) return; // nooit een kapotte of nog lege staat bewaren
-  AUTOKOPIE.maak(vandaag(), JSON.stringify(S)).then(nieuw => { if (nieuw && route.naam === 'instellingen') autoKopieVul(); }).catch(e => { if (window.LOGBOEK) LOGBOEK.fout(e, 'autokopie'); });
+  AUTOKOPIE.maak(vandaag(), JSON.stringify(S), undefined, eind === true).then(nieuw => { if (nieuw && route.naam === 'instellingen') autoKopieVul(); }).catch(e => { if (window.LOGBOEK) LOGBOEK.fout(e, 'autokopie'); });
 }
 async function autoKopieVul() {
   if (!$('#autokopielijst') || !window.AUTOKOPIE) return;
-  let t; try { const L = await AUTOKOPIE.lijst(); t = L.length ? '<ul class="akl" style="list-style:none;padding:0;margin:.3rem 0 0">' + L.map(x => `<li style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;padding:.25rem 0"><span>${esc(fmtLang(x.dag))} <span class="sub">(${Math.max(1, Math.round(x.grootte / 1024))} kB)</span></span><button class="btn klein" data-akterug="${esc(x.dag)}">Terugzetten</button></li>`).join('') + '</ul>' : 'Er is nog geen kopie. Morgen staat de eerste er.'; }
+  let t; try { const L = await AUTOKOPIE.lijst(); t = L.length ? '<ul class="akl" style="list-style:none;padding:0;margin:.3rem 0 0">' + L.map(x => `<li style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;padding:.25rem 0"><span>${esc(fmtLang(x.dag.slice(0, 10)))} <span class="sub">(${x.eind ? 'na Dag afsluiten, ' : 'begin van de dag, '}${Math.max(1, Math.round(x.grootte / 1024))} kB)</span></span><button class="btn klein" data-akterug="${esc(x.dag)}">Terugzetten</button></li>`).join('') + '</ul>' : 'Er is nog geen kopie. Morgen staat de eerste er.'; }
   catch (e) { t = 'Automatische kopieën zijn op dit apparaat niet beschikbaar (privévenster of opslag geblokkeerd).'; }
   const el = $('#autokopielijst'); if (el) el.innerHTML = t;
 }
@@ -2932,7 +2932,7 @@ function viewInstellingen() {
     ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   ${logboekKaart()}
-  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. De kopie is de stand van het begin van die dag. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
+  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. Er is een kopie van het begin van de dag en een van het moment dat je Dag afsluit, zodat de invoer van die dag erin zit. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
 
@@ -3272,7 +3272,7 @@ document.addEventListener('click', async e => {
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }
   if (D.later) { const terug = foto(); const [k, v] = D.later.split('|'); S.later[k] = v; bewaar(); toast(v === 'ok' ? 'Genoteerd' : 'Vandaag niet meer', terug); return; }
   if (D.klaarextra) { const terug = foto(); const [d, txt] = D.klaarextra.split('|'); (S.klaarExtra[d] = S.klaarExtra[d] || []).push(txt); bewaar(); toast('Staat op je klaarzetlijst', terug); return; }
-  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); const nOpen = +D.open || 0; const nogOpen = nOpen ? (nOpen === 1 ? ' 1 punt staat nog open.' : ` ${nOpen} punten staan nog open.`) : ''; toast((weekAfsluitDag(D.afsluiten) ? (nogOpen ? 'Week afgesloten.' : 'Week afgesloten. Maandag staat klaar.') : (nogOpen ? 'Dag afgesloten.' : 'Morgen staat klaar. Fijne avond.')) + nogOpen, terug); return; }
+  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); if (D.afsluiten === vandaag()) autoKopieMaak(true); const nOpen = +D.open || 0; const nogOpen = nOpen ? (nOpen === 1 ? ' 1 punt staat nog open.' : ` ${nOpen} punten staan nog open.`) : ''; toast((weekAfsluitDag(D.afsluiten) ? (nogOpen ? 'Week afgesloten.' : 'Week afgesloten. Maandag staat klaar.') : (nogOpen ? 'Dag afgesloten.' : 'Morgen staat klaar. Fijne avond.')) + nogOpen, terug); return; }
   if (D.fnkopie) { const a = (S.afwijkingen || []).find(x => x.id === D.fnkopie); try { await navigator.clipboard.writeText(a ? a.bericht : ''); toast('Gekopieerd'); } catch (err) { toast('Kopiëren lukt niet: open het bericht bij Nu en kopieer zelf'); } return; }
   if (D.heropen) { delete S.afgesloten[D.heropen]; bewaar(); return; }
   if (D.taakbewerk) { openTaakBewerk(D.taakbewerk); return; }
