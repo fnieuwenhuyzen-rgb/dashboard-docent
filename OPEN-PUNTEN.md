@@ -3,6 +3,7 @@
 Bijgewerkt: 4 november 2026 (beslisblad van Frans verwerkt, achterhaalde punten verwijderd; daarvoor 3 november: scherm Jaar gebouwd, lokaal getest, nog niet online; onderbouwmappen heringedeeld). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
+- **CSP afdwingend maken** op of na 16-11 (besluit Frans 9-11): console nakijken, ook PowerPoint maken, dan in `public/_headers` `-Report-Only` weghalen. Privacyfunctionaris: Frans stuurt geen bericht (9-11), dat deel van het punt over synchroniseren vervalt.
 
 - [ ] **Magister afronden in drie statussen, jarige collega's alsnog feliciteren (6-11, lokaal getest, live sinds 6-11, ja van Frans, samen met de rollen op cache `lesdag-v46`, commit 2b78eb2; live gecontroleerd 6-11: code staat erin, geen consolefouten).**
   - **Statussen:** elke les is Op tijd (Afgerond binnen 15 minuten na het begin), Ingehaald (later afgerond, telt als gedaan) of Open. De knop heet Afgerond, na het kwartier Nu ingehaald; de melding zegt "Afgerond, op tijd" of "Ingehaald. Telt als gedaan." De bron is het bestaande tijdstip `S.mag[k].p`, dus er is geen nieuw veld en geen migratie (`magStatus`, `magLaat`, `OP_TIJD` in `app.js`). **Keuze Claude:** gaat mee met synchroniseren, zoals `S.mag` al deed (alleen tijdstippen, geen leerlinggegevens). Op de leskaart en in Nu: "Magister afronden"; in de lijsten "Presentie en afronden h4 van 10:30" (niet "Afronden", dat staat al voor gegeven/deels). Open lessen staan bij Dag afsluiten, in Nog open en in het kompas met Nu ingehaald.
