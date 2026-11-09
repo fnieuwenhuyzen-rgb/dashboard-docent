@@ -93,7 +93,7 @@ def klas3(niveau, code, p1naam, events, uitval, tw_titel, extra_kmu=False):
     ]
     ts = [
         toets('P1', p1naam, 'praktijk', 10, 19, 'in de les, periode 2 (week nog kiezen)', SPEEL, 'P2'),
-        toets('T1', "Herhaling alle behandelde thema's", 'theorie', 10, 29, 'in de les, periode 3 (week nog kiezen)',
+        toets('T1', "Instrumenten, bands en orkesten", 'theorie', 10, 29, 'in de les, periode 3 (week nog kiezen)',
               'Instrumenten, bands en orkesten (theoriedeel klas 3).', 'P3'),
     ]
     meta = {'klas': niveau, 'klassen': code, 'concept': True,
