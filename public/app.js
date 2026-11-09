@@ -287,11 +287,13 @@ function zOverzicht() { // in Instellingen: vak- en groepscodes, en alles uit Ze
 function zUren(s) {
   if (!ZC || !ZC.events || s < ZC.van || s > ZC.tot) return null;
   const dag = dOf(s).getDay();
-  return ZC.events.filter(e => e.d === s && zLes(e)).map(e => {
+  const per = new Map(); // Zermelo kan dezelfde les twee keer geven (twee roosterversies): dezelfde klas op dezelfde tijd telt één keer, een les die niet vervalt gaat voor
+  ZC.events.filter(e => e.d === s && zLes(e)).map(e => {
     const g = zGroep(e) || e.summary;
     const vast = S.rooster.find(u => +u.dag === dag && u.start === e.start && u.groep === g);
     return { id: vast ? vast.id : `z-${e.start}-${g}`, dag, start: e.start, eind: e.eind, groep: g, lokaal: e.loc || (vast && vast.lokaal) || '', zermelo: true, vervallen: e.vervallen, reden: e.reden || '', anderLokaal: !!(vast && e.loc && vast.lokaal && e.loc !== vast.lokaal) };
-  });
+  }).forEach(u => { const k = u.start + '|' + u.groep; const o = per.get(k); if (!o || (o.vervallen && !u.vervallen)) per.set(k, u); });
+  return [...per.values()];
 }
 async function zOphalen(melden) {
   const tok = S.zermeloToken; const px = zProxy();
@@ -1758,7 +1760,7 @@ function werkblokKaart(s, p, A, it, nu, live) {
 function afsluitKaart(s, p, A, nu) {
   const af = teAfronden(s, p, nu); const open = A.items.filter(it => it.soort === 'taak' && !it.k.af);
   const blok = vrijeBlokken(volgendeLesdag(s, 1), 0, 6);
-  const chips = (v, min) => { const a = slotVoor(blok, min), b = slotVoor(blok, min); return [a, b].filter(Boolean).map(sl => `<button class="btn klein" data-slot="${esc(v)}|${sl.dag}|${sl.van}|${sl.tot}">${esc(slotTekst(sl))}</button>`).join(''); };
+  const chips = (v, min, dl) => { const tot = dl && dl >= volgendeLesdag(s, 1) ? /* een taak plan je niet na zijn deadline; een verlopen deadline: gewoon het eerste blok */ addD(dl, 1) : null; const a = slotVoor(blok, min, tot), b = slotVoor(blok, min, tot); return [a, b].filter(Boolean).map(sl => `<button class="btn klein" data-slot="${esc(v)}|${sl.dag}|${sl.van}|${sl.tot}">${esc(slotTekst(sl))}</button>`).join(''); };
   const rij = (t, sub, extra) => `<div class="nu-rij"><span>${esc(t)}${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</span><span class="tb">${extra}</span></div>`;
   const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
   const M = s === vandaag() ? magOpen(s) : [];
@@ -1768,8 +1770,8 @@ function afsluitKaart(s, p, A, nu) {
     <h3>${n ? 'Nog open, krijgt een moment' : 'Nog open'}</h3>
     ${magLijst(M, 5)}
     ${af.map(x => afrondRij(s, x)).join('')}
-    ${open.map(it => rij('Niet af: ' + it.k.titel, '', chips('eigen:' + it.k.id, schat(soortVan(it.k), it.k.titel, it.k.min)) + `<label class="chk"><input type="checkbox" data-taakaf="${esc(it.k.id)}"><span>klaar</span></label>`)).join('')}
-    ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min))).join('')}
+    ${open.map(it => rij('Niet af: ' + it.k.titel, '', chips('eigen:' + it.k.id, schat(soortVan(it.k), it.k.titel, it.k.min), it.k.d) + `<label class="chk"><input type="checkbox" data-taakaf="${esc(it.k.id)}"><span>klaar</span></label>`)).join('')}
+    ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min, k.d))).join('')}
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
     ${s === vandaag() && magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}
     <!--dok--><button class="btn hoofd" data-afsluiten="${s}">Dag afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
@@ -1928,10 +1930,11 @@ const FELIC_DAGEN = 3; // tot drie dagen na de verjaardag blijft de collega staa
 function jarigDagen(s) { const out = []; for (let d = [addD(volgendeLesdag(s, -1), 1), addD(s, -FELIC_DAGEN)].sort()[0]; d <= s; d = addD(d, 1)) out.push(d); return out; }
 const wanneerJarig = (d, s) => d === s ? 'is vandaag jarig' : 'was ' + (d >= addD(s, -6) ? DAGLANG[dOf(d).getDay()] : fmtD(d)) + ' jarig';
 const felicKey = j => j.d + '|' + j.c.naam; // per verjaardag, niet per dag: gefeliciteerd blijft gefeliciteerd
-function collegasJarig(s) { const D = jarigDagen(s); return (AP.collegas || []).map(c => ({ c, d: D.find(d => c.md === d.slice(5)) })).filter(j => j.d && !AP.felic[felicKey(j)]); }
+const jarigOp = (c, d) => c.md === d.slice(5) || (c.md === '02-29' && d.slice(5) === '02-28' && !(+d.slice(0, 4) % 4 === 0 && (+d.slice(0, 4) % 100 !== 0 || +d.slice(0, 4) % 400 === 0))); // 29 februari: in een jaar zonder schrikkeldag op 28 februari
+function collegasJarig(s) { const D = jarigDagen(s); return (AP.collegas || []).map(c => ({ c, d: D.find(d => jarigOp(c, d)) })).filter(j => j.d && !AP.felic[felicKey(j)]); }
 function collegasDezeWeek(s) { // maandag (of de eerste werkdag van de week): wie is de rest van deze week jarig, ook in het weekend
   if (volgendeLesdag(s, -1) >= maandagVan(s)) return []; const zo = addD(maandagVan(s), 6); const out = [];
-  for (let d = addD(s, 1); d <= zo; d = addD(d, 1)) (AP.collegas || []).forEach(c => { if (c.md === d.slice(5)) out.push({ c, d }); });
+  for (let d = addD(s, 1); d <= zo; d = addD(d, 1)) (AP.collegas || []).forEach(c => { if (jarigOp(c, d)) out.push({ c, d }); });
   return out;
 }
 const voornaam = c => /,/.test(c.naam) ? c.naam.split(',')[1].trim().split(/\s+/)[0] : c.naam.split(/\s+/)[0];
@@ -2160,7 +2163,7 @@ function paletToon() {
   const sel = $('#palL .sel'); if (sel) sel.scrollIntoView({ block: 'nearest' });
 }
 function paletKies(j) { const a = PAL && PAL.L[j]; if (!a) return; if (a.zet != null) { $('#palQ').value = a.zet; PAL.q = a.zet; PAL.i = 0; paletToon(); $('#palQ').focus(); return; } paletDicht(); a.run(); }
-const DAGW = { zondag: 0, maandag: 1, dinsdag: 2, woensdag: 3, donderdag: 4, vrijdag: 5, zaterdag: 6, ma: 1, di: 2, wo: 3, do: 4, vr: 5 };
+const DAGW = { zondag: 0, maandag: 1, dinsdag: 2, woensdag: 3, donderdag: 4, vrijdag: 5, zaterdag: 6, ma: 1, di: 2, wo: 3, do: 4, vr: 5, za: 6 };
 function datumVan(dag, mnd) { // de eerstvolgende keer; '' als de datum niet bestaat (31 februari)
   const j = dOf(vandaag()).getFullYear();
   for (let y = j; y <= j + 4; y++) { const D = new Date(y, mnd, dag, 12); if (D.getMonth() !== mnd || D.getDate() !== dag) continue; const x = ymd(D); if (x >= vandaag()) return x; }
@@ -2188,7 +2191,7 @@ function leesTaak(q, dagHint, los) { // los: in de agenda telt 11-12 als tijd en
   if (pak(/\s(?:eer)?gisteren(?=\s)/i)) fouten.push('Gisteren is al voorbij. Kies vandaag of een dag die nog komt.');
   if ((m = pak(/\s(vandaag|morgen|overmorgen)(?=\s)/i))) dag = addD(s0, { vandaag: 0, morgen: 1, overmorgen: 2 }[m[1].toLowerCase()]);
   const vw = pak(/\svolgende\s+week(?=\s)/i);
-  if ((m = pak(/\s(maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|ma|di|wo|do|vr)(?=\s)/i))) { const wd = DAGW[m[1].toLowerCase()]; let d = s0; while (dOf(d).getDay() !== wd) d = addD(d, 1); if (vw && d < addD(maandagVan(s0), 7)) d = addD(d, 7); dag = d; }
+  if ((m = pak(/\s(maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|ma|di|wo|do|vr|za)(?=\s)/i))) { const wd = DAGW[m[1].toLowerCase()]; let d = s0; while (dOf(d).getDay() !== wd) d = addD(d, 1); if (vw && d < addD(maandagVan(s0), 7)) d = addD(d, 7); dag = d; }
   else if (vw) dag = addD(maandagVan(s0), 7);
   const geenDatum = (d, mn) => fouten.push(`${d} ${MAANDEN[mn] || 'van maand ' + (mn + 1)} bestaat niet. Kies een datum die bestaat.`);
   if (!dag && (m = pak(/\s(\d{1,2})[-\/](\d{1,2})(?=\s)/))) { dag = +m[2] >= 1 && +m[2] <= 12 ? datumVan(+m[1], +m[2] - 1) : ''; if (!dag) geenDatum(+m[1], +m[2] - 1); }
@@ -3074,6 +3077,7 @@ document.addEventListener('submit', e => {
     if (!u.groep) return;
     const a = minuten(u.start), b = minuten(u.eind);
     if (!u.start || !u.eind || b <= a) { toast(b === a ? 'Begin en eind zijn gelijk. Kies een eindtijd na de begintijd.' : `Het uur eindigt (${u.eind}) vóór het begint (${u.start}). Kies een eindtijd na de begintijd.`); return; }
+    if (S.rooster.some(x => +x.dag === u.dag && minuten(x.start) === a && x.groep === u.groep)) { toast(`${u.groep} heeft ${DAGLANG[u.dag]} om ${u.start} al les. Een uur kan niet twee keer.`); return; } // dezelfde klas op dezelfde tijd is een dubbel uur
     const over = S.rooster.filter(x => +x.dag === u.dag && minuten(x.start) < b && minuten(x.eind) > a); // waarschuwen, niet weigeren: twee groepen in één uur kan
     const waar = [over.length ? `het overlapt met ${lijstTxt(over.map(x => `${x.groep} ${x.start.replace(/^0/, '')}-${x.eind.replace(/^0/, '')}`))}` : '', b - a > 120 ? `het duurt ${Math.floor((b - a) / 60)} uur${(b - a) % 60 ? ' en ' + (b - a) % 60 + ' min' : ''}` : ''].filter(Boolean);
     const terug = foto(); S.rooster.push(u); bewaar(); toast(`${DAGLANG[u.dag]} ${u.start} ${u.groep} toegevoegd${waar.length ? ". Let op: " + waar.join(' en ') + '.' : ''}`, waar.length ? terug : undefined);
