@@ -503,10 +503,43 @@ sc('Reclametaken: eigen activiteit en afvinken', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('reclame');
   await P.page.fill('#recT', 'Open dag muziek'); await P.page.fill('#recD', '2026-12-02'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(200);
   let S = await P.S(); const x = (S.reclameExtra || []).find(e => /Open dag muziek/.test(e.titel)); ok(x && x.d === '2026-12-02', 'eigen activiteit staat erin: ' + JSON.stringify(S.reclameExtra));
+  await P.page.fill('#recT', '   '); await P.page.fill('#recD', '2026-12-01'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(100);
+  ok(/Typ wat de activiteit is/.test(await P.toast()), 'lege titel (spaties) geeft een melding: ' + await P.toast()); gelijk(((await P.S()).reclameExtra || []).length, 1, 'lege titel voegt niets toe');
   await P.page.fill('#recT', 'Gisteren'); await P.page.fill('#recD', '2026-11-15'); await P.page.locator('#recForm button[type=submit]').click(); await P.page.waitForTimeout(100); gelijk(((await P.S()).reclameExtra || []).length, 1, 'verleden datum wordt geweigerd');
   const vinkjes = await P.page.locator('[data-recvink]').count(); ok(vinkjes >= 1, 'in Reclame staan afvinkbare momenten (' + vinkjes + ')');
   if (vinkjes) { const id = await P.page.locator('[data-recvink]').first().getAttribute('data-recvink'); await klikData(P, `[data-recvink="${id}"]`); S = await P.S(); ok(S.reclameAf && S.reclameAf[id], 'afvinken zet reclameAf voor ' + id); await klikData(P, `[data-recvink="${id}"]`); ok(!(await P.S()).reclameAf[id], 'weer uitvinken'); }
   await klikData(P, `[data-recweg="${x.id}"]`); ok(!((await P.S()).reclameExtra || []).length, 'weg haalt de activiteit weg');
+});
+sc('Weekinfo-deadline: maandag 14:00 boven aan Nu, daarna te laat, dinsdag nog zichtbaar (bevinding 64)', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-11-30', '08:12') }); await P.open('nu'); const zin = async () => (await P.tekst('.ens-zin')).replace(/\s+/g, ' ');
+  const tijden = {};
+  for (const [t, d] of [['08:12', '2026-11-30'], ['11:50', '2026-11-30'], ['13:50', '2026-11-30'], ['14:10', '2026-11-30'], ['08:15', '2026-12-01']]) { try { await P.klok(nlIso(d, t), 'nu'); tijden[d + ' ' + t] = await zin(); } catch (e) { tijden[d + ' ' + t] = 'FOUT ' + e.message.slice(0, 80) + ' ' + (await P.page.evaluate(() => document.body.innerText.slice(0, 200))); } }
+  ok(!/weekinfo/i.test(tijden['2026-11-30 08:12']) && !/weekinfo/i.test(tijden['2026-11-30 11:50']), 'vóór 12:00 geen weekinfo boven aan Nu');
+  ok(/weekinfo.*14:00/i.test(tijden['2026-11-30 13:50']), '13:50: weekinfo met 14:00 boven aan Nu: ' + tijden['2026-11-30 13:50']);
+  ok(/was om 14:00.*Nog mailen/.test(tijden['2026-11-30 14:10']), '14:10: te laat: ' + tijden['2026-11-30 14:10']);
+  await P.klok(nlIso('2026-12-01', '08:15'), 'nu'); ok(await P.page.locator('.ens-meld [data-recvink="koor:2026-12-18#wi2"]').count() === 1, 'dinsdag: de gemiste weekinfo staat onder Blijft liggen, tot hij af is');
+});
+sc('Reclame: geen weekinfo of bord op een geschatte examenconcertdatum (bevinding 65)', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2027-02-01', '08:15') }); await P.open('reclame');
+  const kaart = P.page.locator('#rec-ex-mavo4-P2'); ok(await kaart.count() === 1, 'examenconcert mavo 4 staat in Reclame');
+  ok(/datum staat nog niet vast/i.test(await kaart.innerText()), 'de kaart zegt dat de datum nog niet vaststaat');
+  gelijk(await kaart.locator('[data-recmail], [data-recvink], [data-recbord]').count(), 0, 'geen mailknop, vinkje of bord op een geschatte datum');
+  gelijk(await P.page.locator('[data-recvink^="ex:"]').count(), 0, 'Reclame rekent niet met de geschatte datum');
+  await P.open('nu'); ok(!/Examenconcert mavo 4/.test(await P.tekst()), 'Nu noemt geen reclame voor het examenconcert');
+  await P.open('reclame'); await klikData(P, '[data-recdatumklopt="ex:mavo4:P2"]');
+  ok(await P.page.locator('#rec-ex-mavo4-P2 [data-recvink]').count() >= 1, 'na "De datum klopt" komen de weekinfo en het bord');
+});
+sc('Examenconcert: vaste voorbereidingstaken, eerst de datum, daarna de rest (bevinding 66)', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-11-12', '08:15') }); await P.open('vandaag');
+  const kort = x => x.slice(0, 200).replace(/\n/g, ' ');
+  let t = await P.tekst(); ok(/Datum, tijd en plaats vastleggen \(Examenconcert vwo ?6\)/.test(t), 'onvaste datum: alleen de taak om de datum vast te leggen: ' + kort(t));
+  ok(!/Zaal en tijden regelen/.test(t), 'de rest van de voorbereiding wacht op de datum');
+  await P.wijzig(s => { s.reclame = s.reclame || {}; s.reclame['ex:vwo6:P19'] = { d: '2027-01-11' }; }, 'vandaag');
+  await P.klok(nlIso('2026-11-30', '08:15'), 'vandaag'); t = await P.tekst();
+  ok(/Zaal en tijden regelen \(Examenconcert vwo ?6\)/.test(t) && /Groepen en taken bevestigen/.test(t), 'vaste datum: zaal en groepen staan erbij: ' + kort(t));
+  ok(!/Datum, tijd en plaats vastleggen \(Examenconcert vwo/.test(t), 'de datumtaak is weg');
+  const id = await P.page.locator('[data-koorvink^="exam-voor-vwo6-P19-"]').first().getAttribute('data-koorvink'); await klikData(P, `[data-koorvink="${id}"]`);
+  ok((await P.S()).koorAf[id], 'afvinken zet koorAf voor ' + id);
 });
 sc('Pauzes: zelf invullen, en met Zermelo-pauzes houdt de agenda ze vrij', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('instellingen'); await P.page.evaluate(() => document.querySelector('#pzForm').closest('details').open = true);
