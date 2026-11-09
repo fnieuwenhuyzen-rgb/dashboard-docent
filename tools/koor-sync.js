@@ -72,6 +72,16 @@ const VOORBEREIDING = [
   ['kopieen', 7, 'Extra muziek kopiëren', 'De extra kopieën gaan mee naar het concert (papieren checklist), voor als iemand muziek mist. Klaar als ze klaarliggen. Het kopieerrecht is een aparte taak.'],
   ['blaadje', 3, 'Blaadje met alle afspraken en de checklist printen', 'Na de laatste repetitie, dan klopt het nog.']
 ];
+// losse taken uit "vrede op aarde carols 26-versie5.docx" (Optredens/2026-12-18 Christmas Carols/Planning), vergeleken met de partituren en de koorapp (9-11-2026)
+const EENMALIG = [
+  ['correcties', '2026-11-13', 'Correcties op programma versie 5 doorgeven aan Mar', 'The Lord at first did Adam make is nu het arrangement van Philip Le Bas, in het programma staat nog David Willcocks. Prince of Peace is van Monica Scott, in het programma staat Schott. De titel is Once in royal David\'s city.'],
+  ['sax', '2026-11-13', 'Sopraansax en percussie bij Star of Wonder en Drop, drop: beslissen en spelers regelen', 'Die partijen staan in de partituren (sopraansax bij beide; bongo\'s, conga\'s, shaker en woodblock bij Star of Wonder), maar niet in programma versie 5. Geef de keuze door aan Mar. Op 24 nov staat Star of Wonder samen met de begeleiding op het repetitieplan.'],
+  ['koorapp', '2026-11-20', 'Programma in de koorapp gelijktrekken met versie 5', 'Harp bij Dona nobis pacem na lezing 6, trombone bij het Benedictus, blazers bij Eer zij God en de laatste Prince of Peace, recitatief And suddenly there was with the angel in plaats van There were angels. Wacht op het antwoord van Mar over de correcties.'],
+  ['harp', '2026-11-20', 'Harp bij Dona nobis pacem afspreken', 'Nieuw in versie 5: PM met harp na lezing 6. Er is nog geen harppartij. Spreek af wat de harp speelt, in welke toonsoort, hoe vaak de canon rondgaat en hoe het eindigt. Vooraf in de hal zingt PM zonder harp.'],
+  ['benedictus', '2026-11-20', 'Benedictus met Con Spirito en trombone afspreken', 'Nieuw in versie 5: plus trombone. Wie dirigeert, wie speelt de trombone en uit welke partij, en repeteren PM en Con Spirito vóór de concertdag nog samen? Volgens Praktisch is de soundcheck op 18 dec de eerste keer samen.'],
+  ['blazers', '2026-11-27', 'Met de blazers afstemmen welke zetting en coupletten', 'Once in royal, Eer zij God, Prince of Peace (slot), Hark the herald en Komt allen tezamen. Spelen ze dezelfde zetting als in de koormappen, en wat gebeurt er in het laatste couplet (descant)?'],
+  ['hal', '2026-12-04', 'Dona nobis pacem in de hal: start en looproute afspreken', 'Hoe laat begint PM, wie geeft de toon, wanneer stopt de canon en hoe komt PM daarna op de plek voor Once in royal? Op 15 dec staat de hal op het repetitieplan.']
+].map(([k, d, titel, sub]) => ({ id: `koor-carols-2026-v5-${k}`, titel: `${titel} (Christmas Carols)`, d, sub: `${sub} Concert: vr 18 dec.`, zicht: 7, tot: '2026-12-18' }));
 const ZICHT = 7, TE_LAAT = 7; // een taak komt een week voor de deadline in beeld; nieuwe taken met een deadline langer dan een week geleden worden niet meer aangemaakt
 const bestond = new Set(((basis.koor || {}).taken || []).map(t => t.id)); // wat al bestond blijft staan: een open taak verdwijnt niet door een nieuwe sync
 // taken voor de dirigent: wat de koordata zelf als open aangeeft, plus de vaste voorbereiding
@@ -94,6 +104,8 @@ for (const a of agenda) {
   }
 }
 for (const v of data.voorjaar || []) if (/datum volgt/i.test(v.text || '')) taken.push({ id: 'koor-voorjaar', titel: `${v.title}: datum vastleggen`, sub: v.text });
+// losse taken uit een programma of ander stuk; staan hier zodat een nieuwe sync ze niet weggooit. Weg zodra het concert voorbij is.
+for (const t of EENMALIG) if (t.tot >= vandaag) taken.push(t);
 
 basis.koor = { bron: 'Koorapp', url: URL, inhoudsversie: versie, bijgewerkt: new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Amsterdam' }).slice(0, 16),
   standaard: { dag: 2, van: '12:45', tot: '14:00', titel: 'Schoolkoor' }, agenda, taken };
