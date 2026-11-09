@@ -22,6 +22,7 @@ const STAPPEN = [
   ['Nieuwe versie (service worker)', 'test-nieuwe-versie.js', []],
   ['Automatische kopie', 'test-autokopie.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
+  ['Routes toetsdag PT1 vwo 4 (headless, ±20 s)', 'test-routes-toetsdag.js', []],
   ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []]] : []),
 ];
 const uitslag = []; const t0 = Date.now();
