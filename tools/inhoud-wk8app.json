@@ -28,10 +28,6 @@
       "t": "P9 format zelfbeoordeling leerling (Word)",
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Format%20zelfbeoordeling%20leerling.docx?web=1"
     },
-    "pres-vwo5-2": {
-      "t": "Presentatie: Inspelen en terugluisteren (PowerPoint)",
-      "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/Lessen%202026-2027/08.2%20Inspelen%20en%20terugluisteren.pptx?web=1"
-    },
     "pres-vwo5-2-b1": {
       "t": "P9 format zelfbeoordeling leerling (Word)",
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%205/P9%20Praktijktoets%20-%20Solowerk%20en%20samenspel%20classicisme/Beoordeling/P9%20Format%20zelfbeoordeling%20leerling.docx?web=1"
@@ -309,7 +305,6 @@
         "tekst": "Format voor je eigen uitvoering: één concreet punt voor P10."
       },
       "materiaal": [
-        "pres-vwo5-2",
         "mb",
         "pres-vwo5-2-b1"
       ]
