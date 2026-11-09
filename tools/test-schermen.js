@@ -1,6 +1,7 @@
-// node tools/test-schermen.js [--poort=8748] [--map=<andere public-map>] [--snel] [--breedte=1280,375] [--toon]
+// node tools/test-schermen.js [--poort=8748] [--map=<andere public-map>] [--snel] [--breedte=1280,375] [--formaten=alle|snel|geen] [--toon]
 // Schermtest: opent Lesdag headless met een verzonnen rooster en loopt elk scherm langs op nagebootste tijden en twee breedtes.
 // Faalt op: de foutmelding "Dit scherm lukt nu niet" (of "Lesdag start niet"), consolefouten/uitzonderingen, horizontale overloop.
+// Formaten (8-11): daarnaast elk scherm op 375×812, 412×915, tablet 800×1280 en 1280×800 (met aanraking), laptop 1366×768 en 1920×1080: horizontale overloop, tikdoelen onder 44 px op aanraakschermen (dichte rasters: weekknoppen en toetsen minstens 24 px breed, tikvlak 44 px hoog) en het toetsenbord (Enter opent een paneel en zet de focus erin, Esc sluit en brengt de focus terug).
 // Playwright staat bewust NIET in de repo: installeer eenmalig buiten de repo (zie tools/TESTEN.md) en wijs ernaar met NODE_PATH:
 //   NODE_PATH=C:/Users/nwn/lesdag-werk/_testgereedschap/node_modules node tools/test-schermen.js
 // Browser: Microsoft Edge of Chrome die al op de laptop staan (LESDAG_BROWSER=<pad naar exe> om er een te kiezen).
@@ -8,6 +9,7 @@
 const cp = require('child_process'), net = require('net'), path = require('path'), fs = require('fs');
 const args = process.argv.slice(2); const arg = (n, d) => { const a = args.find(x => x.startsWith('--' + n + '=')); return a ? a.split('=')[1] : d; };
 const SNEL = args.includes('--snel'), TOON = args.includes('--toon');
+const FORMATEN_KEUZE = arg('formaten', SNEL ? 'snel' : 'alle');
 const BREEDTES = arg('breedte', '1280,375').split(',').map(Number);
 
 let pw; try { pw = require('playwright-core'); } catch (e) { try { pw = require('playwright'); } catch (e2) { console.log('OVERGESLAGEN: Playwright niet gevonden (zet NODE_PATH, zie tools/TESTEN.md).'); process.exit(2); } }
@@ -85,10 +87,68 @@ const bladeren = [process.env.LESDAG_BROWSER, 'C:/Program Files (x86)/Microsoft/
     }
     await ctx.close();
   }
+  // ---- formaten en bediening (8-11): zes formaten, tikdoelen en toetsenbord; alles op "tijdens een les" (de lesklokbalk staat dan bovenin) ----
+  const FORMATEN = [['telefoon 375×812', 375, 812, true], ['telefoon 412×915', 412, 915, true], ['tablet staand 800×1280', 800, 1280, true], ['tablet liggend 1280×800', 1280, 800, true], ['laptop 1366×768', 1366, 768, false], ['laptop 1920×1080', 1920, 1080, false]]
+    .filter(f => FORMATEN_KEUZE === 'alle' || (FORMATEN_KEUZE === 'snel' && (f[1] === 375 || f[1] === 1280 && f[3])));
+  const TIJD_LES = TIJDEN.find(t => t[0] === 'tijdens een les')[1];
+  const nieuweContext = async (w, h, touch) => {
+    const c = await browser.newContext({ viewport: { width: w, height: h }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block', hasTouch: touch });
+    await c.route(u => !u.href.startsWith(basis), r => r.fulfill({ status: 200, contentType: r.request().resourceType() === 'stylesheet' ? 'text/css' : 'text/plain', body: '' }));
+    await c.route(u => u.pathname.startsWith('/api/'), r => r.fulfill({ status: 404, contentType: 'application/json', body: '{}' }));
+    await c.addInitScript(([staat]) => { try { if (!sessionStorage.getItem('lesdag-test-ingesteld')) { localStorage.setItem('lesdag-staat', JSON.stringify(staat)); sessionStorage.setItem('lesdag-test-ingesteld', '1'); } } catch (e) {} }, [STAAT]);
+    const p = await c.newPage(); await p.clock.setFixedTime(new Date(TIJD_LES));
+    await p.goto(basis + '#nu', { waitUntil: 'load' }); await p.waitForFunction(() => document.querySelector('#main') && !/Lesdag laden/.test(document.querySelector('#main').textContent), null, { timeout: 8000 }).catch(() => {});
+    return [c, p];
+  };
+  const TIKDOELEN = () => { // zichtbare bedieningselementen kleiner dan 44 px; de ::after van een dicht raster telt als tikvlak
+    const vis = e => { const r = e.getBoundingClientRect(), cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && !e.closest('[hidden],[inert]') && (e.offsetParent !== null || cs.position === 'fixed'); };
+    const uit = [];
+    document.querySelectorAll('a[href],button,input:not([type=hidden]),select,textarea,summary,[role=button]').forEach(e => {
+      if (!vis(e) || e.closest('#les[hidden]')) return;
+      if (e.tagName === 'A' && getComputedStyle(e).display === 'inline' && e.closest('p,li,span,td,small')) return; // een link in lopende tekst
+      const r = e.getBoundingClientRect(); let W = r.width, H = r.height;
+      const ps = getComputedStyle(e, '::after'); if (ps.content !== 'none' && ps.position === 'absolute') { W = parseFloat(ps.width) || W; H = parseFloat(ps.height) || H; }
+      const dicht = e.matches('.w,.jr-toets,.tussen'); // jaarrooster en cijferknoppen: te veel naast elkaar voor 44 px breed; 24 px breed en 44 px hoog
+      if (H < 43.5 || (W < 43.5 && !(dicht && W >= 24))) uit.push((e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/)[0] : '') + ' "' + (e.getAttribute('aria-label') || e.textContent || e.value || '').trim().slice(0, 20) + '" ' + Math.round(W) + '×' + Math.round(H)));
+    });
+    return uit;
+  };
+  for (const [fnaam, w, h, touch] of (FORMATEN_KEUZE === 'geen' ? [] : FORMATEN)) {
+    const [fctx, fpage] = await nieuweContext(w, h, touch); let nu = 'start';
+    fpage.on('pageerror', e => fout(nu, fnaam, w, 'uitzondering', String(e.message).slice(0, 200)));
+    for (const [naam, hash] of SCHERMEN.concat([['Regie', 'regie/t1/2026-11-16']])) {
+      nu = naam; await fpage.evaluate(x => { location.hash = x; }, hash); await fpage.waitForTimeout(150);
+      const r = await fpage.evaluate(`(() => { const T = ${TIKDOELEN.toString()}; return { breder: document.documentElement.scrollWidth - window.innerWidth, klein: matchMedia('(pointer:coarse)').matches ? T() : [] }; })()`); gemeten++;
+      if (r.breder > 1) fout(naam, fnaam, w, 'horizontale overloop', r.breder + 'px te breed');
+      for (const k of r.klein) fout(naam, fnaam, w, 'tikdoel onder 44 px', k);
+    }
+    await fctx.close();
+  }
+  // toetsenbord: Enter opent een paneel en zet de focus erin, Esc sluit en brengt de focus terug bij de knop; de lesmodus idem
+  if (FORMATEN_KEUZE !== 'geen') {
+    const [kctx, kpage] = await nieuweContext(1366, 768, false); let nu = 'toetsenbord';
+    kpage.on('pageerror', e => fout(nu, 'toetsenbord', 1366, 'uitzondering', String(e.message).slice(0, 200)));
+    const welke = () => kpage.evaluate(() => { const a = document.activeElement; return { id: a && (a.id || a.getAttribute('data-taakopen') || a.getAttribute('data-l') || (a.textContent || '').trim().slice(0, 25)), in: a ? ['drawer', 'palet', 'nw', 'les'].find(i => document.getElementById(i) && document.getElementById(i).contains(a)) || '' : '', open: ['drawer', 'palet', 'nw', 'les'].filter(i => { const e = document.getElementById(i); return e && (i === 'drawer' ? e.classList.contains('open') : !e.hidden); }) }; });
+    const scenario = async (scherm, hash, kies, wat) => {
+      nu = scherm; await kpage.evaluate(x => { location.hash = x; }, hash); await kpage.waitForTimeout(250);
+      const knop = kpage.locator(kies).first(); if (!await knop.count()) { fout(scherm, 'toetsenbord', 1366, 'toetsenbord', wat + ': knop niet gevonden'); return; }
+      await knop.focus(); const voor = await welke(); await kpage.keyboard.press('Enter'); await kpage.waitForTimeout(350); const open = await welke();
+      if (!open.open.length) fout(scherm, 'toetsenbord', 1366, 'toetsenbord', wat + ': Enter opent niets');
+      else if (!open.in) fout(scherm, 'toetsenbord', 1366, 'toetsenbord', wat + ': focus gaat het paneel (' + open.open.join('+') + ') niet in');
+      await kpage.keyboard.press('Escape'); await kpage.waitForTimeout(300); const na = await welke();
+      if (na.open.length) fout(scherm, 'toetsenbord', 1366, 'toetsenbord', wat + ': Esc sluit ' + na.open.join('+') + ' niet');
+      else if (na.id !== voor.id) fout(scherm, 'toetsenbord', 1366, 'toetsenbord', wat + ': focus komt niet terug bij de knop (nu "' + na.id + '", was "' + voor.id + '")');
+    };
+    await scenario('Dag', 'vandaag', 'button.taak-open', 'taak openen');
+    await scenario('Dag', 'vandaag', 'button:has-text("Nieuw")', 'nieuw item');
+    await scenario('Nu', 'nu', 'button:has-text("Les op dit scherm")', 'lesmodus');
+    await scenario('Week', 'week', 'button:has-text("Nieuw")', 'nieuw item');
+    await kctx.close();
+  }
   await browser.close(); server.kill();
 
   const dur = ((Date.now() - t0) / 1000).toFixed(1);
-  console.log(`Schermtest: ${gemeten} metingen (${SCHERMEN.length + 1} schermen × ${tijden.length} tijden × ${BREEDTES.join(' en ')} px) in ${dur} s.`);
+  console.log(`Schermtest: ${gemeten} metingen (${SCHERMEN.length + 1} schermen × ${tijden.length} tijden × ${BREEDTES.join(" en ")} px, plus formaten en toetsenbord: ${FORMATEN_KEUZE}) in ${dur} s.`);
   if (!fouten.size) { console.log('Alle schermen in orde.'); process.exit(0); }
   const perScherm = {}; for (const e of fouten.values()) (perScherm[e.scherm] = perScherm[e.scherm] || []).push(e);
   for (const [s, lijst] of Object.entries(perScherm)) { console.log('\n' + s + ':'); for (const e of lijst) console.log(`  ${e.soort}: ${e.tekst}  [${TOON ? e.waar.join('; ') : e.waar.length + 'x, o.a. ' + e.waar.slice(0, 2).join('; ')}]`); }
