@@ -18,7 +18,8 @@ const ROOSTER = [
   uur('t13', 5, '8:30', '9:15', 'th3'), uur('t14', 5, '9:15', '10:00', 'tb1'),
 ];
 const GROEPEN = { tv4: 'vwo4', tv5: 'vwo5', th3: 'havo3', tb1: 'bb1', tm4: 'mavo4' };
-const BASISSTAAT = () => ({ v: 1, rooster: JSON.parse(JSON.stringify(ROOSTER)), groepLeergang: Object.assign({}, GROEPEN), magVanaf: '2026-08-01', beoord: { toetsen: {}, lijsten: {} } });
+const STAAT = require(path.join(__dirname, '..', 'public', 'staat.js')); // de teststaat is van nu: zonder schema loopt hij door de migratieketen (o.a. de herindeling van vwo 5 schuift dan les-id's op)
+const BASISSTAAT = () => ({ v: 1, schema: STAAT.SCHEMA, rooster: JSON.parse(JSON.stringify(ROOSTER)), groepLeergang: Object.assign({}, GROEPEN), magVanaf: '2026-08-01', beoord: { toetsen: {}, lijsten: {} } });
 const MA = '2026-11-16T09:50:00+01:00'; // maandag lesweek 11, tussen de lessen van tv4 en tb1
 
 // ---- harnas ----
@@ -621,7 +622,7 @@ sc('Dag afsluiten: wat ging goed, open taak inplannen voor morgen, heropenen', a
   ok((await P.S()).goed['2026-11-17'] === 'Goede les met v5', 'de notitie is bewaard');
   const slots = await P.page.$$eval('[data-slot*="eigen:f1"]', e => e.map(x => x.dataset.slot.split('|')[1])); ok(slots.every(d => d >= '2026-11-18' && d <= '2026-11-20'), 'alle voorstellen liggen vanaf morgen tot en met de deadline (vr 20 nov): ' + slots.join(', '));
   const chip = P.page.locator('[data-slot*="eigen:f1"]'); if (await chip.count()) { await chip.first().evaluate(e => e.click()); await P.page.waitForTimeout(200); const k = (await P.S()).taken[0]; ok(k.plan && k.plan.dag >= '2026-11-18' && k.plan.dag <= '2026-11-20', 'de taak staat vóór zijn deadline: ' + JSON.stringify(k.plan)); }
-  await P.page.locator('[data-afsluiten="2026-11-17"]').first().evaluate(e => e.click()); await P.page.waitForTimeout(150); let S = await P.S(); ok(S.afgesloten['2026-11-17'] && S.goed['2026-11-17'] === 'Goede les met v5', 'afgesloten met notitie'); ok(/Morgen staat klaar/.test(await P.toast()), 'melding: Morgen staat klaar');
+  await P.page.locator('[data-afsluiten="2026-11-17"]').first().evaluate(e => e.click()); await P.page.waitForTimeout(150); let S = await P.S(); ok(S.afgesloten['2026-11-17'] && S.goed['2026-11-17'] === 'Goede les met v5', 'afgesloten met notitie'); { const tt = await P.toast(); ok(/Dag afgesloten./.test(tt) && /\d+ punten? sta(at|an) nog open/.test(tt) && !/Morgen staat klaar/.test(tt), 'melding noemt wat nog open staat: ' + tt); }
   await P.klik('.toast-terug'); S = await P.S(); ok(!S.afgesloten['2026-11-17'], 'Ongedaan maken heropent de dag');
 });
 sc('Ik ben er niet: ongeldige perioden worden geweigerd', async nieuw => {
@@ -746,7 +747,7 @@ async function doorloopDagen(P, dagen, rooster, lgVan, metZermelo) { // met Zerm
   for (const [g, lg] of Object.entries(lgVan)) {
     const verwacht = Object.entries(uren[g]).reduce((t, [w, c]) => t + (metZermelo ? c : lessenInWeek(lg, +w, c)), 0); const ids = Object.keys(S.voortgang[g] || {});
     gelijk(ids.length, n0[g] + verwacht, g + ' (' + dagen[0] + ' t/m ' + dagen[dagen.length - 1] + '): aantal gegeven lessen' + (gemist.length ? '; geen knop gegeven voor ' + gemist.filter(x => x.includes(' ' + g + ':') || / [a-z0-9]+ /.test(x) && x.split(' ')[2] === g).map(x => x.slice(0, 40)).join(', ') : ''));
-    const eerste = reeksIds(lg).slice(0, ids.length).map(x => x.id).sort(); ok(JSON.stringify(ids.slice().sort()) === JSON.stringify(eerste), g + ': precies de eerste ' + ids.length + ' lessen van de leergang, geen gat of dubbele');
+    const eerste = reeksIds(lg).slice(0, ids.length).map(x => x.id).sort(); if (JSON.stringify(ids.slice().sort()) !== JSON.stringify(eerste)) console.log('   VERSCHIL', g, 'alleen gegeven:', ids.filter(x => !eerste.includes(x)).join(','), '| alleen verwacht:', eerste.filter(x => !ids.includes(x)).join(',')); ok(JSON.stringify(ids.slice().sort()) === JSON.stringify(eerste), g + ': precies de eerste ' + ids.length + ' lessen van de leergang, geen gat of dubbele');
   }
   return { afgesloten };
 }
