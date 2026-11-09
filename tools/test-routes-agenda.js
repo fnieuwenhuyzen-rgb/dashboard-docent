@@ -44,7 +44,7 @@ const maandag = d => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getU
 const plus = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
 function zermeloWeek(ma, o = {}) {
   const uit = [];
-  for (const u of ROOSTER) {
+  for (const u of (o.rooster || ROOSTER)) {
     if (o.zonderDag && o.zonderDag.includes(u.dag)) continue;
     const d = plus(ma, u.dag - 1); const [h, m] = u.start.split(':');
     uit.push({ d, start: u.start.padStart(5, '0'), eind: u.eind.padStart(5, '0'), groepen: [(typeof ZG !== 'undefined' && ZG[u.groep]) || u.groep], vakken: ['mu'], locations: [u.lokaal], cancelled: !!(o.vervallen && o.vervallen.includes(u.id)) });
@@ -327,9 +327,10 @@ sc('Inhalen: later beslissen zet de melding een dag uit', async nieuw => {
   ok(!/raakt krap/.test(await P.tekst()), 'de melding is weg');
   await P.klok('2027-01-05T07:30:00+01:00', 'vandaag'); ok(/tm4 raakt krap/.test(await P.tekst()) || true, '');
 });
+const PT1_NA = '2026-11-30T07:30:00+01:00'; // PT1 van vwo4 staat in basis.json op ma 23 nov; een week later is hij gemist
 sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
-  // vwo4 T1 staat in toetsweek (vast); PT1 (week 10, ma 9 nov) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
-  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
+  // vwo4 T1 staat in toetsweek (vast); PT1 (basis.json: ma 23 nov, verplaatst) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
+  const P = await nieuw({ tijd: PT1_NA, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
   const t = await P.tekst(); ok(/tv4: PT1/.test(t), 'melding over PT1: ' + (t.match(/[^\n]*PT1[^\n]*/) || ['(geen)'])[0]);
   ok(await P.page.locator('[data-markeer^="tv4|"]').count() > 0, 'Is gegeven staat erbij');
   await klikData(P, '[data-ankeropen^="tv4|"]'); const f = await P.tekst('#ankerForm'); ok(!!f, 'het verplaatsformulier opent: ' + (f || '').slice(0, 120));
@@ -341,8 +342,8 @@ sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
   await P.page.evaluate(() => {});
 });
 sc('Toets: Is gegeven na een gemist uur', async nieuw => {
-  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
-  await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-16'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
+  const P = await nieuw({ tijd: PT1_NA, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
+  await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-30'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
   ok(!/tv4: PT1/.test(await P.tekst()), 'de melding is weg');
 });
 
@@ -409,7 +410,7 @@ const minPlus = (hm, n) => { const [h, m] = hm.split(':').map(Number); const t =
 // Geeft alle lessen van een dag les: na elk uur op Nu "gegeven" kiezen. rooster: de uren van die weekdag.
 async function geefLessen(P, dag, rooster) { // na elk uur op Nu "gegeven" kiezen; bij aansluitende uren kan dat pas na het laatste uur
   const uren = rooster.filter(u => +u.dag === wdag(dag)).sort((a, b) => a.start.padStart(5, '0') < b.start.padStart(5, '0') ? -1 : 1); let n = 0; const mis = [];
-  const probeer = async u => { const knop = P.page.locator(`[data-rondaf="${dag}|${u.id}|gegeven"]`); if (await knop.count()) { await knop.first().evaluate(e => e.click()); await P.page.waitForTimeout(150); n++; return true; } return false; };
+  const probeer = async u => { const knop = P.page.locator(`[data-rondaf="${dag}|${u.id}|gegeven"], [data-rondaf^="${dag}|z-${u.start.padStart(5, '0')}-"][data-rondaf$="-${u.groep}|gegeven"]`); /* met Zermelo heten de uren z-<begintijd>-<groep> */ if (await knop.count()) { await knop.first().evaluate(e => e.click()); await P.page.waitForTimeout(150); n++; return true; } return false; };
   for (const u of uren) { await P.klok(nlIso(dag, minPlus(u.eind.padStart(5, '0'), 1)), 'nu'); if (!(await probeer(u))) mis.push(u); }
   for (const u of mis) { await P.klok(nlIso(dag, minPlus(uren[uren.length - 1].eind.padStart(5, '0'), 3)), 'nu'); if (!(await probeer(u))) (P.gemist = P.gemist || []).push(dag + ' ' + u.id + ' ' + u.groep + ': ' + (await P.tekst()).slice(0, 260).replace(/\n/g, ' | ')); }
   return n;
@@ -711,6 +712,98 @@ sc('Sectietaak plannen via Blijft liggen en afvinken van de ingeplande kopie', a
     ok(await P.zichtbaar('#planForm'), 'Plan opent het planformulier voor een sectietaak'); await P.page.locator('#planForm button[type=submit]').click(); await P.page.waitForTimeout(200); let S = await P.S();
     const k = S.taken.find(x => x.sectieId === key.slice(4)); ok(k && k.plan, 'er is een ingeplande kopie met sectieId: ' + JSON.stringify(k && k.plan)); gelijk(await P.liggen(), n0 - 1, 'de teller loopt terug');
     await P.page.locator(`[data-taakaf="${k.id}"]`).first().evaluate(e => e.click()); await P.page.waitForTimeout(200); S = await P.S(); ok(S.sectieAf[k.sectieId], 'het afvinken van de kopie vinkt de sectietaak af'); }
+});
+// ---- ronde 3: hele weken met tellers, over vakantie, jaarwisseling, zomertijd en einde schooljaar ----
+// Een rooster zoals het echt is: per klas evenveel uren als de leergang lessen per week heeft (vwo4 2, vwo5 3, havo3 1, bb1 1, mavo4 2).
+const ROOSTER_ECHT = [
+  uur('e1', 1, '8:30', '9:15', 'tv4'), uur('e2', 3, '9:15', '10:00', 'tv4'),
+  uur('e3', 2, '11:15', '12:00', 'tv5'), uur('e4', 3, '10:15', '11:00', 'tv5'), uur('e5', 5, '10:15', '11:00', 'tv5'),
+  uur('e6', 5, '8:30', '9:15', 'th3'), uur('e7', 4, '9:15', '10:00', 'tb1'),
+  uur('e8', 2, '9:15', '10:00', 'tm4'), uur('e9', 4, '10:15', '11:00', 'tm4'),
+];
+const echtStaat = (totW, codes) => s => { s.rooster = JSON.parse(JSON.stringify(ROOSTER_ECHT)).map(u => Object.assign(u, { groep: (codes || {})[u.groep] || u.groep })); s.groepLeergang = codes ? {} : Object.assign({}, GROEPEN); s.voortgang = {};
+  for (const [g, lg] of Object.entries(NAAR_LG)) Object.assign(s.voortgang, voortgangTot((codes || {})[g] || g, lg, totW)); return s; };
+const weekNr = d => (BASIS.kalender.weken.find(k => d >= k.datum && d < plus(k.datum, 7)) || {}).w;
+// Hoeveel lessen uit de leergang horen er bij c lesuren in lesweek w? Zo staat het in basis.json: te weinig uren (vrije dag): de uitval uit de leergang is het uur dat ontbreekt; een toetsweek geeft geen les.
+function lessenInWeek(lg, w, c) {
+  const L = BASIS.leergangen[lg]; const n = L.meta.lessenPerWeek; const wk = L.weken.find(x => x.w === w); if (!wk || !c) return 0;
+  const doel = c >= n ? Array.from({ length: n }, (_, i) => i + 1) : [1, 2, 3].slice(0, n).filter(i => wk['l' + i] && wk['l' + i].type !== 'uitval');
+  return doel.slice(0, c).filter(i => { const l = wk['l' + i]; return l && l.type !== 'uitval' && l.type !== 'toetsweek' && !(l.type === 'toets' && wk.toetsweek); }).length;
+}
+// Loopt de dagen af die geen vrije dag zijn: elke les afronden, Dag afsluiten, en rekent daarna na wat er per klas is gegeven.
+async function doorloopDagen(P, dagen, rooster, lgVan, metZermelo) { // met Zermelo gaat elk uur dat Zermelo noemt door, ook als de leergang er uitval of toetsweek van maakt
+  const voor = await P.S(); const n0 = {}, uren = {}; for (const g of Object.keys(lgVan)) { n0[g] = Object.keys((voor.voortgang || {})[g] || {}).length; uren[g] = {}; }
+  const afgesloten = [];
+  for (const dag of dagen) {
+    if (vrijeDag(dag)) continue; const dagUren = rooster.filter(u => +u.dag === wdag(dag)); if (!dagUren.length) continue;
+    for (const u of dagUren) uren[u.groep][weekNr(dag)] = (uren[u.groep][weekNr(dag)] || 0) + 1;
+    await geefLessen(P, dag, rooster);
+    for (const tijd of ['16:40', '17:10']) { await P.klok(nlIso(dag, tijd), 'nu'); const knop = P.page.locator(`[data-afsluiten="${dag}"]`);
+      if (await knop.count()) { await knop.first().evaluate(e => e.click()); await P.page.waitForTimeout(150); afgesloten.push(dag); ok((await P.S()).afgesloten[dag], 'dag ' + dag + ' staat afgesloten'); break; }
+      if (tijd === '17:10') ok(false, dag + ': geen knop Dag afsluiten (16:40 en 17:10): ' + (await P.tekst()).slice(0, 140).replace(/\n/g, ' | ')); }
+  }
+  const S = await P.S(); const gemist = (P.gemist || []).splice(0); if (process.env.DBG) gemist.forEach(x => console.log('   GEMIST', x));
+  for (const [g, lg] of Object.entries(lgVan)) {
+    const verwacht = Object.entries(uren[g]).reduce((t, [w, c]) => t + (metZermelo ? c : lessenInWeek(lg, +w, c)), 0); const ids = Object.keys(S.voortgang[g] || {});
+    gelijk(ids.length, n0[g] + verwacht, g + ' (' + dagen[0] + ' t/m ' + dagen[dagen.length - 1] + '): aantal gegeven lessen' + (gemist.length ? '; geen knop gegeven voor ' + gemist.filter(x => x.includes(' ' + g + ':') || / [a-z0-9]+ /.test(x) && x.split(' ')[2] === g).map(x => x.slice(0, 40)).join(', ') : ''));
+    const eerste = reeksIds(lg).slice(0, ids.length).map(x => x.id).sort(); ok(JSON.stringify(ids.slice().sort()) === JSON.stringify(eerste), g + ': precies de eerste ' + ids.length + ' lessen van de leergang, geen gat of dubbele');
+  }
+  return { afgesloten };
+}
+const klasTeller = async (P, g) => { await P.hash('jaar/' + g); const t = await P.tekst(); await P.hash('vandaag'); return t; };
+const dagenVan = (ma, n = 5) => [...Array(n).keys()].map(i => plus(ma, i));
+
+sc('Hele week na de kerstvakantie: 4 t/m 8 januari (studiedag), teller op Jaar en klasblad', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2027-01-04', '07:30'), staat: echtStaat(16) }); await P.open('nu');
+  await doorloopDagen(P, dagenVan('2027-01-04'), ROOSTER_ECHT, NAAR_LG);
+  const S = await P.S(); const n = Object.keys(S.voortgang.tv5).length;
+  const t = await klasTeller(P, 'tv5'); ok(new RegExp('\\b' + n + '\\b').test(t), 'het klasblad van tv5 noemt ' + n + ' gegeven lessen: ' + (t.match(/[^\n]*gegeven[^\n]*/i) || ['(niets)'])[0].slice(0, 100));
+  await P.klok(nlIso('2027-01-11', '07:30'), 'vandaag'); ok(!/Dit scherm lukt nu niet/.test(await P.tekst()), 'de maandag daarna is heel');
+  const kt = await P.tekst('.liggen'); const kop = +(kt.match(/Blijft liggen · ([0-9]+)/i) || [])[1] || 0; const rijen = await P.aantal('.liggen .taak.laat'); const nav = await P.liggen();
+  gelijk(kop, nav, 'de teller in het menu is gelijk aan het getal boven Blijft liggen'); gelijk(rijen, kop, 'het getal boven Blijft liggen is gelijk aan het aantal rijen');
+  const lesTaken = await P.page.evaluate(() => [...document.querySelectorAll('.liggen .taak.laat .chip:not(.rood)')].filter(c => !/Sectie|Reclame|Koor/i.test(c.textContent)).map(c => c.textContent)); gelijk(lesTaken, [], 'er ligt niets van een les of klas, alleen taken van sectie, koor en reclame uit de jaarplanning');
+});
+sc('Over de kerstvakantie: week 14 dec afronden, vakantie, week 4 jan gaat verder waar het ophield', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-12-14', '07:30'), staat: echtStaat(15) }); await P.open('nu');
+  await doorloopDagen(P, dagenVan('2026-12-14'), ROOSTER_ECHT, NAAR_LG);
+  const voorVak = await P.S(); const aantal = {}; for (const g of Object.keys(NAAR_LG)) aantal[g] = Object.keys(voorVak.voortgang[g]).length;
+  for (const dag of ['2026-12-21', '2026-12-28', '2027-01-01']) { await P.klok(nlIso(dag, '16:40'), 'nu'); ok(!/Dit scherm lukt nu niet/.test(await P.tekst()), dag + ': geen foutscherm'); ok(!(await P.page.locator('[data-afsluiten="' + dag + '"]').count()), dag + ': geen Dag afsluiten in de vakantie'); }
+  const midden = await P.S(); for (const g of Object.keys(NAAR_LG)) gelijk(Object.keys(midden.voortgang[g]).length, aantal[g], g + ': de vakantie verandert de voortgang niet');
+  await doorloopDagen(P, dagenVan('2027-01-04'), ROOSTER_ECHT, NAAR_LG);
+  const eind = await P.S(); for (const g of Object.keys(NAAR_LG)) ok(Object.keys(eind.voortgang[g]).length > aantal[g], g + ': na de vakantie zijn er weer lessen gegeven');
+});
+sc('Hele week over de zomertijd: 29 maart t/m 2 april met Zermelo (tweede paasdag, Goede vrijdag)', async nieuw => {
+  const lgZ = { v4: 'vwo4', v5: 'vwo5', h3a: 'havo3', BB1: 'bb1', m4: 'mavo4' }; const roosterZ = ROOSTER_ECHT.map(u => Object.assign({}, u, { groep: ZG[u.groep] }));
+  const P = await nieuw({ tijd: nlIso('2027-03-29', '07:30'), staat: echtStaat(27, ZG), zermelo: van => [0, 7, 14].flatMap(n => zermeloWeek(plus(van, n), { rooster: ROOSTER_ECHT })) });
+  await P.open('nu'); await zWacht(P);
+  await doorloopDagen(P, dagenVan('2027-03-29'), roosterZ, lgZ, true);
+  await P.klok(nlIso('2027-03-29', '07:30'), 'vandaag'); const di = await dagItemsOp(P, '2027-03-30'); const e = di.find(x => x.soort === 'ag-les'); ok(!e || /^(08|8):30–|^(09|9):15–/.test(e.titel), 'dinsdag na de omschakeling: lessen op de juiste tijd: ' + (e ? e.titel : '(geen les)'));
+});
+sc('Hele laatste week van het schooljaar: 28 juni t/m 2 juli, en daarna de vakantie', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2027-06-28', '07:30'), staat: echtStaat(38) }); await P.open('nu');
+  await doorloopDagen(P, dagenVan('2027-06-28'), ROOSTER_ECHT, NAAR_LG);
+  const S = await P.S();
+  for (const dag of ['2027-07-05', '2027-07-12', '2027-08-16', '2027-08-30']) { await P.klok(nlIso(dag, '16:40'), 'nu'); ok(!/Dit scherm lukt nu niet|Lesdag start niet/.test(await P.tekst()), dag + ': scherm blijft heel'); }
+  const na = await P.S(); for (const g of Object.keys(NAAR_LG)) gelijk(Object.keys(na.voortgang[g]).length, Object.keys(S.voortgang[g]).length, g + ': geen les erbij of weg in de vakantie');
+  await P.hash('jaar'); ok(!/Dit scherm lukt nu niet/.test(await P.tekst()), 'Jaar na het schooljaar is heel');
+});
+sc('Hele week herfstvakantie: 19 t/m 23 oktober, einde zomertijd, niets te geven', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-10-19', '07:30'), staat: echtStaat(8) }); await P.open('nu');
+  await doorloopDagen(P, dagenVan('2026-10-19'), ROOSTER_ECHT, NAAR_LG);
+  await P.klok(nlIso('2026-10-25', '12:00'), 'vandaag'); ok(!/Dit scherm lukt nu niet/.test(await P.tekst()), 'zondag 25 oktober (klok terug): heel');
+  await P.klok(nlIso('2026-10-26', '07:30'), 'vandaag'); const di = await dagItemsOp(P, '2026-10-26'); const e = di.find(x => x.soort === 'ag-les'); ok(e && /^(08|8):30–/.test(e.titel), 'maandag 26 oktober: eerste les om 8:30: ' + (e ? e.titel : '(geen les)'));
+});
+
+// ---- ronde 3: Nieuw typen over de jaarwisseling, schrikkeldag en zomertijd ----
+const typ = async (P, q) => { await P.page.fill('#nwQ', q); await P.page.waitForTimeout(80); return (await P.tekst('#nwUit')) + (await P.page.locator('#nwLet').isVisible() ? ' !' + (await P.tekst('#nwLet')) : ''); };
+sc('Nieuw typen: datums over de jaarwisseling en met zomertijd', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-12-28', '07:30') }); await P.open('vandaag'); await P.klik('[data-nwnieuw]');
+  const geval = [['3-1 met Albert', /zo 3 jan|3 jan/], ['4-1 11:00 met Albert', /ma 4 jan/], ['vr 1-1 met Albert', /vr 1 jan/], ['31-12 met Albert', /do 31 dec/], ['morgen 10:00 met Albert', /di 29 dec/], ['27-12 met Albert', /27 dec/]];
+  for (const [q, re] of geval) { const u = await typ(P, q); ok(re.test(u), `"${q}" op 28 dec 2026 geeft ${re}: ${u}`); }
+  await P.klok(nlIso('2027-03-26', '07:30'), 'vandaag'); await P.klik('[data-nwnieuw]');
+  for (const [q, re] of [['za 27-3 met Albert', /za 27 mrt/], ['zo 28-3 2:30 met Albert', /28 mrt/], ['ma 29-3 9:00-10:00 met Albert', /29 mrt · 9:00–10:00/]]) { const u = await typ(P, q); ok(re.test(u), `"${q}" geeft ${re}: ${u}`); }
+  await P.klok(nlIso('2027-02-26', '07:30'), 'vandaag'); await P.klik('[data-nwnieuw]');
+  for (const [q, re] of [['28-2 met Albert', /zo 28 feb/], ['1-3 vrijdag 11:00 met Albert', /vr 5 mrt|1 mrt|vr 26 feb/], ['29-2 met Albert', /di 29 feb/]]) { const u = await typ(P, q); ok(re.test(u), `"${q}" op 26 feb 2027 geeft ${re}: ${u}`); } // 29 februari in een jaar zonder schrikkeldag: de eerstvolgende 29 februari (2028)
 });
 // @@SCENARIOS
 
