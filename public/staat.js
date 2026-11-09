@@ -20,6 +20,32 @@
       if (Array.isArray(d.rooster)) d.rooster.forEach(u => { if (isObj(u) && u.dag !== undefined && typeof u.dag !== 'number') { const n = Number(u.dag); if (Number.isFinite(n)) u.dag = n; } });
       return d;
     } },
+    { naar: 2, naam: "vwo 5: toetsles P9 van lesweek 8 naar 12.1 en 12.2 (9 nov 2026)", doe(d) {
+      // De lessen 8.1 en 8.3 (P9) wisselden van plek met 12.1 en 12.2 in basis.json. Gegevens van Frans die op een les-id hangen gaan mee:
+      // voortgang, eigen lesbewerkingen, verplaatsingen (ankers), de lessen in een afwijking en sleutels als pres:vwo5:8.1.
+      const WISSEL = { "vwo5:8.1": "vwo5:12.1", "vwo5:12.1": "vwo5:8.1", "vwo5:8.3": "vwo5:12.2", "vwo5:12.2": "vwo5:8.3" };
+      const RE = /(^|[^\w.])(vwo5:(?:8\.1|8\.3|12\.1|12\.2))(?![\w.])/g;
+      const hernoem = s => s.replace(RE, (m, v, id) => v + WISSEL[id]);
+      const sleutels = o => { if (!isObj(o)) return o; const uit = {}; for (const k of Object.keys(o)) uit[hernoem(k)] = o[k]; return uit; };
+      if (isObj(d.voortgang)) for (const g of Object.keys(d.voortgang)) if (isObj(d.voortgang[g])) { d.voortgang[g] = sleutels(d.voortgang[g]); for (const id of Object.keys(d.voortgang[g])) { const st = d.voortgang[g][id]; if (isObj(st) && tekst(st.inToets)) st.inToets = hernoem(st.inToets); } }
+      if (isObj(d.ankers)) for (const g of Object.keys(d.ankers)) d.ankers[g] = sleutels(d.ankers[g]);
+      for (const k of ["les", "uitgesteld", "later", "afLater", "goed", "klaarExtra", "mag", "magHw", "minuten", "reclameAf"]) if (isObj(d[k])) d[k] = sleutels(d[k]);
+      if (isObj(d.pres)) d.pres = sleutels(d.pres);
+      if (Array.isArray(d.afwijkingen)) d.afwijkingen.forEach(a => { if (!isObj(a)) return; if (Array.isArray(a.lesIds)) a.lesIds = a.lesIds.map(x => tekst(x) ? hernoem(x) : x); if (tekst(a.lesId)) a.lesId = hernoem(a.lesId); });
+      return d;
+    } },
+    { naar: 3, naam: 'vwo 4: PT1 en PT2 heten P1 en P2 (9 nov 2026)', doe(d) {
+      // De toets-id's PT1 en PT2 van vwo 4 zijn P1 en P2 geworden (het PTA noemt ze zo). Een sleutel met het toets-id gaat mee (tw:vwo4:PT1 in uitgesteld, later enz.).
+      // Tekst die de app zelf maakte, de lijst met afwijkingen en een eigen bewerking van een vwo 4-les, krijgt de nieuwe naam. Eigen vrije tekst (taken, notities) blijft zoals Frans hem schreef.
+      const RE = /\bPT([12])\b/g; const hernoem = s => s.replace(RE, 'P$1');
+      const sleutelNaam = k => k.replace(/(^|[^\w.])(tw:vwo4:)PT([12])(?![\w.])/g, (m, v, p, n) => v + p + 'P' + n);
+      const sleutels = o => { if (!isObj(o)) return o; const uit = {}; for (const k of Object.keys(o)) uit[sleutelNaam(k)] = o[k]; return uit; };
+      for (const k of ['uitgesteld', 'later', 'afLater', 'goed', 'klaarExtra', 'mag', 'magHw', 'minuten', 'reclameAf']) if (isObj(d[k])) d[k] = sleutels(d[k]);
+      const tekstIn = (x, sleutel) => { if (tekst(x)) return sleutel === 'u' || /^https?:/.test(x) ? x : hernoem(x); if (Array.isArray(x)) return x.map(y => tekstIn(y, sleutel)); if (isObj(x)) { const uit = {}; for (const k of Object.keys(x)) uit[k] = tekstIn(x[k], k); return uit; } return x; };
+      if (Array.isArray(d.afwijkingen)) d.afwijkingen = d.afwijkingen.map(a => { if (!isObj(a)) return a; const uit = Object.assign({}, a); for (const k of ['wat', 'waarom', 'studiewijzer', 'bericht']) if (tekst(uit[k])) uit[k] = hernoem(uit[k]); return uit; });
+      if (isObj(d.les)) for (const id of Object.keys(d.les)) if (/^vwo4:/.test(id)) d.les[id] = tekstIn(d.les[id], '');
+      return d;
+    } },
   ];
   const SCHEMA = STAPPEN[STAPPEN.length - 1].naar;
 

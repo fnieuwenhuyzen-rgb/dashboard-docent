@@ -1,4 +1,4 @@
-// Waar een toets echt valt: de `datum` in basis.json gaat voor de lesweek waarin de leergang hem zet (besluit Frans 4-11: PT1 vwo 4 en P9 vwo 5 staan op ma 23-11).
+// Waar een toets echt valt: de `datum` in basis.json gaat voor de lesweek waarin de leergang hem zet (besluit Frans 4-11: P1 vwo 4 en P9 vwo 5 staan op ma 23-11).
 // Alleen rekenwerk zonder staat, zodat app.js en tools/test-toetsdatum.js dezelfde regel gebruiken.
 // plek(kalender, toets, wLeergang) -> { datum, w, afwijkt }: datum = toets.datum of null, w = lesweek waarin die datum valt (valt hij in geen lesweek, dan wLeergang),
 // afwijkt = de datum valt in een andere lesweek dan de leergang.

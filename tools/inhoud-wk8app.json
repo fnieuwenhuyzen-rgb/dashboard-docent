@@ -9,7 +9,7 @@
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%204/Lessen%202026-2027/08.1%20Blues%20met%20zang%20-%20samenspel.pptx?web=1"
     },
     "pres-vwo4-2": {
-      "t": "Presentatie: Improviseren en generale PT1 (PowerPoint)",
+      "t": "Presentatie: Improviseren en generale P1 (PowerPoint)",
       "u": "https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Gedeelde%20%20documenten/02%20Keuzevak%20muziek/VWO/VWO%204/Lessen%202026-2027/08.2%20Improviseren%20op%20de%20bluestoonladder%20-%20generale%20PT1.pptx?web=1"
     },
     "pres-vwo5-1": {
@@ -149,7 +149,7 @@
           "stappen": [
             "Elke groep luistert naar een andere groep: één top, één tip.",
             "Schrijf de tip op jullie schema. Daar beginnen we volgende week mee.",
-            "Woensdag: improviseren op de bluestoonladder en de generale voor PT1."
+            "Woensdag: improviseren op de bluestoonladder en de generale voor P1."
           ],
           "docent": "Tips verzamelen op het bord; terug laten komen in de lesmodus van woensdag."
         }
@@ -164,7 +164,7 @@
         "mb"
       ]
     },
-    "Improviseren en generale PT1": {
+    "Improviseren en generale P1": {
       "vraag": "Durf ik te improviseren op de bluestoonladder?",
       "doel": "Je improviseert vier maten op de bluestoonladder en speelt het stuk twee keer helemaal door.",
       "criteria": [
@@ -202,7 +202,7 @@
           "stappen": [
             "Het stuk loopt door; om de vier maten is de volgende aan de beurt voor de solo. De rest speelt de partij zachter.",
             "Niemand stopt. Geen inspiratie? Speel dan de grondtoon in het ritme van de call.",
-            "Daarna: twee keer helemaal doorspelen zoals bij PT1. Begin en einde samen."
+            "Daarna: twee keer helemaal doorspelen zoals bij P1. Begin en einde samen."
           ],
           "klaar": "Solo over twaalf maten in plaats van vier.",
           "docent": "Volgorde van de soloruil vooraf vastleggen (met de klok mee). Bij de generale zelf de tijd nemen: dit is de toetssituatie."
@@ -210,18 +210,18 @@
         {
           "min": 5,
           "soort": "check",
-          "kop": "Klaar-voor-PT1-lijst",
+          "kop": "Klaar-voor-P1-lijst",
           "stappen": [
             "Drie kruisjes: mijn partij, mijn inzet, mijn improvisatie.",
             "Mis je er twee? Oefen thuis met de opname en zet dat in je oefenlog.",
-            "PT1 is na de toetsweek: zelfde stuk, zelfde groep."
+            "P1 is na de toetsweek: zelfde stuk, zelfde groep."
           ],
           "docent": "Lijstjes innemen of fotograferen; wie twee kruisjes mist, krijgt de opname van vandaag."
         }
       ],
       "formatief": {
         "soort": "zelfcheck",
-        "tekst": "Klaar-voor-PT1-lijst: partij, inzet, improvisatie. Wie twee kruisjes mist, oefent thuis met de opname."
+        "tekst": "Klaar-voor-P1-lijst: partij, inzet, improvisatie. Wie twee kruisjes mist, oefent thuis met de opname."
       },
       "materiaal": [
         "pres-vwo4-2",
