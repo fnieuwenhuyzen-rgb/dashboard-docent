@@ -6,7 +6,7 @@
 // Bewust NIET overgenomen (de Koorapp staat achter de schoollogin, basis.json is openbaar): notities voor koorleden,
 // thuis oefenen, praktische concertinformatie, WhatsApp-link, ledengegevens. Voor die details: knop naar de Koorapp.
 const fs = require('fs'), path = require('path'), { execSync } = require('child_process');
-const KOORAPP = 'C:/Users/nwn/OneDrive - CSG Prins Maurits/Documenten/Claude werkmap/Koorapp';
+const KOORAPP = 'C:/Projecten/Koorapp';
 const URL = 'https://pmkoor.f-nieuwenhuyzen.workers.dev/';
 const root = path.join(__dirname, '..');
 
