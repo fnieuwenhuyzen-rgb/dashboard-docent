@@ -41,29 +41,10 @@
     return opt.lokaalNieuwer ? l : s;
   }
 
-  /* Bewaartermijn voor leerlinggegevens. Alleen rekenwerk: wat zou er weg gaan, en het weghalen zelf. Niets verdwijnt zonder dat de app dit aanroept.
-     - toets (met scores): als de startdatum ouder is dan de termijn;
-     - klassenlijst: als de klas niet meer in het rooster staat en er geen toets van die klas overblijft (zonder rooster blijft elke lijst staan);
-     - beoord.weg (leerlingen die uit een lijst gehaald zijn): als ze zelf ouder zijn dan de termijn (het id bevat de aanmaaktijd; zonder leesbare tijd blijft de rij staan), of bij een verwijderde klas. */
-  const MS_MAAND = 30.44 * 864e5;
-  function idTijd(id) { const t = /^l([0-9a-z]{8})/.exec(String(id)); const ms = t ? parseInt(t[1], 36) : NaN; return ms > 1.5e12 && ms < 4.2e12 ? ms : null; }
-  function bewaarPlan(beoord, groepen, nu, maanden) {
-    const plan = { toetsen: [], lijsten: [], weg: [] };
-    if (!isObj(beoord) || !(maanden > 0)) return plan;
-    const grens = nu - maanden * MS_MAAND, dag = new Date(grens).toISOString().slice(0, 10);
-    const T = isObj(beoord.toetsen) ? beoord.toetsen : {}, Ls = isObj(beoord.lijsten) ? beoord.lijsten : {}, W = isObj(beoord.weg) ? beoord.weg : {};
-    plan.toetsen = Object.keys(T).filter(k => isObj(T[k]) && typeof T[k].start === 'string' && T[k].start < dag);
-    const blijft = g => Object.keys(T).some(k => k.split('|')[1] === g && !plan.toetsen.includes(k));
-    if (groepen && groepen.length) plan.lijsten = Object.keys(Ls).filter(g => !groepen.includes(g) && !blijft(g));
-    for (const g of Object.keys(W)) for (const x of Array.isArray(W[g]) ? W[g] : []) { const t = idTijd(x && x.id); if (plan.lijsten.includes(g) || (t != null && t < grens)) plan.weg.push({ g, id: x.id }); }
-    return plan;
-  }
-  function bewaarToepassen(beoord, plan) {
-    const T = beoord.toetsen || {}, Ls = beoord.lijsten || {}, W = beoord.weg || {};
-    plan.toetsen.forEach(k => delete T[k]); plan.lijsten.forEach(g => delete Ls[g]);
-    for (const g of Object.keys(W)) { const rest = (W[g] || []).filter(x => !plan.weg.some(w => w.g === g && w.id === x.id)); if (rest.length) W[g] = rest; else delete W[g]; }
-  }
-  const planTelt = p => p.toetsen.length + p.lijsten.length + p.weg.length;
+  /* Bewaartermijn (besluit Frans 9-11): leerlinggegevens blijven één cursusjaar. Het cursusjaar wisselt op 1 augustus.
+     jaarWissel(onthouden jaar of null, 'jjjj-mm-dd'): { jaar, wissen }. Zonder onthouden jaar (nieuw apparaat) wordt er niets gewist. */
+  const cursusjaar = d => +d.slice(0, 4) - (d.slice(5) < '08-01' ? 1 : 0);
+  function jaarWissel(onthouden, d) { const jaar = cursusjaar(d), oud = parseInt(onthouden, 10); return { jaar, wissen: oud > 0 && oud < jaar }; }
 
   /* waarde zetten op een pad uit samenvoegen() ('/taken/12/titel'): lijsten met ids worden op id gevonden. Geeft false als het pad niet meer bestaat. */
   function padZet(doc, pad, waarde) {
@@ -262,5 +243,5 @@
     const tx = (modus, fn) => db().then(d => new Promise((ok, nee) => { const t = d.transaction('kv', modus); const r = fn(t.objectStore('kv')); t.oncomplete = () => ok(r.result); t.onerror = () => nee(t.error); }));
     return { haal: k => tx('readonly', s => s.get(k)), zet: (k, v) => tx('readwrite', s => s.put(v, k)) };
   }
-  return { padHaal, bewaarPlan, bewaarToepassen, planTelt, idTijd, zonderLeerlingen, padZet, samenvoegen, gelijk, delen, samen, verschil, leeg, telling, maak, idbOpslag };
+  return { padHaal, cursusjaar, jaarWissel, zonderLeerlingen, padZet, samenvoegen, gelijk, delen, samen, verschil, leeg, telling, maak, idbOpslag };
 });

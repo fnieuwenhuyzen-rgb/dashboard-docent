@@ -51,19 +51,12 @@ console.log('kapotte kopie geweigerd: goed');
   assert.ok(SYNC.padZet(doc, '/beoord/toetsen/m1|g1/ll/l2/s/c1', 8) && doc.beoord.toetsen['m1|g1'].ll.l2.s.c1 === 8, 'diep pad');
   assert.ok(!SYNC.padZet(doc, '/taken/99/titel', 'x') && !SYNC.padZet(doc, '/bestaat/niet/x', 1) && !SYNC.padZet(doc, '', 1), 'onbekend pad: false, niets stuk');
   assert.strictEqual(SYNC.padHaal(doc, '/taken/99/titel'), undefined);
-  // bewaartermijn: wat zou er weg gaan
-  const nu = Date.UTC(2026, 10, 8), oudId = 'l' + Date.UTC(2024, 0, 1).toString(36) + '0', nieuwId = 'l' + Date.UTC(2026, 9, 1).toString(36) + '0';
-  const B = { lijsten: { oud: [{ id: 'a', naam: 'Test A' }], h4: [{ id: 'b', naam: 'Test B' }], h5: [{ id: 'c', naam: 'Test C' }] },
-    toetsen: { 'm|oud': { ll: {}, start: '2025-01-10' }, 'm|h4': { ll: {}, start: '2026-09-01' }, 'm|h5': { ll: {}, start: '2025-02-01' }, 'n|h5': { ll: {}, start: '2026-10-01' } },
-    weg: { h4: [{ id: oudId, naam: 'Weg 1' }, { id: nieuwId, naam: 'Weg 2' }, { id: 'l0', naam: 'Weg 3' }], oud: [{ id: 'x', naam: 'Weg 4' }] } };
-  assert.deepStrictEqual(SYNC.bewaarPlan(B, ['h4', 'h5'], nu, 0), { toetsen: [], lijsten: [], weg: [] }, 'termijn uit: niets');
-  const p = SYNC.bewaarPlan(B, ['h4', 'h5'], nu, 12);
-  assert.deepStrictEqual(p.toetsen.sort(), ['m|h5', 'm|oud'], 'toetsen ouder dan een jaar'); assert.deepStrictEqual(p.lijsten, ['oud'], 'klas die niet meer in het rooster staat en geen toets meer heeft; h5 houdt een recente toets');
-  assert.deepStrictEqual(p.weg.map(w => w.id).sort(), ['x', oudId].sort(), 'oude weg-leerling en weg van verwijderde klas; onleesbaar of recent blijft');
-  assert.deepStrictEqual(SYNC.bewaarPlan(B, [], nu, 12).lijsten, [], 'zonder rooster verdwijnt geen klassenlijst');
-  const kop = JSON.parse(JSON.stringify(B)); SYNC.bewaarToepassen(kop, p);
-  assert.deepStrictEqual(Object.keys(kop.toetsen).sort(), ['m|h4', 'n|h5']); assert.deepStrictEqual(Object.keys(kop.lijsten).sort(), ['h4', 'h5']); assert.deepStrictEqual(kop.weg.h4.map(x => x.id), [nieuwId, 'l0']); assert.ok(!kop.weg.oud);
-  assert.strictEqual(SYNC.planTelt(p), 5);
+  // bewaartermijn: het cursusjaar wisselt op 1 augustus
+  assert.deepStrictEqual(SYNC.jaarWissel('2026', '2027-07-31'), { jaar: 2026, wissen: false }, 'laatste dag van het cursusjaar');
+  assert.deepStrictEqual(SYNC.jaarWissel('2026', '2027-08-01'), { jaar: 2027, wissen: true }, 'eerste dag van het nieuwe');
+  assert.deepStrictEqual(SYNC.jaarWissel('2026', '2028-01-15'), { jaar: 2027, wissen: true }, 'apparaat dat lang uit stond');
+  assert.deepStrictEqual(SYNC.jaarWissel(null, '2027-08-01'), { jaar: 2027, wissen: false }, 'nieuw apparaat wist niets');
+  assert.deepStrictEqual(SYNC.jaarWissel('2027', '2027-09-01'), { jaar: 2027, wissen: false }, 'al gewist');
   assert.deepStrictEqual(SYNC.zonderLeerlingen({ taken: [1], beoord: { lijsten: {} } }), { taken: [1] }, 'filter haalt beoord weg');
 }
 console.log('padZet en bewaartermijn: goed');

@@ -2689,30 +2689,30 @@ async function syncKlik(D) {
 }
 
 /* ---------- leerlinggegevens, bewaartermijn en botsingen (Instellingen) ----------
-   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard niet), en hoe lang blijven ze staan (standaard altijd).
-   Het beoordelingslogboek staat in IndexedDB en gaat nooit naar de server. Rekenwerk in sync.js (bewaarPlan, padZet); tests: tools/test-sync.js. */
-const BEWAAR_KEY = 'lesdag-bewaartermijn'; // maanden; leeg of 0 = niets verdwijnt vanzelf
-const BEWAAR_DAG = 'lesdag-bewaar-dag';
-const bewaarMaanden = () => { try { return Math.max(0, +localStorage.getItem(BEWAAR_KEY) || 0); } catch (e) { return 0; } };
-let LLN = { server: null, eerste: null, voorbeeld: null }, BOTS = null;
-const bewaarPlan = () => SYNC.bewaarPlan(S.beoord, rooGroepen(), Date.now(), bewaarMaanden());
-async function bewaarLogGrens() { return { grens: Date.now() - bewaarMaanden() * 30.44 * 864e5, sleutels: new Set(bewaarPlan().toetsen) }; }
-async function bewaarVoorbeeld() { // wat zou er nu weg gaan: { p, log }
-  if (!bewaarMaanden()) return null; const p = bewaarPlan(); const { grens, sleutels } = await bewaarLogGrens(); let log = 0;
-  try { log = (await bmIdb('log', 'readonly', s => s.getAll())).filter(x => x.t < grens || sleutels.has(x.k)).length; } catch (e) {}
-  return { p, log };
+   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard niet). Ze blijven één cursusjaar staan.
+   Het beoordelingslogboek staat in IndexedDB en gaat nooit naar de server. Rekenwerk in sync.js (jaarWissel, padZet); tests: tools/test-sync.js. */
+/* bewaartermijn: het cursusjaar (besluit Frans 9-11). Vanaf 1 augustus gaan klassenlijsten, scores, verwijderde leerlingen, absenten, logboeknotities,
+   het beoordelingslogboek en de automatische kopieën weg, per apparaat bij de eerste start in het nieuwe cursusjaar en vóór er gesynchroniseerd wordt:
+   zo zet een apparaat dat lang uit stond de oude gegevens niet terug. Ongedaan maken kan niet. Losse bestanden (reservemap, downloads) wist Frans zelf. */
+const JW_JAAR = 'lesdag-cursusjaar', JW_REST = 'lesdag-cursusjaar-rest'; // JW_REST: de opslag buiten localStorage en de server moeten nog
+let LLN = { server: null, eerste: null }, BOTS = null;
+function jaarWisselLokaal() {
+  let w; try { const v = localStorage.getItem(JW_JAAR); w = SYNC.jaarWissel(v, vandaag()); if (!w.wissen) { if (!v) localStorage.setItem(JW_JAAR, String(w.jaar)); return; } localStorage.setItem(JW_REST, '1'); } catch (e) { return; }
+  S.beoord = { lijsten: {}, toetsen: {} }; AP.weg = {}; AP.log = {}; apBewaar(); bewaar(true);
+  try { localStorage.removeItem(VOOR_KOPIE); localStorage.setItem(JW_JAAR, String(w.jaar)); } catch (e) {}
+  toast('Nieuw cursusjaar: de leerlinggegevens van vorig jaar zijn gewist');
 }
-const bewaarTekst = v => !v ? '' : SYNC.planTelt(v.p) + v.log === 0 ? 'Met deze termijn gaat er nu niets weg.' : `Met deze termijn gaat er nu weg: ${v.p.toetsen.length} toetsen met scores, ${v.p.lijsten.length} klassenlijsten${v.p.lijsten.length ? ' (' + v.p.lijsten.map(esc).join(', ') + ')' : ''}, ${v.p.weg.length} leerlingen die uit een lijst zijn gehaald en ${v.log} logboekregels.`;
-async function bewaarUitvoeren(stil) { // haalt weg wat bewaarPlan aanwijst; terug = foto van daarvoor (het logboek komt niet terug)
-  const m = bewaarMaanden(); if (!m) return false; const v = await bewaarVoorbeeld(); if (!v || SYNC.planTelt(v.p) + v.log === 0) { if (!stil) toast('Er is niets om op te ruimen'); return false; }
-  const terug = foto(), { grens, sleutels } = await bewaarLogGrens();
-  SYNC.bewaarToepassen(S.beoord, v.p);
-  try { await bmIdb('log', 'readwrite', s => { const q = s.openCursor(); q.onsuccess = () => { const c = q.result; if (!c) return; if (c.value.t < grens || sleutels.has(c.value.k)) c.delete(); c.continue(); }; return q; }); } catch (e) { console.warn(e); }
-  bewaar(true); LLN.voorbeeld = null; toast(`Opgeruimd: ${v.p.toetsen.length} toetsen, ${v.p.lijsten.length} klassenlijsten, ${v.log} logboekregels`, terug); if (route.naam === 'instellingen') render(); return true;
+async function jaarWisselRest() { // lukt iets niet (offline, niet ingelogd), dan bij de volgende start opnieuw
+  try { if (localStorage.getItem(JW_REST) !== '1') return; } catch (e) { return; }
+  try {
+    await bmIdb('log', 'readwrite', s => s.clear());
+    if (window.AUTOKOPIE) await AUTOKOPIE.wis();
+    const o = SYNC.idbOpslag(); await o.zet('voor-sync', null); await o.zet('botsingen', []);
+    if (SY) await SY.leerlingenWissen();
+    localStorage.removeItem(JW_REST);
+  } catch (e) { console.warn(e); }
 }
-function bewaarStart() { // hooguit één keer per dag, en alleen als er een termijn is gekozen
-  setTimeout(() => { try { const d = vandaag(); if (!bewaarMaanden() || localStorage.getItem(BEWAAR_DAG) === d || !syncMag()) return; localStorage.setItem(BEWAAR_DAG, d); bewaarUitvoeren(true).catch(() => {}); } catch (e) {} }, 30000);
-}
+const jaarMelding = () => vandaag().slice(5, 7) === '07' ? '<p class="bm-waarsch">Op 1 augustus wist Lesdag alle klassenlijsten, scores en het logboek van dit cursusjaar. Zet cijfers die nog moeten vóór die tijd in Magister.</p>' : '';
 const waardeTekst = x => { const t = x === undefined ? '(weg)' : typeof x === 'string' ? x : JSON.stringify(x); return t.length > 110 ? t.slice(0, 110) + '…' : t; };
 function padLeesbaar(pad) {
   const sg = String(pad).split('/').slice(1); if (sg[0] === '_zermeloApi') return 'De Zermelo-koppeling';
@@ -2730,17 +2730,13 @@ function botsKaart() {
   return `<p class="sub" style="margin-top:.6rem">${BOTS.length ? BOTS.length + ' botsingen bewaard (de laatste 50 staan hier).' : 'Geen botsingen.'}</p>${L.map(rij).join('')}<div class="knoppen" style="margin-top:.5rem">${BOTS.length ? '<button class="btn" data-bots="alles">Alles zo laten</button>' : ''}<button class="btn" data-bots="dicht">Sluiten</button></div>`;
 }
 function leerlingKaart() {
-  const mee = leerlingenMee(), m = bewaarMaanden(); const opties = [[0, 'Uit'], [6, '6 maanden'], [12, '1 jaar'], [24, '2 jaar']];
+  const mee = leerlingenMee();
   const server = !SY ? '' : `<p class="lead"><b>Synchroniseren:</b> klassenlijsten, scores en reserve-kopieën daarvan ${mee ? 'gaan <b>wel</b> naar de server (achter je login)' : 'gaan <b>niet</b> naar de server'}. Het beoordelingslogboek en absenten blijven altijd op het apparaat. Dit geldt per apparaat.</p>
     <div class="knoppen">${mee ? '<button class="btn" data-lln="uit">Niet meer meenemen</button>' : '<button class="btn" data-lln="aan">Wel meenemen…</button>'}<button class="btn" data-lln="kijk">Wat staat er op de server?</button></div>
     ${LLN.server ? (LLN.server.fout ? '<p class="sub">De server is nu niet bereikbaar.</p>' : `<p class="sub">Op de server: ${LLN.server.onderdelen} onderdelen en ${LLN.server.back_ups} back-up-rijen met klassenlijsten of scores. Wat al op de server staat, blijft daar tot je het wist.</p>${LLN.server.onderdelen + LLN.server.back_ups ? '<div class="knoppen"><button class="btn rood" data-lln="wis">Leerlinggegevens van de server wissen…</button></div>' : ''}`) : ''}
     ${LLN.eerste ? `<p class="sub">Back-up “eerste upload”: ${LLN.eerste.rijen ? LLN.eerste.rijen + ' rijen, de leeftijd is niet bekend.' : 'bestaat niet (meer).'}</p>${LLN.eerste.rijen ? '<div class="knoppen"><button class="btn rood" data-lln="eerstewis">Back-up “eerste upload” wissen…</button></div>' : ''}` : (mee ? '' : '<div class="knoppen"><button class="btn klein" data-lln="eerstekijk">Back-up “eerste upload” bekijken</button></div>')}`;
-  if (m && !LLN.voorbeeld) { LLN.voorbeeld = { laden: true }; bewaarVoorbeeld().then(v => { LLN.voorbeeld = v || {}; }).catch(() => { LLN.voorbeeld = {}; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
-  const voorb = !m ? 'Er verdwijnt niets vanzelf.' : LLN.voorbeeld && LLN.voorbeeld.laden ? 'Even kijken wat er weg zou gaan…' : bewaarTekst(LLN.voorbeeld && LLN.voorbeeld.p ? LLN.voorbeeld : null) || 'Met deze termijn gaat er nu niets weg.';
   return `<div class="kaart"><h2>Leerlinggegevens</h2>${server}
-    <h3 style="margin-top:.8rem">Bewaartermijn</h3><p class="lead">Hoe lang klassenlijsten, toetsen met scores, verwijderde leerlingen en het beoordelingslogboek op dit apparaat blijven. Een toets telt vanaf zijn startdatum; een klassenlijst gaat pas weg als de klas niet meer in je rooster staat. Met een termijn kijkt Lesdag hooguit één keer per dag; na het opruimen kun je het via de melding nog terugzetten (het logboek niet).</p>
-    <div class="knoppen">${opties.map(([n, t]) => `<button class="btn${n === m ? ' hoofd' : ''}" data-bew="${n}" aria-pressed="${n === m}">${t}</button>`).join('')}</div>
-    <p class="sub">${voorb}</p>${m ? '<div class="knoppen"><button class="btn" data-bew="nu">Nu opruimen…</button></div>' : ''}
+    <h3 style="margin-top:.8rem">Bewaartermijn</h3><p class="lead">Leerlinggegevens blijven één cursusjaar. Op 1 augustus wist Lesdag op elk apparaat klassenlijsten, scores, absenten, logboeknotities, het beoordelingslogboek en de automatische kopieën, en op de server ook de back-ups daarvan. Dat kan niet ongedaan worden gemaakt. Bestanden in je reservemap en downloads wis je zelf.</p>
     <h3 style="margin-top:.8rem">Botsingen tussen apparaten</h3>${SY ? botsKaart() : '<p class="sub">Synchroniseren is niet beschikbaar.</p>'}</div>`;
 }
 async function leerlingKlik(D) {
@@ -2758,11 +2754,6 @@ async function leerlingKlik(D) {
       else if (D.lln === 'eerstewis') { if (!confirm('De back-up van de eerste upload wordt van de server gewist. Dat kan niet ongedaan worden gemaakt. Doorgaan?')) return true; await SY.eersteWissen(); LLN.eerste = { rijen: 0 }; toast('Back-up gewist'); }
     } catch (e) { SY.meld(e); toast('Dat lukt nu niet'); }
     render(); return true;
-  }
-  if (D.bew != null) {
-    if (D.bew === 'nu') { const v = await bewaarVoorbeeld(); if (!v || SYNC.planTelt(v.p) + v.log === 0) { toast('Er is niets om op te ruimen'); return true; } if (!confirm(bewaarTekst(v) + '\n\nOpruimen? Na afloop kun je het via de melding nog terugzetten (het logboek niet).')) return true; await bewaarUitvoeren(); return true; }
-    try { if (+D.bew) localStorage.setItem(BEWAAR_KEY, String(+D.bew)); else localStorage.removeItem(BEWAAR_KEY); localStorage.removeItem(BEWAAR_DAG); } catch (e) {}
-    LLN.voorbeeld = null; render(); return true;
   }
   if (D.bots != null) {
     try {
@@ -3727,7 +3718,7 @@ function viewBeoordelen() {
   if (!route.arg[0]) return viewBeoordelenKeuze();
   if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
   const lijst = S.beoord.lijsten[g] || []; const heeft = lijst.length > 0;
-  let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
+  let h = jaarMelding() + `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
     <div class="knoppen">${heeft ? '<button class="btn" data-bm="concert">Concertstand</button>' : ''}<button class="btn" data-bm="lijst">Klassenlijst</button>${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="inlever">Inleverbak</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="${esc(bmTerug || '#vandaag')}">Klaar</a></div></div>
     <div class="bm-status" id="bmStatus">${bmStatusHtml()}</div>`;
   if (bmPaneel === 'koppel' && bmKoppel) return h + bmKoppelKaart(g);
@@ -4015,6 +4006,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   if (route.naam === 'bord') { // dit venster is het digibord
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
+  jaarWisselLokaal();
   render();
   try { // herladen midden in de les: de lesmodus gaat weer open, op de plek waar je was
     const op = sessionStorage.getItem('lesdag-lesopen'); const [uid, s] = (op || '').split('|');
@@ -4025,7 +4017,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
   syncStart();
-  bewaarStart();
+  jaarWisselRest();
   agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
