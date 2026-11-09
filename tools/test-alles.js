@@ -17,6 +17,7 @@ const STAPPEN = [
   ['Toetsdatum (basis.json)', 'test-toetsdatum.js', []],
   ['Planning: toetsen op hun datum', 'test-planning.js', []],
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
+  ['Proeffuncties (rekenregels)', 'test-functies.js', []],
   ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : a.includes('--snel') ? ['--snel'] : []],
   ['Foutlogboek', 'test-logboek.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
   ['Nieuwe versie (service worker)', 'test-nieuwe-versie.js', []],

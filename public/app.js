@@ -85,9 +85,10 @@ function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) ret
    leerlingen. Een eigen sleutel die nooit naar OneDrive gaat, niet in de kopie zit en nooit naar de server. Absenten en logboeknotities
    verdwijnen zodra ze in Magister staan. */
 const AP_KEY = 'lesdag-apparaat';
-const apLeeg = () => ({ collegas: [], weg: {}, log: {}, felic: {} });
+const apLeeg = () => ({ collegas: [], weg: {}, log: {}, felic: {}, functies: {} });
 function laadAP() { try { const a = Object.assign(apLeeg(), JSON.parse(localStorage.getItem(AP_KEY) || '{}')); delete a.jarig; const oud = ymd(new Date(Date.now() - 30 * 864e5)); Object.keys(a.felic || {}).forEach(k => { if (k.slice(0, 10) < oud) delete a.felic[k]; }); return a; } catch (e) { return apLeeg(); } } // verjaardagen van leerlingen blijven in Magister (besluit 3-11)
 let AP = laadAP();
+const fnAan = sleutel => FUNCTIES.aan(AP.functies, sleutel); // proeffuncties (functies.js): standaard uit, schakelaar bij Instellingen
 function apBewaar() { try { localStorage.setItem(AP_KEY, JSON.stringify(AP)); } catch (e) {} }
 function bewaar(stil) {
   S.updated = Date.now();
@@ -2769,6 +2770,11 @@ async function agendaKlik(D) {
   render(); return true;
 }
 
+/* ---------- proeffuncties: schakelaars (alleen op dit apparaat), keuzes staan in functies.js ---------- */
+function functiesKaart() {
+  return `<div class="kaart" id="functieskaart"><h2>Proeffuncties</h2><p class="lead">Nieuwe functies die je eerst proefondert. Ze staan standaard uit en gaan alleen aan op dit apparaat.</p>
+    ${FUNCTIES.LIJST.map(f => `<label class="chk" style="display:flex;gap:.6rem;align-items:flex-start;margin-top:.6rem"><input type="checkbox" data-fnzet="${esc(f.sleutel)}"${fnAan(f.sleutel) ? ' checked' : ''}><span><b>${esc(f.naam)}</b><span class="sub" style="display:block">${esc(f.uitleg)}</span></span></label>`).join('')}</div>`;
+}
 /* ---------- instellingen ---------- */
 function viewInstellingen() {
   const on = M365.enabled(); const acc = M365.account;
@@ -2795,6 +2801,7 @@ function viewInstellingen() {
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   ${logboekKaart()}
   <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. De kopie is de stand van het begin van die dag. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
+  ${functiesKaart()}
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
 
@@ -3182,6 +3189,7 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
+  if (t.dataset.fnzet) { FUNCTIES.zet(AP.functies, t.dataset.fnzet, t.checked); apBewaar(); PLAN = null; render(); return; }
   if (t.dataset.bericht) { const a = (S.afwijkingen || []).find(x => x.id === t.dataset.bericht); if (a) { a.bericht = t.value; bewaar(true); } return; }
   if (t.checked && t.closest('.taak-klaar')) sluit();
   if (t.dataset.taaknoot) { const i = t.dataset.taaknoot.indexOf('|'), soort = t.dataset.taaknoot.slice(0, i), n = t.dataset.taaknoot.slice(i + 1), k = soort === 'ff' ? nootVooruit(n) : n; S.taakNoot = S.taakNoot || {}; const r = S.taakNoot[k] = S.taakNoot[k] || {}; const w = t.value.trim(); if (w) { r[soort] = w; r.d = vandaag(); r.titel = $('#drawer > h2').textContent; } else { delete r[soort]; if (!r.fb && !r.ff) delete S.taakNoot[k]; } bewaar(); return; }
