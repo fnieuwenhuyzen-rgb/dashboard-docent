@@ -11,7 +11,7 @@ Repo: `C:\Projecten\Lesdag`. Push naar `main` = binnen ongeveer een minuut live 
 
 - `git status --short`: alleen de bedoelde bestanden. Geen leerlingnamen, geen Zermelo-link, geen testgegevens.
 - Iets veranderd in de vaste bestandenlijst van `public/sw.js` of aan `app.js`/`app.css` met gevolgen voor de cache? Verhoog `CACHE` (`lesdag-vN`).
-- `node tools/test-alles.js --snel` met `$env:NODE_PATH='C:\Users\nwn\lesdag-werk\_testgereedschap\node_modules'` moet slagen; faalt het, dan niet pushen (besluit Frans 9-11).
+- `node tools/test-alles.js --snel` moet slagen; faalt het, dan niet pushen (besluit Frans 9-11).
 - `node -c public/app.js` (node: `C:\Users\nwn\AppData\Local\Programs\node\node.exe`).
 - Gegevens gewijzigd in `tools/`? Eerst de juiste scripts gedraaid (`merge-inhoud.js`, daarna `beoordeling/koppel-beoordeling.js`).
 

@@ -10,11 +10,11 @@ Alles staat in `C:\Users\nwn\lesdag-werk\`. De hoofdmap (`C:\Projecten\Lesdag`) 
 
 ## Een worktree maken
 
-Elke nieuwe taak start vanaf de branch `samengevoegd`, **niet** vanaf `main`. `samengevoegd` heeft alle werk dat klaar is maar nog niet live staat.
+Elke nieuwe taak start sinds 9-11 vanaf `main`. Alleen als er meerdere sessies lopen die eerst samen getest moeten worden, is `samengevoegd` de tussenstap, zoals hieronder bij Samenvoegen; start dan vanaf die branch.
 
 ```bash
 cd "C:/Projecten/Lesdag"
-git worktree add -b <branchnaam> C:/Users/nwn/lesdag-werk/<korte-naam> samengevoegd
+git worktree add -b <branchnaam> C:/Users/nwn/lesdag-werk/<korte-naam> main
 ```
 
 - `git` is `%LOCALAPPDATA%\Programs\Git\cmd\git.exe`.

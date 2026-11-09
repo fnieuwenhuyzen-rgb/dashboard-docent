@@ -6,6 +6,7 @@ description: Test Lesdag lokaal in de ingebouwde browser (launch-entry lesdag-pr
 # Lesdag lokaal testen
 
 1. Start de server: `preview_start` met `name: "lesdag-proef"` (`tools/serve-lokaal.js`, poort uit PORT, meestal 8732). Lukt het niet omdat alle plekken bezet zijn, push dan naar een eigen branch: `https://<branch>.lesdag-muziek.pages.dev` (achter Access; Frans moet daar mogelijk opnieuw inloggen).
+   In een worktree wijst `lesdag-proef` naar de hoofdmap: start dan zelf `tools/serve-lokaal.js public <eigen poort>`.
 2. Lokaal is er geen service worker en geen Microsoft-login. De staat staat in localStorage `lesdag-staat` van `localhost:<poort>`.
 3. Testgegevens zetten met `javascript_tool`, bijvoorbeeld:
    ```js

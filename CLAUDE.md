@@ -1,68 +1,45 @@
 # Lesdag
 
-Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins Maurits). Vanilla JS-PWA zonder build: Vandaag en Week als agenda, Lesmodus (digibord), Jaar, Rooster, Sectie, Reclame, Instellingen, Beoordelen. Voorlopig alleen voor Frans. Frans schrijft Nederlands: korte zinnen, informeel.
+Docent-app van Frans Nieuwenhuyzen (muziekdocent, CSG Prins Maurits). Vanilla JS-PWA zonder build, voorlopig alleen voor Frans. Frans schrijft Nederlands: kort, informeel.
 
-## Begin hier (nieuwe sessie)
+## Begin hier
 
-1. Lees dit bestand en `OPEN-PUNTEN.md` (werkvoorraad; vragen aan Frans staan onder A).
-2. Lees alleen wat je taak nodig heeft:
+- Werk in een eigen worktree vanaf `main`: `git worktree add -b <naam> C:/Users/nwn/lesdag-werk/<naam> main`. Niet in de hoofdmap `C:/Projecten/Lesdag`.
+- **Elke push naar `main` staat binnen een minuut live.** Niet pushen, geen `wrangler deploy`, nooit de echte database zonder ja van Frans.
+- Stand, volgende stappen en vragen aan Frans: `OPEN-PUNTEN.md`. Afsluiten: dat bestand bijwerken en kort houden.
 
-| Je taak | Lees |
+| Je taak | Lees (alleen dan) |
 |---|---|
-| Code, gegevens, workers, service worker, uitrollen | `handboek/techniek.md` (met index van functies in `app.js`) |
+| Code, gegevens, workers, uitrollen, laptop | `handboek/techniek.md`, per kop |
 | Testen | `tools/TESTEN.md` |
-| Meerdere sessies tegelijk, worktrees, samenvoegen, opruimen | `handboek/werkwijze-parallel.md` |
-| Iets is stuk (terugdraaien, back-up, agendalink, worker, Zermelo) | `handboek/noodprocedures.md` |
-| Uitleg voor Frans zelf (maandag, toets, ziekte, periode, nieuw jaar) | `handboek/gebruiken.md` |
-| Oude geschiedenis | `handboek/overdracht-tot-2026-10-29.md`; zoek per kop (`grep -n "^## "`) |
+| Meerdere sessies, samenvoegen, opruimen | `handboek/werkwijze-parallel.md` |
+| Iets is stuk | `handboek/noodprocedures.md` |
+| Uitleg voor Frans | `handboek/gebruiken.md` |
+| Klein open punt | zoek in `handboek/werkvoorraad.md` |
+| Eerder besluit | `handboek/beslisblad-2026-11-09.md`: niet opnieuw voorleggen |
 
-3. Werk in een eigen worktree in `C:/Users/nwn/lesdag-werk/<naam>`, vanaf branch `samengevoegd`. Niet in de hoofdmap, niet vanaf `main`.
-4. Niet pushen, niet live, geen `wrangler deploy`, nooit de echte database. Dat gaat alleen na een ja van Frans.
+## Zuinig lezen
 
-## Waar alles staat
-
-- Live: https://lesdag-muziek.pages.dev (Cloudflare Pages, Git-gekoppeld). **Elke push naar `main` staat binnen een minuut live.** Achter Cloudflare Access: alleen nwn@csgpm.nl.
-- Repo: deze map (`C:/Projecten/Lesdag`, sinds 9-11-2026 buiten OneDrive; pushen is de back-up), GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). De app staat in `public/`; `tools/`, `bron/`, `worker/`, `handboek/` gaan niet online.
-- Documenten horen niet in de repo: `decks-herstel-klaar`, `studiewijzers-klaar`, `fotos-kerst-kandidaten`, de PTA-lijst en `rapport ChatGPT.docx` staan in OneDrive, `Dashboard Docent/lesdag project`.
-- Workers `lesdag-rooster` (Zermelo) en `lesdag-agenda` (Outlook) staan los van Pages, bewust niet achter Access. Een push verandert ze niet; alleen `wrangler deploy`. Zie `techniek.md`. Wat in de agendafeed meegaat staat in `agendaItems` in `app.js`: nooit eigen vrije tekst of leerlinggegevens toevoegen zonder dit opnieuw te bekijken.
-- Gegevens: `public/data/basis.json` (één regel; leergangen, kalender, toetsweken, sectie, koor), `public/data/beoordeling.json`. Les-id's zijn `leergang:lesweek.lesnummer`; weekindeling niet wijzigen zonder migratie. Dashboard-artifact "Leergang muziek": https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2 (bron `bron/`).
-- Eigen staat van Frans: localStorage `lesdag-staat` (`S`), `lesdag-apparaat` (`AP`, blijft op het apparaat) en met synchroniseren aan ook D1 `lesdag-sync`. Geen Entra-koppeling (besluit Frans, 3-11); `m365.js` is niet in gebruik. Wat waar staat: `techniek.md`, hoofdstuk 3.
+- Nooit hele bestanden of onbegrensd `grep`, `sed`, `cat` op `public/app.js` (530 kB), `public/data/*.json` en `bron/leergang-data.json` (tot 920 kB op één regel), of `handboek/*archief*` (130 kB).
+- `node tools/kijk.js inhoud` (kopjes `app.js`), `fn <naam>`, `zoek <regex> [pad]`, `basis [leergangen.vwo4.toetsen]`, `les vwo4:12.1`.
+- Daarna `Read` met `offset` en `limit`. Bash-uitvoer altijd met `| cut -c1-200`.
+- Tests: `node tools/test-alles.js --snel` (±4 minuten, dus op de achtergrond). Eén regel als alles goed is, `--lang` voor de tabel.
+- Node staat niet op PATH in bash: `C:\Users\nwn\AppData\Local\Programs\node\node.exe`.
 
 ## Vaste afspraken
 
-- **Privacy:** nooit leerlingnamen of -gegevens in de repo, `basis.json`, `beoordeling.json`, documentatie of andere openbare plekken. Klassenlijsten en scores alleen in `S.beoord` (apparaten en D1 `lesdag-sync` achter de login, besluit Frans 3-11). Verjaardagen van leerlingen blijven in Magister. Absenten en logboeknotities (`AP`) en het beoordelingslogboek (IndexedDB) blijven op het apparaat. Voeg nooit iemand toe aan de Access-policy zonder dit opnieuw te bekijken. Ingevulde formulieren met namen in de sectiemap niet openen of citeren.
-- **Zermelo-link, koppelcode, token en agendasleutel** zijn wachtwoorden: nooit in code, commit, documentatie of chat. Frans plakt ze zelf in Instellingen. De API-token staat in localStorage `lesdag-zermelo-api`, niet in `S`, en gaat mee met synchroniseren.
-- **Lesmateriaal en presentaties:** geen AI-gevoel (geen meta-tekst, geen generieke foto's), passend bij de les, echte rechtenvrije foto's met bron in `beeld/bronnen.txt`. Ontwerptaal van de didactische kaarten; per leerjaar een eigen accent. Klaar vóór de eerstvolgende maandag. Nooit voor de klas presenteren: in groepjes, Frans loopt langs. Geen telefoon in de les.
-- Christelijke school: liedkeuze en voorbeelden daarop afstemmen. Geen songteksten overnemen.
-- Lokaal 009 met digibord; laptop staat altijd klaar.
+- **Privacy:** nooit leerlingnamen of -gegevens in de repo, `basis.json`, `beoordeling.json`, documentatie of andere openbare plekken. Klassenlijsten en scores alleen in `S.beoord`. Verjaardagen blijven in Magister. Absenten, logboeknotities (`AP`) en beoordelingslogboek blijven op het apparaat. Ingevulde formulieren met namen in de sectiemap niet openen of citeren. Niemand toevoegen aan de Access-policy zonder dit opnieuw te bekijken. Wat in de agendafeed gaat (`agendaItems`): nooit eigen vrije tekst of leerlinggegevens erbij zonder herziening.
+- **Zermelo-link, koppelcode, token, agendasleutel** zijn wachtwoorden: nooit in code, commit, documentatie of chat.
+- **Lesmateriaal:** geen AI-gevoel, passend bij de les, echte rechtenvrije foto's met bron in `beeld/bronnen.txt`. Klaar vóór de eerstvolgende maandag. Nooit voor de klas presenteren: groepjes, Frans loopt langs. Geen telefoon in de les. Christelijke school: liedkeuze daarop afstemmen. Geen songteksten overnemen. Lokaal 009 met digibord; laptop staat klaar.
 - Feiten uit de bronnen (PTA, studiewijzer, leergang); tegenstrijdigheden melden, niet zelf oplossen.
-
-## Werkwijze (zuinig)
-
-- Eén sessie per taak. Sluit af door `OPEN-PUNTEN.md` bij te werken (afgevinkt, nieuw, beslissingen van Frans), of bij parallel werk: een notitie voor de samenvoeger. Zie `werkwijze-parallel.md`.
-- Verzamel vragen aan Frans in `OPEN-PUNTEN.md` onder A, niet verspreid door de chat.
-- Tests: `node tools/test-alles.js --snel`. Meten met `javascript_tool` en `get_page_text`, geen schermafdrukken tenzij de opmaak zelf de vraag is. Testgegevens zijn verzonnen namen; ruim ze op.
-- Synchroniseren testen alleen op een lokale kopie van de database (`techniek.md`, hoofdstuk 7).
+- Les-id's zijn `leergang:lesweek.lesnummer`: weekindeling niet wijzigen zonder migratie.
 - Maar één sessie tegelijk aan `basis.json`, `bron/leergang-data.json` en het cachenummer in `sw.js`.
-- Grote zoek- of schrijfklussen aan helpers met een strakke opdracht; zij schrijven alleen hun bestanden, jij controleert.
-- Model per klus: zwaar model voor ontwerp en onderzoek, lichter model voor bouwen volgens een goedgekeurd plan of mechanisch werk.
+- `app.js` blijft één bestand (besluit 9-11; wanneer opsplitsen: `techniek.md`, hoofdstuk 11).
+- Synchroniseren alleen testen op een lokale kopie van de database. Testgegevens zijn verzonnen namen; ruim ze op.
+- `git push` alleen via `run_in_terminal` (Credential Manager), met cwd in de repo.
 
-## Skills (in `.claude/skills/` van dit project)
+## Waar alles staat
 
-- `/lesdag-online`: committen, pushen (= live) en live controleren achter Access.
-- `/lesdag-lokaal`: de app lokaal testen op `lesdag-proef` (`tools/serve-lokaal.js`), met testrooster en opruimen. In een worktree wijst `lesdag-proef` naar de hoofdmap: start dan `tools/serve-lokaal.js public <eigen poort>` zelf.
-- `/lesdag-beoordeling`: een beoordelingsmodel toevoegen of wijzigen, formulieren en scorebladen maken, koppelen in de lessen.
-- `/lesdag-koor`: de koorplanning uit de Koorapp opnieuw ophalen na een wijziging in Beheer.
-
-## Laptop (geen beheerdersrechten)
-
-- Node: `C:\Users\nwn\AppData\Local\Programs\node\node.exe` (niet op PATH in bash). Git: `%LOCALAPPDATA%\Programs\Git\cmd\git.exe`.
-- `git push` alleen via `run_in_terminal` (Credential Manager), met als cwd deze map.
-- In PowerShell is `R` een alias (Invoke-History): geen eigen functie zo noemen. `$c` en `$C` zijn dezelfde variabele.
-- Word en Excel via COM: paden boven 255 tekens weigert Word; test in een korte map (`%LOCALAPPDATA%\Temp\bq`).
-- Cloudflare Access beheren kan via de dashboard-API vanuit een ingelogde tab op dash.cloudflare.com (fetch met `X-Cross-Site-Security: dash`); Access-app "Lesdag" id `c47af1f4-8d7b-48ef-9910-d740ccc58ea0`.
-
-## Opbouw van de code (kort)
-
-- **Inhoudsopgave van `app.js`:** `grep -nE '^/\* -{4,}' public/app.js` geeft alle kopjes met regelnummer. Begin daarmee en lees alleen het stuk dat je nodig hebt.
-- **`app.js` blijft één bestand (besluit Frans 9-11).** Pas opsplitsen als Lesdag naar anderen gaat, `app.js` voorbij ongeveer 700 kB groeit, of sessies aantoonbaar fouten maken door gebrek aan overzicht. Plan: https://claude.ai/artifact/DPDaAR7UfvB6F4hWRJwNfc (variant B, vijf stukken). Daarbij mag de afspraak "namen niet globaal" vervallen; stap 1 en 2 op een avond zonder les de volgende ochtend, niet in een toetsweek, de rest verspreid over minstens drie lesdagen.
+- Live: https://lesdag-muziek.pages.dev, achter Cloudflare Access. Repo: GitHub `fnieuwenhuyzen-rgb/dashboard-docent` (privé). Alleen `public/` en `functions/` gaan online.
+- Workers `lesdag-rooster` (Zermelo) en `lesdag-agenda` (Outlook) staan los van Pages; een push verandert ze niet.
+- Documenten staan niet in de repo maar in OneDrive, `Dashboard Docent/lesdag project`.

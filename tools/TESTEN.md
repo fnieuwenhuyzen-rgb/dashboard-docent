@@ -1,6 +1,6 @@
 # Testen van Lesdag
 
-Eén opdracht draait alles: `node tools/test-alles.js` (±40 s; `--snel` ±20 s; `--zonder-browser` zonder schermtest).
+Eén opdracht draait alles: `node tools/test-alles.js` (`--snel` ±4 minuten met browsertests, gemeten 9-11; `--zonder-browser` zonder schermtest). `NODE_PATH` zet `test-alles` zelf als het testgereedschap er staat. De uitvoer is alleen wat faalt plus één eindregel; `--lang` geeft de tabel. Grote bestanden lezen zonder lange uitvoer: `node tools/kijk.js`.
 
 | Onderdeel | Bestand | Wat het vangt |
 |---|---|---|

@@ -290,3 +290,21 @@ Ronde 2 (29-10, na "aan de UI en UX is toch niets veranderd?"): nieuwe schil. Zi
 - Roosterproxy `lesdag-rooster` laat sinds 29-10 ook testadressen `*.lesdag-muziek.pages.dev` toe (live, versie bd2545cf; code in `worker/rooster-proxy.js`). Andere sites krijgen 403.
 - `merge-inhoud.js --force` kan materiaal overschrijven: daarna `koppel-beoordeling.js`.
 - `koppel-week8.js` voegt de P9-bijlagen nog apart toe; dubbel met het P9-model is onschuldig (zelfde URL), maar kan weg.
+
+
+## Uit OPEN-PUNTEN.md gehaald op 9-11 (afgehandeld of toelichting)
+
+TESTUITSLAG 9-11 (`samengevoegd` 8f83955): `test-alles --routes` slaagt op alle onderdelen na de reparatie van `test-routes-agenda.js` (62 scenario's, 0 fouten). De vijf eerdere fouten waren verouderde tests, geen app-fouten: de teststaat had geen schema en de melding bij Dag afsluiten noemt sinds 9-11 wat open staat. NODE_PATH moet op `_testgereedschap\node_modules` staan, anders slaat test-alles de browsertests stil over.
+- Beoordelen stap 3 live op 9-11 na ja van Frans (0660f6a, cache v56).
+- Repo verhuisd op 9-11 naar `C:/Projecten/Lesdag`; documenten (`lesdag project/...` hieronder) blijven in OneDrive onder `Dashboard Docent`. Werkmappen opgeruimd; drie oude branches bewaard als tag `archief/lesinhoud`, `archief/nooit-voor-de-klas`, `archief/week-9-11`.
+- Eerder op 9-11 live: cache v55 (8f83955 plus deze overdracht), live gezet op 9-11 na ja van Frans: nachtserie, vier functies, koor versie 71, BB1 lesweek 21-38 en alles van het beslisblad (`beslisblad-app`, `beslisblad-data`, bewaartermijn). Ook live op 9-11: koortaak "Muziek klaarmaken en naar de repro" in `tools/koor-sync.js`, een week voor de eerste repetitie van een periode; staan de repetities nog niet in de koorapp, dan op de dag van het vorige concert.
+- App: telefoonmenu transparant, zoekknop rond, tweede kopie bij Dag afsluiten, Ongedaan maken alleen de markering, Periode sluit op Dag in de laatste week, Morgen slaat vakanties over, bewaartermijn.
+- Gegevens: blokgrens vwo 5, week 8 weg, handelingsdelen 23-4, 18-1 leeg en 30-3, kerst 18-12, havo 5 P4 min. 2, p1-mavo4 weg, mavo 3 P1 alle drie en herkansing 18-5, T1 klas 3, examenconcert niet "voor de klas", decktekst in bronnen, fasen acht weken ingekort.
+- Sectiemap gedaan: acht herstelde decks vervangen, vwo 5 08.2 naar archief, studiewijzers vwo 4, vwo 5, havo 4 aangepast, PTO-titel T1 h3/v3, AI-reeks uit Vakwerkplan klas 3. Originelen in `99 Archief/Oud`.
+- Way Maker-deck hangt al aan de eerste Way Maker-lessen (havo 3 week 21 les 1, vwo 3 week 30 les 1).
+- Synchroniseren: leerlinggegevens meenemen staat standaard uit. Feed met vaste titels klopt. Herladen alleen op de achtergrond klopt.
+- Fout voor 23-11 (`ankersVan`) is opgelost: de datum in `basis.json` gaat voor de lesweek.
+2. Controle bij commits en snelle test voor live staan aan (9-11).
+- Welke Wiegenlied-versie en toonsoort in lokaal 009 (sessie lesdag-wiegenlied wachtte daarop).
+  (Achterhaald: vastgelegd is Es, arrangement Hans v.d. Laan.)
+- Beoordelingsmodus stap 3: gebouwd volgens het beslisblad en samengevoegd op `stap3-samen` (zie Live zetten, punt 5). Uitslag 9-11: `test-alles --routes` op 3b27ff4 slaagt op alle routes; alleen de eigen test van stap 3 faalde op het verwijderde model `p1-mavo4`, gerepareerd in 884959e (112 controles goed). De schermen Het jaar, leerlingkaart en Strookjes zijn doorgeklikt in een wegwerpbrowser met verzonnen namen, ook op 375 px en na Afronden. Niet getest: echt rooster, echte tablet, echte strookjes. De vijf onderdelen per criterium staan als voorstel in `tools/beoordeling/zet-domeinen.js`; daar loopt Frans de lijst na.

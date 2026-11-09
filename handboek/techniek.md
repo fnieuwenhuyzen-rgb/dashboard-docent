@@ -188,3 +188,15 @@ Overgenomen uit `CLAUDE.md` op 8 november 2026, zodat die korter kon.
 - `public/lesklok.js`: resttijd in elk scherm en het opruimsignaal, 4 minuten voor het einde van het rooster. `app.js` geeft via `LESKLOK.start` door wat de klok nodig heeft (`app.js` staat in een eigen functie, zijn namen zijn niet globaal). Tests: `tools/test-lesklok.js`.
 - `public/lesmodus.js`: digibordpresentatie (fasen als objecten `{min, soort, kop, stappen, klaar, docent, beeld}`).
 - `tools/`: lesinhoud (`inhoud-*.json` + `merge-inhoud.js`), presentaties (`lesdeck.js`, `maak-decks-*.js`), SharePoint-links (`sp.js`), koor (`koor-sync.js`), beoordeling (`beoordeling/`). Na `merge-inhoud.js --force` altijd `zet-decks-in-leergang.js` en `beoordeling/koppel-beoordeling.js` opnieuw draaien.
+
+## 11. Laptop, beheer en opsplitsen
+
+Uit `CLAUDE.md` gehaald op 9 november 2026, zodat die korter kon.
+
+- Geen beheerdersrechten. Git: `%LOCALAPPDATA%\Programs\Git\cmd\git.exe`.
+- In PowerShell is `R` een alias (Invoke-History): geen eigen functie zo noemen. `$c` en `$C` zijn dezelfde variabele.
+- Word en Excel via COM: paden boven 255 tekens weigert Word; test in een korte map (`%LOCALAPPDATA%\Temp\bq`).
+- Cloudflare Access beheren kan via de dashboard-API vanuit een ingelogde tab op dash.cloudflare.com (fetch met `X-Cross-Site-Security: dash`); Access-app "Lesdag" id `c47af1f4-8d7b-48ef-9910-d740ccc58ea0`.
+- Dashboard-artifact "Leergang muziek": https://claude.ai/artifact/J27NLYLXHRFSCGvjDmGdj2 (bron `bron/`).
+- Oude geschiedenis: `overdracht-tot-2026-10-29.md`; zoek per kop.
+- **`app.js` opsplitsen** pas als Lesdag naar anderen gaat, `app.js` voorbij ongeveer 700 kB groeit, of sessies aantoonbaar fouten maken door gebrek aan overzicht. Plan: https://claude.ai/artifact/DPDaAR7UfvB6F4hWRJwNfc (variant B, vijf stukken). Daarbij mag de afspraak "namen niet globaal" vervallen; stap 1 en 2 op een avond zonder les de volgende ochtend, niet in een toetsweek, de rest verspreid over minstens drie lesdagen.

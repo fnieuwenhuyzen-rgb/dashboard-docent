@@ -4,7 +4,7 @@ Bron: https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (54 van 54 gekozen). Dit
 
 ## Deze week
 - Bericht over 23-11 aan vwo 4 en 5: Frans stuurt het vandaag zelf.
-- Wiegenlied vwo 5: de versie die al in lokaal 009 ligt. Welke versie en toonsoort: nog door Frans te noteren.
+- Wiegenlied vwo 5: de versie die al in lokaal 009 ligt. Vastgelegd: Es, arrangement Hans v.d. Laan.
 - Acht herstelde presentaties vervangen de oude in de sectiemap. Het negende deck (voorlichting havo 3) niet.
 - Vwo 5 lesweek 10: de les (romantiek) klopt, de blokgrens van "Het classicisme" wordt aangepast.
 - Lessen uit lesweek 8 worden niet meer gegeven. Vwo 5 08.2 Inspelen en terugluisteren naar het archief.
@@ -65,3 +65,7 @@ Bron: https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (54 van 54 gekozen). Dit
 - 12 oude modellen naar een strookje: na mavo 3 presentatie 2, voor 22 maart.
 - Mavo 3 presentatie 1 achteraf: alleen als de ingevulde strookjes er nog zijn.
 - Het overzicht is voorlopig alleen voor Frans.
+
+## Aanvullingen uit OPEN-PUNTEN.md (9-11)
+
+- Verhuis het AI-onderwerp niet: AI-voorstellen worden niet gebouwd (besluit 9-11).
