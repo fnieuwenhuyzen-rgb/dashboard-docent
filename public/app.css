@@ -164,6 +164,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .les .slide.docentkaart{background:repeating-linear-gradient(135deg,#ffffff06 0 12px,transparent 12px 24px);border:1px dashed #ffffff30;margin:1rem max(20px,3vw);border-radius:14px;justify-content:flex-start}
 .les .eyebrow{text-transform:uppercase;letter-spacing:.09em;color:var(--z);font-size:clamp(.9rem,1.6vw,1.25rem);margin:0;font-weight:700}
 .les h1{font-family:var(--kop);font-size:clamp(2.4rem,6.5vw,5.4rem);line-height:1;color:#fff;font-weight:900;max-width:18ch}
+.les h1,.les h2{overflow-wrap:anywhere}
 .les h2{font-family:var(--kop);font-size:clamp(1.75rem,4.4vw,3.6rem);font-weight:800;color:#fff;max-width:26ch;line-height:1.08}
 .les h3{font-size:clamp(1rem,1.8vw,1.35rem);color:var(--z);text-transform:uppercase;letter-spacing:.06em;margin:.4rem 0 .2rem}
 .les .vraag{font-family:var(--lees);font-size:clamp(1.4rem,3.2vw,2.6rem);font-style:italic;color:#ffd9a6;margin:0;max-width:40ch;line-height:1.25}
@@ -195,7 +196,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .les ol.stappen li::before{content:counter(s);font-family:var(--lees);font-weight:900;font-size:1.1em;color:var(--z);text-align:right}
 .les .klaarkaart{align-self:flex-start;background:#ffffff12;border-left:4px solid var(--z);padding:.6rem 1rem;border-radius:0 10px 10px 0;font-family:var(--lees);font-size:clamp(1rem,1.9vw,1.4rem);max-width:50rem}
 .les .klaarkaart b{font-family:var(--lees);color:var(--z);margin-right:.4rem}
-.les .s-fase .slide{padding-right:clamp(20px,22vw,22rem)}
+.les .s-fase .slide,.les:has(.timerhoek) .slide{padding-right:clamp(20px,22vw,22rem)} /* .s-fase bestond nooit (de klasse is de soort, bv. s-doen): daardoor liep tekst onder de timer */
 .les .timerhoek{position:absolute;right:max(20px,3vw);top:50%;transform:translateY(-50%);width:clamp(8rem,17vw,15rem)}
 .les .ring{position:relative;width:100%;aspect-ratio:1;display:grid;place-items:center}
 .les .ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
@@ -210,7 +211,7 @@ td.num{font-variant-numeric:tabular-nums;font-family:var(--lees)}
 .les .fase-tijd[hidden]{display:none}
 @keyframes ftIn{from{opacity:0}to{opacity:1}}
 .les .lm-krap{margin:0;padding:.55rem .8rem;border-left:4px solid #f2c063;background:#f2c0631a;color:#f6e3b8;font-size:1.05rem}
-@media (max-width:760px){.les .timerhoek{position:static;transform:none;width:7rem;margin:0 auto}.les .s-fase .slide{padding-right:max(20px,5vw)}}
+@media (max-width:760px){.les .timerhoek{position:static;transform:none;width:7rem;margin:0 auto}.les .s-fase .slide,.les:has(.timerhoek) .slide{padding-right:max(20px,5vw)}}
 /* check en rode draad */
 .les.s-check h2{max-width:30ch}
 .les.s-id .slide{align-items:center;text-align:center}

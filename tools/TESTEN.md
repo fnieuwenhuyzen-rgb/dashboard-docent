@@ -11,6 +11,7 @@ Eén opdracht draait alles: `node tools/test-alles.js` (±40 s; `--snel` ±20 s;
 | Schermen | `test-schermen.js` | "Dit scherm lukt nu niet", consolefouten, horizontale overloop; 14 schermen × 7 tijden × 1280/375 px, met verzonnen rooster |
 
 Routetest Beoordelen (`node tools/test-routes-beoordelen.js [--model=<id,id>] [--toon]`, of `test-alles.js --routes`; ±5 minuten): klikt per model uit `beoordeling.json` de hele route door (lijst plakken, koppelen, groepjes, scoren, concertstand, tussenstand, afwezig/inhalen, afronden, wijzigen, herkansing, klasgenoten, inleverbak, cijferkolom, csv, feedbackblad-pdf, reserve, logboek) en rekent elke uitkomst na met een eigen berekening uit het model.
+Routes door de lesmodus (niet in `test-alles`, ±17 min voor alle lessen, `--snel` ±4 min): `node tools/test-routes-lesmodus.js [--leergang=vwo4] [--onderdeel=6] [--rapport=pad]`. Loopt elke les van elke leergang door op 1280×800 en 1920×1080, plus kapotte lesvelden, timers, lesklok op alle tijden, afronden en regie met bord in twee vensters. Lesinhoud die niet past komt in het rapport, niet in de exitcode.
 
 ## Eenmalig: Playwright buiten de repo
 
