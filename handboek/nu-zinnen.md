@@ -55,3 +55,7 @@ Schuingedrukt = alleen als het van toepassing is.
 ## Vaste woorden bij afronden (bevinding 74)
 
 Overal dezelfde drie keuzes, op Nu, in de lesmodus en in de regie: **Gegeven**, **Half af, volgende keer verder** en **Niet aan toegekomen**. Niet "Deels" en niet "Niet gegeven". De notitie bij een half afgeronde les zegt "half af". Test: `tools/test-nu-ochtend.js`.
+
+## Afwezig (bevinding 62)
+
+Op een dag waarop Frans zich afwezig meldt, leest Nu niet als een vrije dag. Zin: "Afwezig. 3 lessen schuiven door (tv4 en tb1). Toetsweek tm4 loopt door." met de knop **Toch aanwezig**. De kop van Dag noemt dezelfde dingen. Op de eerste lesdag erna staat in de meldingen één regel: "Tijdens je afwezigheid geschoven: 3 lessen (tv4 en tb1), ma 9 nov."

@@ -58,6 +58,19 @@ const TOON = process.argv.includes('--toon');
     const src = fs.readFileSync(path.join(__dirname, '..', 'public', 'app.js'), 'utf8');
     is('74: nergens "Deels" of "Niet gegeven" als keuze', !/>Deels|'Niet gegeven'|>deels</.test(src)); }
 
+
+  // 62: een ziektedag tijdens de toetsweek: Nu en Dag zeggen wat er schuift, de dag erna één regel
+  { const AFW = { afwezig: { '2026-11-09': { herstel: {} } } };
+    const a = await kijk('2026-11-09T07:30:00+01:00', 'nu', AFW, async page => { });
+    is('62: Nu zegt dat je afwezig bent en wat er schuift', /Afwezig\. 3 lessen schuiven door \(tv4 en tb1\)/.test(a.tekst) && /Toetsweek tm4 loopt door/.test(a.tekst), a.tekst.slice(0, 300));
+    is('62: Nu leest niet als vrije dag', !/Vrij\. Vandaag heeft Lesdag niets voor je/.test(a.tekst));
+    is('62: Toch aanwezig staat op Nu', /Toch aanwezig/.test(a.tekst));
+    const b = await kijk('2026-11-09T07:30:00+01:00', 'vandaag', AFW); is('62: Dag-kop met toetsweek en wat schuift', /Toetsweek tm4\. Afwezig\. 3 lessen schuiven door/.test(b.tekst) && !/Lesweek 10\. Vrij\./.test(b.tekst), b.tekst.slice(0, 200));
+    let na = null; await kijk('2026-11-09T07:30:00+01:00', 'nu', AFW, async page => { await page.click('[data-afwezigterug]'); await page.waitForTimeout(300); na = await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('lesdag-staat')).afwezig || {}).length); });
+    is('62: Toch aanwezig op Nu zet de dag terug', na === 0, 'afwezig: ' + na);
+    const c = await kijk('2026-11-10T07:30:00+01:00', 'nu', AFW); is('62: de dag erna: wat er geschoven is', /Tijdens je afwezigheid geschoven: 3 lessen \(tv4 en tb1\), ma 9 nov\./.test(c.tekst), c.tekst.slice(0, 200));
+    const d = await kijk('2026-11-11T07:30:00+01:00', 'nu', AFW); is('62: een dag later is die regel weg', !/Tijdens je afwezigheid/.test(d.tekst)); }
+
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
   console.log(`nu-ochtend: ${n} controles, alles goed`);
