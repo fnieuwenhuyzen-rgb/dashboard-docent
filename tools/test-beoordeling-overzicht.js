@@ -11,11 +11,11 @@ const m = id => BM.find(x => x.id === id);
 /* ---------- 1. de gegevens in het model ---------- */
 const DOM = O.INSTELLINGEN.DOMEINEN;
 { let teller = 0, zonder = []; for (const M of BM) for (const o of M.onderdelen) for (const c of o.criteria) { teller++; if (!DOM.includes(c.domein)) zonder.push(M.id + '/' + c.id); }
-  is('126 criteria', teller, 126); is('elk criterium heeft een van de vijf domeinen', zonder, []);
+  is('120 criteria', teller, 120); is('elk criterium heeft een van de vijf domeinen', zonder, []);
   const met = BM.filter(M => M.strookje).map(M => M.id); is('3 modellen met strookje', met, ['p1a-mavo3-zang', 'p1b-mavo3-akkoord', 'p1c-mavo3-slagwerk']);
   for (const M of BM.filter(x => x.strookje)) { const ids = M.onderdelen.flatMap(o => o.criteria.map(c => c.id)); is('strookje.crit lengte ' + M.id, M.strookje.crit.length, M.strookje.stellingen.length); is('strookje.crit bestaat in model ' + M.id, M.strookje.crit.every(c => ids.includes(c)), true); }
   is('zin naar criterium mavo 3 P2', m('p1b-mavo3-akkoord').strookje.crit, ['presentatie', 'wisselen', 'patroon']);
-  is('de andere 17 modellen hebben geen koppeling', BM.filter(x => !x.strookje).every(x => !x.strookje), true);
+  is('de andere 16 modellen hebben geen koppeling', BM.filter(x => !x.strookje).every(x => !x.strookje), true);
   // domeinen: de naam "Ritme en maat" in mavo 3 P1 hoort bij Ritme en maat, "Samenspel" bij Samenspel, "Begin en slot" bij Presenteren
   const dm = (mid, cid) => m(mid).onderdelen.flatMap(o => o.criteria).find(c => c.id === cid).domein;
   is('domein ritme', dm('p1a-mavo3-zang', 'ritme'), 'Ritme en maat'); is('domein samenspel', dm('p1a-mavo3-zang', 'samenspel'), 'Samenspel'); is('domein begin en slot', dm('p1b-mavo3-akkoord', 'presentatie'), 'Presenteren');
@@ -121,7 +121,7 @@ T2.ll.f.vink = vink('N', 'J', null);   // f: alles 9 (ja): nog niet = -2 (licht)
 // de score is die van het criterium, niet van het eindcijfer: Fenna's afgetopte 7,0 verandert haar criteriumscores niet
 is('plafond raakt het criterium niet', O.scoreCrit(P2, T2, T2, 'f', 'wisselen'), 9);
 // een model zonder koppeling of zonder strookje geeft geen vergelijking
-is('model zonder strookje: leeg', O.vergelijking(m('p1-mavo4'), { ll: { a: { s: {}, v: {}, opm: {} } } }, 'a'), []);
+is('model zonder strookje: leeg', O.vergelijking(m('p2-mavo4'), { ll: { a: { s: {}, v: {}, opm: {} } } }, 'a'), []);
 // kapotte kruisjes breken niets
 { const T = { ll: { a: { s: { presentatie: 8 }, v: {}, opm: {}, vink: 'rommel' } }, volgorde: [] }; is('vink die geen object is', O.vergelijking(P2, T, 'a').map(q => q.vink), [null, null, null]);
   T.ll.a.vink = { 0: 'X', 1: 5, 2: 'J' }; is('onbekende waarden tellen niet', O.vergelijking(P2, T, 'a').map(q => q.vink), [null, null, 'J']); }
@@ -140,7 +140,7 @@ Tp1.ll.b.vink = vink('J', 'J', 'B');
 { const T = { ll: {}, volgorde: [] }; const M = JSON.parse(JSON.stringify(P2)); is('eerste kruisje legt vast', O.legStrookVast(M, T), true); is('tweede keer niets', O.legStrookVast(M, T), false);
   is('vastgelegd', T.strook, { stellingen: M.strookje.stellingen, crit: ['presentatie', 'wisselen', 'patroon'] });
   M.strookje.stellingen[0] = 'Een nieuwe zin'; M.strookje.crit[0] = 'samenspel'; is('oud kruisje blijft bij de oude zin en koppeling', O.strookVan(M, T).stellingen[0], 'Ik tel af en begin samen met mijn groepje'); is('en bij het oude criterium', O.strookVan(M, T).crit[0], 'presentatie');
-  is('model zonder koppeling legt niets vast', O.legStrookVast(m('p1-mavo4'), { ll: {} }), false); is('heeftStrookje', [P1, P2, P3, m('p1-mavo4')].map(O.heeftStrookje), [true, true, true, false]); }
+  is('model zonder koppeling legt niets vast', O.legStrookVast(m('p2-mavo4'), { ll: {} }), false); is('heeftStrookje', [P1, P2, P3, m('p2-mavo4')].map(O.heeftStrookje), [true, true, true, false]); }
 // bestaande scores werken zonder migratie: een toets zonder vink en zonder strook geeft gewoon het overzicht
 { const oud = { lijsten: { x: [{ id: 'a', naam: 'Testleerling, Oud' }] }, toetsen: { 'p1b-mavo3-akkoord|x': { ll: { a: rij(sc(8, 8, 8, 8, 8, 8), { Niveau: 'Niveau 2' }, 8) }, volgorde: [], start: '2026-11-02' } } };
   R.afronden(P2, oud.toetsen['p1b-mavo3-akkoord|x'], [{ id: 'a' }], 1); const o = O.overzicht(oud, BM, 'x', NU, []);
@@ -175,7 +175,7 @@ Tp1.ll.b.vink = vink('J', 'J', 'B');
   is('strookjes: Eef heeft nog niet afgerond: 4 knoppen voor het cijfer; de anderen zijn afgerond', (h.match(/data-ovzelf=/g) || []).length, 4);
   is('strookjes: teller klaar = alle kruisjes en strookjescijfer', O.strookjesTelling(P2, T2, lijst, T2), { klaar: 3, n: 6 }); // a, b en d hebben drie kruisjes en een strookjescijfer; c mist kruisjes, f het derde, e alles
   const hH = O.htmlStrookjes(S, P2, 'm3x', 'herkans'); is('strookjes: herkansing toont de herkansing', hH.includes('data-ovlaag=""'), true);
-  const uit = O.htmlStrookjes(S, P2, 'm3x', '', ''); is('strookjes zonder koppeling', O.htmlStrookjes(S, m('p1-mavo4'), 'm3x', '').includes('nog geen strookje'), true); }
+  const uit = O.htmlStrookjes(S, P2, 'm3x', '', ''); is('strookjes zonder koppeling', O.htmlStrookjes(S, m('p2-mavo4'), 'm3x', '').includes('nog geen strookje'), true); }
 { const keuze = O.INSTELLINGEN.KRUISJES_INVOEREN; O.INSTELLINGEN.KRUISJES_INVOEREN = 'geen'; is('keuze 1b: het scherm is uit', O.htmlStrookjes(S, P2, 'm3x', '').includes('staat uit'), true); O.INSTELLINGEN.KRUISJES_INVOEREN = keuze; }
 
 console.log(fout ? fout + ' van ' + n + ' controles fout' : 'alles goed (' + n + ' controles)'); process.exit(fout ? 1 : 0);
