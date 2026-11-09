@@ -102,7 +102,8 @@
             "Ik heb een vraag, maar je hoort het antwoord maar op één plek.",
             "Mijn stuk geeft hoorbaar antwoord op mijn vraag.",
             "Mijn hele stuk is op mijn vraag gebouwd en het antwoord overtuigt."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "samenhang",
@@ -120,7 +121,8 @@
             "Mijn stuk heeft een vorm, maar ik herhaal vooral.",
             "Mijn stuk heeft herhaling en contrast en ik werk mijn motief uit.",
             "Mijn materiaal groeit door het stuk en mijn contrast heeft een doel."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "middelen",
@@ -138,7 +140,8 @@
             "Ik heb drie partijen en gebruik één middel bewust.",
             "Ik zet meerdere middelen bewust in en elke partij heeft een eigen taak.",
             "Al mijn middelen en partijen helpen om mijn vraag te beantwoorden."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -162,7 +165,8 @@
             "Ik heb alle partijen genoteerd, maar niet alles klopt.",
             "Mijn bladmuziek is netjes en compleet, met tempo- en dynamiektekens.",
             "Een ander kan van mijn bladmuziek spelen, ook articulatie staat erin."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -186,7 +190,8 @@
             "We spelen het grotendeels zoals opgeschreven, met haperingen.",
             "We spelen zeker en in tempo, zoals het er staat, met de dynamiek.",
             "We spelen muzikaal; je hoort mijn antwoord op de vraag goed."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "toelichting",
@@ -204,7 +209,8 @@
             "Ik noem mijn vraag en vertel de stappen.",
             "Ik leg uit welke middelen mijn vraag oplossen en waarom.",
             "Ik onderbouw mijn keuzes met een voorbeeld uit de lessen en weet wat beter kan."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     }

@@ -79,7 +79,8 @@
             "Ik pas me aan de anderen aan en speel de opbouw en terugval soepel mee.",
             "Ik voel aan wat de anderen doen en help het lied groeien van rustig naar vol."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         },
         {
           "id": "ritme",
@@ -153,7 +154,8 @@
                 "Timing zo strak dat de groep erop bouwt; de groove houdt stand in de volle delen."
               ]
             }
-          }
+          },
+          "domein": "Ritme en maat"
         },
         {
           "id": "toon",
@@ -228,7 +230,8 @@
               ],
               "naam": "Klank en balans"
             }
-          }
+          },
+          "domein": "Techniek en klank"
         },
         {
           "id": "techniek",
@@ -302,7 +305,8 @@
                 "Ontspannen en zeker; een eenvoudige fill past in de groove."
               ]
             }
-          }
+          },
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -326,7 +330,8 @@
             "Ik noem een paar sterke en zwakke punten.",
             "Ik noem sterke en zwakke punten, met concrete voorbeelden uit het lied.",
             "Ik noem sterke en zwakke punten met voorbeelden en koppel ze aan wat ik wilde leren."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "feedback",
@@ -344,7 +349,8 @@
             "Ik geef algemene feedback.",
             "Ik geef concrete tips waar iemand iets aan heeft.",
             "Ik geef precieze tips die iemand echt helpen om beter te spelen."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     }

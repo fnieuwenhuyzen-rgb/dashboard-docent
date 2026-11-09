@@ -92,7 +92,8 @@
             "Ik weet het van één of twee avonden, maar noem geen kenmerken.",
             "Ik plaats alle drie in de juiste stijl en noem per stijl een kenmerk.",
             "Ik plaats alle drie en vergelijk de avonden op stijl, bezetting en klank."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "functie",
@@ -110,7 +111,8 @@
             "Ik noem waarvoor de muziek was, maar niet waaraan je dat merkt.",
             "Ik noem per avond waarvoor de muziek was en leg uit waaraan je dat merkt.",
             "Ik verbind de functie met wat ik zelf heb gehoord en meegemaakt."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -134,7 +136,8 @@
             "Ik noem één of twee dingen, zoals de instrumenten.",
             "Ik beschrijf bezetting, klank, vorm en ritme.",
             "Ik beschrijf precies wat ik hoor en weet waar in het fragment het gebeurt."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "beargumenteren",
@@ -152,7 +155,8 @@
             "Ik noem één reden, of ik zeg vooral wat ik uit mijn hoofd ken.",
             "Ik plaats het fragment met redenen uit wat ik hoor.",
             "Ik weeg mijn redenen af, ook wat er niet bij past, en kies goed onderbouwd."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -176,7 +180,8 @@
             "Ik gebruik een paar vaktermen, niet altijd goed.",
             "Ik gebruik de vaktermen goed, zoals koor, aria, recitatief of basso continuo.",
             "Ik gebruik vaktermen vanzelf, ook als ik twee stukken vergelijk."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "doordenken",
@@ -194,7 +199,8 @@
             "Ik geef een kort antwoord, maar denk niet verder.",
             "Ik geef op een vervolgvraag een antwoord met uitleg.",
             "Ik denk hardop verder, leg verbanden en stel zelf ook een vraag."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     }

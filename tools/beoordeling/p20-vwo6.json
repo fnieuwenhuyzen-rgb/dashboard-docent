@@ -77,7 +77,8 @@
             "Ik zing meestal zuiver en houd mijn stem vast, behalve bij de inzetten.",
             "Ik zing zuiver en zeker in mijn eigen stem, ook als de anderen iets anders zingen.",
             "Mijn stem mengt met de groep; de akkoorden klinken zuiver."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "tekst",
@@ -95,7 +96,8 @@
             "Mijn tekst is meestal verstaanbaar, maar het gregoriaans is nog wat stijf.",
             "Ik spreek de tekst helder uit en het gregoriaans vloeit op de woorden.",
             "Ik zing in stijl: vrij op het woord, en je hoort het karakter van elk lied."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -119,7 +121,8 @@
             "Ik speel mijn partij grotendeels, met stops op lastige plekken.",
             "Ik speel mijn partij zeker en in een stabiel tempo.",
             "Ik speel mijn partij beheerst en luister naar de andere stemmen."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "articulatie",
@@ -137,7 +140,8 @@
             "Je hoort soms verschil tussen kort en gebonden, en soms een frase.",
             "Je hoort duidelijk kort en gebonden, en frasen met een begin en een eind.",
             "Mijn articulatie en frasering geven het stuk zijn eigen karakter."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -161,7 +165,8 @@
             "Ik volg de opdracht in grote lijnen, maar mijn keuzes zijn nog toevallig.",
             "Ik los de opdracht op met materiaal dat ik bewust kies, zoals een modus of bordun.",
             "Ik los de opdracht op mijn eigen manier op en kan mijn keuzes uitleggen."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "samenhang",
@@ -179,7 +184,8 @@
             "Ik herhaal een kort motief en heb een begin en een slot.",
             "Ik herhaal en varieer mijn motieven en eindig duidelijk.",
             "Mijn improvisatie heeft een opbouw en een slot, en ik durf iets eigens."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     }

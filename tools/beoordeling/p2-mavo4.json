@@ -100,7 +100,8 @@
             "Mijn partij gaat grotendeels goed, maar ik stop soms.",
             "Ik speel of zing mijn partij zeker, met weinig fouten.",
             "Ik beheers mijn partij helemaal, ook uit mijn hoofd."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "timing",
@@ -118,7 +119,8 @@
             "Ik blijf meestal in de maat, maar soms gaat een inzet mis.",
             "Ik blijf in de maat en zet op tijd in.",
             "Ik speel strak in de maat, ook bij overgangen, en help de groep in tempo te blijven."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "dynamiek",
@@ -136,7 +138,8 @@
             "Ik speel of zing soms harder en zachter.",
             "Je hoort bij mij hard en zacht en kort en lang, passend bij het nummer.",
             "Met hard en zacht en kort en lang maak ik het nummer spannend."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -161,7 +164,8 @@
             "Ik luister naar de anderen en speel niet te hard.",
             "Ik reageer op de anderen en help als er iets misgaat; we klinken als één band."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         },
         {
           "id": "samenwerking",
@@ -179,7 +183,8 @@
             "Ik doe mee, maar oefen weinig en vergeet soms afspraken.",
             "Ik kom voorbereid naar repetities en houd me aan afspraken.",
             "Ik trek de groep mee, help anderen en denk mee."
-          ]
+          ],
+          "domein": "Samenspel"
         }
       ]
     },
@@ -204,7 +209,8 @@
             "Ik kondig duidelijk aan, sta rustig en speel door na een fout.",
             "Ik straal plezier en zekerheid uit en maak contact met het publiek."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         },
         {
           "id": "organisatie",
@@ -222,7 +228,8 @@
             "Ik heb mijn taak gedaan, maar pas toen iemand me eraan herinnerde.",
             "Ik heb mijn taak zelfstandig en op tijd gedaan en me aan het draaiboek gehouden.",
             "Ik heb verantwoordelijkheid genomen, vooruitgedacht en anderen geholpen."
-          ]
+          ],
+          "domein": "Presenteren"
         }
       ]
     }

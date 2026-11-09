@@ -95,7 +95,8 @@
             "Ik ben meestal zuiver en in de maat, maar wankel op lastige plekken.",
             "Ik ben zuiver en zeker in de maat en heb mijn stem of instrument onder controle.",
             "Ik beheers mijn partij helemaal, ook de moeilijke stukken."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "muzikaliteit",
@@ -113,7 +114,8 @@
             "Je hoort af en toe dynamiek en frasering.",
             "Je hoort dynamiek en frasering, en het karakter van elk stuk komt over.",
             "Ik breng mijn eigen versie, met bewuste keuzes in dynamiek, tempo en klank."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "samenspel",
@@ -132,7 +134,8 @@
             "Ik luister naar de anderen en heb in minstens twee onderdelen een eigen rol.",
             "Ik draag het samenspel en heb in twee of meer onderdelen een sterke eigen rol."
           ],
-          "groepsscore": "start"
+          "groepsscore": "start",
+          "domein": "Samenspel"
         }
       ]
     },
@@ -156,7 +159,8 @@
             "Ik heb een kleine bijdrage geleverd aan het eigen werk.",
             "Ik heb duidelijk bijgedragen aan een compositie, arrangement of improvisatie.",
             "Mijn eigen werk is sterk uitgewerkt en klinkt overtuigend."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -181,7 +185,8 @@
             "Ik kondig duidelijk aan, sta rustig en speel door na een fout.",
             "Ik presenteer als een professional en maak echt contact met het publiek."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         }
       ]
     },
@@ -205,7 +210,8 @@
             "Ons programma heeft wat opbouw; ik kan het een beetje uitleggen.",
             "Ons programma hangt samen en ik kan uitleggen waarom deze volgorde.",
             "Ons programma heeft een sterke rode draad en elke keuze is doordacht."
-          ]
+          ],
+          "domein": "Presenteren"
         },
         {
           "id": "organisatie",
@@ -223,7 +229,8 @@
             "Ik heb mijn taak gedaan, maar pas toen iemand me eraan herinnerde.",
             "Ik heb mijn taak zelfstandig en op tijd gedaan en me aan afspraken gehouden.",
             "Ik heb verantwoordelijkheid genomen, vooruitgedacht en anderen geholpen."
-          ]
+          ],
+          "domein": "Presenteren"
         }
       ]
     }

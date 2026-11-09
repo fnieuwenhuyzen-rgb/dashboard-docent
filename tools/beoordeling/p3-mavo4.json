@@ -93,7 +93,8 @@
             "Ik noem de kunstvorm, maar mijn voorbeeld past er maar half bij.",
             "Ik noem de kunstvorm en een voorbeeld dat goed past.",
             "Ik noem precies welke kunstvorm het is en mijn voorbeeld is goed gekozen."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "functie",
@@ -111,7 +112,8 @@
             "Ik noem een functie, maar leg niet uit waarom.",
             "Ik noem de functie en laat met mijn voorbeeld zien wat het toevoegt.",
             "Ik leg uit wat de kunstvorm toevoegt en wat dat met de kijker doet."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "samenhang",
@@ -129,7 +131,8 @@
             "Ik noem een verband, met een begrip zoals tempo of dynamiek.",
             "Ik leg met muziekbegrippen en een fragment uit hoe ze samenwerken.",
             "Ik laat op meer plekken zien hoe muziek en kunstvorm elkaar sterker maken."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "bronnen",
@@ -147,7 +150,8 @@
             "Ik heb een paar bronnen, maar je ziet niet altijd waar iets vandaan komt.",
             "Ik gebruik goede bronnen en fragmenten en noem waar ze vandaan komen.",
             "Ik schrijf alles in eigen woorden en mijn bronnen en fragmenten zijn goed gekozen."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -171,7 +175,8 @@
             "Je kunt mijn verhaal volgen, maar ik lees deels voor.",
             "Mijn verhaal is duidelijk, ik vertel vanuit mijn dia's en beantwoord vragen.",
             "Ik vertel boeiend en zeker en leg bij vragen goed uit."
-          ]
+          ],
+          "domein": "Presenteren"
         },
         {
           "id": "muziekstuk",
@@ -189,7 +194,8 @@
             "Ik heb een muziekstuk laten horen, maar slecht voorbereid.",
             "Ik heb een muziekstuk goed voorbereid laten horen dat past bij mijn onderwerp.",
             "Mijn muziekstuk past bij mijn onderzoek en het publiek is echt geboeid."
-          ]
+          ],
+          "domein": "Presenteren"
         },
         {
           "id": "planning",
@@ -207,7 +213,8 @@
             "Ik heb de meeste stappen ingeleverd, soms pas na herinneren.",
             "Ik lever alles op tijd in en heb de feedback op mijn opzet gebruikt.",
             "Ik werk zelfstandig volgens mijn planning en heb mijn werk met de feedback beter gemaakt."
-          ]
+          ],
+          "domein": "Presenteren"
         }
       ]
     }

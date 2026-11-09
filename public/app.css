@@ -1052,3 +1052,20 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 .jr-noot.lucht{background:var(--ok);border-color:var(--ok)}
 .jr-stand{position:sticky;left:.85rem;width:max-content;max-width:calc(100vw - 3rem);padding:.05rem 0 .35rem 4.6rem;font-size:.84rem;font-weight:600;color:var(--let)}
 .jr-stand a{color:inherit}
+
+/* Beoordelen stap 3: het jaar per leerling en de strookjes (bm-overzicht.js) */
+.ov-rol{overflow-x:auto}
+.ov-tabel{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.ov-tabel th,.ov-tabel td{text-align:left;padding:.4rem .55rem;border-bottom:1px solid var(--line);vertical-align:top}
+.ov-tabel th{font-size:.82rem;font-weight:700}
+.ov-tabel small{display:block;opacity:.75;font-weight:500}
+.ov-cijfer{font-weight:700;font-size:1.05rem}
+.ov-laag{background:var(--rood-zacht);color:var(--rood);font-weight:700}
+.ov-twee{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:1rem}
+.ov-punten{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;align-content:start}
+.ov-punten b{display:block;font-size:.8rem;opacity:.75}
+.ov-zoek{border:1px solid var(--line);border-radius:6px;padding:.4rem .6rem;font:inherit;max-width:100%}
+.ov .tik{display:inline-flex;gap:2px}
+.ov .tik button{min-width:44px;min-height:44px;border:1px solid var(--line);background:transparent;color:inherit;font:700 .95rem inherit;border-radius:6px;cursor:pointer}
+.ov .tik button.aan{background:var(--paars);border-color:var(--paars);color:var(--op)}
+@media (max-width:640px){.ov-twee{grid-template-columns:minmax(0,1fr)}}

@@ -69,7 +69,8 @@
             "Ik speel de meeste noten of grepen goed.",
             "Ik speel alle noten of grepen goed en het klinkt helder.",
             "Ik speel een moeilijkere partij goed, met meer snaren of drie akkoorden."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "ritme",
@@ -87,7 +88,8 @@
             "Ik speel meestal op de tel, maar op lastige plekken hapert het.",
             "Ik speel het hele lied op de tel in hetzelfde tempo.",
             "Ik speel zo strak dat de anderen op mij kunnen bouwen."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "wisselen",
@@ -105,7 +107,8 @@
             "Ik speel het lied uit, maar wacht soms bij een wissel.",
             "Ik wissel op tijd en speel door zonder te stoppen.",
             "Ik wissel soepel, ook tussen drie akkoorden."
-          ]
+          ],
+          "domein": "Ritme en maat"
         }
       ]
     },
@@ -129,7 +132,8 @@
             "Ik zing een deel mee, of ik stop met spelen als ik zing.",
             "Ik zing het lied mee en blijf spelen.",
             "Ik zing duidelijk mee en speel tegelijk zonder haperen."
-          ]
+          ],
+          "domein": "Samenspel"
         },
         {
           "id": "samenspel",
@@ -148,7 +152,8 @@
             "Ik blijf gelijk met de groep en we beginnen en eindigen samen.",
             "Ik pas me aan de anderen aan; we klinken als één geheel."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         },
         {
           "id": "inzet",
@@ -166,7 +171,8 @@
             "Ik doe mee, maar ik begin onrustig of geef snel op.",
             "Ik begin rustig, speel serieus en houd vol tot het einde.",
             "Ik speel met zelfvertrouwen en help mijn groep op gang."
-          ]
+          ],
+          "domein": "Presenteren"
         }
       ]
     }

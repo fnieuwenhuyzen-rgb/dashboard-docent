@@ -12,6 +12,7 @@ const STAPPEN = [
   ['Bestanden en scripts', 'test-bestanden.js', []],
   ['Gegevens (basis, beoordeling, leergang)', 'controleer-gegevens.js', tegen ? [tegen] : []],
   ['Rekenregels beoordeling', 'beoordeling/test-reken.js', []],
+  ['Beoordelen: jaaroverzicht en strookje', 'test-beoordeling-overzicht.js', []],
   ['Lesklok', 'test-lesklok.js', []],
   ['Agendafeed', 'test-agendafeed.js', []],
   ['Toetsdatum (basis.json)', 'test-toetsdatum.js', []],

@@ -101,7 +101,8 @@
             "Ik speel of zing mijn partij grotendeels goed, met haperingen op moeilijke plekken.",
             "Ik voer mijn partij zelfstandig en bijna foutloos uit, ook als ik alleen inzet.",
             "Ik beheers mijn partij helemaal en heb ruimte om op de anderen te reageren."
-          ]
+          ],
+          "domein": "Samenspel"
         },
         {
           "id": "maat",
@@ -119,7 +120,8 @@
             "Ik blijf meestal in de maat, behalve bij overgangen.",
             "Ik blijf in de maat, ook bij overgangen en tempowisselingen.",
             "Ik geef de anderen houvast in de maat, ook als het tempo verandert."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "toon",
@@ -137,7 +139,8 @@
             "Ik zing of speel meestal zuiver, behalve op lastige plekken.",
             "Ik zing of speel het hele stuk zuiver en met een heldere toon.",
             "Ik klink zuiver in de samenklank en kleur mijn toon bij het karakter."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "samen",
@@ -156,7 +159,8 @@
             "Ik pas mijn volume aan de anderen aan, begin en eindig samen en stap na een fout zelf weer in.",
             "Ik luister steeds naar het geheel, geef of volg inzetten en herstel een fout zonder dat je het merkt."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     },
@@ -180,7 +184,8 @@
             "Ik haal de minuut met korte motieven, maar er zit weinig opbouw in.",
             "Ik herhaal en varieer motieven en bouw op naar een hoogtepunt.",
             "Mijn improvisatie vertelt een verhaal: begin, opbouw, hoogtepunt en een duidelijk slot."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "groove",
@@ -198,7 +203,8 @@
             "Ik blijf meestal in de maat, met een eenvoudig ritme.",
             "Ik zit stevig in de groove en gebruik syncopen en rusten.",
             "Ik speel ritmisch vrij en blijf toch precies in de puls."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "akkoorden",
@@ -216,7 +222,8 @@
             "Ik blijf meestal in de juiste toonladder, zoals de pentatoniek.",
             "Je hoort dat ik de akkoordwisselingen volg; ik land op akkoordtonen.",
             "Ik speel bewust met akkoordtonen en spanningstonen; dat geeft mijn improvisatie richting."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     }

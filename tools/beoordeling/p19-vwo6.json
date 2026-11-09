@@ -101,7 +101,8 @@
             "Ik kondig helder aan, begin en eindig duidelijk en speel door na een fout.",
             "Ik presenteer als op een echt concert, met contact met het publiek."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         }
       ]
     },
@@ -125,7 +126,8 @@
             "Ik ben meestal zuiver en in de maat, maar wankel op lastige plekken.",
             "Ik ben zuiver en zeker in de maat en heb mijn stem of instrument onder controle.",
             "Ik beheers mijn partij helemaal, ook de moeilijke stukken."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "interpretatie",
@@ -143,7 +145,8 @@
             "Je hoort wat dynamiek en frasering, maar de stijl nog weinig.",
             "Dynamiek, frasering en stijl passen bij elk stuk.",
             "Ik breng een eigen versie met een duidelijke artistieke visie."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "veelzijdigheid",
@@ -161,7 +164,8 @@
             "Ik laat twee vaardigheden horen; improviseren of eigen werk is nog voorzichtig.",
             "Ik laat meerdere vaardigheden horen, ook improvisatie of een eigen compositie.",
             "Ik laat breed en sterk horen wat ik kan, met een overtuigende improvisatie of compositie."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -186,7 +190,8 @@
             "Ik pas tempo en volume aan; de melodie blijft hoorbaar.",
             "Ik reageer op de anderen; we klinken als één ensemble."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     },
@@ -210,7 +215,8 @@
             "Ik heb mijn taak gedaan, maar pas toen iemand me eraan herinnerde.",
             "Ik heb mijn taak zelfstandig en op tijd gedaan en me aan afspraken gehouden.",
             "Ik heb verantwoordelijkheid genomen, vooruitgedacht en anderen geholpen."
-          ]
+          ],
+          "domein": "Presenteren"
         }
       ]
     }

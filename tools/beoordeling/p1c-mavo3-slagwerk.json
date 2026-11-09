@@ -87,7 +87,8 @@
             "We tellen af, eindigen samen en ik speel door.",
             "We beginnen zeker en eindigen strak; een fout merkt bijna niemand."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         }
       ]
     },
@@ -111,7 +112,8 @@
             "Ik speel meestal op de tel, maar soms schuift mijn tempo.",
             "Ik speel strak op de tel en houd hetzelfde tempo.",
             "Mijn timing is zo strak dat de groep op mij kan bouwen."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "groove",
@@ -129,7 +131,8 @@
             "Ik speel een eenvoudige groove met twee klanken, met een paar fouten.",
             "Ik speel mijn hele groove goed, met alle klanken samen.",
             "Mijn groove klinkt vanzelf en ik voeg zelf iets passends toe."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "fill",
@@ -147,7 +150,8 @@
             "Ik speel een eenvoudige fill, maar val aarzelend weer in.",
             "Ik speel mijn fill op de goede plek en val weer in op de één.",
             "Mijn fill past bij het stuk en loopt soepel over in de groove."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "klank",
@@ -165,7 +169,8 @@
             "Mijn aanslag is redelijk, maar mijn handen klinken nog niet gelijk.",
             "Ik sla gelijk en helder en speel hard en zacht als het moet.",
             "Ik speel ontspannen en gebruik hard en zacht zelf in de groove."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -190,7 +195,8 @@
             "Ik blijf gelijk met de groep en we klinken in balans.",
             "Ik reageer op de anderen; samen klinken we als één groove."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     }
@@ -207,6 +213,11 @@
       "Dit ging het lastigst:",
       "Dit ga ik oefenen:"
     ],
-    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen.",
+    "crit": [
+      "presentatie",
+      "timing",
+      "fill"
+    ]
   }
 }
