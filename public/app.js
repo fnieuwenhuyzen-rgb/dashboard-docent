@@ -14,7 +14,7 @@ const BENODIGD = [[/keyboard|piano|toetsenbord/i, 'Keyboards'], [/gitaar|ukelele
 
 let B = null;               // basisgegevens
 let S = null;               // eigen staat
-let route = { naam: 'vandaag', arg: [] }; let focusRoute = null;
+let route = { naam: 'vandaag', arg: [] }; let focusRoute = null; let bmNaarScore = false; // bevinding 44: op een telefoon opent Beoordelen bij de scorekaart
 let syncState = 'lokaal';
 let remoteT = null;
 let SY = null;               // synchronisatie tussen apparaten, zie syncStart
@@ -564,6 +564,7 @@ function render() {
   if (fk && !LES) { if (fk.w === '#main' && routeWissel) $('#main').focus({ preventScroll: true }); else if (!focusHerstel(fk)) $('#main').focus({ preventScroll: true }); } // focus blijft waar de gebruiker was; bij een ander scherm begint Tab bovenaan de inhoud
   if (concert) bmCsMerk();
   if (klasScroll && $('#bmLijst')) { klasScroll = false; setTimeout(() => { const v = $('#bmLijst'); if (v) { v.scrollIntoView({ block: 'center' }); v.focus(); } }); }
+  if (bmNaarScore && route.naam === 'beoordelen' && $('.bm-scoor')) { bmNaarScore = false; if (matchMedia('(max-width:600px)').matches) setTimeout(() => { const k = $('.bm-scoor'); if (k) k.scrollIntoView(); }); } // de kop en de status staan erboven; de eerste scoreknop is meteen in beeld
   if (NW) nwGhost();
   if (route.naam === 'instellingen') autoKopieVul();
   if (route.naam === 'reclame') { recBeelden(); if (recFocus) { const el = document.getElementById('rec-' + recVeilig(recFocus)); if (el) el.scrollIntoView({ block: 'start' }); recFocus = ''; } }
@@ -3376,7 +3377,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') sluit();
 });
 function leesRoute() { if (/^#groepen(\/|$)/.test(location.hash)) history.replaceState(null, '', '#jaar'); // oude links
-  const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; }
+  const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; bmNaarScore = route.naam === 'beoordelen' && !!route.arg[1]; }
 window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
   if (route.naam === 'bord' && !LES) { document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true); return; } // opent de browser het bord in hetzelfde venster
   render(); window.scrollTo(0, 0); });

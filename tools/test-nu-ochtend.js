@@ -10,8 +10,8 @@ const vorigeStaat = (n, st) => { const r = reeksIds('vwo4'); const voor = r.filt
 const TOON = process.argv.includes('--toon');
 (async () => {
   const h = await H.start(); const fouten = []; let n = 0;
-  async function kijk(iso, hash, patch, na) { // opent #hash op de nagebootste tijd; geeft de tekst van #main en de html
-    const ctx = await h.browser.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block' }); await H.sluis(ctx, h.basis);
+  async function kijk(iso, hash, patch, na, vp) { // opent #hash op de nagebootste tijd; geeft de tekst van #main en de html
+    const ctx = await h.browser.newContext({ viewport: vp || { width: 1280, height: 900 }, hasTouch: !!vp, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block' }); await H.sluis(ctx, h.basis);
     const staat = Object.assign({}, H.STAAT, patch || {});
     await ctx.addInitScript(x => { try { if (!sessionStorage.getItem('i')) { localStorage.setItem('lesdag-staat', JSON.stringify(x)); sessionStorage.setItem('i', '1'); } } catch (e) {} }, staat);
     const page = await ctx.newPage(); await page.clock.setFixedTime(new Date(iso)); const fout = []; page.on('pageerror', e => fout.push(e.message));
@@ -100,6 +100,15 @@ const TOON = process.argv.includes('--toon');
     const tot = x => +(x.match(/(\d+) minuten\s*$/) || [0, 0])[1];
     is('73: welkomdia na een late start telt niet 45 minuten', tot(welkom) > 0 && tot(welkom) < 45 && tot(welkom) <= 35, welkom.slice(-120));
     is('73: vóór de les staat er de geplande tijd', tot(vroeg) === 45, vroeg.slice(-80)); }
+
+
+  // 44: Beoordelen op een telefoon (375×812): de eerste scoreknop staat meteen in beeld; op een laptop begint de pagina bovenaan
+  { const meet = async page => { await page.waitForTimeout(250); return page.evaluate(() => { const b = document.querySelector('.bm-scoor .bm-rij button'); return { y: window.scrollY, top: b ? Math.round(b.getBoundingClientRect().top) : null, b: innerWidth }; }); };
+    let tel = null, lap = null;
+    await kijk('2026-11-16T09:00:00+01:00', 'beoordelen/p1-bb1-gitaar/tb1', null, async page => { tel = await meet(page); }, { width: 375, height: 812 });
+    await kijk('2026-11-16T09:00:00+01:00', 'beoordelen/p1-bb1-gitaar/tb1', null, async page => { lap = await meet(page); });
+    is('44: telefoon, de eerste scoreknop staat boven 812 px', tel && tel.top != null && tel.top > 0 && tel.top < 812 && tel.y > 0, JSON.stringify(tel));
+    is('44: laptop begint bovenaan', lap && lap.y === 0, JSON.stringify(lap)); }
 
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
