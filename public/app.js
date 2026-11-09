@@ -3399,6 +3399,7 @@ const bmToepassen = (L, e) => { // één tik of tekst toepassen
   else if (e.a === 'v') r.v[e.c] = e.w;
   else if (e.a === 'opm') r.opm[e.c] = e.w;
   else if (e.a === 'vooruit') r.vooruit = e.w;
+  else if (e.a === 'vink') { const o = r.vink && typeof r.vink === 'object' ? r.vink : {}; if (e.w == null) delete o[e.c]; else o[e.c] = e.w; r.vink = o; } // strookje: nog niet / bijna / ja per zin (Beoordelen stap 3)
   else if (e.a === 'papier') r.klas = Object.assign(r.klas || {}, { papier: e.w });
   else if (e.a === 'forms') r.klas = Object.assign(r.klas || {}, { forms: e.w });
 };
@@ -3591,18 +3592,19 @@ function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daa
   for (const x of (p && p.uren) || []) if (x.item && !x.uitval) for (const m of bmVoor(x.item)) if (!vandaagM.some(y => y.m === m && y.g === x.u.groep)) vandaagM.push({ m, g: x.u.groep, u: x.u });
   const knop = (m, g) => bmRegel(m, g, `${m.toets} · ${m.titel.replace(/^[^:]*:\s*/, '')}`);
   const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
-  const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b></span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
+  const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b>${(S.beoord.lijsten[g] || []).length ? ` <button class="btn klein" data-ovjaar="${esc(g)}">Het jaar</button>` : ''}</span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
   return `<div class="kop"><div><p class="eyebrow">Beoordelen</p><h1>Kies een toets</h1></div></div>
     <div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
     ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}`;
 }
 function viewBeoordelen() {
+  if (['overzicht', 'strookjes', 'leerling'].includes(route.arg[0])) return viewOverzicht();
   const m = BM.find(x => x.id === decodeURIComponent(route.arg[0] || '')); const g = decodeURIComponent(route.arg[1] || '');
   if (!route.arg[0]) return viewBeoordelenKeuze();
   if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
   const lijst = S.beoord.lijsten[g] || []; const heeft = lijst.length > 0;
   let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
-    <div class="knoppen">${heeft ? '<button class="btn" data-bm="concert">Concertstand</button>' : ''}<button class="btn" data-bm="lijst">Klassenlijst</button>${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="inlever">Inleverbak</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="${esc(bmTerug || '#vandaag')}">Klaar</a></div></div>
+    <div class="knoppen">${heeft ? '<button class="btn" data-bm="concert">Concertstand</button>' : ''}<button class="btn" data-bm="lijst">Klassenlijst</button>${heeft ? `<button class="btn" data-ovjaar="${esc(g)}">Het jaar</button>` : ''}${heeft && BMO.INSTELLINGEN.KRUISJES_INVOEREN === 'intikken' && BMO.heeftStrookje(m) ? `<button class="btn" data-ovstrook="${esc(m.id)}|${esc(g)}">Strookjes</button>` : ''}${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="inlever">Inleverbak</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="${esc(bmTerug || '#vandaag')}">Klaar</a></div></div>
     <div class="bm-status" id="bmStatus">${bmStatusHtml()}</div>`;
   if (bmPaneel === 'koppel' && bmKoppel) return h + bmKoppelKaart(g);
   if (!heeft || bmPaneel === 'lijst') return h + bmLijstKaart(g, lijst);
@@ -3693,6 +3695,31 @@ function bmExport(m, g) {
 function bmLijstOpslaan(g, rij) { S.beoord.weg = S.beoord.weg || {}; const gekozen = new Set(rij.map(u => u.id).filter(Boolean)); const alle = [...(S.beoord.lijsten[g] || []), ...(S.beoord.weg[g] || [])];
   S.beoord.lijsten[g] = rij.map((u, i) => ({ id: u.id || 'l' + Date.now().toString(36) + i, naam: u.naam })); S.beoord.weg[g] = alle.filter(x => !gekozen.has(x.id));
   bmPaneel = null; bmKoppel = null; bewaar(); toast(rij.length + ' leerlingen opgeslagen'); }
+/* ---- Beoordelen stap 3: het jaar per leerling en de strookjes (bm-overzicht.js; instellingen daar bovenaan) ---- */
+let ovFilter = 'iedereen', ovLaag = '';
+const ovKomend = g => { const lg = leergangVan(g); return BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); };
+function viewOverzicht() {
+  const a = route.arg.map(decodeURIComponent); const kop = (t, terug, sub) => `<div class="kop bm"><div><p class="eyebrow">${esc(sub)}</p><h1>${esc(t)}</h1></div><div class="knoppen"><a class="btn" href="${terug}">Terug</a></div></div>`;
+  if (a[0] === 'overzicht') { const g = a[1]; const o = BMO.overzicht(S.beoord, BM, g, Date.now(), ovKomend(g)); return kop('Klas ' + g + ': het jaar', '#beoordelen', 'Beoordelen · overzicht') + BMO.htmlOverzicht(o, ovFilter); }
+  if (a[0] === 'leerling') { const g = a[1]; return kop('Leerlingkaart', '#beoordelen/overzicht/' + encodeURIComponent(g), 'Beoordelen · het jaar') + BMO.htmlKaart(BMO.leerlingKaart(S.beoord, BM, g, a[2], Date.now(), ovKomend(g))); }
+  const m = BM.find(x => x.id === a[1]); const g = a[2]; if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p></div>`;
+  return kop('Strookjes invoeren', '#beoordelen/' + encodeURIComponent(m.id) + '/' + encodeURIComponent(g), `${m.klas} · groep ${g}`) + BMO.htmlStrookjes(S.beoord, m, g, ovLaag);
+}
+function ovZet(m, g, a, id, c, w) { const T = bmToets(m.id, g); const L = ovLaag === 'herkans' && T.herkans ? T.herkans : T; if (a === 'vink') BMO.legStrookVast(m, T); const e = { a, id, c, w, l: L === T ? null : L.id }; bmToepassen(L, e); bmLog(m.id + '|' + g, e); bmVuil = true; bewaar(true); }
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-ovjaar],[data-ovfilter],[data-ovleerling],[data-ovvink],[data-ovzelf],[data-ovlaag],[data-ovstrook]'); if (!b || route.naam !== 'beoordelen') return; const D = b.dataset; const a = route.arg.map(decodeURIComponent);
+  if (D.ovjaar != null) { ovFilter = 'iedereen'; location.hash = 'beoordelen/overzicht/' + encodeURIComponent(D.ovjaar); return; }
+  if (D.ovstrook != null) { const [mid, g] = D.ovstrook.split('|'); ovLaag = ''; location.hash = 'beoordelen/strookjes/' + encodeURIComponent(mid) + '/' + encodeURIComponent(g); return; }
+  if (D.ovfilter != null) { ovFilter = D.ovfilter; render(); return; }
+  if (D.ovleerling != null) { location.hash = 'beoordelen/leerling/' + encodeURIComponent(a[1]) + '/' + encodeURIComponent(D.ovleerling); return; }
+  if (D.ovlaag != null) { ovLaag = D.ovlaag; render(); return; }
+  const m = BM.find(x => x.id === a[1]); const g = a[2]; if (a[0] !== 'strookjes' || !m || !g) return;
+  const [id, i, w] = (D.ovvink != null ? D.ovvink : D.ovzelf).split('|'); const aan = b.getAttribute('aria-pressed') === 'true';
+  if (D.ovvink != null) ovZet(m, g, 'vink', id, +i, aan ? null : w); else ovZet(m, g, 'zelf', id, null, aan ? null : +w);
+  b.parentNode.querySelectorAll('button').forEach(x => { x.setAttribute('aria-pressed', 'false'); x.classList.remove('aan'); }); if (!aan) { b.setAttribute('aria-pressed', 'true'); b.classList.add('aan'); }
+  const T = bmToets(m.id, g); const t = BMO.strookjesTelling(m, T, S.beoord.lijsten[g] || [], ovLaag === 'herkans' && T.herkans ? T.herkans : T); const tl = $('#ovTeller'); if (tl) tl.textContent = t.klaar + ' van ' + t.n + ' klaar';
+});
+document.addEventListener('input', e => { const z = e.target.closest && e.target.closest('#ovZoek'); if (!z) return; const q = z.value.trim().toLowerCase(); document.querySelectorAll('tr[data-ovn]').forEach(r => { r.hidden = !!q && !r.dataset.ovn.includes(q); }); });
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-beoordeel],[data-bm],[data-bmkies],[data-bmop],[data-bmscore],[data-bmzelf],[data-bmwis],[data-bmgs],[data-bmgswis],[data-bmgkies],[data-bmgactief],[data-bmgin],[data-bmgruit],[data-bmgweg],[data-bmlaag],[data-bmhwie]'); if (!b) return;
   const D = b.dataset;
