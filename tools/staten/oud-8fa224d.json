@@ -1,0 +1,65 @@
+{
+ "v": 1,
+ "updated": 1792494000000,
+ "rooster": [
+  {
+   "id": "r1",
+   "dag": 1,
+   "start": "8:30",
+   "eind": "9:15",
+   "groep": "tv4",
+   "lokaal": "009"
+  },
+  {
+   "id": "r2",
+   "dag": 2,
+   "start": "9:15",
+   "eind": "10:00",
+   "groep": "tb1"
+  }
+ ],
+ "voortgang": {
+  "tv4": {
+   "vwo4:1.1": {
+    "st": "gegeven",
+    "auto": true
+   },
+   "vwo4:1.2": {
+    "st": "gegeven",
+    "n": "korte notitie"
+   }
+  }
+ },
+ "les": {
+  "vwo4:2.1": {
+   "titel": "Eigen titel",
+   "materiaal": [
+    {
+     "t": "Link",
+     "u": "https://example.org/x"
+    }
+   ]
+  }
+ },
+ "uitval": {
+  "2026-10-26": [
+   "r1"
+  ]
+ },
+ "sectieAf": {
+  "s1": true
+ },
+ "sectieNotitie": {
+  "s1": "verzonnen notitie"
+ },
+ "sectieExtra": [
+  {
+   "id": "x1",
+   "titel": "Extra",
+   "d": "2026-11-10"
+  }
+ ],
+ "groepLeergang": {
+  "tv4": "vwo4"
+ }
+}

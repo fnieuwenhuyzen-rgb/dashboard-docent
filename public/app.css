@@ -427,6 +427,9 @@ body:has(.dok) .toast{bottom:calc(5.6rem + env(safe-area-inset-bottom,0px))}
 @media (max-width:560px){.bm-crit{grid-template-columns:1fr}.bm-knoppen button{min-width:2.6rem;min-height:2.8rem}.bm-knoppen button.tussen{min-width:1.9rem}}
 .opslagfout{position:sticky;top:var(--lk-h,0px);z-index:50;background:#8C2332;color:#fff;padding:.6rem 1rem;font-family:var(--lees)}
 .opslagfout .btn{margin-left:.5rem}
+.nieuweversie{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(4.6rem + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--bg);font-family:var(--lees);padding:.45rem .6rem .45rem 1rem;border-radius:10px;display:flex;gap:.6rem;align-items:center;max-width:calc(100vw - 2rem)}
+.nieuweversie[hidden]{display:none}
+.nieuweversie .btn{margin:0}
 .bm-status{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin:.4rem 0 0;font-family:var(--lees);font-size:.85rem}
 .bm-status .bm-vastuitleg{flex-basis:100%;color:var(--muted)}
 .chip.rood{background:#8C2332;color:#fff}

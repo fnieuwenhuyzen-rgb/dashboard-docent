@@ -24,6 +24,7 @@
     <span class="sync" id="sync" title="Opslag"><i></i><span>Op dit apparaat</span></span>
   </div>
 </header>
+<div class="nieuweversie" id="nieuweversie" role="status" hidden><span>Er staat een nieuwe versie van Lesdag klaar.</span> <button class="btn klein" data-nieuweversie="">Nu bijwerken</button></div>
 <div class="opslagfout" id="opslagfout" role="alert" hidden><b>Opslaan op dit apparaat lukt niet.</b> Je laatste wijzigingen staan alleen nog in dit scherm. Maak nu een kopie en sluit de app niet. <button class="btn klein" data-export="">Kopie downloaden</button></div>
 <div class="opslagfout" id="synclogin" role="status" hidden><b>Opnieuw inloggen om te synchroniseren.</b> Je werk staat veilig op dit apparaat. <a class="btn klein" href="./">Inloggen</a></div>
 <main id="main" class="wrap" tabindex="-1"><p class="lead">Lesdag laden…</p></main>
@@ -32,6 +33,7 @@
 <div class="les" id="les" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <noscript>Lesdag heeft JavaScript nodig.</noscript>
+<script src="logboek.js"></script>
 <script src="config.js"></script>
 <script>/* Microsoft-bibliotheek (283 kB) alleen laden als er een clientId is ingevuld; zonder staat Microsoft 365 uit */if(window.LESDAG_CONFIG&&window.LESDAG_CONFIG.clientId)document.write('<script src="vendor/msal-browser.min.js"><\/script>');</script>
 <script src="m365.js"></script>
@@ -39,6 +41,8 @@
 <script src="bm-reken.js"></script>
 <script src="bm-pdf.js"></script>
 <script src="reclame.js"></script>
+<script src="staat.js"></script>
+<script src="kopie.js"></script>
 <script src="sync.js"></script>
 <script src="agendafeed.js"></script>
 <script src="toetsdatum.js"></script>

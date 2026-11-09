@@ -78,7 +78,9 @@ function staatRepareer(d) { // kapotte onderdelen leeg, de rest blijft
   return r;
 }
 const VOOR_KOPIE = 'lesdag-staat-voor-kopie'; // de stand van vóór de laatst teruggezette kopie, voor als de melding al weg is
-function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return Object.assign(nieuweStaat(), JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
+/* alles wat binnenkomt (opslag, kopie, server, automatische kopie) gaat door de migratieketen in staat.js. Is een hoofdonderdeel kapot, dan blijft de staat zoals hij is: staatFouten en het herstelscherm beslissen dan. */
+function staatIn(d) { const raw = Object.assign(nieuweStaat(), d); try { const l = nieuweStaat(); for (const k of Object.keys(l)) if (Array.isArray(l[k]) && Array.isArray(raw[k])) raw[k] = raw[k].filter(isObj); if (isObj(raw.beoord)) for (const k of ['lijsten', 'toetsen']) if (raw.beoord[k] == null) delete raw.beoord[k]; } catch (e) {} if (!window.STAAT || staatFouten(raw).length) return raw; try { return STAAT.migreer(raw, nieuweStaat()).staat; } catch (e) { return raw; } }
+function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) return staatIn(JSON.parse(j)); } catch (e) {} return nieuweStaat(); }
 /* alleen op dit apparaat: jarige collega's, wie er absent is en logboeknotities over
    leerlingen. Een eigen sleutel die nooit naar OneDrive gaat, niet in de kopie zit en nooit naar de server. Absenten en logboeknotities
    verdwijnen zodra ze in Magister staan. */
@@ -548,10 +550,11 @@ function render() {
   if (concert) waak(true); else if (route.naam !== 'regie' && !LES && !LESKLOK.loopt()) waak(false);
   const f = { nu: viewNu, regie: viewRegie, vandaag: viewVandaag, week: viewWeek, jaar: viewJaar, rooster: viewRooster, sectie: viewSectie, team: viewTeam, reclame: viewReclame, instellingen: viewInstellingen, beoordelen: viewBeoordelen, kompas: viewKompas }[route.naam] || viewNu;
   try { $('#main').innerHTML = f(); }
-  catch (e) { console.error(e); $('#main').innerHTML = `<div class="kaart"><h2>Dit scherm lukt nu niet</h2><p class="lead">Er ging iets mis bij het tekenen: ${esc(e && e.message)}. De andere onderdelen in het menu werken nog.</p></div>`; } // nooit een leeg scherm
+  catch (e) { console.error(e); if (window.LOGBOEK) LOGBOEK.fout(e, 'scherm'); $('#main').innerHTML = `<div class="kaart"><h2>Dit scherm lukt nu niet</h2><p class="lead">Er ging iets mis bij het tekenen: ${esc(e && e.message)}. De andere onderdelen in het menu werken nog.</p></div>`; } // nooit een leeg scherm
   if (concert) bmCsMerk();
   if (klasScroll && $('#bmLijst')) { klasScroll = false; setTimeout(() => { const v = $('#bmLijst'); if (v) { v.scrollIntoView({ block: 'center' }); v.focus(); } }); }
   if (NW) nwGhost();
+  if (route.naam === 'instellingen') autoKopieVul();
   if (route.naam === 'reclame') { recBeelden(); if (recFocus) { const el = document.getElementById('rec-' + recVeilig(recFocus)); if (el) el.scrollIntoView({ block: 'start' }); recFocus = ''; } }
 }
 /* meldingen onderaan. Na een handeling staat er acht seconden lang Ongedaan maken, in plaats van vooraf "Weet je het zeker?". terug: een foto() of een eigen functie */
@@ -570,17 +573,48 @@ function kopieOmvang(d) { // wat er in een kopie zit, in gewone woorden
 }
 async function kopieTerug(file) {
   let d; try { d = JSON.parse(await file.text()); } catch (e) { toast('Dit bestand kan ik niet lezen. Kies een kopie die Lesdag heeft gedownload.'); return; }
+  return kopieToepas(d);
+}
+function kopieToepas(d) { // dezelfde controle en vraag voor een gedownload bestand en voor een automatische kopie
   const fout = staatFouten(d);
   if (fout.length) { alert(`Deze kopie zet ik niet terug: hij is kapot of hoort niet bij Lesdag.\n\nNiet in orde: ${fout.join(', ')}.\n\nJe gegevens op dit apparaat blijven zoals ze zijn.`); return; }
   const wanneer = d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum';
   if (!confirm(`Kopie van ${wanneer} terugzetten?\n\nDaarin: ${kopieOmvang(d)}.\nNu op dit apparaat: ${kopieOmvang(S)}.\n\nAlles op dit apparaat wordt vervangen${SY && SY.aan() ? ', en via synchroniseren ook op je andere apparaten' : ''}.`)) return;
   const terug = foto(); try { localStorage.setItem(VOOR_KOPIE, JSON.stringify({ tijd: Date.now(), foto: terug })); } catch (e) {}
-  S = Object.assign(nieuweStaat(), d); bewaar(); toast('Kopie teruggezet', terug);
+  S = staatIn(d); bewaar(); toast('Kopie teruggezet', terug);
+}
+/* automatische kopie (kopie.js): één per dag in IndexedDB, de laatste veertien; terugzetten via kopieToepas */
+function autoKopieMaak() {
+  if (!window.AUTOKOPIE || !S || !S.updated || staatFouten(S).length) return; // nooit een kapotte of nog lege staat bewaren
+  AUTOKOPIE.maak(vandaag(), JSON.stringify(S)).then(nieuw => { if (nieuw && route.naam === 'instellingen') autoKopieVul(); }).catch(e => { if (window.LOGBOEK) LOGBOEK.fout(e, 'autokopie'); });
+}
+async function autoKopieVul() {
+  if (!$('#autokopielijst') || !window.AUTOKOPIE) return;
+  let t; try { const L = await AUTOKOPIE.lijst(); t = L.length ? '<ul class="akl" style="list-style:none;padding:0;margin:.3rem 0 0">' + L.map(x => `<li style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;padding:.25rem 0"><span>${esc(fmtLang(x.dag))} <span class="sub">(${Math.max(1, Math.round(x.grootte / 1024))} kB)</span></span><button class="btn klein" data-akterug="${esc(x.dag)}">Terugzetten</button></li>`).join('') + '</ul>' : 'Er is nog geen kopie. Morgen staat de eerste er.'; }
+  catch (e) { t = 'Automatische kopieën zijn op dit apparaat niet beschikbaar (privévenster of opslag geblokkeerd).'; }
+  const el = $('#autokopielijst'); if (el) el.innerHTML = t;
+}
+async function autoKopieTerug(dag) {
+  let d = null; try { d = await AUTOKOPIE.haal(dag); } catch (e) {}
+  if (!d) { toast('Die kopie kan ik niet lezen.'); return; }
+  kopieToepas(d);
+}
+/* foutlogboek (logboek.js): alleen op dit apparaat, zonder leerlinggegevens en tokens; hier alleen de kaart in Instellingen */
+function logboekKaart() {
+  if (!window.LOGBOEK) return '';
+  const a = LOGBOEK.lees(); const l = a[a.length - 1];
+  return `<div class="kaart" id="logboekkaart"><h2>Foutlogboek</h2><p class="lead">${a.length ? `${a.length} ${a.length === 1 ? 'regel' : 'regels'}, de laatste van ${esc(new Date(l.laatst || l.t).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }))} (${esc(l.soort)}).` : 'Er staat niets in het logboek.'} Als er iets misgaat bewaart Lesdag hier wat er gebeurde, zonder namen van leerlingen. Het blijft op dit apparaat; kopieer het en plak het in een bericht als je het wilt laten zien.</p><div class="knoppen"><button class="btn" data-logkopie=""${a.length ? '' : ' disabled'}>Logboek kopiëren</button><button class="btn" data-logwis=""${a.length ? '' : ' disabled'}>Logboek wissen</button></div></div>`;
+}
+async function logKopieer() {
+  const t = LOGBOEK.tekst();
+  try { await navigator.clipboard.writeText(t); toast('Logboek gekopieerd'); return; } catch (e) { /* geen toegang tot het klembord: val terug op selecteren */ }
+  const ta = document.createElement('textarea'); ta.value = t; ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select();
+  let gelukt = false; try { gelukt = document.execCommand('copy'); } catch (e) {} ta.remove(); toast(gelukt ? 'Logboek gekopieerd' : 'Kopiëren lukte niet: selecteer en kopieer de tekst zelf');
 }
 function terugZetten() {
   if (!TERUG) return; const o = TERUG; TERUG = null;
   if (typeof o === 'function') { $('#toast').hidden = true; o(); return; }
-  const f = JSON.parse(o); S = Object.assign(nieuweStaat(), f.S); AP = Object.assign(apLeeg(), f.AP); apBewaar(); bewaar();
+  const f = JSON.parse(o); S = staatIn(f.S); AP = Object.assign(apLeeg(), f.AP); apBewaar(); bewaar();
   if (zGekoppeld() && !ZC) zOphalen(false);
   toast('Teruggezet');
 }
@@ -2515,7 +2549,7 @@ let syncUit = '';
 function syncDoc() { const { updated, ...d } = S; const t = zApiToken(); if (t) d._zermeloApi = t; return d; } // de Zermelo-koppeling staat buiten S maar gaat wel mee
 function syncZet(d) {
   const { _zermeloApi: t, ...rest } = d; const upd = S.updated; const had = zGekoppeld();
-  S = Object.assign(nieuweStaat(), rest); S.beoord = Object.assign({ lijsten: {}, toetsen: {} }, S.beoord); S.updated = upd;
+  S = staatIn(rest); S.beoord = Object.assign({ lijsten: {}, toetsen: {} }, S.beoord); S.updated = upd;
   roosterOpruimen(); // twee apparaten die apart overnamen geven na samenvoegen dubbele lesuren
   try { localStorage.setItem(LS_KEY, JSON.stringify(S)); if (t) localStorage.setItem(Z_API, t); else localStorage.removeItem(Z_API); opslagMelding(null); } catch (e) { opslagMelding(e); }
   if (!had && zGekoppeld() && zProxy() && navigator.onLine) zOphalen(false);
@@ -2652,6 +2686,8 @@ function viewInstellingen() {
     <p class="sub" style="margin-top:.5rem">${(AP.collegas || []).length ? `${AP.collegas.length} collega's op dit apparaat.` : 'Nog geen lijst.'}</p>
     ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
+  ${logboekKaart()}
+  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. De kopie is de stand van het begin van die dag. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
 
@@ -3027,6 +3063,10 @@ document.addEventListener('click', async e => {
   if (D.zweg != null) { delete S.zermeloToken; if (!zApiToken()) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); return; }
   if (D.zapiweg != null) { try { localStorage.removeItem(Z_API); } catch (e) {} if (!S.zermeloToken) { ZC = null; try { localStorage.removeItem('lesdag-zermelo'); } catch (e) {} } bewaar(); if (S.zermeloToken) await zOphalen(false); return; }
   if (D.zovernemen != null) { const terug = foto(); roosterUitZermelo(); bewaar(); toast('Rooster overgenomen uit Zermelo', terug); return; }
+  if (D.nieuweversie != null) { if (!LES) location.reload(); return; }
+  if (D.akterug != null) { autoKopieTerug(D.akterug); return; }
+  if (D.logkopie != null) { logKopieer(); return; }
+  if (D.logwis != null) { if (confirm('Het foutlogboek op dit apparaat wissen?')) { LOGBOEK.wis(); render(); } return; }
   if (D.export != null) { const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lesdag-' + vandaag() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return; }
   if (D.zoek != null) { zoek(); return; }
   if (D.kies != null) { kiesBestand(+D.kies); return; }
@@ -3611,7 +3651,7 @@ async function syncNu(melden) {
   setSync('bezig', 'Synchroniseren…');
   try {
     const r = await M365.loadState();
-    if (r && r.v && (r.updated || 0) > (S.updated || 0)) { S = Object.assign(nieuweStaat(), r); try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} render(); }
+    if (r && r.v && (r.updated || 0) > (S.updated || 0)) { S = staatIn(r); try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} render(); }
     else if (!r || (S.updated || 0) > (r.updated || 0)) await M365.saveState(S);
     setSync('ok', 'Opgeslagen in OneDrive'); if (melden) toast('Gesynchroniseerd');
   } catch (e) { setSync('fout', 'OneDrive niet bereikbaar, staat op dit apparaat'); console.warn(e); if (melden) toast('Synchroniseren lukt niet'); }
@@ -3625,7 +3665,7 @@ setInterval(() => {
 }, 20000);
 // een tweede venster (bord, kompas) bewaarde iets: neem het over, zodat dit venster het niet overschrijft
 window.addEventListener('storage', e => {
-  if (e.key === LS_KEY && e.newValue) { try { S = Object.assign(nieuweStaat(), JSON.parse(e.newValue)); } catch (x) { return; } if (SY) SY.gewijzigd(); }
+  if (e.key === LS_KEY && e.newValue) { try { S = staatIn(JSON.parse(e.newValue)); } catch (x) { return; } if (SY) SY.gewijzigd(); }
   else if (e.key === AP_KEY) AP = laadAP(); else return;
   const a = document.activeElement; if (B && !LES && !PAL && !(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName))) render();
 });
@@ -3660,19 +3700,37 @@ function herstelStaat() { // eenmalig: taken die eigenlijk een afspraak met tijd
   if (zVastBij()) anders = true;
   if (anders) bewaar(true);
 }
+/* ---------- nieuwe versie ----------
+   sw.js neemt direct over (skipWaiting + claim), maar het scherm draait nog op de oude code. Dat melden we (balk onderin, nooit in de lesmodus) en we laden pas
+   opnieuw als niemand er last van heeft: pagina op de achtergrond én geen lesmodus, geen typen, geen beoordelen, geen regie of bord, geen open paneel.
+   De knop Nu bijwerken doet het op verzoek. Controle op een nieuwe versie: bij terugkeer naar de app en elk kwartier. */
+let NIEUW = false;
+const versieVeilig = () => syncMag() && !['beoordelen', 'bord'].includes(route.naam) && !bmConcertAan();
+function versieToon() { const el = $('#nieuweversie'); if (el) el.hidden = !(NIEUW && !LES && route.naam !== 'bord'); }
+function versieStart() {
+  if (!('serviceWorker' in navigator)) return;
+  let had = !!navigator.serviceWorker.controller; // de eerste installatie (nog geen controller) is geen nieuwe versie
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!had) { had = true; return; } NIEUW = true; versieToon(); });
+  const check = () => navigator.serviceWorker.getRegistration().then(r => r && r.update()).catch(() => {});
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { if (NIEUW && versieVeilig()) location.reload(); } else check(); });
+  setInterval(() => { if (!document.hidden) check(); }, 15 * 60000);
+  setInterval(() => { versieToon(); if (NIEUW && document.hidden && versieVeilig()) location.reload(); }, 2000);
+}
 /* ---------- start ---------- */
 /* gegevens: index.html start het ophalen al (VOORAF), tegelijk met het laden van dit script en alle drie naast elkaar */
 const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n + '.json', { cache: 'no-cache' }).then(r => r.json());
 (async function start() {
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {}); // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) { versieStart(); navigator.serviceWorker.register('sw.js').catch(() => {}); } // eerst, zodat een nieuwe versie ook binnenkomt als er verderop iets misgaat
   S = laadLokaal(); leesRoute();
-  const kapot = staatFouten(S); if (kapot.length) { herstelScherm('Je opgeslagen gegevens zijn beschadigd. Niet in orde: ' + kapot.join(', ') + '.'); return; } // vóór bewaren en synchroniseren: niets kapots doorgeven
+  const kapot = staatFouten(S); if (kapot.length) { if (window.LOGBOEK) LOGBOEK.noteer('start', 'staat beschadigd: ' + kapot.join(', ')); herstelScherm('Je opgeslagen gegevens zijn beschadigd. Niet in orde: ' + kapot.join(', ') + '.'); return; } // vóór bewaren en synchroniseren: niets kapots doorgeven
+  try { const ruw = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); if (ruw && ruw.schema !== S.schema) localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} // de gemigreerde vorm ook opslaan, zonder `updated` te veranderen
   if (!S.magVanaf) { S.magVanaf = vandaag(); bewaar(true); } // Magister-vakken tellen vanaf de eerste dag met deze versie, niet met terugwerkende kracht
   try { B = await laadJson('basis'); }
   catch (e) { $('#main').innerHTML = '<div class="kaart"><p>De leergangen kunnen niet geladen worden. Controleer de verbinding.</p></div>'; return; }
   try { BM = await laadJson('beoordeling'); } catch (e) { BM = []; }
   try { RC = await laadJson('reclame'); } catch (e) { RC = null; }
   herstelStaat();
+  autoKopieMaak(); document.addEventListener('visibilitychange', () => { if (!document.hidden) autoKopieMaak(); }); setInterval(autoKopieMaak, 3600000);
   LESKLOK.start({ uren: lesklokUren, vandaag, esc, waak, lesOpen: () => !!LES, route: () => route.naam, klaar: () => !!B,
     lesTijd: () => LES && LES.s === vandaag() ? { groep: LES.x.u.groep, van: minuten(LES.x.u.start), tot: minuten(LES.x.u.eind) } : null });
   if (route.naam === 'bord') { // dit venster is het digibord
@@ -3691,7 +3749,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);
-})().catch(e => { console.error(e); herstelScherm('Er ging iets mis bij het starten (' + (e && e.message) + ').'); });
+})().catch(e => { console.error(e); if (window.LOGBOEK) LOGBOEK.fout(e, 'start'); herstelScherm('Er ging iets mis bij het starten (' + (e && e.message) + ').'); });
 function herstelScherm(reden) { // Lesdag start niet: altijd een uitweg zonder script. Elke keuze schrijft de staat en laadt opnieuw
   let ruw = null; try { ruw = localStorage.getItem(LS_KEY); } catch (e) {}
   let voor = null; try { voor = localStorage.getItem(VOOR_KOPIE); } catch (e) {}
@@ -3716,7 +3774,7 @@ function herstelScherm(reden) { // Lesdag start niet: altijd een uitweg zonder s
   };
   el.onchange = async ev => { const t = ev.target; if (t.dataset.h !== 'imp' || !t.files[0]) return; let d = null; try { d = JSON.parse(await t.files[0].text()); } catch (e) {} t.value = '';
     const f = staatFouten(d); if (f.length) { alert('Deze kopie is ook niet in orde (' + f.join(', ') + '). Kies een andere.'); return; }
-    zet(Object.assign(nieuweStaat(), d), `Kopie van ${d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum'} terugzetten? Daarin: ${kopieOmvang(d)}.`); };
+    zet(staatIn(d), `Kopie van ${d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum'} terugzetten? Daarin: ${kopieOmvang(d)}.`); };
 }
 window.LESDAG_TEST = { ankersVan, planBasis, planning, dagItems, ruimte, ankersGemist, jaarToetsen, agendaItems, reeks, les, planGroepen, S: () => S }; // alleen lezen, voor tools/test-planning.js
 })();

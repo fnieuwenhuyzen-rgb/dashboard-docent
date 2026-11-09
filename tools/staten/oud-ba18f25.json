@@ -1,0 +1,191 @@
+{
+ "v": 1,
+ "updated": 1793703600000,
+ "rooster": [
+  {
+   "id": "r1",
+   "dag": 1,
+   "start": "8:30",
+   "eind": "9:15",
+   "groep": "tv4",
+   "lokaal": "009"
+  },
+  {
+   "id": "r2",
+   "dag": 2,
+   "start": "9:15",
+   "eind": "10:00",
+   "groep": "tb1"
+  }
+ ],
+ "voortgang": {
+  "tv4": {
+   "vwo4:1.1": {
+    "st": "gegeven",
+    "auto": true
+   },
+   "vwo4:1.2": {
+    "st": "gegeven",
+    "n": "korte notitie"
+   }
+  }
+ },
+ "les": {
+  "vwo4:2.1": {
+   "titel": "Eigen titel",
+   "materiaal": [
+    {
+     "t": "Link",
+     "u": "https://example.org/x"
+    }
+   ]
+  }
+ },
+ "uitval": {
+  "2026-10-26": [
+   "r1"
+  ]
+ },
+ "sectieAf": {
+  "s1": true
+ },
+ "sectieNotitie": {
+  "s1": "verzonnen notitie"
+ },
+ "sectieExtra": [
+  {
+   "id": "x1",
+   "titel": "Extra",
+   "d": "2026-11-10"
+  }
+ ],
+ "groepLeergang": {
+  "tv4": "vwo4"
+ },
+ "taken": [
+  {
+   "id": "t1",
+   "titel": "Toets nakijken",
+   "d": "2026-10-28",
+   "min": 30
+  },
+  {
+   "titel": "Zonder id",
+   "af": true
+  }
+ ],
+ "dagTaken": {
+  "2026-10-28": {
+   "sectie:s1": true
+  }
+ },
+ "koorAf": {
+  "k1": true
+ },
+ "taakNoot": {},
+ "reclame": {
+  "rc1": {
+   "bord": true
+  }
+ },
+ "reclameAf": {
+  "rc1": true
+ },
+ "reclameExtra": [
+  {
+   "id": "rx",
+   "titel": "Reclame",
+   "d": "2026-11-12"
+  }
+ ],
+ "uitgesteld": {},
+ "afwezig": {
+  "2026-11-02": {
+   "herstel": {}
+  }
+ },
+ "ankers": {
+  "tv4": {
+   "vwo4:1.3": {
+    "s": "2026-11-09",
+    "uur": "r1",
+    "reden": "x",
+    "d": "2026-11-03"
+   }
+  }
+ },
+ "afwijkingen": [
+  {
+   "id": "af1",
+   "g": "tv4",
+   "lesIds": [
+    "vwo4:1.3"
+   ],
+   "d": "2026-11-03"
+  }
+ ],
+ "beoord": {
+  "lijsten": {
+   "tb1": [
+    {
+     "id": "l1",
+     "naam": "Testleerling, Anna"
+    }
+   ]
+  },
+  "toetsen": {
+   "p1-bb1-gitaar|tb1": {
+    "ll": {
+     "l1": {
+      "s": {
+       "k1": 3
+      },
+      "v": {},
+      "opm": {}
+     }
+    },
+    "volgorde": [
+     "l1"
+    ],
+    "start": "2026-11-03"
+   }
+  }
+ },
+ "pauzes": [
+  {
+   "id": "p1",
+   "dag": 1,
+   "start": "12:00",
+   "eind": "12:20"
+  }
+ ],
+ "rust": {
+  "2026-10-30": "weg"
+ },
+ "afLater": {},
+ "afgesloten": {},
+ "goed": {
+  "tv4|vwo4:1.1": true
+ },
+ "later": {},
+ "klaarExtra": {},
+ "duur": {
+  "theorie": [
+   1.1,
+   0.9
+  ]
+ },
+ "duurLog": [
+  {
+   "s": "overig",
+   "t": "",
+   "e": 25,
+   "d": "2026-11-03",
+   "id": "oud"
+  }
+ ],
+ "schatStart": {},
+ "minuten": {},
+ "mag": {},
+ "magHw": {}
+}
