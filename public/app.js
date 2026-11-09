@@ -462,7 +462,7 @@ function verplaatsAnker(g, a, sleutel, reden) { // lessen van dezelfde toets (P2
   const samen = ankersVan(g).filter(x => x.t.id === a.t.id && !x.klaar); const ids = [];
   S.ankers[g] = S.ankers[g] || {};
   samen.forEach((x, i) => { const y = uren[vanaf + i]; if (y) { S.ankers[g][x.id] = { s: y.s, uur: y.u.id, reden, d: vandaag() }; ids.push(x.id); } });
-  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden,
+  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden, berichtTot: s,
     bericht: `${a.t.id} is verplaatst${oud ? ` van ${fmtLang(oud.s)}` : ''} naar ${fmtLang(s)}.` });
 }
 /* ---------- eenmalig extra of geruild lesuur: "+ Nieuw", keuze Les. Een ruil zet het oude uur op uitval en voegt het nieuwe toe ---------- */
@@ -1461,9 +1461,11 @@ function voerKrapUit(R, k) {
   krapOpen = ''; krapKeuze = ''; bewaar();
   toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id));
 }
+const berichtTot = a => a.berichtTot || (a.lesIds && a.lesIds.length ? (((S.ankers || {})[a.g] || {})[a.lesIds[0]] || {}).s : '') || ''; // bevinding 69: het bericht aan de klas is nuttig tot de nieuwe datum; op de dag zelf is het oud nieuws
+const berichtVervallen = a => { const d = berichtTot(a); return !!d && vandaag() >= d; };
 function uitvalBlok(s) {
   let h = '';
-  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
+  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar && !berichtVervallen(a)).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
   const rijen = [];
   for (const g of planGroepen()) {
     if (!Object.keys(S.voortgang[g] || {}).length) continue;

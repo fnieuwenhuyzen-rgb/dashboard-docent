@@ -66,6 +66,21 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     waar('terug op het klasblad is het formulier dicht en leeg', !(await page.$('#avUur')));
   });
 
+  /* 1c. PT1 zelf verplaatst naar wo 25-11 8:30 (bevinding 69), in een eigen wegwerpbrowser zodat PT1 hierboven en hieronder op ma 23-11 blijft staan:
+     het bericht aan de klas staat tot die nieuwe datum en vervalt dan */
+  await stap('verplaatsen en het bericht aan de klas', async () => {
+    const ctx2 = await h.browser.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block' }); await H.sluis(ctx2, h.basis);
+    await ctx2.addInitScript(staat => { try { if (!sessionStorage.getItem('lesdag-test-ingesteld')) { localStorage.setItem('lesdag-staat', JSON.stringify(staat)); sessionStorage.setItem('lesdag-test-ingesteld', '1'); } } catch (e) {} }, STAAT);
+    const p2 = await ctx2.newPage(); p2.setDefaultTimeout(5000);
+    const op2 = async (dag, hm, hash) => { await p2.clock.setFixedTime(new Date(tijd(dag, hm))); await p2.goto(h.basis + '#' + hash); await p2.reload(); await H.wacht(p2); return (await p2.locator('#main').innerText()).replace(/\s+/g, ' '); };
+    await op2('09-11', '09:16', 'jaar/' + G); await p2.click('[data-ankeropen]'); await p2.waitForSelector('#avUur');
+    await p2.selectOption('#avUur', '2026-11-25|t2'); await p2.fill('#avReden', 'toetsweek erachter'); await p2.click('#ankerForm button.hoofd'); await p2.waitForTimeout(200);
+    const a = (JSON.parse(await p2.evaluate(() => localStorage.getItem('lesdag-staat'))).afwijkingen || [])[0]; waar('de verplaatsing is vastgelegd met bericht en nieuwe datum', !!a && /PT1 verplaatst/.test(a.wat) && a.berichtTot === '2026-11-25', JSON.stringify(a));
+    for (const [dag, hm, ja] of [['09-11', '09:16', true], ['24-11', '08:20', true], ['25-11', '08:20', false]]) { const t = await op2(dag, hm, 'vandaag'); const er = /Bericht aan de klas/i.test(t) && !!(await p2.$('[data-berichtklaar]'));
+      waar(`${dag} ${hm} Nu: bericht aan de klas ${ja ? 'staat er' : 'is vervallen (de toets is die dag, het bericht is oud nieuws)'}`, er === ja, t.slice(0, 200)); }
+    await ctx2.close();
+  });
+
   /* 2. de toetsdag: ma 23-11 om 9:05 staat PT1 op Nu en Dag, en in Beoordelen onder Vandaag (bevinding 8 en 56) */
   await stap('toetsdag op Nu, Dag en Beoordelen', async () => {
     await op('23-11', '09:05', 'nu'); let t = await tekst();
