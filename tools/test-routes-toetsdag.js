@@ -138,6 +138,12 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     waar('afronden vraagt om bevestiging met 3 cijfers', dialogen.some(d => /3 cijfers vastleggen/.test(d.tekst)), JSON.stringify(dialogen));
     const T = await toetsStaat(); waar('drie cijfers staan vast, Daan niet', NAMEN.slice(0, 3).every(n => T.ll[lid[n]].vast) && !T.ll[lid[NAMEN[3]]].vast);
     const voort = (await staat()).voortgang[G]; waar('de toetsles staat op gegeven', voort['vwo4:10.1'] && voort['vwo4:10.1'].st === 'gegeven', JSON.stringify(voort['vwo4:10.1']));
+    // Ongedaan maken na Nu afronden zet alleen "gegeven" terug (besluit Frans 9-11): de cijfers blijven vast
+    const eerdere = JSON.stringify(voort['vwo4:10.1']); await klik('.toast-terug'); await page.waitForTimeout(250);
+    const na = await staat(); const T2 = await toetsStaat();
+    waar('ongedaan maken: de toetsles staat niet meer op gegeven', !(na.voortgang[G]['vwo4:10.1'] && na.voortgang[G]['vwo4:10.1'].st === 'gegeven'), JSON.stringify(na.voortgang[G]['vwo4:10.1']));
+    waar('ongedaan maken: de drie cijfers blijven vast', NAMEN.slice(0, 3).every(n => T2.ll[lid[n]].vast));
+    await page.evaluate(([g, e]) => { const x = JSON.parse(localStorage.getItem('lesdag-staat')); x.voortgang[g]['vwo4:10.1'] = JSON.parse(e); localStorage.setItem('lesdag-staat', JSON.stringify(x)); }, [G, eerdere]); // terug naar de stand voor de stappen hieronder
     for (const [dag, hm, hash] of [['23-11', '16:20', 'nu'], ['24-11', '09:00', 'nu'], ['24-11', '09:00', 'vandaag']]) { await op(dag, hm, hash); const t = await tekst();
       waar(`${dag} ${hm} ${hash}: geen melding dat P1 nog niet is afgevinkt`, !/P1 stond op|nog niet afgevinkt/.test(t), (t.match(/.{0,60}(afgevinkt|stond op).{0,60}/g) || []).join(' // ')); }
   });
