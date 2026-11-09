@@ -70,13 +70,28 @@ console.log('  ' + vervuild + ' vervuilde varianten');
   s.later = { 'pres:vwo5:12.2': 'ok', 's|pres:vwo5:8.1': 'ok' };
   s.afwijkingen = [{ g: 'v5', lesIds: ['vwo5:8.1', 'vwo5:8.3'], wat: 'P9 verplaatst' }];
   const r = STAAT.migreer(s, leeg()); const x = r.staat;
-  ok(r.stappen.length === 1 && x.schema === STAAT.SCHEMA, 'stap 2 niet uitgevoerd');
+  ok(r.stappen.length === 2 && x.schema === STAAT.SCHEMA, 'stap 2 en 3 niet uitgevoerd');
   ok(x.voortgang.v5['vwo5:12.1'].d === '2026-10-26' && x.voortgang.v5['vwo5:8.1'].st === 'overgeslagen' && x.voortgang.v5['vwo5:8.1'].inToets === 'vwo5:12.2' && x.voortgang.v5['vwo5:8.2'] && x.voortgang.v5['vwo5:18.1'], 'voortgang van vwo 5 niet gewisseld of iets kwijt');
   ok(x.ankers.v5['vwo5:12.2'] && !x.ankers.v5['vwo5:8.3'], 'anker niet meegegaan');
   ok(x.les['vwo5:12.1'].titel === 'eigen titel' && x.les['vwo4:8.1'].titel === 'blijft' && x.les['vwo5:28.1'].titel === 'blijft ook' && !x.les['vwo5:8.1'], 'eigen lesbewerking niet goed meegegaan');
   ok(x.later['pres:vwo5:8.3'] === 'ok' && x.later['pres:vwo5:12.2'] === undefined && x.later['s|pres:vwo5:12.1'] === 'ok', 'sleutel met pres: niet meegegaan');
   ok(x.afwijkingen[0].lesIds.join() === 'vwo5:12.1,vwo5:12.2' && x.afwijkingen[0].wat === 'P9 verplaatst', 'afwijking niet meegegaan');
   const r2 = STAAT.migreer(x, leeg()); ok(!r2.stappen.length && JSON.stringify(r2.staat.voortgang) === JSON.stringify(x.voortgang), 'stap 2 draait twee keer');
+}
+// 4c. stap 3 (9-11-2026): PT1 en PT2 van vwo 4 heten P1 en P2; sleutels en door de app gemaakte tekst gaan mee, eigen vrije tekst niet
+{ const s = kloon(HUIDIG); s.schema = 2;
+  s.uitgesteld = { 'tw:vwo4:PT1': '2026-11-20', 'tw:havo4:P1': '2026-11-21' };
+  s.later = { 'tw:vwo4:PT2': 'ok' };
+  s.afwijkingen = [{ g: 'tv4', soort: 'pta', wat: 'PT1 verplaatst naar ma 23 nov', waarom: 'PT1 en PTA', studiewijzer: 'lesweek 10' }];
+  s.les = { 'vwo4:10.1': { titel: 'Praktijktoets PT1', materiaal: [{ t: 'PT1 scoreblad', u: 'https://x.nl/PT1%20Scoreblad.xlsx' }] }, 'vwo5:12.1': { titel: 'blijft PT1' } };
+  s.taken = [{ id: 't1', titel: 'PT1 nakijken' }];
+  const r = STAAT.migreer(s, leeg()); const x = r.staat;
+  ok(r.stappen.length === 1 && x.schema === STAAT.SCHEMA, 'stap 3 niet uitgevoerd');
+  ok(x.uitgesteld['tw:vwo4:P1'] === '2026-11-20' && x.uitgesteld['tw:havo4:P1'] === '2026-11-21' && !x.uitgesteld['tw:vwo4:PT1'] && x.later['tw:vwo4:P2'] === 'ok', 'sleutel met toets-id niet meegegaan');
+  ok(x.afwijkingen[0].wat === 'P1 verplaatst naar ma 23 nov' && x.afwijkingen[0].waarom === 'P1 en PTA', 'afwijkingstekst niet aangepast');
+  ok(x.les['vwo4:10.1'].titel === 'Praktijktoets P1' && x.les['vwo4:10.1'].materiaal[0].t === 'P1 scoreblad' && x.les['vwo4:10.1'].materiaal[0].u === 'https://x.nl/PT1%20Scoreblad.xlsx' && x.les['vwo5:12.1'].titel === 'blijft PT1', 'eigen lesbewerking verkeerd aangepast');
+  ok(x.taken[0].titel === 'PT1 nakijken', 'eigen taak is aangepast');
+  const r2 = STAAT.migreer(x, leeg()); ok(!r2.stappen.length && JSON.stringify(r2.staat.uitgesteld) === JSON.stringify(x.uitgesteld), 'stap 3 draait twee keer');
 }
 console.log(fouten ? '  ' + fouten + ' fout(en)' : '  ' + n + ' controles goed');
 

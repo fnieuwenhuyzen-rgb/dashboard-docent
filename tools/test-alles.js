@@ -24,7 +24,7 @@ const STAPPEN = [
   ['Automatische kopie', 'test-autokopie.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
   ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []], ['Routes Agenda en planning (headless)', 'test-routes-agenda.js', []], ['Routes Lesmodus (headless, snel)', 'test-routes-lesmodus.js', ['--snel']]] : []),
-  ['Routes toetsdag PT1 vwo 4 (headless, ±20 s)', 'test-routes-toetsdag.js', []],
+  ['Routes toetsdag P1 vwo 4 (headless, ±20 s)', 'test-routes-toetsdag.js', []],
   ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []]] : []),
 ];
 const uitslag = []; const t0 = Date.now();

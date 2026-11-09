@@ -6,7 +6,7 @@ const assert = require('assert'), path = require('path');
 const B = require(path.join(__dirname, '..', 'public', 'data', 'basis.json'));
 const { plek, lesweekVan } = require(path.join(__dirname, '..', 'public', 'toetsdatum.js'));
 const BEKEND = {
-  'vwo4:PT1': 'verwerkt: PT1 verplaatst naar ma 23-11 (besluit Frans 4-11), les staat in lesweek 10',
+  'vwo4:P1': 'verwerkt: P1 (voorheen PT1) verplaatst naar ma 23-11 (besluit Frans 4-11), les staat in lesweek 10',
   'vwo6:T10': 'OPEN: datum do 1-4 valt in lesweek 27, de leergang zet T10 in lesweek 28 (toetsweek 3 begint do 1-4 volgens B.toetsweken en het PTA, lesweek 28 begint ma 5-4); Frans kiest',
 };
 const fouten = [], info = []; let n = 0;

@@ -1,6 +1,6 @@
 // node tools/test-routes-toetsdag.js [--poort=8761] [--toon]
-// Routetest toetsdag: PT1 vwo 4 (klas tv4) van begin tot eind, zoals Frans het meemaakt (bevindingen 8, 56, 58 tot en met 61 en 67 tot en met 70 uit
-// handboek/feedback-kritische-docent-ronde-2.md): PT1 staat op ma 23-11 (datum in basis.json gaat voor de lesweek), de dagen ervoor mag er geen PT1 staan,
+// Routetest toetsdag: P1 vwo 4 (klas tv4) van begin tot eind, zoals Frans het meemaakt (bevindingen 8, 56, 58 tot en met 61 en 67 tot en met 70 uit
+// handboek/feedback-kritische-docent-ronde-2.md): P1 staat op ma 23-11 (datum in basis.json gaat voor de lesweek), de dagen ervoor mag er geen P1 staan,
 // op de toetsdag één tik naar de scorekaart, scoren, een afwezige, afronden, kolom kopiëren en de dag erna.
 // Zelfde opzet als test-routes-beoordelen.js: Playwright via NODE_PATH (zie tools/TESTEN.md), verzonnen namen, wegwerpbrowser, vaste klok. Exitcode 0 goed, 1 fouten, 2 overgeslagen.
 const path = require('path'), fs = require('fs');
@@ -45,16 +45,16 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
   const staat = () => page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')));
   const toetsStaat = async () => ((await staat()).beoord.toetsen[`pt1-vwo4|${G}`]) || null;
 
-  /* 1. de dagen voor de toets: PT1 staat op ma 23-11 en nergens anders (bevinding 8 en 56) */
+  /* 1. de dagen voor de toets: P1 staat op ma 23-11 en nergens anders (bevinding 8 en 56) */
   await stap('de dagen voor de toets', async () => {
     await op('09-11', '09:16', 'nu'); let t = await tekst();
-    waar('9-11 Nu: de generale staat, de toets niet', !/Praktijktoets|(?<!Generale )PT1/.test(t), (t.match(/.{0,80}(PT1|Praktijktoets).{0,80}/g) || []).join(' // '));
+    waar('9-11 Nu: de generale staat, de toets niet', !/Praktijktoets|(?<!Generale )P1/.test(t), (t.match(/.{0,80}(P1|Praktijktoets).{0,80}/g) || []).join(' // '));
     await op('09-11', '09:16', 'vandaag'); t = await tekst(); waar('9-11 Dag: geen Praktijktoets', !/Praktijktoets/.test(t), t.slice(0, 300));
     await op('09-11', '09:16', 'beoordelen'); t = await tekst(); waar('9-11 Beoordelen: er staat vandaag geen toets', /Vandaag staat er geen toets/.test(t), t.slice(0, 300));
     await op('09-11', '09:16', 'jaar/' + G); t = await tekst();
-    waar('klasblad: één datum voor PT1 (ma 23 nov), niet ma 9 nov', /PT1 ma 23 nov/.test(t) && !/PT1 ma 9 nov/.test(t) && !/ma 9 nov/.test(t.replace(/Maandag 9 november/g, '')), (t.match(/[^.]{0,60}PT1[^.]{0,60}/g) || []).join(' | '));
+    waar('klasblad: één datum voor P1 (ma 23 nov), niet ma 9 nov', /P1 ma 23 nov/.test(t) && !/P1 ma 9 nov/.test(t) && !/ma 9 nov/.test(t.replace(/Maandag 9 november/g, '')), (t.match(/[^.]{0,60}P1[^.]{0,60}/g) || []).join(' | '));
     await op('16-11', '09:16', 'nu'); await page.keyboard.press('Control+k'); await page.keyboard.type('pt1'); await page.waitForTimeout(200);
-    const k = await page.locator('body').innerText(); waar('16-11 Ctrl K "pt1": een toets van volgende week heet niet geweest', !/geweest/i.test((k.match(/PT1[^\n]*\n?[^\n]*/g) || []).join(' ')), (k.match(/[^\n]*pt1[^\n]*/gi) || []).join(' | '));
+    const k = await page.locator('body').innerText(); waar('16-11 Ctrl K "pt1": een toets van volgende week heet niet geweest', !/geweest/i.test((k.match(/P1[^\n]*\n?[^\n]*/g) || []).join(' ')), (k.match(/[^\n]*pt1[^\n]*/gi) || []).join(' | '));
   });
 
   /* 1b. een half ingevuld verplaats-paneel sluit als je van scherm wisselt (bevinding 68) */
@@ -66,7 +66,7 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     waar('terug op het klasblad is het formulier dicht en leeg', !(await page.$('#avUur')));
   });
 
-  /* 1c. PT1 zelf verplaatst naar wo 25-11 8:30 (bevinding 69), in een eigen wegwerpbrowser zodat PT1 hierboven en hieronder op ma 23-11 blijft staan:
+  /* 1c. P1 zelf verplaatst naar wo 25-11 8:30 (bevinding 69), in een eigen wegwerpbrowser zodat P1 hierboven en hieronder op ma 23-11 blijft staan:
      het bericht aan de klas staat tot die nieuwe datum en vervalt dan */
   await stap('verplaatsen en het bericht aan de klas', async () => {
     const ctx2 = await h.browser.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block' }); await H.sluis(ctx2, h.basis);
@@ -75,7 +75,7 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     const op2 = async (dag, hm, hash) => { await p2.clock.setFixedTime(new Date(tijd(dag, hm))); await p2.goto(h.basis + '#' + hash); await p2.reload(); await H.wacht(p2); return (await p2.locator('#main').innerText()).replace(/\s+/g, ' '); };
     await op2('09-11', '09:16', 'jaar/' + G); await p2.click('[data-ankeropen]'); await p2.waitForSelector('#avUur');
     await p2.selectOption('#avUur', '2026-11-25|t2'); await p2.fill('#avReden', 'toetsweek erachter'); await p2.click('#ankerForm button.hoofd'); await p2.waitForTimeout(200);
-    const a = (JSON.parse(await p2.evaluate(() => localStorage.getItem('lesdag-staat'))).afwijkingen || [])[0]; waar('de verplaatsing is vastgelegd met bericht en nieuwe datum', !!a && /PT1 verplaatst/.test(a.wat) && a.berichtTot === '2026-11-25', JSON.stringify(a));
+    const a = (JSON.parse(await p2.evaluate(() => localStorage.getItem('lesdag-staat'))).afwijkingen || [])[0]; waar('de verplaatsing is vastgelegd met bericht en nieuwe datum', !!a && /P1 verplaatst/.test(a.wat) && a.berichtTot === '2026-11-25', JSON.stringify(a));
     for (const [dag, hm, ja] of [['09-11', '09:16', true], ['24-11', '08:20', true], ['25-11', '08:20', false]]) { const t = await op2(dag, hm, 'vandaag'); const er = /Bericht aan de klas/i.test(t) && !!(await p2.$('[data-berichtklaar]'));
       waar(`${dag} ${hm} Nu: bericht aan de klas ${ja ? 'staat er' : 'is vervallen (de toets is die dag, het bericht is oud nieuws)'}`, er === ja, t.slice(0, 200)); }
     await ctx2.close();
@@ -85,25 +85,25 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
   await stap('einde periode: wat ontbreekt per klas', async () => {
     for (const hash of ['beoordelen', 'jaar']) { await op('13-11', '15:00', hash); const t = await tekst();
       waar(`${hash} vr 13-11: kaart "Periode 1 sluit vr 13 nov"`, /Periode 1 sluit vr 13 nov/.test(t), t.slice(0, 300));
-      waar(`${hash} vr 13-11: tv4 PT1 nog niet gescoord, staat op ma 23 nov`, /tv4 PT1: nog niet gescoord, staat op ma 23 nov/.test(t), (t.match(/.{0,60}Periode 1.{0,160}/g) || []).join(' // ')); }
+      waar(`${hash} vr 13-11: tv4 P1 nog niet gescoord, staat op ma 23 nov`, /tv4 P1: nog niet gescoord, staat op ma 23 nov/.test(t), (t.match(/.{0,60}Periode 1.{0,160}/g) || []).join(' // ')); }
     await op('13-11', '15:00', 'beoordelen'); await klik('.periode [data-beoordeel]'); await page.waitForFunction(() => /^#beoordelen\/pt1-vwo4\/tv4/.test(location.hash)); waar('de knop in de kaart opent de scorekaart', true);
   });
 
-  /* 2. de toetsdag: ma 23-11 om 9:05 staat PT1 op Nu en Dag, en in Beoordelen onder Vandaag (bevinding 8 en 56) */
+  /* 2. de toetsdag: ma 23-11 om 9:05 staat P1 op Nu en Dag, en in Beoordelen onder Vandaag (bevinding 8 en 56) */
   await stap('toetsdag op Nu, Dag en Beoordelen', async () => {
     await op('23-11', '09:05', 'nu'); let t = await tekst();
-    waar('23-11 Nu: PT1 staat klaar', /Praktijktoets 1/.test(t), t.slice(0, 300));
-    waar('23-11 Nu: PT1 is niet "gemist"', !/PT1 stond op/.test(t), (t.match(/[^.]*stond op[^.]*/g) || []).join(' | '));
+    waar('23-11 Nu: P1 staat klaar', /Praktijktoets 1/.test(t), t.slice(0, 300));
+    waar('23-11 Nu: P1 is niet "gemist"', !/P1 stond op/.test(t), (t.match(/[^.]*stond op[^.]*/g) || []).join(' | '));
     await op('23-11', '09:05', 'vandaag'); t = await tekst(); waar('23-11 Dag: Praktijktoets 1', /Praktijktoets 1/.test(t));
-    await op('23-11', '09:05', 'beoordelen'); t = await tekst(); waar('23-11 Beoordelen: PT1 onder Vandaag', !/Vandaag staat er geen toets/.test(t) && /PT1/.test(t), t.slice(0, 300));
+    await op('23-11', '09:05', 'beoordelen'); t = await tekst(); waar('23-11 Beoordelen: P1 onder Vandaag', !/Vandaag staat er geen toets/.test(t) && /P1/.test(t), t.slice(0, 300));
   });
 
   /* 3. op het toetsmoment één tik naar de scorekaart (bevinding 58) */
   await stap('één tik naar de scorekaart', async () => {
-    await op('23-11', '09:13', 'nu'); waar('9:13 Nu (over 2 minuten): knop Beoordelen PT1', (await knoppen('[data-beoordeel]')).some(x => /Beoordelen PT1/.test(x)), await tekst());
-    await op('23-11', '09:16', 'nu'); const kn = await knoppen('[data-beoordeel]'); waar('9:16 Nu (de les loopt): knop Beoordelen PT1', kn.some(x => /Beoordelen PT1/.test(x)), (await tekst()).slice(0, 300));
+    await op('23-11', '09:13', 'nu'); waar('9:13 Nu (over 2 minuten): knop Beoordelen P1', (await knoppen('[data-beoordeel]')).some(x => /Beoordelen P1/.test(x)), await tekst());
+    await op('23-11', '09:16', 'nu'); const kn = await knoppen('[data-beoordeel]'); waar('9:16 Nu (de les loopt): knop Beoordelen P1', kn.some(x => /Beoordelen P1/.test(x)), (await tekst()).slice(0, 300));
     await klik('[data-beoordeel]'); await page.waitForFunction(() => /^#beoordelen\/pt1-vwo4\/tv4/.test(location.hash));
-    await page.waitForSelector('#bmLijst, .bm-status'); waar('na één tik staat de scorekaart van PT1 tv4 open', /PT1/.test(await tekst()), (await tekst()).slice(0, 200));
+    await page.waitForSelector('#bmLijst, .bm-status'); waar('na één tik staat de scorekaart van P1 tv4 open', /P1/.test(await tekst()), (await tekst()).slice(0, 200));
   });
 
   /* 4. scoren op de toetsdag: klassenlijst plakken, vier leerlingen scoren, een afwezige (bevinding 70: eerst vragen als er al scores staan) */
@@ -139,19 +139,19 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     const T = await toetsStaat(); waar('drie cijfers staan vast, Daan niet', NAMEN.slice(0, 3).every(n => T.ll[lid[n]].vast) && !T.ll[lid[NAMEN[3]]].vast);
     const voort = (await staat()).voortgang[G]; waar('de toetsles staat op gegeven', voort['vwo4:10.1'] && voort['vwo4:10.1'].st === 'gegeven', JSON.stringify(voort['vwo4:10.1']));
     for (const [dag, hm, hash] of [['23-11', '16:20', 'nu'], ['24-11', '09:00', 'nu'], ['24-11', '09:00', 'vandaag']]) { await op(dag, hm, hash); const t = await tekst();
-      waar(`${dag} ${hm} ${hash}: geen melding dat PT1 nog niet is afgevinkt`, !/PT1 stond op|nog niet afgevinkt/.test(t), (t.match(/.{0,60}(afgevinkt|stond op).{0,60}/g) || []).join(' // ')); }
+      waar(`${dag} ${hm} ${hash}: geen melding dat P1 nog niet is afgevinkt`, !/P1 stond op|nog niet afgevinkt/.test(t), (t.match(/.{0,60}(afgevinkt|stond op).{0,60}/g) || []).join(' // ')); }
   });
 
   /* 5b. dag erna: nog één leerling zonder cijfer (Daan, afwezig) */
   await stap('einde periode: één leerling mist nog', async () => {
     for (const hash of ['beoordelen', 'jaar']) { await op('24-11', '09:00', hash); const t = await tekst();
-      waar(`${hash} 24-11: periode 1 sloot vr 13 nov en PT1 mist 1 van 4 (1 moet nog inhalen)`, /Periode 1 sloot vr 13 nov/.test(t) && /PT1: 1 van 4 zonder afgerond cijfer \(1 moet nog inhalen\)/.test(t), (t.match(/.{0,60}Periode 1.{0,200}/g) || []).join(' // ')); }
+      waar(`${hash} 24-11: periode 1 sloot vr 13 nov en P1 mist 1 van 4 (1 moet nog inhalen)`, /Periode 1 sloot vr 13 nov/.test(t) && /P1: 1 van 4 zonder afgerond cijfer \(1 moet nog inhalen\)/.test(t), (t.match(/.{0,60}Periode 1.{0,200}/g) || []).join(' // ')); }
   });
 
   /* 6. inhalen (bevinding 60): Daan was afwezig; een regel blijft op Nu en Dag staan tot hij een cijfer heeft */
   await stap('inhalen blijft zichtbaar tot het gebeurd is', async () => {
     for (const [dag, hm, hash] of [['23-11', '16:20', 'nu'], ['24-11', '09:00', 'vandaag'], ['02-12', '08:40', 'nu'], ['07-12', '09:00', 'vandaag']]) { await op(dag, hm, hash); const t = await tekst();
-      waar(`${dag} ${hash}: "1 leerling moet nog inhalen"`, /PT1 1 leerling moet nog inhalen/.test(t), (t.match(/.{0,60}inhalen.{0,60}/g) || []).join(' // ')); }
+      waar(`${dag} ${hash}: "1 leerling moet nog inhalen"`, /P1 1 leerling moet nog inhalen/.test(t), (t.match(/.{0,60}inhalen.{0,60}/g) || []).join(' // ')); }
     await op('07-12', '09:00', 'nu'); await klik('[data-beoordeel]:has-text("Open")'); await page.waitForSelector('.bm-lijst, [data-bmkies]');
     await klik(`[data-bmkies="${lid[NAMEN[3]]}"]`); await page.uncheck('input[data-bmaf]'); await scoorAlles(7, 7);
     await klik('[data-bm="kolom"]'); await page.waitForSelector('[data-bm="kolomkopie"]'); dialogen.length = 0; await klik('.bm-waarsch [data-bm="afronden"]'); await page.waitForTimeout(250);
@@ -162,8 +162,8 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
   /* 7. kolom kopiëren en Magister (bevinding 61): na het kopiëren weet Frans wat er nog moet, tot hij "Staat in Magister" aantikt */
   await stap('kolom kopiëren en Magister', async () => {
     await op('07-12', '09:40', 'nu'); let t = await tekst();
-    waar('Nu: de cijfers staan nog niet in Magister', /PT1 de cijfers staan nog niet als ingevoerd in Magister/.test(t), (t.match(/.{0,60}Magister.{0,60}/g) || []).join(' // '));
-    await op('07-12', '09:40', 'jaar/' + G); waar('klasblad: PT1 "nog in Magister zetten"', (await knoppen('[data-beoordeel]')).some(x => /nog in Magister zetten/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
+    waar('Nu: de cijfers staan nog niet in Magister', /P1 de cijfers staan nog niet als ingevoerd in Magister/.test(t), (t.match(/.{0,60}Magister.{0,60}/g) || []).join(' // '));
+    await op('07-12', '09:40', 'jaar/' + G); waar('klasblad: P1 "nog in Magister zetten"', (await knoppen('[data-beoordeel]')).some(x => /nog in Magister zetten/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
     await op('07-12', '09:40', 'beoordelen/pt1-vwo4/' + G); await klik('[data-bm="kolom"]'); await page.waitForSelector('[data-bm="kolomkopie"]');
     await klik('[data-bm="kolomkopie"]'); await page.waitForTimeout(150);
     const kl = (await page.evaluate(() => navigator.clipboard.readText())).replace(/\r\n/g, '\n');
@@ -171,8 +171,8 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     waar('na het kopiëren: de kaart zegt dat het nog niet in Magister staat', /nog niet als ingevoerd in Magister/.test(await tekst()));
     await klik('[data-bm="inmagister"]'); await page.waitForTimeout(100);
     waar('na "Staat in Magister" noemt de kaart de datum', /In Magister gezet op/.test(await tekst()), (await tekst()).slice(0, 300));
-    for (const hash of ['nu', 'vandaag']) { await op('07-12', '09:45', hash); waar(`${hash}: geen regel meer over Magister`, !/PT1 (de cijfers staan nog niet als ingevoerd|er zijn cijfers bijgekomen)/.test(await tekst()), (await tekst()).slice(0, 200)); }
-    await op('07-12', '09:45', 'jaar/' + G); waar('klasblad: PT1 "in Magister"', (await knoppen('[data-beoordeel]')).some(x => / · in Magister/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
+    for (const hash of ['nu', 'vandaag']) { await op('07-12', '09:45', hash); waar(`${hash}: geen regel meer over Magister`, !/P1 (de cijfers staan nog niet als ingevoerd|er zijn cijfers bijgekomen)/.test(await tekst()), (await tekst()).slice(0, 200)); }
+    await op('07-12', '09:45', 'jaar/' + G); waar('klasblad: P1 "in Magister"', (await knoppen('[data-beoordeel]')).some(x => / · in Magister/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
   });
 
   /* 8. alles staat vast en in Magister: de kaart verdwijnt een week na het einde van de periode */

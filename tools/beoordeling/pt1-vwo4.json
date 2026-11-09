@@ -1,8 +1,8 @@
 {
   "id": "pt1-vwo4",
   "klas": "vwo 4",
-  "toets": "PT1",
-  "titel": "Praktijktoets PT1: samenspel en zang",
+  "toets": "P1",
+  "titel": "Praktijktoets P1: samenspel en zang",
   "thema": "Voorlopers van de jazz",
   "weging": 3,
   "herkansbaar": false,
@@ -10,10 +10,10 @@
     "Mijn partij",
     "Niveau"
   ],
-  "vooruit": "Eén punt voor PT2",
+  "vooruit": "Eén punt voor P2",
   "leerlingTitel": "Zo beoordeel ik ons samenspel en mijn zang",
   "leerlingInstructie": "Gebruik dit direct na de toets. Zet per onderdeel een kruisje bij wat je hoorde en schrijf je score op. Je docent let op dezelfde onderdelen.",
-  "pta": "PTA vwo 4 2026-2027, P1 (in studiewijzer en lesplanning PT1): periode 1 in de les (ma 9 nov), weging 3, 90 minuten, niet herkansbaar. Domein B1 zingen en spelen en B2 improviseren (bluesschema, call-and-response). Beoordeling op presentatie, muzikaliteit en samenspel. Afgenomen op ma 23 nov, niet op 9 nov (Frans, 4-11).",
+  "pta": "PTA vwo 4 2026-2027, P1: periode 1 in de les (ma 9 nov), weging 3, 90 minuten, niet herkansbaar. Domein B1 zingen en spelen en B2 improviseren (bluesschema, call-and-response). Beoordeling op presentatie, muzikaliteit en samenspel. Afgenomen op ma 23 nov, niet op 9 nov (Frans, 4-11).",
   "map": "02 Keuzevak muziek\\VWO\\VWO 4\\P1 Praktijktoets - Samenspel jazz-voorlopers\\Beoordeling",
   "lessen": [
     {

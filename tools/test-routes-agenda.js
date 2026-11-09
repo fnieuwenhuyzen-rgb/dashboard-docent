@@ -327,16 +327,16 @@ sc('Inhalen: later beslissen zet de melding een dag uit', async nieuw => {
   ok(!/raakt krap/.test(await P.tekst()), 'de melding is weg');
   await P.klok('2027-01-05T07:30:00+01:00', 'vandaag'); ok(/tm4 raakt krap/.test(await P.tekst()) || true, '');
 });
-const PT1_NA = '2026-11-30T07:30:00+01:00'; // PT1 van vwo4 staat in basis.json op ma 23 nov; een week later is hij gemist
+const PT1_NA = '2026-11-30T07:30:00+01:00'; // P1 van vwo4 staat in basis.json op ma 23 nov; een week later is hij gemist
 sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
-  // vwo4 T1 staat in toetsweek (vast); PT1 (basis.json: ma 23 nov, verplaatst) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
+  // vwo4 T1 staat in toetsweek (vast); P1 (basis.json: ma 23 nov, verplaatst) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
   const P = await nieuw({ tijd: PT1_NA, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
-  const t = await P.tekst(); ok(/tv4: PT1/.test(t), 'melding over PT1: ' + (t.match(/[^\n]*PT1[^\n]*/) || ['(geen)'])[0]);
+  const t = await P.tekst(); ok(/tv4: P1/.test(t), 'melding over P1: ' + (t.match(/[^\n]*P1[^\n]*/) || ['(geen)'])[0]);
   ok(await P.page.locator('[data-markeer^="tv4|"]').count() > 0, 'Is gegeven staat erbij');
   await klikData(P, '[data-ankeropen^="tv4|"]'); const f = await P.tekst('#ankerForm'); ok(!!f, 'het verplaatsformulier opent: ' + (f || '').slice(0, 120));
   if (await P.page.locator('#avUur').count()) {
     await P.page.fill('#avReden', 'twee lessen uitgevallen'); await P.page.locator('#ankerForm button[type=submit]').click(); await P.page.waitForTimeout(200); let S = await P.S();
-    const a = (S.afwijkingen || []).find(x => x.soort === 'pta'); ok(a && /PT1 verplaatst/.test(a.wat), 'afwijking PTA staat in de lijst: ' + JSON.stringify(a && a.wat));
+    const a = (S.afwijkingen || []).find(x => x.soort === 'pta'); ok(a && /P1 verplaatst/.test(a.wat), 'afwijking PTA staat in de lijst: ' + JSON.stringify(a && a.wat));
     ok(S.ankers && S.ankers.tv4 && Object.keys(S.ankers.tv4).length >= 1, 'S.ankers kent de nieuwe plek'); await P.klik('.toast-terug'); S = await P.S(); ok(!S.ankers.tv4 || !Object.keys(S.ankers.tv4).length, 'Ongedaan maken haalt de plek weg');
   } else ok(/geen lesuur meer vrij/.test(f), 'zonder plek staat er waarom');
   await P.page.evaluate(() => {});
@@ -344,7 +344,7 @@ sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
 sc('Toets: Is gegeven na een gemist uur', async nieuw => {
   const P = await nieuw({ tijd: PT1_NA, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
   await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-30'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
-  ok(!/tv4: PT1/.test(await P.tekst()), 'de melding is weg');
+  ok(!/tv4: P1/.test(await P.tekst()), 'de melding is weg');
 });
 
 // ---- Zermelo nagebootst: met de echte groepscodes uit basis.json (v4, h3a, BB1, ...), want zo noemt Zermelo ze ----
