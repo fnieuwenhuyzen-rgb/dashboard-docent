@@ -327,9 +327,10 @@ sc('Inhalen: later beslissen zet de melding een dag uit', async nieuw => {
   ok(!/raakt krap/.test(await P.tekst()), 'de melding is weg');
   await P.klok('2027-01-05T07:30:00+01:00', 'vandaag'); ok(/tm4 raakt krap/.test(await P.tekst()) || true, '');
 });
+const PT1_NA = '2026-11-30T07:30:00+01:00'; // PT1 van vwo4 staat in basis.json op ma 23 nov; een week later is hij gemist
 sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
-  // vwo4 T1 staat in toetsweek (vast); PT1 (week 10, ma 9 nov) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
-  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
+  // vwo4 T1 staat in toetsweek (vast); PT1 (basis.json: ma 23 nov, verplaatst) is niet afgevinkt: "Verplaatsen" biedt uren aan of zegt dat er geen is
+  const P = await nieuw({ tijd: PT1_NA, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
   const t = await P.tekst(); ok(/tv4: PT1/.test(t), 'melding over PT1: ' + (t.match(/[^\n]*PT1[^\n]*/) || ['(geen)'])[0]);
   ok(await P.page.locator('[data-markeer^="tv4|"]').count() > 0, 'Is gegeven staat erbij');
   await klikData(P, '[data-ankeropen^="tv4|"]'); const f = await P.tekst('#ankerForm'); ok(!!f, 'het verplaatsformulier opent: ' + (f || '').slice(0, 120));
@@ -341,8 +342,8 @@ sc('Toets verplaatsen: gemiste toets op een vervallen uur', async nieuw => {
   await P.page.evaluate(() => {});
 });
 sc('Toets: Is gegeven na een gemist uur', async nieuw => {
-  const P = await nieuw({ tijd: VROEG, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
-  await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-16'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
+  const P = await nieuw({ tijd: PT1_NA, staat: s => { s.voortgang = voortgangTot('tv4', 'vwo4', 10); return s; } }); await P.open('vandaag');
+  await klikData(P, '[data-markeer^="tv4|"]'); const S = await P.S(); ok(Object.values(S.voortgang.tv4).some(v => v.st === 'gegeven' && v.d === '2026-11-30'), 'Is gegeven zet de toets op gegeven met de datum van vandaag');
   ok(!/tv4: PT1/.test(await P.tekst()), 'de melding is weg');
 });
 
