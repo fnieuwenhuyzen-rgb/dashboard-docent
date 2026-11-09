@@ -88,7 +88,8 @@
             "We hebben een duidelijk begin en slot; ik ga door na een fout.",
             "We beginnen en eindigen zeker; een fout valt bijna niet op."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         },
         {
           "id": "houding",
@@ -168,7 +169,8 @@
               ],
               "naam": "Coördinatie"
             }
-          }
+          },
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -254,7 +256,8 @@
               ],
               "naam": "Patroon"
             }
-          }
+          },
+          "domein": "Techniek en klank"
         },
         {
           "id": "toon",
@@ -334,7 +337,8 @@
               ],
               "naam": "Klank en balans"
             }
-          }
+          },
+          "domein": "Techniek en klank"
         },
         {
           "id": "ritme",
@@ -414,7 +418,8 @@
               ],
               "naam": "Timing en groove"
             }
-          }
+          },
+          "domein": "Ritme en maat"
         }
       ]
     },
@@ -439,7 +444,8 @@
             "Ik blijf gelijk met de anderen en we zijn in balans.",
             "Ik reageer op de anderen; we klinken als één geheel."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     }
@@ -548,6 +554,11 @@
       "Dit ging het lastigst:",
       "Dit ga ik oefenen:"
     ],
-    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen.",
+    "crit": [
+      "tekst",
+      "ritme",
+      "samenspel"
+    ]
   }
 }

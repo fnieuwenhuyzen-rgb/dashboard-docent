@@ -93,7 +93,8 @@
             "Ik kondig het stuk aan, maar begin of eindig aarzelend.",
             "Ik noem stuk, componist en bezetting, begin en eindig duidelijk en speel door na een fout.",
             "Ik presenteer zoals op een concert: rustig, overtuigend begin en slot."
-          ]
+          ],
+          "domein": "Presenteren"
         }
       ]
     },
@@ -117,7 +118,8 @@
             "Mijn toon is meestal zuiver, behalve op lastige plekken.",
             "Mijn toon is het hele stuk zuiver en helder.",
             "Ik kleur mijn toon bewust, passend bij het karakter."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "ritme",
@@ -135,7 +137,8 @@
             "Mijn tempo is meestal stabiel, met een paar ritmefouten.",
             "Mijn tempo staat, ook in de moeilijkste maten.",
             "Mijn ritme is strak en levendig en past bij het karakter."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "uitdrukking",
@@ -153,7 +156,8 @@
             "Je hoort af en toe dynamiek en een frase.",
             "Mijn frasen ademen en eindigen op de cadens; je hoort dynamiek en contrast.",
             "Je hoort de klassieke stijl: periodebouw, contrast en crescendo met een doel."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -177,7 +181,8 @@
             "Ik speel mijn partij grotendeels, met stops.",
             "Ik speel mijn partij zeker en in tempo.",
             "Ik speel mijn partij beheerst en muzikaal."
-          ]
+          ],
+          "domein": "Samenspel"
         },
         {
           "id": "luisteren",
@@ -196,7 +201,8 @@
             "Ik pas tempo en volume aan; de melodie blijft hoorbaar.",
             "Ik reageer op de anderen; we klinken als één ensemble."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     }

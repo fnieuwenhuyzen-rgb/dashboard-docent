@@ -58,7 +58,8 @@
             "Het klinkt meestal goed, maar op lastige plekken gaat het mis.",
             "Ik zing zuiver of speel schoon, met een goede houding.",
             "Ik beheers het hele nummer en het klinkt vol en zeker."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "ritme",
@@ -76,7 +77,8 @@
             "Ik blijf meestal in de maat, maar bij overgangen gaat het soms mis.",
             "Ik blijf in de maat en houd het tempo vast.",
             "Ik speel of zing strak op de tel, ook bij overgangen."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "dynamiek",
@@ -94,7 +96,8 @@
             "Ik speel of zing soms harder en zachter.",
             "Je hoort bij mij hard en zacht, passend bij het nummer.",
             "Met hard en zacht maak ik het nummer spannend."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "eigen",
@@ -112,7 +115,8 @@
             "Ik heb een klein stukje zelf bedacht, zoals het begin of het slot.",
             "Ik heb zelf een intro, slot, fill of variatie bedacht die past.",
             "Mijn eigen idee maakt het nummer beter, bijvoorbeeld een korte improvisatie."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     },
@@ -137,7 +141,8 @@
             "Ik luister, blijf gelijk en speel of zing niet te hard.",
             "Ik reageer op de anderen en help als er iets misgaat."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     },
@@ -162,7 +167,8 @@
             "Ik noem naam, titel en instrument, sta rustig en ga door na een fout.",
             "Ik sta er zeker en maak contact met het publiek."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         }
       ]
     }

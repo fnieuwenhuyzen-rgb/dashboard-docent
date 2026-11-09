@@ -86,7 +86,8 @@
             "Ik vind de eerste toon na wat zoeken of bij een tweede poging.",
             "Ik zet de eerste toon na de grondtoon meteen zuiver in.",
             "Ik zet meteen zuiver en zeker in, in het tempo van de begeleiding."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "toonhoogte",
@@ -104,7 +105,8 @@
             "De stapjes kloppen meestal, bij sprongen gaat het soms mis.",
             "Bijna alle noten kloppen, ook de sprongen.",
             "Alle noten kloppen en klinken zuiver, alsof ik de melodie al kende."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "ritme",
@@ -122,7 +124,8 @@
             "Mijn ritme klopt meestal; lange noten of rusten maak ik soms te kort.",
             "Mijn ritme klopt, ook bij lange noten en rusten.",
             "Mijn ritme klopt precies en ik adem op de rusten en aan het eind van een zin."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "maat",
@@ -140,7 +143,8 @@
             "Ik blijf meestal bij de begeleiding, soms wacht ik of loop ik voor.",
             "Ik blijf van begin tot eind in de maat met de begeleiding.",
             "Ik beweeg mee in de puls; mijn melodie en de begeleiding klinken als één geheel."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "doorgaan",
@@ -158,7 +162,8 @@
             "Na een fout haper ik even, maar ik ga verder.",
             "Na een fout ga ik meteen door, op de goede tel.",
             "Ik herstel een fout zo snel dat bijna niemand het hoort."
-          ]
+          ],
+          "domein": "Samenspel"
         }
       ]
     },
@@ -182,7 +187,8 @@
             "Ik klap het ritme grotendeels goed, maar de syncope of de achtsten nog niet.",
             "Ik klap de vier maten in één keer goed, in een vast tempo.",
             "Ik klap de vier maten meteen foutloos en strak, ook de syncope."
-          ]
+          ],
+          "domein": "Ritme en maat"
         }
       ]
     }

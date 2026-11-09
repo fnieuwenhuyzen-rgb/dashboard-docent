@@ -102,7 +102,8 @@
             "Ik kondig het stuk aan, maar begin of eindig aarzelend.",
             "Ik noem stuk en componist, begin en eindig duidelijk en speel door na een fout.",
             "Ik presenteer zoals op een concert: rustig, met een overtuigend begin en slot."
-          ]
+          ],
+          "domein": "Presenteren"
         },
         {
           "id": "toon",
@@ -120,7 +121,8 @@
             "Mijn toon en tempo zijn meestal goed, behalve op lastige plekken.",
             "Mijn toon is zuiver en mijn tempo staat, ook in de moeilijkste maten.",
             "Ik kleur mijn toon en mijn tempo past bij het karakter van het stuk."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "frasering",
@@ -138,7 +140,8 @@
             "Je hoort af en toe een frase of dynamiek.",
             "Mijn frasen ademen en mijn dynamiek en articulatie passen bij de stijl.",
             "Je hoort de stijl van het stuk, bij barok bijvoorbeeld terrassendynamiek."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -162,7 +165,8 @@
             "Mijn stuk heeft een baslijn, een melodie en één barok middel, zoals een sequens.",
             "Mijn baslijn heeft een sequens, mijn melodie gebruikt akkoordtonen en heeft een slot.",
             "Ik gebruik barokke middelen bewust; bas en melodie vullen elkaar aan."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "notatie",
@@ -180,7 +184,8 @@
             "Ik heb 12 maten genoteerd, maar niet alles klopt.",
             "Mijn notatie is compleet en leesbaar; ritmes en maatstrepen kloppen.",
             "Mijn notatie is verzorgd, met tempo, dynamiek en articulatie."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         },
         {
           "id": "uitvoering",
@@ -198,7 +203,8 @@
             "Ik speel het grotendeels zoals genoteerd, met haperingen.",
             "Ik speel mijn stuk zeker en in tempo, zoals het er staat.",
             "Ik speel mijn stuk muzikaal, met frasering en dynamiek."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "keuzes",
@@ -216,7 +222,8 @@
             "Ik vertel de stappen: eerst de baslijn, dan de melodie.",
             "Ik leg uit welke barokke middelen ik gebruik en waarom.",
             "Ik onderbouw mijn keuzes met een voorbeeld uit de barok en weet wat beter kan."
-          ]
+          ],
+          "domein": "Eigen werk en denken"
         }
       ]
     }

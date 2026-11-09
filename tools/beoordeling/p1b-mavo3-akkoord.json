@@ -88,7 +88,8 @@
             "We beginnen en eindigen duidelijk en ik speel door.",
             "We beginnen en eindigen zeker; als er iets misgaat, merkt bijna niemand het."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Presenteren"
         }
       ]
     },
@@ -112,7 +113,8 @@
             "Ik ken de grepen, maar een paar akkoorden klinken nog niet mooi.",
             "Al mijn akkoorden zijn goed en klinken helder.",
             "Mijn akkoorden klinken vol en helder, ook een moeilijke greep zoals F."
-          ]
+          ],
+          "domein": "Techniek en klank"
         },
         {
           "id": "wisselen",
@@ -130,7 +132,8 @@
             "Ik wissel goed, maar soms te laat.",
             "Ik wissel op tijd en het lied loopt door.",
             "Ik wissel soepel en precies op de tel, ook als het snel gaat."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "patroon",
@@ -148,7 +151,8 @@
             "Ik speel een eenvoudig patroon, meestal in hetzelfde tempo.",
             "Ik houd mijn patroon het hele lied vast in hetzelfde tempo.",
             "Mijn patroon heeft groove en past bij het lied, met hard en zacht."
-          ]
+          ],
+          "domein": "Ritme en maat"
         },
         {
           "id": "techniek",
@@ -166,7 +170,8 @@
             "Mijn houding is redelijk, maar mijn vingers zijn nog gespannen.",
             "Ik zit of sta goed en mijn vingers staan goed.",
             "Ik speel ontspannen en kan zelfs opkijken tijdens het spelen."
-          ]
+          ],
+          "domein": "Techniek en klank"
         }
       ]
     },
@@ -191,7 +196,8 @@
             "Ik blijf gelijk met mijn groepje en mijn begeleiding helpt de zang.",
             "Ik reageer op mijn groepje; je kunt makkelijk op mijn begeleiding zingen."
           ],
-          "groepsscore": true
+          "groepsscore": true,
+          "domein": "Samenspel"
         }
       ]
     }
@@ -208,7 +214,12 @@
       "Dit ging het lastigst:",
       "Dit ga ik oefenen:"
     ],
-    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen."
+    "score": "4: niet ingeleverd of leeg. 6: alleen kruisjes of een vage zin. 8: een concreet moment of probleem. 10: concreet moment én wat de leerling gaat doen.",
+    "crit": [
+      "presentatie",
+      "wisselen",
+      "patroon"
+    ]
   },
   "keuzes": {
     "Instrument": [
