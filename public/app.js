@@ -85,10 +85,9 @@ function laadLokaal() { try { const j = localStorage.getItem(LS_KEY); if (j) ret
    leerlingen. Een eigen sleutel die nooit naar OneDrive gaat, niet in de kopie zit en nooit naar de server. Absenten en logboeknotities
    verdwijnen zodra ze in Magister staan. */
 const AP_KEY = 'lesdag-apparaat';
-const apLeeg = () => ({ collegas: [], weg: {}, log: {}, felic: {}, functies: {} });
+const apLeeg = () => ({ collegas: [], weg: {}, log: {}, felic: {} });
 function laadAP() { try { const a = Object.assign(apLeeg(), JSON.parse(localStorage.getItem(AP_KEY) || '{}')); delete a.jarig; const oud = ymd(new Date(Date.now() - 30 * 864e5)); Object.keys(a.felic || {}).forEach(k => { if (k.slice(0, 10) < oud) delete a.felic[k]; }); return a; } catch (e) { return apLeeg(); } } // verjaardagen van leerlingen blijven in Magister (besluit 3-11)
 let AP = laadAP();
-const fnAan = sleutel => FUNCTIES.aan(AP.functies, sleutel); // proeffuncties (functies.js): standaard uit, schakelaar bij Instellingen
 function apBewaar() { try { localStorage.setItem(AP_KEY, JSON.stringify(AP)); } catch (e) {} }
 function bewaar(stil) {
   S.updated = Date.now();
@@ -1484,8 +1483,8 @@ function verplaatsVelden(g, a, uren) {
   if (!uren.length) return `<p class="lead">Er is geen lesuur meer vrij tussen lesweek ${verplaatsGrens(g, a)[0]} en lesweek ${verplaatsGrens(g, a)[1]} (einde van de periode).</p>`;
   return `<div class="rij"><label>Naar <select id="avUur">${uren.slice(0, 10).map(y => `<option value="${esc(y.s + '|' + y.u.id)}">${esc(fmtD(y.s))} ${esc(y.u.start)}</option>`).join('')}</select></label><label style="flex:3 1 16rem">Reden (voor de lijst met afwijkingen) <input id="avReden" required placeholder="Bijvoorbeeld: twee lessen uitgevallen"></label></div>`;
 }
-/* ---------- proeffunctie Twee lessen samenvoegen (functies.js, keuzes samen.*): Frans kiest de fasen, Lesdag telt tot de lesduur ---------- */
-const samenAan = () => fnAan('samenvoegen') && FUNCTIES.KEUZES.samen.omvang === 'twee-lessen';
+/* ---------- Twee lessen samenvoegen (functies.js, keuzes samen.*): Frans kiest de fasen, Lesdag telt tot de lesduur ---------- */
+const samenAan = () => FUNCTIES.KEUZES.samen.omvang === 'twee-lessen';
 const samenKan = (g, x) => { const l = les(x); const st = status(g, x.id); // geen toets, beoordeling of strookje in de les, wel uitgewerkte fasen, nog niet begonnen of samengevoegd
   return l.type !== 'toets' && l.type !== 'leeg' && Array.isArray(l.fasen) && l.fasen.length > 0 && !st.st && !(S.les[x.id] || {}).samengevoegd && !bmVoor(x).length && !/strookje/i.test(JSON.stringify(l.fasen)); };
 let samenSel = null;
@@ -1653,7 +1652,6 @@ const titel = t => String(t || 'les').replace(/[.\s]+$/, ''); // de zin zet zelf
 const kort = t => { const k = String(t).replace(/^([^:]*:[^:,]*)[:,].*$/, '$1'); return k.length > 48 ? k.slice(0, k.lastIndexOf(' ', 46)) + '…' : k; }; // lange taaknamen: alleen het eerste stuk
 const afspraakSoort = it => { const w = it.soort !== 'toets' ? '' : it.z && it.z.dienst ? 'Surveillance' : 'Toets'; return w && !new RegExp(w, 'i').test(it.titel || '') ? w + ': ' : ''; };
 const magWat = o => (o.soort === 'pres' ? 'de absenten van ' : o.soort === 'hw' ? 'het huiswerk van ' : 'het logboek van ') + o.x.u.groep + ' in Magister';
-function gisterenGoed(s) { const v = volgendeLesdag(s, -1); const g = S.goed[v]; if (!g) return ''; const k = String(g).replace(/\s+/g, ' ').trim(); return ` Wat ${v === addD(s, -1) ? 'gisteren' : 'de vorige werkdag'} goed ging: ${k.length > 110 ? k.slice(0, k.lastIndexOf(' ', 108)) + '…' : k.replace(/[.!?]+$/, '') + '.'}`; } // jouw zin van het afsluiten, de volgende ochtend (bevinding 50)
 function nuWeekinfo(s, nu, mm) { // op de inleverdag vanaf 12:00 bovenaan Nu, ook na de bel; na de sluitingstijd "te laat" (bevinding 64). Niet tijdens een les, voor een les of in de pauze.
   if (nu < 12 * 60 || !RC || !B || !S || !['naLes', 'werkblok', 'tussen', 'afsluiten'].includes(mm)) return null;
   const m = reclameOpen(s).find(x => x.soort === 'wi' && x.d === s); if (!m) return null;
@@ -1671,7 +1669,7 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
     case 'stil': return { lab: '', zin: S.afgesloten[s] ? (weekAfsluitDag(s) ? 'Je week is afgesloten. Maandag staat klaar.' : 'Je dag is afgesloten. Morgen staat klaar.') : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
     case 'start': { const L = lesUren(p); const week = weekMaandagRegel(s); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
       return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan), week,
-        zin: `Goedemorgen. ${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${L[0].u.start} (${L[0].u.groep})` : 'Geen lessen vandaag'}${kr ? `, koor om ${hm(kr.van)}` : ''}${T.length ? `, ${T.length === 1 ? 'een afspraak' : T.length + ' afspraken'} uit je rooster om ${lijstTxt(T.map(y => hm(y.van)))}` : ''}.${C.length ? ` ${C[0].c.naam} ${wanneerJarig(C[0].d, s)}.` : ''}${gisterenGoed(s)}` }; }
+        zin: `Goedemorgen. ${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${L[0].u.start} (${L[0].u.groep})` : 'Geen lessen vandaag'}${kr ? `, koor om ${hm(kr.van)}` : ''}${T.length ? `, ${T.length === 1 ? 'een afspraak' : T.length + ' afspraken'} uit je rooster om ${lijstTxt(T.map(y => hm(y.van)))}` : ''}.${C.length ? ` ${C[0].c.naam} ${wanneerJarig(C[0].d, s)}.` : ''}` }; }
     case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
       return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
     case 'les': { const y = it.x; const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
@@ -1907,8 +1905,9 @@ function werkblokKaart(s, p, A, it, nu, live) {
     ${!used ? '<p class="lead" style="margin-top:.6rem">Dit blok mag ook gewoon rustig blijven.</p>' : ''}
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-ag="${s}|${esc(it.key)}">Zelf iets plannen</button></div></div>`;
 }
-/* ---------- proeffunctie Week afsluiten (functies.js, keuzes week.*): op de laatste lesdag van de week is Dag afsluiten dezelfde knop met meer erin ---------- */
-const weekAfsluitDag = s => fnAan('weekAfsluiten') && FUNCTIES.KEUZES.week.waar === 'laatste-werkdag' && FUNCTIES.laatsteLesdagVanWeek(s, d => volgendeLesdag(d, 1));
+/* ---------- Week afsluiten (functies.js, keuzes week.*): op de laatste werkdag van de week is Dag afsluiten dezelfde knop met meer erin ---------- */
+const lesdagStap = (s, stap) => { let d = s; for (let i = 0; i < 30; i++) { d = addD(d, stap); if (!vrijReden(d)) return d; } return addD(s, stap * 30); }; // slaat ook vakanties en vrije dagen over; een dag dat je afwezig bent telt wel mee
+const weekAfsluitDag = s => FUNCTIES.KEUZES.week.waar === 'laatste-werkdag' && FUNCTIES.laatsteLesdagVanWeek(s, d => lesdagStap(d, 1));
 function weekToetsenTussen(van, tot) { // toetsen van je klassen met hun lesuur (of laatste uur) in deze periode, elke toets één keer
   const L = []; const gezien = new Set();
   for (const g of planGroepen()) { if (MEE_MET[g]) continue;
@@ -1917,7 +1916,7 @@ function weekToetsenTussen(van, tot) { // toetsen van je klassen met hun lesuur 
   return L;
 }
 function weekMaandagRegel(s) { // keuze 3: op de eerste lesdag van de week één grijze regel met de toetsen van die week, onder de zin op Nu
-  if (!fnAan('weekAfsluiten') || !FUNCTIES.KEUZES.week.maandagRegel || !FUNCTIES.eersteLesdagVanWeek(s, d => volgendeLesdag(d, -1))) return '';
+  if (!FUNCTIES.KEUZES.week.maandagRegel || !FUNCTIES.eersteLesdagVanWeek(s, d => lesdagStap(d, -1))) return '';
   return FUNCTIES.weekRegel(weekToetsenTussen(s, FUNCTIES.plusDagen(FUNCTIES.maandagVan(s), 6)), FUNCTIES.KEUZES.week.maandagMaxToetsen);
 }
 function weekBlokken(s) { // de extra stukken van Week afsluiten, na Nog open: zinnen van de week, anders dan de studiewijzer, volgende week
@@ -1926,7 +1925,7 @@ function weekBlokken(s) { // de extra stukken van Week afsluiten, na Nog open: z
   if (zinnen.length) h += `<h3>Wat ging goed deze week</h3>${zinnen.map(d => `<blockquote class="nu-goed">${esc(S.goed[d])} <span class="sub">${DAG[dOf(d).getDay()]}</span></blockquote>`).join('')}`;
   const af = (S.afwijkingen || []).filter(a => a.bericht && a.d >= ma && a.d <= s);
   if (af.length) h += `<h3>Anders dan de studiewijzer</h3>${af.map(a => `<div class="nu-rij"><span>${esc(a.g)} · ${esc(a.wat || '')}</span><span class="tb"><button class="btn klein mag" data-fnkopie="${esc(a.id)}">Kopieer bericht</button></span></div>`).join('')}`;
-  const vm = FUNCTIES.maandagVan(volgendeLesdag(s, 1)); const T = weekToetsenTussen(vm, FUNCTIES.plusDagen(vm, 6)).sort((a, b) => a.s < b.s ? -1 : 1);
+  const vm = FUNCTIES.maandagVan(lesdagStap(s, 1)); const T = weekToetsenTussen(vm, FUNCTIES.plusDagen(vm, 6)).sort((a, b) => a.s < b.s ? -1 : 1);
   const krap = planGroepen().filter(g => !MEE_MET[g] && Object.keys(S.voortgang[g] || {}).length).map(g => ruimte(g).find(d => d.tekort > 0)).filter(Boolean);
   if (T.length || krap.length) h += `<h3>Volgende week</h3>${T.map(x => `<div class="nu-rij"><span>${esc(x.g)} · ${x.soort === 'praktijk' ? 'praktijktoets' : 'toets'} ${esc(x.id)} op ${esc(x.dag)}</span><span class="tb"><span class="chip ${x.vast ? 'ok' : ''}">${x.vast ? 'staat vast' : 'schuift mee'}</span></span></div>`).join('')}${krap.map(d => `<div class="nu-rij"><span>${esc(d.g)} · krap voor ${esc(d.t.id)}</span><span class="tb"><a class="btn klein" href="${esc(klasUrl(d.g))}">Bekijk</a></span></div>`).join('')}`;
   return h;
@@ -1950,7 +1949,7 @@ function afsluitKaart(s, p, A, nu) {
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
     ${s === vandaag() && magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}
     ${wk ? weekBlokken(s) : ''}
-    <!--dok--><button class="btn hoofd" data-afsluiten="${s}">${wk ? 'Week' : 'Dag'} afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
+    <!--dok--><button class="btn hoofd" data-afsluiten="${s}" data-open="${n}">${wk ? 'Week' : 'Dag'} afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
 }
 function stilKaart(s) {
   const dicht = !!S.afgesloten[s]; const wk = weekAfsluitDag(s);
@@ -2450,8 +2449,8 @@ function jaarBereik(lg) { // eerste en laatste lesweek die echt bestaan: h5, v6 
   return W.length ? [W[0], W[W.length - 1]] : [1, 0];
 }
 const jaarTw = lg => ((B.toetsweken || {})[lg] || []).flatMap(tw => B.kalender.weken.filter(k => k.datum <= tw.tot && addD(k.datum, 4) >= tw.van).map(k => ({ w: k.w, tw })));
-/* proeffunctie Jaar: waar is nog lucht (functies.js, keuze jaar.*): een groene noot voor een les die kan vervallen (herkend als generale, afronden, herhaling of oefenen, nog niet gegeven, vóór een komende toets) */
-const luchtAan = () => fnAan('jaarLucht') && FUNCTIES.KEUZES.jaar.lucht === 'groene-noten-en-regel';
+/* Jaar: waar is nog lucht (functies.js, keuze jaar.*): een groene noot voor een les die kan vervallen (herkend als generale, afronden, herhaling of oefenen, nog niet gegeven, vóór een komende toets) */
+const luchtAan = () => FUNCTIES.KEUZES.jaar.lucht === 'groene-noten-en-regel';
 function luchtIds(g) { const s = new Set(); if (MEE_MET[g] || !leergangVan(g)) return s; ruimte(g).forEach(d => d.inhaal.forEach(x => s.add(x.id))); return s; }
 function jaarNootKlas(g, x, lw, lucht) { const st = status(g, x.id).st;
   return st === 'gegeven' ? '' : st === 'overgeslagen' ? 'over' : st === 'half' ? 'half' : les(x).type === 'leeg' ? 'leeg' : lucht && lucht.has(x.id) ? 'lucht' : x.w < lw ? 'mis' : 'open'; }
@@ -2917,11 +2916,6 @@ async function agendaKlik(D) {
   render(); return true;
 }
 
-/* ---------- proeffuncties: schakelaars (alleen op dit apparaat), keuzes staan in functies.js ---------- */
-function functiesKaart() {
-  return `<div class="kaart" id="functieskaart"><h2>Proeffuncties</h2><p class="lead">Nieuwe functies die je eerst proefondert. Ze staan standaard uit en gaan alleen aan op dit apparaat.</p>
-    ${FUNCTIES.LIJST.map(f => `<label class="chk" style="display:flex;gap:.6rem;align-items:flex-start;margin-top:.6rem"><input type="checkbox" data-fnzet="${esc(f.sleutel)}"${fnAan(f.sleutel) ? ' checked' : ''}><span><b>${esc(f.naam)}</b><span class="sub" style="display:block">${esc(f.uitleg)}</span></span></label>`).join('')}</div>`;
-}
 /* ---------- instellingen ---------- */
 function viewInstellingen() {
   const on = M365.enabled(); const acc = M365.account;
@@ -2948,7 +2942,6 @@ function viewInstellingen() {
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   ${logboekKaart()}
   <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. De kopie is de stand van het begin van die dag. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
-  ${functiesKaart()}
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
 
@@ -3288,7 +3281,7 @@ document.addEventListener('click', async e => {
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }
   if (D.later) { const terug = foto(); const [k, v] = D.later.split('|'); S.later[k] = v; bewaar(); toast(v === 'ok' ? 'Genoteerd' : 'Vandaag niet meer', terug); return; }
   if (D.klaarextra) { const terug = foto(); const [d, txt] = D.klaarextra.split('|'); (S.klaarExtra[d] = S.klaarExtra[d] || []).push(txt); bewaar(); toast('Staat op je klaarzetlijst', terug); return; }
-  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); toast(weekAfsluitDag(D.afsluiten) ? 'Week afgesloten. Maandag staat klaar.' : 'Morgen staat klaar. Fijne avond.', terug); return; }
+  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); const nOpen = +D.open || 0; const nogOpen = nOpen ? (nOpen === 1 ? ' 1 punt staat nog open.' : ` ${nOpen} punten staan nog open.`) : ''; toast((weekAfsluitDag(D.afsluiten) ? (nogOpen ? 'Week afgesloten.' : 'Week afgesloten. Maandag staat klaar.') : (nogOpen ? 'Dag afgesloten.' : 'Morgen staat klaar. Fijne avond.')) + nogOpen, terug); return; }
   if (D.fnkopie) { const a = (S.afwijkingen || []).find(x => x.id === D.fnkopie); try { await navigator.clipboard.writeText(a ? a.bericht : ''); toast('Gekopieerd'); } catch (err) { toast('Kopiëren lukt niet: open het bericht bij Nu en kopieer zelf'); } return; }
   if (D.heropen) { delete S.afgesloten[D.heropen]; bewaar(); return; }
   if (D.taakbewerk) { openTaakBewerk(D.taakbewerk); return; }
@@ -3348,7 +3341,6 @@ document.addEventListener('change', e => {
   const t = e.target;
   if (t.dataset.samenles) { if (samenSel) { const w = t.dataset.samenles; samenSel[w] = t.value; samenSel[w === 'a' ? 'fa' : 'fb'] = []; const r = reeks(leergangVan(samenSel.key.split('|')[0])); // de eerste les is de vroegste
       if (samenSel.a && samenSel.b && r.findIndex(x => x.id === samenSel.a) > r.findIndex(x => x.id === samenSel.b)) { [samenSel.a, samenSel.b] = [samenSel.b, samenSel.a]; [samenSel.fa, samenSel.fb] = [samenSel.fb, samenSel.fa]; } } render(); return; }
-  if (t.dataset.fnzet) { FUNCTIES.zet(AP.functies, t.dataset.fnzet, t.checked); apBewaar(); PLAN = null; render(); return; }
   if (t.dataset.bericht) { const a = (S.afwijkingen || []).find(x => x.id === t.dataset.bericht); if (a) { a.bericht = t.value; bewaar(true); } return; }
   if (t.checked && t.closest('.taak-klaar')) sluit();
   if (t.dataset.taaknoot) { const i = t.dataset.taaknoot.indexOf('|'), soort = t.dataset.taaknoot.slice(0, i), n = t.dataset.taaknoot.slice(i + 1), k = soort === 'ff' ? nootVooruit(n) : n; S.taakNoot = S.taakNoot || {}; const r = S.taakNoot[k] = S.taakNoot[k] || {}; const w = t.value.trim(); if (w) { r[soort] = w; r.d = vandaag(); r.titel = $('#drawer > h2').textContent; } else { delete r[soort]; if (!r.fb && !r.ff) delete S.taakNoot[k]; } bewaar(); return; }

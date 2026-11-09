@@ -1,16 +1,7 @@
-/* Proeffuncties van Lesdag (voorstel "Vier functies", 8-11-2026). Alles staat standaard uit, achter een schakelaar bij Instellingen.
-   De schakelaars staan per apparaat in AP.functies (niet in de gesynchroniseerde staat). Elke keuze van Frans is een benoemde instelling
-   in KEUZES: een andere keuze is een waarde hier wijzigen, geen herbouw. Rekenregels staan hier zonder scherm, getest in tools/test-functies.js.
-   Les-id's en de weekindeling blijven zoals ze zijn. */
+/* Week afsluiten, twee lessen samenvoegen en lucht op Jaar (voorstel "Vier functies", keuzes van Frans 9-11-2026). Elke keuze is een benoemde instelling
+   in KEUZES. Rekenregels staan hier zonder scherm, getest in tools/test-functies.js. Les-id's en de weekindeling blijven zoals ze zijn. */
 (function (wortel, maak) { if (typeof module === 'object' && module.exports) module.exports = maak(); else wortel.FUNCTIES = maak(); })(this, () => {
-  /* De schakelaars en hun uitleg voor Instellingen. Volgorde = volgorde op het scherm. */
-  const LIJST = [
-    { sleutel: 'weekAfsluiten', naam: 'Week afsluiten', uitleg: 'Op je laatste werkdag van de week wordt Dag afsluiten Week afsluiten: de goede zinnen van de week, wat anders ging dan de studiewijzer en wat er volgende week vaststaat.' },
-    { sleutel: 'samenvoegen', naam: 'Twee lessen samenvoegen', uitleg: 'Bij Krap voor de toets een extra optie: twee lessen naast elkaar, jij kiest de fasen, Lesdag telt tot de lesduur. Lesdag schrapt zelf nooit iets.' },
-    { sleutel: 'jaarLucht', naam: 'Jaar: waar is nog lucht', uitleg: 'Op Jaar een groene noot voor lessen die kunnen vervallen, en een korte regel bij een klas die krap zit.' }
-  ];
-
-  /* Benoemde keuzes uit het voorstel (nummers = vraagnummers). De waarden zijn het advies. */
+  /* Benoemde keuzes uit het voorstel (nummers = vraagnummers). De waarden zijn wat Frans op 9-11-2026 koos. */
   const KEUZES = {
     week: {
       waar: 'laatste-werkdag',        // keuze 1. 'laatste-werkdag' = Dag afsluiten wordt vanzelf Week afsluiten; 'nooit' = alleen de losse stukken (aantal op de knop blijft)
@@ -64,8 +55,5 @@
   /* ---- Jaar: waar is nog lucht. De regel bij een klas die krap zit (keuze 8); een klas die goed zit krijgt niets ---- */
   const luchtRegel = (toets, aantal) => 'Krap voor ' + toets + '. ' + (aantal < 1 ? 'Geen les kan vervallen.' : aantal === 1 ? 'Eén les kan vervallen.' : aantal + ' lessen kunnen vervallen.');
 
-  const aan = (ap, sleutel) => !!(ap && ap[sleutel]); // ap = AP.functies
-  const zet = (ap, sleutel, waarde) => { if (waarde) ap[sleutel] = true; else delete ap[sleutel]; return ap; };
-
-  return { LIJST, KEUZES, aan, zet, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, kiesPaar, unie };
+  return { KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, kiesPaar, unie };
 });

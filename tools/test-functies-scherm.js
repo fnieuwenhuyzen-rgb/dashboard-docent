@@ -1,57 +1,51 @@
-// node tools/test-functies-scherm.js: de proeffuncties in de browser, met verzonnen rooster (test-hulp.js) en een vaste klok.
-// Per functie: uit = niets verandert, aan = het doet wat het voorstel zegt. Playwright via NODE_PATH, zie tools/TESTEN.md.
+// node tools/test-functies-scherm.js: de vier functies in de browser, met verzonnen rooster (test-hulp.js) en een vaste klok.
+// Elke functie doet wat Frans op 9-11-2026 koos. Playwright via NODE_PATH, zie tools/TESTEN.md.
 const path = require('path'); const H = require('./test-hulp.js'); const pub = path.join(__dirname, '..', 'public');
 let fouten = 0, n = 0; const slecht = t => { console.log('  FOUT ' + t); fouten++; }; const ok = (c, t) => { n++; if (!c) slecht(t); };
 const paginaFouten = [];
 (async () => {
   const T = await H.start(pub);
-  // nieuwe browsercontext met staat en schakelaars; iso = de vaste klok
-  const open = async (hash, iso, { staat, functies } = {}) => {
+  // nieuwe browsercontext met staat; iso = de vaste klok
+  const open = async (hash, iso, { staat } = {}) => {
     const ctx = await T.browser.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block' }); await H.sluis(ctx, T.basis);
-    await ctx.addInitScript(([s, f]) => { try { if (!sessionStorage.getItem('ingesteld')) { localStorage.setItem('lesdag-staat', JSON.stringify(s)); if (f) localStorage.setItem('lesdag-apparaat', JSON.stringify({ functies: f })); sessionStorage.setItem('ingesteld', '1'); } } catch (e) {} }, [staat || H.STAAT, functies || null]);
+    await ctx.addInitScript(([s]) => { try { if (!sessionStorage.getItem('ingesteld')) { localStorage.setItem('lesdag-staat', JSON.stringify(s)); sessionStorage.setItem('ingesteld', '1'); } } catch (e) {} }, [staat || H.STAAT]);
     const page = await ctx.newPage(); page.on('pageerror', e => paginaFouten.push(String(e.message).slice(0, 200)));
     await page.clock.setFixedTime(new Date(iso)); await page.goto(T.basis + hash, { waitUntil: 'load' }); await H.wacht(page); await page.waitForTimeout(250);
     return { ctx, page, tekst: () => page.evaluate(() => document.querySelector('#main').innerText) };
   };
   try {
-    // 0. schakelaars bij Instellingen: standaard uit, aan te zetten, blijft staan
-    { const { ctx, page, tekst } = await open('#instellingen', '2026-11-20T10:00:00+01:00');
-      ok(/Proeffuncties/.test(await tekst()), 'Instellingen heeft geen kaart Proeffuncties');
-      ok(await page.evaluate(() => [...document.querySelectorAll('[data-fnzet]')].length === 3 && [...document.querySelectorAll('[data-fnzet]')].every(c => !c.checked)), 'proeffuncties staan niet allemaal uit');
-      await page.check('[data-fnzet="weekAfsluiten"]'); await page.waitForTimeout(200);
-      ok(await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-apparaat')).functies.weekAfsluiten === true), 'schakelaar wordt niet bewaard op het apparaat');
-      ok(await page.evaluate(() => document.querySelector('[data-fnzet="weekAfsluiten"]').checked), 'schakelaar springt terug');
-      ok(await page.evaluate(() => !('functies' in JSON.parse(localStorage.getItem('lesdag-staat') || '{}'))), 'schakelaars zitten in de gesynchroniseerde staat');
-      await ctx.close(); }
+    // 0. geen schakelaars meer: de functies staan gewoon aan
+    { const { ctx, tekst } = await open('#instellingen', '2026-11-20T10:00:00+01:00');
+      ok(!/Proeffuncties/.test(await tekst()), 'Instellingen heeft nog een kaart Proeffuncties'); await ctx.close(); }
     // 1. Week afsluiten
     const WSTAAT = Object.assign({}, H.STAAT, { goed: { '2026-11-16': 'De alten pakten maat 17.', '2026-11-18': 'Vwo 4 speelde het schema zonder blad.' }, afwijkingen: [{ id: 'af1', g: 'tv4', wat: 'Generale vervallen', bericht: 'De generale komt niet meer.', d: '2026-11-17', soort: 'les' }] });
-    const WAAN = { weekAfsluiten: true };
-    { const { ctx, tekst } = await open('#nu', '2026-11-20T16:20:00+01:00', { staat: WSTAAT });
-      const t0 = await tekst(); ok(/Dag afsluiten/.test(t0) && !/Week afsluiten/.test(t0) && !/Volgende week/i.test(t0), 'week afsluiten: uit, maar de kaart verandert'); await ctx.close(); }
-    { const { ctx, page, tekst } = await open('#nu', '2026-11-20T16:20:00+01:00', { staat: WSTAAT, functies: WAAN });
+    { const { ctx, page, tekst } = await open('#nu', '2026-11-20T16:20:00+01:00', { staat: WSTAAT });
       const t1 = await tekst();
       ok(/Week afsluiten/.test(t1) && /Wat ging goed deze week?/.test(t1), 'week afsluiten: vrijdag toont geen Week afsluiten');
       ok(/De alten pakten maat 17./.test(t1) && /Vwo 4 speelde het schema/.test(t1), 'week afsluiten: zinnen van de week ontbreken');
       ok(/Anders dan de studiewijzer/i.test(t1) && /Generale vervallen/.test(t1) && /Kopieer bericht/.test(t1), 'week afsluiten: blok Anders dan de studiewijzer ontbreekt');
-      ok(/Volgende week/i.test(t1) && /tv4 · praktijktoets PT1 op ma/.test(t1) && /staat vast/.test(t1), 'week afsluiten: toets van volgende week ontbreekt: ' + t1.slice(-400));
+      ok(/Volgende week/i.test(t1) && /tv4 · praktijktoets P1 op ma/.test(t1) && /staat vast/.test(t1), 'week afsluiten: toets van volgende week ontbreekt: ' + t1.slice(-400));
+      const nOpen = +(await page.getAttribute('[data-afsluiten]', 'data-open')); ok(nOpen === 0 || (await page.innerText('[data-afsluiten]')).includes(nOpen + ' nog open'), 'keuze 2: aantal staat niet op de knop');
       await page.click('[data-afsluiten]'); await page.waitForTimeout(300);
-      const t2 = await tekst(); ok(/Week afgesloten/.test(await page.evaluate(() => document.body.innerText)), 'week afsluiten: geen melding Week afgesloten');
+      const t2 = await tekst(); const melding = await page.evaluate(() => document.body.innerText); ok(/Week afgesloten/.test(melding) && /Ongedaan maken/.test(melding), 'week afsluiten: geen melding met Ongedaan maken'); ok(nOpen === 0 || melding.includes('nog open.'), 'keuze 2: melding noemt niet wat er open blijft');
       ok(await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')).afgesloten['2026-11-20'] === true), 'week afsluiten: dag niet afgesloten');
       ok(/Je week is afgesloten/i.test(t2), 'week afsluiten: stille tekst na afsluiten ontbreekt: ' + t2.slice(0, 200)); await ctx.close(); }
-    { const { ctx, tekst } = await open('#nu', '2026-11-19T16:20:00+01:00', { staat: WSTAAT, functies: WAAN });
+    { const { ctx, tekst } = await open('#nu', '2026-11-19T16:20:00+01:00', { staat: WSTAAT });
       const t3 = await tekst(); ok(/Dag afsluiten/.test(t3) && !/Week afsluiten/.test(t3) && !/Volgende week/i.test(t3), 'week afsluiten: donderdag is geen weekafsluiting'); await ctx.close(); }
-    { const { ctx, tekst } = await open('#nu', '2026-11-23T08:10:00+01:00', { staat: WSTAAT, functies: WAAN });
-      ok((await tekst()).includes('Deze week: praktijktoets tv4 (ma).'), 'week afsluiten: maandagregel ontbreekt'); await ctx.close(); }
     { const { ctx, tekst } = await open('#nu', '2026-11-23T08:10:00+01:00', { staat: WSTAAT });
-      ok(!/Deze week:/.test(await tekst()), 'week afsluiten: maandagregel staat aan zonder schakelaar'); await ctx.close(); }
-    { const { ctx, tekst } = await open('#nu', '2026-11-24T08:10:00+01:00', { staat: WSTAAT, functies: WAAN });
+      ok((await tekst()).includes('Deze week: praktijktoets tv4 (ma).'), 'week afsluiten: maandagregel ontbreekt'); await ctx.close(); }
+    { const { ctx, tekst } = await open('#nu', '2026-11-19T08:10:00+01:00', { staat: Object.assign({}, WSTAAT, { goed: { '2026-11-18': 'Vwo 4 speelde het schema zonder blad.' } }) });
+      ok(!/speelde het schema/.test(await tekst()), 'keuze 4: de zin van gisteren staat op Nu'); await ctx.close(); }
+    { const { ctx, tekst } = await open('#nu', '2027-03-11T16:20:00+01:00', { staat: WSTAAT });
+      ok(/Week afsluiten/.test(await tekst()), 'keuze 1: de donderdag voor een vrije vrijdag is geen weekafsluiting'); await ctx.close(); }
+    { const { ctx, tekst } = await open('#nu', '2027-03-10T16:20:00+01:00', { staat: WSTAAT });
+      ok(!/Week afsluiten/.test(await tekst()), 'keuze 1: de woensdag ervoor is wel een weekafsluiting'); await ctx.close(); }
+    { const { ctx, tekst } = await open('#nu', '2026-11-24T08:10:00+01:00', { staat: WSTAAT });
       ok(!/Deze week:/.test(await tekst()), 'week afsluiten: maandagregel op dinsdag'); await ctx.close(); }
     // 2. Twee lessen samenvoegen (bij Krap voor de toets)
     const KSTAAT = Object.assign({}, H.STAAT, { voortgang: { tv4: { 'vwo4:2.1': { st: 'gegeven', d: '2026-09-07' } } } });
-    const krap = async (functies) => { const o = await open('#nu', '2026-11-17T10:00:00+01:00', { staat: KSTAAT, functies }); await o.page.click('[data-krapopen]'); await o.page.waitForTimeout(200); return o; };
-    { const { ctx, tekst } = await krap(null); const t = await tekst();
-      ok(!/Twee lessen samenvoegen/.test(t) && /aan het begin van de toetsles/.test(t), 'samenvoegen: uit, maar de opties veranderen'); await ctx.close(); }
-    { const { ctx, page, tekst } = await krap({ samenvoegen: true }); const t = await tekst();
+    const krap = async () => { const o = await open('#nu', '2026-11-17T10:00:00+01:00', { staat: KSTAAT }); await o.page.click('[data-krapopen]'); await o.page.waitForTimeout(200); return o; };
+    { const { ctx, page, tekst } = await krap(); const t = await tekst();
       ok(/Twee lessen samenvoegen/.test(t), 'samenvoegen: de optie ontbreekt');
       ok(!/aan het begin van de toetsles/.test(t), 'samenvoegen: de optie "begin van de toetsles" blijft staan (keuze 7)');
       await page.click('[data-krapoptie="samen"]'); await page.waitForTimeout(200);
@@ -79,13 +73,10 @@ const paginaFouten = [];
       await ctx.close(); }
     // 3. Jaar: waar is nog lucht
     { const { ctx, page, tekst } = await open('#jaar', '2026-11-17T10:00:00+01:00', { staat: KSTAAT });
-      const t = await tekst(); ok(await page.evaluate(() => !document.querySelector('.jr-noot.lucht') && !document.querySelector('.jr-stand')), 'jaar: uit, maar groene noten of regel staan er');
-      ok(/heeft nog \d+ lessen te geven/.test(t), 'jaar: uit, maar de melding onder de partituur is veranderd'); await ctx.close(); }
-    { const { ctx, page, tekst } = await open('#jaar', '2026-11-17T10:00:00+01:00', { staat: KSTAAT, functies: { jaarLucht: true } });
       const t = await tekst();
       ok(await page.evaluate(() => document.querySelectorAll('.jr-score .jr-noot.lucht').length > 0), 'jaar: geen groene noot voor een les die kan vervallen');
       ok(await page.evaluate(() => document.querySelectorAll('.jr-stand').length === 1), 'jaar: precies één regel (alleen tv4 zit krap)');
-      ok(/tv4 · Krap voor PT1\. (Eén les kan vervallen|\d+ lessen kunnen vervallen|Geen les kan vervallen)\./.test(t), 'jaar: regel bij de krappe klas ontbreekt: ' + t.slice(0, 300));
+      ok(/tv4 · Krap voor P1\. (Eén les kan vervallen|\d+ lessen kunnen vervallen|Geen les kan vervallen)\./.test(t), 'jaar: regel bij de krappe klas ontbreekt: ' + t.slice(0, 300));
       ok(!/heeft nog \d+ lessen te geven/.test(t), 'jaar: de oude melding onder de partituur staat er nog naast de regel');
       ok(/kan vervallen \(generale/.test(t), 'jaar: legenda mist de groene noot');
       ok(await page.evaluate(() => JSON.stringify(JSON.parse(localStorage.getItem('lesdag-staat')).voortgang) === '{"tv4":{"vwo4:2.1":{"st":"gegeven","d":"2026-09-07"}}}'), 'jaar: Jaar heeft de voortgang veranderd (alleen lezen)');

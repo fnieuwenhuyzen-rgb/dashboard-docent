@@ -1031,7 +1031,7 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   .nav-blad .ico{display:block;width:22px;height:22px;flex:none}.nav-blad .ico svg{display:block;width:100%;height:100%}
 }
 
-/* proeffunctie Twee lessen samenvoegen (bij Krap voor de toets) */
+/* Twee lessen samenvoegen (bij Krap voor de toets) */
 .samen{display:grid;gap:.7rem}
 .samenkol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
 .samenkol select{width:100%;margin-bottom:.4rem}
@@ -1045,7 +1045,7 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 .samenteller .meter i.over{background:var(--let)}
 @media (max-width:640px){.samenkol{grid-template-columns:minmax(0,1fr)}}
 
-/* proeffunctie Jaar: waar is nog lucht */
+/* Jaar: waar is nog lucht */
 .jr-noot.lucht{background:var(--ok);border-color:var(--ok)}
 .jr-stand{position:sticky;left:.85rem;width:max-content;max-width:calc(100vw - 3rem);padding:.05rem 0 .35rem 4.6rem;font-size:.84rem;font-weight:600;color:var(--let)}
 .jr-stand a{color:inherit}
