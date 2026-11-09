@@ -62,21 +62,30 @@ console.log('  ' + vervuild + ' vervuilde varianten');
   STAAT.STAPPEN.push({ naar: was + 1, naam: 'test A', doe: d => { volg.push('A'); d.proef = 1; return d; } }, { naar: was + 2, naam: 'test B', doe: d => { volg.push('B'); d.proef++; return d; } }, { naar: was + 3, naam: 'kapotte stap', doe: () => { throw new Error('x'); } });
   const r = STAAT.migreer(s, leeg()); ok(volg.join('') === 'AB' && r.staat.proef === 2 && r.stappen.length === 2, 'stappen niet in volgorde of een kapotte stap stopt de keten: ' + volg + ' ' + r.stappen);
   STAAT.STAPPEN.length = 0; echt.forEach(x => STAAT.STAPPEN.push(x)); }
-// 4b. stap 2 (9-11-2026): de P9-lessen van vwo 5 wisselden van id; alles wat aan een les-id hangt gaat mee, de rest blijft
-{ const s = kloon(HUIDIG); s.schema = 1;
-  s.voortgang.v5 = { 'vwo5:8.1': { st: 'gegeven', d: '2026-10-26' }, 'vwo5:8.2': { st: 'gegeven' }, 'vwo5:12.1': { st: 'overgeslagen', inToets: 'vwo5:8.3' }, 'vwo5:18.1': { st: 'gegeven' } };
-  s.ankers.v5 = { 'vwo5:8.3': { s: '2026-11-23', uur: 'x', reden: 'proef' } };
-  s.les = { 'vwo5:8.1': { titel: 'eigen titel' }, 'vwo4:8.1': { titel: 'blijft' }, 'vwo5:28.1': { titel: 'blijft ook' } };
-  s.later = { 'pres:vwo5:12.2': 'ok', 's|pres:vwo5:8.1': 'ok' };
-  s.afwijkingen = [{ g: 'v5', lesIds: ['vwo5:8.1', 'vwo5:8.3'], wat: 'P9 verplaatst' }];
-  const r = STAAT.migreer(s, leeg()); const x = r.staat;
+// 4b. stap 2 (9-11-2026): vwo 5, P9 naar lesweek 12 en de lessen van week 12-15 schuiven op, in een keer vanaf de oude indeling.
+//     Alles wat aan een les-id hangt gaat mee (voortgang, ankers, eigen lesbewerking, pres:-sleutels, afwijkingen); 13.2 en 15.2 zijn vervallen en vallen weg
+{ const NAAR = { '8.1': '12.1', '8.3': '12.2', '12.1': '13.1', '12.2': '13.2', '13.1': '14.1', '14.1': '14.2', '14.2': '15.1', '15.1': '15.2' }; const VERVALLEN = ['13.2', '15.2'];
+  const BLIJFT = ['8.2', '12.3', '13.3', '14.3', '15.3', '18.1'];
+  const s = kloon(HUIDIG); s.schema = 1;
+  const alle = Object.keys(NAAR).concat(VERVALLEN, BLIJFT);
+  s.voortgang.v5 = {}; s.ankers.v5 = {}; s.les = { 'vwo4:8.1': { titel: 'blijft' }, 'vwo4:12.1': { titel: 'blijft ook' } }; s.later = {}; s.uitgesteld = {}; s.pres = {};
+  for (const id of alle) { s.voortgang.v5['vwo5:' + id] = { st: 'gegeven', d: 'van ' + id }; s.ankers.v5['vwo5:' + id] = { s: '2026-11-23', uur: 'x', reden: 'van ' + id }; s.les['vwo5:' + id] = { titel: 'van ' + id }; s.later['pres:vwo5:' + id] = 'van ' + id; s.later['s|pres:vwo5:' + id] = 'van ' + id; s.uitgesteld['vwo5:' + id] = 'van ' + id; }
+  s.voortgang.v5['vwo5:12.3'].inToets = 'vwo5:8.1'; s.voortgang.v5['vwo5:8.2'].inToets = 'vwo5:13.2'; s.voortgang.v5['vwo5:13.3'].inToets = 'vwo5:12.2';
+  s.afwijkingen = [{ g: 'v5', lesIds: ['vwo5:8.1', 'vwo5:8.3', 'vwo5:13.2', 'vwo5:12.1', 'vwo5:14.1', 'vwo4:12.1'], wat: 'P9 verplaatst' }, { g: 'v5', lesId: 'vwo5:13.1', wat: 'een' }, { g: 'v5', lesId: 'vwo5:15.2', wat: 'twee' }];
+  const r = STAAT.migreer(s, leeg()); const x = r.staat; const v = x.voortgang.v5;
   ok(r.stappen.length === 2 && x.schema === STAAT.SCHEMA, 'stap 2 en 3 niet uitgevoerd');
-  ok(x.voortgang.v5['vwo5:12.1'].d === '2026-10-26' && x.voortgang.v5['vwo5:8.1'].st === 'overgeslagen' && x.voortgang.v5['vwo5:8.1'].inToets === 'vwo5:12.2' && x.voortgang.v5['vwo5:8.2'] && x.voortgang.v5['vwo5:18.1'], 'voortgang van vwo 5 niet gewisseld of iets kwijt');
-  ok(x.ankers.v5['vwo5:12.2'] && !x.ankers.v5['vwo5:8.3'], 'anker niet meegegaan');
-  ok(x.les['vwo5:12.1'].titel === 'eigen titel' && x.les['vwo4:8.1'].titel === 'blijft' && x.les['vwo5:28.1'].titel === 'blijft ook' && !x.les['vwo5:8.1'], 'eigen lesbewerking niet goed meegegaan');
-  ok(x.later['pres:vwo5:8.3'] === 'ok' && x.later['pres:vwo5:12.2'] === undefined && x.later['s|pres:vwo5:12.1'] === 'ok', 'sleutel met pres: niet meegegaan');
-  ok(x.afwijkingen[0].lesIds.join() === 'vwo5:12.1,vwo5:12.2' && x.afwijkingen[0].wat === 'P9 verplaatst', 'afwijking niet meegegaan');
-  const r2 = STAAT.migreer(x, leeg()); ok(!r2.stappen.length && JSON.stringify(r2.staat.voortgang) === JSON.stringify(x.voortgang), 'stap 2 draait twee keer');
+  for (const [oud, nieuw] of Object.entries(NAAR)) {
+    const n = 'vwo5:' + nieuw, tag = 'van ' + oud;
+    ok(v[n] && v[n].d === tag && x.ankers.v5[n] && x.ankers.v5[n].reden === tag && x.les[n] && x.les[n].titel === tag && x.later['pres:' + n] === tag && x.later['s|pres:' + n] === tag && x.uitgesteld[n] === tag, 'gegevens van ' + oud + ' niet op ' + nieuw + ' terechtgekomen');
+  }
+  for (const id of VERVALLEN) { const n = 'vwo5:' + id; ok(!JSON.stringify(x).includes('van ' + id), 'gegevens van vervallen les ' + id + ' zijn blijven staan (op een nieuwe les of ergens anders)'); ok(!(n in v) || v[n].d !== 'van ' + id, 'vervallen ' + id + ' op nieuwe les'); }
+  for (const id of BLIJFT) { const n = 'vwo5:' + id; ok(v[n] && v[n].d === 'van ' + id && x.les[n].titel === 'van ' + id && x.ankers.v5[n].reden === 'van ' + id && x.later['pres:' + n] === 'van ' + id, 'les ' + id + ' hoort te blijven staan'); }
+  ok(x.les['vwo4:8.1'].titel === 'blijft' && x.les['vwo4:12.1'].titel === 'blijft ook', 'vwo 4 geraakt');
+  ok(Object.keys(v).length === 8 + 6 - 0 && Object.keys(x.ankers.v5).length === 14 && Object.keys(x.les).length === 16 && Object.keys(x.later).length === 28, 'aantal sleutels klopt niet (niets dubbel, vervallen weg)');
+  ok(v['vwo5:12.3'].inToets === 'vwo5:12.1' && v['vwo5:13.3'].inToets === 'vwo5:13.2' && v['vwo5:8.2'].inToets === undefined, 'inToets niet goed omgezet: ' + JSON.stringify([v['vwo5:12.3'].inToets, v['vwo5:13.3'].inToets, v['vwo5:8.2'].inToets]));
+  ok(x.afwijkingen[0].lesIds.join() === 'vwo5:12.1,vwo5:12.2,vwo5:13.1,vwo5:14.2,vwo4:12.1' && x.afwijkingen[0].wat === 'P9 verplaatst', 'lesIds van afwijking niet goed: ' + x.afwijkingen[0].lesIds);
+  ok(x.afwijkingen[1].lesId === 'vwo5:14.1' && x.afwijkingen[2].lesId === 'vwo5:vervallen', 'lesId van afwijking niet goed: ' + x.afwijkingen[1].lesId + ' ' + x.afwijkingen[2].lesId);
+  const r2 = STAAT.migreer(x, leeg()); ok(!r2.stappen.length && JSON.stringify(r2.staat.voortgang) === JSON.stringify(x.voortgang) && JSON.stringify(r2.staat.les) === JSON.stringify(x.les), 'stap 2 draait twee keer');
 }
 // 4c. stap 3 (9-11-2026): PT1 en PT2 van vwo 4 heten P1 en P2; sleutels en door de app gemaakte tekst gaan mee, eigen vrije tekst niet
 { const s = kloon(HUIDIG); s.schema = 2;

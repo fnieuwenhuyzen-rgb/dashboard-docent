@@ -20,18 +20,21 @@
       if (Array.isArray(d.rooster)) d.rooster.forEach(u => { if (isObj(u) && u.dag !== undefined && typeof u.dag !== 'number') { const n = Number(u.dag); if (Number.isFinite(n)) u.dag = n; } });
       return d;
     } },
-    { naar: 2, naam: "vwo 5: toetsles P9 van lesweek 8 naar 12.1 en 12.2 (9 nov 2026)", doe(d) {
-      // De lessen 8.1 en 8.3 (P9) wisselden van plek met 12.1 en 12.2 in basis.json. Gegevens van Frans die op een les-id hangen gaan mee:
-      // voortgang, eigen lesbewerkingen, verplaatsingen (ankers), de lessen in een afwijking en sleutels als pres:vwo5:8.1.
-      const WISSEL = { "vwo5:8.1": "vwo5:12.1", "vwo5:12.1": "vwo5:8.1", "vwo5:8.3": "vwo5:12.2", "vwo5:12.2": "vwo5:8.3" };
-      const RE = /(^|[^\w.])(vwo5:(?:8\.1|8\.3|12\.1|12\.2))(?![\w.])/g;
-      const hernoem = s => s.replace(RE, (m, v, id) => v + WISSEL[id]);
-      const sleutels = o => { if (!isObj(o)) return o; const uit = {}; for (const k of Object.keys(o)) uit[hernoem(k)] = o[k]; return uit; };
-      if (isObj(d.voortgang)) for (const g of Object.keys(d.voortgang)) if (isObj(d.voortgang[g])) { d.voortgang[g] = sleutels(d.voortgang[g]); for (const id of Object.keys(d.voortgang[g])) { const st = d.voortgang[g][id]; if (isObj(st) && tekst(st.inToets)) st.inToets = hernoem(st.inToets); } }
+    { naar: 2, naam: "vwo 5: toetsles P9 naar lesweek 12, lessen van week 12-15 schuiven op (9 nov 2026)", doe(d) {
+      // Ten opzichte van de oude indeling (die Frans op zijn apparaat heeft) verhuisden lessen van vwo 5 in basis.json. In één keer, voor alle sleutels tegelijk
+      // (anders schuift iets twee keer): P9 van 8.1 en 8.3 naar 12.1 en 12.2, en de lessen daarna een plek of week verder.
+      // 13.2 (Baslijn met omkeringen) en 15.2 (Heidenröslein begeleiden) zijn vervallen: gegevens daarvan vallen weg en komen nooit op een nieuwe les terecht.
+      // Alles wat aan een les-id hangt gaat mee: voortgang, eigen lesbewerkingen, verplaatsingen (ankers), de lessen in een afwijking en sleutels als pres:vwo5:8.1.
+      const NAAR = { "8.1": "12.1", "8.3": "12.2", "12.1": "13.1", "12.2": "13.2", "13.1": "14.1", "14.1": "14.2", "14.2": "15.1", "15.1": "15.2", "13.2": null, "15.2": null };
+      const RE = /(^|[^\w.])vwo5:(8\.1|8\.3|12\.1|12\.2|13\.1|13\.2|14\.1|14\.2|15\.1|15\.2)(?![\w.])/g;
+      const heeftVervallen = s => { let v = false; s.replace(RE, (m, v0, id) => { if (NAAR[id] === null) v = true; return m; }); return v; };
+      const hernoem = s => s.replace(RE, (m, v, id) => v + 'vwo5:' + NAAR[id]);
+      const sleutels = o => { if (!isObj(o)) return o; const uit = {}; for (const k of Object.keys(o)) if (!heeftVervallen(k)) uit[hernoem(k)] = o[k]; return uit; };
+      if (isObj(d.voortgang)) for (const g of Object.keys(d.voortgang)) if (isObj(d.voortgang[g])) { d.voortgang[g] = sleutels(d.voortgang[g]); for (const id of Object.keys(d.voortgang[g])) { const st = d.voortgang[g][id]; if (isObj(st) && tekst(st.inToets)) { if (heeftVervallen(st.inToets)) delete st.inToets; else st.inToets = hernoem(st.inToets); } } }
       if (isObj(d.ankers)) for (const g of Object.keys(d.ankers)) d.ankers[g] = sleutels(d.ankers[g]);
       for (const k of ["les", "uitgesteld", "later", "afLater", "goed", "klaarExtra", "mag", "magHw", "minuten", "reclameAf"]) if (isObj(d[k])) d[k] = sleutels(d[k]);
       if (isObj(d.pres)) d.pres = sleutels(d.pres);
-      if (Array.isArray(d.afwijkingen)) d.afwijkingen.forEach(a => { if (!isObj(a)) return; if (Array.isArray(a.lesIds)) a.lesIds = a.lesIds.map(x => tekst(x) ? hernoem(x) : x); if (tekst(a.lesId)) a.lesId = hernoem(a.lesId); });
+      if (Array.isArray(d.afwijkingen)) d.afwijkingen.forEach(a => { if (!isObj(a)) return; if (Array.isArray(a.lesIds)) a.lesIds = a.lesIds.filter(x => !(tekst(x) && heeftVervallen(x))).map(x => tekst(x) ? hernoem(x) : x); if (tekst(a.lesId)) a.lesId = heeftVervallen(a.lesId) ? 'vwo5:vervallen' : hernoem(a.lesId); });
       return d;
     } },
     { naar: 3, naam: 'vwo 4: PT1 en PT2 heten P1 en P2 (9 nov 2026)', doe(d) {
