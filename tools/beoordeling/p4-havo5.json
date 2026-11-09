@@ -73,7 +73,7 @@
     }
   ],
   "tussenscores": "Zit een leerling tussen twee niveaus in, geef dan 5, 7 of 9.",
-  "cijfer": "Tel per onderdeel score × weging op en deel door 12 (de som van de wegingen). Eindcijfer = 75% docent + 10% eigen cijfer van de leerling + 15% gemiddelde van minstens 3 klasgenoten. Ontbreekt een deel, dan is er geen eindcijfer.",
+  "cijfer": "Tel per onderdeel score × weging op en deel door 12 (de som van de wegingen). Eindcijfer = 75% docent + 10% eigen cijfer van de leerling + 15% gemiddelde van minstens 2 klasgenoten. Ontbreekt een deel, dan is er geen eindcijfer.",
   "onderdelen": [
     {
       "groep": "Uitvoering",
@@ -235,5 +235,5 @@
     "klasgenoten": 15
   },
   "zelfSoort": "cijfer",
-  "klasgenotenMin": 3
+  "klasgenotenMin": 2
 }
