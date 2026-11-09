@@ -2364,6 +2364,7 @@ function viewPartituur() {
   const lw = jaarLw(); const rang = g => { const i = JAAR_VOLG.indexOf(leergangVan(g)); return i < 0 ? 99 : i; };
   const gs = [...new Set(rooGroepen().concat(Object.keys(MEE_MET).filter(m => rooGroepen().includes(MEE_MET[m]))))].sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
+  h += periodeKaart();
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
     return `<div class="jr-rij${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>`; }).join('');
@@ -3603,6 +3604,31 @@ function bmStreepKlaar(e) { if (!bmStreep || e.pointerId !== bmStreep.id) return
   const T = bmToets(c.m.id, c.g); if (bmSelG) bmZet(c.k, T, 'k+', bmSelG, 'g', w, true); else if (bmSel) bmZet(c.k, T, 'k+', bmSel, null, w, true); }
 document.addEventListener('pointerup', bmStreepKlaar); document.addEventListener('pointercancel', bmStreepKlaar);
 const bmOnderdelen = (m, T) => { if (!T.vast) return m.onderdelen; const uit = []; for (const c of T.vast.crit) { let o = uit.find(x => x.groep === c.groep); if (!o) uit.push(o = { groep: c.groep, stuk: (m.onderdelen.find(x => x.groep === c.groep) || {}).stuk, criteria: [] }); o.criteria.push(c); } return uit; };
+// Einde van een periode (bevinding 67): per klas welke cijfers van de toetsen in die periode nog ontbreken, vanaf twee weken ervoor.
+// Een toets telt voor de periode van zijn laatste blok. Alleen toetsen met een beoordelingsmodel in Lesdag; schriftelijke toetsen zonder scorekaart staan hier niet.
+function periodeOverzicht() {
+  const t = vandaag(); const uit = []; const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
+  for (const g of groepen) { const lg = leergangVan(g); if (!lg) continue; const L = B.leergangen[lg]; const lijst = (S.beoord.lijsten || {})[g] || [];
+    for (const b of L.blokken || []) { if (!b.weken) continue; const wk = B.kalender.weken.find(k => k.w === b.weken[1]); if (!wk) continue; const eind = addD(wk.datum, 4);
+      if (t < addD(eind, -14) || t > addD(eind, 60)) continue;
+      const rijen = [];
+      for (const toets of L.toetsen || []) { if (String(toets.blok || '').split('+').pop() !== b.id) continue;
+        const m = BM.find(x => x.toets === toets.id && (x.lessen || []).some(k => k.lg === lg)); if (!m) continue;
+        const T = (S.beoord.toetsen || {})[m.id + '|' + g]; const datum = TOETSDATUM.plek(B.kalender, toets, toets.week).datum; const n = lijst.length;
+        if (!T || !n) { rijen.push({ m, g, toets: toets.id, ok: false, tekst: 'nog niet gescoord' + (datum && datum >= t ? ', staat op ' + fmtD(datum) : '') }); continue; }
+        const R = toetsRest(T, g); const zonder = n - R.vast;
+        if (zonder > 0) rijen.push({ m, g, toets: toets.id, ok: false, tekst: `${zonder} van ${n} zonder afgerond cijfer${R.inhalen ? ` (${R.inhalen} moet nog inhalen)` : ''}` });
+        else if (magNog(T, g)) rijen.push({ m, g, toets: toets.id, ok: false, tekst: 'alle cijfers staan vast, nog in Magister zetten' });
+        else rijen.push({ m, g, toets: toets.id, ok: true, tekst: 'alle cijfers staan vast en in Magister' }); }
+      if (rijen.length) uit.push({ nr: (String(b.id).match(/\d+/) || [''])[0], eind, g, rijen }); } }
+  return uit.filter(x => x.rijen.some(r => !r.ok) || t <= addD(x.eind, 7));
+}
+function periodeKaart() {
+  const P = periodeOverzicht(); if (!P.length) return ''; const t = vandaag(); const groepen = {};
+  P.forEach(x => { (groepen[x.nr + '|' + x.eind] = groepen[x.nr + '|' + x.eind] || []).push(x); });
+  return Object.entries(groepen).sort((a, b) => a[0].split('|')[1] < b[0].split('|')[1] ? -1 : 1).map(([k, L]) => { const [nr, eind] = k.split('|'); const open = L.reduce((n, x) => n + x.rijen.filter(r => !r.ok).length, 0);
+    return `<div class="kaart periode"><h2>Periode ${esc(nr)} ${eind >= t ? 'sluit' : 'sloot'} ${esc(fmtD(eind))}</h2><p class="lead">${open ? `Nog ${open} ${open === 1 ? 'toets' : 'toetsen'} waar cijfers van ontbreken.` : 'Alle cijfers van deze periode staan vast en in Magister.'}</p>${L.map(x => `<div class="jr-regel"><span><b>${esc(x.g)}</b></span><span class="tb">${x.rijen.map(r => `<button class="btn klein${r.ok ? '' : ' hoofd'}" data-beoordeel="${esc(r.m.id + '|' + r.g)}">${esc(r.toets)}: ${esc(r.tekst)}</button>`).join(' ')}</span></div>`).join('')}</div>`; }).join('');
+}
 function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daaronder per klas
   const t = vandaag(); const p = planning(t, t)[t]; const vandaagM = [];
   for (const x of (p && p.uren) || []) if (x.item && !x.uitval) for (const m of bmVoor(x.item)) if (!vandaagM.some(y => y.m === m && y.g === x.u.groep)) vandaagM.push({ m, g: x.u.groep, u: x.u });
@@ -3610,7 +3636,7 @@ function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daa
   const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
   const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b></span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
   return `<div class="kop"><div><p class="eyebrow">Beoordelen</p><h1>Kies een toets</h1></div></div>
-    <div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
+    ${periodeKaart()}<div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
     ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}`;
 }
 function viewBeoordelen() {

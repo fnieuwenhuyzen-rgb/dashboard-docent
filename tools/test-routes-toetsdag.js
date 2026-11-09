@@ -81,6 +81,14 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     await ctx2.close();
   });
 
+  /* 1d. einde van periode 1 (bevinding 67): vr 13-11 15:00 staat er per klas wat nog mist */
+  await stap('einde periode: wat ontbreekt per klas', async () => {
+    for (const hash of ['beoordelen', 'jaar']) { await op('13-11', '15:00', hash); const t = await tekst();
+      waar(`${hash} vr 13-11: kaart "Periode 1 sluit vr 13 nov"`, /Periode 1 sluit vr 13 nov/.test(t), t.slice(0, 300));
+      waar(`${hash} vr 13-11: tv4 PT1 nog niet gescoord, staat op ma 23 nov`, /tv4 PT1: nog niet gescoord, staat op ma 23 nov/.test(t), (t.match(/.{0,60}Periode 1.{0,160}/g) || []).join(' // ')); }
+    await op('13-11', '15:00', 'beoordelen'); await klik('.periode [data-beoordeel]'); await page.waitForFunction(() => /^#beoordelen\/pt1-vwo4\/tv4/.test(location.hash)); waar('de knop in de kaart opent de scorekaart', true);
+  });
+
   /* 2. de toetsdag: ma 23-11 om 9:05 staat PT1 op Nu en Dag, en in Beoordelen onder Vandaag (bevinding 8 en 56) */
   await stap('toetsdag op Nu, Dag en Beoordelen', async () => {
     await op('23-11', '09:05', 'nu'); let t = await tekst();
@@ -134,6 +142,12 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
       waar(`${dag} ${hm} ${hash}: geen melding dat PT1 nog niet is afgevinkt`, !/PT1 stond op|nog niet afgevinkt/.test(t), (t.match(/.{0,60}(afgevinkt|stond op).{0,60}/g) || []).join(' // ')); }
   });
 
+  /* 5b. dag erna: nog één leerling zonder cijfer (Daan, afwezig) */
+  await stap('einde periode: één leerling mist nog', async () => {
+    for (const hash of ['beoordelen', 'jaar']) { await op('24-11', '09:00', hash); const t = await tekst();
+      waar(`${hash} 24-11: periode 1 sloot vr 13 nov en PT1 mist 1 van 4 (1 moet nog inhalen)`, /Periode 1 sloot vr 13 nov/.test(t) && /PT1: 1 van 4 zonder afgerond cijfer \(1 moet nog inhalen\)/.test(t), (t.match(/.{0,60}Periode 1.{0,200}/g) || []).join(' // ')); }
+  });
+
   /* 6. inhalen (bevinding 60): Daan was afwezig; een regel blijft op Nu en Dag staan tot hij een cijfer heeft */
   await stap('inhalen blijft zichtbaar tot het gebeurd is', async () => {
     for (const [dag, hm, hash] of [['23-11', '16:20', 'nu'], ['24-11', '09:00', 'vandaag'], ['02-12', '08:40', 'nu'], ['07-12', '09:00', 'vandaag']]) { await op(dag, hm, hash); const t = await tekst();
@@ -159,6 +173,11 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     waar('na "Staat in Magister" noemt de kaart de datum', /In Magister gezet op/.test(await tekst()), (await tekst()).slice(0, 300));
     for (const hash of ['nu', 'vandaag']) { await op('07-12', '09:45', hash); waar(`${hash}: geen regel meer over Magister`, !/PT1 (de cijfers staan nog niet als ingevoerd|er zijn cijfers bijgekomen)/.test(await tekst()), (await tekst()).slice(0, 200)); }
     await op('07-12', '09:45', 'jaar/' + G); waar('klasblad: PT1 "in Magister"', (await knoppen('[data-beoordeel]')).some(x => / · in Magister/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
+  });
+
+  /* 8. alles staat vast en in Magister: de kaart verdwijnt een week na het einde van de periode */
+  await stap('einde periode: klaar', async () => {
+    for (const hash of ['beoordelen', 'jaar']) { await op('07-12', '10:00', hash); waar(`${hash} 7-12: geen kaart over periode 1 meer`, !/Periode 1 sloot/.test(await tekst()), (await tekst()).slice(0, 200)); }
   });
 
   await h.stop();
