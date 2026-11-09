@@ -519,6 +519,16 @@ sc('Weekinfo-deadline: maandag 14:00 boven aan Nu, daarna te laat, dinsdag nog z
   ok(/was om 14:00.*Nog mailen/.test(tijden['2026-11-30 14:10']), '14:10: te laat: ' + tijden['2026-11-30 14:10']);
   await P.klok(nlIso('2026-12-01', '08:15'), 'nu'); ok(await P.page.locator('.ens-meld [data-recvink="koor:2026-12-18#wi2"]').count() === 1, 'dinsdag: de gemiste weekinfo staat onder Blijft liggen, tot hij af is');
 });
+sc('Reclame: geen weekinfo of bord op een geschatte examenconcertdatum (bevinding 65)', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2027-02-01', '08:15') }); await P.open('reclame');
+  const kaart = P.page.locator('#rec-ex-mavo4-P2'); ok(await kaart.count() === 1, 'examenconcert mavo 4 staat in Reclame');
+  ok(/datum staat nog niet vast/i.test(await kaart.innerText()), 'de kaart zegt dat de datum nog niet vaststaat');
+  gelijk(await kaart.locator('[data-recmail], [data-recvink], [data-recbord]').count(), 0, 'geen mailknop, vinkje of bord op een geschatte datum');
+  gelijk(await P.page.locator('[data-recvink^="ex:"]').count(), 0, 'Reclame rekent niet met de geschatte datum');
+  await P.open('nu'); ok(!/Examenconcert mavo 4/.test(await P.tekst()), 'Nu noemt geen reclame voor het examenconcert');
+  await P.open('reclame'); await klikData(P, '[data-recdatumklopt="ex:mavo4:P2"]');
+  ok(await P.page.locator('#rec-ex-mavo4-P2 [data-recvink]').count() >= 1, 'na "De datum klopt" komen de weekinfo en het bord');
+});
 sc('Pauzes: zelf invullen, en met Zermelo-pauzes houdt de agenda ze vrij', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('instellingen'); await P.page.evaluate(() => document.querySelector('#pzForm').closest('details').open = true);
   const rij = P.page.locator('#pzForm .rij').last(); await rij.locator('[name=van]').fill('12:00'); await rij.locator('[name=tot]').fill('12:30'); await P.page.locator('#pzForm button[type=submit]').click(); await P.page.waitForTimeout(150);

@@ -731,6 +731,7 @@ function weekinfoMaandag(m) { // in een vakantie verschijnt er geen weekinfo: da
   return { maandag: x, d: recVrij(x) ? laatsteSchooldag(x) : x };
 }
 function reclameMomenten(a) {
+  if (a.uitLeergang) return []; // de datum komt uit de leergang en staat nog niet vast: geen weekinfo of bord op een geschatte datum (bevinding 65)
   const t = vandaag(); const tot = (RC.weekinfo || {}).inleverenTot || '14:00'; let m0 = maandagVan(a.doel); if (m0 === a.doel) m0 = addD(m0, -7); // op maandag zelf is die weekinfo te laat
   const out = []; const gezien = {};
   for (const w of (RC.weekinfo || {}).wekenVooraf || [2, 0]) { const s = weekinfoMaandag(addD(m0, -7 * w)); if (gezien[s.maandag]) continue; gezien[s.maandag] = 1;
@@ -748,7 +749,7 @@ const reclameMoment = id => { const a = reclameActs().find(a => a.id === id.spli
 const recTekst = a => (a.tekst != null && a.tekst !== '') ? a.tekst : RECLAME.tekst(a);
 function recWaarschuwingen(a) {
   const w = [];
-  if (a.uitLeergang) w.push(`Datum uit de leergang (${a.uitLeergang}). Vul de echte datum in.`);
+  if (a.uitLeergang) w.push(`De datum staat nog niet vast (leergang: ${a.uitLeergang}). Vul de echte datum in; tot dan maakt Lesdag geen weekinfo of bord.`);
   if (!a.aanvang) w.push(a.alleenVerzamel ? 'In de koorapp staat alleen de verzameltijd. Vul de aanvang voor het publiek in.' : 'Aanvangstijd ontbreekt.');
   if (!a.plaats) w.push('Plaats ontbreekt.');
   if (a.toegang === 'ticket') {
@@ -766,9 +767,9 @@ function recKaart(a) {
   const veld = (k, label, type, extra) => `<label>${label}<input data-recveld="${id}|${k}" type="${type || 'text'}" value="${v(k)}"${extra || ''}></label>`;
   const eigenTekst = a.tekst != null && a.tekst !== '';
   return `<div class="kaart reckaart${a.uit ? ' uit' : ''}" id="rec-${recVeilig(a.id)}"><div class="recgrid">
-    <button class="recvoorbeeld" data-recbord="${id}" title="Bord downloaden (pptx)"><img data-recimg="${id}" alt="Voorbeeld van het bord voor ${esc(a.titel)}"></button>
+    ${a.uitLeergang ? '' : `<button class="recvoorbeeld" data-recbord="${id}" title="Bord downloaden (pptx)"><img data-recimg="${id}" alt="Voorbeeld van het bord voor ${esc(a.titel)}"></button>`}
     <div class="recin"><p class="eyebrow">${esc(RSOORT[a.soort] || a.soort)} · ${esc(fmtLang(a.d))}${a.aanvang ? ' · ' + esc(a.aanvang) : ''}</p><h2>${esc(a.titel)}</h2>
-    ${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : M.map(m => recMomentRij(m)).join('')}
+    ${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : a.uitLeergang ? '<p class="lead">Eerst de datum vastleggen. Daarna komen de weekinfo en het bord.</p>' : M.map(m => recMomentRij(m)).join('')}
     ${w.length && !a.uit ? `<div class="melding recwaar">${w.map(esc).join('<br>')}</div>` : ''}
     <details class="recgeg"${w.length && !a.uit ? ' open' : ''}><summary>Gegevens voor de tekst en het bord</summary><div class="form recvelden">
       ${veld('titel', 'Titel')}${veld('ondertitel', 'Regel onder de titel (bord)')}
@@ -778,8 +779,9 @@ function recKaart(a) {
       <label>Toegang<select data-recveld="${id}|toegang"><option value="">zonder tickets</option><option value="ticket"${a.toegang === 'ticket' ? ' selected' : ''}>met tickets</option></select></label>
       ${a.toegang === 'ticket' ? `<div class="rij">${veld('sluit', 'Bestellen tot en met', 'date')}${veld('kosten', 'Prijs', 'text', ' placeholder="€ 12,50"')}</div>${veld('aanmeldlink', 'Website voor de tickets')}` : a.soort === 'excursie' ? `<div class="rij">${veld('sluit', 'Aanmelden tot en met', 'date')}${veld('kosten', 'Kosten')}</div>${veld('aanmeldlink', 'Aanmelden via (link of plek)')}` : ''}
     </div></details>
-    <label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
-    <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>
+    ${a.uitLeergang ? '' : `<label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
+    <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>`}
+    ${a.uitLeergang ? `<div class="knoppen"><button class="btn hoofd" data-recdatumklopt="${id}">De datum ${esc(fmtD(a.d))} klopt</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button></div>` : ''}
     </div></div></div>`;
 }
 let recAlles = false, recFocus = '';
@@ -816,6 +818,7 @@ function recDownload(naam, blob) { const u = URL.createObjectURL(blob); const l 
 async function recBestand(a, soort) { return soort === 'bord' ? RECLAME.pptx(a, recTekst(a)) : RECLAME.png(await RECLAME.beeld(a, 'weekinfo')); }
 async function recMail(soort, aid, mid) {
   const a = reclameActs().find(x => x.id === aid); if (!a) return;
+  if (a.uitLeergang) { toast('De datum staat nog niet vast. Vul eerst de datum in bij Reclame.'); return; }
   const M = reclameMomenten(a); const m = M.find(x => x.id === mid) || M.find(x => x.soort === soort && !x.af && !x.verlopen) || M.find(x => x.soort === soort);
   const mis = recWaarschuwingen(a); // ontbrekende gegevens: eerst vragen, de mail gaat dan pas klaar als Frans het zo wil
   if (mis.length && !confirm(`Bij "${a.titel}" klopt nog niet alles:\n\n- ${mis.join('\n- ')}\n\nToch de mail klaarzetten? Kies Annuleren om eerst de gegevens aan te vullen.`)) { toast('Mail niet klaargezet. Vul de gegevens aan en probeer opnieuw'); return; }
@@ -3057,6 +3060,7 @@ document.addEventListener('click', async e => {
   if (D.recmail) { const [soort, aid, mid] = D.recmail.split('|'); b.disabled = true; await recMail(soort, aid, mid); b.disabled = false; return; }
   if (D.reckopie) { const a = reclameActs().find(x => x.id === D.reckopie); const ta = document.querySelector(`[data-rectekst="${CSS.escape(D.reckopie)}"]`); const txt = ta ? ta.value : a ? recTekst(a) : ''; try { await navigator.clipboard.writeText(txt); toast('Tekst gekopieerd'); } catch (err) { if (ta) ta.select(); toast('Kopiëren lukt niet: selecteer en kopieer zelf'); } return; }
   if (D.recbeeld || D.recbord) { const soort = D.recbord ? 'bord' : 'wi'; const a = reclameActs().find(x => x.id === (D.recbord || D.recbeeld)); if (!a) return; b.disabled = true; try { recDownload(RECLAME.bestand(a, soort), await recBestand(a, soort)); } catch (err) { console.warn(err); toast('Maken lukt niet'); } b.disabled = false; return; }
+  if (D.recdatumklopt) { const x = reclameActs().find(y => y.id === D.recdatumklopt); if (!x) return; const r = (S.reclame = S.reclame || {})[x.id] = S.reclame[x.id] || {}; r.d = x.d; recFocus = x.id; bewaar(); toast('Datum staat vast: ' + fmtD(x.d)); return; }
   if (D.recuit) { const r = (S.reclame = S.reclame || {})[D.recuit] = S.reclame[D.recuit] || {}; r.uit = !r.uit; if (!r.uit) delete r.uit; recFocus = D.recuit; bewaar(); return; }
   if (D.recstel) { const r = (S.reclame || {})[D.recstel]; if (r) delete r.tekst; recFocus = D.recstel; bewaar(); return; }
   if (D.recweg) { S.reclameExtra = (S.reclameExtra || []).filter(x => x.id !== D.recweg); if (S.reclame) delete S.reclame[D.recweg]; bewaar(); return; }
