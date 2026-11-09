@@ -630,6 +630,7 @@ body.bordvenster{padding:0}
 .ens-lab{margin:0;font-size:var(--t-klein);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--m)}
 .ens-zin{font-family:var(--lees);font-size:clamp(22px,2.5vw,30px);font-weight:600;line-height:1.3;letter-spacing:0;margin:0;max-width:36ch;color:var(--ink)}
 .ens-twijfel{margin:-.4rem 0 0;font-size:var(--t-klein);color:var(--muted)}
+.ens-week{margin:-.4rem 0 0;font-size:var(--t-klein);color:var(--muted)}
 .ens-acties{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
 .ens-acties .btn{min-height:48px;font-size:1.02rem;padding:.55rem 1.15rem;border-radius:12px}
 .ens-acties .btn.hoofd{background:var(--m);border-color:var(--m);color:var(--op)}

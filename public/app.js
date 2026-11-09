@@ -1539,7 +1539,7 @@ function viewNu() {
   const pzVraag = !rustig && A.werkdag && A.pz && A.pz.onbekend && !pauzeVraagWeg() ? pauzeVraag() : ''; // onderaan, niet bovenaan (bevinding 21)
   const twijfel = rustig || stil ? '' : zinTwijfel(A);
   const meld = rustig || stil ? '' : nuMeldingen(s);
-  h += `<div class="ens${rustig ? ' zonder' : ''}${meld ? ' met-meld' : ''}"><div class="ens-links">${Z.lab ? `<p class="ens-lab">${kijk ? 'Ander moment · ' : ''}${esc(Z.lab)}</p>` : ''}<h1 class="ens-zin">${esc(Z.zin)}</h1>${twijfel ? `<p class="ens-twijfel">${esc(twijfel)}</p>` : ''}
+  h += `<div class="ens${rustig ? ' zonder' : ''}${meld ? ' met-meld' : ''}"><div class="ens-links">${Z.lab ? `<p class="ens-lab">${kijk ? 'Ander moment · ' : ''}${esc(Z.lab)}</p>` : ''}<h1 class="ens-zin">${esc(Z.zin)}</h1>${Z.week && !kijk ? `<p class="ens-week">${esc(Z.week)}</p>` : ''}${twijfel ? `<p class="ens-twijfel">${esc(twijfel)}</p>` : ''}
     ${acties || Z.knop ? `<div class="ens-acties">${acties || Z.knop}</div>` : ''}<div class="nu-kaart">${kaart}</div></div>${meld}`;
   if (!rustig) h += `<aside class="ens-rechts"><p class="eyebrow">Vandaag</p>${vandaagLijst(s, A, nu, kijk || live)}${stil || geenVoorstel ? '' : `<div class="ens-open">${nogOpen(s, p, A, m, nu)}</div>`}</aside>`;
   h += '</div>' + pzVraag;
@@ -1568,9 +1568,9 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
   const it = m.it; const x = m.x;
   switch (m.m) {
     case 'vrijedag': return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
-    case 'stil': return { lab: '', zin: S.afgesloten[s] ? 'Je dag is afgesloten. Morgen staat klaar.' : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
-    case 'start': { const L = lesUren(p); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
-      return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan),
+    case 'stil': return { lab: '', zin: S.afgesloten[s] ? (weekAfsluitDag(s) ? 'Je week is afgesloten. Maandag staat klaar.' : 'Je dag is afgesloten. Morgen staat klaar.') : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
+    case 'start': { const L = lesUren(p); const week = weekMaandagRegel(s); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
+      return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan), week,
         zin: `Goedemorgen. ${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${L[0].u.start} (${L[0].u.groep})` : 'Geen lessen vandaag'}${kr ? `, koor om ${hm(kr.van)}` : ''}${T.length ? `, ${T.length === 1 ? 'een afspraak' : T.length + ' afspraken'} uit je rooster om ${lijstTxt(T.map(y => hm(y.van)))}` : ''}.${C.length ? ` ${C[0].c.naam} ${wanneerJarig(C[0].d, s)}.` : ''}${gisterenGoed(s)}` }; }
     case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
       return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
@@ -1603,7 +1603,8 @@ function werkblokZin(s, p, it, nu) { // dezelfde volgorde als de werkblokkaart: 
 function afsluitZin(s, p, A, nu) {
   const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
   const n = teAfronden(s, p, nu).length + A.items.filter(y => y.soort === 'taak' && !y.k.af).length + deadl.length + (s === vandaag() ? magOpen(s).length : 0);
-  return { lab: 'Dag afsluiten · een paar minuten', zin: n ? `Tijd om af te sluiten. ${n === 1 ? 'Eén ding staat' : n + ' dingen staan'} nog open; elk krijgt een moment.` : 'Niets staat open. Sluit de dag af, dan is het stil.' };
+  const wk = weekAfsluitDag(s);
+  return { lab: (wk ? 'Week' : 'Dag') + ' afsluiten · een paar minuten', zin: n ? `Tijd om ${wk ? 'de week ' : ''}af te sluiten. ${n === 1 ? 'Eén ding staat' : n + ' dingen staan'} nog open; elk krijgt een moment.` : 'Niets staat open. Sluit de dag af, dan is het stil.' };
 }
 function kijkZin(s, it, nu) { // een ander moment van de dag, gekozen met ‹ › of in de lijst
   const t = `${hm(it.van)}–${hm(it.tot)}`;
@@ -1795,7 +1796,32 @@ function werkblokKaart(s, p, A, it, nu, live) {
     ${!used ? '<p class="lead" style="margin-top:.6rem">Dit blok mag ook gewoon rustig blijven.</p>' : ''}
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-ag="${s}|${esc(it.key)}">Zelf iets plannen</button></div></div>`;
 }
+/* ---------- proeffunctie Week afsluiten (functies.js, keuzes week.*): op de laatste lesdag van de week is Dag afsluiten dezelfde knop met meer erin ---------- */
+const weekAfsluitDag = s => fnAan('weekAfsluiten') && FUNCTIES.KEUZES.week.waar === 'laatste-werkdag' && FUNCTIES.laatsteLesdagVanWeek(s, d => volgendeLesdag(d, 1));
+function weekToetsenTussen(van, tot) { // toetsen van je klassen met hun lesuur (of laatste uur) in deze periode, elke toets één keer
+  const L = []; const gezien = new Set();
+  for (const g of planGroepen()) { if (MEE_MET[g]) continue;
+    for (const a of ankersVan(g)) { if (a.klaar) continue; const y = a.vast ? a.slot : a.grens; if (!y || y.s < van || y.s > tot || gezien.has(g + '|' + a.t.id)) continue; gezien.add(g + '|' + a.t.id);
+      L.push({ g, soort: a.t.soort || '', id: a.t.id, s: y.s, dag: DAG[dOf(y.s).getDay()], vast: a.vast }); } }
+  return L;
+}
+function weekMaandagRegel(s) { // keuze 3: op de eerste lesdag van de week één grijze regel met de toetsen van die week, onder de zin op Nu
+  if (!fnAan('weekAfsluiten') || !FUNCTIES.KEUZES.week.maandagRegel || !FUNCTIES.eersteLesdagVanWeek(s, d => volgendeLesdag(d, -1))) return '';
+  return FUNCTIES.weekRegel(weekToetsenTussen(s, FUNCTIES.plusDagen(FUNCTIES.maandagVan(s), 6)), FUNCTIES.KEUZES.week.maandagMaxToetsen);
+}
+function weekBlokken(s) { // de extra stukken van Week afsluiten, na Nog open: zinnen van de week, anders dan de studiewijzer, volgende week
+  const ma = FUNCTIES.maandagVan(s); const K = FUNCTIES.KEUZES.week; let h = '';
+  const zinnen = K.zinnenTerug ? [1, 2, 3, 4, 5].map(i => FUNCTIES.plusDagen(ma, i - 1)).filter(d => d < s && S.goed[d]) : [];
+  if (zinnen.length) h += `<h3>Wat ging goed deze week</h3>${zinnen.map(d => `<blockquote class="nu-goed">${esc(S.goed[d])} <span class="sub">${DAG[dOf(d).getDay()]}</span></blockquote>`).join('')}`;
+  const af = (S.afwijkingen || []).filter(a => a.bericht && a.d >= ma && a.d <= s);
+  if (af.length) h += `<h3>Anders dan de studiewijzer</h3>${af.map(a => `<div class="nu-rij"><span>${esc(a.g)} · ${esc(a.wat || '')}</span><span class="tb"><button class="btn klein mag" data-fnkopie="${esc(a.id)}">Kopieer bericht</button></span></div>`).join('')}`;
+  const vm = FUNCTIES.maandagVan(volgendeLesdag(s, 1)); const T = weekToetsenTussen(vm, FUNCTIES.plusDagen(vm, 6)).sort((a, b) => a.s < b.s ? -1 : 1);
+  const krap = planGroepen().filter(g => !MEE_MET[g] && Object.keys(S.voortgang[g] || {}).length).map(g => ruimte(g).find(d => d.tekort > 0)).filter(Boolean);
+  if (T.length || krap.length) h += `<h3>Volgende week</h3>${T.map(x => `<div class="nu-rij"><span>${esc(x.g)} · ${x.soort === 'praktijk' ? 'praktijktoets' : 'toets'} ${esc(x.id)} op ${esc(x.dag)}</span><span class="tb"><span class="chip ${x.vast ? 'ok' : ''}">${x.vast ? 'staat vast' : 'schuift mee'}</span></span></div>`).join('')}${krap.map(d => `<div class="nu-rij"><span>${esc(d.g)} · krap voor ${esc(d.t.id)}</span><span class="tb"><a class="btn klein" href="${esc(klasUrl(d.g))}">Bekijk</a></span></div>`).join('')}`;
+  return h;
+}
 function afsluitKaart(s, p, A, nu) {
+  const wk = weekAfsluitDag(s);
   const af = teAfronden(s, p, nu); const open = A.items.filter(it => it.soort === 'taak' && !it.k.af);
   const blok = vrijeBlokken(volgendeLesdag(s, 1), 0, 6);
   const chips = (v, min, dl) => { const tot = dl && dl >= volgendeLesdag(s, 1) ? /* een taak plan je niet na zijn deadline; een verlopen deadline: gewoon het eerste blok */ addD(dl, 1) : null; const a = slotVoor(blok, min, tot), b = slotVoor(blok, min, tot); return [a, b].filter(Boolean).map(sl => `<button class="btn klein" data-slot="${esc(v)}|${sl.dag}|${sl.van}|${sl.tot}">${esc(slotTekst(sl))}</button>`).join(''); };
@@ -1803,7 +1829,7 @@ function afsluitKaart(s, p, A, nu) {
   const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
   const M = s === vandaag() ? magOpen(s) : [];
   const n = af.length + open.length + deadl.length + M.length;
-  return `<div class="kaart"><p class="eyebrow">Dag afsluiten · een paar minuten</p><h2>Wat ging goed vandaag?</h2>
+  return `<div class="kaart"><p class="eyebrow">${wk ? 'Week' : 'Dag'} afsluiten · een paar minuten</p><h2>${wk ? 'Wat ging goed deze week?' : 'Wat ging goed vandaag?'}</h2>
     <textarea id="gGoed" rows="2" placeholder="Bijvoorbeeld: de alten hadden maat 17 ineens te pakken">${esc(S.goed[s] || '')}</textarea><p class="sub">Mag leeg blijven. Alleen voor jou.</p>
     <h3>${n ? 'Nog open, krijgt een moment' : 'Nog open'}</h3>
     ${magLijst(M, 5)}
@@ -1812,12 +1838,13 @@ function afsluitKaart(s, p, A, nu) {
     ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min, k.d))).join('')}
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
     ${s === vandaag() && magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}
-    <!--dok--><button class="btn hoofd" data-afsluiten="${s}">Dag afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
+    ${wk ? weekBlokken(s) : ''}
+    <!--dok--><button class="btn hoofd" data-afsluiten="${s}">${wk ? 'Week' : 'Dag'} afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
 }
 function stilKaart(s) {
-  const dicht = !!S.afgesloten[s];
-  return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${dicht ? 'Morgen staat klaar' : 'Je dag zit erop'}</h2>
-    <p class="lead">${dicht ? 'Lesdag is stil tot morgen 8:00.' : 'Afsluiten kost een paar minuten. Daarna is Lesdag stil.'}</p>
+  const dicht = !!S.afgesloten[s]; const wk = weekAfsluitDag(s);
+  return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${dicht ? (wk ? 'Je week is afgesloten' : 'Morgen staat klaar') : 'Je dag zit erop'}</h2>
+    <p class="lead">${dicht ? (wk ? 'Maandag staat klaar. Lesdag is stil tot dan.' : 'Lesdag is stil tot morgen 8:00.') : 'Afsluiten kost een paar minuten. Daarna is Lesdag stil.'}</p>
     ${S.goed[s] ? `<blockquote class="nu-goed">${esc(S.goed[s])}</blockquote>` : ''}
     <!--dok-->${dicht ? `<button class="btn" data-heropen="${s}">Toch nog iets doen</button>` : '<button class="btn hoofd" data-kijk="afsluiten">Dag afsluiten</button>'}<button class="btn" data-dag="${volgendeLesdag(s, 1)}">Morgen bekijken</button><!--/dok--></div>`;
 }
@@ -3132,7 +3159,8 @@ document.addEventListener('click', async e => {
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }
   if (D.later) { const terug = foto(); const [k, v] = D.later.split('|'); S.later[k] = v; bewaar(); toast(v === 'ok' ? 'Genoteerd' : 'Vandaag niet meer', terug); return; }
   if (D.klaarextra) { const terug = foto(); const [d, txt] = D.klaarextra.split('|'); (S.klaarExtra[d] = S.klaarExtra[d] || []).push(txt); bewaar(); toast('Staat op je klaarzetlijst', terug); return; }
-  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); toast('Morgen staat klaar. Fijne avond.', terug); return; }
+  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); toast(weekAfsluitDag(D.afsluiten) ? 'Week afgesloten. Maandag staat klaar.' : 'Morgen staat klaar. Fijne avond.', terug); return; }
+  if (D.fnkopie) { const a = (S.afwijkingen || []).find(x => x.id === D.fnkopie); try { await navigator.clipboard.writeText(a ? a.bericht : ''); toast('Gekopieerd'); } catch (err) { toast('Kopiëren lukt niet: open het bericht bij Nu en kopieer zelf'); } return; }
   if (D.heropen) { delete S.afgesloten[D.heropen]; bewaar(); return; }
   if (D.taakbewerk) { openTaakBewerk(D.taakbewerk); return; }
   if (D.duurja) { duurNoteer(+D.duurja); return; }
