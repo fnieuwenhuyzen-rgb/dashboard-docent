@@ -371,23 +371,28 @@ function ankersVan(g) { // de toetsen van een groep met hun lesuur. a.vast: staa
   const P = planBasis(); if (P.ank[g]) return P.ank[g];
   const lg = leergangVan(g); const slots = P.slots[g] || []; const verpl = (S.ankers || {})[g] || {};
   const lijst = reeks(lg).filter(x => les(x).type === 'toets').map(x => { const l = les(x); const verplaatst = verpl[x.id] || null;
-    return { id: x.id, item: x, t: toetsVan(lg, l.toets) || { id: l.toets || 'toets', naam: l.titel || '' }, verplaatst, vast: !ONDERBOUW.test(lg) || !!verplaatst, klaar: afgerond(status(g, x.id)), slot: null, grens: null }; });
+    const t = toetsVan(lg, l.toets) || { id: l.toets || 'toets', naam: l.titel || '' }; const plek = TOETSDATUM.plek(B.kalender, t, x.w); // de datum in basis.json gaat voor de lesweek uit de leergang (PTA-toetsen; het PTO schuift mee)
+    return { id: x.id, item: x, t, verplaatst, plek, opDatum: !ONDERBOUW.test(lg) && plek.afwijkt, vast: !ONDERBOUW.test(lg) || !!verplaatst, klaar: afgerond(status(g, x.id)), slot: null, grens: null }; });
   const zet = (a, y) => { if (y) { a.slot = y; y.anker = a; } };
   lijst.filter(a => a.verplaatst && !a.klaar).forEach(a => zet(a, slots.find(y => y.s === a.verplaatst.s && y.u.id === a.verplaatst.uur && !y.anker) || slots.find(y => y.s === a.verplaatst.s && !y.anker)));
-  lijst.filter(a => a.vast && !a.verplaatst && !a.klaar).forEach(a => zet(a, slots.find(y => y.w === a.item.w && y.li === a.item.li && !y.anker) || slots.find(y => y.w >= a.item.w && !y.anker && !y.geplandUit)));
+  lijst.filter(a => a.opDatum && !a.verplaatst && !a.klaar).forEach(a => zet(a, slots.find(y => y.s === a.plek.datum && !y.anker) || slots.find(y => y.w === a.plek.w && !y.anker && !y.geplandUit))); // een toets met twee lessen (P9 en P9 vervolg) krijgt de uren van die dag achter elkaar
+  lijst.filter(a => a.vast && !a.verplaatst && !a.klaar && !a.slot).forEach(a => zet(a, slots.find(y => y.w === a.item.w && y.li === a.item.li && !y.anker) || slots.find(y => y.w >= a.item.w && !y.anker && !y.geplandUit)));
   lijst.filter(a => !a.vast && !a.klaar).reverse().forEach(a => { const eind = periodeEind(lg, a); if (!slots.some(y => y.w >= eind)) return; // einde periode nog niet in het bekende rooster: nog geen grens
     const y = slots.filter(y => y.w <= eind && !y.anker && !y.grens && !y.geplandUit && !isUitval(y.s, y.u)).pop(); if (y) { a.grens = y; y.grens = a; } });
   return (P.ank[g] = lijst);
 }
 const isVastAnker = (g, id) => ankersVan(g).some(a => a.id === id && a.vast);
 // Toets die niet op zijn uur door kan: uur voorbij en niet afgevinkt, uur vervallen, of (onderbouw) geen uur meer in de periode.
-function ankersGemist(g) { const t = vandaag(); const voorbij = a => a.verplaatst || ((B.kalender.weken.find(k => k.w === a.item.w) || {}).datum || t) < t; // geen uur en de week komt nog: het rooster is daar nog niet bekend
+function ankersGemist(g) { const t = vandaag(); const voorbij = a => a.verplaatst || ((B.kalender.weken.find(k => k.w === (a.opDatum ? a.plek.w : a.item.w)) || {}).datum || t) < t; // geen uur en de week komt nog: het rooster is daar nog niet bekend
   return ankersVan(g).filter(a => !a.klaar && (a.vast ? (a.slot ? a.slot.s < t || isUitval(a.slot.s, a.slot.u) : voorbij(a)) : (a.grens ? a.grens.s < t : voorbij(a)))); }
 const planGroepen = () => Object.keys(planBasis().slots).filter(g => leergangVan(g));
+function ankerIdx(r, a) { // plek in de reeks tot waar de lessen vóór de toets reiken; staat de toets verplaatst (of op zijn datum), dan hoort de generale uit dezelfde lesweek er nog vóór
+  let i = r.indexOf(a.item); if (!a.verplaatst && !a.opDatum) return i; i++;
+  while (r[i] && r[i].w === a.item.w && /generale/i.test(les(r[i]).titel || '')) i++; return i; }
 function ruimte(g) { // per komende toets: hoeveel lessen moeten er nog vóór, en hoeveel lesuren zijn daarvoor over
   const lg = leergangVan(g); const r = reeks(lg); const t = vandaag(); const nu = nuMin(); const ank = ankersVan(g); const doelen = [];
   const uren = (planBasis().slots[g] || []).filter(y => (y.s > t || (y.s === t && minuten(y.u.eind) > nu)) && !isUitval(y.s, y.u) && !y.geplandUit && !y.anker);
-  for (const a of ank) { const y = a.vast ? a.slot : a.grens; if (a.klaar || !y || y.s < t || isUitval(y.s, y.u)) continue; doelen.push({ id: a.id, a, t: a.t, s: y.s, y, idx: r.indexOf(a.item) }); }
+  for (const a of ank) { const y = a.vast ? a.slot : a.grens; if (a.klaar || !y || y.s < t || isUitval(y.s, y.u)) continue; doelen.push({ id: a.id, a, t: a.t, s: y.s, y, idx: ankerIdx(r, a) }); }
   for (const w of B.leergangen[lg].weken) { if (!w.toetsweek) continue; // toetsweektoetsen staan niet in de reeks, maar de stof moet er wel vóór af zijn
     for (const i of [1, 2, 3]) { const l = w['l' + i]; const T = l && l.type === 'toets' && toetsVan(lg, l.toets); if (!T) continue;
       const x = toetsweekToetsen().find(x => x.lg === lg && x.t.id === T.id); const s = x ? x.tw.d : w.datum; if (s <= t) continue;
@@ -2278,7 +2283,7 @@ function jaarNoten(g, lg, lw) {
 }
 function jaarToetsen(g) { // de toetsen op hun lesuur (ankersVan) en de rest uit de leergang: toetsen in een toetsweek zijn geen les
   const lg = leergangVan(g); const A = MEE_MET[g] ? [] : ankersVan(g); const lw = jaarLw(); // meedraaien: geen eigen lesuren, dus de weken uit de leergang
-  const uit = A.map(a => ({ a, t: a.t, w: a.verplaatst && a.slot ? a.slot.w : a.item.w, klaar: a.klaar, los: !a.verplaatst && WEEK_LOS.test(a.t.waar || '') }));
+  const uit = A.map(a => ({ a, t: a.t, w: (a.verplaatst || a.opDatum) && a.slot ? a.slot.w : a.opDatum ? a.plek.w : a.item.w, klaar: a.klaar, los: !a.verplaatst && WEEK_LOS.test(a.t.waar || '') }));
   ((B.leergangen[lg] || {}).toetsen || []).filter(T => !A.some(a => a.t.id === T.id)).forEach(T => uit.push({ t: T, w: T.week, klaar: T.week < lw, los: WEEK_LOS.test(T.waar || '') }));
   return uit.sort((a, b) => a.w - b.w);
 }
@@ -3709,4 +3714,5 @@ function herstelScherm(reden) { // Lesdag start niet: altijd een uitweg zonder s
     const f = staatFouten(d); if (f.length) { alert('Deze kopie is ook niet in orde (' + f.join(', ') + '). Kies een andere.'); return; }
     zet(Object.assign(nieuweStaat(), d), `Kopie van ${d.updated ? new Date(d.updated).toLocaleString('nl-NL', { dateStyle: 'long', timeStyle: 'short' }) : 'onbekende datum'} terugzetten? Daarin: ${kopieOmvang(d)}.`); };
 }
+window.LESDAG_TEST = { ankersVan, planBasis, planning, dagItems, ruimte, ankersGemist, jaarToetsen, agendaItems, reeks, les, planGroepen, S: () => S }; // alleen lezen, voor tools/test-planning.js
 })();

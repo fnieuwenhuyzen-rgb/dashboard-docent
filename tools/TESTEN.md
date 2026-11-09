@@ -7,6 +7,7 @@ Eén opdracht draait alles: `node tools/test-alles.js` (±40 s; `--snel` ±20 s;
 | Bestanden | `test-bestanden.js` | syntaxfout in een script, ontbrekend bestand in `index.html` of de `SHELL`-lijst van `sw.js` |
 | Gegevens | `controleer-gegevens.js` | kapotte JSON, **minder** sectietaken/leergangen/lessen/presentaties/formulieren dan `HEAD`, leerlingnamen-achtige velden |
 | Rekenregels, lesklok, agendafeed, samenvoegen | `beoordeling/test-reken.js`, `test-lesklok.js`, `test-agendafeed.js`, `test-sync.js` | rekenfouten |
+| Toetsdatum en planning | `test-toetsdatum.js`, `test-planning.js` | een toets die niet op zijn datum uit `basis.json` staat (Dag, Week, Jaar, klasblad, tekort, agendafeed); nieuwe afwijking in de data |
 | Schermen | `test-schermen.js` | "Dit scherm lukt nu niet", consolefouten, horizontale overloop; 14 schermen × 7 tijden × 1280/375 px, met verzonnen rooster |
 
 ## Eenmalig: Playwright buiten de repo
