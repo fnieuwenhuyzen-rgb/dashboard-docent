@@ -529,6 +529,18 @@ sc('Reclame: geen weekinfo of bord op een geschatte examenconcertdatum (bevindin
   await P.open('reclame'); await klikData(P, '[data-recdatumklopt="ex:mavo4:P2"]');
   ok(await P.page.locator('#rec-ex-mavo4-P2 [data-recvink]').count() >= 1, 'na "De datum klopt" komen de weekinfo en het bord');
 });
+sc('Examenconcert: vaste voorbereidingstaken, eerst de datum, daarna de rest (bevinding 66)', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-11-12', '08:15') }); await P.open('vandaag');
+  const kort = x => x.slice(0, 200).replace(/\n/g, ' ');
+  let t = await P.tekst(); ok(/Datum, tijd en plaats vastleggen \(Examenconcert vwo ?6\)/.test(t), 'onvaste datum: alleen de taak om de datum vast te leggen: ' + kort(t));
+  ok(!/Zaal en tijden regelen/.test(t), 'de rest van de voorbereiding wacht op de datum');
+  await P.wijzig(s => { s.reclame = s.reclame || {}; s.reclame['ex:vwo6:P19'] = { d: '2027-01-11' }; }, 'vandaag');
+  await P.klok(nlIso('2026-11-30', '08:15'), 'vandaag'); t = await P.tekst();
+  ok(/Zaal en tijden regelen \(Examenconcert vwo ?6\)/.test(t) && /Groepen en taken bevestigen/.test(t), 'vaste datum: zaal en groepen staan erbij: ' + kort(t));
+  ok(!/Datum, tijd en plaats vastleggen \(Examenconcert vwo/.test(t), 'de datumtaak is weg');
+  const id = await P.page.locator('[data-koorvink^="exam-voor-vwo6-P19-"]').first().getAttribute('data-koorvink'); await klikData(P, `[data-koorvink="${id}"]`);
+  ok((await P.S()).koorAf[id], 'afvinken zet koorAf voor ' + id);
+});
 sc('Pauzes: zelf invullen, en met Zermelo-pauzes houdt de agenda ze vrij', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('instellingen'); await P.page.evaluate(() => document.querySelector('#pzForm').closest('details').open = true);
   const rij = P.page.locator('#pzForm .rij').last(); await rij.locator('[name=van]').fill('12:00'); await rij.locator('[name=tot]').fill('12:30'); await P.page.locator('#pzForm button[type=submit]').click(); await P.page.waitForTimeout(150);
