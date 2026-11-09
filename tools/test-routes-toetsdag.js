@@ -66,6 +66,14 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     await op('23-11', '09:05', 'beoordelen'); t = await tekst(); waar('23-11 Beoordelen: PT1 onder Vandaag', !/Vandaag staat er geen toets/.test(t) && /PT1/.test(t), t.slice(0, 300));
   });
 
+  /* 3. op het toetsmoment één tik naar de scorekaart (bevinding 58) */
+  await stap('één tik naar de scorekaart', async () => {
+    await op('23-11', '09:13', 'nu'); waar('9:13 Nu (over 2 minuten): knop Beoordelen PT1', (await knoppen('[data-beoordeel]')).some(x => /Beoordelen PT1/.test(x)), await tekst());
+    await op('23-11', '09:16', 'nu'); const kn = await knoppen('[data-beoordeel]'); waar('9:16 Nu (de les loopt): knop Beoordelen PT1', kn.some(x => /Beoordelen PT1/.test(x)), (await tekst()).slice(0, 300));
+    await klik('[data-beoordeel]'); await page.waitForFunction(() => /^#beoordelen\/pt1-vwo4\/tv4/.test(location.hash));
+    await page.waitForSelector('#bmLijst, .bm-status'); waar('na één tik staat de scorekaart van PT1 tv4 open', /PT1/.test(await tekst()), (await tekst()).slice(0, 200));
+  });
+
   await h.stop();
   const geen = fouten.length === 0;
   console.log(geen ? `toetsdag: ${nChecks} controles, alles goed (${((Date.now() - t0) / 1000).toFixed(0)} s)` : `toetsdag: ${fouten.length} fout(en) in ${nChecks} controles:\n  - ` + fouten.join('\n  - '));
