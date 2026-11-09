@@ -462,7 +462,7 @@ function verplaatsAnker(g, a, sleutel, reden) { // lessen van dezelfde toets (P2
   const samen = ankersVan(g).filter(x => x.t.id === a.t.id && !x.klaar); const ids = [];
   S.ankers[g] = S.ankers[g] || {};
   samen.forEach((x, i) => { const y = uren[vanaf + i]; if (y) { S.ankers[g][x.id] = { s: y.s, uur: y.u.id, reden, d: vandaag() }; ids.push(x.id); } });
-  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden,
+  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden, berichtTot: s,
     bericht: `${a.t.id} is verplaatst${oud ? ` van ${fmtLang(oud.s)}` : ''} naar ${fmtLang(s)}.` });
 }
 /* ---------- eenmalig extra of geruild lesuur: "+ Nieuw", keuze Les. Een ruil zet het oude uur op uitval en voegt het nieuwe toe ---------- */
@@ -1496,9 +1496,11 @@ function voerKrapUit(R, k) {
   krapOpen = ''; krapKeuze = ''; bewaar();
   toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id));
 }
+const berichtTot = a => a.berichtTot || (a.lesIds && a.lesIds.length ? (((S.ankers || {})[a.g] || {})[a.lesIds[0]] || {}).s : '') || ''; // bevinding 69: het bericht aan de klas is nuttig tot de nieuwe datum; op de dag zelf is het oud nieuws
+const berichtVervallen = a => { const d = berichtTot(a); return !!d && vandaag() >= d; };
 function uitvalBlok(s) {
   let h = '';
-  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
+  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar && !berichtVervallen(a)).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
   const rijen = [];
   for (const g of planGroepen()) {
     if (!Object.keys(S.voortgang[g] || {}).length) continue;
@@ -1506,6 +1508,10 @@ function uitvalBlok(s) {
       if (ankerOpen === g + '|' + a.id) { rijen.push(ankerForm(g, a)); continue; }
       const tekst = !a.vast ? `past niet meer in zijn periode.` : !y ? 'heeft geen lesuur.' : y.s >= vandaag() ? `stond op ${esc(fmtD(y.s))}, maar dat uur vervalt.` : `stond op ${esc(fmtD(y.s))} en is nog niet afgevinkt.`;
       rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+    if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.inhalen)) { const key = `inhalen:${x.k}`; if (uitgesteld(key)) continue; // bevinding 60: wie moet inhalen blijft zichtbaar tot er een cijfer is
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.inhalen === 1 ? '1 leerling moet' : x.inhalen + ' leerlingen moeten'} nog inhalen.</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+    if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.mag)) { const key = `magister:${x.k}`; if (uitgesteld(key)) continue;
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.T.inMagister ? 'er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'de cijfers staan nog niet als ingevoerd in Magister.'}</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-bminmag="${esc(x.m.id + '|' + g)}">Staat erin</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
     const R = krapVoor(g); if (!R) continue;
     if (krapOpen === g + '|' + R.id) { rijen.push(krapKaart(R)); continue; }
     const x = R.inhaal[R.inhaal.length - 1] || R.nog[R.nog.length - 1];
@@ -1965,7 +1971,8 @@ function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de pre
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
   return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>
     <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is en rond de les daar af. Tik daarna op Afgerond; Lesdag kijkt zelf niet in Magister.</p>
-    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok--></div>`;
+    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok-->
+    ${x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn hoofd" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div>`; // bevinding 58: op het toetsmoment één tik naar de scorekaart
 }
 function magBlok(s, x) { // Magister in het oog, tijdens en na de les: presentie, huiswerk bij de bel, logboek
   if (!magTelt(s, x)) return ''; const k = magKey(s, x); const v = magVakken(s, x); const R = [];
@@ -2399,6 +2406,7 @@ function viewPartituur() {
   const lw = jaarLw(); const rang = g => { const i = JAAR_VOLG.indexOf(leergangVan(g)); return i < 0 ? 99 : i; };
   const gs = [...new Set(rooGroepen().concat(Object.keys(MEE_MET).filter(m => rooGroepen().includes(MEE_MET[m]))))].sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
+  h += periodeKaart();
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
     return `<div class="jr-rij${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>`; }).join('');
@@ -2410,7 +2418,8 @@ function viewPartituur() {
   return h;
 }
 function bmRegel(m, g, label) { const T = S.beoord.toetsen[m.id + '|' + g]; const n = T ? Object.keys(T.ll).filter(id => T.ll[id].af || BMR.eind(m, T, T, id).e != null).length : 0;
-  return `<button class="btn klein" data-beoordeel="${esc(m.id)}|${esc(g)}">${esc(label)}${n ? ` (${n} klaar)` : ''}</button>`; }
+  const mag = T && toetsRest(T, g).vast ? (magNog(T, g) ? ' · nog in Magister zetten' : ' · in Magister') : ''; // bevinding 61: de stand van de kolom zie je op het klasblad en in het menu Beoordelen
+  return `<button class="btn klein" data-beoordeel="${esc(m.id)}|${esc(g)}">${esc(label)}${n ? ` (${n} klaar)` : ''}${mag}</button>`; }
 function toetsenKaart(g) { // met de knop Beoordelen op de regel van de toets, ook om in te halen of na te kijken buiten de toetsles
   const lg = leergangVan(g); const L = jaarToetsen(g); const bms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); const gehad = new Set();
   const rij = o => { const { a, t } = o; const y = a && (a.vast ? a.slot : a.grens); const eigen = gehad.has(t.id) ? [] : bms.filter(m => m.toets.split(' · ')[0] === t.id); gehad.add(t.id);
@@ -3126,6 +3135,7 @@ document.addEventListener('click', async e => {
   if (D.jaartoets) { const i = D.jaartoets.indexOf('|'); const el = $('#jaarInfo'); if (el) el.innerHTML = jaarToetsTekst(D.jaartoets.slice(0, i), D.jaartoets.slice(i + 1)); return; }
   if (D.jaarklas) { location.hash = 'jaar/' + encodeURIComponent(D.jaarklas); return; }
   if (D.berichtkopie) { const ta = document.querySelector(`[data-bericht="${D.berichtkopie}"]`); try { await navigator.clipboard.writeText(ta.value); toast('Gekopieerd'); } catch (err) { ta.select(); toast('Kopiëren lukt niet: selecteer en kopieer zelf'); } return; }
+  if (D.bminmag) { const [mid, g] = D.bminmag.split('|'); const T = S.beoord.toetsen[mid + '|' + g]; if (T) { const f = foto(); bmInMagister(T, g); bewaar(); toast('Genoteerd: de cijfers staan in Magister', f); } return; }
   if (D.berichtklaar) { const a = (S.afwijkingen || []).find(x => x.id === D.berichtklaar); if (a) a.berichtKlaar = true; bewaar(); return; }
   if (D.afwijkingterug) { maakOngedaan(D.afwijkingterug); toast('Teruggezet'); return; }
   if (D.taakopen) { openTaak(D.taakopen); return; }
@@ -3381,7 +3391,7 @@ document.addEventListener('keydown', e => {
 });
 function leesRoute() { if (/^#groepen(\/|$)/.test(location.hash)) history.replaceState(null, '', '#jaar'); // oude links
   const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; }
-window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
+window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); ankerOpen = ''; /* bevinding 68: een half ingevuld verplaats-paneel blijft niet open staan tot een andere dag */ if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
   if (route.naam === 'bord' && !LES) { document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true); return; } // opent de browser het bord in hetzelfde venster
   render(); window.scrollTo(0, 0); });
 
@@ -3396,6 +3406,13 @@ const bmVoor = item => BM.filter(m => (m.lessen || []).some(k => k.lg === item.l
 const komma = x => x == null ? '' : String(x).replace('.', ',');
 const bmKanMap = () => typeof window.showDirectoryPicker === 'function';
 const bmTijd = t => { const d = new Date(t); return `${fmtD(ymd(d))} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
+function bmToetsGegeven(m, g) { if (!leergangVan(g)) return 0; let n = 0; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { S.voortgang[g] = S.voortgang[g] || {}; S.voortgang[g][a.id] = Object.assign({}, status(g, a.id), { st: 'gegeven', d: vandaag() }); n++; }); return n; }
+// wat er na een toets nog ligt (bevinding 60 en 61): wie moet nog inhalen, en staan de afgeronde cijfers in Magister. Alleen aantallen: namen blijven in Beoordelen.
+function toetsRest(T, g) { const lijst = (S.beoord.lijsten || {})[g] || []; const r = x => (T && T.ll && T.ll[x.id]) || {};
+  return { inhalen: lijst.filter(x => r(x).af && !r(x).vast).length, vast: lijst.filter(x => r(x).vast).length }; }
+const magNog = (T, g) => toetsRest(T, g).vast > ((T && T.inMagister && T.inMagister.n) || 0); // bevinding 61: er staan afgeronde cijfers die niet (allemaal) als ingevoerd in Magister zijn gemeld
+function bmInMagister(T, g) { T.inMagister = { d: vandaag(), n: toetsRest(T, g).vast }; }
+function toetsenOpen() { const uit = []; if (!S.beoord || !BM) return uit; for (const [k, T] of Object.entries(S.beoord.toetsen || {})) { const i = k.lastIndexOf('|'); const m = BM.find(x => x.id === k.slice(0, i)); if (!m) continue; const g = k.slice(i + 1); uit.push(Object.assign({ m, g, T, k, mag: magNog(T, g) }, toetsRest(T, g))); } return uit; }
 function bmToets(mid, g) { const k = mid + '|' + g; return S.beoord.toetsen[k] || (S.beoord.toetsen[k] = { ll: {}, volgorde: [], start: vandaag() }); }
 function bmRij(L, id) { return L.ll[id] || (L.ll[id] = { s: {}, v: {}, opm: {} }); }
 const bmLaag = T => (bmLaagId === 'herkans' && T.herkans) || (T.tussen || []).find(x => x.id === bmLaagId) || T;
@@ -3496,7 +3513,8 @@ function bmKolomKaart(m, g, T, lijst) {
   return `<div class="kaart bm"><h2>Cijferkolom voor Magister</h2><p class="lead">In de volgorde van de klassenlijst, één regel per leerling. Alleen afgeronde cijfers; bij inhalen of zonder cijfer blijft de cel leeg.${H ? ' Na een herkansing staat hier het hoogste afgeronde cijfer.' : ''} Klik in Magister op de eerste cel van de kolom en plak.</p>
     ${open.length ? `<p class="bm-waarsch">${open.length} ${open.length === 1 ? 'leerling heeft' : 'leerlingen hebben'} een cijfer dat nog niet is afgerond. <button class="btn klein hoofd" data-bm="afronden" data-laag="toets">Nu afronden</button></p>` : ''}
     ${hOpen.length ? `<p class="bm-waarsch">${hOpen.length} ${hOpen.length === 1 ? 'herkansing is' : 'herkansingen zijn'} nog niet afgerond en ${hOpen.length === 1 ? 'telt' : 'tellen'} dus nog niet mee. <button class="btn klein hoofd" data-bm="afronden" data-laag="herkans">Nu afronden</button></p>` : ''}
-    <div class="knoppen"><button class="btn hoofd" data-bm="kolomkopie" ${rij.some(x => x.c) ? '' : 'disabled'}>Kopieer kolom</button><button class="btn" data-bm="dicht">Terug</button></div>
+    <p class="lead" id="bmMagStatus">${magNog(T, g) ? (T.inMagister ? 'Er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'Deze cijfers staan nog niet als ingevoerd in Magister.') : T.inMagister ? 'In Magister gezet op ' + fmtD(T.inMagister.d) + '.' : ''}</p>
+    <div class="knoppen"><button class="btn hoofd" data-bm="kolomkopie" ${rij.some(x => x.c) ? '' : 'disabled'}>Kopieer kolom</button><button class="btn" data-bm="inmagister" ${rij.some(x => x.r && x.r.vast) ? '' : 'disabled'}>Staat in Magister</button><button class="btn" data-bm="dicht">Terug</button></div>
     <p>${rij.length} regels, ${rij.length - leeg} cijfers, ${leeg} leeg.</p>
     <textarea id="bmKolom" readonly hidden rows="4">${esc(BMR.kolom(T, lijst).join('\n'))}</textarea>
     <table class="bm-kolom"><thead><tr><th>Leerling</th><th>Cijfer</th><th></th></tr></thead><tbody>${rij.map(x => `<tr><td>${esc(x.naam)}</td><td class="c">${esc(x.c)}</td><td>${esc(noot(x))}</td></tr>`).join('')}</tbody></table></div>`;
@@ -3629,6 +3647,31 @@ function bmStreepKlaar(e) { if (!bmStreep || e.pointerId !== bmStreep.id) return
   const T = bmToets(c.m.id, c.g); if (bmSelG) bmZet(c.k, T, 'k+', bmSelG, 'g', w, true); else if (bmSel) bmZet(c.k, T, 'k+', bmSel, null, w, true); }
 document.addEventListener('pointerup', bmStreepKlaar); document.addEventListener('pointercancel', bmStreepKlaar);
 const bmOnderdelen = (m, T) => { if (!T.vast) return m.onderdelen; const uit = []; for (const c of T.vast.crit) { let o = uit.find(x => x.groep === c.groep); if (!o) uit.push(o = { groep: c.groep, stuk: (m.onderdelen.find(x => x.groep === c.groep) || {}).stuk, criteria: [] }); o.criteria.push(c); } return uit; };
+// Einde van een periode (bevinding 67): per klas welke cijfers van de toetsen in die periode nog ontbreken, vanaf twee weken ervoor.
+// Een toets telt voor de periode van zijn laatste blok. Alleen toetsen met een beoordelingsmodel in Lesdag; schriftelijke toetsen zonder scorekaart staan hier niet.
+function periodeOverzicht() {
+  const t = vandaag(); const uit = []; const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
+  for (const g of groepen) { const lg = leergangVan(g); if (!lg) continue; const L = B.leergangen[lg]; const lijst = (S.beoord.lijsten || {})[g] || [];
+    for (const b of L.blokken || []) { if (!b.weken) continue; const wk = B.kalender.weken.find(k => k.w === b.weken[1]); if (!wk) continue; const eind = addD(wk.datum, 4);
+      if (t < addD(eind, -14) || t > addD(eind, 60)) continue;
+      const rijen = [];
+      for (const toets of L.toetsen || []) { if (String(toets.blok || '').split('+').pop() !== b.id) continue;
+        const m = BM.find(x => x.toets === toets.id && (x.lessen || []).some(k => k.lg === lg)); if (!m) continue;
+        const T = (S.beoord.toetsen || {})[m.id + '|' + g]; const datum = TOETSDATUM.plek(B.kalender, toets, toets.week).datum; const n = lijst.length;
+        if (!T || !n) { rijen.push({ m, g, toets: toets.id, ok: false, tekst: 'nog niet gescoord' + (datum && datum >= t ? ', staat op ' + fmtD(datum) : '') }); continue; }
+        const R = toetsRest(T, g); const zonder = n - R.vast;
+        if (zonder > 0) rijen.push({ m, g, toets: toets.id, ok: false, tekst: `${zonder} van ${n} zonder afgerond cijfer${R.inhalen ? ` (${R.inhalen} moet nog inhalen)` : ''}` });
+        else if (magNog(T, g)) rijen.push({ m, g, toets: toets.id, ok: false, tekst: 'alle cijfers staan vast, nog in Magister zetten' });
+        else rijen.push({ m, g, toets: toets.id, ok: true, tekst: 'alle cijfers staan vast en in Magister' }); }
+      if (rijen.length) uit.push({ nr: (String(b.id).match(/\d+/) || [''])[0], eind, g, rijen }); } }
+  return uit.filter(x => x.rijen.some(r => !r.ok) || t <= addD(x.eind, 7));
+}
+function periodeKaart() {
+  const P = periodeOverzicht(); if (!P.length) return ''; const t = vandaag(); const groepen = {};
+  P.forEach(x => { (groepen[x.nr + '|' + x.eind] = groepen[x.nr + '|' + x.eind] || []).push(x); });
+  return Object.entries(groepen).sort((a, b) => a[0].split('|')[1] < b[0].split('|')[1] ? -1 : 1).map(([k, L]) => { const [nr, eind] = k.split('|'); const open = L.reduce((n, x) => n + x.rijen.filter(r => !r.ok).length, 0);
+    return `<div class="kaart periode"><h2>Periode ${esc(nr)} ${eind >= t ? 'sluit' : 'sloot'} ${esc(fmtD(eind))}</h2><p class="lead">${open ? `Nog ${open} ${open === 1 ? 'toets' : 'toetsen'} waar cijfers van ontbreken.` : 'Alle cijfers van deze periode staan vast en in Magister.'}</p>${L.map(x => `<div class="jr-regel"><span><b>${esc(x.g)}</b></span><span class="tb">${x.rijen.map(r => `<button class="btn klein${r.ok ? '' : ' hoofd'}" data-beoordeel="${esc(r.m.id + '|' + r.g)}">${esc(r.toets)}: ${esc(r.tekst)}</button>`).join(' ')}</span></div>`).join('')}</div>`; }).join('');
+}
 function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daaronder per klas
   const t = vandaag(); const p = planning(t, t)[t]; const vandaagM = [];
   for (const x of (p && p.uren) || []) if (x.item && !x.uitval) for (const m of bmVoor(x.item)) if (!vandaagM.some(y => y.m === m && y.g === x.u.groep)) vandaagM.push({ m, g: x.u.groep, u: x.u });
@@ -3636,7 +3679,7 @@ function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daa
   const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
   const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b></span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
   return `<div class="kop"><div><p class="eyebrow">Beoordelen</p><h1>Kies een toets</h1></div></div>
-    <div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
+    ${periodeKaart()}<div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
     ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}`;
 }
 function viewBeoordelen() {
@@ -3800,9 +3843,12 @@ document.addEventListener('click', async e => {
   if (D.bm === 'afronden') { const isH = T.herkans && (D.laag === 'herkans' || (!D.laag && bmLaag(T) === T.herkans)); const A = isH ? T.herkans : T; const wie = isH ? lijst.filter(x => A.wie.includes(x.id)) : lijst;
     const open = wie.filter(x => !(A.ll[x.id] && (A.ll[x.id].vast || A.ll[x.id].af)) && BMR.eind(m, A, T, x.id).e != null).length; const rest = wie.filter(x => !(A.ll[x.id] && A.ll[x.id].vast)).length - open;
     if (!confirm(`${isH ? 'Herkansing: ' : ''}${open} ${open === 1 ? 'cijfer' : 'cijfers'} vastleggen, met de scores en wegingen van nu.${rest ? ` ${rest} ${rest === 1 ? 'leerling heeft' : 'leerlingen hebben'} nog geen cijfer en ${rest === 1 ? 'blijft' : 'blijven'} open.` : ''}`)) return;
-    const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true; bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '')); await bmReserveNu(m, g); return; }
+    const voor = foto(); const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true;
+    const gez = !isH && af.length ? bmToetsGegeven(m, g) : 0; // bevinding 59: cijfers vastgelegd = de toets is gegeven, dus geen melding "nog niet afgevinkt" de volgende dag
+    bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '') + (gez ? `. ${m.toets} staat op gegeven` : ''), gez ? voor : undefined); await bmReserveNu(m, g); return; }
   if (D.bm === 'heropen') { const A = bmLaag(T); if (!BMR.isPoging(A, T)) return; if (!confirm('Dit cijfer openzetten om te wijzigen? Het oude cijfer staat in het logboek. Rond daarna opnieuw af en zet het nieuwe cijfer zelf in Magister.')) return; bmLog(k, { a: 'heropen', id: bmSel, w: A.ll[bmSel].vast.e, l: A === T ? null : A.id }); BMR.heropen(T, bmSel, A); bewaar(); return; }
-  if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
+  if (D.bm === 'inmagister') { const f = foto(); bmInMagister(T, g); bewaar(); toast('Genoteerd: de cijfers van ' + m.toets + ' staan in Magister', f); return; }
+  if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister en tik daarna op Staat in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
   if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { const oud = bmSel; bmSel = vol[i]; bmKlok = null; const G = bmLaag(T) === T.herkans ? null : BMR.groepVan(T, bmSel); if (D.bm === 'volgende' && G && G !== BMR.groepVan(T, oud) && !Object.keys((bmLaag(T).gs || {})[G.id] || {}).length) bmSelG = G.id; render(); window.scrollTo(0, 0); if (D.bm === 'volgende') bmNaVolgende(m, g, T, oud, bmSel); } return; } // een nieuwe groep zonder groepsscore begint op de groepskaart
   if (D.bmkies) { bmSel = D.bmkies; bmSelG = null; bmKlok = null; render(); if (matchMedia('(max-width:820px)').matches) { const k = document.querySelector('.bm-scoor'); if (k) k.scrollIntoView(); } return; }
   if (D.bmop) { const [id, st] = D.bmop.split('|'); const i = vol.indexOf(id), j = i + +st; if (j >= 0 && j < vol.length) { [vol[i], vol[j]] = [vol[j], vol[i]]; T.volgorde = vol; bewaar(); } return; }
@@ -3828,7 +3874,9 @@ document.addEventListener('change', async e => {
       await bmDownloadReserve(c.m, c.g); S.beoord.toetsen[c.k] = d.toets; if (d.lijst && d.lijst.length) S.beoord.lijsten[c.g] = d.lijst; S.beoord.weg = S.beoord.weg || {}; if (d.weg) S.beoord.weg[c.g] = d.weg; bmLog(c.k, { a: 'teruggezet', w: d.gemaakt }); bewaar(); toast('Reserve teruggezet; de oude stand staat in je downloads'); } catch (err) { console.warn(err); toast('Dit bestand kan niet worden gelezen'); } return; }
   if (t.dataset.bmcskies != null) { const v = t.value; if (v.startsWith('g:')) bmSelG = v.slice(2); else { bmSelG = null; bmSel = v; } bmKlok = null; render(); window.scrollTo(0, 0); return; }
   if (!bmSel || !t.closest('.bm-scoor')) return;
-  if (t.dataset.bmaf != null) { bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
+  if (t.dataset.bmaf != null) { const r = bmLaag(T).ll[bmSel]; // bevinding 70: afwezig zetten bij een leerling met scores haalt het cijfer uit de kolom; eerst vragen
+    if (t.checked && r && (Object.keys(r.s || {}).length || r.zelf != null) && !confirm('Deze leerling heeft al scores. Als afwezig telt er geen cijfer mee en blijft de cel in de kolom leeg tot de leerling heeft ingehaald. De scores blijven bewaard. Toch op afwezig zetten?')) { t.checked = false; return; }
+    bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
   if (t.dataset.bmzelfc != null) { const w = t.value.trim() === '' ? null : BMR.leesCijfer(t.value); if (t.value.trim() && w == null) { toast('Vul een cijfer van 1 tot en met 10 in, bijvoorbeeld 7,5'); t.value = ''; } bmZet(c.k, T, 'zelf', bmSel, null, w); return; }
   if (t.dataset.bmpapier != null) { const stuk = t.value.trim().split(/\s+/).filter(Boolean); const w = stuk.map(BMR.leesCijfer); if (w.includes(null)) toast('Niet alles is een cijfer van 1 tot en met 10: alleen de goede cijfers tellen mee'); bmZet(c.k, T, 'papier', bmSel, null, w.filter(x => x != null)); return; }
   const soort = t.dataset.bmveld ? ['v', t.dataset.bmveld] : t.dataset.bmopm ? ['opm', t.dataset.bmopm] : t.dataset.bmvooruit != null ? ['vooruit', null] : null;
