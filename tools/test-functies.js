@@ -42,5 +42,9 @@ is('dubbel aangetikt telt een keer', F.samenFasen(A, Bf, [1, 1], [0]).length ===
 is('paar: de laatste twee', JSON.stringify(F.kiesPaar(['a', 'b', 'c'], 'laatste-twee-voor-toets')) === '["b","c"]');
 is('paar: te weinig kandidaten', F.kiesPaar(['a'], 'laatste-twee-voor-toets').length === 0 && F.kiesPaar(['a', 'b'], 'zelf').length === 0);
 is('materiaal: unie zonder dubbelen', JSON.stringify(F.unie(['x', 'y'], ['y', 'z'])) === '["x","y","z"]' && F.unie(undefined, ['q']).length === 1);
+// Jaar: de regel bij een krappe klas
+is('regel: geen les kan vervallen', F.luchtRegel('PT1', 0) === 'Krap voor PT1. Geen les kan vervallen.');
+is('regel: een les', F.luchtRegel('P3', 1) === 'Krap voor P3. Eén les kan vervallen.');
+is('regel: meer lessen', F.luchtRegel('T1', 3) === 'Krap voor T1. 3 lessen kunnen vervallen.');
 console.log(fouten ? fouten + ' fout(en).' : 'functies: alles goed (' + n + ' controles)');
 process.exit(fouten ? 1 : 0);

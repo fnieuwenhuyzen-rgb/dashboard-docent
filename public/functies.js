@@ -61,8 +61,11 @@
   const kiesPaar = (ids, eerste) => eerste === 'laatste-twee-voor-toets' && ids.length >= 2 ? ids.slice(-2) : [];
   const unie = (a, b) => { const gezien = new Set(); return [...(a || []), ...(b || [])].filter(x => { const k = JSON.stringify(x); if (gezien.has(k)) return false; gezien.add(k); return true; }); };
 
+  /* ---- Jaar: waar is nog lucht. De regel bij een klas die krap zit (keuze 8); een klas die goed zit krijgt niets ---- */
+  const luchtRegel = (toets, aantal) => 'Krap voor ' + toets + '. ' + (aantal < 1 ? 'Geen les kan vervallen.' : aantal === 1 ? 'Eén les kan vervallen.' : aantal + ' lessen kunnen vervallen.');
+
   const aan = (ap, sleutel) => !!(ap && ap[sleutel]); // ap = AP.functies
   const zet = (ap, sleutel, waarde) => { if (waarde) ap[sleutel] = true; else delete ap[sleutel]; return ap; };
 
-  return { LIJST, KEUZES, aan, zet, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, faseMinuten, telMinuten, pastSamen, samenFasen, kiesPaar, unie };
+  return { LIJST, KEUZES, aan, zet, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, kiesPaar, unie };
 });
