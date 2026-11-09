@@ -141,6 +141,7 @@ function vorigeNotitie(g, vanaf) {
 // wat je vorige keer noteerde, alleen bij de eerstvolgende les van de groep en niet bij een afgeronde les
 function vorigeVan(x) { if (!x.item || x.klaar || !x.eerst) return null; const v = vorigeNotitie(x.u.groep, reeks(x.item.lg).indexOf(x.item)); return v && v.st.n ? v.st : null; }
 const vorigeKop = st => 'Vorige keer' + (st.d ? ` (${fmtD(st.d)}${st.st === 'half' ? ', half af' : ''})` : '');
+function ookRegel(l) { return (l.ook || []).length ? `<p class="ook-regel">Ook in deze les: ${esc(l.ook.join(', '))}.</p>` : ''; } // samengevoegd met een les zonder uitgewerkte fasen
 function vorigeRegel(x, inklap) { const st = vorigeVan(x); return st ? `<div class="vorige${inklap && st.n.length > 80 ? ' kort' : ''}">${esc(vorigeKop(st))}: ${esc(st.n)}</div>` : ''; }
 // het afrondvak begint leeg: een notitie van een eerdere dag mag niet ongemerkt naar de les daarna verhuizen
 function notitieVak(x, s) { const st = status(x.u.groep, x.item.id); return st.d === s ? st.n || '' : ''; }
@@ -1462,7 +1463,7 @@ function uurKaart(s, x, nu) {
     ${vorigeRegel(x, true)}
     ${voorToets ? `<div class="vorige">Eerst: ${esc(les(voorToets).titel || '')}. Past dat nog naast de toets?</div>` : ''}
     <div class="regel">${u.extra ? `<span class="chip let">${(S.extraUren || []).some(e => e.id === u.id && e.ruil) ? 'geruild uur' : 'extra uur'}</span>` : ''}<span class="chip">${esc(lgNaam(lg))} · les uit lesweek ${x.item.w}</span>${diff > 0 ? `<span class="chip let">${diff} ${diff === 1 ? 'week' : 'weken'} achter op de planning</span>` : diff < 0 ? `<span class="chip ok">${-diff} week voor</span>` : ''}${plan}${ev}${u.anderLokaal ? `<span class="chip rood">ander lokaal: ${esc(u.lokaal)}</span>` : ''}${u.reden ? `<span class="chip let">${esc(u.reden)}</span>` : ''}${u.zermelo && route.naam !== 'vandaag' ? '<span class="chip">Zermelo</span>' : ''}</div>
-    ${l.doel ? `<p class="doel">${esc(l.doel)}</p>` : l.detail ? `<p class="doel">${esc(l.detail)}</p>` : ''}
+    ${l.doel ? `<p class="doel">${esc(l.doel)}</p>` : l.detail ? `<p class="doel">${esc(l.detail)}</p>` : ''}${ookRegel(l)}
     ${(l.fasen || []).length ? `<details class="meer"><summary>Lesverloop</summary><ol class="fasen">${l.fasen.map(f => `<li>${esc(LESMODUS.faseTekst(f))}</li>`).join('')}</ol></details>` : ''}
     ${matLinks(l)}
     <div class="knoppen">${x.klaar ? '' : `<button class="btn hoofd" data-start="${esc(u.id)}|${s}">▶ Geef les</button>`}${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}${route.naam === 'vandaag' ? '' : lesMeer}</div>${route.naam === 'vandaag' ? `<details class="meer"><summary>Meer</summary><div class="knoppen" style="margin-top:.4rem">${lesMeer}</div></details>` : ''}
@@ -1485,21 +1486,21 @@ function verplaatsVelden(g, a, uren) {
 }
 /* ---------- Twee lessen samenvoegen (functies.js, keuzes samen.*): Frans kiest de fasen, Lesdag telt tot de lesduur ---------- */
 const samenAan = () => FUNCTIES.KEUZES.samen.omvang === 'twee-lessen';
-const samenKan = (g, x) => { const l = les(x); const st = status(g, x.id); // geen toets, beoordeling of strookje in de les, wel uitgewerkte fasen, nog niet begonnen of samengevoegd
-  return l.type !== 'toets' && l.type !== 'leeg' && Array.isArray(l.fasen) && l.fasen.length > 0 && !st.st && !(S.les[x.id] || {}).samengevoegd && !bmVoor(x).length && !/strookje/i.test(JSON.stringify(l.fasen)); };
+const samenKan = (g, x) => { const l = les(x); const st = status(g, x.id); // geen toets, beoordeling of strookje in de les, nog niet begonnen of samengevoegd. Een les zonder fasen mag: die krijgt de regel "Ook in deze les"
+  return l.type !== 'toets' && l.type !== 'leeg' && !st.st && !(S.les[x.id] || {}).samengevoegd && !bmVoor(x).length && !/strookje/i.test(JSON.stringify(l.fasen || [])); };
 let samenSel = null;
 function samenRekening(R) {
   const lg = leergangVan(R.g); const duur = B.leergangen[lg].meta.lesduurMin || 45; const key = R.g + '|' + R.id; const kand = R.nog.filter(x => samenKan(R.g, x));
   if (!samenSel || samenSel.key !== key) { const paar = FUNCTIES.kiesPaar(kand.map(x => x.id), FUNCTIES.KEUZES.samen.eerste); samenSel = { key, a: paar[0] || '', b: paar[1] || '', fa: [], fb: [] }; }
-  const Z = samenSel; const xa = kand.find(x => x.id === Z.a) || null; const xb = kand.find(x => x.id === Z.b) || null;
+  const Z = samenSel; const xa = kand.find(x => x.id === Z.a) || null; const xb = (Z.b !== Z.a && kand.find(x => x.id === Z.b)) || null;
   const p = xa && xb ? FUNCTIES.pastSamen(les(xa).fasen, les(xb).fasen, Z.fa, Z.fb, duur) : { ok: false, som: 0, reden: 'Kies twee lessen.' };
   return { kand, Z, xa, xb, p, duur };
 }
 function samenVelden(R) {
   const { kand, Z, xa, xb, p, duur } = samenRekening(R);
-  if (kand.length < 2) return `<p class="lead">Er zijn geen twee gewone lessen om samen te voegen. Een les met een toets, een beoordeling of een strookje, of zonder uitgewerkte fasen, komt hier niet in.</p>`;
-  const kies = (w, waarde) => `<select data-samenles="${w}" aria-label="${w === 'a' ? 'Eerste' : 'Tweede'} les">${waarde ? '' : '<option value="">Kies een les</option>'}${kand.map(x => `<option value="${esc(x.id)}"${x.id === waarde ? ' selected' : ''}>${esc(les(x).titel || 'Les')}</option>`).join('')}</select>`;
-  const kol = (x, w, gek) => !x ? '' : `<div class="samenfasen">${les(x).fasen.map((f, i) => { const t = LESMODUS.fase(f); const soort = (LESMODUS.SOORT[t.soort] || { naam: '' }).naam;
+  if (kand.length < 2) return `<p class="lead">Er zijn geen twee gewone lessen om samen te voegen. Een les met een toets, een beoordeling of een strookje komt hier niet in.</p>`;
+  const kies = (w, waarde) => `<select data-samenles="${w}" aria-label="${w === 'a' ? 'Eerste' : 'Tweede'} les">${waarde ? '' : '<option value="">Kies een les</option>'}${kand.filter(x => x.id === waarde || x.id !== (w === 'a' ? Z.b : Z.a)).map(x => `<option value="${esc(x.id)}"${x.id === waarde ? ' selected' : ''}>${esc(les(x).titel || 'Les')}</option>`).join('')}</select>`;
+  const kol = (x, w, gek) => !x ? '' : !(les(x).fasen || []).length ? '<p class="ook-regel">Geen uitgewerkte fasen. Deze les komt als regel "Ook in deze les" op de leskaart.</p>' : `<div class="samenfasen">${les(x).fasen.map((f, i) => { const t = LESMODUS.fase(f); const soort = (LESMODUS.SOORT[t.soort] || { naam: '' }).naam;
     return `<button type="button" class="samenfase" data-samenfase="${w}|${i}" aria-pressed="${gek.includes(i)}"><b>${FUNCTIES.faseMinuten(f)} min</b><span>${esc(soort ? soort + ': ' : '')}${esc(t.kop)}</span></button>`; }).join('')}</div>`;
   return `<div class="samen"><p class="lead">Tik aan wat blijft. Wat je niet aantikt valt weg uit de samengevoegde les. De presentaties van beide lessen staan straks bij de les.</p>
     <div class="samenkol"><div>${kies('a', Z.a)}${kol(xa, 'a', Z.fa)}</div><div>${kies('b', Z.b)}${kol(xb, 'b', Z.fb)}</div></div>
@@ -1536,7 +1537,8 @@ function voerKrapUit(R, k) {
     id = verplaatsAnker(R.g, R.a, uur, reden.trim()); if (!id) return; const af = S.afwijkingen.find(x => x.id === id); af.bericht = uit + af.bericht; }
   else if (k === 'samen') { const { xa, xb, Z, p } = samenRekening(R); if (!xa || !xb || !p.ok) { toast(p.reden); return; }
     const lA = les(xa), lB = les(xb); const was = S.les[xa.id]; const wasB = status(R.g, xb.id);
-    S.les[xa.id] = Object.assign({}, was, { titel: `${lA.titel || 'Les'} + ${lB.titel || 'Les'}`, fasen: FUNCTIES.samenFasen(lA.fasen, lB.fasen, Z.fa, Z.fb), materiaal: FUNCTIES.unie(lA.materiaal, lB.materiaal), samengevoegd: { met: xb.id } });
+    const fasen = FUNCTIES.samenFasen(lA.fasen || [], lB.fasen || [], Z.fa, Z.fb); const ook = FUNCTIES.ookIn(lA.titel || 'Les', lB.titel || 'Les', lA.fasen, lB.fasen);
+    S.les[xa.id] = Object.assign({}, was, { titel: `${lA.titel || 'Les'} + ${lB.titel || 'Les'}`, materiaal: FUNCTIES.unie(lA.materiaal, lB.materiaal), samengevoegd: { met: xb.id } }, fasen.length ? { fasen } : {}, ook.length ? { ook } : {});
     S.voortgang[R.g] = S.voortgang[R.g] || {}; S.voortgang[R.g][xb.id] = Object.assign({}, wasB, { st: 'overgeslagen', inhaal: true, hoortBij: xa.id }); delete S.voortgang[R.g][xb.id].auto;
     id = afwijkingErbij({ g: R.g, lesId: xb.id, was: Object.keys(wasB).length ? wasB : undefined, samenA: xa.id, lesWas: was, soort: 'les', studiewijzer: `lesweek ${xa.w}, les ${xa.li} en lesweek ${xb.w}, les ${xb.li}`, wat: `${lA.titel || 'Les'} en ${lB.titel || 'Les'} samengevoegd`, waarom: uitvalReden(R.g).kort,
       bericht: `${uit}We voegen "${lA.titel || 'de les'}" en "${lB.titel || 'de les'}" samen tot één les. ${R.t.id} blijft op ${fmtLang(R.s)}.` }); samenSel = null; }
@@ -1665,7 +1667,7 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
   const it = m.it; const x = m.x;
   switch (m.m) {
     case 'vrijedag': if (S.afwezig[s] && !p.reden) return { lab: '', zin: afwezigZin(s) + (toetsweekKlassen(s).length ? ` Toetsweek ${toetsweekKlassen(s).join(', ')} loopt door.` : ''), knop: `<button class="btn hoofd" data-afwezigterug="${s}">Toch aanwezig</button>` };
-      return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
+      return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : weekendDicht(s, p) ? 'Je week is afgesloten. Maandag staat klaar.' : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
     case 'stil': return { lab: '', zin: S.afgesloten[s] ? (weekAfsluitDag(s) ? 'Je week is afgesloten. Maandag staat klaar.' : 'Je dag is afgesloten. Morgen staat klaar.') : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
     case 'start': { const L = lesUren(p); const week = weekMaandagRegel(s); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
       return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan), week,
@@ -1703,7 +1705,7 @@ function afsluitZin(s, p, A, nu) {
   const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
   const n = teAfronden(s, p, nu).length + A.items.filter(y => y.soort === 'taak' && !y.k.af).length + deadl.length + (s === vandaag() ? magOpen(s).length : 0);
   const wk = weekAfsluitDag(s);
-  return { lab: (wk ? 'Week' : 'Dag') + ' afsluiten · een paar minuten', zin: n ? `Tijd om ${wk ? 'de week ' : ''}af te sluiten. ${n === 1 ? 'Eén ding staat' : n + ' dingen staan'} nog open; elk krijgt een moment.` : 'Niets staat open. Sluit de dag af, dan is het stil.' };
+  return { lab: (wk ? 'Week' : 'Dag') + ' afsluiten · een paar minuten', zin: n ? `Tijd om ${wk ? 'de week ' : ''}af te sluiten. ${n === 1 ? 'Eén ding staat' : n + ' dingen staan'} nog open; elk krijgt een moment.` : `Niets staat open. Sluit de ${wk ? 'week' : 'dag'} af, dan is het stil.` };
 }
 function kijkZin(s, it, nu) { // een ander moment van de dag, gekozen met ‹ › of in de lijst
   const t = `${hm(it.van)}–${hm(it.tot)}`;
@@ -1785,14 +1787,14 @@ function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zeg
 }
 function eersteLesBlok(s, x) { // doel, klaarzetten en materiaal van de eerste les, zoals de kaart vlak voor de les
   const l = les(x.item); const ben = klaarLijst(s, l);
-  return `<p class="sub" style="margin-top:.3rem">${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}
+  return `<p class="sub" style="margin-top:.3rem">${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}${ookRegel(l)}
     <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}`;
 }
 function voorLesKaart(s, p, x, nu) {
   const l = les(x.item); const ben = klaarLijst(s, l);
   const min = minuten(x.u.start) - nu; const rest = s === vandaag() ? teAfronden(s, p, nu) : [];
   return `<div class="kaart"><p class="eyebrow">${s === vandaag() && min > 0 && min <= 90 ? `Over ${min} ${min === 1 ? 'minuut' : 'minuten'} · ` : ''}${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>
-    <h2>${esc(x.u.groep)} · ${esc(l.titel || '')}</h2>${vorigeRegel(x)}${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}
+    <h2>${esc(x.u.groep)} · ${esc(l.titel || '')}</h2>${vorigeRegel(x)}${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}${ookRegel(l)}
     <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>
     ${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}
     <!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok--><div class="knoppen" style="margin-top:.9rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button></div>
@@ -1802,7 +1804,7 @@ function lesKaart(s, x, nu) {
   const l = les(x.item); const rest = minuten(x.u.eind) - nu;
   const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
   const fasen = (l.fasen || []).map(LESMODUS.fase);
-  return `<div class="kaart"><p class="eyebrow">Les loopt · ${esc(x.u.groep)} · nog ${rest} min · tot ${esc(x.u.eind)}</p><h2>${esc(l.titel || '')}</h2>${vorigeRegel(x)}
+  return `<div class="kaart"><p class="eyebrow">Les loopt · ${esc(x.u.groep)} · nog ${rest} min · tot ${esc(x.u.eind)}</p><h2>${esc(l.titel || '')}</h2>${vorigeRegel(x)}${ookRegel(l)}
     ${bordLoopt ? `<p class="lead">Het bord loopt in het andere venster.</p><!--dok--><a class="btn hoofd" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a><!--/dok-->` : `<!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok-->`}
     ${fasen.length ? `<h3>Verloop · alleen jij ziet dit</h3><ol class="fasen nu-fasen">${fasen.map(f => `<li><b>${f.min} min · ${esc(LESMODUS.SOORT[f.soort].naam.toLowerCase())}</b> ${esc(f.kop)}${f.docent ? `<div class="sub">${esc(f.docent)}</div>` : ''}</li>`).join('')}</ol>` : ''}
     ${bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}${magBlok(s, x)}</div>`;
@@ -1907,6 +1909,7 @@ function werkblokKaart(s, p, A, it, nu, live) {
 }
 /* ---------- Week afsluiten (functies.js, keuzes week.*): op de laatste werkdag van de week is Dag afsluiten dezelfde knop met meer erin ---------- */
 const lesdagStap = (s, stap) => { let d = s; for (let i = 0; i < 30; i++) { d = addD(d, stap); if (!vrijReden(d)) return d; } return addD(s, stap * 30); }; // slaat ook vakanties en vrije dagen over; een dag dat je afwezig bent telt wel mee
+const weekendDicht = (s, p) => p.reden === 'weekend' && !!S.afgesloten[lesdagStap(s, -1)]; // het weekend blijft stil; afwezig op de laatste werkdag betekent: niets afgesloten, dus ook deze zin niet
 const weekAfsluitDag = s => FUNCTIES.KEUZES.week.waar === 'laatste-werkdag' && FUNCTIES.laatsteLesdagVanWeek(s, d => lesdagStap(d, 1));
 function weekToetsenTussen(van, tot) { // toetsen van je klassen met hun lesuur (of laatste uur) in deze periode, elke toets één keer
   const L = []; const gezien = new Set();
@@ -1919,10 +1922,12 @@ function weekMaandagRegel(s) { // keuze 3: op de eerste lesdag van de week één
   if (!FUNCTIES.KEUZES.week.maandagRegel || !FUNCTIES.eersteLesdagVanWeek(s, d => lesdagStap(d, -1))) return '';
   return FUNCTIES.weekRegel(weekToetsenTussen(s, FUNCTIES.plusDagen(FUNCTIES.maandagVan(s), 6)), FUNCTIES.KEUZES.week.maandagMaxToetsen);
 }
-function weekBlokken(s) { // de extra stukken van Week afsluiten, na Nog open: zinnen van de week, anders dan de studiewijzer, volgende week
-  const ma = FUNCTIES.maandagVan(s); const K = FUNCTIES.KEUZES.week; let h = '';
-  const zinnen = K.zinnenTerug ? [1, 2, 3, 4, 5].map(i => FUNCTIES.plusDagen(ma, i - 1)).filter(d => d < s && S.goed[d]) : [];
-  if (zinnen.length) h += `<h3>Wat ging goed deze week</h3>${zinnen.map(d => `<blockquote class="nu-goed">${esc(S.goed[d])} <span class="sub">${DAG[dOf(d).getDay()]}</span></blockquote>`).join('')}`;
+function weekZinnen(s) { // keuze 4: alle zinnen van deze week, boven het vak voor de zin van vandaag
+  if (!FUNCTIES.KEUZES.week.zinnenTerug) return ''; const ma = FUNCTIES.maandagVan(s);
+  return [0, 1, 2, 3, 4].map(i => FUNCTIES.plusDagen(ma, i)).filter(d => d < s && S.goed[d]).map(d => `<blockquote class="nu-goed">${esc(S.goed[d])} <span class="sub">${DAG[dOf(d).getDay()]}</span></blockquote>`).join('');
+}
+function weekBlokken(s) { // de extra stukken van Week afsluiten, na Nog open: anders dan de studiewijzer, volgende week
+  const ma = FUNCTIES.maandagVan(s); let h = '';
   const af = (S.afwijkingen || []).filter(a => a.bericht && a.d >= ma && a.d <= s);
   if (af.length) h += `<h3>Anders dan de studiewijzer</h3>${af.map(a => `<div class="nu-rij"><span>${esc(a.g)} · ${esc(a.wat || '')}</span><span class="tb"><button class="btn klein mag" data-fnkopie="${esc(a.id)}">Kopieer bericht</button></span></div>`).join('')}`;
   const vm = FUNCTIES.maandagVan(lesdagStap(s, 1)); const T = weekToetsenTussen(vm, FUNCTIES.plusDagen(vm, 6)).sort((a, b) => a.s < b.s ? -1 : 1);
@@ -1939,7 +1944,7 @@ function afsluitKaart(s, p, A, nu) {
   const deadl = kandidaten(s).filter(k => k.d && k.d <= addD(s, 7) && !k.v.startsWith('pres:') && k.v !== 'koorrep');
   const M = s === vandaag() ? magOpen(s) : [];
   const n = af.length + open.length + deadl.length + M.length;
-  return `<div class="kaart"><p class="eyebrow">${wk ? 'Week' : 'Dag'} afsluiten · een paar minuten</p><h2>${wk ? 'Wat ging goed deze week?' : 'Wat ging goed vandaag?'}</h2>
+  return `<div class="kaart"><p class="eyebrow">${wk ? 'Week' : 'Dag'} afsluiten · een paar minuten</p><h2>${wk ? 'Wat ging goed deze week?' : 'Wat ging goed vandaag?'}</h2>${wk ? weekZinnen(s) : ''}
     <textarea id="gGoed" rows="2" placeholder="Bijvoorbeeld: de alten hadden maat 17 ineens te pakken">${esc(S.goed[s] || '')}</textarea><p class="sub">Mag leeg blijven. Alleen voor jou.</p>
     <h3>${n ? 'Nog open, krijgt een moment' : 'Nog open'}</h3>
     ${magLijst(M, 5)}
@@ -1956,7 +1961,7 @@ function stilKaart(s) {
   return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${dicht ? (wk ? 'Je week is afgesloten' : 'Morgen staat klaar') : 'Je dag zit erop'}</h2>
     <p class="lead">${dicht ? (wk ? 'Maandag staat klaar. Lesdag is stil tot dan.' : 'Lesdag is stil tot morgen 8:00.') : 'Afsluiten kost een paar minuten. Daarna is Lesdag stil.'}</p>
     ${S.goed[s] ? `<blockquote class="nu-goed">${esc(S.goed[s])}</blockquote>` : ''}
-    <!--dok-->${dicht ? `<button class="btn" data-heropen="${s}">Toch nog iets doen</button>` : '<button class="btn hoofd" data-kijk="afsluiten">Dag afsluiten</button>'}<button class="btn" data-dag="${volgendeLesdag(s, 1)}">Morgen bekijken</button><!--/dok--></div>`;
+    <!--dok-->${dicht ? `<button class="btn" data-heropen="${s}">Toch nog iets doen</button>` : `<button class="btn hoofd" data-kijk="afsluiten">${wk ? 'Week' : 'Dag'} afsluiten</button>`}<button class="btn" data-dag="${volgendeLesdag(s, 1)}">${wk ? 'Volgende werkdag' : 'Morgen'} bekijken</button><!--/dok--></div>`;
 }
 const buitenJaar = p => p.reden === 'na de laatste lesweek' ? { kop: 'Het schooljaar zit erop', zin: 'Het schooljaar zit erop. Lesdag heeft tot het nieuwe schooljaar niets voor je.' } : p.reden === 'nog geen lesweek' ? { kop: 'Het schooljaar begint nog', zin: 'Het schooljaar is nog niet begonnen. Lesdag heeft tot de eerste lesweek niets voor je.' } : null; // zomer: geen werk voorgeschoteld (bevinding 51)
 function vrijeDagKaart(s, p) {
@@ -2503,7 +2508,7 @@ function viewPartituur() {
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
   h += periodeKaart();
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
-  const lucht = luchtAan(); const krapD = g => { if (!leergangVan(g) || !B.leergangen[leergangVan(g)] || !Object.keys(S.voortgang[g] || {}).length) return null; const d = ruimte(g)[0]; return d && d.tekort ? d : null; }; // een groep die nog nooit is afgevinkt krijgt eerst de melding op Dag
+  const lucht = luchtAan(); const krapD = g => { if (!leergangVan(g) || !B.leergangen[leergangVan(g)] || !Object.keys(S.voortgang[g] || {}).length) return null; return ruimte(g).find(d => d.tekort) || null; }; // een groep die nog nooit is afgevinkt krijgt eerst de melding op Dag
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
     return `<div class="jr-rij${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>${lucht && krapD(g) ? `<div class="jr-stand"><a href="${esc(klasUrl(g))}">${esc(g)}</a> · ${esc(FUNCTIES.luchtRegel(krapD(g).t.id, krapD(g).inhaal.length))}</div>` : ''}`; }).join('');
   const tekort = lucht ? [] : gs.map(krapD).filter(Boolean); // met de schakelaar aan staat de melding als regel bij de klas zelf
@@ -3013,6 +3018,7 @@ function bewaarBewerk(f) {
     formatief: { soort: g('fsoort'), tekst: g('ftekst') },
     materiaal: lines('materiaal').map(x => { const i = x.indexOf('|'); const m = i < 0 ? { t: x, u: '' } : { t: x.slice(0, i).trim(), u: x.slice(i + 1).trim() }; return meta[m.u] ? Object.assign({}, meta[m.u], { t: m.t }) : m; }) };
   if (f.get('type')) o.type = f.get('type');
+  const oud = S.les[id] || {}; if (oud.samengevoegd) { o.samengevoegd = oud.samengevoegd; if (oud.ook) o.ook = oud.ook; } // bewerken maakt een samenvoeging niet los
   S.les[id] = o; sluit(); bewaar(); toast('Les opgeslagen');
 }
 
@@ -3302,7 +3308,7 @@ document.addEventListener('click', async e => {
   if (D.uitvalterug) { const [s, u] = D.uitvalterug.split('|'); S.uitval[s] = (S.uitval[s] || []).filter(x => x !== u); bewaar(); return; }
   if (D.bewerk) { openBewerk(D.bewerk); return; }
   if (D.sluit != null) { sluit(); return; }
-  if (D.herstel != null) { const terug = foto(); delete S.les[$('#drawer').dataset.id]; sluit(); bewaar(); toast('De les staat weer zoals in de leergang', terug); return; }
+  if (D.herstel != null) { const terug = foto(); const id = $('#drawer').dataset.id; const af = (S.les[id] || {}).samengevoegd && (S.afwijkingen || []).find(a => a.samenA === id); if (af) maakOngedaan(af.id); else delete S.les[id]; sluit(); bewaar(); toast(af ? 'De twee lessen staan weer los' : 'De les staat weer zoals in de leergang', terug); return; } // een samengevoegde les: ook de tweede les komt terug
   if (D.markeer) { const terug = foto(); const [g, id] = D.markeer.split('|'); S.voortgang[g] = S.voortgang[g] || {}; S.voortgang[g][id] = Object.assign({}, status(g, id), { st: 'gegeven', d: vandaag() }); bewaar(); toast('Op gegeven gezet', terug); return; }
   if (D.reset) { const terug = foto(); const [g, id] = D.reset.split('|'); if (S.voortgang[g]) delete S.voortgang[g][id]; bewaar(); toast('Weer niet gegeven', terug); return; }
   if (D.opplan) { const terug = foto(); const n = opPlanning(D.opplan); bewaar(); toast(`${n} lessen op gegeven gezet`, terug); return; }

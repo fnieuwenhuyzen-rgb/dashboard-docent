@@ -39,15 +39,19 @@
   /* ---- Twee lessen samenvoegen: Frans kiest fasen, Lesdag telt tot de lesduur en schrapt zelf nooit iets ---- */
   const faseMinuten = f => f && typeof f === 'object' ? Math.max(0, +f.min || 0) : ((String(f || '').match(/^\s*(\d+)\s*min/i) || [])[1] | 0);
   const telMinuten = (fasen, gekozen) => (gekozen || []).reduce((som, i) => som + faseMinuten((fasen || [])[i]), 0);
-  /* Past het? Ten minste één fase uit elke les (anders is het geen samenvoegen) en samen niet meer dan de lesduur. */
+  /* Past het? Ten minste één fase uit elke les die fasen heeft, en samen niet meer dan de lesduur. Een les zonder fasen telt niet mee: die komt als regel "Ook in deze les" op de leskaart. */
   function pastSamen(fA, fB, kA, kB, duur) {
     const som = telMinuten(fA, kA) + telMinuten(fB, kB);
-    if (!kA.length || !kB.length) return { ok: false, som, reden: 'Kies uit beide lessen minstens één fase.' };
+    const metA = (fA || []).length > 0, metB = (fB || []).length > 0;
+    if ((metA && !kA.length) || (metB && !kB.length)) return { ok: false, som, reden: metA && metB ? 'Kies uit beide lessen minstens één fase.' : 'Kies minstens één fase.' };
+    if (!metA && !metB) return { ok: true, som, reden: 'Geen fasen om te tellen.' };
     if (som > duur) return { ok: false, som, reden: (som - duur) + ' minuten te veel. Haal eerst iets weg.' };
     return { ok: true, som, reden: som === duur ? 'Past precies.' : (duur - som) + ' minuten over.' };
   }
   /* De fasen van de nieuwe les: eerst de gekozen fasen van les A, dan die van les B, elk in hun eigen volgorde. */
   const samenFasen = (fA, fB, kA, kB) => [...new Set(kA)].sort((x, y) => x - y).map(i => fA[i]).concat([...new Set(kB)].sort((x, y) => x - y).map(i => fB[i]));
+  /* Lessen zonder fasen gaan als titel mee naar de regel "Ook in deze les". Hebben ze allebei geen fasen, dan blijft de eerste de les en is de tweede de regel. */
+  const ookIn = (tA, tB, fA, fB) => !(fB || []).length ? [tB] : !(fA || []).length ? [tA] : [];
   /* Welke twee lessen eerst staan (keuze 6). ids = kandidaten in lesvolgorde. 'laatste-twee-voor-toets': de laatste twee; anders niets voorgekozen. */
   const kiesPaar = (ids, eerste) => eerste === 'laatste-twee-voor-toets' && ids.length >= 2 ? ids.slice(-2) : [];
   const unie = (a, b) => { const gezien = new Set(); return [...(a || []), ...(b || [])].filter(x => { const k = JSON.stringify(x); if (gezien.has(k)) return false; gezien.add(k); return true; }); };
@@ -55,5 +59,5 @@
   /* ---- Jaar: waar is nog lucht. De regel bij een klas die krap zit (keuze 8); een klas die goed zit krijgt niets ---- */
   const luchtRegel = (toets, aantal) => 'Krap voor ' + toets + '. ' + (aantal < 1 ? 'Geen les kan vervallen.' : aantal === 1 ? 'Eén les kan vervallen.' : aantal + ' lessen kunnen vervallen.');
 
-  return { KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, kiesPaar, unie };
+  return { KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
 });

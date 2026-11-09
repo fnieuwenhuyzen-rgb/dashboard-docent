@@ -35,6 +35,13 @@ is('dubbel aangetikt telt een keer', F.samenFasen(A, Bf, [1, 1], [0]).length ===
 is('paar: de laatste twee', JSON.stringify(F.kiesPaar(['a', 'b', 'c'], 'laatste-twee-voor-toets')) === '["b","c"]');
 is('paar: te weinig kandidaten', F.kiesPaar(['a'], 'laatste-twee-voor-toets').length === 0 && F.kiesPaar(['a', 'b'], 'zelf').length === 0);
 is('materiaal: unie zonder dubbelen', JSON.stringify(F.unie(['x', 'y'], ['y', 'z'])) === '["x","y","z"]' && F.unie(undefined, ['q']).length === 1);
+// Een les zonder fasen: telt niet mee en wordt de regel "Ook in deze les"
+p = F.pastSamen(A, [], [0, 1], [], 45); is('zonder fasen in de tweede les: past', p.ok && p.som === 20);
+p = F.pastSamen([], Bf, [], [], 45); is('zonder fasen in de eerste les: nog een fase kiezen', !p.ok && /minstens één fase/.test(p.reden));
+p = F.pastSamen(undefined, undefined, [], [], 45); is('allebei zonder fasen: past', p.ok && p.som === 0);
+is('ook-regel: de tweede les zonder fasen', JSON.stringify(F.ookIn('A', 'B', A, [])) === '["B"]');
+is('ook-regel: de eerste les zonder fasen', JSON.stringify(F.ookIn('A', 'B', undefined, Bf)) === '["A"]');
+is('ook-regel: allebei met fasen', F.ookIn('A', 'B', A, Bf).length === 0);
 // Jaar: de regel bij een krappe klas
 is('regel: geen les kan vervallen', F.luchtRegel('PT1', 0) === 'Krap voor PT1. Geen les kan vervallen.');
 is('regel: een les', F.luchtRegel('P3', 1) === 'Krap voor P3. Eén les kan vervallen.');

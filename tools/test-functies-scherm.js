@@ -81,6 +81,49 @@ const paginaFouten = [];
       ok(/kan vervallen \(generale/.test(t), 'jaar: legenda mist de groene noot');
       ok(await page.evaluate(() => JSON.stringify(JSON.parse(localStorage.getItem('lesdag-staat')).voortgang) === '{"tv4":{"vwo4:2.1":{"st":"gegeven","d":"2026-09-07"}}}'), 'jaar: Jaar heeft de voortgang veranderd (alleen lezen)');
       await ctx.close(); }
+    // 4. Week afsluiten: weekend en afwezig
+    { const { ctx, tekst } = await open('#nu', '2026-11-21T11:00:00+01:00', { staat: Object.assign({}, WSTAAT, { afgesloten: { '2026-11-20': true } }) });
+      ok(/Je week is afgesloten\. Maandag staat klaar\./.test(await tekst()), 'weekend: de zin Je week is afgesloten ontbreekt'); await ctx.close(); }
+    { const { ctx, tekst } = await open('#nu', '2026-11-21T11:00:00+01:00', { staat: WSTAAT });
+      ok(!/Je week is afgesloten/.test(await tekst()), 'weekend: week niet afgesloten maar de zin staat er wel'); await ctx.close(); }
+    { const AFW = Object.assign({}, WSTAAT, { afwezig: { '2026-11-20': { herstel: {} } } });
+      const v = await open('#nu', '2026-11-20T16:20:00+01:00', { staat: AFW }); const t = await v.tekst();
+      ok(!/Week afsluiten/.test(t) && !/Dag afsluiten/.test(t), 'afwezig op de laatste werkdag: toch een afsluitkaart'); await v.ctx.close();
+      const z = await open('#nu', '2026-11-21T11:00:00+01:00', { staat: AFW });
+      ok(!/Je week is afgesloten/.test(await z.tekst()), 'afwezig op de laatste werkdag: toch de zin in het weekend'); await z.ctx.close();
+      const d = await open('#nu', '2026-11-19T16:20:00+01:00', { staat: AFW });
+      ok(/Dag afsluiten/.test(await d.tekst()), 'afwezig op vrijdag: donderdag hoort gewoon Dag afsluiten te zijn'); await d.ctx.close(); }
+    // 5. Samenvoegen met een les zonder fasen, dezelfde les niet twee keer, bewerken en terug naar de leergang
+    { const RSTAAT = Object.assign({}, KSTAAT, { rooster: KSTAAT.rooster.concat([{ id: 't9', dag: 3, start: '11:00', eind: '11:45', groep: 'tv4', lokaal: '009' }]) });
+      const o = await open('#nu', '2026-11-17T10:00:00+01:00', { staat: RSTAAT }); const { ctx, page } = o; const staat = () => page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')));
+      const paneel = async () => { await page.click('[data-krapopen]'); await page.waitForTimeout(200); await page.click('[data-krapoptie="samen"]'); await page.waitForTimeout(200); };
+      const opties = w => page.evaluate(w => [...document.querySelectorAll('[data-samenles="' + w + '"] option')].map(x => [x.value, x.textContent]), w);
+      await paneel(); const a0 = await opties('a'), b0 = await opties('b'); const va = await page.inputValue('[data-samenles="a"]'), vb = await page.inputValue('[data-samenles="b"]');
+      ok(va && vb && va !== vb && !a0.some(x => x[0] === vb) && !b0.some(x => x[0] === va), 'samenvoegen: dezelfde les staat in beide keuzelijsten');
+      const eerste = a0[0][0], tweede = (a0[1] || b0[0])[0]; const titel2 = (a0.concat(b0).find(x => x[0] === tweede) || [])[1];
+      await page.evaluate(id => { const s = JSON.parse(localStorage.getItem('lesdag-staat')); s.les = s.les || {}; s.les[id] = { fasen: [] }; localStorage.setItem('lesdag-staat', JSON.stringify(s)); }, tweede);
+      await page.reload({ waitUntil: 'load' }); await H.wacht(page); await page.waitForTimeout(250); await paneel();
+      await page.selectOption('[data-samenles="a"]', eerste); await page.waitForTimeout(150); await page.selectOption('[data-samenles="b"]', tweede); await page.waitForTimeout(150);
+      ok(await page.evaluate(() => document.querySelectorAll('[data-samenfase^="b|"]').length === 0 && /Ook in deze les/.test(document.querySelector('.samen').innerText)), 'samenvoegen: een les zonder fasen krijgt geen uitleg over Ook in deze les');
+      ok(await page.evaluate(() => document.querySelector('#krapForm button[type=submit]').disabled), 'samenvoegen: Doen staat aan zonder fase uit de les met fasen');
+      await page.click('[data-samenfase="a|0"]'); await page.waitForTimeout(150); ok(await page.evaluate(() => !document.querySelector('#krapForm button[type=submit]').disabled), 'samenvoegen: Doen blijft uit met een les zonder fasen');
+      await page.click('#krapForm button[type=submit]'); await page.waitForTimeout(300);
+      let s = await staat(); ok(s.les[eerste] && JSON.stringify(s.les[eerste].ook) === JSON.stringify([titel2]) && s.les[eerste].fasen.length === 1 && s.voortgang.tv4[tweede].hoortBij === eerste, 'samenvoegen: de regel Ook in deze les is niet bewaard: ' + JSON.stringify(s.les[eerste]));
+      // de regel staat op de leskaart: op Nu vlak voor de les, op Dag en in de lesmodus
+      await page.clock.setFixedTime(new Date('2026-11-18T10:50:00+01:00')); await page.reload({ waitUntil: 'load' }); await H.wacht(page); await page.waitForTimeout(250);
+      ok((await o.tekst()).includes('Ook in deze les: ' + titel2 + '.'), 'samenvoegen: de regel staat niet op Nu vlak voor de les');
+      await page.click('[data-start]'); await page.waitForTimeout(400);
+      ok(await page.evaluate(() => /Ook in deze les/.test(document.body.innerText)), 'samenvoegen: de regel staat niet op jouw kaart in de lesmodus');
+      await page.goto(T.basis + '#dag', { waitUntil: 'load' }); await H.wacht(page); await page.waitForTimeout(250);
+      ok((await o.tekst()).includes('Ook in deze les: ' + titel2 + '.'), 'samenvoegen: de regel staat niet op Dag');
+      // bewerken laat de samenvoeging staan, Terug naar de leergang maakt hem helemaal los
+      await page.evaluate(id => { const b = document.querySelector('[data-bewerk="' + id + '"]'); b.click(); }, eerste); await page.waitForTimeout(250);
+      await page.evaluate(() => document.querySelector('#drawer button[type=submit]').click()); await page.waitForTimeout(250);
+      s = await staat(); ok(s.les[eerste].samengevoegd && s.les[eerste].samengevoegd.met === tweede && s.les[eerste].ook, 'bewerken: de samenvoeging is weg na opslaan');
+      await page.evaluate(id => { const b = document.querySelector('[data-bewerk="' + id + '"]'); b.click(); }, eerste); await page.waitForTimeout(250);
+      await page.evaluate(() => document.querySelector('[data-herstel]').click()); await page.waitForTimeout(250);
+      s = await staat(); ok(!(s.voortgang.tv4 || {})[tweede] && !(s.afwijkingen || []).some(a => a.samenA) && !(s.les[eerste] || {}).samengevoegd, 'Terug naar de leergang: de tweede les blijft overgeslagen');
+      await ctx.close(); }
     //FUNCTIE-SCHERMTESTS
   } finally { await T.stop(); }
   ok(!paginaFouten.length, 'uitzonderingen op de pagina: ' + paginaFouten.slice(0, 3).join(' | '));

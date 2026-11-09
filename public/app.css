@@ -539,6 +539,7 @@ main{grid-template-columns:minmax(0,1fr)} /* lange titels zonder afbreking mogen
 .nu-fasen b{font-family:var(--lees);font-weight:600}
 .vs{border-left:3px solid var(--paars);padding:.1rem 0 .1rem .7rem;margin:.5rem 0 .9rem}
 .vs p{margin:0 0 .45rem;font-size:.95rem}
+.ook-regel{margin:.3rem 0 0;font-size:var(--t-klein);color:var(--muted)}
 .nu-goed{margin:.8rem 0 0;padding-left:.8rem;border-left:3px solid var(--ok);font-style:italic;color:var(--muted)}
 kbd{font-family:var(--lees);font-size:var(--t-klein);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 .35rem;color:var(--muted);white-space:nowrap}
 @media (pointer:coarse){kbd{display:none}}
