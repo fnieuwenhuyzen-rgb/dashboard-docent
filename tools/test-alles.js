@@ -16,6 +16,7 @@ const STAPPEN = [
   ['Agendafeed', 'test-agendafeed.js', []],
   ['Toetsdatum (basis.json)', 'test-toetsdatum.js', []],
   ['Planning: toetsen op hun datum', 'test-planning.js', []],
+  ['Nu en de lesdag (ochtend, afronden, ziekte, vakantie)', 'test-nu-ochtend.js', []],
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
   ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : a.includes('--snel') ? ['--snel'] : []],
   ['Foutlogboek', 'test-logboek.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
@@ -28,7 +29,7 @@ const STAPPEN = [
 ];
 const uitslag = []; const t0 = Date.now();
 for (const [naam, f, extra] of STAPPEN) {
-  if (/^test-(schermen|planning|nieuwe-versie|autokopie|routes-[a-z]+)\.js$/.test(f) && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
+  if (/^test-(schermen|planning|nu-ochtend|nieuwe-versie|autokopie|routes-[a-z]+)\.js$/.test(f) && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
   const s = Date.now(); const r = cp.spawnSync(process.execPath, [t(f), ...extra], { cwd: root, encoding: 'utf8', env: process.env, maxBuffer: 1 << 26 });
   const uit = ((r.stdout || '') + (r.stderr || '')).trim(); const sec = (Date.now() - s) / 1000;
   const st = r.status === 0 ? 'goed' : r.status === 2 ? 'overgeslagen' : 'FAALT';

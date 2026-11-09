@@ -22,7 +22,7 @@ Nu begint met één zin die zegt wat er nu telt. De zin komt uit rooster, leerga
 | Kwartier voor een les | Over 12 minuten · h4 · lokaal 009 | Zo meteen h4: Notenbingo in de g-sleutel. Zet keyboards en wisbordjes klaar. |
 | Eerste kwartier van een les | Les · m3 · tot 12:10 | m3 is 4 minuten bezig. Zet de absenten in Magister zodra de klas aan het werk is. |
 | In de les | Les · m3 · tot 12:10 | m3 loopt nog 30 minuten: akkoorden G en C. *Het huiswerk staat klaar voor bij de bel.* |
-| Na de bel (20 min) | De bel ging · m3 | Hoe ging m3: gegeven, deels of niet aan toegekomen? *De absenten staan nog open.* |
+| Na de bel (20 min) | De bel ging · m3 | Hoe ging m3: gegeven, half af of niet aan toegekomen? *De absenten staan nog open.* |
 | Pauze | (geen) | Pauze. Tot 10:25. |
 | Rustblok | Rustblok | Tot 14:00 is van jou. Je pauze viel weg door het koor. |
 | Koor | Schoolkoor · tot 12:45 | (titel van de repetitie). |
@@ -51,3 +51,15 @@ Schuingedrukt = alleen als het van toepassing is.
 
 - "Loopt deze week" (projecten en toetsen als korte regel onder de zin): wacht tot er projecten als gegevens bestaan.
 - Een zin bovenaan Week, Jaar, Koor en Sectie in dezelfde stijl.
+
+## Vaste woorden bij afronden (bevinding 74)
+
+Overal dezelfde drie keuzes, op Nu, in de lesmodus en in de regie: **Gegeven**, **Half af, volgende keer verder** en **Niet aan toegekomen**. Niet "Deels" en niet "Niet gegeven". De notitie bij een half afgeronde les zegt "half af". Test: `tools/test-nu-ochtend.js`.
+
+## Afwezig (bevinding 62)
+
+Op een dag waarop Frans zich afwezig meldt, leest Nu niet als een vrije dag. Zin: "Afwezig. 3 lessen schuiven door (tv4 en tb1). Toetsweek tm4 loopt door." met de knop **Toch aanwezig**. De kop van Dag noemt dezelfde dingen. Op de eerste lesdag erna staat in de meldingen één regel: "Tijdens je afwezigheid geschoven: 3 lessen (tv4 en tb1), ma 9 nov."
+
+## De eerste lesdag na een vakantie (bevinding 71)
+
+"Blijft liggen" is die ochtend één regel in plaats van een stapel: "Tijdens de kerstvakantie verlopen: 2 taken. 26 lagen er al langer." Eén knop schuift de taken die in de vakantie verliepen door naar de volgende lesdag; de hele lijst staat ingeklapt eronder. De dag erna is het weer de gewone lijst. Code: `naVakantie`, `liggenBlok`.

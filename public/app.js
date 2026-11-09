@@ -14,7 +14,7 @@ const BENODIGD = [[/keyboard|piano|toetsenbord/i, 'Keyboards'], [/gitaar|ukelele
 
 let B = null;               // basisgegevens
 let S = null;               // eigen staat
-let route = { naam: 'vandaag', arg: [] }; let focusRoute = null;
+let route = { naam: 'vandaag', arg: [] }; let focusRoute = null; let bmNaarScore = false; // bevinding 44: op een telefoon opent Beoordelen bij de scorekaart
 let syncState = 'lokaal';
 let remoteT = null;
 let SY = null;               // synchronisatie tussen apparaten, zie syncStart
@@ -440,6 +440,14 @@ function zetAfwezig(van, tot) {
   afwezigOpen = false; bewaar();
   if (dagen.length) toast(`Afwezig ${dagenTekst(dagen)} · lessen schuiven door`, () => afwezigTerug(dagen));
 }
+function afwezigLessen(s) { const p = planning(s, s)[s]; return ((p && p.uren) || []).filter(x => x.uitval && x.afwezig); } // de lessen van een afwezige dag (bevinding 62)
+const afwezigGroepen = L => lijstTxt([...new Set(L.map(x => x.u.groep))]);
+function afwezigZin(s) { const L = afwezigLessen(s); return L.length ? `Afwezig. ${L.length} ${L.length === 1 ? 'les schuift' : 'lessen schuiven'} door (${afwezigGroepen(L)}).` : 'Afwezig. Er zijn vandaag geen lessen die schuiven.'; }
+function afwezigNa(s) { // de eerste lesdag na een afwezigheid: wat er geschoven is
+  if (s !== vandaag() || S.afwezig[s] || vrijReden(s)) return ''; let v = addD(s, -1); for (let i = 0; i < 40 && vrijReden(v); i++) v = addD(v, -1); if (!S.afwezig[v]) return '';
+  const per = afwezigPeriode(v); const L = per.flatMap(afwezigLessen); if (!L.length) return '';
+  return `Tijdens je afwezigheid geschoven: ${L.length} ${L.length === 1 ? 'les' : 'lessen'} (${afwezigGroepen(L)}), ${dagenTekst(per)}.`;
+}
 function afwezigTerug(dagen) {
   for (const s of dagen) { const rec = S.afwezig[s]; if (!rec) continue; for (const [g, m] of Object.entries(rec.herstel || {})) Object.assign(S.voortgang[g] = S.voortgang[g] || {}, m); delete S.afwezig[s]; }
   bewaar();
@@ -556,6 +564,7 @@ function render() {
   if (fk && !LES) { if (fk.w === '#main' && routeWissel) $('#main').focus({ preventScroll: true }); else if (!focusHerstel(fk)) $('#main').focus({ preventScroll: true }); } // focus blijft waar de gebruiker was; bij een ander scherm begint Tab bovenaan de inhoud
   if (concert) bmCsMerk();
   if (klasScroll && $('#bmLijst')) { klasScroll = false; setTimeout(() => { const v = $('#bmLijst'); if (v) { v.scrollIntoView({ block: 'center' }); v.focus(); } }); }
+  if (bmNaarScore && route.naam === 'beoordelen' && $('.bm-scoor')) { bmNaarScore = false; if (matchMedia('(max-width:600px)').matches) setTimeout(() => { const k = $('.bm-scoor'); if (k) k.scrollIntoView(); }); } // de kop en de status staan erboven; de eerste scoreknop is meteen in beeld
   if (NW) nwGhost();
   if (route.naam === 'instellingen') autoKopieVul();
   if (route.naam === 'reclame') { recBeelden(); if (recFocus) { const el = document.getElementById('rec-' + recVeilig(recFocus)); if (el) el.scrollIntoView({ block: 'start' }); recFocus = ''; } }
@@ -646,12 +655,14 @@ function viewVandaag() {
     <div class="knoppen"><button class="btn" data-dag="${voor}">‹ ${esc(dagLabel(voor))}</button>${s !== t && voor !== t && na !== t ? `<button class="btn" data-dag="${t}">vandaag</button>` : ''}<button class="btn" data-dag="${na}">${esc(dagLabel(na))} ›</button>
     <button class="btn kaal" data-afwezigopen="" aria-pressed="${afwezigOpen}">Ik ben er niet</button><button class="btn" data-nwnieuw="">+ Nieuw</button>${s === t && !p.reden && p.uren.length ? '<button class="btn hoofd" data-start="">▶ Lesmodus</button>' : ''}</div></div>`;
   if (afwezigOpen) h += afwezigForm(s);
+  { const na = afwezigNa(s); if (na) h += `<div class="melding info">${esc(na)}</div>`; }
   if (S.afwezig[s]) { const per = afwezigPeriode(s); h += `<div class="melding info afwezigrij">${per.length > 1 ? `Je bent afwezig ${dagenTekst(per)} (${per.length} lesdagen). Al je lessen in die periode vervallen en schuiven door.` : 'Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door.'} <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig${per.length > 1 ? ' op deze dag' : ''}</button>${per.length > 1 ? ` <button class="btn klein" data-afwezigperiode="${s}">Hele periode ongedaan</button>` : ''}</div>`; }
   if (!S.rooster.length && !ZC) h += `<div class="kaart" style="margin-bottom:1rem"><h2>Eerst je rooster</h2><p class="lead">Vul één keer je weekrooster in: per lesuur de groep en het lokaal. Daarna staan je lessen hier in de agenda, met wat er klaar moet staan.</p><p><a class="btn hoofd" href="#rooster">Rooster invullen</a></p></div>`;
-  const achter = rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
+  const zomer = !!buitenJaar(p); // buiten het schooljaar staat er niets meer dan "het schooljaar zit erop" (bevinding 76)
+  const achter = zomer ? [] : rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
   let wacht = ''; // op een telefoon staan de lessen bovenaan; wat kan wachten komt eronder (bevinding 46)
   if (achter.length) wacht += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
-  if (s >= t) { h += uitvalBlok(s); wacht += liggenBlok(); }
+  if (s >= t && !zomer) { h += uitvalBlok(s); wacht += liggenBlok(); }
   const onder = [...zonderTijd.map(it => `${it.tz ? `Toets ${(B.groepen[it.tz.lg] || [it.tz.lg]).join(', ')} ${it.tz.t.id}` : it.titel} staat in je leergang, maar niet in het rooster. Klopt dat?`), pauzeTekst(A.pz)].filter(Boolean);
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu
   h += `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -923,6 +934,7 @@ function zetBanen(items) { // overlappende items naast elkaar (vrije blokken ove
 }
 /* de zin boven Dag: kort, wat de dag vraagt (regels: handboek/nu-zinnen.md) */
 function dagZin(s, p, A) {
+  if (S.afwezig[s] && !p.reden) { const tk = toetsweekKlassen(s); return (tk.length ? `Toetsweek ${tk.join(', ')}. ` : '') + afwezigZin(s); } // bevinding 62: geen "Vrij"
   if (!A.werkdag) return buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}.`;
   const L = A.items.filter(it => it.soort === 'les' || it.soort === 'klaar'); const V = A.items.filter(it => it.soort === 'uitval').length;
   const af = A.items.filter(it => ['toets', 'rooster', 'sectie', 'afspraak'].includes(it.soort) && it.sub !== 'in je pauze'); const kr = A.items.find(it => it.soort === 'koor');
@@ -1257,7 +1269,7 @@ document.addEventListener('pointerup', e => {
 document.addEventListener('pointercancel', () => { const d = AGD; AGD = null; if (d && d.moved) render(); });
 function agPaneel(s, p, A, sel) {
   const it = A.items.find(x => x.key === sel) || A.heleDag.find(x => x.key === sel);
-  if (!it) return `<div class="kaart"><p class="lead">${A.werkdag ? 'Niets in de agenda op deze dag.' : 'Vrij.'}</p></div>`;
+  if (!it) return buitenJaar(p) ? '' : `<div class="kaart"><p class="lead">${A.werkdag ? 'Niets in de agenda op deze dag.' : 'Vrij.'}</p></div>`;
   const t = vandaag(); const tijd = it.van != null ? `${hm(it.van)}–${hm(it.tot)}` : '';
   if (it.x) return uurKaart(s, it.x, s === t && nuMin() >= it.van - 5 && nuMin() < it.tot);
   if (it.soort === 'start') { const eerste = A.items.find(x => x.soort === 'les'); return `<div class="kaart"><p class="eyebrow">${tijd}</p><h2>Koffie en opstarten</h2><p class="lead">${eerste ? `Eerste les om ${hm(eerste.van)}: ${esc(eerste.titel)}.` : 'Geen lessen vandaag.'}${startDaarna(A) ? ' ' + esc(startDaarna(A)) : ''}</p></div>`; }
@@ -1350,10 +1362,18 @@ function blijftLiggen() {
   reclameOpen(addD(t, -1), G).forEach(m => { if (!op('rec:' + m.id)) out.push({ key: 'rec:' + m.id, titel: m.titel, bron: 'reclame', dag: m.d, vink: `data-recvink="${esc(m.id)}"` }); });
   return out.sort((a, b) => a.dag < b.dag ? -1 : a.dag > b.dag ? 1 : 0);
 }
+function naVakantie(t) { // t is de eerste lesdag na een vakantie: geeft die vakantie (bevinding 71)
+  for (const v of B.kalender.vakanties) { let d = addD(v.tot, 1); for (let i = 0; i < 40 && vrijReden(d); i++) d = addD(d, 1); if (d === t) return v; }
+  return null;
+}
 function liggenBlok() {
   const L = blijftLiggen(); if (!L.length) return '';
   const t = vandaag(); const morgen = volgendeLesdag(t, 1);
   const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
+  const V = naVakantie(t);
+  if (V) { const nw = L.filter(x => x.dag >= V.van).length, oud = L.length - nw; // de eerste dag na een vakantie: één regel en één knop, de stapel ingeklapt
+    return `<div class="kaart liggen"><h2>Na de ${esc(V.naam.toLowerCase())}</h2><p class="lead">${nw ? `Tijdens de ${esc(V.naam.toLowerCase())} verlopen: ${nw} ${nw === 1 ? 'taak' : 'taken'}.` : `Tijdens de ${esc(V.naam.toLowerCase())} is niets verlopen.`}${oud ? ` ${oud} ${oud === 1 ? 'lag' : 'lagen'} er al langer.` : ''}</p>
+      ${nw ? `<div class="knoppen"><button class="btn hoofd" data-liggenvakantie="${morgen}">Schuif de ${nw === 1 ? 'taak' : nw + ' taken'} door naar morgen</button></div>` : ''}<details class="meer"><summary>Bekijk alles wat blijft liggen · ${L.length}</summary>${L.map(rij).join('')}</details></div>`; }
   const rest = L.slice(3);
   return `<div class="kaart liggen"><h2>Blijft liggen · ${L.length}</h2>${L.slice(0, 3).map(rij).join('')}${rest.length ? `<details class="meer"><summary>Nog ${rest.length} ${rest.length === 1 ? 'taak' : 'taken'}</summary>${rest.map(rij).join('')}</details>` : ''}</div>`;
 }
@@ -1588,7 +1608,7 @@ function viewNu() {
 }
 function nuMeldingen(s) { // wat aandacht vraagt, ook als je niet op Dag kijkt
   const n = reclameOpen(s).length;
-  const h = uitvalBlok(s) + liggenBlok() + (n ? `<a class="melding nu-rec" href="#reclame"><b>Reclame:</b> ${n} ${n === 1 ? 'actie staat' : 'acties staan'} open voor vandaag of eerder.</a>` : '');
+  const na = afwezigNa(s); const h = (na ? `<div class="melding info">${esc(na)}</div>` : '') + uitvalBlok(s) + liggenBlok() + (n ? `<a class="melding nu-rec" href="#reclame"><b>Reclame:</b> ${n} ${n === 1 ? 'actie staat' : 'acties staan'} open voor vandaag of eerder.</a>` : '');
   return h ? `<section class="ens-meld" aria-label="Meldingen">${h}</section>` : '';
 }
 /* ---------- de zin: wat nu telt, in één zin (regels: handboek/nu-zinnen.md) ----------
@@ -1614,7 +1634,8 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
   const rw = nuWeekinfo(s, nu, m.m); if (rw) return rw;
   const it = m.it; const x = m.x;
   switch (m.m) {
-    case 'vrijedag': return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
+    case 'vrijedag': if (S.afwezig[s] && !p.reden) return { lab: '', zin: afwezigZin(s) + (toetsweekKlassen(s).length ? ` Toetsweek ${toetsweekKlassen(s).join(', ')} loopt door.` : ''), knop: `<button class="btn hoofd" data-afwezigterug="${s}">Toch aanwezig</button>` };
+      return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
     case 'stil': return { lab: '', zin: S.afgesloten[s] ? 'Je dag is afgesloten. Morgen staat klaar.' : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
     case 'start': { const L = lesUren(p); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
       return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan),
@@ -1622,13 +1643,14 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
     case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
       return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
     case 'les': { const y = it.x; const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
+      const R = s === vandaag() ? teAfronden(s, p, nu).filter(q => q.u.id !== y.u.id) : []; const daarna = R.length ? ` Daarna ${R.length === 1 ? R[0].u.groep : 'de vorige lessen'} afronden.` : ''; // lessen zonder pauze ertussen (bevinding 63)
       if (!y.item && !presVoorop(s, y, nu)) return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}.${y.fout ? ' Deze klas heeft nog geen leergang.' : ''}` };
       const l = y.item ? les(y.item) : {};
-      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.` }; }
+      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.${daarna}` }; }
       const v = magTelt(s, y) ? magVakken(s, y) : {};
-      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}` }; }
+      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}${daarna}` }; }
     case 'naLes': { const v = magTelt(s, x) ? magVakken(s, x) : {};
-      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, deels of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
+      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, half af of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
     case 'pauze': return { lab: '', zin: 'Pauze.', sub: `Tot ${hm(it.tot)}.` };
     case 'rust': return { lab: 'Rustblok', zin: `Tot ${hm(it.tot)} is van jou.${A.pz && A.pz.weg.length ? ' Je pauze viel weg door ' + lijstTxt([...new Set(A.pz.weg.map(q => q.door))]) + '.' : ''}` };
     case 'koor': return { lab: 'Schoolkoor · tot ' + hm(it.tot), zin: `${titel(it.titel)}.` };
@@ -1691,8 +1713,8 @@ function nuStap(d) { // door je dag bladeren: pijltjes op de laptop, vegen op de
 function nuKaart(s, p, A, m, nu) {
   if (m.m === 'vrijedag') return vrijeDagKaart(s, p);
   if (m.m === 'stil') return stilKaart(s);
-  if (m.m === 'start') return startKaart(s, p, A, nu);
-  if (m.m === 'les') return presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu);
+  if (m.m === 'start') return startKaart(s, p, A, nu, true);
+  if (m.m === 'les') return (presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu)) + vorigeAfronden(s, p, m.it.x, nu);
   if (m.m === 'koor') return (pauzeTekst(A.pz) ? `<div class="melding" style="margin-bottom:.8rem">${esc(pauzeTekst(A.pz))}</div>` : '') + koorKaart(s, m.it.koor);
   if (m.m === 'pauze' || m.m === 'rust') return rustKaart(s, m.it, A, true);
   if (m.m === 'naLes') return naLesKaart(s, p, m.x, nu);
@@ -1714,16 +1736,26 @@ function kijkKaart(s, p, A, key, nu) {
   return agPaneel(s, p, A, key);
 }
 function klaarLijst(s, l) { const b = benodigd(l).slice(); if (b.includes('Drums / percussie')) b.push('Oordoppen voor jezelf'); (S.klaarExtra[s] || []).forEach(x => { if (!b.includes(x)) b.push(x); }); return b; }
-function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">deels</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
-function startKaart(s, p, A, nu) {
+function vorigeAfronden(s, p, x, nu) { // lessen zonder pauze ertussen: de vorige les is voorbij en nog niet afgerond (bevinding 63)
+  const rest = s === vandaag() ? teAfronden(s, p, nu).filter(y => y.u.id !== x.u.id) : []; if (!rest.length) return '';
+  return `<div class="kaart" style="margin-top:1rem"><h3>${rest.length === 1 ? 'De vorige les afronden' : 'De vorige lessen afronden'}</h3>${rest.map(y => afrondRij(s, y)).join('')}${rest.length === 1 ? `<details class="meer"><summary>Notitie voor de volgende les van ${esc(rest[0].u.groep)}</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(rest[0], s))}</textarea></details>` : ''}</div>`;
+}
+function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">half af</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
+function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zegt al hoeveel lessen en de eerste (bevinding 72)
   const L = lesUren(p); const kr = A.items.find(it => it.soort === 'koor'); const pz = A.pz;
   const pzT = pz && !pz.onbekend && pz.vrij.length ? ` Pauze: ${pz.vrij.map(x => hm(x.van) + '–' + hm(x.tot)).join(' en ')}.` : '';
-  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>Je dag</h2>
-    <p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>
-    ${L[0] ? vorigeRegel(L[0]) : ''}
+  const e = zinNoemt && L[0] && L[0].item && !L[0].klaar ? L[0] : null; // de eerste les staat er vanaf het opstarten: onderwerp, klaarzetten, materiaal (bevinding 57)
+  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>${e ? `Eerste les: ${esc(e.u.groep)} · ${esc(les(e.item).titel || '')}` : 'Je dag'}</h2>
+    ${zinNoemt ? (pzT ? `<p class="lead">${esc(pzT.trim())}</p>` : '') : `<p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>`}
+    ${L[0] ? vorigeRegel(L[0]) : ''}${e ? eersteLesBlok(s, e) : ''}
     ${pauzeTekst(pz) ? `<div class="melding" style="margin-top:.6rem">${esc(pauzeTekst(pz))}</div>` : ''}
     ${collegasJarig(s).length ? `<div class="jarig-rij">${collegasJarig(s).map(felicRij).join('')}</div>` : ''}${weekJarigRij(s)}
-    <p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p></div>`;
+    ${e ? (startDaarna(A) ? `<p class="lead" style="margin-top:.6rem">${esc(startDaarna(A))}</p>` : '') : `<p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p>`}</div>`;
+}
+function eersteLesBlok(s, x) { // doel, klaarzetten en materiaal van de eerste les, zoals de kaart vlak voor de les
+  const l = les(x.item); const ben = klaarLijst(s, l);
+  return `<p class="sub" style="margin-top:.3rem">${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}
+    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}`;
 }
 function voorLesKaart(s, p, x, nu) {
   const l = les(x.item); const ben = klaarLijst(s, l);
@@ -1753,7 +1785,7 @@ function lesZonderKaart(s, x, nu) { // les zonder lesinhoud (klas zonder leergan
 function naLesKaart(s, p, x, nu) {
   const l = les(x.item); const rest = teAfronden(s, p, nu).filter(y => y !== x);
   return `<div class="kaart"><p class="eyebrow">De bel ging · ${esc(x.u.groep)} · ${esc(x.u.start)}–${esc(x.u.eind)}</p><h2>Hoe ging het?</h2><p class="lead">${esc(l.titel || '')}</p>${magBlok(s, x)}
-    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Deels, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
+    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Half af, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
     <details class="meer"><summary>Notitie voor de volgende les</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(x, s))}</textarea></details>
     <p class="sub" style="margin-top:.6rem">De notitie gaat mee naar de volgende les van ${esc(x.u.groep)}. Straks komt terug in je volgende werkblok, niet in je pauze.</p>
     ${rest.length ? `<h3>Ook nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
@@ -1870,6 +1902,8 @@ function stilKaart(s) {
 }
 const buitenJaar = p => p.reden === 'na de laatste lesweek' ? { kop: 'Het schooljaar zit erop', zin: 'Het schooljaar zit erop. Lesdag heeft tot het nieuwe schooljaar niets voor je.' } : p.reden === 'nog geen lesweek' ? { kop: 'Het schooljaar begint nog', zin: 'Het schooljaar is nog niet begonnen. Lesdag heeft tot de eerste lesweek niets voor je.' } : null; // zomer: geen werk voorgeschoteld (bevinding 51)
 function vrijeDagKaart(s, p) {
+  if (S.afwezig[s] && !p.reden) return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>Afwezig</h2><p class="lead">Lesdag heeft vandaag niets voor je. De lessen van vandaag schuiven door naar je volgende lesdagen.</p>
+    <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
   return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${esc(buitenJaar(p) ? buitenJaar(p).kop : cap(p.reden || 'Vrij'))}</h2><p class="lead">${buitenJaar(p) ? 'Lesdag heeft tot het ' + (p.reden === 'nog geen lesweek' ? 'begin van het schooljaar' : 'nieuwe schooljaar') + ' niets voor je.' : 'Lesdag heeft vandaag niets voor je.'}</p>
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
 }
@@ -1969,7 +2003,7 @@ const presVoorop = (s, x, nu) => s === vandaag() && magTelt(s, x) && !magVan(s, 
 const magOpenKnop = (k, klein) => `<a class="btn mag${klein ? ' klein' : ''}" href="${esc(MAGURL())}" target="magister" rel="noopener" data-magopen="${esc(k)}">Open Magister</a>`;
 function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de presentie voorop
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
-  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>
+  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>${vorigeRegel(x)}
     <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is en rond de les daar af. Tik daarna op Afgerond; Lesdag kijkt zelf niet in Magister.</p>
     <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok-->
     ${x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn hoofd" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div>`; // bevinding 58: op het toetsmoment één tik naar de scorekaart
@@ -2135,7 +2169,7 @@ function viewRegie() {
   <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
   <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min${y.was && y.was !== y.min ? ` (was ${y.was})` : ''}</small>` : ''}</button></li>`).join('')}</ol></div></div>
   <div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
-    <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Deels, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
+    <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Half af, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
     <textarea id="rgNot" placeholder="Notitie voor de volgende les">${x && x.item ? esc(notitieVak(x, s)) : ''}</textarea>
     ${x && x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div></div>`;
 }
@@ -2972,10 +3006,11 @@ function notitiesLaad() {
   if (!notLaad) notLaad = fetch('data/notities.json').then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))).then(j => { NOT = j; return j; }).catch(() => null).then(j => { notLaad = null; return j; });
   return notLaad;
 }
+const vorHtml = (P, sl, fi) => !P.bord && P.vorige && sl.k !== 'klaar' && (sl.k === 'welkom' || sl.k === 'doel' || fi === 0) ? `<b>${esc(vorigeKop(P.vorige))}</b> ${esc(P.vorige.n)}<br>` : ''; // de notitie van vorige keer bij de eerste dia's, alleen voor jou
 const notHtml = (item, l, sl, fi) => NOT && item && sl ? LESMODUS.notitieHtml(NOT[item.id], sl, fi, l) : '';
 function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwerken, de timer blijft ongemoeid
   const P = LES; if (!P || P.bord) return; const sl = P.slides[P.i]; const el = $('#notities'); if (!el || !sl) return;
-  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '';
+  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '');
   el.innerHTML = d + nh; const b = document.querySelector('#les [data-l="notities"]'); if (b) b.hidden = !(d || nh);
   el.classList.toggle('open', !!(P.notities && (d || nh)));
 }
@@ -2990,9 +3025,13 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   const th = x.item.week.thuis || {};
   const vor = vorigeVan(x);
   const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
-  let slides = LESMODUS.bouwSlides(l, { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml });
+  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml };
+  let slides = LESMODUS.bouwSlides(l, kctx);
+  { const kr = lesKrap({ s, x, slides, i: 0, bord: false }); // bevinding 73: loopt de les al, dan staan op het welkomdia de ingekorte minuten, niet de geplande
+    if (kr) { const kort = slides.map((y, j) => ({ y, j })).filter(o => o.y.k === 'fase').map(o => kr.min[o.j] != null ? kr.min[o.j] : null); slides[slides.findIndex(y => y.k === 'welkom')] = LESMODUS.bouwSlides(l, Object.assign(kctx, { kort })).find(y => y.k === 'welkom'); } }
   if (bord) slides = slides.filter(y => y.k !== 'klaar'); // jouw kaart hoort niet op het bord
   LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null };
+  LES.vorige = vor; // bevinding 3: loopt de les al, dan staat jouw kaart er niet; de notitie van vorige keer zit dan bij de notities (alleen jij, niet op het bord)
   // verder waar je was; loopt de les al, dan niet op jouw kaart beginnen (die zou op het digibord kunnen staan)
   const pl = s === vandaag() ? plekAlle()[s + '|' + x.u.id] : null;
   let i = pl ? pl.i : 0; if (i === 0 && s === vandaag() && nuMin() >= minuten(x.u.start)) i = 1;
@@ -3013,7 +3052,7 @@ function toonSlide() {
   if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
   else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
   else { P.left = 0; P.tot = 0; }
-  const notInh = P.bord ? '' : (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
+  const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
   $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
@@ -3032,7 +3071,7 @@ function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.l
 function afrondenHtml() {
   const P = LES;
   return `<div class="afronden"><p class="eyebrow">Les afronden · ${esc(P.x.u.groep)}</p><h2>${esc(P.l.titel || '')}</h2>
-  <div class="keuzes">${[['gegeven', 'Gegeven'], ['half', 'Half af, volgende keer verder'], ['niet', 'Niet gegeven']].map(([k, n]) => `<button data-keuze="${k}" aria-pressed="${P.keuze === k}">${n}</button>`).join('')}</div>
+  <div class="keuzes">${[['gegeven', 'Gegeven'], ['half', 'Half af, volgende keer verder'], ['niet', 'Niet aan toegekomen']].map(([k, n]) => `<button data-keuze="${k}" aria-pressed="${P.keuze === k}">${n}</button>`).join('')}</div>
   <label style="font-family:var(--lees);color:#cbb8db">Notitie voor de volgende les<textarea id="lnot">${esc(notitieVak(P.x, P.s))}</textarea></label>
   <div class="keuzes"><button data-l="opslaan">Opslaan en naar de volgende les</button></div></div>`;
 }
@@ -3140,6 +3179,7 @@ document.addEventListener('click', async e => {
   if (D.afwijkingterug) { maakOngedaan(D.afwijkingterug); toast('Teruggezet'); return; }
   if (D.taakopen) { openTaak(D.taakopen); return; }
   if (D.liggenplan) { sluit(); liggenInPlannen(D.liggenplan); return; }
+  if (D.liggenvakantie) { sluit(); const V = naVakantie(vandaag()); const lijst = V ? blijftLiggen().filter(x => x.dag >= V.van) : []; if (lijst.length) { S.uitgesteld = S.uitgesteld || {}; for (const k of Object.keys(S.uitgesteld)) if (S.uitgesteld[k] <= vandaag()) delete S.uitgesteld[k]; lijst.forEach(x => { S.uitgesteld[x.key] = D.liggenvakantie; }); bewaar(); toast(lijst.length + ' ' + (lijst.length === 1 ? 'taak komt' : 'taken komen') + ' terug op ' + fmtD(D.liggenvakantie)); } return; }
   if (D.liggenlater) { sluit(); const i = D.liggenlater.lastIndexOf('|'); stelUit(D.liggenlater.slice(0, i), D.liggenlater.slice(i + 1)); return; }
   if (D.palet != null) { paletOpen(); return; }
   if (D.stap) { nuStap(+D.stap); return; }
@@ -3172,7 +3212,7 @@ document.addEventListener('click', async e => {
     if (!x || !x.item) { toast('Deze les staat niet meer op de planning'); return; }
     const terug = foto(); rondAf(s, x, D.rgaf, ($('#rgNot') || {}).value); bewaar(true); rgStuur('sluit'); RG = null; toast(x.u.groep + ' afgerond', terug); location.hash = 'nu'; return; }
   if (D.rondaf) { const [s, uid, keuze] = D.rondaf.split('|'); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
-    if (x && x.item) { const terug = foto(); rondAf(s, x, keuze, ($('#nNot') || {}).value); nuKijk = null; bewaar(); toast(x.u.groep + ': ' + (keuze === 'gegeven' ? 'gegeven' : keuze === 'half' ? 'deels, volgende keer verder' : 'de les schuift door'), terug); } return; }
+    if (x && x.item) { const terug = foto(); rondAf(s, x, keuze, ($('#nNot') || {}).value); nuKijk = null; bewaar(); toast(x.u.groep + ': ' + (keuze === 'gegeven' ? 'gegeven' : keuze === 'half' ? 'half af, volgende keer verder' : 'de les schuift door'), terug); } return; }
   if (D.aflater) { const terug = foto(); const [s, uid] = D.aflater.split('|'); (S.afLater[s] = S.afLater[s] || []).push(uid); nuKijk = null; bewaar(); toast('Komt terug in je volgende werkblok', terug); return; }
   if (D.rustweg) { const terug = foto(); S.rust[D.rustweg] = 'weg'; bewaar(); toast('Het rustblok is vrijgegeven', terug); return; }
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }
@@ -3390,7 +3430,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') sluit();
 });
 function leesRoute() { if (/^#groepen(\/|$)/.test(location.hash)) history.replaceState(null, '', '#jaar'); // oude links
-  const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; }
+  const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; bmNaarScore = route.naam === 'beoordelen' && !!route.arg[1]; }
 window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); ankerOpen = ''; /* bevinding 68: een half ingevuld verplaats-paneel blijft niet open staan tot een andere dag */ if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
   if (route.naam === 'bord' && !LES) { document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true); return; } // opent de browser het bord in hetzelfde venster
   render(); window.scrollTo(0, 0); });

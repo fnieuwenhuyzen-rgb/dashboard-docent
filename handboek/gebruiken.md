@@ -26,7 +26,7 @@ Doe dit voor je eerste les, in deze volgorde. Het kost vijf minuten.
 7. Kijk op **Week** of er deze week een toets, surveillance of vergadering is.
 8. Staat er een jarige collega bij Opstarten? Er is een knop voor een felicitatie in Outlook. Jij verstuurt hem.
 
-Start je les: tik op **Lesmodus**. Het digibord laat titel, doel en fasen zien, met een klok. Aan het einde kies je **gegeven**, **half af** of **niet gegeven** en zet je een notitie.
+Start je les: tik op **Lesmodus**. Het digibord laat titel, doel en fasen zien, met een klok. Aan het einde kies je **gegeven**, **half af** of **niet aan toegekomen** en zet je een notitie.
 Wil je de les liever niet voor de klas laten zien? Dat is een keuze per klas. De werkvormen staan in de les zelf.
 
 Na elke les, of aan het eind van de dag: zet in Magister de presentie, het huiswerk en het logboek. Lesdag onthoudt wat nog moet (oker stip). Binnen 15 minuten na het begin is "op tijd".

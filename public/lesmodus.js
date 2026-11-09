@@ -138,8 +138,8 @@
   }
 
   // ---------- slides ----------
-  function agenda(fasen) {
-    const fs = fasen.map(fase); const tot = fs.reduce((a, f) => a + (f.min || 0), 0) || 1;
+  function agenda(fasen, kort) { // kort: de ingekorte minuten per fase als de les al loopt (bevinding 73)
+    const fs = fasen.map(fase).map((f, i) => kort && kort[i] != null ? Object.assign({}, f, { min: kort[i] }) : f); const tot = fs.reduce((a, f) => a + (f.min || 0), 0) || 1;
     return `<div class="agenda"><div class="balk">${fs.map(f => `<div style="flex:${f.min || 1};background:${SOORT[f.soort].kleur}" title="${esc(f.kop)}"></div>`).join('')}</div><ol>${fs.map(f => `<li><i style="color:${SOORT[f.soort].zacht}">${ico(f.soort)}</i><span><b>${esc(SOORT[f.soort].naam)}</b> · ${f.min} min<br>${esc(f.kop)}</span></li>`).join('')}</ol><div class="tot">${tot} minuten</div></div>`;
   }
   function bouwSlides(l, ctx) {
@@ -148,7 +148,7 @@
     const kop = `${esc(ctx.groep)} · ${esc(ctx.lgNaam)}${ctx.lokaal ? ' · ' + esc(ctx.lokaal) : ''}`;
     const fasen = (l.fasen || []).map(fase);
     S.push({ k: 'klaar', docent: true, h: `<p class="eyebrow">Jouw kaart · niet voor het bord</p><h2>${esc(l.titel || '')}</h2><div class="tweekol"><div><h3>Klaarzetten</h3><ul class="groot">${(ctx.benodigd || []).map(b => `<li>${esc(b)}</li>`).join('') || '<li>Niets bijzonders</li>'}</ul></div><div>${ctx.vorige ? `<h3>${esc(ctx.vorigeKop || 'Vorige keer')}</h3><p class="detail" style="white-space:pre-line">${esc(ctx.vorige)}</p>` : ''}${l.doel ? `<h3>Doel</h3><p class="detail">${esc(l.doel)}</p>` : ''}${fasen.length ? `<h3>Verloop</h3><p class="detail">${fasen.map(f => f.min + ' min ' + SOORT[f.soort].naam.toLowerCase()).join(' → ')}</p>` : ''}</div></div><p class="hint">Pijl rechts als het bord aanstaat · n = notities · t = timer · f = volledig scherm</p>` });
-    S.push({ k: 'welkom', h: `<p class="eyebrow">${kop}</p><h1>${esc(l.titel || '')}</h1>${ctx.toets ? `<p class="detail">${esc(ctx.toets)}</p>` : ''}${l.vraag ? `<p class="vraag">${esc(l.vraag)}</p>` : ''}${fasen.length ? agenda(l.fasen) : l.detail ? `<p class="detail">${esc(l.detail)}</p>` : ''}` });
+    S.push({ k: 'welkom', h: `<p class="eyebrow">${kop}</p><h1>${esc(l.titel || '')}</h1>${ctx.toets ? `<p class="detail">${esc(ctx.toets)}</p>` : ''}${l.vraag ? `<p class="vraag">${esc(l.vraag)}</p>` : ''}${fasen.length ? agenda(l.fasen, ctx.kort) : l.detail ? `<p class="detail">${esc(l.detail)}</p>` : ''}` });
     if (l.doel || (l.criteria || []).length) S.push({ k: 'doel', h: `<p class="eyebrow">Aan het eind van deze les</p><h2>${esc(l.doel || '')}</h2>${(l.criteria || []).length ? `<ul class="crit">${l.criteria.map(c => `<li><button type="button" class="vink" data-vink="" aria-pressed="false" aria-label="${esc(c)}"></button><span>${esc(c)}</span></li>`).join('')}</ul>` : ''}` });
     fasen.forEach((f, i) => {
       const s = SOORT[f.soort];
