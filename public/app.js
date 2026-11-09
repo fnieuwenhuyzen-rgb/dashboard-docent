@@ -1574,11 +1574,12 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
     case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
       return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
     case 'les': { const y = it.x; const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
+      const R = s === vandaag() ? teAfronden(s, p, nu).filter(q => q.u.id !== y.u.id) : []; const daarna = R.length ? ` Daarna ${R.length === 1 ? R[0].u.groep : 'de vorige lessen'} afronden.` : ''; // lessen zonder pauze ertussen (bevinding 63)
       if (!y.item && !presVoorop(s, y, nu)) return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}.${y.fout ? ' Deze klas heeft nog geen leergang.' : ''}` };
       const l = y.item ? les(y.item) : {};
-      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.` }; }
+      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.${daarna}` }; }
       const v = magTelt(s, y) ? magVakken(s, y) : {};
-      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}` }; }
+      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}${daarna}` }; }
     case 'naLes': { const v = magTelt(s, x) ? magVakken(s, x) : {};
       return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, deels of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
     case 'pauze': return { lab: '', zin: 'Pauze.', sub: `Tot ${hm(it.tot)}.` };
@@ -1644,7 +1645,7 @@ function nuKaart(s, p, A, m, nu) {
   if (m.m === 'vrijedag') return vrijeDagKaart(s, p);
   if (m.m === 'stil') return stilKaart(s);
   if (m.m === 'start') return startKaart(s, p, A, nu, true);
-  if (m.m === 'les') return presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu);
+  if (m.m === 'les') return (presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu)) + vorigeAfronden(s, p, m.it.x, nu);
   if (m.m === 'koor') return (pauzeTekst(A.pz) ? `<div class="melding" style="margin-bottom:.8rem">${esc(pauzeTekst(A.pz))}</div>` : '') + koorKaart(s, m.it.koor);
   if (m.m === 'pauze' || m.m === 'rust') return rustKaart(s, m.it, A, true);
   if (m.m === 'naLes') return naLesKaart(s, p, m.x, nu);
@@ -1666,6 +1667,10 @@ function kijkKaart(s, p, A, key, nu) {
   return agPaneel(s, p, A, key);
 }
 function klaarLijst(s, l) { const b = benodigd(l).slice(); if (b.includes('Drums / percussie')) b.push('Oordoppen voor jezelf'); (S.klaarExtra[s] || []).forEach(x => { if (!b.includes(x)) b.push(x); }); return b; }
+function vorigeAfronden(s, p, x, nu) { // lessen zonder pauze ertussen: de vorige les is voorbij en nog niet afgerond (bevinding 63)
+  const rest = s === vandaag() ? teAfronden(s, p, nu).filter(y => y.u.id !== x.u.id) : []; if (!rest.length) return '';
+  return `<div class="kaart" style="margin-top:1rem"><h3>${rest.length === 1 ? 'De vorige les afronden' : 'De vorige lessen afronden'}</h3>${rest.map(y => afrondRij(s, y)).join('')}${rest.length === 1 ? `<details class="meer"><summary>Notitie voor de volgende les van ${esc(rest[0].u.groep)}</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(rest[0], s))}</textarea></details>` : ''}</div>`;
+}
 function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">deels</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
 function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zegt al hoeveel lessen en de eerste (bevinding 72)
   const L = lesUren(p); const kr = A.items.find(it => it.soort === 'koor'); const pz = A.pz;

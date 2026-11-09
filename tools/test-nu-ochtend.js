@@ -22,6 +22,7 @@ const TOON = process.argv.includes('--toon');
     await ctx.close(); return r;
   }
   const is = (naam, ok, extra) => { n++; if (!ok) fouten.push(naam + (extra ? ' — ' + extra : '')); };
+  const rijen = (html, uur) => (html.match(new RegExp('data-rondaf="[^"]*\\|' + uur + '\\|', 'g')) || []).length; // knoppen om een les af te ronden
   const tel = (t, w) => t.split(w).length - 1;
 
   // 72: de zin "5 lessen, de eerste om 8:30" staat maar één keer op Nu
@@ -38,6 +39,13 @@ const TOON = process.argv.includes('--toon');
     const a = await kijk('2026-11-16T08:10:00+01:00', 'nu', staat); is('3: Nu 8:10 vorige keer', a.tekst.includes(NOT));
     const b = await kijk('2026-11-16T08:32:00+01:00', 'nu', staat); is('3: Nu in het eerste kwartier (Magister afronden voorop)', /Magister afronden/.test(b.tekst) && b.tekst.includes('Vorige keer') && b.tekst.includes(NOT));
     let les = ''; const c = await kijk('2026-11-16T08:40:00+01:00', 'vandaag', staat, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(200); await page.click('#les [data-l="notities"]'); await page.waitForTimeout(100); les = await page.evaluate(() => document.querySelector('#les').innerText); }); is('3: lesmodus die al loopt toont vorige keer bij de notities', /Vorige keer/.test(les) && les.includes(NOT)); }
+
+  // 63: twee lessen achter elkaar (tv4 8:30 en 9:15): in de tweede les kan de eerste nog worden afgerond
+  { let na = null;
+    const a = await kijk('2026-11-16T09:17:00+01:00', 'nu', null, async page => { await page.click('summary:has-text("Notitie voor de volgende les")'); await page.fill('#nNot', 'Ritme nog niet af'); await page.click('[data-rondaf$="|t1|half"]'); await page.waitForTimeout(400); na = await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')).voortgang); });
+    is('63: knoppen voor de eerste les', rijen(a.html, 't1') === 0 && na && Object.values(na.tv4 || {}).some(v => v.st === 'half' && v.n === 'Ritme nog niet af'), JSON.stringify(na));
+    const b = await kijk('2026-11-16T09:17:00+01:00', 'nu'); is('63: de vraag staat er bij de tweede les', rijen(b.html, 't1') === 3 && /Daarna tv4 afronden/.test(b.tekst), b.tekst.slice(0, 400));
+    const c = await kijk('2026-11-16T09:40:00+01:00', 'nu'); is('63: ook later in de les nog', rijen(c.html, 't1') === 3); }
 
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
