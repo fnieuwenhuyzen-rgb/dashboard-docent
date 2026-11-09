@@ -82,6 +82,7 @@ const EENMALIG = [
   ['blazers', '2026-11-27', 'Met de blazers afstemmen welke zetting en coupletten', 'Once in royal, Eer zij God, Prince of Peace (slot), Hark the herald en Komt allen tezamen. Spelen ze dezelfde zetting als in de koormappen, en wat gebeurt er in het laatste couplet (descant)?'],
   ['hal', '2026-12-04', 'Dona nobis pacem in de hal: start en looproute afspreken', 'Hoe laat begint PM, wie geeft de toon, wanneer stopt de canon en hoe komt PM daarna op de plek voor Once in royal? Op 15 dec staat de hal op het repetitieplan.']
 ].map(([k, d, titel, sub]) => ({ id: `koor-carols-2026-v5-${k}`, titel: `${titel} (Christmas Carols)`, d, sub: `${sub} Concert: vr 18 dec.`, zicht: 7, tot: '2026-12-18' }));
+const MUZIEK_VOORAF = 7; // dagen vóór de eerste repetitie van een periode
 const ZICHT = 7, TE_LAAT = 7; // een taak komt een week voor de deadline in beeld; nieuwe taken met een deadline langer dan een week geleden worden niet meer aangemaakt
 const bestond = new Set(((basis.koor || {}).taken || []).map(t => t.id)); // wat al bestond blijft staan: een open taak verdwijnt niet door een nieuwe sync
 // taken voor de dirigent: wat de koordata zelf als open aangeeft, plus de vaste voorbereiding
@@ -102,6 +103,16 @@ for (const a of agenda) {
     const id = `koor-voor-${sleutel}-${k}`; const d = werkdag(addD(a.d, -n));
     if (d >= addD(vandaag, -TE_LAAT) || bestond.has(id)) taken.push({ id, titel: `${titel} (${naam})`, d, sub: (sub + ' Concert: ' + fmt(a.d) + '.').trim(), zicht: ZICHT, tot: a.d });
   }
+  // de muziek voor een nieuwe periode moet langs de repro: deadline een week vóór de eerste repetitie voor dit concert.
+  // Staan de repetities nog niet in de koorapp, dan op de dag van het vorige concert, zodat de taak in de laatste week van de lopende periode in beeld komt.
+  const alle = data.agenda || [], conId = Object.keys(concerten).find(k => concerten[k].naam === a.concert);
+  const concertDagen = alle.filter(x => x.type === 'concert' && x.d < a.d);
+  const vorigeZelfde = concertDagen.filter(x => x.concert === conId).map(x => x.d).sort().pop() || '';
+  const eersteRep = conId && alle.filter(x => (x.type === 'rep' || x.type === 'extra') && x.concert === conId && x.d > vorigeZelfde && x.d <= a.d).map(x => x.d).sort()[0];
+  const vorigConcert = concertDagen.map(x => x.d).sort().pop();
+  const muziekId = `koor-voor-${sleutel}-muziek`, muziekD = werkdag(eersteRep ? addD(eersteRep, -MUZIEK_VOORAF) : vorigConcert || addD(a.d, -56));
+  const muziekSub = eersteRep ? `Netjes en geprint vóór de eerste repetitie van ${fmt(eersteRep)}. Het moet langs de repro, dus reken daar tijd voor. Concert: ${fmt(a.d)}.` : `De repetities staan nog niet in de koorapp. Zet ze erin, dan schuift de deadline naar een week vóór de eerste repetitie. Het moet langs de repro. Concert: ${fmt(a.d)}.`;
+  if (!taken.some(t => t.id === muziekId) && (!eersteRep || muziekD >= addD(vandaag, -TE_LAAT) || bestond.has(muziekId))) taken.push({ id: muziekId, titel: `Muziek klaarmaken en naar de repro (${naam})`, d: muziekD, sub: muziekSub, zicht: ZICHT, tot: eersteRep || a.d });
 }
 for (const v of data.voorjaar || []) if (/datum volgt/i.test(v.text || '')) taken.push({ id: 'koor-voorjaar', titel: `${v.title}: datum vastleggen`, sub: v.text });
 // losse taken uit een programma of ander stuk; staan hier zodat een nieuwe sync ze niet weggooit. Weg zodra het concert voorbij is.
