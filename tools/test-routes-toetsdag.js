@@ -121,6 +121,22 @@ const tijd = (dag, hm) => `2026-${dag.slice(3, 5) === '11' ? '11' : '12'}-${dag.
     for (const hash of ['nu', 'vandaag']) { await op('07-12', '09:30', hash); waar(`na het cijfer van Daan staat er op ${hash} geen inhaalregel meer`, !/moet nog inhalen|moeten nog inhalen/.test(await tekst())); }
   });
 
+  /* 7. kolom kopiëren en Magister (bevinding 61): na het kopiëren weet Frans wat er nog moet, tot hij "Staat in Magister" aantikt */
+  await stap('kolom kopiëren en Magister', async () => {
+    await op('07-12', '09:40', 'nu'); let t = await tekst();
+    waar('Nu: de cijfers staan nog niet in Magister', /PT1 de cijfers staan nog niet als ingevoerd in Magister/.test(t), (t.match(/.{0,60}Magister.{0,60}/g) || []).join(' // '));
+    await op('07-12', '09:40', 'jaar/' + G); waar('klasblad: PT1 "nog in Magister zetten"', (await knoppen('[data-beoordeel]')).some(x => /nog in Magister zetten/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
+    await op('07-12', '09:40', 'beoordelen/pt1-vwo4/' + G); await klik('[data-bm="kolom"]'); await page.waitForSelector('[data-bm="kolomkopie"]');
+    await klik('[data-bm="kolomkopie"]'); await page.waitForTimeout(150);
+    const kl = (await page.evaluate(() => navigator.clipboard.readText())).replace(/\r\n/g, '\n');
+    waar('klembord: 4 regels met een cijfer (Anna 5,6 / Bram 8,0 ...)', kl.split('\n').filter(x => /^\d+,\d$/.test(x)).length === 4, JSON.stringify(kl));
+    waar('na het kopiëren: de kaart zegt dat het nog niet in Magister staat', /nog niet als ingevoerd in Magister/.test(await tekst()));
+    await klik('[data-bm="inmagister"]'); await page.waitForTimeout(100);
+    waar('na "Staat in Magister" noemt de kaart de datum', /In Magister gezet op/.test(await tekst()), (await tekst()).slice(0, 300));
+    for (const hash of ['nu', 'vandaag']) { await op('07-12', '09:45', hash); waar(`${hash}: geen regel meer over Magister`, !/PT1 (de cijfers staan nog niet als ingevoerd|er zijn cijfers bijgekomen)/.test(await tekst()), (await tekst()).slice(0, 200)); }
+    await op('07-12', '09:45', 'jaar/' + G); waar('klasblad: PT1 "in Magister"', (await knoppen('[data-beoordeel]')).some(x => / · in Magister/.test(x)), (await knoppen('[data-beoordeel]')).join(' | '));
+  });
+
   await h.stop();
   const geen = fouten.length === 0;
   console.log(geen ? `toetsdag: ${nChecks} controles, alles goed (${((Date.now() - t0) / 1000).toFixed(0)} s)` : `toetsdag: ${fouten.length} fout(en) in ${nChecks} controles:\n  - ` + fouten.join('\n  - '));
