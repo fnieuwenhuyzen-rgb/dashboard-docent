@@ -1927,7 +1927,7 @@ const presVoorop = (s, x, nu) => s === vandaag() && magTelt(s, x) && !magVan(s, 
 const magOpenKnop = (k, klein) => `<a class="btn mag${klein ? ' klein' : ''}" href="${esc(MAGURL())}" target="magister" rel="noopener" data-magopen="${esc(k)}">Open Magister</a>`;
 function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de presentie voorop
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
-  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>
+  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>${vorigeRegel(x)}
     <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is en rond de les daar af. Tik daarna op Afgerond; Lesdag kijkt zelf niet in Magister.</p>
     <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok--></div>`;
 }
@@ -2927,10 +2927,11 @@ function notitiesLaad() {
   if (!notLaad) notLaad = fetch('data/notities.json').then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))).then(j => { NOT = j; return j; }).catch(() => null).then(j => { notLaad = null; return j; });
   return notLaad;
 }
+const vorHtml = (P, sl, fi) => !P.bord && P.vorige && sl.k !== 'klaar' && (sl.k === 'welkom' || sl.k === 'doel' || fi === 0) ? `<b>${esc(vorigeKop(P.vorige))}</b> ${esc(P.vorige.n)}<br>` : ''; // de notitie van vorige keer bij de eerste dia's, alleen voor jou
 const notHtml = (item, l, sl, fi) => NOT && item && sl ? LESMODUS.notitieHtml(NOT[item.id], sl, fi, l) : '';
 function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwerken, de timer blijft ongemoeid
   const P = LES; if (!P || P.bord) return; const sl = P.slides[P.i]; const el = $('#notities'); if (!el || !sl) return;
-  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '';
+  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '');
   el.innerHTML = d + nh; const b = document.querySelector('#les [data-l="notities"]'); if (b) b.hidden = !(d || nh);
   el.classList.toggle('open', !!(P.notities && (d || nh)));
 }
@@ -2948,6 +2949,7 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   let slides = LESMODUS.bouwSlides(l, { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml });
   if (bord) slides = slides.filter(y => y.k !== 'klaar'); // jouw kaart hoort niet op het bord
   LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null };
+  LES.vorige = vor; // bevinding 3: loopt de les al, dan staat jouw kaart er niet; de notitie van vorige keer zit dan bij de notities (alleen jij, niet op het bord)
   // verder waar je was; loopt de les al, dan niet op jouw kaart beginnen (die zou op het digibord kunnen staan)
   const pl = s === vandaag() ? plekAlle()[s + '|' + x.u.id] : null;
   let i = pl ? pl.i : 0; if (i === 0 && s === vandaag() && nuMin() >= minuten(x.u.start)) i = 1;
@@ -2968,7 +2970,7 @@ function toonSlide() {
   if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
   else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
   else { P.left = 0; P.tot = 0; }
-  const notInh = P.bord ? '' : (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
+  const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
   $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
