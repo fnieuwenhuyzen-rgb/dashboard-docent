@@ -498,6 +498,7 @@ function maakOngedaan(id) {
   const a = (S.afwijkingen || []).find(x => x.id === id); if (!a) return;
   if (a.extraId) { S.extraUren = (S.extraUren || []).filter(x => x.id !== a.extraId); if (a.ruil && S.uitval[a.ruil.s]) S.uitval[a.ruil.s] = S.uitval[a.ruil.s].filter(u => u !== a.ruil.uur); }
   (a.lesIds || []).forEach(l => { if (S.ankers[a.g]) delete S.ankers[a.g][l]; });
+  if (a.samenA) { if (a.lesWas) S.les[a.samenA] = a.lesWas; else delete S.les[a.samenA]; } // samengevoegd: de eigen aanpassing van de eerste les terug (de tweede herstelt via lesId)
   if (a.lesId) { if (a.was) S.voortgang[a.g][a.lesId] = a.was; else delete S.voortgang[a.g][a.lesId]; }
   S.afwijkingen = S.afwijkingen.filter(x => x.id !== id); bewaar();
 }
@@ -1428,11 +1429,35 @@ function verplaatsVelden(g, a, uren) {
   if (!uren.length) return `<p class="lead">Er is geen lesuur meer vrij tussen lesweek ${verplaatsGrens(g, a)[0]} en lesweek ${verplaatsGrens(g, a)[1]} (einde van de periode).</p>`;
   return `<div class="rij"><label>Naar <select id="avUur">${uren.slice(0, 10).map(y => `<option value="${esc(y.s + '|' + y.u.id)}">${esc(fmtD(y.s))} ${esc(y.u.start)}</option>`).join('')}</select></label><label style="flex:3 1 16rem">Reden (voor de lijst met afwijkingen) <input id="avReden" required placeholder="Bijvoorbeeld: twee lessen uitgevallen"></label></div>`;
 }
+/* ---------- proeffunctie Twee lessen samenvoegen (functies.js, keuzes samen.*): Frans kiest de fasen, Lesdag telt tot de lesduur ---------- */
+const samenAan = () => fnAan('samenvoegen') && FUNCTIES.KEUZES.samen.omvang === 'twee-lessen';
+const samenKan = (g, x) => { const l = les(x); const st = status(g, x.id); // geen toets, beoordeling of strookje in de les, wel uitgewerkte fasen, nog niet begonnen of samengevoegd
+  return l.type !== 'toets' && l.type !== 'leeg' && Array.isArray(l.fasen) && l.fasen.length > 0 && !st.st && !(S.les[x.id] || {}).samengevoegd && !bmVoor(x).length && !/strookje/i.test(JSON.stringify(l.fasen)); };
+let samenSel = null;
+function samenRekening(R) {
+  const lg = leergangVan(R.g); const duur = B.leergangen[lg].meta.lesduurMin || 45; const key = R.g + '|' + R.id; const kand = R.nog.filter(x => samenKan(R.g, x));
+  if (!samenSel || samenSel.key !== key) { const paar = FUNCTIES.kiesPaar(kand.map(x => x.id), FUNCTIES.KEUZES.samen.eerste); samenSel = { key, a: paar[0] || '', b: paar[1] || '', fa: [], fb: [] }; }
+  const Z = samenSel; const xa = kand.find(x => x.id === Z.a) || null; const xb = kand.find(x => x.id === Z.b) || null;
+  const p = xa && xb ? FUNCTIES.pastSamen(les(xa).fasen, les(xb).fasen, Z.fa, Z.fb, duur) : { ok: false, som: 0, reden: 'Kies twee lessen.' };
+  return { kand, Z, xa, xb, p, duur };
+}
+function samenVelden(R) {
+  const { kand, Z, xa, xb, p, duur } = samenRekening(R);
+  if (kand.length < 2) return `<p class="lead">Er zijn geen twee gewone lessen om samen te voegen. Een les met een toets, een beoordeling of een strookje, of zonder uitgewerkte fasen, komt hier niet in.</p>`;
+  const kies = (w, waarde) => `<select data-samenles="${w}" aria-label="${w === 'a' ? 'Eerste' : 'Tweede'} les">${waarde ? '' : '<option value="">Kies een les</option>'}${kand.map(x => `<option value="${esc(x.id)}"${x.id === waarde ? ' selected' : ''}>${esc(les(x).titel || 'Les')}</option>`).join('')}</select>`;
+  const kol = (x, w, gek) => !x ? '' : `<div class="samenfasen">${les(x).fasen.map((f, i) => { const t = LESMODUS.fase(f); const soort = (LESMODUS.SOORT[t.soort] || { naam: '' }).naam;
+    return `<button type="button" class="samenfase" data-samenfase="${w}|${i}" aria-pressed="${gek.includes(i)}"><b>${FUNCTIES.faseMinuten(f)} min</b><span>${esc(soort ? soort + ': ' : '')}${esc(t.kop)}</span></button>`; }).join('')}</div>`;
+  return `<div class="samen"><p class="lead">Tik aan wat blijft. Wat je niet aantikt valt weg uit de samengevoegde les. De presentaties van beide lessen staan straks bij de les.</p>
+    <div class="samenkol"><div>${kies('a', Z.a)}${kol(xa, 'a', Z.fa)}</div><div>${kies('b', Z.b)}${kol(xb, 'b', Z.fb)}</div></div>
+    <div class="samenteller" aria-live="polite"><b>${p.som} van ${duur} minuten</b><span class="meter"><i class="${p.som > duur ? 'over' : ''}" style="width:${Math.min(100, p.som / duur * 100)}%"></i></span><span class="sub">${esc(p.reden)}</span></div></div>`;
+}
 function krapOpties(R) {
   const naam = x => les(x).titel || 'Les'; const blijft = R.a && ONDERBOUW.test(leergangVan(R.g)) ? 'toets blijft' : 'PTA blijft';
-  const O = R.inhaal.slice(-3).reverse().map(x => ({ k: 'skip:' + x.id, titel: `${naam(x)} vervalt`, chip: ['ok', blijft], sub: 'Leerlingen oefenen thuis. Het bericht voor de klas staat daarna klaar.',
+  const O =R.inhaal.slice(-3).reverse().map(x => ({ k: 'skip:' + x.id, titel: `${naam(x)} vervalt`, chip: ['ok', blijft], sub: 'Leerlingen oefenen thuis. Het bericht voor de klas staat daarna klaar.',
     gevolg: `"${naam(x)}" krijgt de status overgeslagen. ${R.t.id} blijft op ${fmtD(R.s)}. In de lijst met afwijkingen komt: ${naam(x)} vervallen.` }));
-  if (R.a && R.inhaal.length) { const x = R.inhaal[R.inhaal.length - 1]; const duur = B.leergangen[leergangVan(R.g)].meta.lesduurMin;
+  if (samenAan()) O.unshift({ k: 'samen', titel: 'Twee lessen samenvoegen', chip: ['ok', blijft], sub: 'Jij kiest welke fasen blijven. Lesdag telt tot de lesduur en schrapt zelf niets.',
+    gevolg: `Van twee lessen blijft één les over met de fasen die je kiest, op het uur van de eerste. De tweede les krijgt de status overgeslagen. ${R.t.id} blijft op ${fmtD(R.s)}. In de lijst met afwijkingen komt: twee lessen samengevoegd.` });
+  if (R.a && R.inhaal.length && !(samenAan() && FUNCTIES.KEUZES.samen.beginToetsles === 'vervalt')) { const x = R.inhaal[R.inhaal.length - 1]; const duur = B.leergangen[leergangVan(R.g)].meta.lesduurMin;
     O.push({ k: 'begin:' + x.id, titel: `${naam(x)} aan het begin van de toetsles`, chip: ['let', 'minder toetstijd'], sub: `De les duurt ${duur} minuten, ${R.t.id} staat op ${R.t.duur || '?'} minuten. Jij beslist of dat kan.`,
       gevolg: `De les van ${fmtD(R.s)} begint met "${naam(x)}" en daarna ${R.t.id}. Dat staat er als vraag bij in je voorbereiding. In de lijst met afwijkingen komt: samengevoegd met de toetsles.` }); }
   if (R.a) O.push({ k: 'move', titel: `${R.t.id} een les later`, chip: ONDERBOUW.test(leergangVan(R.g)) ? ['let', 'binnen de periode'] : ['rood', 'wijkt af van PTA'], sub: 'Jij beslist. Lesdag vraagt een korte reden en de beoordeling gaat mee met de les.',
@@ -1447,14 +1472,20 @@ function krapKaart(R) {
     ${R.tw ? '<p class="lead">De toetsweek ligt vast, dus deze toets verplaats je niet hier.</p>' : ''}
     <div class="opties">${O.map(o => `<button type="button" class="optie" data-krapoptie="${esc(o.k)}" aria-pressed="${o.k === krapKeuze}"><b>${esc(o.titel)}</b><span class="chip ${o.chip[0]}">${esc(o.chip[1])}</span><span class="sub">${esc(o.sub)}</span></button>`).join('')}</div>
     <p class="gevolg">${kies ? esc(kies.gevolg) : 'Kies een optie. Er verandert pas iets als je op Doen tikt, en dat kun je ongedaan maken.'}</p>
-    ${krapKeuze === 'move' ? verplaatsVelden(R.g, R.a, uren) : ''}
+    ${krapKeuze === 'move' ? verplaatsVelden(R.g, R.a, uren) : ''}${krapKeuze === 'samen' && samenAan() ? samenVelden(R) : ''}
     <p class="sub">Toch gegeven maar niet afgevinkt? <button class="btn klein" type="button" data-naargroep="${esc(R.g)}">Bekijk de lessen van ${esc(R.g)}</button></p>
-    <div class="knoppen"><button class="btn hoofd" type="submit"${kies && !(krapKeuze === 'move' && !uren.length) ? '' : ' disabled'}>Doen</button><button class="btn" type="button" data-kraplater="${esc(R.g + '|' + R.id)}">Later beslissen</button></div></form>`;
+    <div class="knoppen"><button class="btn hoofd" type="submit"${kies && !(krapKeuze === 'move' && !uren.length) && !(krapKeuze === 'samen' && !samenRekening(R).p.ok) ? '' : ' disabled'}>Doen</button><button class="btn" type="button" data-kraplater="${esc(R.g + '|' + R.id)}">Later beslissen</button></div></form>`;
 }
 function voerKrapUit(R, k) {
   const van = uitvalReden(R.g).s; const uit = van ? `De les van ${fmtLang(van)} is uitgevallen. ` : ''; let id;
   if (k === 'move') { const reden = ($('#avReden') || {}).value || ''; const uur = ($('#avUur') || {}).value; if (!reden.trim()) { toast('Geef een korte reden'); return; }
     id = verplaatsAnker(R.g, R.a, uur, reden.trim()); if (!id) return; const af = S.afwijkingen.find(x => x.id === id); af.bericht = uit + af.bericht; }
+  else if (k === 'samen') { const { xa, xb, Z, p } = samenRekening(R); if (!xa || !xb || !p.ok) { toast(p.reden); return; }
+    const lA = les(xa), lB = les(xb); const was = S.les[xa.id]; const wasB = status(R.g, xb.id);
+    S.les[xa.id] = Object.assign({}, was, { titel: `${lA.titel || 'Les'} + ${lB.titel || 'Les'}`, fasen: FUNCTIES.samenFasen(lA.fasen, lB.fasen, Z.fa, Z.fb), materiaal: FUNCTIES.unie(lA.materiaal, lB.materiaal), samengevoegd: { met: xb.id } });
+    S.voortgang[R.g] = S.voortgang[R.g] || {}; S.voortgang[R.g][xb.id] = Object.assign({}, wasB, { st: 'overgeslagen', inhaal: true, hoortBij: xa.id }); delete S.voortgang[R.g][xb.id].auto;
+    id = afwijkingErbij({ g: R.g, lesId: xb.id, was: Object.keys(wasB).length ? wasB : undefined, samenA: xa.id, lesWas: was, soort: 'les', studiewijzer: `lesweek ${xa.w}, les ${xa.li} en lesweek ${xb.w}, les ${xb.li}`, wat: `${lA.titel || 'Les'} en ${lB.titel || 'Les'} samengevoegd`, waarom: uitvalReden(R.g).kort,
+      bericht: `${uit}We voegen "${lA.titel || 'de les'}" en "${lB.titel || 'de les'}" samen tot één les. ${R.t.id} blijft op ${fmtLang(R.s)}.` }); samenSel = null; }
   else { const soort = k.slice(0, k.indexOf(':')); const x = R.nog.find(z => z.id === k.slice(k.indexOf(':') + 1)); if (!x) return; const naam = les(x).titel || 'de les'; const was = status(R.g, x.id);
     S.voortgang[R.g] = S.voortgang[R.g] || {}; S.voortgang[R.g][x.id] = Object.assign({}, was, { st: 'overgeslagen', inhaal: true }, soort === 'begin' ? { inToets: R.id } : {}); delete S.voortgang[R.g][x.id].auto;
     id = afwijkingErbij({ g: R.g, lesId: x.id, was: Object.keys(was).length ? was : undefined, soort: 'les', studiewijzer: `lesweek ${x.w}, les ${x.li}`, wat: soort === 'begin' ? `${naam} samengevoegd met ${R.t.id}` : `${naam} vervallen`, waarom: uitvalReden(R.g).kort,
@@ -3111,6 +3142,7 @@ document.addEventListener('click', async e => {
   if (D.afwezigterug) { afwezigTerug([D.afwezigterug]); toast('Je bent er weer; de lessen staan terug'); return; }
   if (D.krapopen) { krapOpen = D.krapopen; krapKeuze = ''; render(); return; }
   if (D.krapoptie) { krapKeuze = D.krapoptie; render(); return; }
+  if (D.samenfase) { const [w, i] = D.samenfase.split('|'); if (samenSel) { const L = samenSel[w === 'a' ? 'fa' : 'fb']; const k = L.indexOf(+i); if (k < 0) L.push(+i); else L.splice(k, 1); } render(); return; }
   if (D.kraplater) { const i = D.kraplater.indexOf('|'); krapOpen = ''; krapKeuze = ''; stelUit(`krap:${D.kraplater.slice(0, i)}:${D.kraplater.slice(i + 1)}`, addD(vandaag(), 1)); return; }
   if (D.ankeropen != null) { ankerOpen = D.ankeropen; render(); return; }
   if (D.naargroep) { location.hash = 'jaar/' + encodeURIComponent(D.naargroep); return; }
@@ -3217,6 +3249,8 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
+  if (t.dataset.samenles) { if (samenSel) { const w = t.dataset.samenles; samenSel[w] = t.value; samenSel[w === 'a' ? 'fa' : 'fb'] = []; const r = reeks(leergangVan(samenSel.key.split('|')[0])); // de eerste les is de vroegste
+      if (samenSel.a && samenSel.b && r.findIndex(x => x.id === samenSel.a) > r.findIndex(x => x.id === samenSel.b)) { [samenSel.a, samenSel.b] = [samenSel.b, samenSel.a]; [samenSel.fa, samenSel.fb] = [samenSel.fb, samenSel.fa]; } } render(); return; }
   if (t.dataset.fnzet) { FUNCTIES.zet(AP.functies, t.dataset.fnzet, t.checked); apBewaar(); PLAN = null; render(); return; }
   if (t.dataset.bericht) { const a = (S.afwijkingen || []).find(x => x.id === t.dataset.bericht); if (a) { a.bericht = t.value; bewaar(true); } return; }
   if (t.checked && t.closest('.taak-klaar')) sluit();
