@@ -760,6 +760,18 @@ sc('Hele week herfstvakantie: 19 t/m 23 oktober, einde zomertijd, niets te geven
   await P.klok(nlIso('2026-10-25', '12:00'), 'vandaag'); ok(!/Dit scherm lukt nu niet/.test(await P.tekst()), 'zondag 25 oktober (klok terug): heel');
   await P.klok(nlIso('2026-10-26', '07:30'), 'vandaag'); const di = await dagItemsOp(P, '2026-10-26'); const e = di.find(x => x.soort === 'ag-les'); ok(e && /^(08|8):30–/.test(e.titel), 'maandag 26 oktober: eerste les om 8:30: ' + (e ? e.titel : '(geen les)'));
 });
+
+// ---- ronde 3: Nieuw typen over de jaarwisseling, schrikkeldag en zomertijd ----
+const typ = async (P, q) => { await P.page.fill('#nwQ', q); await P.page.waitForTimeout(80); return (await P.tekst('#nwUit')) + (await P.page.locator('#nwLet').isVisible() ? ' !' + (await P.tekst('#nwLet')) : ''); };
+sc('Nieuw typen: datums over de jaarwisseling en met zomertijd', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-12-28', '07:30') }); await P.open('vandaag'); await P.klik('[data-nwnieuw]');
+  const geval = [['3-1 met Albert', /zo 3 jan|3 jan/], ['4-1 11:00 met Albert', /ma 4 jan/], ['vr 1-1 met Albert', /vr 1 jan/], ['31-12 met Albert', /do 31 dec/], ['morgen 10:00 met Albert', /di 29 dec/], ['27-12 met Albert', /27 dec/]];
+  for (const [q, re] of geval) { const u = await typ(P, q); ok(re.test(u), `"${q}" op 28 dec 2026 geeft ${re}: ${u}`); }
+  await P.klok(nlIso('2027-03-26', '07:30'), 'vandaag'); await P.klik('[data-nwnieuw]');
+  for (const [q, re] of [['za 27-3 met Albert', /za 27 mrt/], ['zo 28-3 2:30 met Albert', /28 mrt/], ['ma 29-3 9:00-10:00 met Albert', /29 mrt · 9:00–10:00/]]) { const u = await typ(P, q); ok(re.test(u), `"${q}" geeft ${re}: ${u}`); }
+  await P.klok(nlIso('2027-02-26', '07:30'), 'vandaag'); await P.klik('[data-nwnieuw]');
+  for (const [q, re] of [['28-2 met Albert', /zo 28 feb/], ['1-3 vrijdag 11:00 met Albert', /vr 5 mrt|1 mrt|vr 26 feb/], ['29-2 met Albert', /di 29 feb/]]) { const u = await typ(P, q); ok(re.test(u), `"${q}" op 26 feb 2027 geeft ${re}: ${u}`); } // 29 februari in een jaar zonder schrikkeldag: de eerstvolgende 29 februari (2028)
+});
 // @@SCENARIOS
 
 (async () => {
