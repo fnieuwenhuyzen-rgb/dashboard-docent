@@ -664,6 +664,7 @@ function viewVandaag() {
   let wacht = ''; // op een telefoon staan de lessen bovenaan; wat kan wachten komt eronder (bevinding 46)
   if (achter.length) wacht += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
   if (s >= t && !zomer) { h += uitvalBlok(s); wacht += liggenBlok(); }
+  if (s === t && !zomer) wacht += periodeKaart(true); // op Dag alleen in de laatste week van de periode (besluit Frans 9-11); op Jaar en Beoordelen altijd
   const onder = [...zonderTijd.map(it => `${it.tz ? `Toets ${(B.groepen[it.tz.lg] || [it.tz.lg]).join(', ')} ${it.tz.t.id}` : it.titel} staat in je leergang, maar niet in het rooster. Klopt dat?`), pauzeTekst(A.pz)].filter(Boolean);
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu
   h += `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -1369,7 +1370,7 @@ function naVakantie(t) { // t is de eerste lesdag na een vakantie: geeft die vak
 }
 function liggenBlok() {
   const L = blijftLiggen(); if (!L.length) return '';
-  const t = vandaag(); const morgen = volgendeLesdag(t, 1);
+  const t = vandaag(); const morgen = lesdagStap(t, 1); // slaat vakanties en vrije dagen over, net als Week afsluiten
   const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
   const V = naVakantie(t);
   if (V) { const nw = L.filter(x => x.dag >= V.van).length, oud = L.length - nw; // de eerste dag na een vakantie: één regel en één knop, de stapel ingeklapt
@@ -1397,7 +1398,7 @@ function openTaak(key) {
   d.innerHTML = `<div class="dkop"><h2>Taak</h2><button class="btn" data-sluit="">Sluiten</button></div>
   <p class="eyebrow">${esc(BRON[b.bron] || b.bron || 'overig')}${b.dag ? ' · ' + (b.gemist ? 'gemist ' : 'deadline ') + esc(fmtD(b.dag)) : ''}</p><h2>${esc(b.titel)}</h2>
   <h3>Wat moet er gebeuren?</h3>${b.uitleg.length ? b.uitleg.map(x => `<p class="lead">${esc(x)}</p>`).join('') : `<p class="lead">Hier staat nog geen toelichting.${b.eigen ? ' Schrijf hem bij Aanpassen in de notitie.' : ''}</p>`}
-  <div class="knoppen" style="margin:.6rem 0">${ligt ? `<button class="btn" data-liggenplan="${esc(key)}">Plan</button><button class="btn" data-liggenlater="${esc(key)}|${volgendeLesdag(vandaag(), 1)}">Morgen</button>` : ''}${b.knoppen}</div>
+  <div class="knoppen" style="margin:.6rem 0">${ligt ? `<button class="btn" data-liggenplan="${esc(key)}">Plan</button><button class="btn" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Morgen</button>` : ''}${b.knoppen}</div>
   <label class="chk taak-klaar"><input type="checkbox" ${b.vink} ${b.af ? 'checked' : ''}><span>Klaar</span></label>
   <div class="form"><label>Feedback: hoe ging het, klopt deze taak? <textarea rows="3" data-taaknoot="fb|${esc(b.noot)}">${esc(n.fb)}</textarea></label>
   <label>Feedforward: wat wil je volgende keer anders?${nootVooruit(b.noot) !== b.noot ? ' Staat ook bij dit punt van de volgende concerten.' : ''} <textarea rows="3" data-taaknoot="ff|${esc(b.noot)}">${esc(n.ff)}</textarea></label></div>`;
@@ -1558,11 +1559,11 @@ function uitvalBlok(s) {
     for (const a of ankersGemist(g)) { const key = `gemist:${g}:${a.id}`; if (uitgesteld(key)) continue; const y = a.vast ? a.slot : a.grens;
       if (ankerOpen === g + '|' + a.id) { rijen.push(ankerForm(g, a)); continue; }
       const tekst = !a.vast ? `past niet meer in zijn periode.` : !y ? 'heeft geen lesuur.' : y.s >= vandaag() ? `stond op ${esc(fmtD(y.s))}, maar dat uur vervalt.` : `stond op ${esc(fmtD(y.s))} en is nog niet afgevinkt.`;
-      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Later</button></span></div>`); }
     if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.inhalen)) { const key = `inhalen:${x.k}`; if (uitgesteld(key)) continue; // bevinding 60: wie moet inhalen blijft zichtbaar tot er een cijfer is
-      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.inhalen === 1 ? '1 leerling moet' : x.inhalen + ' leerlingen moeten'} nog inhalen.</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.inhalen === 1 ? '1 leerling moet' : x.inhalen + ' leerlingen moeten'} nog inhalen.</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Later</button></span></div>`); }
     if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.mag)) { const key = `magister:${x.k}`; if (uitgesteld(key)) continue;
-      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.T.inMagister ? 'er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'de cijfers staan nog niet als ingevoerd in Magister.'}</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-bminmag="${esc(x.m.id + '|' + g)}">Staat erin</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.T.inMagister ? 'er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'de cijfers staan nog niet als ingevoerd in Magister.'}</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-bminmag="${esc(x.m.id + '|' + g)}">Staat erin</button><button class="btn klein" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Later</button></span></div>`); }
     const R = krapVoor(g); if (!R) continue;
     if (krapOpen === g + '|' + R.id) { rijen.push(krapKaart(R)); continue; }
     const x = R.inhaal[R.inhaal.length - 1] || R.nog[R.nog.length - 1];
@@ -3503,8 +3504,8 @@ const bmVoor = item => BM.filter(m => (m.lessen || []).some(k => k.lg === item.l
 const komma = x => x == null ? '' : String(x).replace('.', ',');
 const bmKanMap = () => typeof window.showDirectoryPicker === 'function';
 const bmTijd = t => { const d = new Date(t); return `${fmtD(ymd(d))} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
-function bmToetsGegeven(m, g) { if (!leergangVan(g)) return 0; let n = 0; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { S.voortgang[g] = S.voortgang[g] || {}; S.voortgang[g][a.id] = Object.assign({}, status(g, a.id), { st: 'gegeven', d: vandaag() }); n++; }); return n; }
 function bmGegevenStand(m, g) { const o = {}; if (!leergangVan(g)) return o; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { const v = (S.voortgang[g] || {})[a.id]; o[a.id] = v === undefined ? undefined : JSON.parse(JSON.stringify(v)); }); return o; } // de stand van vóór bmToetsGegeven, om de markering terug te zetten
+function bmToetsGegeven(m, g) { if (!leergangVan(g)) return 0; let n = 0; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { S.voortgang[g] = S.voortgang[g] || {}; S.voortgang[g][a.id] = Object.assign({}, status(g, a.id), { st: 'gegeven', d: vandaag() }); n++; }); return n; }
 // wat er na een toets nog ligt (bevinding 60 en 61): wie moet nog inhalen, en staan de afgeronde cijfers in Magister. Alleen aantallen: namen blijven in Beoordelen.
 function toetsRest(T, g) { const lijst = (S.beoord.lijsten || {})[g] || []; const r = x => (T && T.ll && T.ll[x.id]) || {};
   return { inhalen: lijst.filter(x => r(x).af && !r(x).vast).length, vast: lijst.filter(x => r(x).vast).length }; }
@@ -3764,8 +3765,8 @@ function periodeOverzicht() {
       if (rijen.length) uit.push({ nr: (String(b.id).match(/\d+/) || [''])[0], eind, g, rijen }); } }
   return uit.filter(x => x.rijen.some(r => !r.ok) || t <= addD(x.eind, 7));
 }
-function periodeKaart() {
-  const P = periodeOverzicht(); if (!P.length) return ''; const t = vandaag(); const groepen = {};
+function periodeKaart(laatsteWeek) {
+  let P = periodeOverzicht(); if (laatsteWeek) P = P.filter(x => vandaag() <= x.eind && vandaag() > addD(x.eind, -7)); if (!P.length) return ''; const t = vandaag(); const groepen = {};
   P.forEach(x => { (groepen[x.nr + '|' + x.eind] = groepen[x.nr + '|' + x.eind] || []).push(x); });
   return Object.entries(groepen).sort((a, b) => a[0].split('|')[1] < b[0].split('|')[1] ? -1 : 1).map(([k, L]) => { const [nr, eind] = k.split('|'); const open = L.reduce((n, x) => n + x.rijen.filter(r => !r.ok).length, 0);
     return `<div class="kaart periode"><h2>Periode ${esc(nr)} ${eind >= t ? 'sluit' : 'sloot'} ${esc(fmtD(eind))}</h2><p class="lead">${open ? `Nog ${open} ${open === 1 ? 'toets' : 'toetsen'} waar cijfers van ontbreken.` : 'Alle cijfers van deze periode staan vast en in Magister.'}</p>${L.map(x => `<div class="jr-regel"><span><b>${esc(x.g)}</b></span><span class="tb">${x.rijen.map(r => `<button class="btn klein${r.ok ? '' : ' hoofd'}" data-beoordeel="${esc(r.m.id + '|' + r.g)}">${esc(r.toets)}: ${esc(r.tekst)}</button>`).join(' ')}</span></div>`).join('')}</div>`; }).join('');
