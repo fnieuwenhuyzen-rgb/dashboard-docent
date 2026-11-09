@@ -510,6 +510,15 @@ sc('Reclametaken: eigen activiteit en afvinken', async nieuw => {
   if (vinkjes) { const id = await P.page.locator('[data-recvink]').first().getAttribute('data-recvink'); await klikData(P, `[data-recvink="${id}"]`); S = await P.S(); ok(S.reclameAf && S.reclameAf[id], 'afvinken zet reclameAf voor ' + id); await klikData(P, `[data-recvink="${id}"]`); ok(!(await P.S()).reclameAf[id], 'weer uitvinken'); }
   await klikData(P, `[data-recweg="${x.id}"]`); ok(!((await P.S()).reclameExtra || []).length, 'weg haalt de activiteit weg');
 });
+sc('Weekinfo-deadline: maandag 14:00 boven aan Nu, daarna te laat, dinsdag nog zichtbaar (bevinding 64)', async nieuw => {
+  const P = await nieuw({ tijd: nlIso('2026-11-30', '08:12') }); await P.open('nu'); const zin = async () => (await P.tekst('.ens-zin')).replace(/\s+/g, ' ');
+  const tijden = {};
+  for (const [t, d] of [['08:12', '2026-11-30'], ['11:50', '2026-11-30'], ['13:50', '2026-11-30'], ['14:10', '2026-11-30'], ['08:15', '2026-12-01']]) { try { await P.klok(nlIso(d, t), 'nu'); tijden[d + ' ' + t] = await zin(); } catch (e) { tijden[d + ' ' + t] = 'FOUT ' + e.message.slice(0, 80) + ' ' + (await P.page.evaluate(() => document.body.innerText.slice(0, 200))); } }
+  ok(!/weekinfo/i.test(tijden['2026-11-30 08:12']) && !/weekinfo/i.test(tijden['2026-11-30 11:50']), 'vóór 12:00 geen weekinfo boven aan Nu');
+  ok(/weekinfo.*14:00/i.test(tijden['2026-11-30 13:50']), '13:50: weekinfo met 14:00 boven aan Nu: ' + tijden['2026-11-30 13:50']);
+  ok(/was om 14:00.*Nog mailen/.test(tijden['2026-11-30 14:10']), '14:10: te laat: ' + tijden['2026-11-30 14:10']);
+  await P.klok(nlIso('2026-12-01', '08:15'), 'nu'); ok(await P.page.locator('.ens-meld [data-recvink="koor:2026-12-18#wi2"]').count() === 1, 'dinsdag: de gemiste weekinfo staat onder Blijft liggen, tot hij af is');
+});
 sc('Pauzes: zelf invullen, en met Zermelo-pauzes houdt de agenda ze vrij', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('instellingen'); await P.page.evaluate(() => document.querySelector('#pzForm').closest('details').open = true);
   const rij = P.page.locator('#pzForm .rij').last(); await rij.locator('[name=van]').fill('12:00'); await rij.locator('[name=tot]').fill('12:30'); await P.page.locator('#pzForm button[type=submit]').click(); await P.page.waitForTimeout(150);

@@ -737,7 +737,7 @@ function reclameMomenten(a) {
     out.push({ id: a.id + '#wi' + w, a, soort: 'wi', maandag: s.maandag, d: s.d, tot, titel: `Weekinfo ${fmtD(s.maandag)}: ${a.titel}`, kort: `Weekinfo ${fmtD(s.maandag)}` }); }
   const b = laatsteSchooldag(addD(a.doel, -((RC.bord || {}).dagenVooraf || 21)));
   out.push({ id: a.id + '#bord', a, soort: 'bord', d: b, titel: `Bord aanleveren: ${a.titel} (${fmtD(a.d)})`, kort: 'Bord' });
-  return out.sort((x, y) => x.d < y.d ? -1 : 1).map(m => Object.assign(m, { af: (S.reclameAf || {})[m.id] || '', verlopen: m.soort === 'wi' ? m.d < t : a.d < t }));
+  return out.sort((x, y) => x.d < y.d ? -1 : 1).map(m => Object.assign(m, { af: (S.reclameAf || {})[m.id] || '', verlopen: a.d < t })); // een gemiste weekinfo blijft staan (te laat) tot hij af is of de activiteit voorbij is (bevinding 64)
 }
 function reclameOpen(s, G) { // open taken voor activiteiten die nog komen; een gemiste weekinfo is voorbij, een bord kan tot de activiteit
   G = G || geplandeSleutels(); const t = vandaag(); const out = [];
@@ -862,7 +862,7 @@ function dagItems(s, p) {
     if (tm && !i.tot && tm.van < AG.tot) items.push({ key: 'team:' + i.id, van: tm.van, tot: Math.min(tm.tot, AG.tot), soort: 'sectie', titel: i.titel, sub: S.sectieNotitie[i.id] || '', i });
     else heleDag.push({ key: 'team:' + i.id, soort: 'sectie', titel: (tm ? hm(tm.van) + ' ' : '') + i.titel, i });
   }
-  for (const m of reclameOpen(null, G)) if (m.d === s) heleDag.push({ key: 'rec:' + m.id, soort: 'deadline', titel: (m.soort === 'wi' ? 'tot ' + m.tot + ' ' : '') + m.titel, rec: m });
+  for (const m of reclameOpen(null, G)) if (m.d === s) heleDag.push({ key: 'rec:' + m.id, soort: 'deadline', titel: (m.soort === 'wi' ? (s === t && nuMin() >= minuten(m.tot) ? 'te laat ' : 'tot ' + m.tot + ' ') : '') + m.titel, rec: m });
   for (const k of S.taken || []) {
     if (k.plan && k.plan.dag === s) items.push({ key: 'taak:' + k.id, van: minuten(k.plan.van), tot: minuten(k.plan.tot), soort: k.afspraak ? 'afspraak' : k.af ? 'taakaf' : planVoorbij(k) ? 'taakgemist' : 'taak', titel: k.titel, sub: k.afspraak ? 'afspraak' : planVoorbij(k) ? 'gemist' : BRON[k.bron] || '', k });
     else if (!k.plan && !k.af && k.d === s) heleDag.push({ key: 'taak:' + k.id, soort: 'deadline', titel: k.titel, k });
@@ -1561,9 +1561,16 @@ const kort = t => { const k = String(t).replace(/^([^:]*:[^:,]*)[:,].*$/, '$1');
 const afspraakSoort = it => { const w = it.soort !== 'toets' ? '' : it.z && it.z.dienst ? 'Surveillance' : 'Toets'; return w && !new RegExp(w, 'i').test(it.titel || '') ? w + ': ' : ''; };
 const magWat = o => (o.soort === 'pres' ? 'de absenten van ' : o.soort === 'hw' ? 'het huiswerk van ' : 'het logboek van ') + o.x.u.groep + ' in Magister';
 function gisterenGoed(s) { const v = volgendeLesdag(s, -1); const g = S.goed[v]; if (!g) return ''; const k = String(g).replace(/\s+/g, ' ').trim(); return ` Wat ${v === addD(s, -1) ? 'gisteren' : 'de vorige werkdag'} goed ging: ${k.length > 110 ? k.slice(0, k.lastIndexOf(' ', 108)) + '…' : k.replace(/[.!?]+$/, '') + '.'}`; } // jouw zin van het afsluiten, de volgende ochtend (bevinding 50)
+function nuWeekinfo(s, nu, mm) { // op de inleverdag vanaf 12:00 bovenaan Nu, ook na de bel; na de sluitingstijd "te laat" (bevinding 64). Niet tijdens een les, voor een les of in de pauze.
+  if (nu < 12 * 60 || !RC || !B || !S || !['naLes', 'werkblok', 'tussen', 'afsluiten'].includes(mm)) return null;
+  const m = reclameOpen(s).find(x => x.soort === 'wi' && x.d === s); if (!m) return null;
+  const tot = minuten(m.tot); const laat = nu >= tot; const knop = `<button class="btn hoofd" data-recmail="wi|${esc(m.a.id)}|${esc(m.id)}">Mail weekinfo</button>`;
+  return laat ? { lab: 'Reclame · te laat', knop, zin: `De weekinfo over ${m.a.titel} was om ${m.tot} aan de beurt. Nog mailen?` } : { lab: `Reclame · tot ${m.tot}`, knop, zin: `De weekinfo over ${m.a.titel} moet vandaag om ${m.tot} weg zijn.` };
+}
 function nuZin(s, p, A, m, nu, kijk, kIt) {
   if (kijk === 'afsluiten') return afsluitZin(s, p, A, nu);
   if (kIt) return kijkZin(s, kIt, nu);
+  const rw = nuWeekinfo(s, nu, m.m); if (rw) return rw;
   const it = m.it; const x = m.x;
   switch (m.m) {
     case 'vrijedag': return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
