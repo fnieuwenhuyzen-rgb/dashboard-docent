@@ -82,6 +82,16 @@ const TOON = process.argv.includes('--toon');
     is('71: één knop schuift de vakantietaken door', uitg && uitg['eigen:v1'] === '2027-01-06' && uitg['eigen:v2'] === '2027-01-06' && !uitg['eigen:o1'], JSON.stringify(uitg));
     const b = await kijk('2027-01-06T08:10:00+01:00', 'nu', KERST); is('71: een dag later gewoon weer de lijst', /Blijft liggen ·/.test(b.tekst) && !/Na de kerstvakantie/.test(b.tekst)); }
 
+
+  // 76: na het schooljaar (ma 2-8-2027) staat er op Dag en Nu niets meer dan dat
+  { const VG = { voortgang: { tv4: { 'vwo4:1.1': { st: 'gegeven', d: '2026-09-01', uur: 'x' } }, th3: { 'havo3:1.1': { st: 'gegeven', d: '2026-09-01', uur: 'x' } } } };
+    const a = await kijk('2027-08-02T10:00:00+02:00', 'vandaag', VG);
+    is('76: Dag zegt dat het schooljaar erop zit', /Het schooljaar zit erop/.test(a.tekst));
+    is('76: Dag vraagt niet om afgeronde toetsen', !/past niet meer in zijn periode|nog niet afgevinkt|Is gegeven/.test(a.tekst), (a.tekst.match(/.*(past niet|afgevinkt).*/) || [''])[0]);
+    is('76: Dag zonder stapel taken of "Begin je nu"', !/Blijft liggen|Begin je nu met Lesdag/.test(a.tekst));
+    const b = await kijk('2027-08-02T10:00:00+02:00', 'nu', VG); is('76: Nu zegt dat ook', /Het schooljaar zit erop/.test(b.tekst) && !/Blijft liggen|past niet meer/.test(b.tekst));
+    const c = await kijk('2026-11-16T10:00:00+01:00', 'vandaag', VG); is('76: tijdens het schooljaar blijft de melding gewoon', /Blijft liggen/.test(c.tekst)); }
+
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
   console.log(`nu-ochtend: ${n} controles, alles goed`);
