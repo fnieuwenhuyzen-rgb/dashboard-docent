@@ -15,17 +15,19 @@
   const vraag = r => new Promise((ok, nee) => { r.onsuccess = () => ok(r.result); r.onerror = () => nee(r.error); });
   async function alle(db) { return (await vraag(db.transaction(STORE).objectStore(STORE).getAll())) || []; }
 
-  /* maakt de kopie van `dag` (jjjj-mm-dd) als die er nog niet is; geeft true als er een gemaakt is. tekst: de staat als JSON */
-  async function maak(dag, tekst, tijd) {
+  /* maakt de kopie van `dag` (jjjj-mm-dd) als die er nog niet is; geeft true als er een gemaakt is. tekst: de staat als JSON.
+     eind = true: de kopie bij Dag afsluiten (sleutel 'jjjj-mm-dd-eind'); die wordt bij elke nieuwe afsluiting van die dag ververst, zodat de invoer van de dag erin zit. */
+  async function maak(dag, tekst, tijd, eind) {
+    const sleutel = eind ? dag + '-eind' : dag;
     const db = await open(); try {
-      if (await vraag(db.transaction(STORE).objectStore(STORE).get(dag))) return false;
-      const t = db.transaction(STORE, 'readwrite'); t.objectStore(STORE).put({ dag, tijd: tijd || Date.now(), staat: String(tekst) }); await klaar(t);
-      const dagen = (await alle(db)).map(x => x.dag).sort().reverse(); // oudste weg, de laatste 14 blijven
-      if (dagen.length > BEWAAR) { const t2 = db.transaction(STORE, 'readwrite'); dagen.slice(BEWAAR).forEach(d => t2.objectStore(STORE).delete(d)); await klaar(t2); }
+      if (!eind && await vraag(db.transaction(STORE).objectStore(STORE).get(sleutel))) return false;
+      const t = db.transaction(STORE, 'readwrite'); t.objectStore(STORE).put({ dag: sleutel, eind: !!eind, tijd: tijd || Date.now(), staat: String(tekst) }); await klaar(t);
+      const sl = (await alle(db)).map(x => x.dag), dagen = [...new Set(sl.map(d => d.slice(0, 10)))].sort().reverse(); // oudste weg: de laatste 14 dagen blijven, met allebei hun kopieën
+      if (dagen.length > BEWAAR) { const weg = new Set(dagen.slice(BEWAAR)); const t2 = db.transaction(STORE, 'readwrite'); sl.filter(d => weg.has(d.slice(0, 10))).forEach(d => t2.objectStore(STORE).delete(d)); await klaar(t2); }
       return true;
     } finally { db.close(); }
   }
-  async function lijst() { const db = await open(); try { return (await alle(db)).map(x => ({ dag: x.dag, tijd: x.tijd, grootte: (x.staat || '').length })).sort((a, b) => a.dag < b.dag ? 1 : -1); } finally { db.close(); } }
+  async function lijst() { const db = await open(); try { return (await alle(db)).map(x => ({ dag: x.dag, eind: !!x.eind, tijd: x.tijd, grootte: (x.staat || '').length })).sort((a, b) => a.dag < b.dag ? 1 : -1); } finally { db.close(); } }
   async function haal(dag) { const db = await open(); try { const r = await vraag(db.transaction(STORE).objectStore(STORE).get(dag)); if (!r) return null; try { return JSON.parse(r.staat); } catch (e) { return null; } } finally { db.close(); } }
   async function wis() { const db = await open(); try { const t = db.transaction(STORE, 'readwrite'); t.objectStore(STORE).clear(); await klaar(t); } finally { db.close(); } }
   return { maak, lijst, haal, wis, BEWAAR, DB };

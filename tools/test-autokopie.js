@@ -49,6 +49,18 @@ const STAAT = Object.assign({}, H.STAAT, { updated: 1763280000000, taken: [{ id:
   ok(/Vandaag verpest/.test(await page.evaluate(() => localStorage.getItem('lesdag-staat'))), 'Ongedaan maken zet de stand van vóór het terugzetten niet terug');
   await ctx.close();
 
+  // 6b. Dag afsluiten maakt een tweede kopie van die dag met de invoer van de dag; opnieuw afsluiten ververst die, de ochtendkopie blijft
+  const e = await nieuw(); await open(e.page, '#nu', '2026-11-16T09:00:00+01:00');
+  await e.page.evaluate(() => { const s = JSON.parse(localStorage.getItem('lesdag-staat')); s.taken = [{ id: 'tk1', titel: 'Invoer van de middag' }]; s.updated = Date.now(); localStorage.setItem('lesdag-staat', JSON.stringify(s)); });
+  await open(e.page, '#nu', '2026-11-16T16:00:00+01:00');
+  const sluit = () => e.page.evaluate(() => { const b = document.createElement('button'); b.dataset.afsluiten = '2026-11-16'; document.body.appendChild(b); b.click(); b.remove(); });
+  await sluit(); await e.page.waitForTimeout(400);
+  let Le = await lijst(e.page); ok(Le.length === 2 && Le[0].dag === '2026-11-16-eind' && Le[0].eind === true && Le[1].dag === '2026-11-16', 'Dag afsluiten geeft geen tweede kopie: ' + JSON.stringify(Le));
+  ok(await e.page.evaluate(async () => !!(await AUTOKOPIE.haal('2026-11-16-eind')).taken.find(t => t.titel === 'Invoer van de middag') && !(await AUTOKOPIE.haal('2026-11-16')).taken.find(t => t.titel === 'Invoer van de middag')), 'eindkopie mist de invoer van de dag of de ochtendkopie is veranderd');
+  await sluit(); await e.page.waitForTimeout(300); Le = await lijst(e.page); ok(Le.length === 2, 'opnieuw afsluiten maakt een derde kopie');
+  await e.page.evaluate(async () => { for (let i = 1; i <= 20; i++) { await AUTOKOPIE.maak('2026-10-' + String(i).padStart(2, '0'), JSON.stringify({ v: 1, updated: 1, rooster: [] })); await AUTOKOPIE.maak('2026-10-' + String(i).padStart(2, '0'), JSON.stringify({ v: 1, updated: 1, rooster: [] }), undefined, true); } });
+  Le = await lijst(e.page); ok(Le.length === 28 && Le[0].dag === '2026-11-16-eind', 'bewaren: ' + Le.length + ' kopieën, verwacht 14 dagen met elk twee'); await e.ctx.close();
+
   // 7. zonder IndexedDB: de app start gewoon, Instellingen legt het uit
   const z = await nieuw(); await z.page.addInitScript(() => { Object.defineProperty(window, 'indexedDB', { value: undefined, configurable: true }); });
   await open(z.page, '#instellingen', '2026-11-16T09:00:00+01:00'); const zt = await z.page.evaluate(() => document.querySelector('#main').innerText);

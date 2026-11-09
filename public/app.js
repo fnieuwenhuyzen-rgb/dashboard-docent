@@ -598,13 +598,13 @@ function kopieToepas(d) { // dezelfde controle en vraag voor een gedownload best
   S = staatIn(d); bewaar(); toast('Kopie teruggezet', terug);
 }
 /* automatische kopie (kopie.js): één per dag in IndexedDB, de laatste veertien; terugzetten via kopieToepas */
-function autoKopieMaak() {
+function autoKopieMaak(eind) {
   if (!window.AUTOKOPIE || !S || !S.updated || staatFouten(S).length) return; // nooit een kapotte of nog lege staat bewaren
-  AUTOKOPIE.maak(vandaag(), JSON.stringify(S)).then(nieuw => { if (nieuw && route.naam === 'instellingen') autoKopieVul(); }).catch(e => { if (window.LOGBOEK) LOGBOEK.fout(e, 'autokopie'); });
+  AUTOKOPIE.maak(vandaag(), JSON.stringify(S), undefined, eind === true).then(nieuw => { if (nieuw && route.naam === 'instellingen') autoKopieVul(); }).catch(e => { if (window.LOGBOEK) LOGBOEK.fout(e, 'autokopie'); });
 }
 async function autoKopieVul() {
   if (!$('#autokopielijst') || !window.AUTOKOPIE) return;
-  let t; try { const L = await AUTOKOPIE.lijst(); t = L.length ? '<ul class="akl" style="list-style:none;padding:0;margin:.3rem 0 0">' + L.map(x => `<li style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;padding:.25rem 0"><span>${esc(fmtLang(x.dag))} <span class="sub">(${Math.max(1, Math.round(x.grootte / 1024))} kB)</span></span><button class="btn klein" data-akterug="${esc(x.dag)}">Terugzetten</button></li>`).join('') + '</ul>' : 'Er is nog geen kopie. Morgen staat de eerste er.'; }
+  let t; try { const L = await AUTOKOPIE.lijst(); t = L.length ? '<ul class="akl" style="list-style:none;padding:0;margin:.3rem 0 0">' + L.map(x => `<li style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;padding:.25rem 0"><span>${esc(fmtLang(x.dag.slice(0, 10)))} <span class="sub">(${x.eind ? 'na Dag afsluiten, ' : 'begin van de dag, '}${Math.max(1, Math.round(x.grootte / 1024))} kB)</span></span><button class="btn klein" data-akterug="${esc(x.dag)}">Terugzetten</button></li>`).join('') + '</ul>' : 'Er is nog geen kopie. Morgen staat de eerste er.'; }
   catch (e) { t = 'Automatische kopieën zijn op dit apparaat niet beschikbaar (privévenster of opslag geblokkeerd).'; }
   const el = $('#autokopielijst'); if (el) el.innerHTML = t;
 }
@@ -665,6 +665,7 @@ function viewVandaag() {
   let wacht = ''; // op een telefoon staan de lessen bovenaan; wat kan wachten komt eronder (bevinding 46)
   if (achter.length) wacht += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
   if (s >= t && !zomer) { h += uitvalBlok(s); wacht += liggenBlok(); }
+  if (s === t && !zomer) wacht += periodeKaart(true); // op Dag alleen in de laatste week van de periode (besluit Frans 9-11); op Jaar en Beoordelen altijd
   const onder = [...zonderTijd.map(it => `${it.tz ? `Toets ${(B.groepen[it.tz.lg] || [it.tz.lg]).join(', ')} ${it.tz.t.id}` : it.titel} staat in je leergang, maar niet in het rooster. Klopt dat?`), pauzeTekst(A.pz)].filter(Boolean);
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu
   h += `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -1370,7 +1371,7 @@ function naVakantie(t) { // t is de eerste lesdag na een vakantie: geeft die vak
 }
 function liggenBlok() {
   const L = blijftLiggen(); if (!L.length) return '';
-  const t = vandaag(); const morgen = volgendeLesdag(t, 1);
+  const t = vandaag(); const morgen = lesdagStap(t, 1); // slaat vakanties en vrije dagen over, net als Week afsluiten
   const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
   const V = naVakantie(t);
   if (V) { const nw = L.filter(x => x.dag >= V.van).length, oud = L.length - nw; // de eerste dag na een vakantie: één regel en één knop, de stapel ingeklapt
@@ -1398,7 +1399,7 @@ function openTaak(key) {
   d.innerHTML = `<div class="dkop"><h2>Taak</h2><button class="btn" data-sluit="">Sluiten</button></div>
   <p class="eyebrow">${esc(BRON[b.bron] || b.bron || 'overig')}${b.dag ? ' · ' + (b.gemist ? 'gemist ' : 'deadline ') + esc(fmtD(b.dag)) : ''}</p><h2>${esc(b.titel)}</h2>
   <h3>Wat moet er gebeuren?</h3>${b.uitleg.length ? b.uitleg.map(x => `<p class="lead">${esc(x)}</p>`).join('') : `<p class="lead">Hier staat nog geen toelichting.${b.eigen ? ' Schrijf hem bij Aanpassen in de notitie.' : ''}</p>`}
-  <div class="knoppen" style="margin:.6rem 0">${ligt ? `<button class="btn" data-liggenplan="${esc(key)}">Plan</button><button class="btn" data-liggenlater="${esc(key)}|${volgendeLesdag(vandaag(), 1)}">Morgen</button>` : ''}${b.knoppen}</div>
+  <div class="knoppen" style="margin:.6rem 0">${ligt ? `<button class="btn" data-liggenplan="${esc(key)}">Plan</button><button class="btn" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Morgen</button>` : ''}${b.knoppen}</div>
   <label class="chk taak-klaar"><input type="checkbox" ${b.vink} ${b.af ? 'checked' : ''}><span>Klaar</span></label>
   <div class="form"><label>Feedback: hoe ging het, klopt deze taak? <textarea rows="3" data-taaknoot="fb|${esc(b.noot)}">${esc(n.fb)}</textarea></label>
   <label>Feedforward: wat wil je volgende keer anders?${nootVooruit(b.noot) !== b.noot ? ' Staat ook bij dit punt van de volgende concerten.' : ''} <textarea rows="3" data-taaknoot="ff|${esc(b.noot)}">${esc(n.ff)}</textarea></label></div>`;
@@ -1560,11 +1561,11 @@ function uitvalBlok(s) {
     for (const a of ankersGemist(g)) { const key = `gemist:${g}:${a.id}`; if (uitgesteld(key)) continue; const y = a.vast ? a.slot : a.grens;
       if (ankerOpen === g + '|' + a.id) { rijen.push(ankerForm(g, a)); continue; }
       const tekst = !a.vast ? `past niet meer in zijn periode.` : !y ? 'heeft geen lesuur.' : y.s >= vandaag() ? `stond op ${esc(fmtD(y.s))}, maar dat uur vervalt.` : `stond op ${esc(fmtD(y.s))} en is nog niet afgevinkt.`;
-      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Later</button></span></div>`); }
     if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.inhalen)) { const key = `inhalen:${x.k}`; if (uitgesteld(key)) continue; // bevinding 60: wie moet inhalen blijft zichtbaar tot er een cijfer is
-      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.inhalen === 1 ? '1 leerling moet' : x.inhalen + ' leerlingen moeten'} nog inhalen.</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.inhalen === 1 ? '1 leerling moet' : x.inhalen + ' leerlingen moeten'} nog inhalen.</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Later</button></span></div>`); }
     if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.mag)) { const key = `magister:${x.k}`; if (uitgesteld(key)) continue;
-      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.T.inMagister ? 'er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'de cijfers staan nog niet als ingevoerd in Magister.'}</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-bminmag="${esc(x.m.id + '|' + g)}">Staat erin</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.T.inMagister ? 'er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'de cijfers staan nog niet als ingevoerd in Magister.'}</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-bminmag="${esc(x.m.id + '|' + g)}">Staat erin</button><button class="btn klein" data-liggenlater="${esc(key)}|${lesdagStap(vandaag(), 1)}">Later</button></span></div>`); }
     const R = krapVoor(g); if (!R) continue;
     if (krapOpen === g + '|' + R.id) { rijen.push(krapKaart(R)); continue; }
     const x = R.inhaal[R.inhaal.length - 1] || R.nog[R.nog.length - 1];
@@ -2756,30 +2757,30 @@ async function syncKlik(D) {
 }
 
 /* ---------- leerlinggegevens, bewaartermijn en botsingen (Instellingen) ----------
-   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard niet), en hoe lang blijven ze staan (standaard altijd).
-   Het beoordelingslogboek staat in IndexedDB en gaat nooit naar de server. Rekenwerk in sync.js (bewaarPlan, padZet); tests: tools/test-sync.js. */
-const BEWAAR_KEY = 'lesdag-bewaartermijn'; // maanden; leeg of 0 = niets verdwijnt vanzelf
-const BEWAAR_DAG = 'lesdag-bewaar-dag';
-const bewaarMaanden = () => { try { return Math.max(0, +localStorage.getItem(BEWAAR_KEY) || 0); } catch (e) { return 0; } };
-let LLN = { server: null, eerste: null, voorbeeld: null }, BOTS = null;
-const bewaarPlan = () => SYNC.bewaarPlan(S.beoord, rooGroepen(), Date.now(), bewaarMaanden());
-async function bewaarLogGrens() { return { grens: Date.now() - bewaarMaanden() * 30.44 * 864e5, sleutels: new Set(bewaarPlan().toetsen) }; }
-async function bewaarVoorbeeld() { // wat zou er nu weg gaan: { p, log }
-  if (!bewaarMaanden()) return null; const p = bewaarPlan(); const { grens, sleutels } = await bewaarLogGrens(); let log = 0;
-  try { log = (await bmIdb('log', 'readonly', s => s.getAll())).filter(x => x.t < grens || sleutels.has(x.k)).length; } catch (e) {}
-  return { p, log };
+   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard niet). Ze blijven één cursusjaar staan.
+   Het beoordelingslogboek staat in IndexedDB en gaat nooit naar de server. Rekenwerk in sync.js (jaarWissel, padZet); tests: tools/test-sync.js. */
+/* bewaartermijn: het cursusjaar (besluit Frans 9-11). Vanaf 1 augustus gaan klassenlijsten, scores, verwijderde leerlingen, absenten, logboeknotities,
+   het beoordelingslogboek en de automatische kopieën weg, per apparaat bij de eerste start in het nieuwe cursusjaar en vóór er gesynchroniseerd wordt:
+   zo zet een apparaat dat lang uit stond de oude gegevens niet terug. Ongedaan maken kan niet. Losse bestanden (reservemap, downloads) wist Frans zelf. */
+const JW_JAAR = 'lesdag-cursusjaar', JW_REST = 'lesdag-cursusjaar-rest'; // JW_REST: de opslag buiten localStorage en de server moeten nog
+let LLN = { server: null, eerste: null }, BOTS = null;
+function jaarWisselLokaal() {
+  let w; try { const v = localStorage.getItem(JW_JAAR); w = SYNC.jaarWissel(v, vandaag()); if (!w.wissen) { if (!v) localStorage.setItem(JW_JAAR, String(w.jaar)); return; } localStorage.setItem(JW_REST, '1'); } catch (e) { return; }
+  S.beoord = { lijsten: {}, toetsen: {} }; AP.weg = {}; AP.log = {}; apBewaar(); bewaar(true);
+  try { localStorage.removeItem(VOOR_KOPIE); localStorage.setItem(JW_JAAR, String(w.jaar)); } catch (e) {}
+  toast('Nieuw cursusjaar: de leerlinggegevens van vorig jaar zijn gewist');
 }
-const bewaarTekst = v => !v ? '' : SYNC.planTelt(v.p) + v.log === 0 ? 'Met deze termijn gaat er nu niets weg.' : `Met deze termijn gaat er nu weg: ${v.p.toetsen.length} toetsen met scores, ${v.p.lijsten.length} klassenlijsten${v.p.lijsten.length ? ' (' + v.p.lijsten.map(esc).join(', ') + ')' : ''}, ${v.p.weg.length} leerlingen die uit een lijst zijn gehaald en ${v.log} logboekregels.`;
-async function bewaarUitvoeren(stil) { // haalt weg wat bewaarPlan aanwijst; terug = foto van daarvoor (het logboek komt niet terug)
-  const m = bewaarMaanden(); if (!m) return false; const v = await bewaarVoorbeeld(); if (!v || SYNC.planTelt(v.p) + v.log === 0) { if (!stil) toast('Er is niets om op te ruimen'); return false; }
-  const terug = foto(), { grens, sleutels } = await bewaarLogGrens();
-  SYNC.bewaarToepassen(S.beoord, v.p);
-  try { await bmIdb('log', 'readwrite', s => { const q = s.openCursor(); q.onsuccess = () => { const c = q.result; if (!c) return; if (c.value.t < grens || sleutels.has(c.value.k)) c.delete(); c.continue(); }; return q; }); } catch (e) { console.warn(e); }
-  bewaar(true); LLN.voorbeeld = null; toast(`Opgeruimd: ${v.p.toetsen.length} toetsen, ${v.p.lijsten.length} klassenlijsten, ${v.log} logboekregels`, terug); if (route.naam === 'instellingen') render(); return true;
+async function jaarWisselRest() { // lukt iets niet (offline, niet ingelogd), dan bij de volgende start opnieuw
+  try { if (localStorage.getItem(JW_REST) !== '1') return; } catch (e) { return; }
+  try {
+    await bmIdb('log', 'readwrite', s => s.clear());
+    if (window.AUTOKOPIE) await AUTOKOPIE.wis();
+    const o = SYNC.idbOpslag(); await o.zet('voor-sync', null); await o.zet('botsingen', []);
+    if (SY) await SY.leerlingenWissen();
+    localStorage.removeItem(JW_REST);
+  } catch (e) { console.warn(e); }
 }
-function bewaarStart() { // hooguit één keer per dag, en alleen als er een termijn is gekozen
-  setTimeout(() => { try { const d = vandaag(); if (!bewaarMaanden() || localStorage.getItem(BEWAAR_DAG) === d || !syncMag()) return; localStorage.setItem(BEWAAR_DAG, d); bewaarUitvoeren(true).catch(() => {}); } catch (e) {} }, 30000);
-}
+const jaarMelding = () => vandaag().slice(5, 7) === '07' ? '<p class="bm-waarsch">Op 1 augustus wist Lesdag alle klassenlijsten, scores en het logboek van dit cursusjaar. Zet cijfers die nog moeten vóór die tijd in Magister.</p>' : '';
 const waardeTekst = x => { const t = x === undefined ? '(weg)' : typeof x === 'string' ? x : JSON.stringify(x); return t.length > 110 ? t.slice(0, 110) + '…' : t; };
 function padLeesbaar(pad) {
   const sg = String(pad).split('/').slice(1); if (sg[0] === '_zermeloApi') return 'De Zermelo-koppeling';
@@ -2797,17 +2798,13 @@ function botsKaart() {
   return `<p class="sub" style="margin-top:.6rem">${BOTS.length ? BOTS.length + ' botsingen bewaard (de laatste 50 staan hier).' : 'Geen botsingen.'}</p>${L.map(rij).join('')}<div class="knoppen" style="margin-top:.5rem">${BOTS.length ? '<button class="btn" data-bots="alles">Alles zo laten</button>' : ''}<button class="btn" data-bots="dicht">Sluiten</button></div>`;
 }
 function leerlingKaart() {
-  const mee = leerlingenMee(), m = bewaarMaanden(); const opties = [[0, 'Uit'], [6, '6 maanden'], [12, '1 jaar'], [24, '2 jaar']];
+  const mee = leerlingenMee();
   const server = !SY ? '' : `<p class="lead"><b>Synchroniseren:</b> klassenlijsten, scores en reserve-kopieën daarvan ${mee ? 'gaan <b>wel</b> naar de server (achter je login)' : 'gaan <b>niet</b> naar de server'}. Het beoordelingslogboek en absenten blijven altijd op het apparaat. Dit geldt per apparaat.</p>
     <div class="knoppen">${mee ? '<button class="btn" data-lln="uit">Niet meer meenemen</button>' : '<button class="btn" data-lln="aan">Wel meenemen…</button>'}<button class="btn" data-lln="kijk">Wat staat er op de server?</button></div>
     ${LLN.server ? (LLN.server.fout ? '<p class="sub">De server is nu niet bereikbaar.</p>' : `<p class="sub">Op de server: ${LLN.server.onderdelen} onderdelen en ${LLN.server.back_ups} back-up-rijen met klassenlijsten of scores. Wat al op de server staat, blijft daar tot je het wist.</p>${LLN.server.onderdelen + LLN.server.back_ups ? '<div class="knoppen"><button class="btn rood" data-lln="wis">Leerlinggegevens van de server wissen…</button></div>' : ''}`) : ''}
     ${LLN.eerste ? `<p class="sub">Back-up “eerste upload”: ${LLN.eerste.rijen ? LLN.eerste.rijen + ' rijen, de leeftijd is niet bekend.' : 'bestaat niet (meer).'}</p>${LLN.eerste.rijen ? '<div class="knoppen"><button class="btn rood" data-lln="eerstewis">Back-up “eerste upload” wissen…</button></div>' : ''}` : (mee ? '' : '<div class="knoppen"><button class="btn klein" data-lln="eerstekijk">Back-up “eerste upload” bekijken</button></div>')}`;
-  if (m && !LLN.voorbeeld) { LLN.voorbeeld = { laden: true }; bewaarVoorbeeld().then(v => { LLN.voorbeeld = v || {}; }).catch(() => { LLN.voorbeeld = {}; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
-  const voorb = !m ? 'Er verdwijnt niets vanzelf.' : LLN.voorbeeld && LLN.voorbeeld.laden ? 'Even kijken wat er weg zou gaan…' : bewaarTekst(LLN.voorbeeld && LLN.voorbeeld.p ? LLN.voorbeeld : null) || 'Met deze termijn gaat er nu niets weg.';
   return `<div class="kaart"><h2>Leerlinggegevens</h2>${server}
-    <h3 style="margin-top:.8rem">Bewaartermijn</h3><p class="lead">Hoe lang klassenlijsten, toetsen met scores, verwijderde leerlingen en het beoordelingslogboek op dit apparaat blijven. Een toets telt vanaf zijn startdatum; een klassenlijst gaat pas weg als de klas niet meer in je rooster staat. Met een termijn kijkt Lesdag hooguit één keer per dag; na het opruimen kun je het via de melding nog terugzetten (het logboek niet).</p>
-    <div class="knoppen">${opties.map(([n, t]) => `<button class="btn${n === m ? ' hoofd' : ''}" data-bew="${n}" aria-pressed="${n === m}">${t}</button>`).join('')}</div>
-    <p class="sub">${voorb}</p>${m ? '<div class="knoppen"><button class="btn" data-bew="nu">Nu opruimen…</button></div>' : ''}
+    <h3 style="margin-top:.8rem">Bewaartermijn</h3><p class="lead">Leerlinggegevens blijven één cursusjaar. Op 1 augustus wist Lesdag op elk apparaat klassenlijsten, scores, absenten, logboeknotities, het beoordelingslogboek en de automatische kopieën, en op de server ook de back-ups daarvan. Dat kan niet ongedaan worden gemaakt. Bestanden in je reservemap en downloads wis je zelf.</p>
     <h3 style="margin-top:.8rem">Botsingen tussen apparaten</h3>${SY ? botsKaart() : '<p class="sub">Synchroniseren is niet beschikbaar.</p>'}</div>`;
 }
 async function leerlingKlik(D) {
@@ -2825,11 +2822,6 @@ async function leerlingKlik(D) {
       else if (D.lln === 'eerstewis') { if (!confirm('De back-up van de eerste upload wordt van de server gewist. Dat kan niet ongedaan worden gemaakt. Doorgaan?')) return true; await SY.eersteWissen(); LLN.eerste = { rijen: 0 }; toast('Back-up gewist'); }
     } catch (e) { SY.meld(e); toast('Dat lukt nu niet'); }
     render(); return true;
-  }
-  if (D.bew != null) {
-    if (D.bew === 'nu') { const v = await bewaarVoorbeeld(); if (!v || SYNC.planTelt(v.p) + v.log === 0) { toast('Er is niets om op te ruimen'); return true; } if (!confirm(bewaarTekst(v) + '\n\nOpruimen? Na afloop kun je het via de melding nog terugzetten (het logboek niet).')) return true; await bewaarUitvoeren(); return true; }
-    try { if (+D.bew) localStorage.setItem(BEWAAR_KEY, String(+D.bew)); else localStorage.removeItem(BEWAAR_KEY); localStorage.removeItem(BEWAAR_DAG); } catch (e) {}
-    LLN.voorbeeld = null; render(); return true;
   }
   if (D.bots != null) {
     try {
@@ -2946,7 +2938,7 @@ function viewInstellingen() {
     ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
   <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
   ${logboekKaart()}
-  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. De kopie is de stand van het begin van die dag. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
+  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. Er is een kopie van het begin van de dag en een van het moment dat je Dag afsluit, zodat de invoer van die dag erin zit. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
   <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
 }
 
@@ -3287,7 +3279,7 @@ document.addEventListener('click', async e => {
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }
   if (D.later) { const terug = foto(); const [k, v] = D.later.split('|'); S.later[k] = v; bewaar(); toast(v === 'ok' ? 'Genoteerd' : 'Vandaag niet meer', terug); return; }
   if (D.klaarextra) { const terug = foto(); const [d, txt] = D.klaarextra.split('|'); (S.klaarExtra[d] = S.klaarExtra[d] || []).push(txt); bewaar(); toast('Staat op je klaarzetlijst', terug); return; }
-  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); const nOpen = +D.open || 0; const nogOpen = nOpen ? (nOpen === 1 ? ' 1 punt staat nog open.' : ` ${nOpen} punten staan nog open.`) : ''; toast((weekAfsluitDag(D.afsluiten) ? (nogOpen ? 'Week afgesloten.' : 'Week afgesloten. Maandag staat klaar.') : (nogOpen ? 'Dag afgesloten.' : 'Morgen staat klaar. Fijne avond.')) + nogOpen, terug); return; }
+  if (D.afsluiten) { const terug = foto(); const g = $('#gGoed'); if (g) S.goed[D.afsluiten] = g.value.trim() || undefined; S.afgesloten[D.afsluiten] = true; nuKijk = null; bewaar(); if (D.afsluiten === vandaag()) autoKopieMaak(true); const nOpen = +D.open || 0; const nogOpen = nOpen ? (nOpen === 1 ? ' 1 punt staat nog open.' : ` ${nOpen} punten staan nog open.`) : ''; toast((weekAfsluitDag(D.afsluiten) ? (nogOpen ? 'Week afgesloten.' : 'Week afgesloten. Maandag staat klaar.') : (nogOpen ? 'Dag afgesloten.' : 'Morgen staat klaar. Fijne avond.')) + nogOpen, terug); return; }
   if (D.fnkopie) { const a = (S.afwijkingen || []).find(x => x.id === D.fnkopie); try { await navigator.clipboard.writeText(a ? a.bericht : ''); toast('Gekopieerd'); } catch (err) { toast('Kopiëren lukt niet: open het bericht bij Nu en kopieer zelf'); } return; }
   if (D.heropen) { delete S.afgesloten[D.heropen]; bewaar(); return; }
   if (D.taakbewerk) { openTaakBewerk(D.taakbewerk); return; }
@@ -3518,6 +3510,7 @@ const bmVoor = item => BM.filter(m => (m.lessen || []).some(k => k.lg === item.l
 const komma = x => x == null ? '' : String(x).replace('.', ',');
 const bmKanMap = () => typeof window.showDirectoryPicker === 'function';
 const bmTijd = t => { const d = new Date(t); return `${fmtD(ymd(d))} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
+function bmGegevenStand(m, g) { const o = {}; if (!leergangVan(g)) return o; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { const v = (S.voortgang[g] || {})[a.id]; o[a.id] = v === undefined ? undefined : JSON.parse(JSON.stringify(v)); }); return o; } // de stand van vóór bmToetsGegeven, om de markering terug te zetten
 function bmToetsGegeven(m, g) { if (!leergangVan(g)) return 0; let n = 0; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { S.voortgang[g] = S.voortgang[g] || {}; S.voortgang[g][a.id] = Object.assign({}, status(g, a.id), { st: 'gegeven', d: vandaag() }); n++; }); return n; }
 // wat er na een toets nog ligt (bevinding 60 en 61): wie moet nog inhalen, en staan de afgeronde cijfers in Magister. Alleen aantallen: namen blijven in Beoordelen.
 function toetsRest(T, g) { const lijst = (S.beoord.lijsten || {})[g] || []; const r = x => (T && T.ll && T.ll[x.id]) || {};
@@ -3778,8 +3771,8 @@ function periodeOverzicht() {
       if (rijen.length) uit.push({ nr: (String(b.id).match(/\d+/) || [''])[0], eind, g, rijen }); } }
   return uit.filter(x => x.rijen.some(r => !r.ok) || t <= addD(x.eind, 7));
 }
-function periodeKaart() {
-  const P = periodeOverzicht(); if (!P.length) return ''; const t = vandaag(); const groepen = {};
+function periodeKaart(laatsteWeek) {
+  let P = periodeOverzicht(); if (laatsteWeek) P = P.filter(x => vandaag() <= x.eind && vandaag() > addD(x.eind, -7)); if (!P.length) return ''; const t = vandaag(); const groepen = {};
   P.forEach(x => { (groepen[x.nr + '|' + x.eind] = groepen[x.nr + '|' + x.eind] || []).push(x); });
   return Object.entries(groepen).sort((a, b) => a[0].split('|')[1] < b[0].split('|')[1] ? -1 : 1).map(([k, L]) => { const [nr, eind] = k.split('|'); const open = L.reduce((n, x) => n + x.rijen.filter(r => !r.ok).length, 0);
     return `<div class="kaart periode"><h2>Periode ${esc(nr)} ${eind >= t ? 'sluit' : 'sloot'} ${esc(fmtD(eind))}</h2><p class="lead">${open ? `Nog ${open} ${open === 1 ? 'toets' : 'toetsen'} waar cijfers van ontbreken.` : 'Alle cijfers van deze periode staan vast en in Magister.'}</p>${L.map(x => `<div class="jr-regel"><span><b>${esc(x.g)}</b></span><span class="tb">${x.rijen.map(r => `<button class="btn klein${r.ok ? '' : ' hoofd'}" data-beoordeel="${esc(r.m.id + '|' + r.g)}">${esc(r.toets)}: ${esc(r.tekst)}</button>`).join(' ')}</span></div>`).join('')}</div>`; }).join('');
@@ -3799,7 +3792,7 @@ function viewBeoordelen() {
   if (!route.arg[0]) return viewBeoordelenKeuze();
   if (!m || !g) return `<div class="kaart"><p>Dit beoordelingsmodel is niet gevonden.</p><p><a class="btn" href="#vandaag">Terug naar vandaag</a></p></div>`;
   const lijst = S.beoord.lijsten[g] || []; const heeft = lijst.length > 0;
-  let h = `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
+  let h = jaarMelding() + `<div class="kop bm"><div><p class="eyebrow">${esc(m.klas)} · groep ${esc(g)} · ${esc(m.toets)}${m.weging ? ' · weging ' + esc(m.weging) : ''}</p><h1>${esc(m.titel)}</h1></div>
     <div class="knoppen">${heeft ? '<button class="btn" data-bm="concert">Concertstand</button>' : ''}<button class="btn" data-bm="lijst">Klassenlijst</button>${heeft && BMR.critVan(m, S.beoord.toetsen[m.id + '|' + g]).some(c => c.groepsscore) ? '<button class="btn" data-bm="groepjes">Groepjes</button>' : ''}${heeft && m.delen && m.delen.klasgenoten ? '<button class="btn" data-bm="klasgenoten">Klasgenoten</button>' : ''}${heeft ? '<button class="btn" data-bm="inlever">Inleverbak</button>' : ''}${heeft ? '<button class="btn" data-bm="kolom">Cijferkolom</button><button class="btn" data-bm="export">Scoreblad downloaden</button>' : ''}<a class="btn" href="${esc(bmTerug || '#vandaag')}">Klaar</a></div></div>
     <div class="bm-status" id="bmStatus">${bmStatusHtml()}</div>`;
   if (bmPaneel === 'koppel' && bmKoppel) return h + bmKoppelKaart(g);
@@ -3955,9 +3948,10 @@ document.addEventListener('click', async e => {
   if (D.bm === 'afronden') { const isH = T.herkans && (D.laag === 'herkans' || (!D.laag && bmLaag(T) === T.herkans)); const A = isH ? T.herkans : T; const wie = isH ? lijst.filter(x => A.wie.includes(x.id)) : lijst;
     const open = wie.filter(x => !(A.ll[x.id] && (A.ll[x.id].vast || A.ll[x.id].af)) && BMR.eind(m, A, T, x.id).e != null).length; const rest = wie.filter(x => !(A.ll[x.id] && A.ll[x.id].vast)).length - open;
     if (!confirm(`${isH ? 'Herkansing: ' : ''}${open} ${open === 1 ? 'cijfer' : 'cijfers'} vastleggen, met de scores en wegingen van nu.${rest ? ` ${rest} ${rest === 1 ? 'leerling heeft' : 'leerlingen hebben'} nog geen cijfer en ${rest === 1 ? 'blijft' : 'blijven'} open.` : ''}`)) return;
-    const voor = foto(); const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true;
+    const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true;
+    const eerder = !isH && af.length ? bmGegevenStand(m, g) : null; // alleen de markering "gegeven" gaat bij Ongedaan maken terug; cijfers en beoordelingen blijven staan (besluit Frans 9-11)
     const gez = !isH && af.length ? bmToetsGegeven(m, g) : 0; // bevinding 59: cijfers vastgelegd = de toets is gegeven, dus geen melding "nog niet afgevinkt" de volgende dag
-    bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '') + (gez ? `. ${m.toets} staat op gegeven` : ''), gez ? voor : undefined); await bmReserveNu(m, g); return; }
+    bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '') + (gez ? `. ${m.toets} staat op gegeven` : ''), gez ? () => { for (const [id, v] of Object.entries(eerder)) { if (v === undefined) delete (S.voortgang[g] || {})[id]; else (S.voortgang[g] = S.voortgang[g] || {})[id] = v; } bewaar(); toast(`${m.toets} staat weer niet op gegeven; de cijfers blijven vastgelegd`); } : undefined); await bmReserveNu(m, g); return; }
   if (D.bm === 'heropen') { const A = bmLaag(T); if (!BMR.isPoging(A, T)) return; if (!confirm('Dit cijfer openzetten om te wijzigen? Het oude cijfer staat in het logboek. Rond daarna opnieuw af en zet het nieuwe cijfer zelf in Magister.')) return; bmLog(k, { a: 'heropen', id: bmSel, w: A.ll[bmSel].vast.e, l: A === T ? null : A.id }); BMR.heropen(T, bmSel, A); bewaar(); return; }
   if (D.bm === 'inmagister') { const f = foto(); bmInMagister(T, g); bewaar(); toast('Genoteerd: de cijfers van ' + m.toets + ' staan in Magister', f); return; }
   if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister en tik daarna op Staat in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
@@ -4087,6 +4081,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   if (route.naam === 'bord') { // dit venster is het digibord
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
+  jaarWisselLokaal();
   render();
   try { // herladen midden in de les: de lesmodus gaat weer open, op de plek waar je was
     const op = sessionStorage.getItem('lesdag-lesopen'); const [uid, s] = (op || '').split('|');
@@ -4096,8 +4091,8 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
   if (/diag/.test(location.search)) setTimeout(diag, 800);
   try { const acc = await M365.init(); if (acc) await syncNu(false); else setSync('', M365.enabled() ? 'Niet ingelogd' : 'Op dit apparaat'); }
   catch (e) { console.warn(e); setSync('fout', 'Inloggen niet beschikbaar'); }
+  await jaarWisselRest(); // eerst de server van oude leerlinggegevens ontdoen, anders zet de eerste synchronisatie ze terug op dit apparaat
   syncStart();
-  bewaarStart();
   agendaStart();
   bmMapLaden(); bmPersist();
   if (zGekoppeld() && zProxy() && navigator.onLine && (!ZC || Date.now() - ZC.opgehaald > 30 * 60000 || ZC.van !== maandagVan(vandaag()))) zOphalen(false);

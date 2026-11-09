@@ -134,10 +134,10 @@ Alle 951 bestandsversies uit alle takken gescand (commit-berichten ook). Gevonde
 
 Dit staat niet in de code en vraagt een blik in het dashboard: de Access-instellingen (beleid, uitzonderingen, cookie), de leden van het Cloudflare-account, de locatie van de database, of Workers Logs aan staan (de agendalink staat in de URL), en de inhoud van de databases. De CSP is niet in een browser getest. De fix in de feed is getest door de echte functie met verzonnen items te draaien, niet in de hele app.
 
-## Beslissingen voor Frans
+## Besluiten van Frans (9-11-2026)
 
-1. Het bericht aan de privacyfunctionaris versturen, en synchroniseren tot het antwoord uit laten (of leerlinggegevens uitsluiten)?
-2. Agendafeed: Zermelo-afspraken zonder vak of groep met een vaste titel, en alleen lestitels uit de leergang?
-3. Welke bewaartermijn, en moet back-up `eerste` weg?
-4. De vier commits op `audit-beveiliging` overnemen op `main`? Per commit is een ja nodig.
-5. Na een week de CSP afdwingend maken?
+1. **Privacyfunctionaris:** geen bericht. Bevinding 1 is daarmee afgehandeld.
+2. **Agendafeed:** vaste titels voor Zermelo-afspraken zonder vak. Staat al op `samengevoegd` (`AGENDAFEED.zTitel`), en daar strenger: alle Zermelo-afspraken die geen les zijn krijgen een vaste titel, tenzij de ruime stand aan staat.
+3. **Bewaartermijn:** het cursusjaar. Vanaf 1 augustus wist elk apparaat bij de eerste start klassenlijsten, scores, verwijderde leerlingen, absenten, logboeknotities, het beoordelingslogboek en de automatische kopieën, en de server de leerlinggegevens inclusief back-ups. Zonder ongedaan maken. In juli staat er een waarschuwing in Beoordelen. Taken, planning en rooster blijven. Bestanden in de reservemap en downloads wist Frans zelf. Tak `bewaar-cursusjaar`.
+4. **Vier fixes:** op 9-11 live (`a69f5ad`). Live gecontroleerd: feed-fix in `app.js` en de beveiligingskoppen.
+5. **CSP:** op of na 16-11 de console nakijken en `-Report-Only` weghalen.

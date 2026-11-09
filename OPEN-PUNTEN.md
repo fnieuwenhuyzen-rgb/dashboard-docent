@@ -3,6 +3,7 @@
 Bijgewerkt: 4 november 2026 (beslisblad van Frans verwerkt, achterhaalde punten verwijderd; daarvoor 3 november: scherm Jaar gebouwd, lokaal getest, nog niet online; onderbouwmappen heringedeeld). Werk dit bij aan het eind van elk werkblok. A = beslissing van Frans nodig.
 
 ## A. Wacht op Frans
+- **CSP afdwingend maken** op of na 16-11 (besluit Frans 9-11): console nakijken, ook PowerPoint maken, dan in `public/_headers` `-Report-Only` weghalen. Privacyfunctionaris: Frans stuurt geen bericht (9-11), dat deel van het punt over synchroniseren vervalt.
 
 - [ ] **Week afsluiten, twee lessen samenvoegen, lucht op Jaar (keuzes Frans 9-11; voorstel https://claude.ai/artifact/6VCP6EvDFQxTpr8azBTKyx). Live sinds 9-11, ja van Frans, samen met alles op `samengevoegd` (branch `functies-af`, cache v54).**
   - **Keuzes van Frans:** (1) op de laatste werkdag wordt Dag afsluiten vanzelf Week afsluiten; (2) aantal op de knop, één tik sluit af, melding met Ongedaan maken, ook bij Dag afsluiten (bevinding 50); (3) maandag een grijze regel met de toetsen van deze week; (4) zinnen van Wat ging goed alleen terug bij Week afsluiten; (5) twee lessen naast elkaar, Frans kiest de fasen, Lesdag telt tot de lestijd; (6) eerst de twee laatste gewone lessen vóór de toets, wisselen kan; (7) "aan het begin van de toetsles" vervalt; (8) Jaar: groene noten en een korte regel alleen bij een krappe klas; (9) AI-voorstellen niet bouwen; (10) route B van de lijst.
