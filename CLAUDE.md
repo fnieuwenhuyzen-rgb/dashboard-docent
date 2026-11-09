@@ -60,3 +60,8 @@ Docent-app van Frans Nieuwenhuyzen (muziekdocent en sectievoorzitter, CSG Prins 
 - In PowerShell is `R` een alias (Invoke-History): geen eigen functie zo noemen. `$c` en `$C` zijn dezelfde variabele.
 - Word en Excel via COM: paden boven 255 tekens weigert Word; test in een korte map (`%LOCALAPPDATA%\Temp\bq`).
 - Cloudflare Access beheren kan via de dashboard-API vanuit een ingelogde tab op dash.cloudflare.com (fetch met `X-Cross-Site-Security: dash`); Access-app "Lesdag" id `c47af1f4-8d7b-48ef-9910-d740ccc58ea0`.
+
+## Opbouw van de code (kort)
+
+- **Inhoudsopgave van `app.js`:** `grep -nE '^/\* -{4,}' public/app.js` geeft alle kopjes met regelnummer. Begin daarmee en lees alleen het stuk dat je nodig hebt.
+- **`app.js` blijft één bestand (besluit Frans 9-11).** Pas opsplitsen als Lesdag naar anderen gaat, `app.js` voorbij ongeveer 700 kB groeit, of sessies aantoonbaar fouten maken door gebrek aan overzicht. Plan: https://claude.ai/artifact/DPDaAR7UfvB6F4hWRJwNfc (variant B, vijf stukken). Daarbij mag de afspraak "namen niet globaal" vervallen; stap 1 en 2 op een avond zonder les de volgende ochtend, niet in een toetsweek, de rest verspreid over minstens drie lesdagen.
