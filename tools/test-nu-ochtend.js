@@ -37,8 +37,7 @@ const TOON = process.argv.includes('--toon');
   { const NOT = 'Gestopt bij vraag twee', staat = vorigeStaat(NOT);
     const a = await kijk('2026-11-16T08:10:00+01:00', 'nu', staat); is('3: Nu 8:10 vorige keer', a.tekst.includes(NOT));
     const b = await kijk('2026-11-16T08:32:00+01:00', 'nu', staat); is('3: Nu in het eerste kwartier (Magister afronden voorop)', /Magister afronden/.test(b.tekst) && b.tekst.includes('Vorige keer') && b.tekst.includes(NOT));
-    const c = await kijk('2026-11-16T08:40:00+01:00', 'vandaag', staat, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(200); await page.click('#les [data-l="notities"]'); await page.waitForTimeout(100); });
-    const les = await c.page.evaluate(() => document.querySelector('#les').innerText).catch(() => ''); is('3: lesmodus die al loopt toont vorige keer bij de notities', /Vorige keer/.test(c.tekst + les) && (c.tekst + les).includes(NOT)); }
+    let les = ''; const c = await kijk('2026-11-16T08:40:00+01:00', 'vandaag', staat, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(200); await page.click('#les [data-l="notities"]'); await page.waitForTimeout(100); les = await page.evaluate(() => document.querySelector('#les').innerText); }); is('3: lesmodus die al loopt toont vorige keer bij de notities', /Vorige keer/.test(les) && les.includes(NOT)); }
 
   await h.stop();
   if (fouten.length) { console.log('MISLUKT (' + fouten.length + ' van ' + n + '):\n  ' + fouten.join('\n  ')); process.exit(1); }
