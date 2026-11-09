@@ -64,8 +64,10 @@ function slideAgenda(p, les, meta, img) {
     const x = M + i * (bw + gap); kaart(s, x, y, bw, 2.7);
     s.addShape('ellipse', { x: x + 0.25, y: y + 0.25, w: 0.5, h: 0.5, fill: { color: K.fase[f.soort] }, line: { color: K.fase[f.soort], width: 0 } });
     s.addText(String(i + 1), { x: x + 0.25, y: y + 0.25, w: 0.5, h: 0.5, fontFace: KOPB, fontSize: 14, bold: true, color: K.wit, align: 'center', valign: 'middle', margin: 0, isTextBox: true });
-    s.addText(K.faseNaam[f.soort] + ' · ' + f.min + ' min', { x: x + 0.85, y: y + 0.3, w: bw - 1.05, h: 0.4, fontFace: KOPB, fontSize: 11, bold: true, color: K.fase[f.soort], margin: 0, isTextBox: true, valign: 'middle' });
-    s.addText(f.kop, { x: x + 0.25, y: y + 0.95, w: bw - 0.5, h: 2.2, fontFace: KOPB, fontSize: 15, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top' });
+    const smal = bw < 2.6; // bij vijf of meer fasen past 'Horen en doen · 5 min' niet naast het cijfer: naam een regel lager
+    s.addText(smal ? f.min + ' min' : K.faseNaam[f.soort] + ' · ' + f.min + ' min', { x: x + 0.85, y: y + 0.3, w: bw - 1.05, h: 0.4, fontFace: KOPB, fontSize: 11, bold: true, color: K.fase[f.soort], margin: 0, isTextBox: true, valign: 'middle' });
+    if (smal) s.addText(K.faseNaam[f.soort], { x: x + 0.25, y: y + 0.85, w: bw - 0.5, h: 0.3, fontFace: KOPB, fontSize: 11, bold: true, color: K.fase[f.soort], margin: 0, isTextBox: true, valign: 'middle' });
+    s.addText(f.kop, { x: x + 0.25, y: y + (smal ? 1.25 : 0.95), w: bw - 0.5, h: 2.2, fontFace: KOPB, fontSize: 15, bold: true, color: K.inkt, margin: 0, isTextBox: true, valign: 'top' });
   });
   return s;
 }

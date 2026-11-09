@@ -1639,7 +1639,7 @@
    }
   },
   "vwo4": {
-   "_uitleg": "Voorstel voor de vier theorielessen van vwo 4 die nog moeten komen en nog geen fasen hebben: 15.1 (ma 14 dec), 21.1 (ma 8 feb), 30.1 (ma 19 apr) en 32.2 (wo 19 mei). Vraag, doel en formatief komen uit basis.json; criteria en fasen zijn nieuw (45 min per les). Feiten komen uit de studiewijzer vwo 4 en de PTA (Muziek, v4); wat daar niet staat is in de docentnotitie gemarkeerd als 'eigen controle'. Bewust niet uitgewerkt: toetslessen 28.1 (T1 op de computer in toetsweek 3), 35.1 en 35.2 (PT2, uitvoeringen; de beoordeling loopt via model pt2-vwo4) en 38.1 (T2 in toetsweek 4), en alle toetsweek- en uitvalsdagen. Lessen 2.2 en 3.1 (verleden) hebben ook geen fasen en blijven buiten dit voorstel. Afwijking van de leergang: in 15.1 lichten leerlingen hun standpunt toe in groepjes aan de docent, niet voor de klas.",
+   "_uitleg": "Voorstel voor de vier theorielessen van vwo 4 die nog moeten komen en nog geen fasen hebben: 15.1 (ma 14 dec), 21.1 (ma 8 feb), 30.1 (ma 19 apr) en 32.2 (wo 19 mei). Vraag, doel en formatief komen uit basis.json; criteria en fasen zijn nieuw (45 min per les). Feiten komen uit de studiewijzer vwo 4 en de PTA (Muziek, v4); wat daar niet staat is in de docentnotitie gemarkeerd als 'eigen controle'. Bewust niet uitgewerkt: toetslessen 28.1 (T1 op de computer in toetsweek 3), 35.1 en 35.2 (P2, uitvoeringen; de beoordeling loopt via model pt2-vwo4) en 38.1 (T2 in toetsweek 4), en alle toetsweek- en uitvalsdagen. Lessen 2.2 en 3.1 (verleden) hebben ook geen fasen en blijven buiten dit voorstel. Afwijking van de leergang: in 15.1 lichten leerlingen hun standpunt toe in groepjes aan de docent, niet voor de klas.",
    "_klas": "vwo4",
    "lessen": {
     "Rhythm & blues (2): de kerk en de straat": {
@@ -2009,10 +2009,10 @@
        "stappen": [
         "Bach schreef 'Soli Deo Gloria' onder zijn partituren.",
         "Praat in tweetallen: kan muziek maken een dienst zijn?",
-        "Thuis: de tabel afmaken, en je compositie voor PT2 netjes noteren, met de hand of in een notatieprogramma.",
+        "Thuis: de tabel afmaken, en je compositie voor P2 netjes noteren, met de hand of in een notatieprogramma.",
         "Herhaal Barok N2 b5, Vocale muziek, in MusicBox."
        ],
-       "docent": "Identiteit uit de leergang. De ingeleverde notatie van PT2 telt mee in de beoordeling (PTA); de notatie moet in lesweek 34 binnen zijn (leergang en studiewijzer). Controleer of de tabel van elke leerling in hun map zit; die komt terug in T2. Studiewijzer: nog 3 lesweken tot PT2."
+       "docent": "Identiteit uit de leergang. De ingeleverde notatie van P2 telt mee in de beoordeling (PTA); de notatie moet in lesweek 34 binnen zijn (leergang en studiewijzer). Controleer of de tabel van elke leerling in hun map zit; die komt terug in T2. Studiewijzer: nog 3 lesweken tot P2."
       }
      ],
      "formatief": {

@@ -89,9 +89,9 @@
           {
             "min": 10,
             "soort": "uitleg",
-            "kop": "PT2 en je oefenlog",
+            "kop": "P2 en je oefenlog",
             "stappen": [
-              "Zo ziet PT2 eruit.",
+              "Zo ziet P2 eruit.",
               "Oefenlog: stuk, moeilijkste maat, plan voor thuis."
             ]
           },
@@ -223,10 +223,10 @@
           {
             "min": 10,
             "soort": "afsluiten",
-            "kop": "Oefenlog en planning tot PT2",
+            "kop": "Oefenlog en planning tot P2",
             "stappen": [
               "Noteer je laatste verbeterpunt.",
-              "Plan je oefenen tot PT2."
+              "Plan je oefenen tot P2."
             ]
           }
         ],
@@ -364,7 +364,7 @@
         "koppel": [
           {
             "lg": "vwo5",
-            "w": 8,
+            "w": 12,
             "slot": "l1"
           }
         ],
@@ -385,8 +385,8 @@
         "koppel": [
           {
             "lg": "vwo5",
-            "w": 8,
-            "slot": "l3"
+            "w": 12,
+            "slot": "l2"
           }
         ],
         "fasenExtra": {

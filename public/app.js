@@ -14,7 +14,7 @@ const BENODIGD = [[/keyboard|piano|toetsenbord/i, 'Keyboards'], [/gitaar|ukelele
 
 let B = null;               // basisgegevens
 let S = null;               // eigen staat
-let route = { naam: 'vandaag', arg: [] }; let focusRoute = null;
+let route = { naam: 'vandaag', arg: [] }; let focusRoute = null; let bmNaarScore = false; // bevinding 44: op een telefoon opent Beoordelen bij de scorekaart
 let syncState = 'lokaal';
 let remoteT = null;
 let SY = null;               // synchronisatie tussen apparaten, zie syncStart
@@ -441,6 +441,14 @@ function zetAfwezig(van, tot) {
   afwezigOpen = false; bewaar();
   if (dagen.length) toast(`Afwezig ${dagenTekst(dagen)} · lessen schuiven door`, () => afwezigTerug(dagen));
 }
+function afwezigLessen(s) { const p = planning(s, s)[s]; return ((p && p.uren) || []).filter(x => x.uitval && x.afwezig); } // de lessen van een afwezige dag (bevinding 62)
+const afwezigGroepen = L => lijstTxt([...new Set(L.map(x => x.u.groep))]);
+function afwezigZin(s) { const L = afwezigLessen(s); return L.length ? `Afwezig. ${L.length} ${L.length === 1 ? 'les schuift' : 'lessen schuiven'} door (${afwezigGroepen(L)}).` : 'Afwezig. Er zijn vandaag geen lessen die schuiven.'; }
+function afwezigNa(s) { // de eerste lesdag na een afwezigheid: wat er geschoven is
+  if (s !== vandaag() || S.afwezig[s] || vrijReden(s)) return ''; let v = addD(s, -1); for (let i = 0; i < 40 && vrijReden(v); i++) v = addD(v, -1); if (!S.afwezig[v]) return '';
+  const per = afwezigPeriode(v); const L = per.flatMap(afwezigLessen); if (!L.length) return '';
+  return `Tijdens je afwezigheid geschoven: ${L.length} ${L.length === 1 ? 'les' : 'lessen'} (${afwezigGroepen(L)}), ${dagenTekst(per)}.`;
+}
 function afwezigTerug(dagen) {
   for (const s of dagen) { const rec = S.afwezig[s]; if (!rec) continue; for (const [g, m] of Object.entries(rec.herstel || {})) Object.assign(S.voortgang[g] = S.voortgang[g] || {}, m); delete S.afwezig[s]; }
   bewaar();
@@ -463,7 +471,7 @@ function verplaatsAnker(g, a, sleutel, reden) { // lessen van dezelfde toets (P2
   const samen = ankersVan(g).filter(x => x.t.id === a.t.id && !x.klaar); const ids = [];
   S.ankers[g] = S.ankers[g] || {};
   samen.forEach((x, i) => { const y = uren[vanaf + i]; if (y) { S.ankers[g][x.id] = { s: y.s, uur: y.u.id, reden, d: vandaag() }; ids.push(x.id); } });
-  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden,
+  return afwijkingErbij({ g, lesIds: ids, soort: ONDERBOUW.test(lg) ? 'pto' : 'pta', studiewijzer: oud ? fmtD(oud.s) : `lesweek ${a.item.w}`, wat: `${a.t.id} verplaatst naar ${fmtD(s)}`, waarom: reden, berichtTot: s,
     bericht: `${a.t.id} is verplaatst${oud ? ` van ${fmtLang(oud.s)}` : ''} naar ${fmtLang(s)}.` });
 }
 /* ---------- eenmalig extra of geruild lesuur: "+ Nieuw", keuze Les. Een ruil zet het oude uur op uitval en voegt het nieuwe toe ---------- */
@@ -558,6 +566,7 @@ function render() {
   if (fk && !LES) { if (fk.w === '#main' && routeWissel) $('#main').focus({ preventScroll: true }); else if (!focusHerstel(fk)) $('#main').focus({ preventScroll: true }); } // focus blijft waar de gebruiker was; bij een ander scherm begint Tab bovenaan de inhoud
   if (concert) bmCsMerk();
   if (klasScroll && $('#bmLijst')) { klasScroll = false; setTimeout(() => { const v = $('#bmLijst'); if (v) { v.scrollIntoView({ block: 'center' }); v.focus(); } }); }
+  if (bmNaarScore && route.naam === 'beoordelen' && $('.bm-scoor')) { bmNaarScore = false; if (matchMedia('(max-width:600px)').matches) setTimeout(() => { const k = $('.bm-scoor'); if (k) k.scrollIntoView(); }); } // de kop en de status staan erboven; de eerste scoreknop is meteen in beeld
   if (NW) nwGhost();
   if (route.naam === 'instellingen') autoKopieVul();
   if (route.naam === 'reclame') { recBeelden(); if (recFocus) { const el = document.getElementById('rec-' + recVeilig(recFocus)); if (el) el.scrollIntoView({ block: 'start' }); recFocus = ''; } }
@@ -648,12 +657,14 @@ function viewVandaag() {
     <div class="knoppen"><button class="btn" data-dag="${voor}">‹ ${esc(dagLabel(voor))}</button>${s !== t && voor !== t && na !== t ? `<button class="btn" data-dag="${t}">vandaag</button>` : ''}<button class="btn" data-dag="${na}">${esc(dagLabel(na))} ›</button>
     <button class="btn kaal" data-afwezigopen="" aria-pressed="${afwezigOpen}">Ik ben er niet</button><button class="btn" data-nwnieuw="">+ Nieuw</button>${s === t && !p.reden && p.uren.length ? '<button class="btn hoofd" data-start="">▶ Lesmodus</button>' : ''}</div></div>`;
   if (afwezigOpen) h += afwezigForm(s);
+  { const na = afwezigNa(s); if (na) h += `<div class="melding info">${esc(na)}</div>`; }
   if (S.afwezig[s]) { const per = afwezigPeriode(s); h += `<div class="melding info afwezigrij">${per.length > 1 ? `Je bent afwezig ${dagenTekst(per)} (${per.length} lesdagen). Al je lessen in die periode vervallen en schuiven door.` : 'Je bent afwezig. Al je lessen van deze dag vervallen en schuiven door.'} <button class="btn klein" data-afwezigterug="${s}">Toch aanwezig${per.length > 1 ? ' op deze dag' : ''}</button>${per.length > 1 ? ` <button class="btn klein" data-afwezigperiode="${s}">Hele periode ongedaan</button>` : ''}</div>`; }
   if (!S.rooster.length && !ZC) h += `<div class="kaart" style="margin-bottom:1rem"><h2>Eerst je rooster</h2><p class="lead">Vul één keer je weekrooster in: per lesuur de groep en het lokaal. Daarna staan je lessen hier in de agenda, met wat er klaar moet staan.</p><p><a class="btn hoofd" href="#rooster">Rooster invullen</a></p></div>`;
-  const achter = rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
+  const zomer = !!buitenJaar(p); // buiten het schooljaar staat er niets meer dan "het schooljaar zit erop" (bevinding 76)
+  const achter = zomer ? [] : rooGroepen().filter(g => !Object.keys(S.voortgang[g] || {}).length && leergangVan(g) && reeks(leergangVan(g)).some(x => x.w < (lesweekVan(t) || nextLesweek()) - 1));
   let wacht = ''; // op een telefoon staan de lessen bovenaan; wat kan wachten komt eronder (bevinding 46)
   if (achter.length) wacht += `<div class="melding info">Begin je nu met Lesdag? ${esc(achter.join(', '))} staan nog op les 1. <button class="btn klein" data-opplanalle="">Zet ze op de planning</button> Dan gelden alle lessen vóór deze lesweek als gegeven.</div>`;
-  if (s >= t) { h += uitvalBlok(s); wacht += liggenBlok(); }
+  if (s >= t && !zomer) { h += uitvalBlok(s); wacht += liggenBlok(); }
   const onder = [...zonderTijd.map(it => `${it.tz ? `Toets ${(B.groepen[it.tz.lg] || [it.tz.lg]).join(', ')} ${it.tz.t.id}` : it.titel} staat in je leergang, maar niet in het rooster. Klopt dat?`), pauzeTekst(A.pz)].filter(Boolean);
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu
   h += `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -703,7 +714,38 @@ const koorNaam = k => k.type === 'concert' ? 'Concert: ' + (k.concert || k.titel
 /* een presentatie doorlopen geldt per les, niet per dag: dezelfde les komt terug bij een parallelgroep of als hij doorschuift */
 const presAf = key => Object.entries(S.dagTaken || {}).some(([d, dt]) => dt && dt[key] && d >= addD(vandaag(), -120));
 function zetDagTaak(d, key, aan) { if (aan) { (S.dagTaken[d] = S.dagTaken[d] || {})[key] = true; return; } if (/^pres:/.test(key)) Object.values(S.dagTaken).forEach(dt => { if (dt) delete dt[key]; }); else if (S.dagTaken[d]) delete S.dagTaken[d][key]; }
-function koorTakenOpen(s) { const G = geplandeSleutels(); return ((B.koor || {}).taken || []).filter(t => !S.koorAf[t.id] && !G.koor[t.id] && (!t.d || t.d <= addD(s, t.zicht || 21)) && (!t.tot || s <= t.tot)); }
+/* vaste voorbereiding per examenconcert, naar voorbeeld van VOORBEREIDING in tools/koor-sync.js: [sleutel, dagen voor het concert, titel, toelichting].
+   De leerlingen organiseren zelf (PTA: groepsopdracht) en niemand presenteert voor de klas; deze lijst is voor Frans. Inhoud is een voorstel, Frans past aan (bevinding 66).
+   Zolang de datum uit de leergang komt (nog niet vast), staat er alleen een taak om de datum vast te leggen. Bij Reclame wordt de datum bevestigd. */
+const VOORBEREIDING_EXAMEN = [
+  ['datum', 56, 'Datum, tijd en plaats vastleggen', 'De datum staat nog niet vast. Leg datum, tijd en zaal vast en vul de datum in bij Reclame; pas dan komen de weekinfo, het bord en de rest van de voorbereiding.'],
+  ['zaal', 42, 'Zaal en tijden regelen', 'Zaal, conciërge, sleutel, stoelen, verwarming en licht.'],
+  ['groepen', 42, 'Groepen en taken bevestigen', 'Wie speelt wat en wie organiseert wat: begroting, uitnodiging, publiciteit, programmaboekje, aankleding. De leerlingen regelen dat zelf; jij loopt langs.'],
+  ['formulieren', 28, 'Beoordelen en formulier Klasgenoten klaarzetten', 'Model met Concertstand en Klasgenoten in Beoordelen; het formulier Klasgenoten en de scorebladen staan in de sectiemap.'],
+  ['techniek', 28, 'Techniek en instrumenten regelen', 'Versterking, piano of vleugel, slagwerk, microfoons, kabels. Wie zet op en wie breekt af.'],
+  ['programma', 21, 'Programma en volgorde vastleggen', 'Met de totale duur, inclusief opkomsten en wisselingen.'],
+  ['boekje', 14, 'Programmaboekje laten nakijken', 'Namen, titels, tijden. De leerlingen maken het, jij kijkt na.'],
+  ['publiciteit', 14, 'Uitnodiging en publiciteit laten afronden', 'Weekinfo en borden staan apart bij Reclame.'],
+  ['generale', 7, 'Generale en techniekdoorloop plannen', 'Een volledige doorloop op de echte plek, met de techniek.'],
+  ['blaadje', 3, 'Draaiboek met alle afspraken printen', 'Tijden, wie waar staat en wie je belt. Zonder namen van leerlingen in Lesdag zelf.']
+];
+function examenTaken() { // taken per examenconcert uit reclame.json, met de datum die Frans bij Reclame bevestigde
+  if (!RC || !B || !S) return [];
+  const t = vandaag(); const out = [];
+  for (const x of RC.examenconcerten || []) {
+    const T = ((B.leergangen[x.lg] || {}).toetsen || []).find(q => q.id === x.toets); if (!T || !T.datum) continue;
+    const eigen = (S.reclame || {})[`ex:${x.lg}:${x.toets}`] || {}; const d = eigen.d || T.datum; const vast = !!eigen.d; const naam = 'Examenconcert ' + lgNaam(x.lg);
+    if (d < t) continue;
+    for (const [k, n, titel, sub] of VOORBEREIDING_EXAMEN) {
+      if ((k === 'datum') === vast) continue; // onvast: alleen de datumtaak; vast: alles behalve de datumtaak
+      const dl = laatsteSchooldag(addD(d, -n)); if (dl < addD(t, -7)) continue; // te lang geleden: niet meer aanmaken, zoals bij het koor
+      out.push({ id: `exam-voor-${x.lg}-${x.toets}-${k}`, titel: `${titel} (${naam})`, d: dl, sub: (sub + (vast ? ' Concert: ' + fmtD(d) + '.' : '')).trim(), zicht: 7, tot: d, bron: 'examen' });
+    }
+  }
+  return out;
+}
+const koorTaken = () => ((B.koor || {}).taken || []).concat(examenTaken());
+function koorTakenOpen(s) { const G = geplandeSleutels(); return koorTaken().filter(t => !S.koorAf[t.id] && !G.koor[t.id] && (!t.d || t.d <= addD(s, t.zicht || 21)) && (!t.tot || s <= t.tot)); }
 function geplandeSleutels() { const sec = {}, pres = {}, koor = {}, rec = {}; (S.taken || []).forEach(k => { if (k.sectieId) sec[k.sectieId] = k; if (k.koorId) koor[k.koorId] = k; if (k.reclameId) rec[k.reclameId] = k; if (k.dagTaak) { pres[k.dagTaak.dag + '|' + k.dagTaak.key] = k; if (/^pres:/.test(k.dagTaak.key) && !planVoorbij(k)) pres[k.dagTaak.key] = k; } }); return { sec, pres, koor, rec }; }
 /* ---------- reclame: weekinfo (maandag, inleveren tot 14:00) en borden in school ----------
    Activiteiten: koorconcerten (Koorapp), muziekactiviteiten uit de sectieplanning, examenconcerten (leergang) en eigen activiteiten.
@@ -733,13 +775,14 @@ function weekinfoMaandag(m) { // in een vakantie verschijnt er geen weekinfo: da
   return { maandag: x, d: recVrij(x) ? laatsteSchooldag(x) : x };
 }
 function reclameMomenten(a) {
+  if (a.uitLeergang) return []; // de datum komt uit de leergang en staat nog niet vast: geen weekinfo of bord op een geschatte datum (bevinding 65)
   const t = vandaag(); const tot = (RC.weekinfo || {}).inleverenTot || '14:00'; let m0 = maandagVan(a.doel); if (m0 === a.doel) m0 = addD(m0, -7); // op maandag zelf is die weekinfo te laat
   const out = []; const gezien = {};
   for (const w of (RC.weekinfo || {}).wekenVooraf || [2, 0]) { const s = weekinfoMaandag(addD(m0, -7 * w)); if (gezien[s.maandag]) continue; gezien[s.maandag] = 1;
     out.push({ id: a.id + '#wi' + w, a, soort: 'wi', maandag: s.maandag, d: s.d, tot, titel: `Weekinfo ${fmtD(s.maandag)}: ${a.titel}`, kort: `Weekinfo ${fmtD(s.maandag)}` }); }
   const b = laatsteSchooldag(addD(a.doel, -((RC.bord || {}).dagenVooraf || 21)));
   out.push({ id: a.id + '#bord', a, soort: 'bord', d: b, titel: `Bord aanleveren: ${a.titel} (${fmtD(a.d)})`, kort: 'Bord' });
-  return out.sort((x, y) => x.d < y.d ? -1 : 1).map(m => Object.assign(m, { af: (S.reclameAf || {})[m.id] || '', verlopen: m.soort === 'wi' ? m.d < t : a.d < t }));
+  return out.sort((x, y) => x.d < y.d ? -1 : 1).map(m => Object.assign(m, { af: (S.reclameAf || {})[m.id] || '', verlopen: a.d < t })); // een gemiste weekinfo blijft staan (te laat) tot hij af is of de activiteit voorbij is (bevinding 64)
 }
 function reclameOpen(s, G) { // open taken voor activiteiten die nog komen; een gemiste weekinfo is voorbij, een bord kan tot de activiteit
   G = G || geplandeSleutels(); const t = vandaag(); const out = [];
@@ -750,7 +793,7 @@ const reclameMoment = id => { const a = reclameActs().find(a => a.id === id.spli
 const recTekst = a => (a.tekst != null && a.tekst !== '') ? a.tekst : RECLAME.tekst(a);
 function recWaarschuwingen(a) {
   const w = [];
-  if (a.uitLeergang) w.push(`Datum uit de leergang (${a.uitLeergang}). Vul de echte datum in.`);
+  if (a.uitLeergang) w.push(`De datum staat nog niet vast (leergang: ${a.uitLeergang}). Vul de echte datum in; tot dan maakt Lesdag geen weekinfo of bord.`);
   if (!a.aanvang) w.push(a.alleenVerzamel ? 'In de koorapp staat alleen de verzameltijd. Vul de aanvang voor het publiek in.' : 'Aanvangstijd ontbreekt.');
   if (!a.plaats) w.push('Plaats ontbreekt.');
   if (a.toegang === 'ticket') {
@@ -768,9 +811,9 @@ function recKaart(a) {
   const veld = (k, label, type, extra) => `<label>${label}<input data-recveld="${id}|${k}" type="${type || 'text'}" value="${v(k)}"${extra || ''}></label>`;
   const eigenTekst = a.tekst != null && a.tekst !== '';
   return `<div class="kaart reckaart${a.uit ? ' uit' : ''}" id="rec-${recVeilig(a.id)}"><div class="recgrid">
-    <button class="recvoorbeeld" data-recbord="${id}" title="Bord downloaden (pptx)"><img data-recimg="${id}" alt="Voorbeeld van het bord voor ${esc(a.titel)}"></button>
+    ${a.uitLeergang ? '' : `<button class="recvoorbeeld" data-recbord="${id}" title="Bord downloaden (pptx)"><img data-recimg="${id}" alt="Voorbeeld van het bord voor ${esc(a.titel)}"></button>`}
     <div class="recin"><p class="eyebrow">${esc(RSOORT[a.soort] || a.soort)} · ${esc(fmtLang(a.d))}${a.aanvang ? ' · ' + esc(a.aanvang) : ''}</p><h2>${esc(a.titel)}</h2>
-    ${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : M.map(m => recMomentRij(m)).join('')}
+    ${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : a.uitLeergang ? '<p class="lead">Eerst de datum vastleggen. Daarna komen de weekinfo en het bord.</p>' : M.map(m => recMomentRij(m)).join('')}
     ${w.length && !a.uit ? `<div class="melding recwaar">${w.map(esc).join('<br>')}</div>` : ''}
     <details class="recgeg"${w.length && !a.uit ? ' open' : ''}><summary>Gegevens voor de tekst en het bord</summary><div class="form recvelden">
       ${veld('titel', 'Titel')}${veld('ondertitel', 'Regel onder de titel (bord)')}
@@ -780,8 +823,9 @@ function recKaart(a) {
       <label>Toegang<select data-recveld="${id}|toegang"><option value="">zonder tickets</option><option value="ticket"${a.toegang === 'ticket' ? ' selected' : ''}>met tickets</option></select></label>
       ${a.toegang === 'ticket' ? `<div class="rij">${veld('sluit', 'Bestellen tot en met', 'date')}${veld('kosten', 'Prijs', 'text', ' placeholder="€ 12,50"')}</div>${veld('aanmeldlink', 'Website voor de tickets')}` : a.soort === 'excursie' ? `<div class="rij">${veld('sluit', 'Aanmelden tot en met', 'date')}${veld('kosten', 'Kosten')}</div>${veld('aanmeldlink', 'Aanmelden via (link of plek)')}` : ''}
     </div></details>
-    <label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
-    <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>
+    ${a.uitLeergang ? '' : `<label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
+    <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>`}
+    ${a.uitLeergang ? `<div class="knoppen"><button class="btn hoofd" data-recdatumklopt="${id}">De datum ${esc(fmtD(a.d))} klopt</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button></div>` : ''}
     </div></div></div>`;
 }
 let recAlles = false, recFocus = '';
@@ -818,6 +862,7 @@ function recDownload(naam, blob) { const u = URL.createObjectURL(blob); const l 
 async function recBestand(a, soort) { return soort === 'bord' ? RECLAME.pptx(a, recTekst(a)) : RECLAME.png(await RECLAME.beeld(a, 'weekinfo')); }
 async function recMail(soort, aid, mid) {
   const a = reclameActs().find(x => x.id === aid); if (!a) return;
+  if (a.uitLeergang) { toast('De datum staat nog niet vast. Vul eerst de datum in bij Reclame.'); return; }
   const M = reclameMomenten(a); const m = M.find(x => x.id === mid) || M.find(x => x.soort === soort && !x.af && !x.verlopen) || M.find(x => x.soort === soort);
   const mis = recWaarschuwingen(a); // ontbrekende gegevens: eerst vragen, de mail gaat dan pas klaar als Frans het zo wil
   if (mis.length && !confirm(`Bij "${a.titel}" klopt nog niet alles:\n\n- ${mis.join('\n- ')}\n\nToch de mail klaarzetten? Kies Annuleren om eerst de gegevens aan te vullen.`)) { toast('Mail niet klaargezet. Vul de gegevens aan en probeer opnieuw'); return; }
@@ -864,7 +909,7 @@ function dagItems(s, p) {
     if (tm && !i.tot && tm.van < AG.tot) items.push({ key: 'team:' + i.id, van: tm.van, tot: Math.min(tm.tot, AG.tot), soort: 'sectie', titel: i.titel, sub: S.sectieNotitie[i.id] || '', i });
     else heleDag.push({ key: 'team:' + i.id, soort: 'sectie', titel: (tm ? hm(tm.van) + ' ' : '') + i.titel, i });
   }
-  for (const m of reclameOpen(null, G)) if (m.d === s) heleDag.push({ key: 'rec:' + m.id, soort: 'deadline', titel: (m.soort === 'wi' ? 'tot ' + m.tot + ' ' : '') + m.titel, rec: m });
+  for (const m of reclameOpen(null, G)) if (m.d === s) heleDag.push({ key: 'rec:' + m.id, soort: 'deadline', titel: (m.soort === 'wi' ? (s === t && nuMin() >= minuten(m.tot) ? 'te laat ' : 'tot ' + m.tot + ' ') : '') + m.titel, rec: m });
   for (const k of S.taken || []) {
     if (k.plan && k.plan.dag === s) items.push({ key: 'taak:' + k.id, van: minuten(k.plan.van), tot: minuten(k.plan.tot), soort: k.afspraak ? 'afspraak' : k.af ? 'taakaf' : planVoorbij(k) ? 'taakgemist' : 'taak', titel: k.titel, sub: k.afspraak ? 'afspraak' : planVoorbij(k) ? 'gemist' : BRON[k.bron] || '', k });
     else if (!k.plan && !k.af && k.d === s) heleDag.push({ key: 'taak:' + k.id, soort: 'deadline', titel: k.titel, k });
@@ -891,6 +936,7 @@ function zetBanen(items) { // overlappende items naast elkaar (vrije blokken ove
 }
 /* de zin boven Dag: kort, wat de dag vraagt (regels: handboek/nu-zinnen.md) */
 function dagZin(s, p, A) {
+  if (S.afwezig[s] && !p.reden) { const tk = toetsweekKlassen(s); return (tk.length ? `Toetsweek ${tk.join(', ')}. ` : '') + afwezigZin(s); } // bevinding 62: geen "Vrij"
   if (!A.werkdag) return buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}.`;
   const L = A.items.filter(it => it.soort === 'les' || it.soort === 'klaar'); const V = A.items.filter(it => it.soort === 'uitval').length;
   const af = A.items.filter(it => ['toets', 'rooster', 'sectie', 'afspraak'].includes(it.soort) && it.sub !== 'in je pauze'); const kr = A.items.find(it => it.soort === 'koor');
@@ -1225,7 +1271,7 @@ document.addEventListener('pointerup', e => {
 document.addEventListener('pointercancel', () => { const d = AGD; AGD = null; if (d && d.moved) render(); });
 function agPaneel(s, p, A, sel) {
   const it = A.items.find(x => x.key === sel) || A.heleDag.find(x => x.key === sel);
-  if (!it) return `<div class="kaart"><p class="lead">${A.werkdag ? 'Niets in de agenda op deze dag.' : 'Vrij.'}</p></div>`;
+  if (!it) return buitenJaar(p) ? '' : `<div class="kaart"><p class="lead">${A.werkdag ? 'Niets in de agenda op deze dag.' : 'Vrij.'}</p></div>`;
   const t = vandaag(); const tijd = it.van != null ? `${hm(it.van)}–${hm(it.tot)}` : '';
   if (it.x) return uurKaart(s, it.x, s === t && nuMin() >= it.van - 5 && nuMin() < it.tot);
   if (it.soort === 'start') { const eerste = A.items.find(x => x.soort === 'les'); return `<div class="kaart"><p class="eyebrow">${tijd}</p><h2>Koffie en opstarten</h2><p class="lead">${eerste ? `Eerste les om ${hm(eerste.van)}: ${esc(eerste.titel)}.` : 'Geen lessen vandaag.'}${startDaarna(A) ? ' ' + esc(startDaarna(A)) : ''}</p></div>`; }
@@ -1314,14 +1360,22 @@ function blijftLiggen() {
     else if (!k.plan && k.d && k.d < t) out.push({ key: 'eigen:' + k.id, titel: k.titel, bron: k.bron, dag: k.d, vink: `data-taakaf="${esc(k.id)}"` });
   });
   sectieItems().forEach(i => { if (i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && (i.tot || i.d) < t && !op('sec:' + i.id)) out.push({ key: 'sec:' + i.id, titel: i.titel, bron: 'sectie', dag: i.tot || i.d, vink: `data-sdone="${esc(i.id)}"` }); });
-  koorTakenOpen(t).forEach(k => { if (k.d && k.d < t && !op('koor:' + k.id)) out.push({ key: 'koor:' + k.id, titel: k.titel, bron: 'koor', dag: k.d, vink: `data-koorvink="${esc(k.id)}"` }); });
+  koorTakenOpen(t).forEach(k => { if (k.d && k.d < t && !op('koor:' + k.id)) out.push({ key: 'koor:' + k.id, titel: k.titel, bron: k.bron === 'examen' ? 'sectie' : 'koor', dag: k.d, vink: `data-koorvink="${esc(k.id)}"` }); });
   reclameOpen(addD(t, -1), G).forEach(m => { if (!op('rec:' + m.id)) out.push({ key: 'rec:' + m.id, titel: m.titel, bron: 'reclame', dag: m.d, vink: `data-recvink="${esc(m.id)}"` }); });
   return out.sort((a, b) => a.dag < b.dag ? -1 : a.dag > b.dag ? 1 : 0);
+}
+function naVakantie(t) { // t is de eerste lesdag na een vakantie: geeft die vakantie (bevinding 71)
+  for (const v of B.kalender.vakanties) { let d = addD(v.tot, 1); for (let i = 0; i < 40 && vrijReden(d); i++) d = addD(d, 1); if (d === t) return v; }
+  return null;
 }
 function liggenBlok() {
   const L = blijftLiggen(); if (!L.length) return '';
   const t = vandaag(); const morgen = volgendeLesdag(t, 1);
   const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
+  const V = naVakantie(t);
+  if (V) { const nw = L.filter(x => x.dag >= V.van).length, oud = L.length - nw; // de eerste dag na een vakantie: één regel en één knop, de stapel ingeklapt
+    return `<div class="kaart liggen"><h2>Na de ${esc(V.naam.toLowerCase())}</h2><p class="lead">${nw ? `Tijdens de ${esc(V.naam.toLowerCase())} verlopen: ${nw} ${nw === 1 ? 'taak' : 'taken'}.` : `Tijdens de ${esc(V.naam.toLowerCase())} is niets verlopen.`}${oud ? ` ${oud} ${oud === 1 ? 'lag' : 'lagen'} er al langer.` : ''}</p>
+      ${nw ? `<div class="knoppen"><button class="btn hoofd" data-liggenvakantie="${morgen}">Schuif de ${nw === 1 ? 'taak' : nw + ' taken'} door naar morgen</button></div>` : ''}<details class="meer"><summary>Bekijk alles wat blijft liggen · ${L.length}</summary>${L.map(rij).join('')}</details></div>`; }
   const rest = L.slice(3);
   return `<div class="kaart liggen"><h2>Blijft liggen · ${L.length}</h2>${L.slice(0, 3).map(rij).join('')}${rest.length ? `<details class="meer"><summary>Nog ${rest.length} ${rest.length === 1 ? 'taak' : 'taken'}</summary>${rest.map(rij).join('')}</details>` : ''}</div>`;
 }
@@ -1332,7 +1386,7 @@ function taakBron(key) {
     const via = k.koorId ? taakBron('koor:' + k.koorId) : k.sectieId ? taakBron('sec:' + k.sectieId) : k.reclameId ? taakBron('rec:' + k.reclameId) : null;
     return { titel: k.titel, bron: k.bron, dag: k.plan ? k.plan.dag : k.d, gemist: planVoorbij(k), af: k.af, vink: `data-taakaf="${esc(k.id)}"`, uitleg: (via ? via.uitleg : []).concat(k.notitie || []), knoppen: (k.reclameId && via ? via.knoppen : '') + openKnop(waarK(k)) + `<button class="btn" data-taakbewerk="${esc(k.id)}">Aanpassen</button>`, noot: via ? via.noot : key, eigen: !via }; }
   if (soort === 'sec') { const s = sectieItems().find(x => x.id === id); if (!s) return null; return { titel: s.titel, bron: 'sectie', dag: s.tot || s.d, af: S.sectieAf[id], vink: `data-sdone="${esc(id)}"`, uitleg: [s.info].filter(Boolean), knoppen: openKnop(waarV(key)), noot: key }; }
-  if (soort === 'koor') { const t = ((B.koor || {}).taken || []).find(x => x.id === id); if (!t) return null; return { titel: t.titel, bron: 'koor', dag: t.d, af: S.koorAf[id], vink: `data-koorvink="${esc(id)}"`, uitleg: [t.sub].filter(Boolean), knoppen: openKnop(waarV(key)), noot: key }; }
+  if (soort === 'koor') { const t = koorTaken().find(x => x.id === id); if (!t) return null; return { titel: t.titel, bron: t.bron === 'examen' ? 'sectie' : 'koor', dag: t.d, af: S.koorAf[id], vink: `data-koorvink="${esc(id)}"`, uitleg: [t.sub].filter(Boolean), knoppen: openKnop(waarV(key)), noot: key }; }
   if (soort === 'rec') { const m = reclameMoment(id); if (!m) return null; return { titel: m.titel, bron: 'reclame', dag: m.d, af: m.af, vink: `data-recvink="${esc(id)}"`, uitleg: [m.soort === 'wi' ? 'Inleveren tot ' + m.tot + ' bij ' + RC.mail : 'Staande dia voor de borden, mail naar ' + RC.mail].concat(recWaarschuwingen(m.a)), knoppen: `<button class="btn" data-recmail="${m.soort}|${esc(m.a.id)}|${esc(id)}">Mail</button><button class="btn" data-recnaar="${esc(m.a.id)}">Naar reclame</button>`, noot: key }; }
   return null;
 }
@@ -1378,7 +1432,8 @@ function takenBlok(s, p) {
   const rij = (k, chk, extra) => `<div class="taak ${k.af ? 'af' : ''} ${(k.d && k.d < t && !k.af) || (k.plan && planVoorbij(k)) ? 'laat' : ''}">${k.open ? taakTitel(k.open, k.titel, chk) : `<label class="chk">${chk}<span>${esc(k.titel)}</span></label>`}<span class="tb">${k.bron ? `<span class="chip">${esc(BRON[k.bron] || k.bron)}</span>` : ''}${k.plan ? `<button class="chip ${planVoorbij(k) ? 'rood' : 'ok'}" data-ag="${esc(k.plan.dag)}|taak:${esc(k.id)}">${planVoorbij(k) ? 'gemist ' : ''}${esc(fmtD(k.plan.dag))} ${esc(k.plan.van)}</button>` : ''}${k.d ? `<span class="chip ${k.d < t && !k.af ? 'rood' : ''}">deadline ${esc(fmtD(k.d))}</span>` : ''}${extra || ''}</span>${k.sub ? `<div class="sub">${esc(k.sub)}</div>` : ''}</div>`;
   let h = `<div class="kaart"><h2 style="margin-bottom:.3rem">Taken</h2><p class="lead" style="margin-bottom:.4rem">Klik in de agenda op een vrij blok om een taak op een vast moment te zetten.</p>`;
   if (auto.length) h += `<h3>Lessen van ${s === t ? 'vandaag' : 'deze dag'}</h3>` + auto.map(k => rij(k, `<input type="checkbox" data-dagtaak="${esc(k.key)}" data-dag="${s}" ${k.af ? 'checked' : ''}>`)).join('');
-  const kr = koorOp(s); const krRep = kr && (kr.type === 'rep' || kr.type === 'extra') && !G.pres[s + '|koor'] ? kr : null; const kt = koorTakenOpen(s);
+  const kr = koorOp(s); const krRep = kr && (kr.type === 'rep' || kr.type === 'extra') && !G.pres[s + '|koor'] ? kr : null; const kta = koorTakenOpen(s); const kt = kta.filter(t => t.bron !== 'examen'); const ke = kta.filter(t => t.bron === 'examen');
+  if (ke.length) h += '<h3>Examenconcert</h3>' + ke.map(t => rij({ open: 'koor:' + t.id, titel: t.titel, d: t.d, sub: t.sub, bron: 'sectie', af: false }, `<input type="checkbox" data-koorvink="${esc(t.id)}">`)).join('');
   if (krRep || kt.length) h += '<h3>Koor</h3>' + (krRep ? rij({ titel: koorNaam(krRep) + ' voorbereiden: ' + krRep.titel, sub: (krRep.van ? krRep.van + ' · ' : '') + ((krRep.plan || []).map(x => x.stuk).join(', ') || 'repetitieplan in de koorapp'), af: !!dt.koor, bron: 'koor' }, `<input type="checkbox" data-dagtaak="koor" data-dag="${s}" ${dt.koor ? 'checked' : ''}>`) : '') + kt.map(t => rij({ open: 'koor:' + t.id, titel: t.titel, d: t.d, sub: t.sub, bron: 'koor', af: false }, `<input type="checkbox" data-koorvink="${esc(t.id)}">`)).join('');
   const rec = reclameOpen(addD(s, 7), G); if (rec.length) h += '<h3>Reclame</h3>' + rec.map(m => rij({ open: 'rec:' + m.id, titel: m.titel, d: m.d, sub: m.soort === 'wi' ? 'Inleveren tot ' + m.tot + ' bij ' + RC.mail : 'Staande dia voor de borden, mail naar ' + RC.mail, bron: 'reclame', af: false }, `<input type="checkbox" data-recvink="${esc(m.id)}">`, `<button class="btn klein" data-recmail="${m.soort}|${esc(m.a.id)}|${esc(m.id)}">Mail</button>`)).join('');
   if (sect.length) h += `<h3>Sectie, komende twee weken</h3>` + sect.map(i => rij({ open: 'sec:' + i.id, titel: i.titel, d: i.d, bron: 'sectie', af: false }, `<input type="checkbox" data-sdone="${esc(i.id)}">`)).join('');
@@ -1493,9 +1548,11 @@ function voerKrapUit(R, k) {
   krapOpen = ''; krapKeuze = ''; bewaar();
   toast(S.afwijkingen.find(x => x.id === id).wat, () => maakOngedaan(id));
 }
+const berichtTot = a => a.berichtTot || (a.lesIds && a.lesIds.length ? (((S.ankers || {})[a.g] || {})[a.lesIds[0]] || {}).s : '') || ''; // bevinding 69: het bericht aan de klas is nuttig tot de nieuwe datum; op de dag zelf is het oud nieuws
+const berichtVervallen = a => { const d = berichtTot(a); return !!d && vandaag() >= d; };
 function uitvalBlok(s) {
   let h = '';
-  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
+  (S.afwijkingen || []).filter(a => a.bericht && !a.berichtKlaar && !berichtVervallen(a)).forEach(a => { h += `<div class="kaart bericht"><p class="eyebrow">Bericht aan de klas · ${esc(a.g)} · plak in Magister</p><textarea rows="3" data-bericht="${esc(a.id)}">${esc(a.bericht)}</textarea><div class="knoppen"><button class="btn hoofd klein" data-berichtkopie="${esc(a.id)}">Kopieer</button><button class="btn klein" data-berichtklaar="${esc(a.id)}">Klaar</button></div></div>`; });
   const rijen = [];
   for (const g of planGroepen()) {
     if (!Object.keys(S.voortgang[g] || {}).length) continue;
@@ -1503,6 +1560,10 @@ function uitvalBlok(s) {
       if (ankerOpen === g + '|' + a.id) { rijen.push(ankerForm(g, a)); continue; }
       const tekst = !a.vast ? `past niet meer in zijn periode.` : !y ? 'heeft geen lesuur.' : y.s >= vandaag() ? `stond op ${esc(fmtD(y.s))}, maar dat uur vervalt.` : `stond op ${esc(fmtD(y.s))} en is nog niet afgevinkt.`;
       rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(a.t.id)}</b> ${tekst}</span><span class="knoppen">${y && y.s < vandaag() ? `<button class="btn klein" data-markeer="${esc(g)}|${esc(a.id)}">Is gegeven</button>` : ''}<button class="btn klein" data-ankeropen="${esc(g + '|' + a.id)}">Verplaatsen</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+    if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.inhalen)) { const key = `inhalen:${x.k}`; if (uitgesteld(key)) continue; // bevinding 60: wie moet inhalen blijft zichtbaar tot er een cijfer is
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.inhalen === 1 ? '1 leerling moet' : x.inhalen + ' leerlingen moeten'} nog inhalen.</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
+    if (s === vandaag()) for (const x of toetsenOpen().filter(x => x.g === g && x.mag)) { const key = `magister:${x.k}`; if (uitgesteld(key)) continue;
+      rijen.push(`<div class="melding uitvalrij"><span><b>${esc(g)}: ${esc(x.m.toets)}</b> ${x.T.inMagister ? 'er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'de cijfers staan nog niet als ingevoerd in Magister.'}</span><span class="knoppen"><button class="btn klein hoofd" data-beoordeel="${esc(x.m.id + '|' + g)}">Open</button><button class="btn klein" data-bminmag="${esc(x.m.id + '|' + g)}">Staat erin</button><button class="btn klein" data-liggenlater="${esc(key)}|${addD(vandaag(), 1)}">Later</button></span></div>`); }
     const R = krapVoor(g); if (!R) continue;
     if (krapOpen === g + '|' + R.id) { rijen.push(krapKaart(R)); continue; }
     const x = R.inhaal[R.inhaal.length - 1] || R.nog[R.nog.length - 1];
@@ -1579,7 +1640,7 @@ function viewNu() {
 }
 function nuMeldingen(s) { // wat aandacht vraagt, ook als je niet op Dag kijkt
   const n = reclameOpen(s).length;
-  const h = uitvalBlok(s) + liggenBlok() + (n ? `<a class="melding nu-rec" href="#reclame"><b>Reclame:</b> ${n} ${n === 1 ? 'actie staat' : 'acties staan'} open voor vandaag of eerder.</a>` : '');
+  const na = afwezigNa(s); const h = (na ? `<div class="melding info">${esc(na)}</div>` : '') + uitvalBlok(s) + liggenBlok() + (n ? `<a class="melding nu-rec" href="#reclame"><b>Reclame:</b> ${n} ${n === 1 ? 'actie staat' : 'acties staan'} open voor vandaag of eerder.</a>` : '');
   return h ? `<section class="ens-meld" aria-label="Meldingen">${h}</section>` : '';
 }
 /* ---------- de zin: wat nu telt, in één zin (regels: handboek/nu-zinnen.md) ----------
@@ -1593,12 +1654,20 @@ const kort = t => { const k = String(t).replace(/^([^:]*:[^:,]*)[:,].*$/, '$1');
 const afspraakSoort = it => { const w = it.soort !== 'toets' ? '' : it.z && it.z.dienst ? 'Surveillance' : 'Toets'; return w && !new RegExp(w, 'i').test(it.titel || '') ? w + ': ' : ''; };
 const magWat = o => (o.soort === 'pres' ? 'de absenten van ' : o.soort === 'hw' ? 'het huiswerk van ' : 'het logboek van ') + o.x.u.groep + ' in Magister';
 function gisterenGoed(s) { const v = volgendeLesdag(s, -1); const g = S.goed[v]; if (!g) return ''; const k = String(g).replace(/\s+/g, ' ').trim(); return ` Wat ${v === addD(s, -1) ? 'gisteren' : 'de vorige werkdag'} goed ging: ${k.length > 110 ? k.slice(0, k.lastIndexOf(' ', 108)) + '…' : k.replace(/[.!?]+$/, '') + '.'}`; } // jouw zin van het afsluiten, de volgende ochtend (bevinding 50)
+function nuWeekinfo(s, nu, mm) { // op de inleverdag vanaf 12:00 bovenaan Nu, ook na de bel; na de sluitingstijd "te laat" (bevinding 64). Niet tijdens een les, voor een les of in de pauze.
+  if (nu < 12 * 60 || !RC || !B || !S || !['naLes', 'werkblok', 'tussen', 'afsluiten'].includes(mm)) return null;
+  const m = reclameOpen(s).find(x => x.soort === 'wi' && x.d === s); if (!m) return null;
+  const tot = minuten(m.tot); const laat = nu >= tot; const knop = `<button class="btn hoofd" data-recmail="wi|${esc(m.a.id)}|${esc(m.id)}">Mail weekinfo</button>`;
+  return laat ? { lab: 'Reclame · te laat', knop, zin: `De weekinfo over ${m.a.titel} was om ${m.tot} aan de beurt. Nog mailen?` } : { lab: `Reclame · tot ${m.tot}`, knop, zin: `De weekinfo over ${m.a.titel} moet vandaag om ${m.tot} weg zijn.` };
+}
 function nuZin(s, p, A, m, nu, kijk, kIt) {
   if (kijk === 'afsluiten') return afsluitZin(s, p, A, nu);
   if (kIt) return kijkZin(s, kIt, nu);
+  const rw = nuWeekinfo(s, nu, m.m); if (rw) return rw;
   const it = m.it; const x = m.x;
   switch (m.m) {
-    case 'vrijedag': return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
+    case 'vrijedag': if (S.afwezig[s] && !p.reden) return { lab: '', zin: afwezigZin(s) + (toetsweekKlassen(s).length ? ` Toetsweek ${toetsweekKlassen(s).join(', ')} loopt door.` : ''), knop: `<button class="btn hoofd" data-afwezigterug="${s}">Toch aanwezig</button>` };
+      return { lab: '', zin: buitenJaar(p) ? buitenJaar(p).zin : `${cap(p.reden || 'Vrij')}. Vandaag heeft Lesdag niets voor je.` };
     case 'stil': return { lab: '', zin: S.afgesloten[s] ? (weekAfsluitDag(s) ? 'Je week is afgesloten. Maandag staat klaar.' : 'Je dag is afgesloten. Morgen staat klaar.') : 'Je dag zit erop. Afsluiten kost een paar minuten, daarna is het stil.' };
     case 'start': { const L = lesUren(p); const week = weekMaandagRegel(s); const kr = A.items.find(y => y.soort === 'koor'); const C = collegasJarig(s); const T = A.items.filter(y => y.soort === 'toets' || y.soort === 'rooster');
       return { lab: nu < AG.van ? 'Voor je werkdag' : 'Opstarten · tot ' + hm(AG.werkVan), week,
@@ -1606,13 +1675,14 @@ function nuZin(s, p, A, m, nu, kijk, kIt) {
     case 'voorLes': { const l = les(x.item); const k = klaarLijst(s, l).slice(0, 2).map(b => klein1(b.replace(/\s+klaar(zetten|leggen)$/i, ''))); const min = minuten(x.u.start) - nu;
       return { lab: `${min > 0 ? 'Over ' + minTxt(min) : 'Zo meteen'} · ${x.u.groep} · lokaal ${x.u.lokaal || '009'}`, zin: `Zo meteen ${x.u.groep}: ${titel(l.titel)}.${k.length ? ' Zet ' + lijstTxt(k) + ' klaar.' : ''}` }; }
     case 'les': { const y = it.x; const lab = `Les · ${y.u.groep} · tot ${y.u.eind}`;
+      const R = s === vandaag() ? teAfronden(s, p, nu).filter(q => q.u.id !== y.u.id) : []; const daarna = R.length ? ` Daarna ${R.length === 1 ? R[0].u.groep : 'de vorige lessen'} afronden.` : ''; // lessen zonder pauze ertussen (bevinding 63)
       if (!y.item && !presVoorop(s, y, nu)) return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}.${y.fout ? ' Deze klas heeft nog geen leergang.' : ''}` };
       const l = y.item ? les(y.item) : {};
-      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.` }; }
+      if (presVoorop(s, y, nu)) { const bezig = nu - minuten(y.u.start); return { lab, zin: `${y.u.groep} is ${bezig < 1 ? 'net begonnen' : minTxt(bezig) + ' bezig'}. Zet de absenten in Magister zodra de klas aan het werk is.${daarna}` }; }
       const v = magTelt(s, y) ? magVakken(s, y) : {};
-      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}` }; }
+      return { lab, zin: `${y.u.groep} loopt nog ${minTxt(minuten(y.u.eind) - nu)}: ${titel(l.titel)}.${v.pres === false ? ' De absenten staan nog open.' : v.hw === false ? ' Het huiswerk staat klaar voor bij de bel.' : ''}${daarna}` }; }
     case 'naLes': { const v = magTelt(s, x) ? magVakken(s, x) : {};
-      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, deels of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
+      return { lab: `De bel ging · ${x.u.groep}`, zin: `Hoe ging ${x.u.groep}: gegeven, half af of niet aan toegekomen?${v.pres === false ? ' De absenten staan nog open.' : ''}` }; }
     case 'pauze': return { lab: '', zin: 'Pauze.', sub: `Tot ${hm(it.tot)}.` };
     case 'rust': return { lab: 'Rustblok', zin: `Tot ${hm(it.tot)} is van jou.${A.pz && A.pz.weg.length ? ' Je pauze viel weg door ' + lijstTxt([...new Set(A.pz.weg.map(q => q.door))]) + '.' : ''}` };
     case 'koor': return { lab: 'Schoolkoor · tot ' + hm(it.tot), zin: `${titel(it.titel)}.` };
@@ -1676,8 +1746,8 @@ function nuStap(d) { // door je dag bladeren: pijltjes op de laptop, vegen op de
 function nuKaart(s, p, A, m, nu) {
   if (m.m === 'vrijedag') return vrijeDagKaart(s, p);
   if (m.m === 'stil') return stilKaart(s);
-  if (m.m === 'start') return startKaart(s, p, A, nu);
-  if (m.m === 'les') return presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu);
+  if (m.m === 'start') return startKaart(s, p, A, nu, true);
+  if (m.m === 'les') return (presVoorop(s, m.it.x, nu) ? presKaart(s, m.it.x, nu) : m.it.x.item ? lesKaart(s, m.it.x, nu) : lesZonderKaart(s, m.it.x, nu)) + vorigeAfronden(s, p, m.it.x, nu);
   if (m.m === 'koor') return (pauzeTekst(A.pz) ? `<div class="melding" style="margin-bottom:.8rem">${esc(pauzeTekst(A.pz))}</div>` : '') + koorKaart(s, m.it.koor);
   if (m.m === 'pauze' || m.m === 'rust') return rustKaart(s, m.it, A, true);
   if (m.m === 'naLes') return naLesKaart(s, p, m.x, nu);
@@ -1699,16 +1769,26 @@ function kijkKaart(s, p, A, key, nu) {
   return agPaneel(s, p, A, key);
 }
 function klaarLijst(s, l) { const b = benodigd(l).slice(); if (b.includes('Drums / percussie')) b.push('Oordoppen voor jezelf'); (S.klaarExtra[s] || []).forEach(x => { if (!b.includes(x)) b.push(x); }); return b; }
-function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">deels</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
-function startKaart(s, p, A, nu) {
+function vorigeAfronden(s, p, x, nu) { // lessen zonder pauze ertussen: de vorige les is voorbij en nog niet afgerond (bevinding 63)
+  const rest = s === vandaag() ? teAfronden(s, p, nu).filter(y => y.u.id !== x.u.id) : []; if (!rest.length) return '';
+  return `<div class="kaart" style="margin-top:1rem"><h3>${rest.length === 1 ? 'De vorige les afronden' : 'De vorige lessen afronden'}</h3>${rest.map(y => afrondRij(s, y)).join('')}${rest.length === 1 ? `<details class="meer"><summary>Notitie voor de volgende les van ${esc(rest[0].u.groep)}</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(rest[0], s))}</textarea></details>` : ''}</div>`;
+}
+function afrondRij(s, x) { return `<div class="nu-rij"><span><b>Afronden:</b> ${esc(x.u.groep)} · ${esc(les(x.item).titel || '')}</span><span class="tb"><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|gegeven">gegeven</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|half">half af</button><button class="btn klein" data-rondaf="${s}|${esc(x.u.id)}|niet">niet aan toegekomen</button></span></div>`; }
+function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zegt al hoeveel lessen en de eerste (bevinding 72)
   const L = lesUren(p); const kr = A.items.find(it => it.soort === 'koor'); const pz = A.pz;
   const pzT = pz && !pz.onbekend && pz.vrij.length ? ` Pauze: ${pz.vrij.map(x => hm(x.van) + '–' + hm(x.tot)).join(' en ')}.` : '';
-  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>Je dag</h2>
-    <p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>
-    ${L[0] ? vorigeRegel(L[0]) : ''}
+  const e = zinNoemt && L[0] && L[0].item && !L[0].klaar ? L[0] : null; // de eerste les staat er vanaf het opstarten: onderwerp, klaarzetten, materiaal (bevinding 57)
+  return `<div class="kaart"><p class="eyebrow">${nu < AG.van ? 'Je werkdag begint om 8:00' : 'Koffie en opstarten · tot ' + hm(AG.werkVan)}</p><h2>${e ? `Eerste les: ${esc(e.u.groep)} · ${esc(les(e.item).titel || '')}` : 'Je dag'}</h2>
+    ${zinNoemt ? (pzT ? `<p class="lead">${esc(pzT.trim())}</p>` : '') : `<p class="lead">${L.length ? `${L.length} ${L.length === 1 ? 'les' : 'lessen'}, de eerste om ${esc(L[0].u.start)} (${esc(L[0].u.groep)})` : 'Geen lessen vandaag'}${kr ? `. ${esc(kr.titel)} om ${hm(kr.van)}` : ''}.${pzT}</p>`}
+    ${L[0] ? vorigeRegel(L[0]) : ''}${e ? eersteLesBlok(s, e) : ''}
     ${pauzeTekst(pz) ? `<div class="melding" style="margin-top:.6rem">${esc(pauzeTekst(pz))}</div>` : ''}
     ${collegasJarig(s).length ? `<div class="jarig-rij">${collegasJarig(s).map(felicRij).join('')}</div>` : ''}${weekJarigRij(s)}
-    <p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p></div>`;
+    ${e ? (startDaarna(A) ? `<p class="lead" style="margin-top:.6rem">${esc(startDaarna(A))}</p>` : '') : `<p class="lead" style="margin-top:.6rem">${startDaarna(A) ? esc(startDaarna(A)) + ' Tot die tijd heeft Lesdag niets voor je.' : L.length ? 'Tot de eerste les heeft Lesdag niets voor je.' : ''}</p>`}</div>`;
+}
+function eersteLesBlok(s, x) { // doel, klaarzetten en materiaal van de eerste les, zoals de kaart vlak voor de les
+  const l = les(x.item); const ben = klaarLijst(s, l);
+  return `<p class="sub" style="margin-top:.3rem">${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}
+    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}`;
 }
 function voorLesKaart(s, p, x, nu) {
   const l = les(x.item); const ben = klaarLijst(s, l);
@@ -1738,7 +1818,7 @@ function lesZonderKaart(s, x, nu) { // les zonder lesinhoud (klas zonder leergan
 function naLesKaart(s, p, x, nu) {
   const l = les(x.item); const rest = teAfronden(s, p, nu).filter(y => y !== x);
   return `<div class="kaart"><p class="eyebrow">De bel ging · ${esc(x.u.groep)} · ${esc(x.u.start)}–${esc(x.u.eind)}</p><h2>Hoe ging het?</h2><p class="lead">${esc(l.titel || '')}</p>${magBlok(s, x)}
-    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Deels, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
+    <!--dok--><button class="btn hoofd" data-rondaf="${s}|${esc(x.u.id)}|gegeven">Gegeven</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|half">Half af, volgende keer verder</button><button class="btn" data-rondaf="${s}|${esc(x.u.id)}|niet">Niet aan toegekomen</button><button class="btn" data-aflater="${s}|${esc(x.u.id)}">Straks</button><!--/dok-->
     <details class="meer"><summary>Notitie voor de volgende les</summary><textarea id="nNot" placeholder="Bijvoorbeeld: begin met de groove uit maat 9">${esc(notitieVak(x, s))}</textarea></details>
     <p class="sub" style="margin-top:.6rem">De notitie gaat mee naar de volgende les van ${esc(x.u.groep)}. Straks komt terug in je volgende werkblok, niet in je pauze.</p>
     ${rest.length ? `<h3>Ook nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
@@ -1782,7 +1862,7 @@ function waarV(v) { // v zoals in kandidaten: sec:<id> | koor:<id> | koorrep | p
   if (v.startsWith('sec:')) { const i = sectieItems().find(x => x.id === v.slice(4)); if (!i) return null;
     if (i.url) return { label: i.waar || 'link', url: i.url, info: i.info };
     const r = WAAR.find(([re]) => re.test(i.titel)); return r ? { label: r[1], url: r[2](), info: i.info } : { label: 'sectiemap', url: spMap('00 Sectie'), info: i.info }; }
-  if (v === 'koorrep' || v.startsWith('koor:')) { const kt = v === 'koorrep' ? null : ((B.koor || {}).taken || []).find(x => x.id === v.slice(5)); return { label: 'koorapp', url: (B.koor || {}).url || '', info: kt ? kt.sub : '' }; }
+  if (v === 'koorrep' || v.startsWith('koor:')) { const kt = v === 'koorrep' ? null : koorTaken().find(x => x.id === v.slice(5)); if (kt && kt.bron === 'examen') return { label: 'Beoordelen', url: '', info: kt.sub }; return { label: 'koorapp', url: (B.koor || {}).url || '', info: kt ? kt.sub : '' }; }
   if (v.startsWith('pres:')) { const [lid, ld] = v.slice(5).split('@'); const d = ld || vandaag(); const x = (planning(d, d)[d].uren || []).find(y => y.item && y.item.id === lid);
     const m = x && (les(x.item).materiaal || []).find(y => /presentatie|\.pptx/i.test((y.t || '') + ' ' + (y.u || '')) && /^https?:/i.test(y.u || '')); return m ? { label: 'presentatie', url: m.u } : null; }
   return null;
@@ -1798,7 +1878,7 @@ function kandidaten(s) {
       if ((l.materiaal || []).some(m => /presentatie|\.pptx/i.test((m.t || '') + ' ' + (m.u || ''))) && !presAf(key) && !G.pres[key] && !G.pres[d + '|' + key] && !gezien.has(key) && (i || minuten(x.u.start) > nuMin()))
         { gezien.add(key); K('pres:' + x.item.id + '@' + d, 'pres', `Presentatie doorlopen: ${x.u.groep}`, { d, voor: minuten(x.u.start), sub: `${i ? fmtD(d) + ' ' : ''}${x.u.start} · ${l.titel || ''}` }); } }); });
   const kr = koorOp(s); if (kr && (kr.type === 'rep' || kr.type === 'extra') && !dt(s).koor && !G.pres[s + '|koor']) K('koorrep', 'koorrep', 'Koorrepetitie voorbereiden', { d: s, sub: kr.titel });
-  koorTakenOpen(s).forEach(t => K('koor:' + t.id, 'koor', 'Koor: ' + t.titel, { d: t.d }));
+  koorTakenOpen(s).forEach(t => K('koor:' + t.id, 'koor', (t.bron === 'examen' ? '' : 'Koor: ') + t.titel, { d: t.d }));
   sectieItems().filter(i => i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && i.d <= addD(s, 14)).forEach(i => K('sec:' + i.id, 'sectie', 'Sectie: ' + i.titel, { d: i.d }));
   (S.taken || []).filter(k => !k.af && !k.plan).forEach(k => K('eigen:' + k.id, soortVan(k), k.titel, { d: k.d }, k.min));
   return out.sort((a, b) => (a.d || '9') < (b.d || '9') ? -1 : (a.d || '9') > (b.d || '9') ? 1 : 0);
@@ -1881,6 +1961,8 @@ function stilKaart(s) {
 }
 const buitenJaar = p => p.reden === 'na de laatste lesweek' ? { kop: 'Het schooljaar zit erop', zin: 'Het schooljaar zit erop. Lesdag heeft tot het nieuwe schooljaar niets voor je.' } : p.reden === 'nog geen lesweek' ? { kop: 'Het schooljaar begint nog', zin: 'Het schooljaar is nog niet begonnen. Lesdag heeft tot de eerste lesweek niets voor je.' } : null; // zomer: geen werk voorgeschoteld (bevinding 51)
 function vrijeDagKaart(s, p) {
+  if (S.afwezig[s] && !p.reden) return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>Afwezig</h2><p class="lead">Lesdag heeft vandaag niets voor je. De lessen van vandaag schuiven door naar je volgende lesdagen.</p>
+    <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
   return `<div class="kaart nu-rust"><p class="eyebrow">${esc(fmtLang(s))}</p><h2>${esc(buitenJaar(p) ? buitenJaar(p).kop : cap(p.reden || 'Vrij'))}</h2><p class="lead">${buitenJaar(p) ? 'Lesdag heeft tot het ' + (p.reden === 'nog geen lesweek' ? 'begin van het schooljaar' : 'nieuwe schooljaar') + ' niets voor je.' : 'Lesdag heeft vandaag niets voor je.'}</p>
     <div class="knoppen" style="margin-top:.8rem"><button class="btn" data-dag="${volgendeLesdag(s, 1)}">Volgende werkdag bekijken</button></div></div>`;
 }
@@ -1980,9 +2062,10 @@ const presVoorop = (s, x, nu) => s === vandaag() && magTelt(s, x) && !magVan(s, 
 const magOpenKnop = (k, klein) => `<a class="btn mag${klein ? ' klein' : ''}" href="${esc(MAGURL())}" target="magister" rel="noopener" data-magopen="${esc(k)}">Open Magister</a>`;
 function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de presentie voorop
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
-  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>
+  return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>${vorigeRegel(x)}
     <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is en rond de les daar af. Tik daarna op Afgerond; Lesdag kijkt zelf niet in Magister.</p>
-    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok--></div>`;
+    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok-->
+    ${x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn hoofd" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div>`; // bevinding 58: op het toetsmoment één tik naar de scorekaart
 }
 function magBlok(s, x) { // Magister in het oog, tijdens en na de les: presentie, huiswerk bij de bel, logboek
   if (!magTelt(s, x)) return ''; const k = magKey(s, x); const v = magVakken(s, x); const R = [];
@@ -2145,7 +2228,7 @@ function viewRegie() {
   <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
   <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min${y.was && y.was !== y.min ? ` (was ${y.was})` : ''}</small>` : ''}</button></li>`).join('')}</ol></div></div>
   <div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
-    <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Deels, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
+    <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Half af, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
     <textarea id="rgNot" placeholder="Notitie voor de volgende les">${x && x.item ? esc(notitieVak(x, s)) : ''}</textarea>
     ${x && x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div></div>`;
 }
@@ -2419,6 +2502,7 @@ function viewPartituur() {
   const lw = jaarLw(); const rang = g => { const i = JAAR_VOLG.indexOf(leergangVan(g)); return i < 0 ? 99 : i; };
   const gs = [...new Set(rooGroepen().concat(Object.keys(MEE_MET).filter(m => rooGroepen().includes(MEE_MET[m]))))].sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
+  h += periodeKaart();
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
   const lucht = luchtAan(); const krapD = g => { if (!leergangVan(g) || !B.leergangen[leergangVan(g)] || !Object.keys(S.voortgang[g] || {}).length) return null; const d = ruimte(g)[0]; return d && d.tekort ? d : null; }; // een groep die nog nooit is afgevinkt krijgt eerst de melding op Dag
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
@@ -2431,7 +2515,8 @@ function viewPartituur() {
   return h;
 }
 function bmRegel(m, g, label) { const T = S.beoord.toetsen[m.id + '|' + g]; const n = T ? Object.keys(T.ll).filter(id => T.ll[id].af || BMR.eind(m, T, T, id).e != null).length : 0;
-  return `<button class="btn klein" data-beoordeel="${esc(m.id)}|${esc(g)}">${esc(label)}${n ? ` (${n} klaar)` : ''}</button>`; }
+  const mag = T && toetsRest(T, g).vast ? (magNog(T, g) ? ' · nog in Magister zetten' : ' · in Magister') : ''; // bevinding 61: de stand van de kolom zie je op het klasblad en in het menu Beoordelen
+  return `<button class="btn klein" data-beoordeel="${esc(m.id)}|${esc(g)}">${esc(label)}${n ? ` (${n} klaar)` : ''}${mag}</button>`; }
 function toetsenKaart(g) { // met de knop Beoordelen op de regel van de toets, ook om in te halen of na te kijken buiten de toetsles
   const lg = leergangVan(g); const L = jaarToetsen(g); const bms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); const gehad = new Set();
   const rij = o => { const { a, t } = o; const y = a && (a.vast ? a.slot : a.grens); const eigen = gehad.has(t.id) ? [] : bms.filter(m => m.toets.split(' · ')[0] === t.id); gehad.add(t.id);
@@ -2990,10 +3075,11 @@ function notitiesLaad() {
   if (!notLaad) notLaad = fetch('data/notities.json').then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))).then(j => { NOT = j; return j; }).catch(() => null).then(j => { notLaad = null; return j; });
   return notLaad;
 }
+const vorHtml = (P, sl, fi) => !P.bord && P.vorige && sl.k !== 'klaar' && (sl.k === 'welkom' || sl.k === 'doel' || fi === 0) ? `<b>${esc(vorigeKop(P.vorige))}</b> ${esc(P.vorige.n)}<br>` : ''; // de notitie van vorige keer bij de eerste dia's, alleen voor jou
 const notHtml = (item, l, sl, fi) => NOT && item && sl ? LESMODUS.notitieHtml(NOT[item.id], sl, fi, l) : '';
 function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwerken, de timer blijft ongemoeid
   const P = LES; if (!P || P.bord) return; const sl = P.slides[P.i]; const el = $('#notities'); if (!el || !sl) return;
-  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '';
+  const fi = P.slides.filter(x => x.k === 'fase').indexOf(sl); const nh = notHtml(P.x.item, P.l, sl, fi); const d = vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '');
   el.innerHTML = d + nh; const b = document.querySelector('#les [data-l="notities"]'); if (b) b.hidden = !(d || nh);
   el.classList.toggle('open', !!(P.notities && (d || nh)));
 }
@@ -3008,9 +3094,13 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   const th = x.item.week.thuis || {};
   const vor = vorigeVan(x);
   const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
-  let slides = LESMODUS.bouwSlides(l, { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml });
+  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml };
+  let slides = LESMODUS.bouwSlides(l, kctx);
+  { const kr = lesKrap({ s, x, slides, i: 0, bord: false }); // bevinding 73: loopt de les al, dan staan op het welkomdia de ingekorte minuten, niet de geplande
+    if (kr) { const kort = slides.map((y, j) => ({ y, j })).filter(o => o.y.k === 'fase').map(o => kr.min[o.j] != null ? kr.min[o.j] : null); slides[slides.findIndex(y => y.k === 'welkom')] = LESMODUS.bouwSlides(l, Object.assign(kctx, { kort })).find(y => y.k === 'welkom'); } }
   if (bord) slides = slides.filter(y => y.k !== 'klaar'); // jouw kaart hoort niet op het bord
   LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null };
+  LES.vorige = vor; // bevinding 3: loopt de les al, dan staat jouw kaart er niet; de notitie van vorige keer zit dan bij de notities (alleen jij, niet op het bord)
   // verder waar je was; loopt de les al, dan niet op jouw kaart beginnen (die zou op het digibord kunnen staan)
   const pl = s === vandaag() ? plekAlle()[s + '|' + x.u.id] : null;
   let i = pl ? pl.i : 0; if (i === 0 && s === vandaag() && nuMin() >= minuten(x.u.start)) i = 1;
@@ -3031,7 +3121,7 @@ function toonSlide() {
   if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
   else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
   else { P.left = 0; P.tot = 0; }
-  const notInh = P.bord ? '' : (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
+  const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
   $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
@@ -3050,7 +3140,7 @@ function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.l
 function afrondenHtml() {
   const P = LES;
   return `<div class="afronden"><p class="eyebrow">Les afronden · ${esc(P.x.u.groep)}</p><h2>${esc(P.l.titel || '')}</h2>
-  <div class="keuzes">${[['gegeven', 'Gegeven'], ['half', 'Half af, volgende keer verder'], ['niet', 'Niet gegeven']].map(([k, n]) => `<button data-keuze="${k}" aria-pressed="${P.keuze === k}">${n}</button>`).join('')}</div>
+  <div class="keuzes">${[['gegeven', 'Gegeven'], ['half', 'Half af, volgende keer verder'], ['niet', 'Niet aan toegekomen']].map(([k, n]) => `<button data-keuze="${k}" aria-pressed="${P.keuze === k}">${n}</button>`).join('')}</div>
   <label style="font-family:var(--lees);color:#cbb8db">Notitie voor de volgende les<textarea id="lnot">${esc(notitieVak(P.x, P.s))}</textarea></label>
   <div class="keuzes"><button data-l="opslaan">Opslaan en naar de volgende les</button></div></div>`;
 }
@@ -3119,6 +3209,7 @@ document.addEventListener('click', async e => {
   if (D.recmail) { const [soort, aid, mid] = D.recmail.split('|'); b.disabled = true; await recMail(soort, aid, mid); b.disabled = false; return; }
   if (D.reckopie) { const a = reclameActs().find(x => x.id === D.reckopie); const ta = document.querySelector(`[data-rectekst="${CSS.escape(D.reckopie)}"]`); const txt = ta ? ta.value : a ? recTekst(a) : ''; try { await navigator.clipboard.writeText(txt); toast('Tekst gekopieerd'); } catch (err) { if (ta) ta.select(); toast('Kopiëren lukt niet: selecteer en kopieer zelf'); } return; }
   if (D.recbeeld || D.recbord) { const soort = D.recbord ? 'bord' : 'wi'; const a = reclameActs().find(x => x.id === (D.recbord || D.recbeeld)); if (!a) return; b.disabled = true; try { recDownload(RECLAME.bestand(a, soort), await recBestand(a, soort)); } catch (err) { console.warn(err); toast('Maken lukt niet'); } b.disabled = false; return; }
+  if (D.recdatumklopt) { const x = reclameActs().find(y => y.id === D.recdatumklopt); if (!x) return; const r = (S.reclame = S.reclame || {})[x.id] = S.reclame[x.id] || {}; r.d = x.d; recFocus = x.id; bewaar(); toast('Datum staat vast: ' + fmtD(x.d)); return; }
   if (D.recuit) { const r = (S.reclame = S.reclame || {})[D.recuit] = S.reclame[D.recuit] || {}; r.uit = !r.uit; if (!r.uit) delete r.uit; recFocus = D.recuit; bewaar(); return; }
   if (D.recstel) { const r = (S.reclame || {})[D.recstel]; if (r) delete r.tekst; recFocus = D.recstel; bewaar(); return; }
   if (D.recweg) { S.reclameExtra = (S.reclameExtra || []).filter(x => x.id !== D.recweg); if (S.reclame) delete S.reclame[D.recweg]; bewaar(); return; }
@@ -3153,10 +3244,12 @@ document.addEventListener('click', async e => {
   if (D.jaartoets) { const i = D.jaartoets.indexOf('|'); const el = $('#jaarInfo'); if (el) el.innerHTML = jaarToetsTekst(D.jaartoets.slice(0, i), D.jaartoets.slice(i + 1)); return; }
   if (D.jaarklas) { location.hash = 'jaar/' + encodeURIComponent(D.jaarklas); return; }
   if (D.berichtkopie) { const ta = document.querySelector(`[data-bericht="${D.berichtkopie}"]`); try { await navigator.clipboard.writeText(ta.value); toast('Gekopieerd'); } catch (err) { ta.select(); toast('Kopiëren lukt niet: selecteer en kopieer zelf'); } return; }
+  if (D.bminmag) { const [mid, g] = D.bminmag.split('|'); const T = S.beoord.toetsen[mid + '|' + g]; if (T) { const f = foto(); bmInMagister(T, g); bewaar(); toast('Genoteerd: de cijfers staan in Magister', f); } return; }
   if (D.berichtklaar) { const a = (S.afwijkingen || []).find(x => x.id === D.berichtklaar); if (a) a.berichtKlaar = true; bewaar(); return; }
   if (D.afwijkingterug) { maakOngedaan(D.afwijkingterug); toast('Teruggezet'); return; }
   if (D.taakopen) { openTaak(D.taakopen); return; }
   if (D.liggenplan) { sluit(); liggenInPlannen(D.liggenplan); return; }
+  if (D.liggenvakantie) { sluit(); const V = naVakantie(vandaag()); const lijst = V ? blijftLiggen().filter(x => x.dag >= V.van) : []; if (lijst.length) { S.uitgesteld = S.uitgesteld || {}; for (const k of Object.keys(S.uitgesteld)) if (S.uitgesteld[k] <= vandaag()) delete S.uitgesteld[k]; lijst.forEach(x => { S.uitgesteld[x.key] = D.liggenvakantie; }); bewaar(); toast(lijst.length + ' ' + (lijst.length === 1 ? 'taak komt' : 'taken komen') + ' terug op ' + fmtD(D.liggenvakantie)); } return; }
   if (D.liggenlater) { sluit(); const i = D.liggenlater.lastIndexOf('|'); stelUit(D.liggenlater.slice(0, i), D.liggenlater.slice(i + 1)); return; }
   if (D.palet != null) { paletOpen(); return; }
   if (D.stap) { nuStap(+D.stap); return; }
@@ -3189,7 +3282,7 @@ document.addEventListener('click', async e => {
     if (!x || !x.item) { toast('Deze les staat niet meer op de planning'); return; }
     const terug = foto(); rondAf(s, x, D.rgaf, ($('#rgNot') || {}).value); bewaar(true); rgStuur('sluit'); RG = null; toast(x.u.groep + ' afgerond', terug); location.hash = 'nu'; return; }
   if (D.rondaf) { const [s, uid, keuze] = D.rondaf.split('|'); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
-    if (x && x.item) { const terug = foto(); rondAf(s, x, keuze, ($('#nNot') || {}).value); nuKijk = null; bewaar(); toast(x.u.groep + ': ' + (keuze === 'gegeven' ? 'gegeven' : keuze === 'half' ? 'deels, volgende keer verder' : 'de les schuift door'), terug); } return; }
+    if (x && x.item) { const terug = foto(); rondAf(s, x, keuze, ($('#nNot') || {}).value); nuKijk = null; bewaar(); toast(x.u.groep + ': ' + (keuze === 'gegeven' ? 'gegeven' : keuze === 'half' ? 'half af, volgende keer verder' : 'de les schuift door'), terug); } return; }
   if (D.aflater) { const terug = foto(); const [s, uid] = D.aflater.split('|'); (S.afLater[s] = S.afLater[s] || []).push(uid); nuKijk = null; bewaar(); toast('Komt terug in je volgende werkblok', terug); return; }
   if (D.rustweg) { const terug = foto(); S.rust[D.rustweg] = 'weg'; bewaar(); toast('Het rustblok is vrijgegeven', terug); return; }
   if (D.slot) { nwDicht(); const terug = foto(); const [v, dag, van, tot] = D.slot.split('|'); const k = maakTaak(v, { dag, van, tot }); if (k) { bewaar(); toast(k.titel + ' staat op ' + fmtD(dag) + ' om ' + van, terug); } return; }
@@ -3279,7 +3372,7 @@ document.addEventListener('change', e => {
   if (t.dataset.recvink) { const id = t.dataset.recvink; S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[id] = vandaag(); else delete S.reclameAf[id]; (S.taken || []).filter(k => k.reclameId === id).forEach(k => { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; }); if (t.checked) { const m = reclameMoment(id); if (m) duurVraag('rec:' + id, 'reclame', m.titel, schat('reclame', m.titel), 0, { rol: rolStandaard('reclame') }); } else duurTerug('rec:' + id); bewaar(); return; }
   if (t.dataset.recveld) { const i = t.dataset.recveld.lastIndexOf('|'); const id = t.dataset.recveld.slice(0, i), k = t.dataset.recveld.slice(i + 1); const r = (S.reclame = S.reclame || {})[id] = S.reclame[id] || {}; r[k] = t.value.trim(); if (k === 'd' && !r.d) delete r.d; recFocus = id; bewaar(); return; }
   if (t.dataset.rectekst) { const r = (S.reclame = S.reclame || {})[t.dataset.rectekst] = S.reclame[t.dataset.rectekst] || {}; r.tekst = t.value; bewaar(true); return; }
-  if (t.dataset.koorvink) { const kt = ((B.koor || {}).taken || []).find(x => x.id === t.dataset.koorvink); if (t.checked) { S.koorAf[t.dataset.koorvink] = true; if (kt) duurVraag('koor:' + kt.id, 'koor', kt.titel, schat('koor', kt.titel), 0, { rol: rolStandaard('koor') }); } else { delete S.koorAf[t.dataset.koorvink]; duurTerug('koor:' + t.dataset.koorvink); } bewaar(); }
+  if (t.dataset.koorvink) { const kt = koorTaken().find(x => x.id === t.dataset.koorvink); if (t.checked) { S.koorAf[t.dataset.koorvink] = true; if (kt) duurVraag('koor:' + kt.id, 'koor', kt.titel, schat('koor', kt.titel), 0, { rol: rolStandaard('koor') }); } else { delete S.koorAf[t.dataset.koorvink]; duurTerug('koor:' + t.dataset.koorvink); } bewaar(); }
   if (t.dataset.dagtaak) { const key = t.dataset.dagtaak; const so = key === 'koor' ? 'koorrep' : 'pres'; zetDagTaak(t.dataset.dag, key, t.checked); if (t.checked) { const tt = SOORTNAAM[so]; duurVraag('dag:' + t.dataset.dag + ':' + key, so, tt, schat(so, tt), 0, { rol: rolStandaard(so) }); } else duurTerug('dag:' + t.dataset.dag + ':' + key); bewaar(); }
   if (t.id === 'gGoed') { S.goed[vandaag()] = t.value.trim() || undefined; bewaar(true); }
   if (t.id === 'pK') { const n = $('#pNieuw'); if (n) n.hidden = !!t.value; }
@@ -3319,7 +3412,7 @@ document.addEventListener('submit', e => {
   if (e.target.id === 'pzForm') { const T = [...e.target.querySelectorAll('[name=tot]')].map(x => x.value); S.pauzes = [...e.target.querySelectorAll('[name=van]')].map((x, i) => ({ van: x.value.replace(/^0/, ''), tot: (T[i] || '').replace(/^0/, '') })).filter(p => p.van && p.tot && minuten(p.tot) > minuten(p.van)); bewaar(); toast('Pauzes opgeslagen'); return; }
   if (e.target.id === 'kForm') { bewaarTaakBewerk(new FormData(e.target)); return; }
   if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; const lt = leesTaak(titel, $('#tD').value); if (lt.fout) { toast(lt.fout); return; } const rp = rolUitKeuze(titel, $('#tB').value, $('#tR').value, $('#tP').value); if (lt.afspraak && lt.plan) { taakUitPalet(lt, rp); return; } (S.taken = S.taken || []).push(zetRol({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }, rp)); bewaar(); return; }
-  if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel || !d) return; if (d < vandaag()) { toast(`${fmtD(d)} ligt in het verleden. Kies een datum vanaf vandaag; een oude activiteit staat niet in de lijst`); return; } const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
+  if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel) { toast('Typ wat de activiteit is.'); return; } if (!d) { toast('Kies de datum van de activiteit.'); return; } if (d < vandaag()) { toast(`${fmtD(d)} ligt in het verleden. Kies een datum vanaf vandaag; een oude activiteit staat niet in de lijst`); return; } const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
   if (e.target.id === 'sForm') { const titel = $('#sT').value.trim(), d = $('#sD').value; const f = sTaakFout(titel, d); if (f) { toast(f); $(titel ? '#sD' : '#sT').focus(); return; }
     S.sectieExtra.push(zetRol({ id: 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d, titel, soort: 'taak', taak: true }, rolUitKeuze(titel, 'sectie', $('#sR').value, $('#sP').value))); bewaar(); toast(`${kort(titel)} staat erbij op ${fmtDJ(d)}`); return; }
   if (e.target.id === 'sEdit') { const k = sEigen(e.target.dataset.id); if (!k) return; const titel = $('#seT').value.trim(), d = $('#seD').value; const f = sTaakFout(titel, d, k.d); if (f) { toast(f); $(titel ? '#seD' : '#seT').focus(); return; }
@@ -3411,8 +3504,8 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') sluit();
 });
 function leesRoute() { if (/^#groepen(\/|$)/.test(location.hash)) history.replaceState(null, '', '#jaar'); // oude links
-  const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; }
-window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
+  const [n, ...a] = location.hash.replace('#', '').split('/'); route = { naam: ROUTES.some(r => r[0] === n) || ['beoordelen', 'regie', 'bord', 'kompas'].includes(n) ? n : 'nu', arg: a }; bmNaarScore = route.naam === 'beoordelen' && !!route.arg[1]; }
+window.addEventListener('hashchange', () => { const was = route.naam; leesRoute(); ankerOpen = ''; /* bevinding 68: een half ingevuld verplaats-paneel blijft niet open staan tot een andere dag */ if (was === 'vandaag' && route.naam !== 'vandaag') dagKeuze = null; sluit(); /* Dag begint weer op vandaag na een ander scherm (bevinding 54) */ if (NW) nwDicht();
   if (route.naam === 'bord' && !LES) { document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true); return; } // opent de browser het bord in hetzelfde venster
   render(); window.scrollTo(0, 0); });
 
@@ -3427,6 +3520,13 @@ const bmVoor = item => BM.filter(m => (m.lessen || []).some(k => k.lg === item.l
 const komma = x => x == null ? '' : String(x).replace('.', ',');
 const bmKanMap = () => typeof window.showDirectoryPicker === 'function';
 const bmTijd = t => { const d = new Date(t); return `${fmtD(ymd(d))} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
+function bmToetsGegeven(m, g) { if (!leergangVan(g)) return 0; let n = 0; ankersVan(g).filter(a => a.t.id === m.toets && !a.klaar).forEach(a => { S.voortgang[g] = S.voortgang[g] || {}; S.voortgang[g][a.id] = Object.assign({}, status(g, a.id), { st: 'gegeven', d: vandaag() }); n++; }); return n; }
+// wat er na een toets nog ligt (bevinding 60 en 61): wie moet nog inhalen, en staan de afgeronde cijfers in Magister. Alleen aantallen: namen blijven in Beoordelen.
+function toetsRest(T, g) { const lijst = (S.beoord.lijsten || {})[g] || []; const r = x => (T && T.ll && T.ll[x.id]) || {};
+  return { inhalen: lijst.filter(x => r(x).af && !r(x).vast).length, vast: lijst.filter(x => r(x).vast).length }; }
+const magNog = (T, g) => toetsRest(T, g).vast > ((T && T.inMagister && T.inMagister.n) || 0); // bevinding 61: er staan afgeronde cijfers die niet (allemaal) als ingevoerd in Magister zijn gemeld
+function bmInMagister(T, g) { T.inMagister = { d: vandaag(), n: toetsRest(T, g).vast }; }
+function toetsenOpen() { const uit = []; if (!S.beoord || !BM) return uit; for (const [k, T] of Object.entries(S.beoord.toetsen || {})) { const i = k.lastIndexOf('|'); const m = BM.find(x => x.id === k.slice(0, i)); if (!m) continue; const g = k.slice(i + 1); uit.push(Object.assign({ m, g, T, k, mag: magNog(T, g) }, toetsRest(T, g))); } return uit; }
 function bmToets(mid, g) { const k = mid + '|' + g; return S.beoord.toetsen[k] || (S.beoord.toetsen[k] = { ll: {}, volgorde: [], start: vandaag() }); }
 function bmRij(L, id) { return L.ll[id] || (L.ll[id] = { s: {}, v: {}, opm: {} }); }
 const bmLaag = T => (bmLaagId === 'herkans' && T.herkans) || (T.tussen || []).find(x => x.id === bmLaagId) || T;
@@ -3527,7 +3627,8 @@ function bmKolomKaart(m, g, T, lijst) {
   return `<div class="kaart bm"><h2>Cijferkolom voor Magister</h2><p class="lead">In de volgorde van de klassenlijst, één regel per leerling. Alleen afgeronde cijfers; bij inhalen of zonder cijfer blijft de cel leeg.${H ? ' Na een herkansing staat hier het hoogste afgeronde cijfer.' : ''} Klik in Magister op de eerste cel van de kolom en plak.</p>
     ${open.length ? `<p class="bm-waarsch">${open.length} ${open.length === 1 ? 'leerling heeft' : 'leerlingen hebben'} een cijfer dat nog niet is afgerond. <button class="btn klein hoofd" data-bm="afronden" data-laag="toets">Nu afronden</button></p>` : ''}
     ${hOpen.length ? `<p class="bm-waarsch">${hOpen.length} ${hOpen.length === 1 ? 'herkansing is' : 'herkansingen zijn'} nog niet afgerond en ${hOpen.length === 1 ? 'telt' : 'tellen'} dus nog niet mee. <button class="btn klein hoofd" data-bm="afronden" data-laag="herkans">Nu afronden</button></p>` : ''}
-    <div class="knoppen"><button class="btn hoofd" data-bm="kolomkopie" ${rij.some(x => x.c) ? '' : 'disabled'}>Kopieer kolom</button><button class="btn" data-bm="dicht">Terug</button></div>
+    <p class="lead" id="bmMagStatus">${magNog(T, g) ? (T.inMagister ? 'Er zijn cijfers bijgekomen sinds je de kolom in Magister zette.' : 'Deze cijfers staan nog niet als ingevoerd in Magister.') : T.inMagister ? 'In Magister gezet op ' + fmtD(T.inMagister.d) + '.' : ''}</p>
+    <div class="knoppen"><button class="btn hoofd" data-bm="kolomkopie" ${rij.some(x => x.c) ? '' : 'disabled'}>Kopieer kolom</button><button class="btn" data-bm="inmagister" ${rij.some(x => x.r && x.r.vast) ? '' : 'disabled'}>Staat in Magister</button><button class="btn" data-bm="dicht">Terug</button></div>
     <p>${rij.length} regels, ${rij.length - leeg} cijfers, ${leeg} leeg.</p>
     <textarea id="bmKolom" readonly hidden rows="4">${esc(BMR.kolom(T, lijst).join('\n'))}</textarea>
     <table class="bm-kolom"><thead><tr><th>Leerling</th><th>Cijfer</th><th></th></tr></thead><tbody>${rij.map(x => `<tr><td>${esc(x.naam)}</td><td class="c">${esc(x.c)}</td><td>${esc(noot(x))}</td></tr>`).join('')}</tbody></table></div>`;
@@ -3660,6 +3761,31 @@ function bmStreepKlaar(e) { if (!bmStreep || e.pointerId !== bmStreep.id) return
   const T = bmToets(c.m.id, c.g); if (bmSelG) bmZet(c.k, T, 'k+', bmSelG, 'g', w, true); else if (bmSel) bmZet(c.k, T, 'k+', bmSel, null, w, true); }
 document.addEventListener('pointerup', bmStreepKlaar); document.addEventListener('pointercancel', bmStreepKlaar);
 const bmOnderdelen = (m, T) => { if (!T.vast) return m.onderdelen; const uit = []; for (const c of T.vast.crit) { let o = uit.find(x => x.groep === c.groep); if (!o) uit.push(o = { groep: c.groep, stuk: (m.onderdelen.find(x => x.groep === c.groep) || {}).stuk, criteria: [] }); o.criteria.push(c); } return uit; };
+// Einde van een periode (bevinding 67): per klas welke cijfers van de toetsen in die periode nog ontbreken, vanaf twee weken ervoor.
+// Een toets telt voor de periode van zijn laatste blok. Alleen toetsen met een beoordelingsmodel in Lesdag; schriftelijke toetsen zonder scorekaart staan hier niet.
+function periodeOverzicht() {
+  const t = vandaag(); const uit = []; const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
+  for (const g of groepen) { const lg = leergangVan(g); if (!lg) continue; const L = B.leergangen[lg]; const lijst = (S.beoord.lijsten || {})[g] || [];
+    for (const b of L.blokken || []) { if (!b.weken) continue; const wk = B.kalender.weken.find(k => k.w === b.weken[1]); if (!wk) continue; const eind = addD(wk.datum, 4);
+      if (t < addD(eind, -14) || t > addD(eind, 60)) continue;
+      const rijen = [];
+      for (const toets of L.toetsen || []) { if (String(toets.blok || '').split('+').pop() !== b.id) continue;
+        const m = BM.find(x => x.toets === toets.id && (x.lessen || []).some(k => k.lg === lg)); if (!m) continue;
+        const T = (S.beoord.toetsen || {})[m.id + '|' + g]; const datum = TOETSDATUM.plek(B.kalender, toets, toets.week).datum; const n = lijst.length;
+        if (!T || !n) { rijen.push({ m, g, toets: toets.id, ok: false, tekst: 'nog niet gescoord' + (datum && datum >= t ? ', staat op ' + fmtD(datum) : '') }); continue; }
+        const R = toetsRest(T, g); const zonder = n - R.vast;
+        if (zonder > 0) rijen.push({ m, g, toets: toets.id, ok: false, tekst: `${zonder} van ${n} zonder afgerond cijfer${R.inhalen ? ` (${R.inhalen} moet nog inhalen)` : ''}` });
+        else if (magNog(T, g)) rijen.push({ m, g, toets: toets.id, ok: false, tekst: 'alle cijfers staan vast, nog in Magister zetten' });
+        else rijen.push({ m, g, toets: toets.id, ok: true, tekst: 'alle cijfers staan vast en in Magister' }); }
+      if (rijen.length) uit.push({ nr: (String(b.id).match(/\d+/) || [''])[0], eind, g, rijen }); } }
+  return uit.filter(x => x.rijen.some(r => !r.ok) || t <= addD(x.eind, 7));
+}
+function periodeKaart() {
+  const P = periodeOverzicht(); if (!P.length) return ''; const t = vandaag(); const groepen = {};
+  P.forEach(x => { (groepen[x.nr + '|' + x.eind] = groepen[x.nr + '|' + x.eind] || []).push(x); });
+  return Object.entries(groepen).sort((a, b) => a[0].split('|')[1] < b[0].split('|')[1] ? -1 : 1).map(([k, L]) => { const [nr, eind] = k.split('|'); const open = L.reduce((n, x) => n + x.rijen.filter(r => !r.ok).length, 0);
+    return `<div class="kaart periode"><h2>Periode ${esc(nr)} ${eind >= t ? 'sluit' : 'sloot'} ${esc(fmtD(eind))}</h2><p class="lead">${open ? `Nog ${open} ${open === 1 ? 'toets' : 'toetsen'} waar cijfers van ontbreken.` : 'Alle cijfers van deze periode staan vast en in Magister.'}</p>${L.map(x => `<div class="jr-regel"><span><b>${esc(x.g)}</b></span><span class="tb">${x.rijen.map(r => `<button class="btn klein${r.ok ? '' : ' hoofd'}" data-beoordeel="${esc(r.m.id + '|' + r.g)}">${esc(r.toets)}: ${esc(r.tekst)}</button>`).join(' ')}</span></div>`).join('')}</div>`; }).join('');
+}
 function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daaronder per klas
   const t = vandaag(); const p = planning(t, t)[t]; const vandaagM = [];
   for (const x of (p && p.uren) || []) if (x.item && !x.uitval) for (const m of bmVoor(x.item)) if (!vandaagM.some(y => y.m === m && y.g === x.u.groep)) vandaagM.push({ m, g: x.u.groep, u: x.u });
@@ -3667,7 +3793,7 @@ function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daa
   const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
   const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b></span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
   return `<div class="kop"><div><p class="eyebrow">Beoordelen</p><h1>Kies een toets</h1></div></div>
-    <div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
+    ${periodeKaart()}<div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
     ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}`;
 }
 function viewBeoordelen() {
@@ -3831,9 +3957,12 @@ document.addEventListener('click', async e => {
   if (D.bm === 'afronden') { const isH = T.herkans && (D.laag === 'herkans' || (!D.laag && bmLaag(T) === T.herkans)); const A = isH ? T.herkans : T; const wie = isH ? lijst.filter(x => A.wie.includes(x.id)) : lijst;
     const open = wie.filter(x => !(A.ll[x.id] && (A.ll[x.id].vast || A.ll[x.id].af)) && BMR.eind(m, A, T, x.id).e != null).length; const rest = wie.filter(x => !(A.ll[x.id] && A.ll[x.id].vast)).length - open;
     if (!confirm(`${isH ? 'Herkansing: ' : ''}${open} ${open === 1 ? 'cijfer' : 'cijfers'} vastleggen, met de scores en wegingen van nu.${rest ? ` ${rest} ${rest === 1 ? 'leerling heeft' : 'leerlingen hebben'} nog geen cijfer en ${rest === 1 ? 'blijft' : 'blijven'} open.` : ''}`)) return;
-    const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true; bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '')); await bmReserveNu(m, g); return; }
+    const voor = foto(); const af = BMR.afronden(m, T, wie, Date.now(), A); bmLog(k, { a: 'afronden', l: isH ? A.id : null, w: af.map(id => id + '=' + A.ll[id].vast.e).join(' ') }); bmVuil = true;
+    const gez = !isH && af.length ? bmToetsGegeven(m, g) : 0; // bevinding 59: cijfers vastgelegd = de toets is gegeven, dus geen melding "nog niet afgevinkt" de volgende dag
+    bewaar(); toast(af.length + ' cijfers vastgelegd' + (isH ? '; het hoogste cijfer telt' : '') + (gez ? `. ${m.toets} staat op gegeven` : ''), gez ? voor : undefined); await bmReserveNu(m, g); return; }
   if (D.bm === 'heropen') { const A = bmLaag(T); if (!BMR.isPoging(A, T)) return; if (!confirm('Dit cijfer openzetten om te wijzigen? Het oude cijfer staat in het logboek. Rond daarna opnieuw af en zet het nieuwe cijfer zelf in Magister.')) return; bmLog(k, { a: 'heropen', id: bmSel, w: A.ll[bmSel].vast.e, l: A === T ? null : A.id }); BMR.heropen(T, bmSel, A); bewaar(); return; }
-  if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
+  if (D.bm === 'inmagister') { const f = foto(); bmInMagister(T, g); bewaar(); toast('Genoteerd: de cijfers van ' + m.toets + ' staan in Magister', f); return; }
+  if (D.bm === 'kolomkopie') { const t = BMR.kolom(T, lijst).join('\n'); try { await navigator.clipboard.writeText(t); toast('Gekopieerd. Plak in de eerste cel van de kolom in Magister en tik daarna op Staat in Magister.'); } catch (err) { const ta = $('#bmKolom'); ta.hidden = false; ta.select(); toast('Kopiëren lukt niet vanzelf: de tekst is geselecteerd, kopieer met Ctrl+C'); } return; }
   if (D.bm === 'volgende' || D.bm === 'vorige') { const i = vol.indexOf(bmSel) + (D.bm === 'volgende' ? 1 : -1); if (i >= 0 && i < vol.length) { const oud = bmSel; bmSel = vol[i]; bmKlok = null; const G = bmLaag(T) === T.herkans ? null : BMR.groepVan(T, bmSel); if (D.bm === 'volgende' && G && G !== BMR.groepVan(T, oud) && !Object.keys((bmLaag(T).gs || {})[G.id] || {}).length) bmSelG = G.id; render(); window.scrollTo(0, 0); if (D.bm === 'volgende') bmNaVolgende(m, g, T, oud, bmSel); } return; } // een nieuwe groep zonder groepsscore begint op de groepskaart
   if (D.bmkies) { bmSel = D.bmkies; bmSelG = null; bmKlok = null; render(); if (matchMedia('(max-width:820px)').matches) { const k = document.querySelector('.bm-scoor'); if (k) k.scrollIntoView(); } return; }
   if (D.bmop) { const [id, st] = D.bmop.split('|'); const i = vol.indexOf(id), j = i + +st; if (j >= 0 && j < vol.length) { [vol[i], vol[j]] = [vol[j], vol[i]]; T.volgorde = vol; bewaar(); } return; }
@@ -3859,7 +3988,9 @@ document.addEventListener('change', async e => {
       await bmDownloadReserve(c.m, c.g); S.beoord.toetsen[c.k] = d.toets; if (d.lijst && d.lijst.length) S.beoord.lijsten[c.g] = d.lijst; S.beoord.weg = S.beoord.weg || {}; if (d.weg) S.beoord.weg[c.g] = d.weg; bmLog(c.k, { a: 'teruggezet', w: d.gemaakt }); bewaar(); toast('Reserve teruggezet; de oude stand staat in je downloads'); } catch (err) { console.warn(err); toast('Dit bestand kan niet worden gelezen'); } return; }
   if (t.dataset.bmcskies != null) { const v = t.value; if (v.startsWith('g:')) bmSelG = v.slice(2); else { bmSelG = null; bmSel = v; } bmKlok = null; render(); window.scrollTo(0, 0); return; }
   if (!bmSel || !t.closest('.bm-scoor')) return;
-  if (t.dataset.bmaf != null) { bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
+  if (t.dataset.bmaf != null) { const r = bmLaag(T).ll[bmSel]; // bevinding 70: afwezig zetten bij een leerling met scores haalt het cijfer uit de kolom; eerst vragen
+    if (t.checked && r && (Object.keys(r.s || {}).length || r.zelf != null) && !confirm('Deze leerling heeft al scores. Als afwezig telt er geen cijfer mee en blijft de cel in de kolom leeg tot de leerling heeft ingehaald. De scores blijven bewaard. Toch op afwezig zetten?')) { t.checked = false; return; }
+    bmZet(c.k, T, 'af', bmSel, null, t.checked); return; }
   if (t.dataset.bmzelfc != null) { const w = t.value.trim() === '' ? null : BMR.leesCijfer(t.value); if (t.value.trim() && w == null) { toast('Vul een cijfer van 1 tot en met 10 in, bijvoorbeeld 7,5'); t.value = ''; } bmZet(c.k, T, 'zelf', bmSel, null, w); return; }
   if (t.dataset.bmpapier != null) { const stuk = t.value.trim().split(/\s+/).filter(Boolean); const w = stuk.map(BMR.leesCijfer); if (w.includes(null)) toast('Niet alles is een cijfer van 1 tot en met 10: alleen de goede cijfers tellen mee'); bmZet(c.k, T, 'papier', bmSel, null, w.filter(x => x != null)); return; }
   const soort = t.dataset.bmveld ? ['v', t.dataset.bmveld] : t.dataset.bmopm ? ['opm', t.dataset.bmopm] : t.dataset.bmvooruit != null ? ['vooruit', null] : null;

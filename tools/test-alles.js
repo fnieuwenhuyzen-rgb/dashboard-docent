@@ -1,7 +1,7 @@
 // node tools/test-alles.js [--snel] [--zonder-browser] [--tegen=<ref>]
 // Draait alle tests van Lesdag en geeft een korte samenvatting. Exitcode 0 = alles goed (of alleen overgeslagen), 1 = iets faalt.
 //   --snel            schermtest met 3 tijden in plaats van 7 (±15 s in plaats van ±35 s)
-//   --routes          ook de routetest Beoordelen (test-routes-beoordelen.js, ±5 minuten)
+//   --routes          ook alle routetests: Beoordelen (±5 min), Agenda en planning (±3 min) en de lesmodus (--snel, ±4 min)
 //   --zonder-browser  schermtest overslaan (CI zonder browser)
 //   --tegen=<ref>     gegevensvergelijking met die ref in plaats van HEAD
 // Schermtest vraagt Playwright via NODE_PATH, zie tools/TESTEN.md.
@@ -16,6 +16,7 @@ const STAPPEN = [
   ['Agendafeed', 'test-agendafeed.js', []],
   ['Toetsdatum (basis.json)', 'test-toetsdatum.js', []],
   ['Planning: toetsen op hun datum', 'test-planning.js', []],
+  ['Nu en de lesdag (ochtend, afronden, ziekte, vakantie)', 'test-nu-ochtend.js', []],
   ['Synchroniseren (samenvoegen)', 'test-sync.js', []],
   ['Proeffuncties (rekenregels)', 'test-functies.js', []],
   ['Gegevensversies (migratie)', 'test-staten.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : a.includes('--snel') ? ['--snel'] : []],
@@ -24,11 +25,13 @@ const STAPPEN = [
   ['Automatische kopie', 'test-autokopie.js', []],
   ['Proeffuncties (headless)', 'test-functies-scherm.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
+  ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []], ['Routes Agenda en planning (headless)', 'test-routes-agenda.js', []], ['Routes Lesmodus (headless, snel)', 'test-routes-lesmodus.js', ['--snel']]] : []),
+  ['Routes toetsdag P1 vwo 4 (headless, ±20 s)', 'test-routes-toetsdag.js', []],
   ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []]] : []),
 ];
 const uitslag = []; const t0 = Date.now();
 for (const [naam, f, extra] of STAPPEN) {
-  if (/^test-(schermen|functies-scherm|planning|nieuwe-versie|autokopie|routes-[a-z]+)\.js$/.test(f) && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
+  if (/^test-(schermen|functies-scherm|planning|nu-ochtend|nieuwe-versie|autokopie|routes-[a-z]+).js$/.test(f) && a.includes('--zonder-browser')) { uitslag.push([naam, 'overgeslagen', 0, '(--zonder-browser)']); continue; }
   const s = Date.now(); const r = cp.spawnSync(process.execPath, [t(f), ...extra], { cwd: root, encoding: 'utf8', env: process.env, maxBuffer: 1 << 26 });
   const uit = ((r.stdout || '') + (r.stderr || '')).trim(); const sec = (Date.now() - s) / 1000;
   const st = r.status === 0 ? 'goed' : r.status === 2 ? 'overgeslagen' : 'FAALT';

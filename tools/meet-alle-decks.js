@@ -176,7 +176,7 @@ async function inhoud(d, bronIndex) {
       for (const t of genoemd) { const ok = new Set([t.datum, t.herkansing].filter(Boolean)); for (const x of ds) if (!ok.has(x.iso)) { melding(d, 'fout', 'datum', `${plek(bron, dia)}: ${t.id} met datum "${x.tekst}" (${x.iso}), maar de leergang (${l.lg}) zegt ${t.datum}${t.herkansing ? ' (herkansing ' + t.herkansing + ')' : ''}: "${p.slice(0, 120)}"`, `Zet de datum van ${t.id} op ${t.datum} (${t.waar || 'zie leergang'}) in dia ${dia}.`, dia); } }
       if (!genoemd.length) for (const x of ds) if (!geldig.has(x.iso) && !inWeek(x.iso)) melding(d, 'let-op', 'datum', `${plek(bron, dia)}: datum "${x.tekst}" (${x.iso}) staat niet in de leergang van ${l.lg} en valt buiten de week van de les (${wkMa}): "${p.slice(0, 120)}"`, `Controleer de datum in dia ${dia} tegen de leergang en de kalender.`, dia);
     }
-    // toets dichtbij: PT1 afnemen vóór de toetsdatum
+    // toets dichtbij: P1 afnemen vóór de toetsdatum
     for (const t of toetsen) if (t.datum && les.toets === t.id && (t.datum < wkMa || t.datum > plusDagen(wkMa, 6)))
       melding(d, 'let-op', 'leergang', `Les ${kl} "${les.titel}" gaat over ${t.id}, maar ${t.id} staat op ${t.datum} en de les staat op ${l.datum} (lesweek ${l.w}). Tegenstrijdigheid in de leergang, niet zelf opgelost`, `Frans beslist op welke dag de les is; daarna het deck (datums, "vandaag") en de leergang gelijk zetten.`);
     if (l.datum !== l.weekMa) melding(d, 'info', 'leergang', `Les ${kl} staat in lesweek ${l.w} (ma ${dagNaam(l.weekMa)}) maar wordt gegeven op ${dagVan(l.datum)} ${dagNaam(l.datum)} (verplaatst, besluit Frans 4-11-2026). Het rapport rekent met die datum`, 'Niets, tenzij de datum is veranderd: dan de lijst VERPLAATST in tools/meet-alle-decks.js bijwerken.');

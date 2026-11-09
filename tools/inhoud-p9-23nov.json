@@ -12,7 +12,7 @@
         "kort": "Praktijktoets P9",
         "code": "P1 · P9",
         "week": 12,
-        "koppel": [{ "lg": "vwo5", "w": 8, "slot": "l1" }],
+        "koppel": [{ "lg": "vwo5", "w": 12, "slot": "l1" }],
         "titel": "Praktijktoets P9: solowerk en samenspel",
         "type": "toets",
         "vraag": "Wat laat ik vandaag horen?",
@@ -26,7 +26,7 @@
         ],
         "notitieTitel": [
           "P9 stond op 26 oktober en is verplaatst naar maandag 23 november, omdat er lessen waren uitgevallen.",
-          "Deze les 13:40 tot 14:25, het vervolg om 15:25. Daartussen heb je vwo 4 met PT1. Wie vandaag niet aan de beurt komt, speelt in het vervolg.",
+          "Deze les 13:40 tot 14:25, het vervolg om 15:25. Daartussen heb je vwo 4 met P1. Wie vandaag niet aan de beurt komt, speelt in het vervolg.",
           "Het solostuk mag ook uit de romantiek komen."
         ],
         "notitieDoel": [
@@ -70,7 +70,7 @@
         "kort": "P9 vervolg, Brahms naast Mozart",
         "code": "P1 · P9",
         "week": 12,
-        "koppel": [{ "lg": "vwo5", "w": 8, "slot": "l3" }],
+        "koppel": [{ "lg": "vwo5", "w": 12, "slot": "l2" }],
         "titel": "Praktijktoets P9, vervolg",
         "type": "toets",
         "vraag": "Wat hoor je als je Brahms naast Mozart zet?",
@@ -82,7 +82,7 @@
           "Scoreblad P9 bij de hand: wie moet nog?"
         ],
         "notitieTitel": [
-          "Tweede P9-les op maandag 23 november, 15:25 tot 16:10. Vwo 4 had je net voor PT1.",
+          "Tweede P9-les op maandag 23 november, 15:25 tot 16:10. Vwo 4 had je net voor P1.",
           "Eerst de laatste uitvoeringen, in de eigen hoek. Daarna luisteren. Is het spelen eerder klaar, dan begin je eerder met luisteren."
         ],
         "notitieDoel": [
