@@ -29,7 +29,7 @@ Alles is live sinds 9-11. Nog te doen, in deze volgorde:
 2. Controle bij commits en snelle test voor live staan aan (9-11).
 3. Controleer dat de migratie van vwo 5 de eigen voortgang goed heeft omgenummerd. [Frans, op de laptop]
 4. Synchroniseren aan, zonder leerlinggegevens. Agendalink maken in Outlook (vaste titels, geen eigen afspraken). [Frans, op de laptop]
-5. `bouw-stap3` toevoegen (proefbouw beoordelen stap 3, nog niet samengevoegd).
+5. Beoordelen stap 3 live zetten: `bouw-stap3` is op 9-11 samengevoegd met `main` op branch `stap3-samen` (worktree `C:/Users/nwn/lesdag-werk/stap3-samen`, cache v56). Getest, niet gepusht. Wacht op een ja van Frans. [Frans] Is `main` intussen verder, dan eerst `main` in `stap3-samen` samenvoegen en het cachenummer opnieuw zetten.
 6. Dashboard verversen: `tools/ververs-dashboard.js`.
 7. Verhuizen naar `C:/Projecten`, dan de werkmappen in `C:/Users/nwn/lesdag-werk` opruimen (alleen als er geen Lesdag-sessie loopt).
 8. Rond 16-11, een week na live: CSP afdwingen, als de meldingen schoon zijn.
@@ -66,7 +66,7 @@ Overig:
 
 - Na toets 23-11: PT1-namen in formulieren en decks vwo 4 naar P1 (links mee).
 - Voor eind maart: zomertijd-jacht in de agenda.
-- Na mavo 3 presentatie 2, voor 22 maart: de 12 oude beoordelingsmodellen naar een strookje.
+- Na mavo 3 presentatie 2, voor 22 maart: de 12 oude beoordelingsmodellen naar een strookje. Let op: `beoordeling.json` heeft 16 modellen zonder strookje; eerst bepalen welke 12 het zijn. [Frans]
 - TW2-rooster (januari): de toetsen van 18-1 een datum geven.
 - Mavo 3 presentatie 1 achteraf: alleen als de strookjes er nog zijn.
 - Mei 2027: opnames St. Louis Blues en Mahler kiezen voor keuzeuur havo 3.
@@ -110,7 +110,7 @@ Uit het oude bestand, nog geldend:
 - Beoordelen op 375 px loopt 5 tot 17 px over de rand (`.bm-scoor`, `.bm-voet`).
 - Zermelo-API: `/api/v3` kan stoppen (Zermelo documenteert alleen nog partnerkoppelingen). Dan agendalink als reserve en ICT om een partner vragen.
 - Verhuis het AI-onderwerp niet: AI-voorstellen worden niet gebouwd (besluit 9-11).
-- Beoordelingsmodus stap 3: bouwen vóór 19-3-2027 volgens de besluiten in het beslisblad.
+- Beoordelingsmodus stap 3: gebouwd volgens het beslisblad en samengevoegd op `stap3-samen` (zie Live zetten, punt 5). Uitslag 9-11: `test-alles --routes` op 3b27ff4 slaagt op alle routes; alleen de eigen test van stap 3 faalde op het verwijderde model `p1-mavo4`, gerepareerd in 884959e (112 controles goed). De schermen Het jaar, leerlingkaart en Strookjes zijn doorgeklikt in een wegwerpbrowser met verzonnen namen, ook op 375 px en na Afronden. Niet getest: echt rooster, echte tablet, echte strookjes. De vijf onderdelen per criterium staan als voorstel in `tools/beoordeling/zet-domeinen.js`; daar loopt Frans de lijst na.
 - `app.js` blijft één bestand (besluit 9-11); zie CLAUDE.md voor wanneer opsplitsen.
 
 ## Blijvende besluiten (kort)
