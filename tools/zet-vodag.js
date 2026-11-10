@@ -12,10 +12,10 @@ const DAG = '2026-11-12';
 const MAP = '05 Activiteiten\\VO dag\\';
 
 const uren = [
-  { id: 'vodag-1', start: '12:45', eind: '13:10', groep: 'Gr. 14 Prins Maurits 8a' },
-  { id: 'vodag-2', start: '13:15', eind: '13:40', groep: 'Gr. 5 Het Kompas' },
-  { id: 'vodag-3', start: '13:45', eind: '14:10', groep: 'Gr. 11 De Vliegers' },
-  { id: 'vodag-4', start: '14:15', eind: '14:40', groep: 'Gr. 7 De Bron + Pannebakker' }
+  { id: 'vodag-1', start: '12:45', eind: '13:10', groep: 'Gr. 14 Prins Maurits 8a', klaar: '25 lln · 12 buizen, 13 slagwerk' },
+  { id: 'vodag-2', start: '13:15', eind: '13:40', groep: 'Gr. 5 Het Kompas', klaar: '13 lln · 12 buizen, 1 slagwerk' },
+  { id: 'vodag-3', start: '13:45', eind: '14:10', groep: 'Gr. 11 De Vliegers', klaar: '18 lln · 12 buizen, 6 slagwerk' },
+  { id: 'vodag-4', start: '14:15', eind: '14:40', groep: 'Gr. 7 De Bron + Pannebakker', klaar: '18 lln · 12 buizen, 6 slagwerk' }
 ].map(u => ({ ...u, s: DAG, lokaal: '009' }));
 
 const les = {
@@ -54,12 +54,14 @@ const les = {
   formatief: { soort: 'samen spelen', tekst: 'Het hele nummer, samen met de muziek.' },
   benodigdVast: true,
   benodigd: [
-    'Boomwhackers: 3 sets, per set geel (E), groen (G, de donkere), oranje (D) en rood (C) = 12 buizen',
-    'Slagwerk: djembés, cajons, darabuka\'s, shakers, claves, tamboerijnen (djembé met de scheur apart)',
-    'Verdeling: gr. 14 25 lln (12 buizen, 13 slagwerk) · gr. 5 13 lln (12, 1) · gr. 11 18 lln (12, 6) · gr. 7 18 lln (12, 6). Aanpassen na de telling',
-    '25 stoelen in U, kleuren bij elkaar, instrument onder elke stoel',
-    'Meespeelpagina open op het digibord, geluid op sterkte, lesklok op 0',
-    'Reserve: laptop met losse luidspreker'
+    '12 boomwhackers: geel E, groen G, oranje D, rood C',
+    'Slagwerk: djembés, cajons, shakers, claves, tamboerijnen',
+    'Djembé met scheur apart',
+    '25 stoelen in U, kleuren bij elkaar',
+    'Instrument onder elke stoel',
+    'Meespeelpagina open, geluid getest',
+    'Lesklok op 0',
+    'Reserve: laptop en luidspreker'
   ],
   materiaal: [
     { t: 'Meespeelpagina Seven Nation Army (digibord)', u: './meespelen-seven-nation-army.html' },

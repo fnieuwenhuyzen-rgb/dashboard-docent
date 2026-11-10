@@ -677,9 +677,10 @@ function viewVandaag() {
   let klaarzet = '';
   const perLokaal = {};
   (p.uren || []).forEach(x => { if (!x.item || x.uitval || x.klaar) return; const l = les(x.item); const k = x.u.lokaal || '009'; const arr = perLokaal[k] = perLokaal[k] || []; const vorig = arr[arr.length - 1];
-    if (vorig && eenmaligLg(x.u.groep) && vorig.x.item.id === x.item.id && eenmaligLg(vorig.x.u.groep)) { vorig.n++; vorig.starts.push(x.u.start); return; } // eenmalige groepen met dezelfde les: één keer klaarzetten
-    arr.push({ x, ben: benodigd(l), l, n: 1, starts: [x.u.start] }); });
-  if (Object.keys(perLokaal).length) klaarzet = `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben, n, starts }) => `<div><b style="font-family:var(--lees)">${n > 1 ? `${esc(starts.join(', '))} ${esc(lgNaam(leergangVan(x.u.groep)))} (${n} groepen)` : `${esc(x.u.start)} ${esc(x.u.groep)}`}</b><div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
+    if (vorig && eenmaligLg(x.u.groep) && vorig.x.item.id === x.item.id && eenmaligLg(vorig.x.u.groep)) { vorig.n++; vorig.rijen.push(x.u); return; } // eenmalige groepen met dezelfde les: één keer klaarzetten
+    arr.push({ x, ben: benodigd(l), l, n: 1, rijen: [x.u] }); });
+  const perGroep = rijen => `<div style="margin:.15rem 0 .3rem;color:var(--muted);font-size:var(--t-klein);line-height:1.5">${rijen.map(u => { const b = basisUren().find(y => y.id === u.id) || {}; return `<div>${esc(u.start)} ${esc(u.groep)}${b.klaar ? ': ' + esc(b.klaar) : ''}</div>`; }).join('')}</div>`;
+  if (Object.keys(perLokaal).length) klaarzet = `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben, rijen }) => `<div>${eenmaligLg(x.u.groep) ? `<b style="font-family:var(--lees)">${esc(lgNaam(leergangVan(x.u.groep)))}</b>${perGroep(rijen)}` : `<b style="font-family:var(--lees)">${esc(x.u.start)} ${esc(x.u.groep)}</b>`}<div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu.
   // De lijsten staan op een breed scherm links onder het blok (10-11), op een telefoon pas onder de agenda (bevinding 46)
   return h + `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -910,7 +911,10 @@ function dagItems(s, p) {
     items.push({ key: 'les:' + x.u.id, van: minuten(x.u.start), tot: minuten(x.u.eind), soort: x.uitval ? 'uitval' : x.klaar ? 'klaar' : 'les', titel: x.u.groep,
       sub: x.uitval ? (x.afwezig ? 'afwezig' : x.u.vervallen ? 'vervallen' : ruilNaar(s, x.u) ? 'geruild naar ' + fmtD(ruilNaar(s, x.u).s) + ' ' + ruilNaar(s, x.u).start : x.planLes ? (x.planLes.titel || 'valt uit') : 'valt uit') : x.fout ? x.fout : verleden ? '' : l ? (l.titel || '') : 'alles gegeven', lokaal: x.u.lokaal || '009', x });
   }
+  const bu = basisUren().filter(x => x.s === s); // eenmalige lessen (VO-dag): de activiteit uit Zermelo in hetzelfde lokaal en op dezelfde tijd is dezelfde middag, die staat er al als les
+  const dubbel = a => !a.toets && !a.dienst && a.van != null && a.tot != null && bu.some(x => a.van < minuten(x.eind) && a.tot > minuten(x.start) && x.lokaal && new RegExp('(^|[^\\d])' + x.lokaal + '([^\\d]|$)').test(a.lokaal || ''));
   zAnders(s).forEach((a, n) => { // surveillance, toetsen en andere afspraken uit Zermelo
+    if (dubbel(a)) return;
     const tg = a.toets ? a.klassen.find(g => toetsweekToetsVoor(g, s)) : null; const tz = tg ? toetsweekToetsVoor(tg, s) : null;
     const it = { key: 'z:' + s + ':' + n, soort: a.toets || a.dienst ? 'toets' : 'rooster', titel: tz ? tg + ' ' + tz.t.id + ' ' + tz.t.naam : a.titel,
       sub: tz ? tz.t.duur + ' min · ' + (tz.t.waar || '') : a.dienst ? 'surveillance' : a.toets ? 'toets' : 'uit Zermelo', lokaal: a.lokaal || '', z: a, tz };
