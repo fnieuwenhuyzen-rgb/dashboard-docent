@@ -536,6 +536,17 @@ sc('Weekinfo-deadline: maandag 14:00 boven aan Nu, daarna te laat, dinsdag nog z
   ok(/was om 14:00.*Nog mailen/.test(tijden['2026-11-30 14:10']), '14:10: te laat: ' + tijden['2026-11-30 14:10']);
   await P.klok(nlIso('2026-12-01', '08:15'), 'nu'); ok(await P.page.locator('.ens-meld [data-recvink="koor:2026-12-18#wi2"]').count() === 1, 'dinsdag: de gemiste weekinfo staat onder Blijft liggen, tot hij af is');
 });
+sc('Reclame: schoolleiding informeren en uitnodigen, vier weken vooraf en zonder mailknop', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('reclame'); const id = 'koor:2026-12-18', sel = '#rec-koor-2026-12-18', p = P.page;
+  const rij = p.locator(`${sel} .taak:has([data-recvink="${id}#sl"])`), det = p.locator(sel + ' details.recgeg');
+  ok(await rij.count() === 1, 'de stap staat op de kaart van Christmas Carols');
+  ok(/20 nov/i.test(await rij.innerText()), 'uiterlijk vier weken voor 18 december: ' + await rij.innerText());
+  ok(await rij.locator('[data-recmail]').count() === 0, 'geen mailknop: de weekinfo-mail hoort hier niet bij');
+  await P.wijzig(s => { s.reclameAf = Object.assign(s.reclameAf || {}, { 'koor:2026-12-18#sl': '2026-11-09' }); }, 'reclame');
+  ok(/gedaan/.test(await rij.innerText()), 'afgevinkt staat er gedaan, niet verstuurd');
+  await det.evaluate(d => { d.open = true; }); const v = p.locator(`${sel} [data-recveld="${id}|plaats"]`); await v.fill('Grote Kerk'); await v.press('Tab'); await p.waitForTimeout(250);
+  ok(!/al verstuurd/.test(await p.locator(sel).innerText()), 'wijzigen na afvinken geeft geen melding dat iets opnieuw verstuurd moet');
+});
 sc('Reclame: uitklapblok, waarschuwingen, verstuurd en printposter', async nieuw => {
   const P = await nieuw({ tijd: VROEG }); await P.open('reclame'); const id = 'koor:2026-12-18', sel = '#rec-koor-2026-12-18', p = P.page;
   const veld = async (k, w) => { const v = p.locator(`${sel} [data-recveld="${id}|${k}"]`); await v.fill(w); await v.press('Tab'); await p.waitForTimeout(250); };

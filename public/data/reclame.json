@@ -4,6 +4,7 @@
   "afzender": "Frans Nieuwenhuyzen",
   "weekinfo": { "verschijnt": "maandag", "inleverenTot": "14:00", "wekenVooraf": [2, 0] },
   "bord": { "dagenVooraf": 21, "breedte": 1080, "hoogte": 1920 },
+  "schoolleiding": { "dagenVooraf": 28 },
   "overslaan": ["si1", "si2", "si3", "kv"],
   "examenconcerten": [
     { "lg": "vwo6", "toets": "P19" },
