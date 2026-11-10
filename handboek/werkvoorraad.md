@@ -11,7 +11,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 - Vaste lijst van vijf onderdelen stap 3 een keer nalopen.
 - Datum havo 5 P4 doorgeven (nog onbekend).
 - [onzeker] Liedkeuze BB1 (Memories, Birds of a Feather) zelf beluisteren; keuze Count on Me of You Say.
-- [onzeker] Reclame: officieel logo, plaats en tijd PMZingt!, prijs en bestellen-tot Christmas Carols, sluitdatum en kosten excursies. Invullen kan op het tabblad Reclame.
+- [onzeker] Reclame: officieel logo, plaats en tijd PMZingt!, bestellen-tot Christmas Carols, sluitdatum en kosten excursies. Invullen kan op het tabblad Reclame.
 - [onzeker] Sectietaken vastzetten die nog `bevestigen` hebben: `hd1`, `or1`, `ww7`, `im16`, `im17`.
 - [onzeker] Mavo 4 PTA-details: syllabusletters, P3 30 min, T3 90 min, concertdatum.
 - Fotokandidaten band staan in `lesdag project/fotos-kerst-kandidaten/kandidaten-band-breder.txt`; niet gedownload, niet op beeld beoordeeld.

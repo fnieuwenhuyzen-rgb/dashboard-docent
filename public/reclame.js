@@ -1,4 +1,4 @@
-/* Reclame voor weekinfo en borden: concepttekst, mailtekst, afbeelding (canvas) en staande dia (pptx).
+/* Reclame voor weekinfo, borden en prikbord: concepttekst, mailtekst, afbeelding (canvas), staande dia (pptx) en printposter A3 (pdf).
    Werkt met een genormaliseerde activiteit uit app.js: {id, soort: koor|muziek|excursie|examen, titel, ondertitel, d, aanvang, eind, plaats, zin, sluit, aanmeldlink, kosten, wie, toegang}. Met toegang 'ticket' zijn aanmeldlink, sluit en kosten de website, de besteldatum en de prijs.
    Huisstijl CSG Prins Maurits: paars #5B247F, rood #C5002E, alles in Encode Sans, koppen vet. Geen foto's. */
 (() => {
@@ -60,7 +60,8 @@ function mailBord(a, afzender) {
     body: `Hoi,\n\nIn de bijlage een staande dia voor de borden in school, voor ${a.titel} op ${lang(a.d)}. Wil je hem laten draaien tot en met ${lang(a.doel || a.d)}?\n\nGroet,\n${afzender || ''}`.trim() };
 }
 const veilig = s => String(s || '').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, ' ').trim();
-const bestand = (a, soort) => `${soort === 'bord' ? 'Bord' : 'Weekinfo'} ${veilig(a.titel)} ${a.d}.${soort === 'bord' ? 'pptx' : 'png'}`;
+const BESTAND = { bord: ['Bord', 'pptx'], poster: ['Poster', 'pdf'], wi: ['Weekinfo', 'png'] };
+const bestand = (a, soort) => { const [n, x] = BESTAND[soort] || BESTAND.wi; return `${n} ${veilig(a.titel)} ${a.d}.${x}`; };
 
 /* ---------- tekenen ---------- */
 async function fontsKlaar() {
@@ -140,6 +141,38 @@ function bord(ctx, a, W, H, q) { // staand paneel 1080 x 1920; alles boven de ro
   }
   hoek(ctx, a, W, H, WB, HB, 92, 64);
 }
+function poster(ctx, a, W, H, q) { // printposter A3 staand: wit papier, want een printer drukt niet tot de rand; de QR-code groot genoeg om van een afstand te scannen
+  const M = 170, WB = 1500, HB = 860, z = zinVan(a); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+  vorm(ctx, [[0, 0], [W, 0], [W, 200], [0, 400]], ROOD);
+  ctx.fillStyle = '#fff'; ctx.font = `700 92px ${KOP}`; ctx.textBaseline = 'alphabetic'; spatie(ctx, 'CSG PRINS MAURITS', M, 190, 11);
+  const info = [tijdRegel(a), a.plaats].filter(Boolean).join(' · '), TK = ticketRegels(ctx, a, W - 2 * M, 124, 70);
+  const hoekLinks = y => y <= H - HB ? W : W - WB * (y - (H - HB)) / HB;
+  const SCAN = ['Scan en', 'bestel'], SMAAT = 150;
+  const maak = (tmax, metZin) => { // opmaak bij een titelmaat; past = alles blijft vrij van de rode hoek
+    const T = pas(ctx, a.titel, s => `900 ${s}px ${KOP}`, tmax, 170, W - 2 * M, 3);
+    let y = 590 + T.s * 0.95 + (T.L.length - 1) * T.s * 0.9; const ond = a.ondertitel ? (y += 165) : 0;
+    const top = y + 190; ctx.font = `400 124px ${TEKST}`; const iL = regels(ctx, info, W - 2 * M).slice(0, 3); const hoog = 450 + (iL.length + TK.length) * 150;
+    const Z = metZin && z ? pas(ctx, z, s => `400 ${s}px ${TEKST}`, q ? 96 : 140, 72, W - 2 * M, 3) : { s: 0, L: [] };
+    let past = top + hoog <= H - HB - 20; const zy = top + hoog + 200; ctx.font = `400 ${Z.s}px ${TEKST}`;
+    Z.L.forEach((l, i) => { const yb = zy + i * Z.s * 1.3; if (yb > H - 110 || M + ctx.measureText(l).width > hoekLinks(yb) - 40) past = false; });
+    let qs = 0; const qy = top + hoog + 120 + (Z.L.length ? Z.L.length * Z.s * 1.3 + 40 : 0), sx = s => M + s + 60;
+    if (q) { ctx.font = `900 ${SMAAT}px ${KOP}`; const sw = Math.max(...SCAN.map(l => ctx.measureText(l).width));
+      for (let s = 960; s >= 560 && !qs; s -= 20) if (qy + s <= H - 110 && M + s <= hoekLinks(qy + s) - 40 && sx(s) + sw <= hoekLinks(qy + SMAAT * 2 + 30) - 30) qs = s; if (!qs) past = false; }
+    return { T, ond, top, iL, hoog, Z, zy, past, qs, qy, sx };
+  };
+  let L = null; const zoek = (metZin, minQ) => { for (let tmax = 460; tmax >= 170; tmax -= 10) { L = maak(tmax, metZin); if (L.past && (!q || L.qs >= minQ)) return true; } return false; };
+  zoek(true, 800) || zoek(true, 560) || zoek(false, 560); // de QR-code gaat voor een grote titel; past het dan nog niet, dan vervalt de wervende zin (die staat in de weekinfo)
+  ctx.fillStyle = ROOD; ctx.font = `700 100px ${KOP}`; spatie(ctx, LABEL[a.soort].toUpperCase(), M, 590, 13);
+  ctx.fillStyle = PAARS; ctx.font = `900 ${L.T.s}px ${KOP}`; L.T.L.forEach((l, i) => ctx.fillText(l, M - 8, 590 + L.T.s * 0.95 + i * L.T.s * 0.9));
+  if (L.ond) { ctx.fillStyle = GRIJS; ctx.font = `400 150px ${TEKST}`; ctx.fillText(a.ondertitel, M, L.ond); }
+  const top = L.top; vorm(ctx, [[0, top + 60], [W, top], [W, top + L.hoog], [0, top + L.hoog + 60]], PAARS);
+  ctx.fillStyle = '#fff'; const D = pas(ctx, kort(a.d).toUpperCase(), s => `900 ${s}px ${KOP}`, 330, 200, W - 2 * M, 1); ctx.fillText(D.L[0], M - 8, top + 340);
+  ctx.font = `400 124px ${TEKST}`; L.iL.forEach((l, i) => ctx.fillText(l, M, top + 510 + i * 150));
+  TK.forEach((r, i) => { ctx.font = `700 ${r.s}px ${KOP}`; ctx.fillText(r.txt, M, top + 510 + (L.iL.length + i) * 150); });
+  ctx.fillStyle = INKT; ctx.font = `400 ${L.Z.s}px ${TEKST}`; L.Z.L.forEach((l, i) => ctx.fillText(l, M, L.zy + i * L.Z.s * 1.3));
+  if (L.qs) { qrTeken(ctx, q, M, L.qy, L.qs); ctx.fillStyle = PAARS; ctx.font = `900 ${SMAAT}px ${KOP}`; SCAN.forEach((l, i) => ctx.fillText(l, L.sx(L.qs), L.qy + SMAAT + i * (SMAAT + 15))); }
+  hoek(ctx, a, W, H, WB, HB, 210, 150);
+}
 function weekinfo(ctx, a, W, H, q) { // liggend 1600 x 900
   const M = 80; ctx.fillStyle = PAPIER; ctx.fillRect(0, 0, W, H);
   vorm(ctx, [[0, 0], [W, 0], [W, 60], [0, 130]], ROOD);
@@ -164,9 +197,9 @@ function weekinfo(ctx, a, W, H, q) { // liggend 1600 x 900
 }
 async function beeld(a, soort) {
   await fontsKlaar();
-  const c = document.createElement('canvas'); const [W, H] = soort === 'bord' ? [1080, 1920] : [1600, 900];
+  const c = document.createElement('canvas'); const [W, H] = soort === 'bord' ? [1080, 1920] : soort === 'poster' ? [2480, 3508] : [1600, 900];
   c.width = W; c.height = H; const ctx = c.getContext('2d');
-  (soort === 'bord' ? bord : weekinfo)(ctx, a, W, H, await qrVan(a)); return c;
+  ({ bord, poster }[soort] || weekinfo)(ctx, a, W, H, await qrVan(a)); return c;
 }
 let qrLaden = null;
 function laadQr() {
@@ -191,5 +224,21 @@ async function pptx(a, notitie) { // staande dia 9:16 (7,5 x 13,333 inch) met he
   if (notitie) s.addNotes(notitie);
   return p.write({ outputType: 'blob' });
 }
-window.RECLAME = { tekst, mailWeekinfo, mailBord, beeld, png, pptx, bestand, tijdRegel, LABEL };
+async function posterPdf(a) { // A3 staand met de poster als afbeelding: geen bibliotheek nodig en op elke printer hetzelfde; op A4 printen = passend maken
+  const c = await beeld(a, 'poster'); const jpg = new Uint8Array(await (await new Promise(r => c.toBlob(r, 'image/jpeg', 0.93))).arrayBuffer());
+  const W = 841.89, H = 1190.55, enc = new TextEncoder(); const titel = 'FEFF' + [...String(a.titel)].map(t => t.codePointAt(0) > 0xFFFF ? '' : t.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')).join('');
+  const inhoud = `q ${W} 0 0 ${H} 0 0 cm /Im0 Do Q`;
+  const delen = [enc.encode('%PDF-1.4\n')]; const plek = []; let n = delen[0].length;
+  const voeg = d => { const b = typeof d === 'string' ? enc.encode(d) : d; delen.push(b); n += b.length; };
+  const obj = (nr, kop, stroom) => { plek[nr] = n; voeg(`${nr} 0 obj\n${kop}\n`); if (stroom) { voeg('stream\n'); voeg(stroom); voeg('\nendstream\n'); } voeg('endobj\n'); };
+  obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2, '<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  obj(3, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
+  obj(4, `<< /Type /XObject /Subtype /Image /Width ${c.width} /Height ${c.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>`, jpg);
+  obj(5, `<< /Length ${inhoud.length} >>`, inhoud);
+  obj(6, `<< /Title <${titel}> >>`);
+  const xref = n; voeg('xref\n0 7\n0000000000 65535 f \n' + plek.slice(1).map(p => String(p).padStart(10, '0') + ' 00000 n \n').join('') + `trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+  return new Blob(delen, { type: 'application/pdf' });
+}
+window.RECLAME = { tekst, mailWeekinfo, mailBord, beeld, png, pptx, posterPdf, bestand, tijdRegel, LABEL, ticketUrl, kortLink };
 })();

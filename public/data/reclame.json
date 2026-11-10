@@ -12,7 +12,7 @@
   ],
   "activiteiten": {
     "koor:2026-11-07": { "aanvang": "19:00", "titel": "Evensong", "ondertitel": "met Magnificat", "zin": "Het Prins Mauritskoor zingt de Evensong, samen met Magnificat. Een avonddienst met veel koormuziek." },
-    "koor:2026-12-18": { "toegang": "ticket", "aanvang": "20:00", "aanmeldlink": "https://www.nieuwekerkzierikzee.nl/agenda/page/2/", "titel": "Vrede op Aarde", "ondertitel": "Christmas Carols", "zin": "Een kerstviering met lezingen en carols. Het Prins Mauritskoor zingt mee, samen met andere koren." },
+    "koor:2026-12-18": { "toegang": "ticket", "aanvang": "20:00", "aanmeldlink": "https://www.ticketkantoor.nl/shop/Cc26", "kosten": "€ 12,50", "titel": "Vrede op Aarde", "ondertitel": "Christmas Carols", "zin": "Een kerstviering met lezingen en carols. Het Prins Mauritskoor zingt mee, samen met andere koren." },
     "koor:2027-07-02": { "titel": "Eindconcert", "ondertitel": "Prins Mauritskoor", "zin": "Het Prins Mauritskoor sluit het schooljaar af met een eindconcert." },
     "sec:pmz": { "titel": "PMZingt!", "soort": "muziek" },
     "sec:doe": { "titel": "Concert in De Doelen", "soort": "excursie", "aanmeldlink": "https://web.csgpm.nl/keuze/ev_index.php", "plaats": "De Doelen, Rotterdam", "zin": "We gaan samen naar een concert in De Doelen in Rotterdam." },

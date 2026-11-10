@@ -536,6 +536,24 @@ sc('Weekinfo-deadline: maandag 14:00 boven aan Nu, daarna te laat, dinsdag nog z
   ok(/was om 14:00.*Nog mailen/.test(tijden['2026-11-30 14:10']), '14:10: te laat: ' + tijden['2026-11-30 14:10']);
   await P.klok(nlIso('2026-12-01', '08:15'), 'nu'); ok(await P.page.locator('.ens-meld [data-recvink="koor:2026-12-18#wi2"]').count() === 1, 'dinsdag: de gemiste weekinfo staat onder Blijft liggen, tot hij af is');
 });
+sc('Reclame: uitklapblok, waarschuwingen, verstuurd en printposter', async nieuw => {
+  const P = await nieuw({ tijd: VROEG }); await P.open('reclame'); const id = 'koor:2026-12-18', sel = '#rec-koor-2026-12-18', p = P.page;
+  const veld = async (k, w) => { const v = p.locator(`${sel} [data-recveld="${id}|${k}"]`); await v.fill(w); await v.press('Tab'); await p.waitForTimeout(250); };
+  const kaart = () => p.locator(sel).innerText(), det = () => p.locator(sel + ' details.recgeg');
+  ok(await p.locator(sel).count() === 1, 'de kaart van Christmas Carols staat er');
+  await det().locator('summary').click(); await p.waitForTimeout(100); await veld('plaats', 'Grote Kerk'); ok(await det().evaluate(d => d.open), 'het blok blijft open na wijzigen');
+  await veld('aanmeldlink', 'zie de website'); ok(/geen geldig webadres/.test(await kaart()), 'ongeldige link geeft een waarschuwing');
+  await veld('aanmeldlink', 'https://www.ticketkantoor.nl/shop/Cc26'); ok(!/geen geldig webadres/.test(await kaart()), 'geldige link haalt hem weg');
+  const tk = p.locator(`${sel} [data-rectekst]`); await tk.fill('Kom zingen via https://oude-link.nl'); await tk.press('Tab'); await p.waitForTimeout(250); await veld('aanmeldlink', 'https://www.ticketkantoor.nl/shop/Cc27');
+  ok(/noemt de ingevulde link niet/.test(await kaart()), 'eigen tekst zonder de link geeft een waarschuwing');
+  await P.wijzig(s => { s.reclame['koor:2026-12-18'].tekst = ''; s.reclameAf = Object.assign(s.reclameAf || {}, { 'koor:2026-12-18#bord': '2026-11-09' }); }, 'reclame');
+  ok(!/al verstuurd/.test(await kaart()), 'nog geen melding zonder wijziging'); await det().evaluate(d => { d.open = true; }); await veld('plaats', 'Nieuwe Kerk, Zierikzee');
+  ok(/nadat het bord al verstuurd was/.test(await kaart()), 'wijzigen na verzenden geeft een melding');
+  await klikData(P, `${sel} [data-recklopt]`); ok(!/al verstuurd/.test(await kaart()), 'Hoeft niet opnieuw haalt de melding weg');
+  const [dl] = await Promise.all([p.waitForEvent('download'), p.locator(`${sel} [data-recposter]`).click()]);
+  gelijk(dl.suggestedFilename(), 'Poster Vrede op Aarde 2026-12-18.pdf', 'naam van de poster');
+  const b = require('fs').readFileSync(await dl.path()); ok(b.slice(0, 5).toString() === '%PDF-' && /\/MediaBox \[0 0 841\.89 1190\.55\]/.test(b.toString('latin1')) && /%%EOF\s*$/.test(b.toString('latin1')), 'de download is een A3-pdf van ' + b.length + ' bytes');
+});
 sc('Reclame: geen weekinfo of bord op een geschatte examenconcertdatum (bevinding 65)', async nieuw => {
   const P = await nieuw({ tijd: nlIso('2027-02-01', '08:15') }); await P.open('reclame');
   const kaart = P.page.locator('#rec-ex-mavo4-P2'); ok(await kaart.count() === 1, 'examenconcert mavo 4 staat in Reclame');
