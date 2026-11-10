@@ -67,7 +67,7 @@
         },
         "formatief": {
           "soort": "meeluisteren",
-          "tekst": "Elke groep speelt de inzet en het slot in de eigen hoek; de docent luistert mee en de groep benoemt wat strak was."
+          "tekst": "Elke groep speelt de inzet en het slot op de eigen plek of in de eigen ruimte; de docent luistert mee en de groep benoemt wat strak was."
         }
       },
       {
@@ -94,7 +94,7 @@
         "fasenExtra": {
           "0": {
             "stappen": [
-              "Elke groep werkt in een eigen hoek.",
+              "Elke groep werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en jullie spelen het hele lied voor mij.",
               "Je krijgt per onderdeel een voorlopige score en één tip."
             ],
@@ -210,7 +210,7 @@
             "soort": "uitleg",
             "kop": "Afspraken",
             "stappen": [
-              "Elke groep werkt in een eigen hoek.",
+              "Elke groep werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en jullie spelen het arrangement voor mij.",
               "Ik neem jullie versie op."
             ],

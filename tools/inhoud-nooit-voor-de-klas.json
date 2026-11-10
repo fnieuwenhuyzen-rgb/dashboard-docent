@@ -11,7 +11,7 @@
           }
         ],
         "titel": "Spelen in je groep: meeluisteren met tips",
-        "detail": "Nummers van de periode achter elkaar in je eigen hoek; de docent luistert mee en geeft tip en top.",
+        "detail": "Nummers van de periode achter elkaar op je eigen plek of in je eigen ruimte; de docent luistert mee en geeft tip en top.",
         "doel": "Je speelt de nummers van de periode in je groep achter elkaar voor de docent en krijgt tip en top.",
         "criteria": [
           "Wij spelen ons nummer zonder stoppen",
@@ -32,7 +32,7 @@
             "soort": "uitleg",
             "kop": "Afspraken",
             "stappen": [
-              "Elke groep werkt in een eigen hoek.",
+              "Elke groep werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en jullie spelen de nummers voor mij."
             ],
             "docent": "Niemand speelt voor de klas."
@@ -59,7 +59,7 @@
         ],
         "formatief": {
           "soort": "meeluisteren",
-          "tekst": "Elke groep speelt in de eigen hoek voor de docent en krijgt één tip en één top op timing, balans en presentatie."
+          "tekst": "Elke groep speelt op de eigen plek of in de eigen ruimte voor de docent en krijgt één tip en één top op timing, balans en presentatie."
         }
       },
       {
@@ -134,9 +134,9 @@
           {
             "min": 30,
             "soort": "doen",
-            "kop": "Solowerk in je eigen hoek",
+            "kop": "Solowerk op je eigen plek of in je eigen ruimte",
             "stappen": [
-              "Oefen je solowerk in een eigen hoek.",
+              "Oefen je solowerk op een eigen plek of in een eigen ruimte.",
               "Kom ik langs? Dan speel je het voor mij.",
               "Je krijgt een feedbackkaartje: toon, tempo, frasering.",
               "Probeer één tip meteen uit."
@@ -182,7 +182,7 @@
             "soort": "doen",
             "kop": "Eerste helft solowerk",
             "stappen": [
-              "Oefen de eerste helft in een eigen hoek.",
+              "Oefen de eerste helft op een eigen plek of in een eigen ruimte.",
               "Kom ik langs? Dan speel je die voor mij.",
               "Je krijgt één feedbackpunt."
             ],
@@ -212,9 +212,9 @@
           {
             "min": 35,
             "soort": "doen",
-            "kop": "Solowerk in je eigen hoek",
+            "kop": "Solowerk op je eigen plek of in je eigen ruimte",
             "stappen": [
-              "Oefen je solowerk in een eigen hoek.",
+              "Oefen je solowerk op een eigen plek of in een eigen ruimte.",
               "Kom ik langs? Dan speel je het hele stuk voor mij.",
               "Je krijgt een feedbackkaartje: tempo, toon, frasering."
             ],
@@ -256,7 +256,7 @@
             "soort": "doen",
             "kop": "Bandproject",
             "stappen": [
-              "Werk aan het bandproject in je eigen hoek.",
+              "Werk aan het bandproject op je eigen plek of in je eigen ruimte.",
               "Speel het een keer helemaal door."
             ]
           },
@@ -292,7 +292,7 @@
             "soort": "uitleg",
             "kop": "Afspraken",
             "stappen": [
-              "Elke groep werkt in een eigen hoek.",
+              "Elke groep werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en jullie spelen de song voor mij."
             ],
             "docent": "Niemand speelt voor de klas."
@@ -351,7 +351,7 @@
           "1": {
             "kop": "Ik kom bij elke groep langs",
             "stappen": [
-              "Elke groep werkt in een eigen hoek.",
+              "Elke groep werkt op een eigen plek of in een eigen ruimte.",
               "Kom ik langs? Dan tel je samen af en speel je het lied voor mij.",
               "Speel door als het misgaat en val weer in op de tel.",
               "Daarna oefen je zacht verder."
@@ -372,7 +372,7 @@
         "fasenExtra": {
           "1": {
             "stappen": [
-              "Iedereen werkt in een eigen hoek. De volgorde staat op het bord.",
+              "Iedereen werkt op een eigen plek of in een eigen ruimte. De volgorde staat op het bord.",
               "Aan de beurt? Dan kom ik bij je staan. Zeg kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.",
               "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.",
               "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."
@@ -392,8 +392,8 @@
         "fasenExtra": {
           "0": {
             "stappen": [
-              "Zelfde afspraken als maandag: eigen hoek, ik kom bij je staan.",
-              "Wie al geweest is, oefent zonder geluid of wacht buiten het lokaal.",
+              "Zelfde afspraken als maandag: eigen plek of eigen ruimte, ik kom bij je staan.",
+              "Wie al geweest is, oefent zacht verder op de eigen plek of in de eigen ruimte.",
               "Daarna is P9 afgerond voor iedereen."
             ],
             "docent": "Scorelijst afmaken; opnamen bewaren in de klasmap. Niemand speelt voor de klas."
@@ -409,7 +409,7 @@
           }
         ],
         "titel": "Tussenstand: meeluisteren met feedback",
-        "detail": "Elke groep speelt in de eigen hoek voor de docent; feedback op samenspel, ritme en presentatie.",
+        "detail": "Elke groep speelt op de eigen plek of in de eigen ruimte voor de docent; feedback op samenspel, ritme en presentatie.",
         "vraag": "Hoe klinkt ons nummer, en wat moet er nog beter?",
         "doel": "Je speelt je nummer voor de docent en krijgt feedback op samenspel, ritme en presentatie.",
         "criteria": [
@@ -425,7 +425,7 @@
           "0": {
             "kop": "Zo gaat de tussenstand",
             "stappen": [
-              "Elke groep werkt in een eigen hoek.",
+              "Elke groep werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en jullie spelen het nummer voor mij.",
               "Je krijgt één top en twee tips: samenspel, ritme en presentatie."
             ],

@@ -224,7 +224,7 @@
               "Luister naar elkaar op ritme: komt het op de goede plek?",
               "Geef elkaar één tip en probeer het nog een keer."
             ],
-            "docent": "Groepjes van drie of vier, elk in een eigen hoek. Op ritme en maat staat bij presentatie 1 de weging 2. Let op: wie komt te vroeg of te laat in, wie raakt de maat kwijt in het couplet? Een laptop met de MusicBox kan helpen.",
+            "docent": "Groepjes van drie of vier, elk op een eigen plek of in een eigen ruimte. Op ritme en maat staat bij presentatie 1 de weging 2. Let op: wie komt te vroeg of te laat in, wie raakt de maat kwijt in het couplet? Een laptop met de MusicBox kan helpen.",
             "klaar": "Klaar? Speel het stuk helemaal door zonder te stoppen."
           },
           {
@@ -386,7 +386,7 @@
             "soort": "start",
             "kop": "Afspraken",
             "stappen": [
-              "Elk groepje werkt in een eigen hoek.",
+              "Elk groepje werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en luister mee.",
               "Elke tip begint met iets wat goed ging."
             ],
@@ -691,7 +691,7 @@
               "Luister terug. Kies één werkpunt.",
               "Speel het nog een keer met dat werkpunt."
             ],
-            "docent": "Vraag per groepje naar het werkpunt: wissel, tempo, begin of slot. Wie dit niet zonder te stoppen kan, krijgt in les 17 extra oefentijd. Opnemen blijft in de les; niets delen buiten het groepje.",
+            "docent": "Vraag per groepje naar het werkpunt: wissel, tempo, begin of slot. Wie dit niet zonder te stoppen kan, krijgt in les 17 extra oefentijd. Opnemen met de laptop van het groepje; inleveren via het Forms-formulier, verder niets delen.",
             "klaar": "Klaar? Speel het lied met een andere slag, bijvoorbeeld alleen op 1 en 3."
           },
           {
@@ -734,7 +734,7 @@
             "soort": "start",
             "kop": "Afspraken",
             "stappen": [
-              "Elk groepje werkt in een eigen hoek.",
+              "Elk groepje werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en luister mee.",
               "Tip op akkoorden, wissels, patroon of samenspel."
             ],
@@ -804,7 +804,7 @@
             "soort": "start",
             "kop": "Afspraken voor vandaag",
             "stappen": [
-              "Elk groepje werkt in een eigen hoek.",
+              "Elk groepje werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en luister. Niemand speelt voor de klas.",
               "Tel af en begin samen. Fout? Speel door op de tel."
             ],
@@ -819,7 +819,7 @@
               "Pak je grepen los: G, C, D7, Em en A7.",
               "Speel het lied één keer door met je groepje, zacht."
             ],
-            "docent": "Stemmen: gitaar E A D G B e, ukelele G C E A. Zet de groepjes in hoeken, met koptelefoon op het keyboard waar dat kan."
+            "docent": "Stemmen: gitaar E A D G B e, ukelele G C E A. Zet de groepjes op eigen plekken of in eigen ruimtes, met koptelefoon op het keyboard waar dat kan."
           },
           {
             "min": 25,
@@ -1063,7 +1063,7 @@
             "soort": "start",
             "kop": "Afspraken",
             "stappen": [
-              "Elk groepje werkt in een eigen hoek.",
+              "Elk groepje werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en luister mee.",
               "Tip op tempo, groove, fill of samenspel."
             ],
@@ -1133,7 +1133,7 @@
             "soort": "start",
             "kop": "Afspraken voor vandaag",
             "stappen": [
-              "Elk groepje werkt in een eigen hoek.",
+              "Elk groepje werkt op een eigen plek of in een eigen ruimte.",
               "Ik kom bij jullie langs en luister. Niemand speelt voor de klas.",
               "Tel af en begin samen. Fout? Speel door op de tel."
             ],

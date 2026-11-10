@@ -30,7 +30,7 @@
           "Het solostuk mag ook uit de romantiek komen."
         ],
         "notitieDoel": [
-          "Niemand speelt voor de klas. Iedereen werkt in een eigen hoek en jij staat bij wie aan de beurt is.",
+          "Niemand speelt voor de klas. Iedereen werkt op een eigen plek of in een eigen ruimte en jij staat bij wie aan de beurt is.",
           "Je beoordeelt zes punten; het cijfer is score maal weging, opgeteld en gedeeld door 10. Presentatie 1, toon en zuiverheid 2, ritme en tempo 2, uitdrukking en stijl 2, eigen partij 1, luisteren en reageren 2.",
           "P9 telt 6 mee voor het SE en is niet herkansbaar."
         ],
@@ -38,7 +38,7 @@
           {
             "min": 10, "soort": "start",
             "kop": "Inzingen: And the glory of the Lord (nr. 4), daarna Hallelujah (nr. 44)",
-            "stappen": ["Nr. 4 vanaf het begin; nr. 44 herhalen tot 'King of Kings'.", "Daarna: instrumenten stemmen, standaards klaar, telefoon weg.", "De volgorde van vandaag staat op het bord. Ga naar je hoek."],
+            "stappen": ["Nr. 4 vanaf het begin; nr. 44 herhalen tot 'King of Kings'.", "Daarna: instrumenten stemmen, standaards klaar, telefoon weg.", "De volgorde van vandaag staat op het bord. Ga naar je eigen plek of eigen ruimte."],
             "docent": "Kort houden: het inzingen is bedoeld om de spanning uit de ruimte te halen.",
             "notitie": {
               "vertel": ["We zingen eerst samen. Dat haalt de spanning weg.", "Daarna gaat iedereen naar de eigen hoek. Niemand speelt voor de klas: ik kom bij je staan als je aan de beurt bent."],
@@ -48,7 +48,7 @@
           {
             "min": 35, "soort": "doen",
             "kop": "De uitvoeringen: zo gaat het",
-            "stappen": ["Iedereen werkt in een eigen hoek. De volgorde staat op het bord.", "Aan de beurt? Dan kom ik bij je staan. Zeg kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.", "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.", "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."],
+            "stappen": ["Iedereen werkt op een eigen plek of in een eigen ruimte. De volgorde staat op het bord.", "Aan de beurt? Dan kom ik bij je staan. Zeg kort wat je gaat horen: stuk, componist, bezetting. Dan spelen.", "Wie klaar is, vult meteen het P9-format in voor de eigen uitvoering: wat ging goed, wat neem je mee naar P10.", "Wie nog moet, speelt stil in: vingers op de toetsen, geen geluid."],
             "docent": "Scorelijst per leerling: solo en samenspel apart. Niemand speelt voor de klas.",
             "beeld": { "soort": "kaarten", "items": [{ "k": "Presentatie", "t": "begin, slot, doorspelen" }, { "k": "Toon en zuiverheid", "t": "klinkt het zoals bedoeld?" }, { "k": "Ritme en tempo", "t": "blijft het staan?" }, { "k": "Uitdrukking en stijl", "t": "dynamiek, frasering, karakter" }, { "k": "Samenspel", "t": "eigen partij, luisteren en reageren" }] },
             "notitie": {
@@ -83,7 +83,7 @@
         ],
         "notitieTitel": [
           "Tweede P9-les op maandag 23 november, 15:25 tot 16:10. Vwo 4 had je net voor P1.",
-          "Eerst de laatste uitvoeringen, in de eigen hoek. Daarna luisteren. Is het spelen eerder klaar, dan begin je eerder met luisteren."
+          "Eerst de laatste uitvoeringen, op de eigen plek of in de eigen ruimte. Daarna luisteren. Is het spelen eerder klaar, dan begin je eerder met luisteren."
         ],
         "notitieDoel": [
           "Na de 25 minuten is P9 voor iedereen afgerond. Het luisterstuk is geen toets: het laat horen wat er in honderd jaar veranderde.",
@@ -93,7 +93,7 @@
           {
             "min": 25, "soort": "doen",
             "kop": "De laatste uitvoeringen",
-            "stappen": ["Zelfde afspraken als de eerste les: eigen hoek, ik kom bij je.", "Wie al geweest is, oefent zonder geluid of wacht buiten het lokaal.", "Daarna is P9 afgerond voor iedereen."],
+            "stappen": ["Zelfde afspraken als de eerste les: eigen plek of eigen ruimte, ik kom bij je.", "Wie al geweest is, oefent zacht verder op de eigen plek of in de eigen ruimte.", "Daarna is P9 afgerond voor iedereen."],
             "docent": "Scorelijst afmaken; opnamen bewaren in de gedeelde map met P9-opnamen. Niemand speelt voor de klas.",
             "notitie": {
               "vertel": ["Wie nog moet, begint meteen. Noem stuk, componist en bezetting, en speel.", "Wie al geweest is en het P9-format nog niet af heeft, maakt dat nu af."],

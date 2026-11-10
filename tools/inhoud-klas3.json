@@ -591,7 +591,7 @@
       "vraag": "Wat hoor je als je jezelf terugluistert?",
       "doel": "Je groep neemt de song op, luistert terug en benoemt twee sterke punten en één verbeterpunt.",
       "criteria": [
-        "Onze opname is compleet en gedeeld met de docent",
+        "Onze opname is compleet en we hebben hem teruggeluisterd",
         "Ik noem iets wat goed ging, met een voorbeeld",
         "Ik noem iets wat beter kan en hoe"
       ],
@@ -633,7 +633,7 @@
           "stappen": [
             "Speel de song één keer door als repetitie.",
             "Neem de tweede keer op.",
-            "Deel de opname via Magister met de docent."
+            "Luister de opname in je groep terug. Hij blijft op de laptop van de groep."
           ]
         },
         {
@@ -660,7 +660,7 @@
       ],
       "formatief": {
         "soort": "opname en reflectie",
-        "tekst": "Opname via Magister delen; per leerling twee sterke punten en één verbeterpunt op een briefje."
+        "tekst": "Opname blijft op de laptop van de groep; per leerling twee sterke punten en één verbeterpunt op een briefje."
       },
       "identiteit": "Eerlijk naar jezelf luisteren en elkaar opbouwend feedback geven: zo groei je samen.",
       "materiaal": [
@@ -1278,7 +1278,7 @@
           "kop": "Zo gaat de toetsles volgende week",
           "stappen": [
             "Volgorde van voorspelen staat vast.",
-            "Je speelt voor de docent, de klas oefent intussen stil of luistert buiten het lokaal.",
+            "Je speelt voor de docent; de rest werkt intussen op de eigen plek of in de eigen ruimte. Klaar met spelen? Dan begin je aan de nieuwe songbox, Way Maker.",
             "Daarna vul je meteen het reflectieformulier in."
           ]
         },
@@ -2784,12 +2784,12 @@
               }
             ]
           },
-          "docent": "Hoeken in het lokaal: akkoorden, zang, bas en drums. Tutorials staan in de kerstbox, niveau 1."
+          "docent": "Eigen plekken of ruimtes: akkoorden, zang, bas en drums. Tutorials staan in de kerstbox, niveau 1."
         },
         {
           "min": 25,
           "soort": "doen",
-          "kop": "Oefen in je hoek, met de kerstbox",
+          "kop": "Oefen op je eigen plek, met de kerstbox",
           "stappen": [
             "Gebruik de tutorial van jouw instrument in niveau 1.",
             "Eerst langzaam, dan met de meespeeltrack.",
@@ -2802,7 +2802,7 @@
           "soort": "check",
           "kop": "Eén keer samen het refrein",
           "stappen": [
-            "Alle hoeken tegelijk, met de meespeeltrack.",
+            "Alle groepen tegelijk, met de meespeeltrack.",
             "Duimen: lukt mijn partij op tempo?"
           ]
         }
@@ -2820,7 +2820,7 @@
       "benodigd": [
         "Akkoordenschema op het bord",
         "Gitaren, ukeleles, keyboards, basgitaar, drums of cajon",
-        "Hoeken in het lokaal klaargezet"
+        "Eigen plekken en ruimtes afgesproken"
       ]
     },
     "Mary's Boy Child: groepen maken en samenspelen": {
@@ -3371,12 +3371,12 @@
               }
             ]
           },
-          "docent": "Hoeken in het lokaal: akkoorden, zang, bas en drums. Tutorials staan in de kerstbox, niveau 1."
+          "docent": "Eigen plekken of ruimtes: akkoorden, zang, bas en drums. Tutorials staan in de kerstbox, niveau 1."
         },
         {
           "min": 25,
           "soort": "doen",
-          "kop": "Oefen in je hoek, met de kerstbox",
+          "kop": "Oefen op je eigen plek, met de kerstbox",
           "stappen": [
             "Gebruik de tutorial van jouw instrument in niveau 1.",
             "Eerst langzaam, dan met de meespeeltrack.",
@@ -3389,7 +3389,7 @@
           "soort": "check",
           "kop": "Eén keer samen het refrein",
           "stappen": [
-            "Alle hoeken tegelijk, met de meespeeltrack.",
+            "Alle groepen tegelijk, met de meespeeltrack.",
             "Duimen: lukt mijn partij op tempo?"
           ]
         }
@@ -3407,7 +3407,7 @@
       "benodigd": [
         "Akkoordenschema op het bord",
         "Gitaren, ukeleles, keyboards, basgitaar, drums of cajon",
-        "Hoeken in het lokaal klaargezet"
+        "Eigen plekken en ruimtes afgesproken"
       ]
     },
     "God Rest Ye: groepen maken en samenspelen": {

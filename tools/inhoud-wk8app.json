@@ -292,7 +292,7 @@
           "soort": "doen",
           "kop": "Twee sporen: nog spelen of al geweest",
           "stappen": [
-            "Nog niet geweest: speel je stukken twee keer helemaal door, in een hoek van het lokaal of in de oefenruimte. Niet repareren, doorspelen.",
+            "Nog niet geweest: speel je stukken twee keer helemaal door, op je eigen plek of in je eigen ruimte. Niet repareren, doorspelen.",
             "Al geweest: luister je opname terug en vul het format in voor je eigen uitvoering. Eén punt dat je meeneemt naar P10, concreet: welke maat, welk probleem.",
             "Klaar? Luister naar de opname van een klasgenoot en geef één tip op het format."
           ],
@@ -479,7 +479,7 @@
       "vraag": "Is mijn improvisatie klaar?",
       "doel": "Je rondt je improvisatie af en neemt hem op.",
       "criteria": [
-        "Mijn opname staat erop",
+        "Mijn opname is ingeleverd via Forms",
         "Ik heb één verbeterpunt opgeschreven"
       ],
       "fasen": [
@@ -502,9 +502,9 @@
           "stappen": [
             "Laptop op tafel, een meter afstand, niet bewegen tijdens de opname.",
             "Zeg eerst je naam en 'improvisatie blok 1', dan spelen. Het hoeft niet perfect; het moet áf zijn.",
-            "Maximaal drie pogingen. Kies zelf de beste en zet hem in de inlevermap."
+            "Maximaal drie pogingen. Kies zelf de beste en lever hem in via het Forms-formulier; de link staat in je Magister-bericht."
           ],
-          "docent": "Opnameplekken verdelen over lokaal en oefenruimte; stilte-afspraak. Inleveren via de Teams-opdracht."
+          "docent": "Opnameplekken verdelen over lokaal en oefenruimte; stilte-afspraak. Inleveren via het Forms-formulier; zet de link vooraf in Magister."
         },
         {
           "min": 10,
@@ -640,14 +640,14 @@
             "Klaar? Schrijf drie dingen op die je in schets 2 wilt veranderen."
           ],
           "klaar": "Speel je schets voor iemand die hem nog niet kent. Waar kijkt die verbaasd?",
-          "docent": "Rouleren; per leerling één vraag stellen over het ontbrekende deel. Niet meeschrijven aan de compositie. Opnamen in de inlevermap P3."
+          "docent": "Rouleren; per leerling één vraag stellen over het ontbrekende deel. Niet meeschrijven aan de compositie. Opnamen komen binnen via het Forms-formulier P3 (Inleverbak in Beoordelen)."
         },
         {
           "min": 5,
           "soort": "afsluiten",
           "kop": "Opgenomen? Dan is schets 1 af",
           "stappen": [
-            "Opname in de inlevermap, met je naam en 'schets 1'.",
+            "Lever de opname in via het Forms-formulier P3; noem het bestand 'schets 1'.",
             "Na de toetsweek: schets 2, met feedback van mij op schets 1.",
             "Toetsweek: T3 analyseren, 135 minuten. Foutenlijst en zelfcheck mee."
           ],
@@ -749,7 +749,7 @@
           "kop": "Verbeteren en afronden voor het portfolio",
           "stappen": [
             "Voer één tip door en rond je toelichting af.",
-            "Zet opname, partituur of leadsheet en toelichting in je portfolio.",
+            "Lever je opname in via het Forms-formulier. Partituur of leadsheet en toelichting gaan in je portfolio.",
             "Vrijdag: examenstukken en het examenconcert."
           ],
           "docent": "Portfolio-inlevering vóór de toetsweek."
