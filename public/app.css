@@ -1381,9 +1381,9 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   /* ===== HAVO: zijkolom. Links de kolom in kleur met kop en klok, rechts de inhoud als lijst. ===== */
   .les[data-niveau="havo"]{--kolom:36vw}
   .les[data-niveau="havo"].werk{--kolom:42vw}
-  .les[data-niveau="havo"]:is(.s-welkom,.s-doel,:has(.fase-kop))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:auto;width:var(--kolom);background-color:var(--paneel);background-image:var(--motief);background-size:var(--motief-maat,auto);z-index:0}
+  .les[data-niveau="havo"]:is(.s-welkom,.s-doel,.s-id,.s-thuis,:has(.fase-kop))::after{content:"";position:absolute;top:0;left:0;bottom:0;right:auto;width:var(--kolom);background-color:var(--paneel);background-image:var(--motief);background-size:var(--motief-maat,auto);z-index:0}
   .les[data-niveau="havo"]>*{z-index:1}.les[data-niveau="havo"] .lkop,.les[data-niveau="havo"] .lbalk{z-index:2}
-  .les[data-niveau="havo"]:is(.s-welkom,.s-doel,:has(.fase-kop)) .slide,.les[data-niveau="havo"].werk:has(.timerhoek) .slide,.les[data-niveau="havo"]:has(.timerhoek) .slide{display:grid;grid-template-columns:calc(var(--kolom) - var(--rand) - 2.5vw) minmax(0,1fr);column-gap:calc(2.5vw + 4vw);padding-left:var(--rand);padding-right:var(--rand);align-items:center;align-content:stretch}
+  .les[data-niveau="havo"]:is(.s-welkom,.s-doel,.s-id,.s-thuis,:has(.fase-kop)) .slide,.les[data-niveau="havo"].werk:has(.timerhoek) .slide,.les[data-niveau="havo"]:has(.timerhoek) .slide{display:grid;grid-template-columns:calc(var(--kolom) - var(--rand) - 2.5vw) minmax(0,1fr);column-gap:calc(2.5vw + 4vw);padding-left:var(--rand);padding-right:var(--rand);align-items:center;align-content:stretch}
   .les[data-niveau="havo"] .w-boven{grid-column:1;grid-row:1;align-self:center}
   .les[data-niveau="havo"] .w-boven.met-foto{grid-template-columns:1fr;gap:1.2rem}
   .les[data-niveau="havo"] .w-boven .lesfoto{height:calc(var(--past,1)*clamp(9rem,26vh,18rem))}
@@ -1429,7 +1429,7 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 
   /* ===== VWO: tijdschrift. Smalle rug in kleur, wit blad, lijnen, inhoudsopgave, klok dun. ===== */
   .les[data-niveau="vwo"]{--rug:2.4vw;--rand:clamp(2.5rem,7vw,7rem)}
-  .les[data-niveau="vwo"]:is(.s-welkom,.s-doel,:has(.fase-kop))::after,.les[data-niveau="vwo"].werk::after{content:"";position:absolute;top:0;left:0;bottom:0;right:auto;width:var(--rug);background-color:var(--paneel);background-image:var(--motief);background-size:var(--motief-maat,auto);z-index:0}
+  .les[data-niveau="vwo"]:is(.s-welkom,.s-doel,.s-id,.s-thuis,:has(.fase-kop))::after,.les[data-niveau="vwo"].werk::after{content:"";position:absolute;top:0;left:0;bottom:0;right:auto;width:var(--rug);background-color:var(--paneel);background-image:var(--motief);background-size:var(--motief-maat,auto);z-index:0}
   .les[data-niveau="vwo"]>*{z-index:1}.les[data-niveau="vwo"] .lkop,.les[data-niveau="vwo"] .lbalk{z-index:2}
   .les[data-niveau="vwo"] .slide:not(.docentkaart),.les[data-niveau="vwo"]:has(.timerhoek) .slide,.les[data-niveau="vwo"].werk:has(.timerhoek) .slide,.les[data-niveau="vwo"].werk .slide{padding-left:var(--rand);padding-right:max(20px,5vw)}
   .les[data-niveau="vwo"].s-welkom .slide{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);column-gap:6vw;align-content:center;align-items:start}
@@ -1489,4 +1489,46 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   .les[data-thema="licht"][data-niveau="vwo"].s-check{background:#fbf8f1;color:#2a2a2a}
   .les[data-thema="licht"][data-niveau="vwo"].s-check .slide h2{color:#1b1b1b;border-left:9px solid var(--jaar);padding-left:.6em;max-width:30ch}
   .les[data-thema="licht"][data-niveau="vwo"].s-check .fasekop{color:var(--ct)}
+}
+
+/* ---------- Lay-out per groep: overige dia's en randgevallen ---------- */
+@media (min-width:761px){
+  .les[data-niveau="mavo"]:not(:has(.fase-kop,.w-boven),.s-thuis) .slide{justify-content:center}
+  .les[data-thema="licht"][data-jaar].s-id blockquote::before{color:var(--ct)}
+  /* check als fase: het blad blijft licht, alleen de kop staat op kleur */
+  .les[data-thema="licht"][data-jaar].s-check:has(.fase-kop){background:#fbf8f1;color:#2a2a2a}
+  .les[data-niveau="mavo"].s-check:has(.fase-kop) .slide h2{font-size:calc(var(--past,1)*clamp(1.75rem,4.4vw,3.6rem))}
+  .les[data-thema="licht"][data-niveau="vwo"].s-check:has(.fase-kop) .slide h2{border-left:0;padding-left:0;max-width:none}
+  /* mavo: werkfase met veel stappen krijgt een lagere band */
+  .les[data-thema="licht"][data-niveau="mavo"].werk:has(ol.stappen li:nth-child(4)) .fase-kop{min-height:27vh;padding-right:calc(var(--rand) + 26vh)}
+  .les[data-niveau="mavo"].werk:has(ol.stappen li:nth-child(4)) .timerhoek{width:24vh}
+  .les[data-niveau="mavo"].werk:has(ol.stappen li:nth-child(4)) .ring b{font-size:clamp(1.8rem,5.8vh,3.8rem)}
+  .les[data-niveau="mavo"].werk:has(ol.stappen li:nth-child(4)) .ring span{display:none}
+  /* mavo: rode draad en thuis */
+  .les[data-thema="licht"][data-niveau="mavo"].s-id{background-color:var(--paneel);background-image:var(--motief);background-size:var(--motief-maat,auto);color:#fff}
+  .les[data-thema="licht"][data-niveau="mavo"].s-id::before{background:none}
+  .les[data-thema="licht"][data-niveau="mavo"].s-id :is(.eyebrow,blockquote,blockquote::before){color:#fff}
+  .les[data-niveau="mavo"].s-id blockquote{font-style:normal;font-weight:700;font-size:calc(var(--past,1)*clamp(1.7rem,4vw,3.6rem));max-width:30ch}
+  .les[data-thema="licht"][data-niveau="mavo"].s-thuis .eyebrow{margin:-3vh calc(-1*var(--rand)) 0;padding:clamp(1rem,3.4vh,2.2rem) var(--rand);color:#fff;background-color:var(--paneel);background-image:var(--motief);background-size:var(--motief-maat,auto);font-size:calc(var(--past,1)*clamp(1.6rem,3.4vw,3.2rem));font-weight:900;letter-spacing:.01em;text-transform:none}
+  .les[data-niveau="mavo"] .thuiskaarten{max-width:none}
+  .les[data-thema="licht"][data-niveau="mavo"] .tk{background:var(--jaar-zacht);border:0;border-radius:var(--hoek)}
+  /* havo: rode draad, thuis, extra ruimte naast beeld, notities en tijdbalk */
+  .les[data-niveau="havo"]:has(.fase-body.twee,.fase-links .beeld){--kolom:29vw}
+  .les[data-niveau="havo"]:has(.fase-body.twee,.fase-links .beeld) .fase-kop h2{font-size:calc(var(--past,1)*clamp(1.35rem,2.6vw,2.6rem))}
+  .les[data-niveau="havo"] .notities{margin-left:calc(var(--kolom) + 2vw)}
+  .les[data-niveau="havo"]:has(.fase-tijd:not([hidden])) .timerhoek{bottom:calc(var(--lbalk-h) + 4.6rem)}
+  .les[data-niveau="havo"].s-id .slide{text-align:left}
+  .les[data-thema="licht"][data-niveau="havo"]:is(.s-id,.s-thuis) .slide>.eyebrow{grid-column:1;grid-row:1/span 3;align-self:center;color:#fff;font-weight:900;letter-spacing:.01em;text-transform:none;font-size:calc(var(--past,1)*clamp(1.7rem,3.4vw,3.2rem));line-height:1.1}
+  .les[data-niveau="havo"].s-id blockquote{grid-column:2;grid-row:1;max-width:none;font-size:calc(var(--past,1)*clamp(1.4rem,2.9vw,2.8rem))}
+  .les[data-niveau="havo"].s-thuis .slide{align-content:center;align-items:start;grid-auto-rows:min-content}
+  .les[data-niveau="havo"].s-thuis .slide>:not(.eyebrow),.les[data-niveau="havo"].s-thuis #pv>*{grid-column:2}
+  .les[data-niveau="havo"] .thuiskaarten{grid-template-columns:1fr;gap:0;max-width:none}
+  .les[data-thema="licht"][data-niveau="havo"] .tk{background:none;border:0;border-bottom:1px solid var(--lijn);border-radius:0;padding:clamp(.5rem,1.6vh,1.1rem) 0}
+  /* vwo: rode draad en thuis */
+  .les[data-niveau="vwo"].s-id .slide{align-items:flex-start;text-align:left}
+  .les[data-niveau="vwo"].s-id blockquote{border-left:7px solid var(--jaar);padding-left:.8em;max-width:36ch;font-size:calc(var(--past,1)*clamp(1.5rem,3.2vw,3rem))}
+  .les[data-niveau="vwo"].s-id blockquote::before{display:none}
+  .les[data-niveau="vwo"].s-thuis .eyebrow{border-top:7px solid var(--jaar);padding-top:clamp(.8rem,2.4vh,1.6rem)}
+  .les[data-niveau="vwo"] .thuiskaarten{max-width:none;gap:0 4vw}
+  .les[data-thema="licht"][data-niveau="vwo"] .tk{background:none;border:0;border-bottom:1px solid var(--lijn);border-radius:0;padding:clamp(.5rem,1.5vh,1rem) 0}
 }
