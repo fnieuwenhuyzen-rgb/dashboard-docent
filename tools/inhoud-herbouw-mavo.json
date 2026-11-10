@@ -1141,7 +1141,7 @@
             "soort": "uitleg",
             "kop": "Het couplet en het slagpatroon",
             "stappen": [
-              "Het couplet: Em, D7, G, G, Em, Em, A7, D7.",
+              "Het couplet: Em, G, G, G, Em, Em, A7, D7.",
               "Slagpatroon: neer, neer-op, op-neer-op.",
               "Het accent ligt op 2 en 4, waar de klas klapt.",
               "Het patroon past op elk akkoord."
@@ -1169,7 +1169,7 @@
             },
             "notitie": {
               "vertel": [
-                "Het couplet heeft acht maten: maat 1 Em, maat 2 D7, maat 3 G, maat 4 G, maat 5 Em, maat 6 Em, maat 7 A7, maat 8 D7. Let op maat 7 en 8: A7, dan D7. Het couplet vertelt, het refrein roept.",
+                "Het couplet heeft acht maten: maat 1 Em, maat 2 G, maat 3 G, maat 4 G, maat 5 Em, maat 6 Em, maat 7 A7, maat 8 D7. Let op maat 7 en 8: A7, dan D7. Het couplet vertelt, het refrein roept.",
                 "Het refrein krijgt op niveau 2 het volledige schema: G, G, C, G | G, Em, C-D7, G. In maat 6 komt Em in plaats van G.",
                 "Het slagpatroon: neer, neer-op, op-neer-op. Tel 1 2 en 3 en 4 en. Op 1 een neerslag. Op 2 een neerslag en op de 'en' erachter een opslag. Op tel 3 geen slag, maar op de 'en' erachter een opslag. Op 4 een neerslag en op de 'en' een opslag. Het accent ligt op 2 en 4, waar de klas klapt.",
                 "Tip voor gitaar en ukelele: laat je hand altijd doorzwaaien, neer-op-neer-op, en raak de snaren alleen aan op de plekken van het patroon. Dan blijft het patroon strak.",
@@ -1179,12 +1179,12 @@
               ],
               "voorbeelden": [
                 "Klap het patroon voor met één hand op je knie: neer = hand omlaag, op = hand omhoog. Tel 1 2 en (3) en 4 en.",
-                "Lees het couplet samen op: Em, D7, G, G, Em, Em, A7, D7."
+                "Lees het couplet samen op: Em, G, G, G, Em, Em, A7, D7."
               ],
               "vragen": [
                 {
                   "v": "Welke akkoorden heeft het couplet?",
-                  "a": "Em, D7, G, G, Em, Em, A7, D7."
+                  "a": "Em, G, G, G, Em, Em, A7, D7."
                 },
                 {
                   "v": "Op welke tellen ligt het accent in het slagpatroon?",
@@ -1306,7 +1306,7 @@
           "Laptop per groepje om op te nemen"
         ],
         "voorbereiding": [
-          "Zet het couplet op het bord: Em, D7, G, G | Em, Em, A7, D7.",
+          "Zet het couplet op het bord: Em, G, G, G | Em, Em, A7, D7.",
           "Zet het slagpatroon op het bord: tel 1 2 en 3 en 4 en, slag neer, neer-op, op-neer-op.",
           "Zorg dat de oefentrack werkt en dat elk groepje een laptop heeft om op te nemen."
         ],

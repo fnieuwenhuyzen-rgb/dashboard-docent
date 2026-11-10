@@ -34,7 +34,7 @@ Voor 23-11, op een echt apparaat:
 
 - Na toets 23-11: PT1-namen in formulieren en decks vwo 4 naar P1 (links mee).
 - Voor de kerst: PTA en leergangen 2027-2028 aanpassen (praktijktoetsen vwo 4 en 5 niet vlak na de zomer). [Frans]
-- TW2-rooster (januari): de toetsen van 18-1 een datum geven.
+- TW2-rooster (januari): de toetsen van 18-1 een datum geven. Vwo 5 T5 hangt sinds de uitval van ma 18-1 aan geen les (de controle meldt dat): geef hem dan ook weer een les.
 - Voor 22 maart, na mavo 3 presentatie 2: de 12 oude beoordelingsmodellen naar een strookje. `beoordeling.json` heeft er 16 zonder strookje; eerst bepalen welke 12. [Frans]
 - Voor eind maart: zomertijd-jacht in de agenda.
 - Mei 2027: opnames St. Louis Blues en Mahler kiezen voor keuzeuur havo 3.

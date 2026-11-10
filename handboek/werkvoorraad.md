@@ -20,7 +20,8 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 
 - Papieren formulier havo 5 P4 noemt nog 3 klasgenoten (moet 2).
 - Forms-inlevering wordt de vaste route voor opnames; de inzender telt voor de groep.
-- Vwo 5 lessen op 18-1 als uitval? Frans noemde alleen havo 5 en vwo 4. De controle meldt ze.
+- Go Tell It couplet maat 2 is sinds 9-11 G (blad, box, lessen, deck 14). De zes meespeelvideo's van niveau 2 en 3 in de box tonen en spelen vermoedelijk nog D7; bronnen in `02 Keuzevak muziek/Mavo/Mavo 3/Kerst/Video's voor YouTube`. Vervangen kan alleen Frans. [Frans]
+- Go Tell It in de box nakijken: keyboard niveau 2 "grondtonen van het couplet: E, D, G, A" klopt als rijtje, niet meer als volgorde; bas niveau 2 toont in de tab nog Em, D7, G, A7 als overzicht. [Frans]
 - Mavo 4 week 12 les 1, dia 5 raakt de timer.
 - Decks vwo 5 10.2 en vwo 6 10.2 lopen licht achter op de bron.
 - `notitieAgenda` vwo 5 10.1 noemt nog 25 minuten.

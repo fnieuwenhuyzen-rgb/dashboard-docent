@@ -66,6 +66,21 @@ Bron: https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (54 van 54 gekozen). Dit
 - Mavo 3 presentatie 1 achteraf: alleen als de ingevulde strookjes er nog zijn.
 - Het overzicht is voorlopig alleen voor Frans.
 
+## Tweede blad, avond van 9-11 (15 keuzes, zelfde adres)
+
+- Wiegenlied vwo 5 (Es, arrangement Hans v.d. Laan): geen pdf, de exemplaren in lokaal 009 zijn genoeg.
+- Vwo 5, lessen van ma 18-1: ook uitval. T5 houdt geen datum tot het TW2-rooster er is.
+- Go Tell It: couplet maat 1 twee kwarten, zoals nu.
+- Go Tell It: couplet maat 2 wordt G. Box en lessen gaan mee.
+- Go Tell It: ukelele fret 5 en 7 in het couplet blijven staan.
+- Go Tell It: gitaar in de eerste positie op de vier dunste snaren is goed.
+- Go Tell It: klapintro niveau 3 met kwartrusten is goed.
+- Go Tell It: de zinnen met "de klas" blijven staan.
+- God Rest Ye: de regel over P1 komt niet bij de uitdaging van niveau 3.
+- God Rest Ye: de uitdaging is verder doorgevoerd (tab Vwo van het ontwerpdoc, mavo- en havoboxen nagekeken).
+- Studio's in de hal: de banken gaan naar een andere plek in school. Waar, is nog niet bepaald.
+- Koorapp: route 2 naar Teams, zonder ICT; geen mail aan ICT. Notities op GitHub. De pianopartij van Star of Wonder verbouwt Frans zelf. Zie `OPEN-PUNTEN.md` van de Koorapp, A7.
+
 ## Aanvullingen uit OPEN-PUNTEN.md (9-11)
 
 - Verhuis het AI-onderwerp niet: AI-voorstellen worden niet gebouwd (besluit 9-11).
