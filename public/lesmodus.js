@@ -24,6 +24,12 @@
     check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
     afsluiten: '<path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/>'
   };
+  // ---------- lay-out per groep (proef): het leerjaar bepaalt kleur, hoeken en motief, het niveau de vorm van de dia's ----------
+  const JAARKLEUR = { 1: '#B0357F', 3: '#E8542A', 4: '#2B4C8C', 5: '#8C2332', 6: '#2F6B4F' };
+  function stijlVan(lg) { // bb1 is de brede brugklas: voorlopig de mavo-vorm; kmu3 is het keuzeuur havo 3
+    const m = String(lg || '').match(/^(bb|mavo|havo|kmu|vwo)(\d)/); if (!m || !JAARKLEUR[m[2]]) return null;
+    return { jaar: +m[2], kleur: JAARKLEUR[m[2]], niveau: m[1] === 'bb' ? 'mavo' : m[1] === 'kmu' ? 'havo' : m[1] };
+  }
   const ico = s => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICOON[s] || ICOON.doen}</svg>`;
   const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
@@ -140,7 +146,7 @@
   // ---------- slides ----------
   function agenda(fasen, kort) { // kort: de ingekorte minuten per fase als de les al loopt (bevinding 73)
     const fs = fasen.map(fase).map((f, i) => kort && kort[i] != null ? Object.assign({}, f, { min: kort[i] }) : f); const tot = fs.reduce((a, f) => a + (f.min || 0), 0) || 1;
-    return `<div class="agenda"><div class="balk">${fs.map(f => `<div style="flex:${f.min || 1};background:${SOORT[f.soort].kleur}" title="${esc(f.kop)}"></div>`).join('')}</div><ol>${fs.map(f => `<li style="--fc:${SOORT[f.soort].kleur};--fz:${SOORT[f.soort].zacht}"><i>${ico(f.soort)}</i><span><b>${esc(SOORT[f.soort].naam)} · ${f.min} min</b>${esc(f.kop)}</span></li>`).join('')}</ol><div class="tot">${tot} minuten</div></div>`;
+    return `<div class="agenda"><div class="balk">${fs.map(f => `<div style="flex:${f.min || 1};background:${SOORT[f.soort].kleur}" title="${esc(f.kop)}"></div>`).join('')}</div><ol>${fs.map(f => `<li style="--fc:${SOORT[f.soort].kleur};--fz:${SOORT[f.soort].zacht}"><i>${ico(f.soort)}</i><span><b><span class="a-soort">${esc(SOORT[f.soort].naam)}</span><span class="a-sep"> · </span><span class="a-min">${f.min} min</span></b><span class="a-kop">${esc(f.kop)}</span></span></li>`).join('')}</ol><div class="tot">${tot} minuten</div></div>`;
   }
   // Foto op een dia, met bronvermelding. f: {src, bron, focus: 'x% y%'}
   const fotoHtml = f => f && f.src ? `<figure class="lesfoto"><img src="${esc(f.src)}" alt="" loading="eager"${f.focus ? ` style="object-position:${esc(f.focus)}"` : ''}>${f.bron ? `<figcaption>Foto: ${esc(f.bron)}</figcaption>` : ''}</figure>` : '';
@@ -150,7 +156,7 @@
     const kop = `${esc(ctx.groep)} · ${esc(ctx.lgNaam)}${ctx.lokaal ? ' · ' + esc(ctx.lokaal) : ''}`;
     const fasen = (l.fasen || []).map(fase); const fot = ctx.fotos || {};
     S.push({ k: 'klaar', docent: true, h: `<p class="eyebrow">Jouw kaart · niet voor het bord</p><h2>${esc(l.titel || '')}</h2>${(l.ook || []).length ? `<p class="detail">Ook in deze les: ${esc(l.ook.join(', '))}.</p>` : ''}<div class="tweekol"><div><h3>Klaarzetten</h3><ul class="groot">${(ctx.benodigd || []).map(b => `<li>${esc(b)}</li>`).join('') || '<li>Niets bijzonders</li>'}</ul></div><div>${ctx.vorige ? `<h3>${esc(ctx.vorigeKop || 'Vorige keer')}</h3><p class="detail" style="white-space:pre-line">${esc(ctx.vorige)}</p>` : ''}${l.doel ? `<h3>Doel</h3><p class="detail">${esc(l.doel)}</p>` : ''}${fasen.length ? `<h3>Verloop</h3><p class="detail">${fasen.map(f => f.min + ' min ' + SOORT[f.soort].naam.toLowerCase()).join(' → ')}</p>` : ''}</div></div><p class="hint">Pijl rechts als het bord aanstaat · n = notities · t = timer · f = volledig scherm</p>` });
-    S.push({ k: 'welkom', h: `<div class="w-boven${fot.titel ? ' met-foto' : ''}"><div class="w-tekst"><p class="eyebrow">${kop}</p><h1>${esc(l.titel || '')}</h1>${ctx.toets ? `<p class="detail">${esc(ctx.toets)}</p>` : ''}${l.vraag ? `<p class="vraag">${esc(l.vraag)}</p>` : ''}</div>${fotoHtml(fot.titel)}</div>${fasen.length ? agenda(l.fasen, ctx.kort) : l.detail ? `<p class="detail">${esc(l.detail)}</p>` : ''}` });
+    S.push({ k: 'welkom', h: `<div class="w-boven${fot.titel ? ' met-foto' : ''}"><div class="w-tekst"><p class="eyebrow">${kop}</p><h1>${esc(l.titel || '')}</h1>${ctx.toets ? `<p class="detail">${esc(ctx.toets)}</p>` : ''}${l.vraag ? `<p class="vraag">${esc(l.vraag)}</p>` : ''}</div>${fotoHtml(fot.titel)}${ctx.stijl ? `<span class="klascijfer" aria-hidden="true">${ctx.stijl.jaar}</span>` : ''}</div>${fasen.length ? agenda(l.fasen, ctx.kort) : l.detail ? `<p class="detail">${esc(l.detail)}</p>` : ''}` });
     if (l.doel || (l.criteria || []).length) S.push({ k: 'doel', h: `<div class="doel-rij${fot.doel ? ' met-foto' : ''}"><div class="doel-tekst"><p class="eyebrow">Aan het eind van deze les</p><h2>${esc(l.doel || '')}</h2>${(l.criteria || []).length ? `<ul class="crit">${l.criteria.map(c => `<li><button type="button" class="vink" data-vink="" aria-pressed="false" aria-label="${esc(c)}"></button><span>${esc(c)}</span></li>`).join('')}</ul>` : ''}</div>${fotoHtml(fot.doel)}</div>` });
     fasen.forEach((f, i) => {
       const s = SOORT[f.soort]; const foto = (fot.fase || [])[i];
@@ -213,5 +219,5 @@
     }
     return h ? `<div class="sp-tekst">${h}</div>` : '';
   }
-  (typeof window !== 'undefined' ? window : globalThis).LESMODUS = { SOORT, fase, faseTekst, fasenNaarTekst, tekstNaarFasen, beeldHtml, bouwSlides, timerRing, timerTekst, ringDeel, inkorten, ico, notitieHtml };
+  (typeof window !== 'undefined' ? window : globalThis).LESMODUS = { SOORT, stijlVan, fase, faseTekst, fasenNaarTekst, tekstNaarFasen, beeldHtml, bouwSlides, timerRing, timerTekst, ringDeel, inkorten, ico, notitieHtml };
 })();
