@@ -820,10 +820,10 @@ function recKaart(a) {
   const t = vandaag(); const M = reclameMomenten(a); const w = recWaarschuwingen(a); const id = esc(a.id); const v = k => esc(a[k] == null ? '' : a[k]);
   const veld = (k, label, type, extra) => `<label>${label}<input data-recveld="${id}|${k}" type="${type || 'text'}" value="${v(k)}"${extra || ''}></label>`;
   const eigenTekst = a.tekst != null && a.tekst !== '';
-  return `<div class="kaart reckaart${a.uit ? ' uit' : ''}" id="rec-${recVeilig(a.id)}"><div class="recgrid">
+  return `<div class="kaart reckaart${a.uit ? ' uit' : ''}${a.id === recKies ? ' gekozen' : ''}" id="rec-${recVeilig(a.id)}"><div class="recgrid">
     ${a.uitLeergang ? '' : `<button class="recvoorbeeld" data-recbord="${id}" title="Bord downloaden (pptx)"><img data-recimg="${id}" alt="Voorbeeld van het bord voor ${esc(a.titel)}"></button>`}
     <div class="recin"><p class="eyebrow">${esc(RSOORT[a.soort] || a.soort)} · ${esc(fmtLang(a.d))}${a.aanvang ? ' · ' + esc(a.aanvang) : ''}</p><h2>${esc(a.titel)}</h2>
-    ${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : a.uitLeergang ? '<p class="lead">Eerst de datum vastleggen. Daarna komen de weekinfo en het bord.</p>' : M.map(m => recMomentRij(m)).join('')}
+    <div class="recin-a">${a.uit ? '<p class="lead">Geen reclame voor deze activiteit.</p>' : a.uitLeergang ? '<p class="lead">Eerst de datum vastleggen. Daarna komen de weekinfo en het bord.</p>' : M.map(m => recMomentRij(m)).join('')}
     ${w.length && !a.uit ? `<div class="melding recwaar">${w.map(esc).join('<br>')}</div>` : ''}
     ${recNaVerstuurd(a)}
     <details class="recgeg" data-recgeg="${id}"${(recGegOpen[a.id] != null ? recGegOpen[a.id] : w.length && !a.uit) ? ' open' : ''}><summary>Gegevens aanpassen (tekst, bord en poster)</summary><div class="form recvelden">
@@ -833,25 +833,29 @@ function recKaart(a) {
       <label>Wervende zin <textarea data-recveld="${id}|zin" rows="2">${v('zin')}</textarea></label>
       <label>Toegang<select data-recveld="${id}|toegang"><option value="">zonder tickets</option><option value="ticket"${a.toegang === 'ticket' ? ' selected' : ''}>met tickets</option></select></label>
       ${a.toegang === 'ticket' ? `<div class="rij">${veld('sluit', 'Bestellen tot en met', 'date')}${veld('kosten', 'Prijs', 'text', ' placeholder="€ 12,50"')}</div>${veld('aanmeldlink', 'Website voor de tickets')}` : a.soort === 'excursie' ? `<div class="rij">${veld('sluit', 'Aanmelden tot en met', 'date')}${veld('kosten', 'Kosten')}</div>${veld('aanmeldlink', 'Aanmelden via (link of plek)')}` : ''}
-    </div></details>
-    ${a.uitLeergang ? '' : `<label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
+    </div></details></div>
+    <div class="recin-b">${a.uitLeergang ? '' : `<label class="rectekst">Tekst voor de weekinfo${eigenTekst ? ' <button class="btn klein" type="button" data-recstel="' + id + '">Voorstel terugzetten</button>' : ''}<textarea data-rectekst="${id}" rows="8">${esc(recTekst(a))}</textarea></label>
     <div class="knoppen"><button class="btn hoofd" data-recmail="wi|${id}">Mail weekinfo</button><button class="btn hoofd" data-recmail="bord|${id}">Mail bord</button><button class="btn" data-reckopie="${id}">Kopieer tekst</button><button class="btn" data-recbeeld="${id}">Afbeelding weekinfo</button><button class="btn" data-recbord="${id}">Bord (pptx)</button><button class="btn" data-recposter="${id}">Poster A3 (pdf)</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button>${a.eigen ? `<button class="btn rood" data-recweg="${id}">Verwijderen</button>` : ''}</div>`}
-    ${a.uitLeergang ? `<div class="knoppen"><button class="btn hoofd" data-recdatumklopt="${id}">De datum ${esc(fmtD(a.d))} klopt</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button></div>` : ''}
+    ${a.uitLeergang ? `<div class="knoppen"><button class="btn hoofd" data-recdatumklopt="${id}">De datum ${esc(fmtD(a.d))} klopt</button><button class="btn" data-recuit="${id}">${a.uit ? 'Toch reclame' : 'Geen reclame'}</button></div>` : ''}</div>
     </div></div></div>`;
 }
-let recAlles = false, recFocus = '';
+let recAlles = false, recFocus = '', recKies = ''; // recKies: de activiteit die op een breed scherm rechts open staat
 const recGegOpen = {}; // welke gegevensblokken open staan, zodat ze bij het invullen niet dichtklappen
 function viewReclame() {
   if (!RC) return `<div class="kop"><div><h1>Reclame</h1></div></div><div class="kaart"><p class="lead">De gegevens voor reclame (data/reclame.json) zijn niet geladen.</p></div>`;
   const t = vandaag(); const acts = reclameActs().filter(a => a.d >= t);
-  const binnenkort = a => recAlles || a.id === recFocus || (!a.uit && (a.d <= addD(t, 70) || reclameMomenten(a).some(m => !m.af && !m.verlopen && m.d <= addD(t, 42))));
+  if (recFocus) recKies = recFocus;
+  const binnenkort = a => recAlles || a.id === recFocus || a.id === recKies || (!a.uit && (a.d <= addD(t, 70) || reclameMomenten(a).some(m => !m.af && !m.verlopen && m.d <= addD(t, 42))));
   const nu = reclameOpen(addD(t, 7));
-  let h = `<div class="kop"><div><h1>Reclame</h1><div class="sub">Weekinfo op maandag, inleveren tot ${esc(RC.weekinfo.inleverenTot)} · borden staand · mail naar ${esc(RC.mail)}</div></div><div class="knoppen"><button class="btn" data-recalles="" aria-pressed="${recAlles}">hele jaar</button></div></div>`;
+  let h = `<div class="kop"><div><h1>Reclame</h1><div class="sub">Weekinfo op maandag, inleveren tot ${esc(RC.weekinfo.inleverenTot)} · borden staand · mail naar ${esc(RC.mail)}</div></div><div class="knoppen alleen-smal"><button class="btn" data-recalles="" aria-pressed="${recAlles}">hele jaar</button></div></div>`;
   h += `<div class="kaart"><h2>Te doen, komende week</h2>${nu.length ? nu.map(m => recMomentRij(m, true)).join('') : '<p class="leeg">Niets deze week.</p>'}<p class="sub" style="margin-top:.5rem">Ritme: weekinfo twee weken vooraf en in de week zelf, bord vanaf drie weken vooraf. Bij een excursie of tickets met een sluitdatum rekent Lesdag vanaf die datum.</p></div>`;
   const vol = acts.filter(binnenkort), later = acts.filter(a => !binnenkort(a));
-  h += vol.map(recKaart).join('');
-  if (later.length) h += `<div class="kaart"><h2>Later dit schooljaar</h2>${later.map(a => `<div class="taak"><span><b style="font-family:var(--kop)">${esc(fmtD(a.d))}</b> ${esc(a.titel)} <span class="chip">${esc(RSOORT[a.soort] || a.soort)}</span>${a.uit ? ' <span class="chip">geen reclame</span>' : ''}</span><span class="tb"><button class="btn klein" data-recnaar="${esc(a.id)}">Open</button></span></div>`).join('')}</div>`;
-  h += `<form class="kaart form" id="recForm"><h2>Activiteit of excursie toevoegen</h2><div class="rij"><label style="flex:3 1 16rem">Wat <input id="recT" required placeholder="Bijvoorbeeld: excursie Muziekgebouw"></label><label>Datum <input id="recD" type="date" required min="${t}"></label><label>Soort<select id="recS">${Object.entries(RSOORT).map(([k, n]) => `<option value="${k}"${k === 'excursie' ? ' selected' : ''}>${n}</option>`).join('')}</select></label><button class="btn hoofd" type="submit">Toevoegen</button></div></form>`;
+  if (!vol.some(a => a.id === recKies)) recKies = (vol.find(a => !a.uit && reclameMomenten(a).some(m => !m.af && !m.verlopen)) || vol[0] || {}).id || '';
+  const lijstRij = a => { const M = reclameMomenten(a).filter(m => !m.af && !m.verlopen); return `<button class="rc-rij" data-reckies="${esc(a.id)}"${a.id === recKies ? ' aria-current="true"' : ''}><span class="rc-d">${esc(fmtD(a.d))}</span><span class="rc-t">${esc(a.titel)}</span>${a.uit ? '<span class="chip">geen reclame</span>' : a.uitLeergang ? '<span class="chip let">datum open</span>' : M.some(m => m.d < t) ? '<span class="chip rood">te laat</span>' : M.length ? `<span class="chip">${M.length} open</span>` : '<span class="chip ok">klaar</span>'}</button>`; };
+  h += `<div class="rc-raster"><div class="kaart rc-lijst alleen-breed"><h2>Activiteiten</h2>${vol.map(lijstRij).join('') || '<p class="leeg">Geen activiteiten.</p>'}${later.length ? `<p class="rc-kop">Later dit schooljaar</p>${later.map(lijstRij).join('')}` : ''}</div>`;
+  h += vol.map(a => recKaart(a)).join('');
+  if (later.length) h += `<div class="kaart rc-later"><h2>Later dit schooljaar</h2>${later.map(a => `<div class="taak"><span><b style="font-family:var(--kop)">${esc(fmtD(a.d))}</b> ${esc(a.titel)} <span class="chip">${esc(RSOORT[a.soort] || a.soort)}</span>${a.uit ? ' <span class="chip">geen reclame</span>' : ''}</span><span class="tb"><button class="btn klein" data-recnaar="${esc(a.id)}">Open</button></span></div>`).join('')}</div>`;
+  h += `<form class="kaart form" id="recForm"><h2>Activiteit of excursie toevoegen</h2><div class="rij"><label style="flex:3 1 16rem">Wat <input id="recT" required placeholder="Bijvoorbeeld: excursie Muziekgebouw"></label><label>Datum <input id="recD" type="date" required min="${t}"></label><label>Soort<select id="recS">${Object.entries(RSOORT).map(([k, n]) => `<option value="${k}"${k === 'excursie' ? ' selected' : ''}>${n}</option>`).join('')}</select></label><button class="btn hoofd" type="submit">Toevoegen</button></div></form></div>`;
   return h;
 }
 const recBeeldCache = {};
@@ -2011,7 +2015,7 @@ const PZ_WEG = 'lesdag-pauzevraag-weg'; // per apparaat: de kaart is weggeklikt
 const pauzeVraagWeg = () => { try { return !!localStorage.getItem(PZ_WEG); } catch (e) { return false; } };
 function pauzeVraag() {
   return `<div class="kaart nu-vraag"><h2>Je pauzes</h2><p class="lead">${ZC && ZC.events ? 'In je rooster vond Lesdag geen vaste pauzes.' : 'Lesdag haalt je pauzes uit je rooster in Zermelo. Plak daarvoor je Zermelo-link bij Instellingen.'} Daarna houdt Lesdag ze vrij.</p>
-    <div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#instellingen">Naar Instellingen</a><button class="btn kaal" data-pzvraagweg="">Niet meer tonen</button></div></div>`;
+    <div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#instellingen/planning">Naar Instellingen</a><button class="btn kaal" data-pzvraagweg="">Niet meer tonen</button></div></div>`;
 }
 /* voorstellen: hoogstens drie, nooit in een pauze; Frans zegt ja of later. Nooit iets uit een les halen. */
 function voorstellen(s, p, A, m, nu) {
@@ -2303,7 +2307,7 @@ function paletActies() {
   rooGroepen().forEach(g => voeg('Groep ' + g, 'voortgang leergang', () => { location.hash = 'jaar/' + encodeURIComponent(g); }));
   voeg('Dag afsluiten', 'einde klaar wat ging goed', () => { nuKijk = 'afsluiten'; location.hash = 'nu'; render(); });
   voeg('Morgen bekijken', 'voorbereiden volgende dag', () => { dagKeuze = volgendeLesdag(s, 1); location.hash = 'vandaag'; render(); });
-  voeg('Pauzetijden instellen', 'pauze rust instellingen', () => { location.hash = 'instellingen'; });
+  voeg('Pauzetijden instellen', 'pauze rust instellingen', () => { location.hash = 'instellingen/planning'; });
   voeg('Kompas naast Magister', 'magister presentie absenten huiswerk logboek', kompasOpen);
   voeg('Open Magister', 'presentie absenten huiswerk logboek', () => window.open(MAGURL(), 'magister'));
   return A;
@@ -2538,8 +2542,10 @@ function jaarAs(lw, metMaand) {
 }
 const JAAR_UITLEG = [['<i class="jr-noot"></i>', 'gegeven'], ['<i class="jr-noot open"></i>', 'komt nog'], ['<i class="jr-noot mis"></i>', 'achter: open, links van de rode lijn'], ['<i class="jr-noot half"></i>', 'half gegeven'], ['<i class="jr-noot over"></i>', 'overgeslagen'], ['<i class="jr-noot leeg"></i>', 'les nog in te vullen'], ['<i class="jr-rust"></i>', 'geen les: vakantie, toetsweek of uitval'],
   ['<span class="jr-toets">T1</span>', 'theorietoets'], ['<span class="jr-toets p">P1</span>', 'praktijktoets'], ['<span class="jr-toets los">P1</span>', 'week nog niet vast'], ['<i class="jr-band tw"></i>', 'toetsweek van die klas'], ['<i class="jr-kop"></i>', 'deze lesweek'], ['<i class="jr-lijn5"></i>', 'lijnen: ma boven, vr onder']];
-function viewJaar() { const g = decodeURIComponent(route.arg[0] || ''); return g ? viewKlasblad(g) : viewPartituur(); }
-function viewPartituur() {
+const JAAR_NAAST = matchMedia('(min-width:1600px)'); // breed scherm: het klasblad opent naast de partituur
+JAAR_NAAST.addEventListener('change', () => { if (route.naam === 'jaar' && route.arg[0]) render(); });
+function viewJaar() { const g = decodeURIComponent(route.arg[0] || ''); return !g ? viewPartituur() : JAAR_NAAST.matches ? `<div class="jr-naast"><div class="jr-links plak">${viewPartituur(g)}</div><div class="jr-rechts">${viewKlasblad(g)}</div></div>` : viewKlasblad(g); }
+function viewPartituur(gekozen) {
   const lw = jaarLw(); const rang = g => { const i = JAAR_VOLG.indexOf(leergangVan(g)); return i < 0 ? 99 : i; };
   const gs = [...new Set(rooGroepen().concat(Object.keys(MEE_MET).filter(m => rooGroepen().includes(MEE_MET[m]))))].sort((a, b) => rang(a) - rang(b) || a.localeCompare(b, 'nl'));
   let h = `<div class="kop"><div><h1>Jaar</h1><div class="sub">Schooljaar ${esc(B.schooljaar || '')}${lw in jaarSlots().per ? ` · nu: lesweek ${lw}` : ''}</div></div></div>`;
@@ -2547,7 +2553,7 @@ function viewPartituur() {
   if (!gs.length) return h + `<div class="kaart"><p class="lead">Nog geen lessen in je rooster, dus nog geen klassen in de partituur.</p><div class="knoppen" style="margin-top:.6rem"><a class="btn" href="#rooster">Naar Rooster</a></div></div>`;
   const lucht = luchtAan(); const krapD = g => { if (!leergangVan(g) || !B.leergangen[leergangVan(g)] || !Object.keys(S.voortgang[g] || {}).length) return null; return ruimte(g).find(d => d.tekort) || null; }; // een groep die nog nooit is afgevinkt krijgt eerst de melding op Dag
   const rijen = gs.map((g, i) => { const lg = leergangVan(g); const heeft = lg && B.leergangen[lg]; const zelfde = x => x && heeft && leergangVan(x) === lg; const acc = zelfde(gs[i - 1]) || zelfde(gs[i + 1]);
-    return `<div class="jr-rij${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>${lucht && krapD(g) ? `<div class="jr-stand"><a href="${esc(klasUrl(g))}">${esc(g)}</a> · ${esc(FUNCTIES.luchtRegel(krapD(g).t.id, krapD(g).inhaal.length))}</div>` : ''}`; }).join('');
+    return `<div class="jr-rij${g === gekozen ? ' gekozen' : ''}${acc ? ' acc' : ''}${acc && !zelfde(gs[i - 1]) ? ' eerst' : ''}${acc && !zelfde(gs[i + 1]) ? ' laatst' : ''}"><a class="jr-naam" href="${esc(klasUrl(g))}" title="${esc(heeft ? lgNaam(lg) : 'geen leergang')}">${esc(g)}</a>${heeft ? `<div class="jr-balk" data-jaarklas="${esc(g)}">${jaarBalk(g, lg, lw)}</div>` : '<div class="jr-balk geen"><span class="chip rood">geen leergang</span></div>'}</div>${lucht && krapD(g) ? `<div class="jr-stand"><a href="${esc(klasUrl(g))}">${esc(g)}</a> · ${esc(FUNCTIES.luchtRegel(krapD(g).t.id, krapD(g).inhaal.length))}</div>` : ''}`; }).join('');
   const tekort = lucht ? [] : gs.map(krapD).filter(Boolean); // met de schakelaar aan staat de melding als regel bij de klas zelf
   h += `<div class="kaart jr-vel"><div class="jr-score"><div class="jr-rij kopregel"><span class="jr-naam"></span>${jaarAs(lw, true)}</div>${rijen}</div></div>`;
   h += tekort.map(d => `<div class="melding"><a href="${esc(klasUrl(d.g))}">${esc(d.g)}</a> heeft nog ${d.nog.length} ${d.nog.length === 1 ? 'les' : 'lessen'} te geven en ${d.uren} ${d.uren === 1 ? 'lesuur' : 'lesuren'} tot ${esc(d.t.id)} ${d.a && !d.a.vast ? 'uiterlijk' : 'op'} ${esc(fmtD(d.s))}: ${d.tekort} tekort.</div>`).join('');
@@ -2635,9 +2641,10 @@ function viewRooster() {
   const stand = !ZC ? 'zelf ingevuld' : verschil ? 'Zermelo wijkt af' : zVastRooster().length ? 'klopt met Zermelo' : '';
   let h = `<div class="kop"><div><h1>Rooster</h1><div class="sub">${rows.length ? [`${rows.length} ${rows.length === 1 ? 'les' : 'lessen'}`, `${klassen} ${klassen === 1 ? 'klas' : 'klassen'}`, lok.length === 1 ? 'alles in ' + esc(lok[0]) : '', stand].filter(Boolean).join(' · ') : 'Je vaste week. Zermelo vult die vanzelf zodra je gekoppeld bent.'}</div></div></div>`;
   h += verschil;
+  h += '<div class="kol2">';
   if (rows.length) h += `<div class="kaart">${roosterRaster(rows)}${Object.entries(MEE_MET).filter(([, v]) => rows.some(u => u.groep === v)).map(([m, v]) => `<p class="sub ro-noot">${esc(m)} draait mee met ${esc(v)}. De toetsen van ${esc(m)} staan op <a href="${esc(klasUrl(m))}">het klasblad van ${esc(m)}</a>.</p>`).join('')}</div>`;
-  h += roosterAfwijkingen() + eenmaligKaart();
-  const open = jaarBlok.rooster != null ? jaarBlok.rooster : !rows.length;
+  h += '<div class="kol-zij">' + roosterAfwijkingen() + eenmaligKaart();
+  const open = jaarBlok.rooster != null ? jaarBlok.rooster : !rows.length || matchMedia('(min-width:1300px)').matches; // breed scherm: staat naast het raster, dus meteen open
   h += `<details class="kaart ro-zelf" data-jaarblok="rooster"${open ? ' open' : ''}><summary>Zelf een lesuur toevoegen of weghalen</summary>
     ${rows.length ? `<div class="scroll"><table><tr><th>Dag</th><th>Van</th><th>Tot</th><th>Groep</th><th>Lokaal</th><th></th></tr>${rows.map(u => `<tr><td>${esc(DAGLANG[u.dag])}</td><td class="num">${esc(u.start)}</td><td class="num">${esc(u.eind)}</td><td><b>${esc(u.groep)}</b></td><td>${esc(u.lokaal || '')}</td><td><button class="btn klein rood" data-weg="${esc(u.id)}">weg</button></td></tr>`).join('')}</table></div>` : ''}
     <form class="form" id="rForm"><div class="rij">
@@ -2648,13 +2655,14 @@ function viewRooster() {
     <label>Lokaal <input id="rLok" list="lokalen" value="009" placeholder="009"></label>
     <button class="btn hoofd" type="submit">Toevoegen</button></div>
     <datalist id="groeplijst">${opties.map(x => `<option value="${esc(x.g)}">${esc(lgNaam(x.lg))}</option>`).join('')}</datalist><datalist id="lokalen"><option value="009"><option value="020"></datalist>
-    <p class="lead" style="font-size:.9rem">Een andere groep kan ook; koppel die daarna aan een leergang op het klasblad onder Jaar.</p></form></details>`;
+    <p class="lead" style="font-size:.9rem">Een andere groep kan ook; koppel die daarna aan een leergang op het klasblad onder Jaar.</p></form></details></div></div>`;
   return h;
 }
 
 /* ---------- sectie ---------- */
 function sectieItems() { return (B.sectie || []).concat(S.sectieExtra || []).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }
 const fmtDJ = d => fmtD(d) + (Math.abs(dOf(d) - dOf(vandaag())) > 300 * 864e5 ? ' ' + d.slice(0, 4) : ''); // ver weg: met jaartal
+document.addEventListener('click', e => { const v = e.target.closest('.s-tijd .vorige'); if (v && matchMedia('(min-width:1300px)').matches) v.classList.toggle('uit'); }); // breed scherm: lange toelichting klapt uit
 const sEigen = id => (S.sectieExtra || []).find(x => x.id === id); // zelf toegevoegd: wijzigen en weghalen mag
 function sRij(i) {
   const t = vandaag(); const af = i.taak && S.sectieAf[i.id]; const laat = i.taak && !af && i.d < t; const eigen = !!sEigen(i.id);
@@ -2689,10 +2697,13 @@ function viewSectie() {
   const t = vandaag(); const it = sectieItems();
   const open = it.filter(i => i.taak && !S.sectieAf[i.id]);
   const lijst = sAlles ? it : it.filter(i => (i.tot || i.d) >= addD(t, -7) && i.d <= addD(t, 42) || (i.taak && !S.sectieAf[i.id] && i.d < t));
+  const doen = open.filter(i => i.d <= addD(t, 21)); let mnd = ''; // de maandkoppen zijn er alleen op een breed scherm
+  const tijd = lijst.map(i => { const m = i.d.slice(0, 7); const kop = m !== mnd ? `<h3 class="s-maand alleen-breed">${esc(cap(dOf(i.d).toLocaleDateString('nl-NL', { month: 'long', year: 'numeric' })))}</h3>` : ''; mnd = m; return kop + sRij(i); }).join('');
   return `<div class="kop"><div><h1>Sectie</h1><div class="sub">${open.length} open taken · vergaderingen, rapporten, toetsweken en taken uit de jaarplanning</div></div><div class="knoppen"><button class="btn" data-salles="" aria-pressed="${sAlles}">hele jaar</button></div></div>
-  ${hdKaart()}
-  <div class="kaart">${lijst.map(sRij).join('') || '<p class="leeg">Niets in deze periode.</p>'}</div>
-  <form class="kaart form" id="sForm"><h2>Taak toevoegen</h2><div class="rij"><label style="flex:3 1 16rem">Wat <input id="sT" required></label><label>Datum <input id="sD" type="date" required value="${t}"></label><select id="sR" aria-label="Rol">${rolOpties('', 'vakgroep')}</select><select id="sP" aria-label="Potje">${potOpties('', '')}</select><button class="btn hoofd" type="submit">Toevoegen</button></div></form>`;
+  <div class="s-raster"><div class="kaart s-doen alleen-breed"><h2>Nu doen</h2>${doen.map(i => `<div class="s-d${i.d < t ? ' laat' : ''}"><span>${esc(fmtDJ(i.d))}</span><label class="chk"><input type="checkbox" data-sdone="${esc(i.id)}"><span>${esc(i.titel)}</span></label></div>`).join('') || '<p class="leeg">Niets open voor de komende drie weken.</p>'}</div>
+  <div class="s-links">${hdKaart()}</div>
+  <div class="kaart s-tijd">${tijd || '<p class="leeg">Niets in deze periode.</p>'}</div>
+  <form class="kaart form s-form" id="sForm"><h2>Taak toevoegen</h2><div class="rij"><label style="flex:3 1 16rem">Wat <input id="sT" required></label><label>Datum <input id="sD" type="date" required value="${t}"></label><select id="sR" aria-label="Rol">${rolOpties('', 'vakgroep')}</select><select id="sP" aria-label="Potje">${potOpties('', '')}</select><button class="btn hoofd" type="submit">Toevoegen</button></div></form></div>`;
 }
 
 /* ---------- Team vwo 4-5-6 (stap 2 van handboek/voorstel-rollen.md) ----------
@@ -2730,9 +2741,9 @@ function viewTeam() {
   const ipb = (S.taken || []).filter(k => /^IPB:/.test(k.titel) && !k.af); const rs = rolStijl('team');
   const rij = i => `<div>${sRij(i)}<details class="meer" style="margin:-.2rem 0 .5rem"><summary>${S.sectieNotitie[i.id] ? 'Notitie wijzigen' : 'Notitie uit de mail erbij'}</summary><textarea rows="2" data-teamnoot="${esc(i.id)}" aria-label="Notitie bij ${esc(i.titel)}" placeholder="Wat er van je gevraagd wordt. Geen namen van leerlingen.">${esc(S.sectieNotitie[i.id] || '')}</textarea></details></div>`;
   return `<div class="kop"><div><h1>Team vwo 4-5-6</h1><div class="sub">${rs.naam ? esc(rs.naam) + ' · ' : ''}teamvergaderingen, dagen voor v456 en andere data uit de algemene jaarplanning; elke afspraak met zijn eigen rol</div></div><div class="knoppen"><button class="btn" data-talles="" aria-pressed="${tAlles}">hele jaar</button></div></div>
-  <div class="kaart">${lijst.map(rij).join('') || '<p class="leeg">Niets in deze periode.</p>'}</div>
-  <div class="kaart"><h2>IPB-cyclus</h2><p class="lead">De vaste stappen: PDCA-actieplan bijwerken, lesbezoek, leerlingenquête, het gesprek voorbereiden en daarna akkoord geven op beschouwing of beoordeling. De cyclus (startgesprek, voortgangsgesprek met formele beschouwing, beoordelingsgesprek) loopt minstens eens per twee jaar; bij het startgesprek hoort ook een VO-spiegel van de teamleider. Zet ze in je takenlijst en plan ze vanuit Dag. Ze staan bij Professional: een IPB-gesprek telt als deskundigheidsbevordering, ook als het team het organiseert. De inhoud van het gesprek komt niet in Lesdag. Elke stap krijgt de uitleg uit de <a href="${GC_HANDLEIDING}" target="_blank" rel="noopener">handleiding gesprekkencyclus</a> en de <a href="${GC}gesprekkencyclus_algemene_documenten.php" target="_blank" rel="noopener">uitwerking gesprekkencyclus</a>, met een link naar de juiste pagina.</p>
-    ${ipb.length ? `<p class="sub">Open: ${ipb.map(k => esc(k.titel.replace(/^IPB: /, ''))).join(', ')}.</p>` : ''}<div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-ipbzet="">IPB-stappen in je takenlijst</button><a class="btn" href="#vandaag">Naar Dag</a></div></div>`;
+  <div class="kol2"><div class="kaart">${lijst.map(rij).join('') || '<p class="leeg">Niets in deze periode.</p>'}</div>
+  <div class="kaart plak"><h2>IPB-cyclus</h2><p class="lead">De vaste stappen: PDCA-actieplan bijwerken, lesbezoek, leerlingenquête, het gesprek voorbereiden en daarna akkoord geven op beschouwing of beoordeling. De cyclus (startgesprek, voortgangsgesprek met formele beschouwing, beoordelingsgesprek) loopt minstens eens per twee jaar; bij het startgesprek hoort ook een VO-spiegel van de teamleider. Zet ze in je takenlijst en plan ze vanuit Dag. Ze staan bij Professional: een IPB-gesprek telt als deskundigheidsbevordering, ook als het team het organiseert. De inhoud van het gesprek komt niet in Lesdag. Elke stap krijgt de uitleg uit de <a href="${GC_HANDLEIDING}" target="_blank" rel="noopener">handleiding gesprekkencyclus</a> en de <a href="${GC}gesprekkencyclus_algemene_documenten.php" target="_blank" rel="noopener">uitwerking gesprekkencyclus</a>, met een link naar de juiste pagina.</p>
+    ${ipb.length ? `<p class="sub">Open: ${ipb.map(k => esc(k.titel.replace(/^IPB: /, ''))).join(', ')}.</p>` : ''}<div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-ipbzet="">IPB-stappen in je takenlijst</button><a class="btn" href="#vandaag">Naar Dag</a></div></div></div>`;
 }
 
 /* ---------- synchroniseren tussen apparaten (sync.js) ---------- */
@@ -2950,32 +2961,37 @@ async function agendaKlik(D) {
 }
 
 /* ---------- instellingen ---------- */
+let inRub = 'koppel'; // de gekozen rubriek op een breed scherm; kleiner dan 1300 px staan alle kaarten onder elkaar in de oude volgorde
+const IN_RUB = [['koppel', 'Koppelingen'], ['planning', 'Planning'], ['gegevens', 'Gegevens'], ['over', 'Over']];
 function viewInstellingen() {
   const on = M365.enabled(); const acc = M365.account;
+  if (IN_RUB.some(([k]) => k === route.arg[0])) inRub = route.arg[0];
+  const k = (r, html) => html ? `<div class="in-k" data-rub="${r}">${html}</div>` : '';
   return `<div class="kop"><div><h1>Instellingen</h1></div></div>
-  ${syncKaart()}${leerlingKaart()}${agendaKaart()}<div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div>${on ? `<div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div>` : ''}
-  <div class="kaart"><h2>Rooster uit Zermelo</h2>${zProxy() ? `<p class="lead">Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie) en plak die hier. Lesdag leest dan vak, groep, lokaal en soort afspraak rechtstreeks uit Zermelo. De koppeling gaat mee met synchroniseren. Verwijderen hier trekt hem niet in: dat doe je in Zermelo bij Koppelingen.</p>
+  <div class="in-schil"><nav class="in-nav alleen-breed" aria-label="Rubrieken">${IN_RUB.map(([r, n]) => `<button class="in-knop" data-inrub="${r}" aria-pressed="${r === inRub}">${n}</button>`).join('')}</nav><div class="in-raster" data-rub="${inRub}">
+  ${k('koppel', syncKaart())}${k('gegevens', leerlingKaart())}${k('koppel', agendaKaart())}<div class="in-k" data-rub="planning"><div class="kaart"><h2>Lesklok en opruimsignaal</h2><p class="lead">Zolang een les loopt, staat de resttijd bovenin elk scherm. Vier minuten voor het einde van het rooster komt het signaal. Probeer hier hoe het eruitziet en of het geluid hard genoeg is.</p><div class="knoppen"><button class="btn" data-lkproef="">Proef het signaal</button></div></div></div>${on ? `<div class="in-k" data-rub="koppel"><div class="kaart"><h2>Microsoft 365</h2>${!on ? `<p class="lead">Nog niet gekoppeld. Zet de gegevens van de app-registratie in <code>config.js</code> (zie LEESMIJ.md). Tot die tijd blijft alles op dit apparaat.</p>` : acc ? `<p>Ingelogd als <b>${esc(M365.naam)}</b>. Je gegevens staan ook in je OneDrive, in de map Apps.</p><div class="knoppen"><button class="btn" data-sync="">Nu synchroniseren</button><button class="btn" data-logout="">Uitloggen</button></div>` : `<p class="lead">Log in met je schoolaccount om je gegevens in OneDrive te bewaren en presentaties uit SharePoint te koppelen.</p><button class="btn hoofd" data-login="">Inloggen met schoolaccount</button>`}</div></div>` : ''}
+  <div class="in-k" data-rub="koppel"><div class="kaart"><h2>Rooster uit Zermelo</h2>${zProxy() ? `<p class="lead">Maak in Zermelo een koppelcode aan (Koppelingen, Koppel externe applicatie) en plak die hier. Lesdag leest dan vak, groep, lokaal en soort afspraak rechtstreeks uit Zermelo. De koppeling gaat mee met synchroniseren. Verwijderen hier trekt hem niet in: dat doe je in Zermelo bij Koppelingen.</p>
     <form class="form" id="zKoppelForm"><div class="rij"><label style="flex:3 1 18rem">Koppelcode <input id="zCode" type="password" autocomplete="off" placeholder="${zApiToken() ? 'gekoppeld' : '12 cijfers'}"></label><button class="btn hoofd" type="submit">Koppelen</button>${zApiToken() ? '<button class="btn rood" type="button" data-zapiweg="">Koppeling verwijderen</button>' : ''}</div></form>
     <p class="lead">Reserve: als de koppeling niet werkt, gebruikt Lesdag je agendalink. Plak je Zermelo-agendalink (Zermelo portal, Koppelingen, Agenda). Lesdag haalt dan je rooster op, met roosterwijzigingen en vervallen lessen. Behandel de link als een wachtwoord: wie hem heeft, ziet je rooster.</p>
     <form class="form" id="zForm"><div class="rij"><label style="flex:3 1 18rem">Zermelo-link <input id="zLink" type="password" autocomplete="off" placeholder="${S.zermeloToken ? 'opgeslagen (••••' + esc(S.zermeloToken.slice(-4)) + ')' : 'https://csgpm.zportal.nl/api/v3/ical?access_token=…'}"></label><button class="btn hoofd" type="submit">Opslaan en ophalen</button>${zGekoppeld() ? '<button class="btn" type="button" data-zophalen="">Nu ophalen</button>' : ''}${S.zermeloToken ? '<button class="btn rood" type="button" data-zweg="">Link verwijderen</button>' : ''}</div></form>
-    <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}, via ${ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'}.` : 'Nog niet opgehaald.'}</p>${zOverzicht()}` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div>
-  ${rolKaart()}${duurKaart()}
-  <div class="kaart"><h2>Pauzes</h2><p class="lead">${(zPauzes() || { vast: [] }).vast.length ? 'Uit je rooster in Zermelo: ' + esc(zPauzes().vast.map(p => hm(p.van) + '–' + hm(p.tot)).join(', ')) + '.' : ZC ? 'In je rooster vond Lesdag geen vaste pauzes.' : 'Zodra Zermelo gekoppeld is, haalt Lesdag je pauzes uit je rooster.'} Lesdag houdt ze vrij: er komen geen taken in, en het Nu-scherm laat dan niets over werk zien. Valt een pauze weg (pauzedienst, koor, Sing-In), dan houdt Lesdag later op de dag een rustblok vrij. Nooit in een les.</p>
+    <p class="lead" style="font-size:.9rem">${ZC ? `Laatst opgehaald: ${esc(new Date(ZC.opgehaald).toLocaleString('nl-NL'))}, voor ${esc(fmtD(ZC.van))} tot en met ${esc(fmtD(ZC.tot))}, via ${ZC.bron === 'api' ? 'de koppeling' : 'de agendalink'}.` : 'Nog niet opgehaald.'}</p>${zOverzicht()}` : `<p class="lead">De roosterproxy staat nog niet in <code>config.js</code>. Zie LEESMIJ.md, stap 3.</p>`}</div></div>
+  ${k('planning', rolKaart())}${k('planning', duurKaart())}
+  <div class="in-k" data-rub="planning"><div class="kaart"><h2>Pauzes</h2><p class="lead">${(zPauzes() || { vast: [] }).vast.length ? 'Uit je rooster in Zermelo: ' + esc(zPauzes().vast.map(p => hm(p.van) + '–' + hm(p.tot)).join(', ')) + '.' : ZC ? 'In je rooster vond Lesdag geen vaste pauzes.' : 'Zodra Zermelo gekoppeld is, haalt Lesdag je pauzes uit je rooster.'} Lesdag houdt ze vrij: er komen geen taken in, en het Nu-scherm laat dan niets over werk zien. Valt een pauze weg (pauzedienst, koor, Sing-In), dan houdt Lesdag later op de dag een rustblok vrij. Nooit in een les.</p>
     <details class="meer" style="margin-top:.6rem" ${(S.pauzes || []).length ? 'open' : ''}><summary>Kloppen ze niet? Zelf invullen (gaat voor het rooster)</summary>
     <form class="form" id="pzForm" style="margin-top:.6rem">${(S.pauzes || []).concat([{ van: '', tot: '' }]).map((p, i) => `<div class="rij"><label>Van<input type="time" name="van" value="${p.van ? esc(p.van.padStart(5, '0')) : ''}"></label><label>Tot<input type="time" name="tot" value="${p.tot ? esc(p.tot.padStart(5, '0')) : ''}"></label>${p.van ? `<button class="btn klein" type="button" data-pzweg="${i}">weg</button>` : ''}</div>`).join('')}
-    <div class="knoppen"><button class="btn hoofd" type="submit">Pauzes opslaan</button></div></form></details></div>
-  <div class="kaart"><h2>Magister</h2><p class="lead">Lesdag kijkt niet in Magister en tikt er niets in; een open koppeling is er niet. Lesdag onthoudt per les de presentie, het huiswerk en het logboek, zet de tekst klaar en opent Magister met één tik. Een oker stip op een les: er moet nog iets in Magister. Groen: de les is rond.</p>
+    <div class="knoppen"><button class="btn hoofd" type="submit">Pauzes opslaan</button></div></form></details></div></div>
+  <div class="in-k" data-rub="koppel"><div class="kaart"><h2>Magister</h2><p class="lead">Lesdag kijkt niet in Magister en tikt er niets in; een open koppeling is er niet. Lesdag onthoudt per les de presentie, het huiswerk en het logboek, zet de tekst klaar en opent Magister met één tik. Een oker stip op een les: er moet nog iets in Magister. Groen: de les is rond.</p>
     <div class="knoppen" style="margin-top:.6rem"><button class="btn mag" data-kompas="">Kompas naast Magister</button><a class="btn" href="${esc(MAGURL())}" target="magister" rel="noopener">Open Magister</a></div>
-    <p class="sub" style="margin-top:.5rem">Klassenlijsten: ${rooGroepen().map(g => `<button class="btn klein" data-klasopen="${esc(g)}">${esc(g)} ${(S.beoord.lijsten[g] || []).length || 'nog niet'}</button>`).join(' ') || 'nog geen rooster'}</p></div>
-  <div class="kaart"><h2>Jarige collega's</h2><p class="lead">Plak de verjaardagen van het intranet: één collega per regel met de datum, bijvoorbeeld "12 november Jan Jansen". Lesdag haalt daar zelf niets op. De lijst staat alleen op dit apparaat. Op de dag zelf staat de collega bij Opstarten, met een knop voor een felicitatie in Outlook.</p>
+    <p class="sub" style="margin-top:.5rem">Klassenlijsten: ${rooGroepen().map(g => `<button class="btn klein" data-klasopen="${esc(g)}">${esc(g)} ${(S.beoord.lijsten[g] || []).length || 'nog niet'}</button>`).join(' ') || 'nog geen rooster'}</p></div></div>
+  <div class="in-k" data-rub="planning"><div class="kaart"><h2>Jarige collega's</h2><p class="lead">Plak de verjaardagen van het intranet: één collega per regel met de datum, bijvoorbeeld "12 november Jan Jansen". Lesdag haalt daar zelf niets op. De lijst staat alleen op dit apparaat. Op de dag zelf staat de collega bij Opstarten, met een knop voor een felicitatie in Outlook.</p>
     <textarea id="colLijst" aria-label="Verjaardagen van collega's, een per regel" rows="6" style="margin-top:.6rem" placeholder="12 november Jan Jansen">${esc((AP.collegas || []).map(c => mdTekst(c.md) + ' ' + c.naam + (c.mail ? ' ' + c.mail : '')).concat(colMis.map(x => x.r)).join('\n'))}</textarea>
     <div class="knoppen" style="margin-top:.5rem"><button class="btn hoofd" data-colopslaan="">Opslaan op dit apparaat</button><a class="btn" href="https://web.csgpm.nl/home/index.php" target="_blank" rel="noopener">Intranet openen</a></div>
     <p class="sub" style="margin-top:.5rem">${(AP.collegas || []).length ? `${AP.collegas.length} collega's op dit apparaat.` : 'Nog geen lijst.'}</p>
-    ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div>
-  <div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div>
-  ${logboekKaart()}
-  <div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. Er is een kopie van het begin van de dag en een van het moment dat je Dag afsluit, zodat de invoer van die dag erin zit. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div>
-  <div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div>`;
+    ${colMis.length ? `<div class="melding" id="colMis" style="margin-top:.5rem"><b>Niet opgeslagen.</b> Ze staan nog onderaan de lijst: zet er een datum bij die bestaat en sla opnieuw op, of haal ze weg.<ul style="margin:.3rem 0 0 1.1rem">${colMis.map(x => `<li>${esc(x.r)}: ${esc(x.w)}</li>`).join('')}</ul></div>` : ''}</div></div>
+  <div class="in-k" data-rub="gegevens"><div class="kaart"><h2>Gegevens</h2><p class="lead">Een kopie maken of terugzetten. Handig bij een ander apparaat zonder inloggen. Verjaardagen, absenten en logboeknotities gaan niet mee: die blijven op dit apparaat.</p><div class="knoppen"><button class="btn" data-export="">Kopie downloaden</button><label class="btn">Kopie terugzetten<input type="file" id="imp" accept="application/json" hidden></label></div></div></div>
+  ${k('over', logboekKaart())}
+  <div class="in-k" data-rub="gegevens"><div class="kaart" id="autokopiekaart"><h2>Automatische kopie</h2><p class="lead">Lesdag bewaart elke dag vanzelf een kopie van je gegevens op dit apparaat, de laatste veertien dagen. Er is een kopie van het begin van de dag en een van het moment dat je Dag afsluit, zodat de invoer van die dag erin zit. Terugzetten vervangt alles op dit apparaat, net als bij Kopie terugzetten, en je krijgt eerst dezelfde vraag.</p><div id="autokopielijst" class="sub">Even kijken…</div></div></div>
+  <div class="in-k" data-rub="over"><div class="kaart"><h2>Over deze versie</h2><p class="lead">Leergangen muziek ${esc(B.schooljaar)}: ${Object.keys(B.leergangen).map(lgNaam).join(', ')}. Bron: Leergang muziek (dashboard).</p></div></div></div></div>`;
 }
 
 /* ---------- lade: les bewerken ---------- */
@@ -3346,6 +3362,8 @@ document.addEventListener('click', async e => {
   if (D.taakweg) { const terug = foto(); const w = (S.taken || []).find(k => k.id === D.taakweg); S.taken = (S.taken || []).filter(k => k.id !== D.taakweg); sluit(); bewaar(); toast(w && !w.af && (w.sectieId || w.koorId || w.reclameId || w.dagTaak) ? 'Uit je planning gehaald. De taak zelf staat nog open; vink hem af als hij klaar is.' : w && w.afspraak ? 'Afspraak verwijderd' : 'Taak verwijderd', terug); return; }
   if (D.weg) { const terug = foto(); S.rooster = S.rooster.filter(u => u.id !== D.weg); bewaar(); toast('Lesuur verwijderd', terug); return; }
   if (D.salles != null) { sAlles = !sAlles; render(); return; }
+  if (D.inrub) { inRub = D.inrub; route.arg = []; history.replaceState(null, '', '#instellingen'); $('.in-raster').dataset.rub = inRub; document.querySelectorAll('.in-knop').forEach(x => x.setAttribute('aria-pressed', x.dataset.inrub === inRub)); window.scrollTo(0, 0); return; } // zonder render: half getypte tekst in een kaart blijft staan
+  if (D.reckies != null) { recKies = D.reckies; render(); return; }
   if (D.talles != null) { tAlles = !tAlles; render(); return; }
   if (D.ipbzet != null) { const { n, aangevuld } = ipbZet(); bewaar(); const st = x => `${x} IPB-${x === 1 ? "stap" : "stappen"}`; toast(n || aangevuld ? [n ? `${st(n)} in je takenlijst gezet, bij Professional` : "", aangevuld ? `uitleg bijgewerkt bij ${st(aangevuld)}` : ""].filter(Boolean).join("; ").replace(/^./, c => c.toUpperCase()) + ". Plan ze vanuit Dag." : "De IPB-stappen staan al in je takenlijst"); return; }
   if (D.rolweg) { const r = rolInfo(D.rolweg); if (!r) return; const terug = foto(); S.rollen = rolLijst().filter(x => x.id !== r.id); bewaar(); toast(`${r.naam} is weggehaald. Taken met deze rol houden hem, zonder kleurstreepje.`, terug); return; }
@@ -3823,8 +3841,8 @@ function viewBeoordelenKeuze() { // menu Beoordelen: de toetsen van vandaag, daa
   const groepen = [...new Set((S.rooster || []).map(u => u.groep))].filter(Boolean).sort();
   const perKlas = groepen.map(g => { const lg = leergangVan(g); const ms = BM.filter(m => (m.lessen || []).some(k => k.lg === lg)); return ms.length ? `<div class="jr-regel"><span><b>${esc(g)}</b>${(S.beoord.lijsten[g] || []).length ? ` <button class="btn klein" data-ovjaar="${esc(g)}">Het jaar</button>` : ''}</span><span class="tb">${ms.map(m => knop(m, g)).join(' ')}</span></div>` : ''; }).join('');
   return `<div class="kop"><div><p class="eyebrow">Beoordelen</p><h1>Kies een toets</h1></div></div>
-    ${periodeKaart()}<div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
-    ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}`;
+    ${periodeKaart()}<div class="kol2 bm-keuze"><div class="kaart"><h2>Vandaag</h2>${vandaagM.length ? vandaagM.map(y => `<div class="jr-regel"><span><b>${esc(y.u.groep)}</b><small>${esc(y.u.start)}</small></span><span class="tb">${knop(y.m, y.g)}</span></div>`).join('') : '<p class="lead">Vandaag staat er geen toets in je rooster. Kies hieronder een klas om in te halen of na te kijken.</p>'}</div>
+    ${perKlas ? `<div class="kaart"><h2>Per klas</h2>${perKlas}</div>` : ''}</div>`;
 }
 function viewBeoordelen() {
   if (['overzicht', 'strookjes', 'leerling'].includes(route.arg[0])) return viewOverzicht();
@@ -3861,7 +3879,7 @@ function viewBeoordelen() {
     ${BMR.isPoging(L, T) && (laatst || nOpen) ? `<div class="regel">${laatst ? `<span class="chip">${nVast} afgerond · ${esc(bmTijd(laatst))}</span>` : ''}${nOpen ? `<button class="btn klein hoofd" data-bm="afronden">Afronden (${nOpen})</button>` : ''}</div>` : ''}
     <div class="regel"><button class="btn klein" data-bm="pdfalle">Alle feedbackbladen</button></div>
     <ol>${gKop ? [...T.groepjes.map(x => `<li class="bm-gkop ${G === x ? 'nu' : ''}"><button class="bm-naam" data-bmgkies="${x.id}">${esc(x.naam)}${(L.gs || {})[x.id] && Object.keys(L.gs[x.id]).length ? ' ✓' : ''}</button></li>${vol.filter(id => x.leden.includes(id)).map(rijHtml).join('')}`), vol.some(id => !BMR.groepVan(T, id)) ? '<li class="bm-gkop"><span class="bm-naam">Geen groepje</span></li>' + vol.filter(id => !BMR.groepVan(T, id)).map(rijHtml).join('') : ''].join('') : vol.map(rijHtml).join('')}</ol></div>`;
-  const inlR = bmInlRegel(inlK, T, lijst, G ? G.leden : [cur]); const scoor = G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur));
+  const inlR = bmInlRegel(inlK, T, lijst, G ? G.leden : [cur]); const scoor = G ? bmGroepKaart(m, T, L, G, lijst) : bmScoorKaart(m, T, L, cur, naam(cur), vol.filter(id => id !== cur && !klaar(id)).map(id => ({ id, naam: naam(id) })));
   return h + (inlR ? `<div class="bm-rechts">${inlR}${scoor}</div>` : scoor) + '</div>';
 }
 // een veld met vaste keuzes (m.keuzes) wordt een keuzelijst; een eerder getypte waarde blijft als eigen keuze staan
@@ -3875,12 +3893,12 @@ function bmSpeelHtml(m, v) {
   const delen = [k.opmerking]; if (n) delen.unshift(`${n.naam}${n.wat ? ': ' + n.wat : ''}.${n.plafond != null ? ` Plafond ${komma(n.plafond)}.` : ''}`); const heeftPl = (k.niveaus || []).some(x => x.plafond != null);
   return `<p class="bm-niv">${n || !heeftPl ? '' : '<b>Nog geen niveau: er geldt geen plafond.</b> '}${esc(delen.filter(Boolean).join(' '))}</p>`;
 }
-function bmScoorKaart(m, T, L, cur, naam) {
+function bmScoorKaart(m, T, L, cur, naam, nogOpen) {
   const r = bmRij(L, cur); const H = L === T.herkans; const pog = BMR.poging(T, cur); const dicht = BMR.isPoging(L, T) && !!r.vast; const u = BMR.eind(m, L, T, cur); const D = u.delen; const zb = D.zelf || 0; const cs = bmConcertAan(); const rv = BMR.veldenVan(L, T, cur);
   let h = `<div class="kaart bm-scoor"><div class="kop"><h2>${esc(naam)}</h2><div class="knoppen"><button class="btn klein" data-bm="klok"><span id="bmKlok">${bmKlok ? pad(Math.floor((Date.now() - bmKlok) / 1000)) : '0:00'}</span>&nbsp;${bmKlok ? 'stop' : 'start'}</button>${H ? '' : `<label class="chk"><input type="checkbox" data-bmaf ${r.af ? 'checked' : ''} ${dicht ? 'disabled' : ''}><span>afwezig, inhalen</span></label>`}</div></div>
     ${H ? `<p class="bm-vast"><b>Herkansing.</b> Eerste poging: ${BMR.fmt(pog.e1) || 'staat open'}. ${pog.e2 == null ? 'Het hoogste afgeronde cijfer telt.' : pog.p === 2 ? `Deze herkansing telt: ${BMR.fmt(pog.e2)}.` : pog.e2 === pog.e1 ? 'Even hoog: de eerste poging blijft staan.' : `De eerste poging blijft tellen: ${BMR.fmt(pog.e1)}.`}</p>` : L === T && pog.e2 != null ? `<p class="bm-vast"><b>Herkansing:</b> ${BMR.fmt(pog.e2)}. ${pog.p === 2 ? 'Die telt.' : 'De eerste poging blijft tellen.'}</p>` : ''}
     ${dicht ? `<p class="bm-vast"><b>Afgerond</b> op ${esc(bmTijd(r.vast.op))} met cijfer ${BMR.fmt(r.vast.e)}. <button class="btn klein" data-bm="heropen">Wijzigen</button></p>` : ''}
-    ${cs ? '<div class="bm-cs-duo"><div>' : ''}<div class="bm-velden">${(cs ? [] : m.velden || []).map(v => bmVeldHtml(m, v, rv[v])).join('')}</div>${cs ? '' : bmSpeelHtml(m, rv)}`;
+    <div class="${cs ? 'bm-cs-duo' : 'bm-duo'}"><div><div class="bm-velden">${(cs ? [] : m.velden || []).map(v => bmVeldHtml(m, v, rv[v])).join('')}</div>${cs ? '' : bmSpeelHtml(m, rv)}`;
   for (const o of bmOnderdelen(m, T)) {
     h += `<h3 class="bm-groep">${esc(o.groep)}${o.stuk ? ` <small>${esc(o.stuk)}</small>` : ''}</h3>`;
     for (const c of o.criteria) h += bmCritHtml(BMR.critVoor(m, c, rv), L, T, cur, r, dicht);
@@ -3895,7 +3913,7 @@ function bmScoorKaart(m, T, L, cur, naam) {
   if (D.klasgenoten && !cs) { const k = (r.klas || {}); const min = +m.klasgenotenMin || 3; h += `<h3 class="bm-groep">Klasgenoten <small>${D.klasgenoten}% van het eindcijfer, minimaal ${min} inzendingen</small></h3>
     <p class="bm-niv"><b>${u.k != null ? 'Gemiddeld ' + komma(u.k) : 'Nog geen gemiddelde'}</b> uit ${u.kn} ${u.kn === 1 ? 'inzending' : 'inzendingen'}${(k.forms || []).length ? ` (${k.forms.length} uit Forms)` : ''}.${!dicht && u.k == null ? ' Geen eindcijfer zolang dit deel ontbreekt.' : ''}</p>
     <label class="bm-cijfer">Papieren cijfers, met spaties ertussen<input data-bmpapier inputmode="decimal" value="${esc((k.papier || []).map(komma).join(' '))}" ${dicht ? 'disabled' : ''}></label>`; }
-  const kr = bmKrabbelHtml(r.krabbel || [], dicht); h += cs ? '</div>' + kr + '</div>' : `<label class="bm-opm">${esc(m.vooruit || 'Eén punt om aan te werken')}<textarea rows="2" data-bmvooruit>${esc(r.vooruit || '')}</textarea></label>` + kr;
+  const kr = bmKrabbelHtml(r.krabbel || [], dicht); h += cs ? '</div>' + kr + '</div>' : `<label class="bm-opm">${esc(m.vooruit || 'Eén punt om aan te werken')}<textarea rows="2" data-bmvooruit>${esc(r.vooruit || '')}</textarea></label></div><div class="bm-duo-zij">${kr}${(nogOpen || []).length ? `<div class="bm-nogopen alleen-breed"><b>Nog open (${nogOpen.length})</b><ul>${nogOpen.map(x => `<li><button type="button" data-bmkies="${x.id}">${esc(x.naam)}</button></li>`).join('')}</ul></div>` : ''}</div></div>`;
   h += `<div class="bm-voet"><div><span>${BMR.isPoging(L, T) ? 'Cijfer docent' : 'Tussenstand'} <b>${u.d != null ? komma(u.d) : '–'}</b></span>${D.docent < 100 || m.speelkeuze ? `<span>Eindcijfer <b>${u.e != null ? komma(u.e) : '–'}</b></span>${u.mist.length && u.d != null ? `<small>mist: ${esc(u.mist.join(', '))}</small>` : ''}${u.ruw != null && u.e < u.ruw ? `<small>${komma(u.ruw)} afgetopt op het plafond</small>` : ''}` : ''}</div>
     <div class="knoppen">${cs ? '' : '<button class="btn" data-bm="pdf">Feedbackblad</button>'}<button class="btn" data-bm="vorige">Vorige</button><button class="btn hoofd" data-bm="volgende">Volgende</button></div></div></div>`;
   return h;

@@ -736,10 +736,10 @@ body.kompasvenster .top{display:none}
 /* taken: waar je ze doet, met een knop */
 .pk-info{display:block;font-size:var(--t-klein);color:var(--muted);margin-top:.15rem}
 .pk-knop{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end;align-items:center}
-/* groot scherm: Nu, Dag en Week gebruiken de hele breedte; lopende tekst elders blijft op leesbare breedte */
+/* groot scherm: alle pagina's gebruiken de hele breedte; lopende tekst blijft op leesbare breedte (.lead) */
 :root{--wrap:1180px}
 @media (min-width:1300px){
-  :root:has(.nu-scherm,.dag-b,.wkagenda){--wrap:min(94vw,2400px)}
+  :root{--wrap:min(94vw,2400px)}
   .ens{grid-template-columns:minmax(0,1fr) minmax(22rem,30rem)}
   .ens.met-meld>.ens-links{grid-column:1;grid-row:1}
   .ens.met-meld>.ens-meld{grid-column:1;grid-row:2}
@@ -1079,3 +1079,86 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 .ov .tik button{min-width:44px;min-height:44px;border:1px solid var(--line);background:transparent;color:inherit;font:700 .95rem inherit;border-radius:6px;cursor:pointer}
 .ov .tik button.aan{background:var(--paars);border-color:var(--paars);color:var(--op)}
 @media (max-width:640px){.ov-twee{grid-template-columns:minmax(0,1fr)}}
+
+/* brede indeling (10-11): links wat er is, rechts wat je ermee doet. Onder de 1300 px doen de omhulsels niets, zodat tablet en telefoon de gewone volgorde houden */
+.kol2,.kol-zij,.in-schil,.in-raster,.in-k,.s-raster,.rc-raster,.recin-a,.recin-b,.bm-duo,.bm-duo>div{display:contents}
+.alleen-breed{display:none}
+@media (min-width:1300px){
+  .alleen-breed{display:block}
+  .alleen-smal{display:none}
+  .plak{position:sticky;top:calc(4.2rem + var(--lk-h,0px));max-height:calc(100vh - 5.5rem - var(--lk-h,0px));overflow:auto}
+  .kol2{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(24rem,1fr);gap:1.2rem;align-items:start}
+  .kol2:has(>:only-child){grid-template-columns:minmax(0,1fr)}
+  .kol-zij{display:grid;gap:1.2rem;min-width:0}
+  .kol2.bm-keuze{grid-template-columns:minmax(24rem,1fr) minmax(0,1.7fr)}
+
+  /* instellingen: rubrieken links, de kaarten van één rubriek rechts */
+  .in-schil{display:grid;grid-template-columns:13rem minmax(0,1fr);gap:1.2rem;align-items:start}
+  .in-nav{display:grid;gap:.25rem;position:sticky;top:calc(4.2rem + var(--lk-h,0px))}
+  .in-knop{font:inherit;text-align:left;background:none;border:0;border-radius:8px;padding:.55rem .8rem;color:var(--ink);cursor:pointer}
+  .in-knop:hover{background:var(--uit-zacht)}
+  .in-knop[aria-pressed=true]{background:var(--paars-zacht);color:var(--paars);font-weight:700}
+  .in-raster{display:block;columns:2;column-gap:1.2rem}
+  .in-k{display:block;break-inside:avoid;margin-bottom:1.2rem}
+  .in-raster[data-rub=koppel] .in-k:not([data-rub=koppel]),.in-raster[data-rub=planning] .in-k:not([data-rub=planning]),.in-raster[data-rub=gegevens] .in-k:not([data-rub=gegevens]),.in-raster[data-rub=over] .in-k:not([data-rub=over]){display:none}
+
+  /* sectie: nu doen, tijdlijn, en links en invoer */
+  .s-raster{display:grid;grid-template-columns:minmax(20rem,24rem) minmax(0,1fr);grid-template-rows:auto auto 1fr;gap:1.2rem;align-items:start}
+  .s-doen{grid-column:1;grid-row:1}
+  .s-links{grid-column:1;grid-row:2}
+  .s-form{grid-column:1;grid-row:3}
+  .s-tijd{grid-column:2;grid-row:1/span 3}
+  .s-maand{font-family:var(--kop);font-size:1.15rem;margin:1.1rem 0 .3rem}
+  .s-maand:first-child{margin-top:0}
+  .s-tijd .vorige{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-width:85ch;cursor:pointer}
+  .s-tijd .vorige:hover{color:var(--ink)}
+  .s-tijd .vorige.uit{display:block;overflow:visible}
+  .s-doen .s-d{display:grid;grid-template-columns:4.6rem minmax(0,1fr);gap:.4rem;padding:.3rem 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .s-doen .s-d:last-child{border-bottom:0}
+  .s-doen .s-d>span{font-size:var(--t-klein);color:var(--muted)}
+  .s-doen .s-d.laat>span{color:var(--rood);font-weight:700}
+
+  /* reclame: lijst activiteiten links, de gekozen activiteit rechts */
+  .rc-raster{display:grid;grid-template-columns:minmax(20rem,24rem) minmax(0,1fr);grid-template-rows:auto 1fr;gap:1.2rem;align-items:start}
+  .rc-lijst{grid-column:1;grid-row:1;padding-inline:.5rem}
+  .rc-lijst h2{padding-inline:.6rem}
+  .rc-kop{font-size:var(--t-klein);color:var(--muted);margin:.8rem .6rem .2rem}
+  .rc-rij{display:grid;grid-template-columns:4.6rem minmax(0,1fr) auto;gap:.5rem;align-items:baseline;width:100%;font:inherit;text-align:left;background:none;border:0;border-radius:8px;padding:.5rem .6rem;color:var(--ink);cursor:pointer}
+  .rc-rij:hover{background:var(--uit-zacht)}
+  .rc-rij[aria-current=true]{background:var(--paars-zacht)}
+  .rc-rij[aria-current=true] .rc-t{font-weight:700;color:var(--paars)}
+  .rc-rij .rc-d{font-size:var(--t-klein);color:var(--muted)}
+  .rc-raster>.reckaart{display:none;margin-top:0}
+  .rc-raster>.reckaart.gekozen{display:block;grid-column:2;grid-row:1/span 2}
+  .rc-raster>.rc-later{display:none}
+  .rc-raster>#recForm{grid-column:1;grid-row:2}
+}
+@media (min-width:1500px){
+  .reckaart.gekozen .recgrid{grid-template-columns:13rem minmax(0,1fr)}
+  .reckaart.gekozen .recin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.4rem;align-items:start}
+  .reckaart.gekozen .recin>.eyebrow,.reckaart.gekozen .recin>h2{grid-column:1/-1}
+  .recin-a,.recin-b{display:block;min-width:0}
+}
+@media (min-width:1700px){
+  .s-raster{grid-template-columns:minmax(20rem,24rem) minmax(0,1fr) minmax(20rem,26rem);grid-template-rows:auto 1fr}
+  .s-doen{grid-column:1;grid-row:1/span 2;position:sticky;top:calc(4.2rem + var(--lk-h,0px));max-height:calc(100vh - 5.5rem - var(--lk-h,0px));overflow:auto}
+  .s-tijd{grid-column:2;grid-row:1/span 2}
+  .s-links{grid-column:3;grid-row:1}
+  .s-form{grid-column:3;grid-row:2}
+}
+/* jaar: het klasblad opent naast de partituur, vanaf 1600 px is daar genoeg plek voor */
+.jr-naast{display:grid;grid-template-columns:minmax(58rem,1.25fr) minmax(0,1fr);gap:1.2rem;align-items:start}
+.jr-links{display:grid;gap:1.2rem;min-width:0}
+.jr-rechts{display:grid;gap:1.2rem;min-width:0}
+.jr-rechts .jr-twee{grid-template-columns:minmax(0,1fr)}
+.jr-rij.gekozen .jr-naam{color:var(--paars);background:var(--paars-zacht)}
+/* beoordelen: krabbel en wie nog open staat naast het scoren */
+@media (min-width:1300px){
+  .bm-duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1.2rem;align-items:start}
+  .bm-duo>div{display:block;min-width:0}
+  .bm-duo>.bm-duo-zij{display:grid;gap:.9rem}
+  .bm-duo-zij .bm-krabbel{margin:0;max-width:none}
+  .bm-nogopen ul{list-style:none;margin:.3rem 0 0;padding:0;display:grid;gap:.1rem}
+  .bm-nogopen button{font:inherit;background:none;border:0;padding:.2rem .3rem;border-radius:6px;color:var(--ink);cursor:pointer;text-align:left;width:100%}
+  .bm-nogopen button:hover{background:var(--uit-zacht)}
+}
