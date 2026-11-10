@@ -3085,7 +3085,7 @@ let LES = null;
 const PLEK = 'lesdag-lesplek';
 function plekAlle() { try { return JSON.parse(localStorage.getItem(PLEK) || '{}') || {}; } catch (e) { return {}; } }
 function plekBewaar() {
-  const P = LES; if (!P || P.s !== vandaag()) return;
+  const P = LES; if (!P || P.proef || P.s !== vandaag()) return;
   const alle = plekAlle(); for (const k in alle) if (!k.startsWith(P.s + '|')) delete alle[k];
   const sl = P.slides[P.i]; const i = P.bord ? P.i + 1 : P.i; const klok = sl.k === 'fase' && P.tot > 0;
   alle[P.s + '|' + P.x.u.id] = { i, klok, left: P.left, tot: P.tot, eind: P.timer ? Date.now() + P.left * 1000 : 0, krap: P.krap };
@@ -3126,10 +3126,28 @@ function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwe
   el.innerHTML = d + nh; const b = document.querySelector('#les [data-l="notities"]'); if (b) b.hidden = !(d || nh);
   el.classList.toggle('open', !!(P.notities && (d || nh)));
 }
+/* Uiterlijk van het bord: licht of donker, per apparaat onthouden. Wisselen raakt de timer niet (geen toonSlide). */
+const BORDTHEMA = 'lesdag-bord-thema';
+function bordThema() { try { return localStorage.getItem(BORDTHEMA) === 'donker' ? 'donker' : 'licht'; } catch (e) { return 'licht'; } }
+function wisselThema() { const n = bordThema() === 'licht' ? 'donker' : 'licht'; try { localStorage.setItem(BORDTHEMA, n); } catch (e) {} $('#les').dataset.thema = n; const b = $('#themaKnop'); if (b) b.textContent = n === 'licht' ? 'donker' : 'licht'; }
+/* Op het bord één opdracht aanwijzen: de rest wordt rustiger. Nog een keer tikken haalt het weg. */
+/* Volle dia's: tekst stapsgewijs kleiner tot alles op het bord past, ook nadat het venster naar het digibord is gesleept. */
+function pasIn() { const el = document.querySelector('#les .slide'); if (!el) return; for (const f of [1, .92, .84, .76, .68, .6]) { el.style.setProperty('--past', f); if (el.scrollHeight <= el.clientHeight + 1) break; } }
+window.addEventListener('resize', () => { if (LES) pasIn(); });
+function wijsStap(li) { const was = li.classList.contains('nu'); li.parentElement.querySelectorAll('li.nu').forEach(x => x.classList.remove('nu')); if (!was) li.classList.add('nu'); }
+/* Proefles: #lesproef/mavo3:8.1 opent die les met een verzonnen uur vanaf nu. Geen rooster nodig en er wordt niets bewaard. */
+function startProef(id) {
+  const lg = id.split(':')[0]; const item = (reeks(lg) || []).find(y => y.id === id); if (!item) { toast('Les ' + id + ' niet gevonden'); return; }
+  const d = new Date(); const u2 = m => Math.floor(m / 60) + ':' + String(m % 60).padStart(2, '0'); const nu = d.getHours() * 60 + d.getMinutes();
+  startLes({ u: { id: 'proef', groep: 'proefles', start: u2(nu), eind: u2(Math.min(nu + 47, 1439)), lokaal: '009' }, item }, vandaag());
+}
+function proefUitHash() { const m = location.hash.match(/^#lesproef\/(.+)$/); if (m && !LES && B) startProef(decodeURIComponent(m[1])); }
+window.addEventListener('hashchange', proefUitHash);
 function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de regie zit in het andere venster
-  s = s || vandaag(); const p = planning(s, s)[s];
+  const proef = uurId && typeof uurId === 'object' ? uurId : null; // proefles (#lesproef/...): geen rooster, niets wordt bewaard
+  s = s || vandaag(); const p = proef ? { uren: [proef] } : planning(s, s)[s];
   if (!p || p.reden || !p.uren.length) { toast('Geen lessen op deze dag'); return; }
-  let x = uurId ? p.uren.find(y => y.u.id === uurId) : null;
+  let x = proef || (uurId ? p.uren.find(y => y.u.id === uurId) : null);
   if (!x) { const nu = nuMin(); x = p.uren.find(y => !y.klaar && !y.uitval && y.item && nu < minuten(y.u.eind)) || p.uren.find(y => y.item && !y.klaar && !y.uitval); }
   if (!x || !x.item) { toast('Geen les meer om te geven vandaag'); return; }
   const l = les(x.item);
@@ -3137,12 +3155,12 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   const th = x.item.week.thuis || {};
   const vor = vorigeVan(x);
   const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => /^https?:/i.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
-  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml };
+  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml, fotos: (window.LESFOTOS || {})[x.item.id] };
   let slides = LESMODUS.bouwSlides(l, kctx);
   { const kr = lesKrap({ s, x, slides, i: 0, bord: false }); // bevinding 73: loopt de les al, dan staan op het welkomdia de ingekorte minuten, niet de geplande
     if (kr) { const kort = slides.map((y, j) => ({ y, j })).filter(o => o.y.k === 'fase').map(o => kr.min[o.j] != null ? kr.min[o.j] : null); slides[slides.findIndex(y => y.k === 'welkom')] = LESMODUS.bouwSlides(l, Object.assign(kctx, { kort })).find(y => y.k === 'welkom'); } }
   if (bord) slides = slides.filter(y => y.k !== 'klaar'); // jouw kaart hoort niet op het bord
-  LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null };
+  LES = { x, l, s, slides, i: 0, left: 0, tot: 0, timer: null, notities: false, keuze: x.half ? 'gegeven' : 'gegeven', begin: Date.now(), bord: !!bord, krap: null, proef: !!proef };
   LES.vorige = vor; // bevinding 3: loopt de les al, dan staat jouw kaart er niet; de notitie van vorige keer zit dan bij de notities (alleen jij, niet op het bord)
   // verder waar je was; loopt de les al, dan niet op jouw kaart beginnen (die zou op het digibord kunnen staan)
   const pl = s === vandaag() ? plekAlle()[s + '|' + x.u.id] : null;
@@ -3150,14 +3168,14 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   LES.i = Math.max(0, Math.min(slides.length - 1, bord ? i - 1 : i));
   if (pl) { LES.krap = pl.krap || null;
     if (pl.klok && pl.i === LES.i + (bord ? 1 : 0) && slides[LES.i].k === 'fase') LES.herstel = { left: pl.eind ? Math.round((pl.eind - Date.now()) / 1000) : pl.left, tot: pl.tot, loopt: !!pl.eind }; }
-  if (!bord) try { sessionStorage.setItem('lesdag-lesopen', x.u.id + '|' + s); } catch (e) {}
+  if (!bord && !proef) try { sessionStorage.setItem('lesdag-lesopen', x.u.id + '|' + s); } catch (e) {}
   $('#les').hidden = false; document.body.style.overflow = 'hidden'; waak(true); toonSlide();
   if (!bord && !NOT) notitiesLaad().then(() => notVul());
 }
 function toonSlide() {
   const fk = focusSleutel(document.activeElement); // knop blijft bereikbaar met het toetsenbord na elke dia
   const P = LES; const sl = P.slides[P.i]; stopTimer();
-  const body = sl.k === 'af' ? (P.bord ? `<p class="eyebrow">${esc(P.x.u.groep)}</p><h1>Tot de volgende les</h1>` : afrondenHtml()) : sl.h;
+  const body = sl.k === 'af' ? (P.bord || P.proef ? `<p class="eyebrow">${esc(P.x.u.groep)}</p><h1>Tot de volgende les</h1>` : afrondenHtml()) : sl.h;
   const soort = sl.soort || sl.k; const kl = LESMODUS.SOORT[sl.soort];
   const fasen = P.slides.filter(x => x.k === 'fase'); const fi = fasen.indexOf(sl);
   const herstel = P.herstel; delete P.herstel; const fklok = sl.k === 'fase' && !!sl.min;
@@ -3166,17 +3184,18 @@ function toonSlide() {
   else { P.left = 0; P.tot = 0; }
   const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
-  $('#les').className = 'les s-' + soort; $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
+  $('#les').className = 'les s-' + soort + (sl.werk ? ' werk' : ''); $('#les').dataset.thema = bordThema(); $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
   <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
   ${fklok ? timerHtml() : ''}
   ${fklok ? `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd · volgende fase</div>` : ''}
   <div class="notities ${P.notities && notInh ? 'open' : ''}" id="notities">${notInh}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="thema" id="themaKnop">${bordThema() === 'licht' ? 'donker' : 'licht'}</button><button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
   if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
   if (fk && fk.w === '#les' && !focusHerstel(fk)) $('#les').focus({ preventScroll: true });
   bordZeg(); plekBewaar();
   LESKLOK.tik(); // de band en de resttijd staan meteen goed op de nieuwe dia
+  pasIn();
 }
 function klok() { const d = new Date(); return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes(); }
 function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.left, LES.tot)}</div>`; }
@@ -3263,6 +3282,8 @@ document.addEventListener('click', async e => {
     toast(`${k.slice(k.indexOf('|') + 1)} staat als gefeliciteerd`, terug); return; }
   if (D.pal != null) { paletKies(+D.pal); return; }
   if (e.target.closest('#les')) {
+    const stap = e.target.closest('.stappen li'); if (stap) { wijsStap(stap); return; }
+    if (D.l === 'thema') { wisselThema(); return; }
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
     else if (D.l === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
     else if (D.l === 'timer') timer();
@@ -3542,6 +3563,8 @@ document.addEventListener('keydown', e => {
     if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); } }
     else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); if (LES.i > 0) { LES.i--; toonSlide(); } }
     else if (e.key === 't') timer();
+    else if (e.key === 'l') wisselThema();
+    else if (/^[1-9]$/.test(e.key)) { const st = document.querySelectorAll('#les .stappen li')[+e.key - 1]; if (st) wijsStap(st); }
     else if (e.key === 'n' && !LES.bord) { LES.notities = !LES.notities; const n = $('#notities'); if (n && n.textContent.trim()) n.classList.toggle('open', LES.notities); const b = document.querySelector('#les [data-l="notities"]'); if (b) b.setAttribute('aria-pressed', LES.notities); }
     else if (e.key === 'f') { const el = $('#les'); if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {}); else if (document.exitFullscreen) document.exitFullscreen().catch(() => {}); }
     else if (e.key === 'Escape' && !document.fullscreenElement) sluitLes();
@@ -4166,6 +4189,7 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
     window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
   jaarWisselLokaal();
   render();
+  proefUitHash();
   try { // herladen midden in de les: de lesmodus gaat weer open, op de plek waar je was
     const op = sessionStorage.getItem('lesdag-lesopen'); const [uid, s] = (op || '').split('|');
     if (op && s === vandaag() && ((planning(s, s)[s] || {}).uren || []).some(y => y.u.id === uid && y.item)) startLes(uid, s); else if (op) sessionStorage.removeItem('lesdag-lesopen');

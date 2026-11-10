@@ -1162,3 +1162,144 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   .bm-nogopen button{font:inherit;background:none;border:0;padding:.2rem .3rem;border-radius:6px;color:var(--ink);cursor:pointer;text-align:left;width:100%}
   .bm-nogopen button:hover{background:var(--uit-zacht)}
 }
+
+/* ---------- Geef les: nieuw uiterlijk, licht en donker (proef 10-11). Staat na de oude regels en gaat daarvoor. ---------- */
+.les{--ct:var(--z);--bg-kop:#17121f}
+.lesfoto{margin:0;position:relative;border-radius:16px;overflow:hidden;min-height:0;background:#0002}
+.lesfoto img{display:block;width:100%;height:100%;object-fit:cover}
+.lesfoto figcaption{position:absolute;right:0;bottom:0;padding:.15rem .55rem;background:#0008;color:#fff;font-size:.75rem;border-top-left-radius:8px}
+.les .lkop,.les .lbalk{background:var(--bg-kop);z-index:2}
+.les ol.stappen li{cursor:pointer;border-radius:12px;padding:.25rem .5rem;margin-left:-.5rem;transition:opacity .2s,background .2s;animation:stapin .35s ease both}
+.les ol.stappen li:nth-child(2){animation-delay:.06s}.les ol.stappen li:nth-child(3){animation-delay:.12s}.les ol.stappen li:nth-child(4){animation-delay:.18s}.les ol.stappen li:nth-child(5){animation-delay:.24s}
+@keyframes stapin{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.les ol.stappen:has(li.nu) li:not(.nu){opacity:.38}
+.les ol.stappen li.nu{background:color-mix(in srgb,var(--c) 20%,transparent)}
+/* agenda als kaarten */
+.les .agenda{max-width:none;width:100%}
+.les .agenda ol{grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.8rem}
+.les .agenda li{display:grid;gap:.5rem;align-content:start;padding:.9rem 1rem;border-radius:14px;background:#ffffff12;border:1px solid #ffffff1f;font-size:clamp(1rem,1.7vw,1.5rem);font-weight:700}
+.les .agenda li i{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--fc);color:#fff;display:grid;place-items:center}
+.les .agenda li i svg{width:1.5rem;height:1.5rem}
+.les .agenda li span{display:grid;gap:.15rem}
+.les .agenda li b{font-size:.72em;color:var(--fz);letter-spacing:.02em}
+.les .agenda .balk{height:10px}
+@media (min-width:761px){
+  /* welkom en doel */
+  .les .w-boven{display:grid;gap:.7rem}
+  .les .w-boven.met-foto{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:4vw;align-items:center}
+  .les .w-tekst{display:grid;gap:clamp(.6rem,1.6vh,1.2rem)}
+  .les .w-boven .lesfoto{height:clamp(13rem,40vh,30rem)}
+  .les .doel-rij{display:grid;gap:clamp(.8rem,2vh,1.4rem)}
+  .les .doel-rij.met-foto{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:4vw;align-items:center}
+  .les .doel-tekst{display:grid;gap:clamp(.8rem,2vh,1.4rem)}
+  .les .doel-rij .lesfoto{height:clamp(16rem,62vh,40rem)}
+  /* fase: kop bovenaan, klok rechtsboven, stappen groot */
+  .les .s-fase .slide,.les:has(.timerhoek) .slide{padding-right:max(20px,5vw);justify-content:flex-start}
+  .les .fase-kop{display:grid;gap:clamp(.5rem,1.4vh,.9rem);min-height:clamp(7.5rem,11vw,11rem);align-content:start;padding-right:clamp(8rem,13vw,13rem)}
+  .les .fase-kop h2{max-width:none}
+  .les .timerhoek{top:calc(3.3rem + 3vh);transform:none;right:max(20px,4vw);width:clamp(6.5rem,10.5vw,10.5rem)}
+  .les .ring b{font-size:clamp(1.3rem,2.5vw,2.5rem)}
+  .les .ring span{display:none}
+  .les .fase-body{flex:1;display:grid;gap:clamp(1.5rem,4vw,4rem);align-items:center;align-content:center;min-height:0}
+  .les .fase-body.twee{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+  .les .fase-body .lesfoto{height:clamp(14rem,50vh,34rem)}
+  .les .fase-links{display:grid;gap:clamp(.8rem,2.4vh,1.6rem)}
+  .les ol.stappen{max-width:none;gap:clamp(.6rem,1.8vh,1.2rem)}
+  .les ol.stappen li{font-size:clamp(1.35rem,2.8vw,2.7rem);grid-template-columns:3rem 1fr;line-height:1.25}
+  /* werkfase: paneel in fasekleur met grote klok */
+  .les.werk::after{content:"";position:absolute;top:0;right:0;bottom:0;width:38vw;background:var(--c);z-index:0}
+  .les.werk>*{z-index:1}.les.werk .lkop,.les.werk .lbalk{z-index:2}
+  .les.werk .slide,.les.werk:has(.timerhoek) .slide{padding-right:calc(38vw + 3vw)}
+  .les.werk .fase-kop{padding-right:0;min-height:0}
+  .les.werk .timerhoek{top:50%;transform:translateY(-50%);right:6vw;width:26vw;z-index:1}
+  .les.werk .ring .spoor{stroke:#ffffff40}.les.werk .ring .voort{stroke:#fff}
+  .les.werk .ring.bijna .voort,.les.werk .ring.over .voort{stroke:#ffd166}
+  .les.werk .ring b,.les.werk .ring.over b{color:#fff;font-size:clamp(3rem,7vw,7rem)}
+  .les.werk .ring span{display:block;color:#ffffffd0;font-size:clamp(1rem,1.5vw,1.5rem)}
+}
+/* check: heel scherm in kleur */
+.les.s-check{background:var(--c)}.les.s-check::before{background:none}
+.les.s-check .slide h2{font-size:clamp(2.2rem,5.4vw,5rem);max-width:24ch;color:#fff}
+.les.s-check .fasekop{color:#ffffffd9}.les.s-check .fasekop i{background:#ffffff2e}
+
+/* lichte variant: wit blad, zandkaarten, zoals de PowerPoints */
+.les[data-thema="licht"]{--ct:color-mix(in srgb,var(--c) 80%,#000);--bg-kop:#fbf8f1;background:#fbf8f1;color:#2a2a2a;color-scheme:light}
+.les[data-thema="licht"]::before{background:radial-gradient(90% 70% at 100% 0%,color-mix(in srgb,var(--c) 9%,transparent),transparent 60%)}
+.les[data-thema="licht"] .lkop{color:#6b6b6b;border-bottom-color:#e2d6bc}
+.les[data-thema="licht"] .lkop b,.les[data-thema="licht"] .lkop .klok{color:#1b1b1b}
+.les[data-thema="licht"] .stip i{background:#e2d6bc}
+.les[data-thema="licht"] .stip i.fase,.les[data-thema="licht"] .stip i.check{background:color-mix(in srgb,var(--s,#b9ad97) 55%,#fff)}
+.les[data-thema="licht"] .stip i.nu{background:#1b1b1b;box-shadow:0 0 0 2px var(--ct)}
+.les[data-thema="licht"] .slide.docentkaart{background:repeating-linear-gradient(135deg,#0000000a 0 12px,transparent 12px 24px);border-color:#0003}
+.les[data-thema="licht"] .eyebrow,.les[data-thema="licht"] h3,.les[data-thema="licht"] .fasekop{color:var(--ct)}
+.les[data-thema="licht"] h1,.les[data-thema="licht"] h2{color:#1b1b1b}
+.les[data-thema="licht"] .vraag{color:#c2431d}
+.les[data-thema="licht"] .detail{color:#4a4a4a}
+.les[data-thema="licht"] .hint,.les[data-thema="licht"] .agenda .tot,.les[data-thema="licht"] .lbalk .waar{color:#6b6b6b}
+.les[data-thema="licht"] .agenda li{background:#f1e8d5;border-color:#e2d6bc;color:#1b1b1b}
+.les[data-thema="licht"] .agenda li b{color:color-mix(in srgb,var(--fc) 72%,#000)}
+.les[data-thema="licht"] .vink{border-color:var(--ct)}
+.les[data-thema="licht"] .vink[aria-pressed="true"]{background:var(--ct)}
+.les[data-thema="licht"] .vink[aria-pressed="true"]::after{border-color:#fff}
+.les[data-thema="licht"] ol.stappen li{color:#2a2a2a}
+.les[data-thema="licht"] ol.stappen li::before{color:var(--ct)}
+.les[data-thema="licht"] .klaarkaart{background:#f1e8d5;border-left-color:var(--ct);color:#2a2a2a}
+.les[data-thema="licht"] .klaarkaart b{color:var(--ct)}
+.les[data-thema="licht"] .ring .spoor{stroke:#0000001a}
+.les[data-thema="licht"] .ring .voort{stroke:var(--ct)}
+.les[data-thema="licht"] .ring.bijna .voort,.les[data-thema="licht"] .ring.over .voort{stroke:#b7791f}
+.les[data-thema="licht"] .ring b{color:#1b1b1b}.les[data-thema="licht"] .ring.over b{color:#92600f}
+.les[data-thema="licht"] .ring span{color:#6b6b6b}
+.les[data-thema="licht"].werk .ring .spoor{stroke:#ffffff40}.les[data-thema="licht"].werk .ring .voort{stroke:#fff}
+.les[data-thema="licht"].werk .ring.bijna .voort,.les[data-thema="licht"].werk .ring.over .voort{stroke:#ffd166}
+.les[data-thema="licht"].werk .ring b,.les[data-thema="licht"].werk .ring.over b{color:#fff}
+.les[data-thema="licht"].werk .ring span{color:#ffffffd0}
+.les[data-thema="licht"] .tk{background:#f1e8d5;border-color:#e2d6bc;color:#1b1b1b}
+.les[data-thema="licht"] a.tk:hover{background:#e9dcc2}
+.les[data-thema="licht"] .tk b{color:var(--ct)}
+.les[data-thema="licht"] .mats a{color:#5B247F}.les[data-thema="licht"] .mats span{color:#4a4a4a}
+.les[data-thema="licht"] .akk{color:#1b1b1b}
+.les[data-thema="licht"] .akk figcaption small,.les[data-thema="licht"] .akkoorden .onder,.les[data-thema="licht"] .opbouw .labels span,.les[data-thema="licht"] .vorm .maten{color:#6b6b6b}
+.les[data-thema="licht"] .orkest .legenda{color:#2a2a2a}
+.les[data-thema="licht"] .kaartje{background:#f1e8d5;border-color:#e2d6bc}
+.les[data-thema="licht"] .kaartje b{color:#1b1b1b}.les[data-thema="licht"] .kaartje span{color:#4a4a4a}
+.les[data-thema="licht"] .btabel th{color:var(--ct);border-bottom-color:#d9d2c3}
+.les[data-thema="licht"] .btabel td{border-bottom-color:#e2d6bc}
+.les[data-thema="licht"] .groot-cijfer b{color:var(--ct)}
+.les[data-thema="licht"] .citaat{color:#c2431d}
+.les[data-thema="licht"].s-id blockquote{color:#1b1b1b}.les[data-thema="licht"].s-id blockquote::before{color:#c2431d}
+.les[data-thema="licht"] .notities{background:#f1e8d5}
+.les[data-thema="licht"] .lm-krap{color:#6b4a00;background:#f2c06333}
+.les[data-thema="licht"] .lbalk{border-top-color:#e2d6bc}
+.les[data-thema="licht"] .lbalk button,.les[data-thema="licht"] .lbalk a{border-color:#d9d2c3;color:#2a2a2a}
+.les[data-thema="licht"] .lbalk button[aria-pressed="true"]{background:#1b1b1b;color:#fff}
+.les[data-thema="licht"] .lbalk button.timer{border-color:var(--ct);color:var(--ct)}
+.les[data-thema="licht"] .lbalk button.af{background:#5B247F;border-color:#5B247F;color:#fff}
+.les[data-thema="licht"] .afronden .keuzes button{background:#f1e8d5;border-color:#d9d2c3;color:#1b1b1b}
+.les[data-thema="licht"] .afronden .keuzes button[aria-pressed="true"]{background:#5B247F;border-color:#5B247F;color:#fff}
+.les[data-thema="licht"] .afronden textarea{background:#fff;color:#1b1b1b;border-color:#d9d2c3}
+.les[data-thema="licht"] .afronden label{color:#4a4a4a!important}
+/* check blijft in beide varianten wit op kleur */
+.les[data-thema="licht"].s-check{background:var(--c);color:#fff}
+.les[data-thema="licht"].s-check::before{background:none}
+.les[data-thema="licht"].s-check .slide h2{color:#fff}
+.les[data-thema="licht"].s-check .fasekop{color:#ffffffd9}
+.les[data-thema="licht"] .lk-rest{color:#6b6b6b}
+@media (min-width:761px){.les .doel-tekst h2{font-size:clamp(1.5rem,3vw,3rem)}}
+@media (min-width:761px){
+  .les ol.stappen li{font-size:calc(var(--past,1)*clamp(1.35rem,2.8vw,2.7rem))}
+  .les .fase-body.twee ol.stappen li,.les .fase-links:has(.beeld) ol.stappen li{font-size:calc(var(--past,1)*clamp(1.2rem,2.3vw,2.3rem))}
+  .les .klaarkaart{font-size:calc(var(--past,1)*clamp(1rem,1.9vw,1.4rem))}
+  .les .slide h2{font-size:calc(var(--past,1)*clamp(1.75rem,4.4vw,3.6rem))}
+  .les .doel-tekst h2{font-size:calc(var(--past,1)*clamp(1.5rem,3vw,3rem))}
+  .les.s-check .slide h2{font-size:calc(var(--past,1)*clamp(2.2rem,5.4vw,5rem))}
+  .les ul.crit li{font-size:calc(var(--past,1)*clamp(1.2rem,2.6vw,2rem))}
+  .les .kaartje b{font-size:calc(var(--past,1)*clamp(1.15rem,2vw,1.8rem))}.les .kaartje span{font-size:calc(var(--past,1)*clamp(1rem,1.7vw,1.5rem))}
+  .les .btabel{font-size:calc(var(--past,1)*clamp(1rem,1.9vw,1.45rem))}
+  .les .fase-body .kaarten{grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr))}
+  .les .agenda li{font-size:calc(var(--past,1)*clamp(1rem,1.7vw,1.5rem))}
+  .les h1{font-size:calc(var(--past,1)*clamp(2.4rem,6.5vw,5.4rem))}
+  .les .vraag{font-size:calc(var(--past,1)*clamp(1.4rem,3.2vw,2.6rem))}
+  .les .w-boven .lesfoto{height:calc(var(--past,1)*clamp(13rem,40vh,30rem))}
+}
+@media (min-width:761px){.les .akk{width:calc(var(--past,1)*clamp(5.5rem,10vw,8.5rem))}.les .fase-kop{min-height:clamp(8rem,12.5vw,12rem)}}
