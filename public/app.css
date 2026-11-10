@@ -712,6 +712,14 @@ body.kompasvenster .top{display:none}
 .dag-lab{flex:1;min-width:0;color:var(--paars)}
 .dag-b{display:grid;grid-template-columns:minmax(0,1fr) 25rem;gap:1.2rem 2.5rem;align-items:start;margin-bottom:1rem}
 @media (max-width:1000px){.dag-b{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:1001px){ /* de agenda loopt naast het blok en de lijsten door, zodat links geen leeg vlak overblijft */
+  .dag-b{grid-template-rows:auto 1fr}
+  .dag-links{grid-column:1;grid-row:1}
+  .dag-lijsten{grid-column:1;grid-row:2}
+  .dag-rechts{grid-column:2;grid-row:1/span 2}
+}
+.dag-lijsten{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;min-width:0;align-content:start}
+.dag-lijsten>*{margin:0}
 .dag-links{display:grid;gap:.8rem;min-width:0;align-content:start}
 .dag-links .agpaneel{position:static;margin-top:.4rem}
 .dag-rechts{min-width:0}

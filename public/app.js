@@ -667,15 +667,17 @@ function viewVandaag() {
   if (s >= t && !zomer) { h += uitvalBlok(s); wacht += liggenBlok(); }
   if (s === t && !zomer) wacht += periodeKaart(true); // op Dag alleen in de laatste week van de periode (besluit Frans 9-11); op Jaar en Beoordelen altijd
   const onder = [...zonderTijd.map(it => `${it.tz ? `Toets ${(B.groepen[it.tz.lg] || [it.tz.lg]).join(', ')} ${it.tz.t.id}` : it.titel} staat in je leergang, maar niet in het rooster. Klopt dat?`), pauzeTekst(A.pz)].filter(Boolean);
-  // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu
-  h += `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
-    ${chips.length ? heleDagRij(s, chips) : ''}<div class="agpaneel">${agPaneel(s, p, A, sel)}</div></div>
-    <div class="kaart agkaart dag-rechts">${agendaRaster([{ s, items: A.items }], { ppm: 1.35, sel })}${agOnder('Klik of sleep in de lege agenda.', weg.length)}</div></div>`;
   // klaarzetten per lokaal
+  let klaarzet = '';
   const perLokaal = {};
   (p.uren || []).forEach(x => { if (!x.item || x.uitval || x.klaar) return; const l = les(x.item); const k = x.u.lokaal || '009'; (perLokaal[k] = perLokaal[k] || []).push({ x, ben: benodigd(l), l }); });
-  if (Object.keys(perLokaal).length) h += `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben }) => `<div><b style="font-family:var(--lees)">${esc(x.u.start)} ${esc(x.u.groep)}</b><div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
-  return h + wacht + dagExtra(s, p);
+  if (Object.keys(perLokaal).length) klaarzet = `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben }) => `<div><b style="font-family:var(--lees)">${esc(x.u.start)} ${esc(x.u.groep)}</b><div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
+  // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu.
+  // De lijsten staan op een breed scherm links onder het blok (10-11), op een telefoon pas onder de agenda (bevinding 46)
+  return h + `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
+    ${chips.length ? heleDagRij(s, chips) : ''}<div class="agpaneel">${agPaneel(s, p, A, sel)}</div></div>
+    <div class="kaart agkaart dag-rechts">${agendaRaster([{ s, items: A.items }], { ppm: 1.35, sel })}${agOnder('Klik of sleep in de lege agenda.', weg.length)}</div>
+    <div class="dag-lijsten">${klaarzet}${wacht}${dagExtra(s, p)}</div></div>`;
 }
 /* ---------- agenda: lessen, afspraken en geplande taken op hun tijd; vrije blokken voor taken ---------- */
 const AG = { van: 8 * 60, tot: 17 * 60, werkVan: 8 * 60 + 30, werkTot: 16 * 60 + 30 };
