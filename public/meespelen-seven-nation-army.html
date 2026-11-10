@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meespelen VO-dag</title>
+<style>
+  :root {
+    --bg: #101624; --paneel: #1b2336; --rand: #2c3650; --tekst: #f4f6fb; --zacht: #9aa5c0;
+    --geel: #ffd400; --groen: #14903a; --oranje: #ff8a00; --rood: #e52521; --track: #6b7591;
+    --accent: #4f8cff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--tekst);
+    font-family: "Encode Sans", "Segoe UI", system-ui, sans-serif;
+    display: flex; flex-direction: column; overflow: hidden; user-select: none;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  /* Bovenbalk: lesklok en fasen */
+  #balk { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--paneel); border-bottom: 1px solid var(--rand); flex-wrap: wrap; }
+  #klok { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 92px; }
+  #klokknop { background: var(--rand); border: 0; border-radius: 8px; padding: 8px 12px; font-size: 15px; }
+  #fasen { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+  .fase { background: transparent; border: 1px solid var(--rand); border-radius: 8px; padding: 6px 10px; font-size: 14px; color: var(--zacht); }
+  .fase b { color: var(--tekst); font-weight: 600; margin-right: 4px; }
+  .fase.nu { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .fase.nu b { color: #fff; }
+
+  /* Podium */
+  #podium { flex: 1; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 2vh 3vw; gap: 2vh; min-height: 0; }
+  #titel { text-align: center; font-size: clamp(22px, 3.2vw, 48px); font-weight: 700; }
+  #banner { text-align: center; font-size: clamp(20px, 3vw, 44px); font-weight: 700; min-height: 1.3em; color: var(--geel); }
+
+  #riff { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vw; }
+  .maat { position: relative; }
+  .rij { position: relative; height: clamp(120px, 26vh, 320px); background: var(--paneel); border-radius: 14px; overflow: hidden; }
+  .blok {
+    position: absolute; top: 8%; bottom: 8%; border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-weight: 800; color: #111; transition: transform .06s, filter .15s, opacity .15s;
+    border: 4px solid transparent; opacity: .55;
+  }
+  .blok .naam { font-size: clamp(16px, 2.4vw, 38px); line-height: 1.05; }
+  .blok .toon { font-size: clamp(12px, 1.4vw, 22px); opacity: .8; }
+  .blok.geel { background: var(--geel); } .blok.groen { background: var(--groen); color: #fff; }
+  .blok.oranje { background: var(--oranje); } .blok.rood { background: var(--rood); color: #fff; }
+  .blok.track { background: var(--track); color: #fff; }
+  .blok.aan { opacity: 1; transform: scale(1.06); border-color: #fff; filter: brightness(1.15); box-shadow: 0 0 40px rgba(255,255,255,.45); }
+  .blok.uit { opacity: .12; }
+  .kop { position: absolute; top: 0; bottom: 0; width: 4px; background: #fff; border-radius: 2px; opacity: 0; pointer-events: none; }
+  .tellen { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 8px; }
+  .tellen span { font-size: clamp(18px, 2.4vw, 36px); font-weight: 700; color: var(--zacht); padding-left: 4px; border-left: 2px solid var(--rand); }
+  .tellen span.aan { color: #fff; }
+
+  /* Bodypercussie */
+  #body { display: none; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; }
+  #body.helften { grid-template-columns: 1fr 1fr; }
+  .lijf { background: var(--paneel); border-radius: 16px; height: clamp(160px, 38vh, 420px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1vh; border: 4px solid transparent; transition: transform .06s; }
+  .lijf .ico { font-size: clamp(48px, 8vw, 130px); line-height: 1; }
+  .lijf .wat { font-size: clamp(20px, 2.8vw, 46px); font-weight: 700; }
+  .lijf .tel { font-size: clamp(16px, 1.8vw, 28px); color: var(--zacht); }
+  .lijf.aan { background: var(--accent); border-color: #fff; transform: scale(1.05); }
+  .lijf.aan .tel { color: #fff; }
+
+  /* Groot scherm-overlays */
+  #groot { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; background: rgba(16,22,36,.92); z-index: 5; }
+  #groot .getal { font-size: clamp(120px, 30vh, 360px); font-weight: 800; line-height: 1; }
+  #groot .uitleg { font-size: clamp(24px, 3.5vw, 56px); font-weight: 700; margin-top: 2vh; text-align: center; }
+
+  /* Bediening */
+  #bediening { display: flex; gap: 10px; align-items: center; padding: 10px 16px; background: var(--paneel); border-top: 1px solid var(--rand); flex-wrap: wrap; }
+  .knop { background: var(--rand); border: 0; border-radius: 10px; padding: 12px 16px; font-size: 17px; font-weight: 600; }
+  .knop.groot { background: var(--accent); color: #fff; font-size: 20px; padding: 12px 22px; }
+  .knop.stil { background: #c23; color: #fff; }
+  .knop.aan { outline: 3px solid #fff; }
+  .groep { display: flex; gap: 6px; align-items: center; padding-left: 10px; border-left: 1px solid var(--rand); }
+  .groep label { color: var(--zacht); font-size: 14px; margin-right: 2px; }
+  .klein { background: transparent; border: 1px solid var(--rand); border-radius: 8px; padding: 8px 10px; font-size: 15px; }
+  .klein.aan { background: var(--tekst); color: var(--bg); border-color: var(--tekst); }
+  .kleurknop { width: 34px; height: 34px; border-radius: 50%; border: 3px solid transparent; padding: 0; }
+  .kleurknop.uit { opacity: .25; }
+  .kleurknop.aan { border-color: #fff; }
+  input[type=range] { width: 110px; }
+  #hulp { color: var(--zacht); font-size: 13px; margin-left: auto; }
+  @media (max-width: 700px) { #riff { grid-template-columns: 1fr; } #hulp { display: none; } }
+</style>
+</head>
+<body>
+
+<div id="balk">
+  <div id="klok">0:00</div>
+  <button id="klokknop" title="Start of pauzeer de lesklok (L)">Lesklok starten</button>
+  <div id="fasen"></div>
+</div>
+
+<div id="podium">
+  <div id="titel">Seven Nation Army</div>
+  <div id="banner"></div>
+  <div id="riff"></div>
+  <div id="body"></div>
+  <div id="groot"><div class="getal"></div><div class="uitleg"></div></div>
+</div>
+
+<div id="bediening">
+  <button class="knop groot" id="speel" title="Spatie">▶ Spelen</button>
+  <button class="knop" id="nummer" title="N: intro, 4×, stil, 4×, zingen, slotklap">Hele nummer</button>
+  <button class="knop stil" id="handen" title="H of Esc">✋ Handen omhoog</button>
+  <div class="groep"><label>Tempo</label>
+    <button class="klein" data-tempo="75">75</button>
+    <button class="klein" data-tempo="85">85</button>
+    <button class="klein" data-tempo="95">95</button>
+    <button class="klein" data-tempo="105">105</button>
+  </div>
+  <div class="groep"><label>Muziek</label>
+    <button class="klein" id="tDrums">Drums</button>
+    <button class="klein" id="tBas">Bas</button>
+    <button class="klein" id="tVoor" title="De computer speelt de buizen voor">Voorspelen</button>
+  </div>
+  <div class="groep"><label>Kleuren</label>
+    <button class="kleurknop" data-kleur="geel" style="background:var(--geel)" title="Geel"></button>
+    <button class="kleurknop" data-kleur="groen" style="background:var(--groen)" title="Groen"></button>
+    <button class="kleurknop" data-kleur="oranje" style="background:var(--oranje)" title="Oranje"></button>
+    <button class="kleurknop" data-kleur="rood" style="background:var(--rood)" title="Rood"></button>
+  </div>
+  <div class="groep"><label>Volume</label><input type="range" id="volume" min="0" max="100" value="80"></div>
+  <div id="hulp">Spatie spelen/stop · H stil · N hele nummer</div>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- De riff ---------- */
+// Tijden in tellen vanaf het begin van maat 1. Kleuren van de standaardset in C.
+const RIFF = [
+  { tel: 0,    duur: 1.5,  kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },
+  { tel: 1.5,  duur: 0.5,  kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },
+  { tel: 2,    duur: 0.75, kleur: "groen",  toon: "G", hz: 392.00, bas: 98.00 },
+  { tel: 2.75, duur: 0.25, kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },
+  { tel: 3,    duur: 1,    kleur: "oranje", toon: "D", hz: 293.66, bas: 73.42 },
+  { tel: 4,    duur: 2,    kleur: "rood",   toon: "C", hz: 261.63, bas: 65.41 },
+  { tel: 6,    duur: 2,    kleur: "track",  toon: "B", hz: null,   bas: 61.74 },
+];
+const NAAM = { geel: "Geel", groen: "Groen", oranje: "Oranje", rood: "Rood", track: "Muziek" };
+
+/* ---------- Fasen van de les (25 minuten) ---------- */
+const FASEN = [
+  { van: 0,  tot: 2,  naam: "Binnenkomst",       preset: "binnen" },
+  { van: 2,  tot: 7,  naam: "Bodypercussie",     preset: "body" },
+  { van: 7,  tot: 9,  naam: "Instrument pakken", preset: "pakken" },
+  { van: 9,  tot: 14, naam: "Kleur voor kleur",  preset: "oefen" },
+  { van: 14, tot: 18, naam: "Samen langzaam",    preset: "langzaam" },
+  { van: 18, tot: 23, naam: "Samen met muziek",  preset: "samen" },
+  { van: 23, tot: 25, naam: "Afsluiten",         preset: "af" },
+];
+
+/* ---------- Toestand ---------- */
+const st = {
+  tempo: 85, drums: true, bas: true, voor: false,
+  kleuren: { geel: true, groen: true, oranje: true, rood: true },
+  weergave: "riff", helften: false,   // riff | body
+  speelt: false, nummer: false,
+  klokStart: null, klokGepauzeerd: 0,
+};
+
+/* ---------- Opbouw van het scherm ---------- */
+const riffEl = document.getElementById("riff");
+const blokken = [];
+const koppen = [];
+const telSpans = [];
+for (let m = 0; m < 2; m++) {
+  const maat = document.createElement("div"); maat.className = "maat";
+  const rij = document.createElement("div"); rij.className = "rij";
+  RIFF.filter(n => Math.floor(n.tel / 4) === m).forEach(n => {
+    const b = document.createElement("div");
+    b.className = "blok " + n.kleur;
+    const links = ((n.tel % 4) / 4) * 100, breed = (n.duur / 4) * 100;
+    b.style.left = `calc(${links}% + 4px)`; b.style.width = `calc(${breed}% - 8px)`;
+    b.innerHTML = n.duur >= 0.5 ? `<div class="naam">${NAAM[n.kleur]}</div><div class="toon">${n.toon}</div>` : `<div class="toon">${n.toon}</div>`;
+    rij.appendChild(b); blokken.push({ el: b, noot: n });
+  });
+  const kop = document.createElement("div"); kop.className = "kop"; rij.appendChild(kop); koppen.push(kop);
+  const tellen = document.createElement("div"); tellen.className = "tellen";
+  for (let t = 1; t <= 4; t++) { const s = document.createElement("span"); s.textContent = t; tellen.appendChild(s); telSpans.push(s); }
+  maat.appendChild(rij); maat.appendChild(tellen); riffEl.appendChild(maat);
+}
+
+const bodyEl = document.getElementById("body");
+function bouwBody() {
+  bodyEl.innerHTML = "";
+  bodyEl.classList.toggle("helften", st.helften);
+  const delen = st.helften
+    ? [ { ico: "🦶", wat: "Deze helft: stampen", tel: "elke tel", tellen: [0,1,2,3] },
+        { ico: "👏", wat: "Deze helft: klappen",  tel: "tel 2 en 4", tellen: [1,3] } ]
+    : [ { ico: "🦶", wat: "Stamp", tel: "1", tellen: [0] },
+        { ico: "👏", wat: "Klap",  tel: "2", tellen: [1] },
+        { ico: "🫲", wat: "Borst", tel: "3", tellen: [2] },
+        { ico: "🫰", wat: "Knip",  tel: "4", tellen: [3] } ];
+  delen.forEach(d => {
+    const el = document.createElement("div"); el.className = "lijf";
+    el.innerHTML = `<div class="ico">${d.ico}</div><div class="wat">${d.wat}</div><div class="tel">${d.tel}</div>`;
+    el.dataset.tellen = d.tellen.join(",");
+    bodyEl.appendChild(el);
+  });
+}
+bouwBody();
+
+const faseEl = document.getElementById("fasen");
+FASEN.forEach((f, i) => {
+  const b = document.createElement("button"); b.className = "fase";
+  b.innerHTML = `<b>${f.van}′</b>${f.naam}`;
+  b.onclick = () => kiesPreset(f.preset, i);
+  f.el = b; faseEl.appendChild(b);
+});
+
+/* ---------- Geluid ---------- */
+let ctx = null, master, gDrums, gBas, gVoor, gKlik, ruis;
+function audio() {
+  if (ctx) return ctx;
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  master = ctx.createGain(); master.connect(ctx.destination);
+  const comp = ctx.createDynamicsCompressor(); comp.connect(master);
+  gDrums = ctx.createGain(); gDrums.gain.value = .9; gDrums.connect(comp);
+  gBas = ctx.createGain(); gBas.gain.value = .8; gBas.connect(comp);
+  gVoor = ctx.createGain(); gVoor.gain.value = .55; gVoor.connect(comp);
+  gKlik = ctx.createGain(); gKlik.gain.value = .5; gKlik.connect(comp);
+  ruis = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+  const d = ruis.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  zetVolume();
+  return ctx;
+}
+function zetVolume() { if (master) master.gain.value = (document.getElementById("volume").value / 100) ** 1.5; }
+function env(g, t, piek, aanslag, verval) {
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(piek, t + aanslag);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + aanslag + verval);
+}
+function kick(t, v = 1) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(42, t + .14);
+  env(g, t, v, .004, .32); o.connect(g).connect(gDrums); o.start(t); o.stop(t + .4);
+}
+function ruisSlag(t, hp, v, verval, uit = gDrums) {
+  const s = ctx.createBufferSource(); s.buffer = ruis;
+  const f = ctx.createBiquadFilter(); f.type = "highpass"; f.frequency.value = hp;
+  const g = ctx.createGain(); env(g, t, v, .002, verval);
+  s.connect(f).connect(g).connect(uit); s.start(t, Math.random()); s.stop(t + verval + .05);
+}
+function snare(t) {
+  ruisSlag(t, 1200, .55, .16);
+  const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "triangle"; o.frequency.value = 190;
+  env(g, t, .35, .002, .09); o.connect(g).connect(gDrums); o.start(t); o.stop(t + .15);
+}
+function hat(t, v = .12) { ruisSlag(t, 7500, v, .05); }
+function crash(t) { ruisSlag(t, 4000, .5, 1.8); kick(t, 1); }
+function klik(t, accent) {
+  const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "square";
+  o.frequency.value = accent ? 1600 : 1100; env(g, t, accent ? .5 : .3, .001, .04);
+  o.connect(g).connect(gKlik); o.start(t); o.stop(t + .07);
+}
+function basNoot(t, hz, duur) {
+  const o = ctx.createOscillator(), o2 = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  o.type = "sawtooth"; o.frequency.value = hz; o2.type = "sine"; o2.frequency.value = hz;
+  f.type = "lowpass"; f.frequency.setValueAtTime(900, t); f.frequency.exponentialRampToValueAtTime(380, t + .25);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(.7, t + .01);
+  g.gain.setValueAtTime(.7, t + Math.max(.02, duur - .06)); g.gain.exponentialRampToValueAtTime(0.0001, t + duur);
+  o.connect(f); o2.connect(f); f.connect(g).connect(gBas);
+  o.start(t); o2.start(t); o.stop(t + duur + .05); o2.stop(t + duur + .05);
+}
+function buis(t, hz) {  // boomwhacker-achtige klank
+  const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+  o.type = "sine"; o.frequency.value = hz; o2.type = "triangle"; o2.frequency.value = hz * 2;
+  const g2 = ctx.createGain(); g2.gain.value = .15;
+  env(g, t, .8, .004, .4); o.connect(g); o2.connect(g2).connect(g); g.connect(gVoor);
+  o.start(t); o2.start(t); o.stop(t + .5); o2.stop(t + .5);
+}
+
+/* ---------- Opbouw van een uitvoering ---------- */
+// Een uitvoering is een rij maten. Elke maat: soort en eventueel een tekst.
+function maatLijst() {
+  if (st.nummer) {
+    const L = [];
+    L.push({ soort: "intro", tekst: "Luister… straks beginnen we" });
+    L.push({ soort: "aftel", tekst: "Klaar?" });
+    for (let i = 0; i < 4; i++) { L.push({ soort: "riff", helft: 0, tekst: `Ronde ${i + 1} van 4` }); L.push({ soort: "riff", helft: 1, tekst: `Ronde ${i + 1} van 4` }); }
+    L.push({ soort: "stil", tekst: "✋ Stil…" });
+    L.push({ soort: "aftel", tekst: "Nog een keer!" });
+    for (let i = 0; i < 4; i++) { L.push({ soort: "riff", helft: 0, tekst: `Ronde ${i + 1} van 4` }); L.push({ soort: "riff", helft: 1, tekst: `Ronde ${i + 1} van 4` }); }
+    for (let i = 0; i < 2; i++) { L.push({ soort: "riff", helft: 0, tekst: "Zing mee: oh – oh – oh!" }); L.push({ soort: "riff", helft: 1, tekst: "Zing mee: oh – oh – oh!" }); }
+    L.push({ soort: "slot", tekst: "Eén grote klap!" });
+    return L;
+  }
+  return null; // doorlopend
+}
+
+let plan = [];          // ingeplande maten: {start, soort, helft, tekst}
+let volgendeMaat = 0, maatNr = 0, lijst = null, timer = null, run = 0;
+const spb = () => 60 / st.tempo;
+
+function planMaat(t, m) {
+  const s = spb();
+  const vol = st.weergave === "body" ? false : true;
+  // Drums
+  const drumsAan = st.drums && m.soort !== "stil" && m.soort !== "aftel";
+  if (m.soort === "slot") { crash(t); }
+  else if (drumsAan) {
+    for (let i = 0; i < 4; i++) kick(t + i * s, i % 2 === 0 ? 1 : .75);
+    if (m.soort !== "intro" || maatNr > 0) { snare(t + s); snare(t + 3 * s); }
+    for (let i = 0; i < 8; i++) hat(t + i * s / 2, i % 2 ? .07 : .12);
+  }
+  if (m.soort === "aftel") for (let i = 0; i < 4; i++) klik(t + i * s, i === 0);
+  // Riff
+  if (m.soort === "riff" && vol) {
+    RIFF.filter(n => Math.floor(n.tel / 4) === m.helft).forEach(n => {
+      const tn = t + (n.tel % 4) * s;
+      if (st.bas || n.kleur === "track") basNoot(tn, n.bas, n.duur * s * .95);
+      if (st.voor && n.hz && st.kleuren[n.kleur]) buis(tn, n.hz);
+    });
+  }
+  plan.push({ start: t, eind: t + 4 * s, ...m });
+}
+
+function volgendeSpec() {
+  if (lijst) return maatNr < lijst.length ? lijst[maatNr] : null;
+  if (st.weergave === "body") return { soort: "body" };
+  if (st.modus === "beat") return { soort: "intro" };
+  if (maatNr === 0) return { soort: "aftel", tekst: "Klaar?" };
+  return { soort: "riff", helft: (maatNr - 1) % 2 };
+}
+
+function plannen() {
+  while (volgendeMaat < ctx.currentTime + 0.25) {
+    const m = volgendeSpec();
+    if (!m) { // einde van het hele nummer
+      const eind = volgendeMaat;
+      clearInterval(timer); timer = null;
+      const r = run;
+      setTimeout(() => { if (r === run && st.speelt) stop(false); }, Math.max(0, (eind - ctx.currentTime) * 1000 + 1600));
+      volgendeMaat = Infinity; return;
+    }
+    planMaat(volgendeMaat, m);
+    volgendeMaat += m.soort === "slot" ? 2 * spb() : 4 * spb();
+    maatNr++;
+  }
+}
+
+function start(heleNummer) {
+  audio(); if (ctx.state === "suspended") ctx.resume();
+  stop(true);
+  st.nummer = !!heleNummer; lijst = maatLijst();
+  st.speelt = true; plan = []; maatNr = 0;
+  [gDrums, gBas, gVoor, gKlik].forEach(g => g.gain.cancelScheduledValues(0));
+  gDrums.gain.value = st.modus === "beat" ? .4 : .9; gBas.gain.value = .8; gVoor.gain.value = .55; gKlik.gain.value = .5;
+  const dezeRun = ++run;
+  volgendeMaat = ctx.currentTime + 0.12;
+  plannen(); timer = setInterval(plannen, 40);
+  knoppen();
+}
+function stop(stilletjes) {
+  if (timer) { clearInterval(timer); timer = null; }
+  if (ctx && st.speelt) {
+    // Wat al ingepland staat snel wegdraaien
+    const t = ctx.currentTime;
+    [gDrums, gBas, gVoor, gKlik].forEach(g => { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + .15); });
+    setTimeout(() => { if (!st.speelt) { gDrums.gain.value = .9; gBas.gain.value = .8; gVoor.gain.value = .55; gKlik.gain.value = .5; } }, 250);
+  }
+  st.speelt = false; plan = []; st.nummer = false; lijst = null;
+  if (!stilletjes) knoppen();
+}
+
+/* ---------- Beeld ---------- */
+const banner = document.getElementById("banner");
+const groot = document.getElementById("groot");
+let handenOmhoog = false;
+
+function teken() {
+  requestAnimationFrame(teken);
+  tekenKlok();
+  if (handenOmhoog) return;
+  let m = null, pos = -1;
+  if (ctx && st.speelt) {
+    const t = ctx.currentTime;
+    plan = plan.filter(p => p.eind > t - 1);
+    m = plan.find(p => p.start <= t && t < p.eind);
+    if (m) pos = (t - m.start) / spb();   // positie in tellen binnen de maat
+  }
+  // Grote overlay: aftellen, stil, slotklap
+  if (m && m.soort === "aftel") toonGroot(String(Math.min(4, Math.floor(pos) + 1)), m.tekst || "");
+  else if (m && m.soort === "stil") toonGroot("✋", "Stil…");
+  else if (m && m.soort === "slot") toonGroot("👏", "Eén grote klap!");
+  else groot.style.display = "none";
+
+  banner.textContent = m && m.tekst && m.soort !== "aftel" ? m.tekst : (st.weergave === "body" ? "" : bannerStandaard());
+
+  // Riff
+  const riffActief = m && m.soort === "riff";
+  const telNu = riffActief ? m.helft * 4 + pos : -1;
+  blokken.forEach(({ el, noot }) => {
+    const aan = riffActief && telNu >= noot.tel && telNu < noot.tel + noot.duur;
+    el.classList.toggle("aan", aan && (noot.kleur === "track" || st.kleuren[noot.kleur]));
+    el.classList.toggle("uit", noot.kleur !== "track" && !st.kleuren[noot.kleur]);
+  });
+  koppen.forEach((k, i) => {
+    if (riffActief && m.helft === i) { k.style.opacity = .9; k.style.left = (pos / 4 * 100) + "%"; }
+    else k.style.opacity = 0;
+  });
+  telSpans.forEach((s, i) => s.classList.toggle("aan", riffActief && Math.floor(i / 4) === m.helft && Math.floor(pos) === i % 4));
+
+  // Bodypercussie
+  if (st.weergave === "body") {
+    const tel = m ? Math.floor(pos) : -1;
+    bodyEl.querySelectorAll(".lijf").forEach(el => {
+      el.classList.toggle("aan", tel >= 0 && el.dataset.tellen.split(",").includes(String(tel)) && (pos % 1) < .45);
+    });
+  }
+}
+function bannerStandaard() {
+  if (!st.speelt) return "";
+  const aan = Object.keys(st.kleuren).filter(k => st.kleuren[k]);
+  if (aan.length === 4) return "";
+  return "Nu spelen: " + aan.map(k => NAAM[k]).join(" + ");
+}
+function toonGroot(getal, uitleg) {
+  groot.style.display = "flex";
+  groot.querySelector(".getal").textContent = getal;
+  groot.querySelector(".uitleg").textContent = uitleg;
+}
+
+/* ---------- Lesklok ---------- */
+const klokEl = document.getElementById("klok"), klokKnop = document.getElementById("klokknop");
+let laatsteFase = -1;
+function lesSeconden() { return st.klokStart ? (Date.now() - st.klokStart) / 1000 : st.klokGepauzeerd; }
+function tekenKlok() {
+  const s = Math.floor(lesSeconden());
+  klokEl.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  klokEl.style.color = s >= 25 * 60 ? "var(--rood)" : (s >= 18 * 60 && s < 23 * 60 ? "var(--geel)" : "");
+  const min = s / 60;
+  const i = s > 0 ? FASEN.findIndex(f => min >= f.van && min < f.tot) : -1;
+  FASEN.forEach((f, j) => f.el.classList.toggle("nu", j === i));
+}
+klokKnop.onclick = () => {
+  if (st.klokStart) { st.klokGepauzeerd = lesSeconden(); st.klokStart = null; klokKnop.textContent = "Lesklok verder"; }
+  else { st.klokStart = Date.now() - st.klokGepauzeerd * 1000; klokKnop.textContent = "Pauze"; }
+};
+klokEl.ondblclick = () => { st.klokStart = null; st.klokGepauzeerd = 0; klokKnop.textContent = "Lesklok starten"; };
+klokEl.title = "Dubbelklik: lesklok op 0";
+
+/* ---------- Presets per fase ---------- */
+function kiesPreset(p) {
+  const wasSpelend = st.speelt;
+  stop(true); handenOmhoog = false; groot.style.display = "none";
+  st.modus = null; st.weergave = "riff"; st.helften = false;
+  const alle = { geel: true, groen: true, oranje: true, rood: true };
+  if (p === "binnen")   { st.modus = "beat"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 85; zetTitel("Welkom! Ga zitten op een stoel"); start(); }
+  if (p === "body")     { st.weergave = "body"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 75; zetTitel("Bodypercussie"); }
+  if (p === "pakken")   { zetTitel("Pak je instrument onder je stoel"); toonGroot("✋", "Handen omhoog is stil"); handenOmhoog = true; }
+  if (p === "oefen")    { st.drums = true; st.bas = false; st.voor = true; st.tempo = 75; st.kleuren = { geel: true, groen: false, oranje: false, rood: false }; zetTitel("Kleur voor kleur"); }
+  if (p === "langzaam") { st.drums = true; st.bas = false; st.voor = true; st.tempo = 75; st.kleuren = { ...alle }; zetTitel("Samen, langzaam"); }
+  if (p === "samen")    { st.drums = true; st.bas = true; st.voor = false; st.tempo = 85; st.kleuren = { ...alle }; zetTitel("Seven Nation Army"); }
+  if (p === "af")       { zetTitel("Buis onder je stoel. Goed gedaan!"); }
+  bodyEl.style.display = st.weergave === "body" ? "grid" : "none";
+  riffEl.style.display = st.weergave === "body" ? "none" : "grid";
+  bouwBody();
+  knoppen();
+}
+function zetTitel(t) { document.getElementById("titel").textContent = t; }
+
+/* ---------- Bediening ---------- */
+const speelKnop = document.getElementById("speel");
+function knoppen() {
+  speelKnop.textContent = st.speelt && !st.nummer ? "■ Stop" : "▶ Spelen";
+  document.getElementById("nummer").textContent = st.speelt && st.nummer ? "■ Stop" : "Hele nummer";
+  document.querySelectorAll("[data-tempo]").forEach(b => b.classList.toggle("aan", +b.dataset.tempo === st.tempo));
+  document.getElementById("tDrums").classList.toggle("aan", st.drums);
+  document.getElementById("tBas").classList.toggle("aan", st.bas);
+  document.getElementById("tVoor").classList.toggle("aan", st.voor);
+  document.querySelectorAll("[data-kleur]").forEach(b => {
+    b.classList.toggle("aan", st.kleuren[b.dataset.kleur]);
+    b.classList.toggle("uit", !st.kleuren[b.dataset.kleur]);
+  });
+  document.getElementById("handen").classList.toggle("aan", handenOmhoog);
+}
+function opnieuw() { if (st.speelt) { const n = st.nummer, mod = st.modus; start(n); st.modus = mod; } knoppen(); }
+
+speelKnop.onclick = () => { handenOmhoog = false; if (st.speelt && !st.nummer) stop(); else start(false); };
+document.getElementById("nummer").onclick = () => {
+  handenOmhoog = false;
+  if (st.speelt && st.nummer) { stop(); return; }
+  if (st.weergave === "body") kiesPreset("samen");
+  st.modus = null; start(true);
+};
+function handen() {
+  if (handenOmhoog) { handenOmhoog = false; groot.style.display = "none"; knoppen(); return; }
+  stop(); handenOmhoog = true; toonGroot("✋", "Handen omhoog is stil"); knoppen();
+}
+document.getElementById("handen").onclick = handen;
+document.querySelectorAll("[data-tempo]").forEach(b => b.onclick = () => { st.tempo = +b.dataset.tempo; opnieuw(); });
+document.getElementById("tDrums").onclick = () => { st.drums = !st.drums; knoppen(); };
+document.getElementById("tBas").onclick = () => { st.bas = !st.bas; knoppen(); };
+document.getElementById("tVoor").onclick = () => { st.voor = !st.voor; knoppen(); };
+document.querySelectorAll("[data-kleur]").forEach(b => b.onclick = () => { st.kleuren[b.dataset.kleur] = !st.kleuren[b.dataset.kleur]; knoppen(); });
+document.getElementById("volume").oninput = zetVolume;
+bodyEl.ondblclick = () => { st.helften = !st.helften; bouwBody(); };
+document.addEventListener("keydown", e => {
+  if (e.code === "Space") { e.preventDefault(); speelKnop.click(); }
+  else if (e.key === "h" || e.key === "H" || e.key === "Escape") handen();
+  else if (e.key === "n" || e.key === "N") document.getElementById("nummer").click();
+  else if (e.key === "l" || e.key === "L") klokKnop.click();
+  else if (e.key === "2" && st.weergave === "body") { st.helften = !st.helften; bouwBody(); }
+});
+
+kiesPreset("samen"); zetTitel("Seven Nation Army");
+requestAnimationFrame(teken);
+</script>
+</body>
+</html>
