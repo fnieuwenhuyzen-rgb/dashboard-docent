@@ -1367,7 +1367,7 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   .les[data-niveau="mavo"] .fase-body:not(.twee) ol.stappen:has(li.nu) li:not(.nu){opacity:.5}
   .les[data-niveau="mavo"] .klaarkaart{border-radius:var(--hoek)}
   /* mavo: werkfase is dezelfde band, groter, met de klok erin */
-  .les[data-thema="licht"][data-niveau="mavo"].werk .fase-kop{min-height:37vh;padding-right:calc(var(--rand) + 34vh)}
+  .les[data-thema="licht"][data-niveau="mavo"].werk .fase-kop{min-height:35vh;padding-right:calc(var(--rand) + 34vh)}
   .les[data-niveau="mavo"].werk .timerhoek{top:calc(var(--lkop-h) + 1.5vh);width:32vh;right:var(--rand);transform:none}
   .les[data-niveau="mavo"].werk .ring b{font-size:clamp(2.2rem,7.6vh,5rem)}
   .les[data-niveau="mavo"].werk .ring span{bottom:20%;font-size:clamp(.9rem,2vh,1.2rem)}
