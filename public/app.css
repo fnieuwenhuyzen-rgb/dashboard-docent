@@ -1163,7 +1163,7 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   .bm-nogopen button:hover{background:var(--uit-zacht)}
 }
 
-/* ---------- Geef les: nieuw uiterlijk, licht en donker (proef 10-11). Staat na de oude regels en gaat daarvoor. ---------- */
+/* ---------- Geef les: nieuw uiterlijk (10-11, besluit Frans: licht). Staat na de oude regels en gaat daarvoor. ---------- */
 .les{--ct:var(--z);--bg-kop:#17121f}
 .lesfoto{margin:0;position:relative;border-radius:16px;overflow:hidden;min-height:0;background:#0002}
 .lesfoto img{display:block;width:100%;height:100%;object-fit:cover}

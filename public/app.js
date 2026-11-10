@@ -3126,10 +3126,6 @@ function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwe
   el.innerHTML = d + nh; const b = document.querySelector('#les [data-l="notities"]'); if (b) b.hidden = !(d || nh);
   el.classList.toggle('open', !!(P.notities && (d || nh)));
 }
-/* Uiterlijk van het bord: licht of donker, per apparaat onthouden. Wisselen raakt de timer niet (geen toonSlide). */
-const BORDTHEMA = 'lesdag-bord-thema';
-function bordThema() { try { return localStorage.getItem(BORDTHEMA) === 'donker' ? 'donker' : 'licht'; } catch (e) { return 'licht'; } }
-function wisselThema() { const n = bordThema() === 'licht' ? 'donker' : 'licht'; try { localStorage.setItem(BORDTHEMA, n); } catch (e) {} $('#les').dataset.thema = n; const b = $('#themaKnop'); if (b) b.textContent = n === 'licht' ? 'donker' : 'licht'; }
 /* Op het bord één opdracht aanwijzen: de rest wordt rustiger. Nog een keer tikken haalt het weg. */
 /* Volle dia's: tekst stapsgewijs kleiner tot alles op het bord past, ook nadat het venster naar het digibord is gesleept. */
 function pasIn() { const el = document.querySelector('#les .slide'); if (!el) return; for (const f of [1, .92, .84, .76, .68, .6]) { el.style.setProperty('--past', f); if (el.scrollHeight <= el.clientHeight + 1) break; } }
@@ -3185,13 +3181,13 @@ function toonSlide() {
   else { P.left = 0; P.tot = 0; }
   const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
-  $('#les').className = 'les s-' + soort + (sl.werk ? ' werk' : ''); $('#les').dataset.thema = bordThema(); $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
+  $('#les').className = 'les s-' + soort + (sl.werk ? ' werk' : ''); $('#les').dataset.thema = 'licht'; /* besluit Frans 10-11: het bord is licht */ $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
   <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
   ${fklok ? timerHtml() : ''}
   ${fklok ? `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd · volgende fase</div>` : ''}
   <div class="notities ${P.notities && notInh ? 'open' : ''}" id="notities">${notInh}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="thema" id="themaKnop">${bordThema() === 'licht' ? 'donker' : 'licht'}</button><button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
   if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
   if (fk && fk.w === '#les' && !focusHerstel(fk)) $('#les').focus({ preventScroll: true });
   bordZeg(); plekBewaar();
@@ -3283,7 +3279,6 @@ document.addEventListener('click', async e => {
     toast(`${k.slice(k.indexOf('|') + 1)} staat als gefeliciteerd`, terug); return; }
   if (D.pal != null) { paletKies(+D.pal); return; }
   if (e.target.closest('#les')) {
-    if (D.l === 'thema') { wisselThema(); return; }
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
     else if (D.l === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
     else if (D.l === 'timer') timer();
@@ -3563,7 +3558,6 @@ document.addEventListener('keydown', e => {
     if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); } }
     else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); if (LES.i > 0) { LES.i--; toonSlide(); } }
     else if (e.key === 't') timer();
-    else if (e.key === 'l') wisselThema();
     else if (/^[1-9]$/.test(e.key)) { const st = document.querySelectorAll('#les .stappen li')[+e.key - 1]; if (st) wijsStap(st); }
     else if (e.key === 'n' && !LES.bord) { LES.notities = !LES.notities; const n = $('#notities'); if (n && n.textContent.trim()) n.classList.toggle('open', LES.notities); const b = document.querySelector('#les [data-l="notities"]'); if (b) b.setAttribute('aria-pressed', LES.notities); }
     else if (e.key === 'f') { const el = $('#les'); if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {}); else if (document.exitFullscreen) document.exitFullscreen().catch(() => {}); }
