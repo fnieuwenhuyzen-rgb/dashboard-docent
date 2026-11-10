@@ -1,13 +1,16 @@
 # Open punten Lesdag
 
-Bijgewerkt: 9 november 2026. Houd dit bestand onder de 45 regels.
+Bijgewerkt: 10 november 2026. Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 
-- Alles staat live sinds 9-11 (cache v57, Beoordelen stap 3 inbegrepen). Nieuw werk begint vanaf `main`.
-- Repo sinds 9-11 in `C:/Projecten/Lesdag`; documenten blijven in OneDrive onder `Dashboard Docent/lesdag project`.
+- Alles live sinds 9-11 (cache v57, Beoordelen stap 3 inbegrepen). Nieuw werk vanaf `main`. Repo sinds 9-11 in `C:/Projecten/Lesdag`; documenten blijven in OneDrive onder `Dashboard Docent/lesdag project`.
+- Reclame live sinds 10-11 (cache v59): printposter A3, ticketlink en prijs Christmas Carols, extra waarschuwingen. Nog proefprinten en de QR-code scannen. [Frans] Sinds 10-11 (cache v62) ook per activiteit "Schoolleiding informeren en uitnodigen", vier weken vooraf; Sing-Ins en Kerstvieringen niet (staan op `overslaan`).
+- Brede indeling live sinds 10-11 (cache v60): vanaf 1300 px nieuwe opzet voor Beoordelen, Jaar, Rooster, Sectie, Team, Reclame, Instellingen. Getest met verzonnen gegevens; nog bekijken met echte klassen, Beoordelen vóór 23-11. [Frans]
+- Geef les nieuw uiterlijk live sinds 10-11 (cache v61, licht; PowerPoints zijn reserve). Foto's per les in `public/lesfotos.js`, alleen `mavo3:8.1` heeft ze; de rest nog koppelen en verkleinen. PowerPoint-link nog klein maken. 316 van 521 lessen hebben nog geen uitgewerkte fasen. Proefles zonder rooster: `#lesproef/<les-id>`. [Claude]
+- Geef les heeft sinds 10-11 een eigen lay-out per groep (live, cache v63). Leerjaar: kleur, hoeken, motief, klascijfer. Niveau: mavo blokken, havo zijkolom, vwo tijdschrift. Code: `stijlVan` in `public/lesmodus.js` en het blok "lay-out per groep" in `public/app.css`. Nog te bevestigen: alleen Geef les en niet de PowerPoints; klas 1 magenta `B0357F` met mavo-vorm; mavo 3 en 4 in de kleur van hun leerjaar. [Frans]
 
 ## Na live, in deze volgorde
 
@@ -19,16 +22,17 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Wacht op Frans
 
+Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (10-11: alleen privémail bewezen klaar. Schoolmail en Gmail nagekeken: PTA-lijst niet per mail verstuurd, niets aan Mar sinds 8-11. Antwoord aan Jan ging 9-11 uit; solist en namen kaarsendragers volgen nog, Frans heeft ze eind volgende week).
+
 Deze week:
-- Bericht over 23-11 aan vwo 4 en 5 in Magister, vandaag.
+- Bericht over 23-11 aan vwo 4 en 5 in Magister.
 - PTA-lijst doorsturen: `lesdag project/PTA-punten muziek 2026-2027 voor PTA-beheerder.docx`.
 - Wo 11-11 na 07:30: geschiedenis Power Automate HD4-stroom bekijken. Na 16-11: stroom HD4 uit en proefantwoord wissen.
-- Meldpunt instrumenten: bewaking faalde op 9-11 (nieuwe sessie).
-- Oude map `lesdag project/lesdag` verwijderen (code staat in `C:/Projecten/Lesdag`).
+- Meldpunt instrumenten: verhuisd naar Sectie Muziek (10-11), omdat de groep Vakgroep Muziek bewust is opgeheven. Vier stromen omgezet, proefmelding door de hele keten geslaagd. Details: `Claude werkmap/Meldpunt kapotte instrumenten/bouwlog.md`. `Onderhoudsteamkaarten.pdf` is op 10-11 vernieuwd, zonder QR-code Klussenlijst (leerlingen konden daar niet bij). Al geprinte kaarten opnieuw printen. [Frans]
+- Oude map `lesdag project/lesdag` verwijderen: op 10-11 nog aanwezig, geen ongepushte commits, geen wijzigingen. Bestanden alleen in de oude map zijn eerder bewust opgeruimd.
 
 Voor 23-11, op een echt apparaat:
-- Cijferkolom plakken in Magister. Lesmodus op het digibord. Zermelo met het echte rooster. Concertstand op de tablet. Feedbackblad printen.
-- Beoordelen in een echte les (vwo 4 PT1): past het op laptop of tablet? Checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
+- Cijferkolom plakken in Magister. Lesmodus op het digibord. Zermelo met het echte rooster. Concertstand op de tablet. Feedbackblad printen. Beoordelen in een echte les (vwo 4 PT1), checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
 
 ## Op datum
 
