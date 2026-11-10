@@ -3135,6 +3135,7 @@ function wisselThema() { const n = bordThema() === 'licht' ? 'donker' : 'licht';
 function pasIn() { const el = document.querySelector('#les .slide'); if (!el) return; for (const f of [1, .92, .84, .76, .68, .6]) { el.style.setProperty('--past', f); if (el.scrollHeight <= el.clientHeight + 1) break; } }
 window.addEventListener('resize', () => { if (LES) pasIn(); });
 function wijsStap(li) { const was = li.classList.contains('nu'); li.parentElement.querySelectorAll('li.nu').forEach(x => x.classList.remove('nu')); if (!was) li.classList.add('nu'); }
+document.addEventListener('click', e => { const st = e.target.closest('#les .stappen li'); if (st) wijsStap(st); });
 /* Proefles: #lesproef/mavo3:8.1 opent die les met een verzonnen uur vanaf nu. Geen rooster nodig en er wordt niets bewaard. */
 function startProef(id) {
   const lg = id.split(':')[0]; const item = (reeks(lg) || []).find(y => y.id === id); if (!item) { toast('Les ' + id + ' niet gevonden'); return; }
@@ -3282,7 +3283,6 @@ document.addEventListener('click', async e => {
     toast(`${k.slice(k.indexOf('|') + 1)} staat als gefeliciteerd`, terug); return; }
   if (D.pal != null) { paletKies(+D.pal); return; }
   if (e.target.closest('#les')) {
-    const stap = e.target.closest('.stappen li'); if (stap) { wijsStap(stap); return; }
     if (D.l === 'thema') { wisselThema(); return; }
     if (D.l === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
     else if (D.l === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
