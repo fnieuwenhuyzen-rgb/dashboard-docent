@@ -1046,7 +1046,7 @@ const soortVan = k => k.dagTaak ? (k.dagTaak.key === 'koor' ? 'koorrep' : 'pres'
 const vijf = n => Math.max(5, Math.round(n / 5) * 5);
 const mediaan = L => { const z = [...L].sort((a, b) => a - b); const m = z.length >> 1; return z.length % 2 ? z[m] : (z[m - 1] + z[m]) / 2; };
 const startMin = soort => (S.schatStart || {})[soort] || SCHAT[soort] || 15;
-const GEEN_WOORD = new Set(['voor', 'naar', 'over', 'met', 'een', 'het', 'van', 'bij', 'uit', 'sectie', 'koor', 'presentatie', 'doorlopen']);
+const GEEN_WOORD = new Set(['voor', 'naar', 'over', 'met', 'een', 'het', 'van', 'bij', 'uit', 'sectie', 'koor', 'presentatie', 'doorlopen', 'deel']);
 const woorden = t => [...new Set(String(t).toLowerCase().replace(/[^a-zà-ÿ0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !GEEN_WOORD.has(w)))];
 function lijkt(a, b) { const A = woorden(a), B = woorden(b); if (!A.length || !B.length) return false; const n = A.filter(w => B.includes(w)).length; return n >= 2 || (n === 1 && A.length === 1 && B.length === 1); }
 function schatting(soort, titel) {
@@ -1119,6 +1119,28 @@ function duurVraag(id, soort, titel, gok, gemeten, rp) { // rp: {rol, potje} van
   el.innerHTML = `<p><b>Hoe lang duurde het?</b> ${esc(kort(titel))}${gemeten ? ` · gemeten ${gemeten} min` : ''}</p><div class="knoppen">${keuze.map(m => `<button class="btn klein${m === g ? ' hoofd' : ''}" type="button" data-duurja="${m}">${m} min</button>`).join('')}<label class="minveld"><input id="dvMin" type="number" inputmode="numeric" min="1" max="480" step="5" aria-label="Aantal minuten"> min</label><button class="btn klein" type="button" data-duurok="">Noteer</button><button class="btn klein" type="button" data-duurnee="">Weet ik niet</button></div>`;
   el.hidden = false;
 }
+/* Past in dit gat (besluit Frans 11-11): een eigen taak boven de grens (30 min) mag in stukken, zodat hij in een tussenuur past.
+   Lesdag stelt het aantal voor, Frans past aan of zegt nee (k.heel: niet opnieuw vragen tot de duur verandert). Rekenregels in functies.js. */
+let SV = null;
+const stukGrens = () => FUNCTIES.KEUZES.stukken.grens;
+const stukDuur = k => k.min || schatting(soortVan(k), k.titel).min;
+const magInStukken = k => !!k && !k.af && !k.plan && !k.afspraak && !k.deel && !k.dagTaak && !k.sectieId && !k.koorId && !k.reclameId && stukDuur(k) > stukGrens();
+function stukVraag(k, opnieuw) {
+  if (!magInStukken(k) || (k.heel && !opnieuw)) return;
+  let el = $('#stukvraag'); if (!el) { el = document.createElement('div'); el.id = 'stukvraag'; el.className = 'duurvraag'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+  const min = stukDuur(k), n = FUNCTIES.stukAantal(min, stukGrens()), max = FUNCTIES.KEUZES.stukken.max; SV = { id: k.id, min };
+  const keuze = [...new Set([n - 1, n, n + 1].filter(x => x >= 2 && x <= max))];
+  el.innerHTML = `<p><b>In stukken?</b> ${esc(kort(k.titel))} duurt ${min} min. In een tussenuur is meestal ${stukGrens()} min werkruimte.</p><div class="knoppen">${keuze.map(x => `<button class="btn klein${x === n ? ' hoofd' : ''}" type="button" data-stukja="${x}">${x} × ${FUNCTIES.stukMinuten(min, x)} min</button>`).join('')}<label class="minveld"><input id="svN" type="number" inputmode="numeric" min="2" max="${max}" step="1" aria-label="Aantal stukken"> stukken</label><button class="btn klein" type="button" data-stukok="">Maak</button><button class="btn klein" type="button" data-stuknee="">Nee, heel laten</button></div>`;
+  el.hidden = false;
+}
+function stukDicht() { SV = null; const el = $('#stukvraag'); if (el) el.hidden = true; }
+function stukMaak(n) {
+  const k = SV && (S.taken || []).find(x => x.id === SV.id); if (!k) { stukDicht(); return; }
+  const max = FUNCTIES.KEUZES.stukken.max; if (!(n >= 2 && n <= max)) { toast(`Kies 2 tot ${max} stukken`); return; }
+  const terug = foto(); const L = FUNCTIES.maakStukken(k, n, SV.min, () => 'k' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6));
+  S.taken.splice(S.taken.indexOf(k), 1, ...L); stukDicht(); bewaar(); toast(`${n} stukken van ${L[0].min} min. Lesdag zet steeds het volgende stuk in een vrij blok.`, terug);
+}
+function stukNee() { const k = SV && (S.taken || []).find(x => x.id === SV.id); stukDicht(); if (k) { k.heel = true; bewaar(); } }
 function duurDicht() { DV = null; const el = $('#duurvraag'); if (el) el.hidden = true; }
 function duurNoteer(min) { if (!DV || !(min >= 1 && min <= 480)) { toast('Vul een aantal minuten in'); return; } const v = DV; duurDicht(); S.duurLog = (S.duurLog || []).concat(Object.assign({ s: v.s, t: v.t, e: min, d: vandaag(), id: v.id, rol: v.rol }, v.potje ? { potje: v.potje } : {})).slice(-300); bewaar(); toast(`Genoteerd: ${min} min. Lesdag rekent daar voortaan mee.`); }
 function duurTerug(id) { if (DV && DV.id === id) duurDicht(); S.duurLog = (S.duurLog || []).filter(x => x.id !== id); }
@@ -1421,11 +1443,11 @@ function taakAfInkorten(k, af) {
 }
 function blijftLiggen() {
   if (!B || !S) return [];
-  const t = vandaag(); const G = geplandeSleutels(); const op = key => (S.uitgesteld || {})[key] > t; const out = [];
+  const t = vandaag(); const G = geplandeSleutels(); const op = key => (S.uitgesteld || {})[key] > t; const out = []; const telt = FUNCTIES.eersteDelen(S.taken);
   (S.taken || []).forEach(k => {
     if (k.af || k.afspraak || op('eigen:' + k.id)) return;
     if (planVoorbij(k)) { if (!k.dagTaak) out.push({ key: 'eigen:' + k.id, titel: k.titel, bron: k.bron, dag: k.plan.dag, gemist: true, vink: `data-taakaf="${esc(k.id)}"` }); }
-    else if (!k.plan && k.d && k.d < t) out.push({ key: 'eigen:' + k.id, titel: k.titel, bron: k.bron, dag: k.d, vink: `data-taakaf="${esc(k.id)}"` });
+    else if (!k.plan && k.d && k.d < t && telt(k)) out.push({ key: 'eigen:' + k.id, titel: k.titel, bron: k.bron, dag: k.d, vink: `data-taakaf="${esc(k.id)}"`, stuk: magInStukken(k) ? k.id : '' });
   });
   sectieItems().forEach(i => { if (i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && (i.tot || i.d) < t && !op('sec:' + i.id)) out.push({ key: 'sec:' + i.id, titel: i.titel, bron: 'sectie', dag: i.tot || i.d, vink: `data-sdone="${esc(i.id)}"` }); });
   koorTakenOpen(t).forEach(k => { if (k.d && k.d < t && !op('koor:' + k.id)) out.push({ key: 'koor:' + k.id, titel: k.titel, bron: k.bron === 'examen' ? 'sectie' : 'koor', dag: k.d, vink: `data-koorvink="${esc(k.id)}"` }); });
@@ -1439,7 +1461,7 @@ function naVakantie(t) { // t is de eerste lesdag na een vakantie: geeft die vak
 function liggenBlok() {
   const L = blijftLiggen(); if (!L.length) return '';
   const t = vandaag(); const morgen = lesdagStap(t, 1); // slaat vakanties en vrije dagen over, net als Week afsluiten
-  const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button><button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
+  const rij = x => `<div class="taak laat">${taakTitel(x.key, x.titel, `<input type="checkbox" ${x.vink} aria-label="Klaar: ${esc(x.titel)}">`)}<span class="tb"><span class="chip">${esc(BRON[x.bron] || x.bron || 'overig')}</span><span class="chip rood">${x.gemist ? 'gemist' : 'deadline'} ${esc(fmtD(x.dag))}</span><button class="btn klein hoofd" data-liggenplan="${esc(x.key)}">Plan</button>${x.stuk ? `<button class="btn klein" data-stukvraag="${esc(x.stuk)}">In stukken</button>` : ''}<button class="btn klein" data-liggenlater="${esc(x.key)}|${morgen}">Morgen</button><label class="later">Later<input type="date" min="${addD(t, 1)}" data-liggentot="${esc(x.key)}"></label></span></div>`;
   const V = naVakantie(t);
   if (V) { const nw = L.filter(x => x.dag >= V.van).length, oud = L.length - nw; // de eerste dag na een vakantie: één regel en één knop, de stapel ingeklapt
     return `<div class="kaart liggen"><h2>Na de ${esc(V.naam.toLowerCase())}</h2><p class="lead">${nw ? `Tijdens de ${esc(V.naam.toLowerCase())} verlopen: ${nw} ${nw === 1 ? 'taak' : 'taken'}.` : `Tijdens de ${esc(V.naam.toLowerCase())} is niets verlopen.`}${oud ? ` ${oud} ${oud === 1 ? 'lag' : 'lagen'} er al langer.` : ''}</p>
@@ -1950,7 +1972,8 @@ function kandidaten(s) {
   const kr = koorOp(s); if (kr && (kr.type === 'rep' || kr.type === 'extra') && !dt(s).koor && !G.pres[s + '|koor']) K('koorrep', 'koorrep', 'Koorrepetitie voorbereiden', { d: s, sub: kr.titel });
   koorTakenOpen(s).forEach(t => K('koor:' + t.id, 'koor', (t.bron === 'examen' ? '' : 'Koor: ') + t.titel, { d: t.d }));
   sectieItems().filter(i => i.taak && !S.sectieAf[i.id] && !G.sec[i.id] && i.d <= addD(s, 14)).forEach(i => K('sec:' + i.id, 'sectie', 'Sectie: ' + i.titel, { d: i.d }));
-  (S.taken || []).filter(k => !k.af && !k.plan).forEach(k => K('eigen:' + k.id, soortVan(k), k.titel, { d: k.d }, k.min));
+  const telt = FUNCTIES.eersteDelen(S.taken); // een taak in stukken: alleen het eerstvolgende stuk (Past in dit gat)
+  (S.taken || []).filter(k => !k.af && !k.plan && telt(k)).forEach(k => K('eigen:' + k.id, soortVan(k), k.titel, { d: k.d }, k.min));
   return out.sort((a, b) => (a.d || '9') < (b.d || '9') ? -1 : (a.d || '9') > (b.d || '9') ? 1 : 0);
 }
 function vrijeBlokken(s0, vanaf, dagen) {
@@ -2479,7 +2502,7 @@ function botsing(dag, van, tot) {
 function taakUitPalet(t, rp) { // rp: rol en potje die je zelf koos
   if (t.fout) { toast(t.fout); return; }
   const k = maakTaak('', t.plan || null, t.titel, t.bron); if (!k) return; if (rp) zetRol(k, rp);
-  if (t.afspraak) k.afspraak = true; if (t.d) k.d = t.d; if (t.min) k.min = t.min; bewaar();
+  if (t.afspraak) k.afspraak = true; if (t.d) k.d = t.d; if (t.min) k.min = t.min; bewaar(); stukVraag(k);
   toast(t.plan ? `${k.titel} staat op ${fmtD(t.plan.dag)} om ${t.plan.van}` : `${k.titel} staat in je takenlijst${t.d ? ', deadline ' + fmtD(t.d) : ''}`);
 }
 
@@ -3075,10 +3098,11 @@ function bewaarTaakBewerk(f) {
   if (afspr && !(dag && van && tot)) { toast('Een afspraak heeft een datum, een begintijd en een eindtijd'); return; }
   if ((dag || van || tot) && !(dag && van && tot)) { toast('Vul datum, van en tot allemaal in, of laat ze alle drie leeg'); return; }
   if (van && minuten(tot) <= minuten(van)) { toast('Kies een eindtijd na de begintijd'); return; }
-  const terug = foto(); k.titel = g('titel'); k.notitie = g('notitie') || undefined; if (g('rol')) zetRol(k, { rol: g('rol'), potje: g('potje') }); k.url = /^https?:\/\//i.test(g('url')) ? g('url') : undefined;
+  const terug = foto(); const oudMin = k.min; k.titel = g('titel'); k.notitie = g('notitie') || undefined; if (g('rol')) zetRol(k, { rol: g('rol'), potje: g('potje') }); k.url = /^https?:\/\//i.test(g('url')) ? g('url') : undefined;
   if (dag) { k.plan = { dag, van, tot }; agSel[dag] = 'taak:' + k.id; } else delete k.plan;
   if (afspr) { k.afspraak = true; delete k.d; delete k.min; delete k.start; } else { delete k.afspraak; k.d = g('d') || undefined; k.min = +g('min') || undefined; k.bron = g('bron') || k.bron; }
-  sluit(); bewaar(); toast(k.titel + ' is aangepast', terug);
+  if (k.min !== oudMin) delete k.heel;
+  sluit(); bewaar(); toast(k.titel + ' is aangepast', terug); stukVraag(k);
 }
 function sluit() { $('#drawer').classList.remove('open'); $('#scrim').hidden = true; }
 function bewaarBewerk(f) {
@@ -3385,6 +3409,10 @@ document.addEventListener('click', async e => {
   if (D.duurja) { duurNoteer(+D.duurja); return; }
   if (D.duurok != null) { duurNoteer(+($('#dvMin') || {}).value); return; }
   if (D.duurnee != null) { duurDicht(); return; }
+  if (D.stukja) { stukMaak(+D.stukja); return; }
+  if (D.stukok != null) { stukMaak(+($('#svN') || {}).value); return; }
+  if (D.stuknee != null) { stukNee(); return; }
+  if (D.stukvraag) { stukVraag((S.taken || []).find(x => x.id === D.stukvraag), true); return; }
   if (D.duurweg != null) { const terug = foto(); S.duurLog.splice(+D.duurweg, 1); bewaar(); toast('Meting telt niet meer mee', terug); return; }
   if (D.taakstart) { const k = (S.taken || []).find(k => k.id === D.taakstart); if (k) { k.start = Date.now(); bewaar(); } return; }
   if (D.pzweg != null) { const terug = foto(); S.pauzes.splice(+D.pzweg, 1); bewaar(); toast('Pauze weg', terug); return; }
@@ -3445,7 +3473,7 @@ document.addEventListener('change', e => {
   if (t.checked && t.closest('.taak-klaar')) sluit();
   if (t.dataset.taaknoot) { const i = t.dataset.taaknoot.indexOf('|'), soort = t.dataset.taaknoot.slice(0, i), n = t.dataset.taaknoot.slice(i + 1), k = soort === 'ff' ? nootVooruit(n) : n; S.taakNoot = S.taakNoot || {}; const r = S.taakNoot[k] = S.taakNoot[k] || {}; const w = t.value.trim(); if (w) { r[soort] = w; r.d = vandaag(); r.titel = $('#drawer > h2').textContent; } else { delete r[soort]; if (!r.fb && !r.ff) delete S.taakNoot[k]; } bewaar(); return; }
   if (t.dataset.liggentot) { if (t.value > vandaag()) stelUit(t.dataset.liggentot, t.value); return; }
-  if (t.dataset.minv) { const v = t.dataset.minv; const m = Math.round(+t.value); if (!(m >= 1 && m <= 480)) { bewaar(); return; } const k = v.startsWith('eigen:') && (S.taken || []).find(x => x.id === v.slice(6)); if (k) k.min = m; else (S.minuten = S.minuten || {})[v] = m; bewaar(); return; }
+  if (t.dataset.minv) { const v = t.dataset.minv; const m = Math.round(+t.value); if (!(m >= 1 && m <= 480)) { bewaar(); return; } const k = v.startsWith('eigen:') && (S.taken || []).find(x => x.id === v.slice(6)); if (k) { if (k.min !== m) delete k.heel; k.min = m; } else (S.minuten = S.minuten || {})[v] = m; bewaar(); if (k) stukVraag(k); return; }
   if (t.dataset.schatstart) { const m = Math.round(+t.value); S.schatStart = S.schatStart || {}; if (m >= 1 && m <= 480) S.schatStart[t.dataset.schatstart] = m; else delete S.schatStart[t.dataset.schatstart]; bewaar(); return; }
   if (t.dataset.rolveld || t.dataset.potveld) { // Instellingen, Rollen en potjes
     const rol = !!t.dataset.rolveld; const [id, veld] = (t.dataset.rolveld || t.dataset.potveld).split('|'); const x = rol ? rolInfo(id) : potInfo(id); if (!x) return; const w = t.value.trim();
@@ -3503,7 +3531,7 @@ document.addEventListener('submit', e => {
   }
   if (e.target.id === 'pzForm') { const T = [...e.target.querySelectorAll('[name=tot]')].map(x => x.value); S.pauzes = [...e.target.querySelectorAll('[name=van]')].map((x, i) => ({ van: x.value.replace(/^0/, ''), tot: (T[i] || '').replace(/^0/, '') })).filter(p => p.van && p.tot && minuten(p.tot) > minuten(p.van)); bewaar(); toast('Pauzes opgeslagen'); return; }
   if (e.target.id === 'kForm') { bewaarTaakBewerk(new FormData(e.target)); return; }
-  if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; const lt = leesTaak(titel, $('#tD').value); if (lt.fout) { toast(lt.fout); return; } const rp = rolUitKeuze(titel, $('#tB').value, $('#tR').value, $('#tP').value); if (lt.afspraak && lt.plan) { taakUitPalet(lt, rp); return; } (S.taken = S.taken || []).push(zetRol({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }, rp)); bewaar(); return; }
+  if (e.target.id === 'tAdd') { const titel = $('#tT').value.trim(); if (!titel) return; const lt = leesTaak(titel, $('#tD').value); if (lt.fout) { toast(lt.fout); return; } const rp = rolUitKeuze(titel, $('#tB').value, $('#tR').value, $('#tP').value); if (lt.afspraak && lt.plan) { taakUitPalet(lt, rp); return; } const nk = zetRol({ id: 'k' + Date.now().toString(36), titel, bron: $('#tB').value, d: $('#tD').value || undefined, af: false }, rp); (S.taken = S.taken || []).push(nk); bewaar(); stukVraag(nk); return; }
   if (e.target.id === 'recForm') { const titel = $('#recT').value.trim(), d = $('#recD').value; if (!titel) { toast('Typ wat de activiteit is.'); return; } if (!d) { toast('Kies de datum van de activiteit.'); return; } if (d < vandaag()) { toast(`${fmtD(d)} ligt in het verleden. Kies een datum vanaf vandaag; een oude activiteit staat niet in de lijst`); return; } const id = 'eigen:' + Date.now().toString(36); (S.reclameExtra = S.reclameExtra || []).push({ id, titel, d, soort: $('#recS').value }); recFocus = id; bewaar(); toast(titel + ' staat erbij'); return; }
   if (e.target.id === 'sForm') { const titel = $('#sT').value.trim(), d = $('#sD').value; const f = sTaakFout(titel, d); if (f) { toast(f); $(titel ? '#sD' : '#sT').focus(); return; }
     S.sectieExtra.push(zetRol({ id: 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d, titel, soort: 'taak', taak: true }, rolUitKeuze(titel, 'sectie', $('#sR').value, $('#sP').value))); bewaar(); toast(`${kort(titel)} staat erbij op ${fmtDJ(d)}`); return; }

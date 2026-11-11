@@ -18,6 +18,10 @@
     jaar: {
       lucht: 'groene-noten-en-regel', // keuze 8. 'groene-noten-en-regel' | 'niets'
       stand: 'alleen-krap'            // keuze 8. Een klas die goed zit krijgt geen label. 'alleen-krap' is gebouwd
+    },
+    stukken: {                        // voorstel "Past in dit gat", onderdeel A (besluit Frans 11-11-2026)
+      grens: 30,                      // een eigen taak boven zoveel minuten: Lesdag vraagt of hij in stukken mag, stukken van zoveel minuten
+      max: 8                          // hoogstens zoveel stukken
     }
   };
 
@@ -59,5 +63,18 @@
   /* ---- Jaar: waar is nog lucht. De regel bij een klas die krap zit (keuze 8); een klas die goed zit krijgt niets ---- */
   const luchtRegel = (toets, aantal) => 'Krap voor ' + toets + '. ' + (aantal < 1 ? 'Geen les kan vervallen.' : aantal === 1 ? 'Eén les kan vervallen.' : aantal + ' lessen kunnen vervallen.');
 
-  return { KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
+  /* ---- Past in dit gat: een grote eigen taak in stukken. Elk stuk is een gewone eigen taak met deel: {groep, nr, van};
+     groep is het id van de oorspronkelijke taak (die wordt deel 1). Alleen het laagste open deel van een groep doet mee in de planning. ---- */
+  const stukAantal = (min, grens) => min > grens ? Math.min(KEUZES.stukken.max, Math.ceil(min / grens)) : 1;
+  const stukMinuten = (min, n) => Math.max(5, Math.round(min / n / 5) * 5);
+  const kaleTitel = t => String(t || '').replace(/ \(deel \d+ van \d+\)$/, '');
+  const stukTitel = (titel, nr, van) => kaleTitel(titel) + ' (deel ' + nr + ' van ' + van + ')';
+  const maakStukken = (k, n, totaal, nieuwId) => { const m = stukMinuten(totaal, n);
+    return Array.from({ length: n }, (_, i) => { const s = Object.assign({}, k, { id: i ? nieuwId() : k.id, titel: stukTitel(k.titel, i + 1, n), min: m, deel: { groep: k.id, nr: i + 1, van: n }, af: false });
+      ['plan', 'planOud', 'start', 'afOp', 'heel'].forEach(x => delete s[x]); return s; }); };
+  /* geeft een toets: telt deze taak mee? Taken zonder deel altijd; van een groep alleen het laagste deel dat nog niet af is */
+  const eersteDelen = taken => { const laag = {}; (taken || []).forEach(k => { if (k.deel && !k.af) { const l = laag[k.deel.groep]; if (!l || k.deel.nr < l.deel.nr) laag[k.deel.groep] = k; } });
+    return k => !k.deel || k.af || laag[k.deel.groep] === k; };
+
+  return { stukAantal, stukMinuten, kaleTitel, stukTitel, maakStukken, eersteDelen, KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
 });

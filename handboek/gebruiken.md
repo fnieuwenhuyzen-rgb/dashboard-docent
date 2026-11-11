@@ -32,6 +32,21 @@ Wil je de les liever niet voor de klas laten zien? Dat is een keuze per klas. De
 Na elke les, of aan het eind van de dag: zet in Magister de presentie, het huiswerk en het logboek. Lesdag onthoudt wat nog moet (oker stip). Binnen 15 minuten na het begin is "op tijd".
 Aan het eind van de dag: **Dag afsluiten**.
 
+## Een grote taak in stukken
+
+Een tussenuur geeft meestal 30 minuten werkruimte. Een taak van 90 minuten past daar nooit in.
+
+1. Maak een taak met een duur boven 30 minuten, bijvoorbeeld "taak toetsen nakijken 90 min vrijdag".
+2. Lesdag vraagt: **In stukken?** Het voorstel is stukken van 30 minuten (90 min wordt 3 × 30).
+3. Tik op het voorstel, kies een ander aantal, of typ zelf een aantal en tik **Maak**.
+4. Wil je het niet? Tik **Nee, heel laten**. Lesdag vraagt het pas weer als je de duur verandert.
+5. De stukken heten "deel 1 van 3" enzovoort. Ze houden de deadline, rol en potje van de taak.
+6. Lesdag zet alleen het eerstvolgende stuk in een vrij blok. Vink je het af, dan komt het volgende.
+7. Na het afvinken vraagt Lesdag hoe lang het stuk duurde. Zo leert de schatting.
+
+Staat een grote taak al in **Blijft liggen**? Daar staat een knop **In stukken**.
+Verkeerd gekozen? Tik op **Ongedaan maken** in de melding.
+
 ## Tijdens een toets
 
 Eerst vooraf (de week ervoor):
