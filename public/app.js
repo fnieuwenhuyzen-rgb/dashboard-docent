@@ -2695,7 +2695,7 @@ function sTaakFout(titel, d, oud) { // lege tekst of een datum die al voorbij is
 let sAlles = false, sBewerk = '';
 /* Handelingsdelen en onderhoud: alleen links naar SharePoint en Forms (geen koppeling, geen namen in Lesdag) */
 const HD_LINKS = (() => {
-  const vm = 'https://studentcsgpm.sharepoint.com/sites/VakgroepMuziek/Lists/MeldingenInstrumenten/';
+  const vm = 'https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Lists/MeldingenInstrumenten/';
   const hd = 'https://studentcsgpm.sharepoint.com/Sectie%20Muziek/Lists/Handelingsdeel%204%2020262027/AllItems.aspx';
   return {
     hoofd: [['Bord meldingen', vm + 'Bord%20per%20status.aspx'], ['Lijst Handelingsdeel 4', hd],
