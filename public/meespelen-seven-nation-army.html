@@ -43,7 +43,8 @@
     font-weight: 800; color: #111; transition: transform .06s, filter .15s, opacity .15s;
     border: 4px solid transparent; opacity: .55;
   }
-  .blok .naam { font-size: clamp(16px, 2.4vw, 38px); line-height: 1.05; }
+  .blok .naam { font-size: clamp(16px, 2.4vw, 38px); line-height: 1.05; white-space: nowrap; max-width: 100%; }
+  .blok { overflow: hidden; padding: 0 4px; }
   .blok .toon { font-size: clamp(12px, 1.4vw, 22px); opacity: .8; }
   .blok.geel { background: var(--geel); } .blok.groen { background: var(--groen); color: #fff; }
   .blok.oranje { background: var(--oranje); } .blok.rood { background: var(--rood); color: #fff; }
@@ -198,6 +199,17 @@ for (let m = 0; m < 2; m++) {
   for (let t = 1; t <= 4; t++) { const s = document.createElement("span"); s.textContent = t; tellen.appendChild(s); telSpans.push(s); }
   maat.appendChild(rij); maat.appendChild(tellen); riffEl.appendChild(maat);
 }
+
+// Kleurnaam passend maken: in een smal blok (zoals Oranje, een halve tel) wordt de letter kleiner tot het woord past.
+function pasNamen() {
+  document.querySelectorAll(".blok .naam").forEach(el => {
+    el.style.fontSize = "";
+    let px = parseFloat(getComputedStyle(el).fontSize);
+    const ruimte = el.parentElement.clientWidth - 8; if (ruimte <= 0) return;   // verborgen (bodypercussie)
+    while (el.scrollWidth > ruimte && px > 10) { px -= 1; el.style.fontSize = px + "px"; }
+  });
+}
+window.addEventListener("resize", pasNamen);
 
 const bodyEl = document.getElementById("body");
 function bouwBody() {
@@ -528,7 +540,7 @@ function kiesPreset(p) {
   bodyEl.style.display = st.weergave === "body" ? "grid" : "none";
   riffEl.style.display = st.weergave === "body" ? "none" : "grid";
   bouwBody();
-  knoppen();
+  knoppen(); pasNamen();
 }
 function zetTitel(t) { document.getElementById("titel").textContent = t; }
 
@@ -627,7 +639,8 @@ window.addEventListener("message", e => {
   else if (e.data.lesdag === "stil") { stop(); karaokePauze(); }
 });
 
-kiesPreset("samen"); zetTitel("Seven Nation Army");
+kiesPreset("samen"); zetTitel("Seven Nation Army"); pasNamen();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(pasNamen);
 requestAnimationFrame(teken);
 </script>
 <script>
