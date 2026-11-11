@@ -1188,7 +1188,7 @@ function agendaRaster(dagen, opt) {
       const sub = !kort && it.sub && it.sub !== 'afspraak' && !['uitval', 'pauze', 'rust'].includes(it.soort) && h >= (opt.compact ? 62 : 44);
       const rs = rolStijl(rolVanItem(it)); // kleurstreepje per rol
       return `<button class="ag-it ag-${it.soort}${opt.sel === it.key ? ' sel' : ''}${nuCls}${kort ? ' kort' : ''}${it.rij ? ' rij' : ''}${voorbij ? ' voorbij' : ''}${pak ? ' pak' : ''}${it.x && it.x.u.extra ? ' eenmalig' : ''}${rs.cls}" style="${rs.st}top:${top}px;height:${h}px;left:calc(${(it.baan || 0) * w}% + 2px);width:calc(${w}% - 4px)" data-ag="${d.s}|${esc(it.key)}"${pak ? ` data-kid="${esc(it.k.id)}"` : ''} title="${esc(hm(echtVan) + '–' + hm(eind) + ' ' + it.titel + (it.sub ? ' · ' + it.sub : '') + (it.x && it.x.u.extra ? ' · eenmalig' : '') + (st ? (st === 'ok' ? ' · Magister rond' : ' · nog iets in Magister') : '') + (rs.naam ? ' · ' + rs.naam : ''))}">${st ? `<i class="st${st === 'ok' ? ' ok' : ''}" aria-hidden="true"></i>` : ''}`
-        + `<span class="ag-rg"><span class="ag-t">${hm(echtVan)}${kort || opt.compact ? '' : '–' + hm(eind)}${lok}</span><b>${esc(it.titel)}</b></span>${sub ? `<span class="ag-s">${esc(it.sub)}</span>` : ''}${pak ? '<span class="ag-grip" aria-hidden="true"></span>' : ''}</button>`;
+        + `<span class="ag-rg"><span class="ag-t">${hm(echtVan)}${kort || opt.compact ? '' : '–' + hm(eind)}${lok}</span><b>${it.soort === 'taakaf' ? '✓ ' : ''}${esc(it.titel)}</b></span>${sub ? `<span class="ag-s">${esc(it.sub)}</span>` : ''}${pak ? '<span class="ag-grip" aria-hidden="true"></span>' : ''}</button>`;
     }).join('');
     return `<div class="ag-kol${d.s === t ? ' vandaag' : ''}" data-kdag="${d.s}" style="height:${hoog}px">${lijnen}${nuLijn}${blokken}</div>`;
   };
@@ -1407,6 +1407,18 @@ function maakTaak(v, plan, titel, bron) {
 /* blijft liggen: gemiste geplande taken en voorbije deadlines, tot ze klaar, opnieuw gepland of uitgesteld zijn */
 let planVoorkeur = ''; // taak die alvast klaarstaat in de keuzelijst van planKaart
 const planVoorbij = k => !k.af && !k.afspraak && !!k.plan && k.plan.dag < vandaag();
+/* Afvinken geeft de rest van het geplande blok vrij (besluit Frans 11-11). Vandaag tijdens het blok: het blok eindigt bij het afvinken (op 5 minuten).
+   Vóór het blok (ook een latere dag): het blok gaat weg, de taak staat afgevinkt in de takenlijst. Een blok dat al voorbij is, blijft zoals het was.
+   Het oude plan staat in k.planOud, zodat terugvinken het blok herstelt. */
+function taakAfInkorten(k, af) {
+  if (!af) { const o = k.planOud; delete k.planOud; if (o && (!k.plan || (k.plan.dag === o.dag && k.plan.van === o.van))) k.plan = o; return; } // intussen verplaatst: dan blijft het nieuwe plan
+  if (!k.plan || k.afspraak || k.dagTaak) return;
+  const t = vandaag(), nu = nuMin(), van = minuten(k.plan.van), tot = minuten(k.plan.tot);
+  if (k.plan.dag < t || (k.plan.dag === t && nu >= tot)) return;
+  k.planOud = Object.assign({}, k.plan);
+  if (k.plan.dag > t || nu < van) { delete k.plan; return; }
+  k.plan = Object.assign({}, k.plan, { tot: hm(Math.min(tot, Math.max(van + 5, Math.ceil(nu / 5) * 5))) });
+}
 function blijftLiggen() {
   if (!B || !S) return [];
   const t = vandaag(); const G = geplandeSleutels(); const op = key => (S.uitgesteld || {})[key] > t; const out = [];
@@ -3448,7 +3460,7 @@ document.addEventListener('change', e => {
     else { delete S.sectieAf[id]; duurTerug('sec:' + id); bewaar(); } }
   if (t.dataset.taakaf) { const k = (S.taken || []).find(k => k.id === t.dataset.taakaf);
     if (k && t.checked) { const echt = k.start ? Math.round((Date.now() - k.start) / 60000) : 0; const gemeten = echt >= 2 && echt <= 240 ? echt : 0; delete k.start; duurVraag(k.id, soortVan(k), k.titel, gemeten || k.min || (k.plan ? minuten(k.plan.tot) - minuten(k.plan.van) : schat(soortVan(k), k.titel)), gemeten, { rol: rolVanTaak(k), potje: k.potje }); } else if (k) duurTerug(k.id); // zo leert de schatting
-    if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.reclameId) { S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[k.reclameId] = vandaag(); else delete S.reclameAf[k.reclameId]; } if (k.dagTaak) zetDagTaak(k.dagTaak.dag, k.dagTaak.key, t.checked); } bewaar(); }
+    if (k) { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; if (k.sectieId) { if (t.checked) S.sectieAf[k.sectieId] = true; else delete S.sectieAf[k.sectieId]; } if (k.koorId) { if (t.checked) S.koorAf[k.koorId] = true; else delete S.koorAf[k.koorId]; } if (k.reclameId) { S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[k.reclameId] = vandaag(); else delete S.reclameAf[k.reclameId]; } if (k.dagTaak) zetDagTaak(k.dagTaak.dag, k.dagTaak.key, t.checked); taakAfInkorten(k, t.checked); } bewaar(); }
   if (t.dataset.recvink) { const id = t.dataset.recvink; S.reclameAf = S.reclameAf || {}; if (t.checked) S.reclameAf[id] = vandaag(); else delete S.reclameAf[id]; (S.taken || []).filter(k => k.reclameId === id).forEach(k => { k.af = t.checked; k.afOp = t.checked ? vandaag() : undefined; }); if (t.checked) { const m = reclameMoment(id); if (m) duurVraag('rec:' + id, 'reclame', m.titel, schat('reclame', m.titel), 0, { rol: rolStandaard('reclame') }); } else duurTerug('rec:' + id); bewaar(); return; }
   if (t.dataset.recveld) { const i = t.dataset.recveld.lastIndexOf('|'); const id = t.dataset.recveld.slice(0, i), k = t.dataset.recveld.slice(i + 1); const r = (S.reclame = S.reclame || {})[id] = S.reclame[id] || {}; const voor = reclameActs().find(x => x.id === id); const oud = voor ? String(voor[k] == null ? '' : voor[k]) : ''; const verstuurd = voor ? reclameMomenten(voor).filter(m => m.af && m.soort !== 'sl') : []; r[k] = t.value.trim(); if (oud !== r[k] && verstuurd.length) { r.naVerstuurd = r.naVerstuurd || {}; verstuurd.forEach(m => { r.naVerstuurd[m.soort] = true; }); } if (k === 'd' && !r.d) delete r.d; recFocus = id; bewaar(); return; }
   if (t.dataset.rectekst) { const r = (S.reclame = S.reclame || {})[t.dataset.rectekst] = S.reclame[t.dataset.rectekst] || {}; r.tekst = t.value; bewaar(true); return; }

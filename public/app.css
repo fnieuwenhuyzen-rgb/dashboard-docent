@@ -798,7 +798,7 @@ body.kompasvenster .top{display:none}
 .ag-toets,.ag-koor{background:var(--toets);color:var(--toets-ink);border:0}
 .ag-afspraak,.ag-sectie,.ag-rooster{background:var(--surface);color:var(--ink);border:1.5px solid var(--ink);padding:calc(.15rem - 1.5px) calc(.4rem - 1.5px)}
 .ag-taak{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
-.ag-taakaf{background:transparent;color:var(--muted);text-decoration:none}
+.ag-taakaf{background:transparent;color:var(--muted);text-decoration:line-through}
 .ag-taakaf b{font-weight:400}
 .ag-taakgemist{background:var(--surface);color:var(--rood);border:1px solid var(--rood)}
 .ag-pauze,.ag-rust{background:var(--uit-zacht);color:var(--uit);border:0;padding-block:0;justify-content:center}
