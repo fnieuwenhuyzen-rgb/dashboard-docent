@@ -1904,11 +1904,13 @@ const spMap = pad => SPBIB + pad.split('/').map(encodeURIComponent).join('/');
 const WAAR = [ // [patroon in de titel, label, adres]
   [/magister|resultaten toetsweek/i, 'Magister', () => MAGURL()],
   [/web\.csgpm\.nl/i, 'intranet', () => 'https://web.csgpm.nl/'],
-  [/agenda sectievergadering|verslag|besluiten|actielijst|terugkoppeling|urentabel/i, 'Overleg en beleid', () => spMap('00 Sectie/Overleg en beleid')],
-  [/lokaal|lokalen|instrument/i, 'Vaklokaal en instrumenten', () => spMap('00 Sectie/Vaklokaal en instrumenten')],
-  [/budget|bestel/i, 'Bestellingen en financiën', () => spMap('00 Sectie/Bestellingen en financiën/2026-2027')],
-  [/leerlijn|\bpto\b|vakwerkplan|curriculum/i, 'Vakwerkplan en curriculum', () => spMap('00 Sectie/Vakwerkplan en curriculum')],
-  [/jaarverslag|jaarplanning|ontwikkeldag|open dag/i, 'Jaarplanning', () => spMap('00 Sectie/Jaarplanning')],
+  [/schoolleiding|\bcvb\b/i, 'Overleg met schoolleiding', () => spMap('00 Sectie/07 Overleg met schoolleiding')],
+  [/agenda sectievergadering|verslag|besluiten|actielijst|terugkoppeling|urentabel/i, 'Sectievergaderingen', () => spMap('00 Sectie/01 Sectievergaderingen/2026-2027')],
+  [/lokaal|lokalen|instrument|piano/i, 'Lokalen en instrumenten', () => spMap('00 Sectie/06 Lokalen en instrumenten')],
+  [/budget|begroting|bestel/i, 'Budget en bestellingen', () => spMap('00 Sectie/05 Budget en bestellingen/2026-2027')],
+  [/vakwerkplan|werkwijze|actieplan|schooltaken/i, 'Vakwerkplan en beleid', () => spMap('00 Sectie/02 Vakwerkplan en beleid')],
+  [/leerlijn|\bpto\b|\bpta\b|curriculum|toetsexpert|tussenevaluatie|examenvoorbereiding|evaluatie eerste jaar/i, 'Curriculum en toetsing', () => spMap('00 Sectie/03 Curriculum en toetsing')],
+  [/jaarverslag|jaarplanning|ontwikkeldag|open dag/i, 'Jaarplanning', () => spMap('00 Sectie/04 Jaarplanning en lesverdeling/2026-2027')],
   [/profielkeuze|keuzevak/i, 'Keuzevak muziek', () => spMap('02 Keuzevak muziek')],
   [/songbox|musicbox/i, 'MusicBox', () => 'https://digitaal.musicboxmethode.nl'],
 ];
