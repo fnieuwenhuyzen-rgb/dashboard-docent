@@ -1532,3 +1532,8 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
   .les[data-niveau="vwo"] .thuiskaarten{max-width:none;gap:0 4vw}
   .les[data-thema="licht"][data-niveau="vwo"] .tk{background:none;border:0;border-bottom:1px solid var(--lijn);border-radius:0;padding:clamp(.5rem,1.5vh,1rem) 0}
 }
+/* meespeelpagina in de les (VO-dag): het iframe ligt over #pgPlek, zie paginaToon in app.js */
+.les.met-pagina .slide{justify-content:flex-start;padding-bottom:1vh}
+.les .lespagina-plek{flex:1;min-height:55vh;border-radius:14px}
+.les>iframe.lespagina{position:absolute;z-index:1;border:0;border-radius:14px;background:#101624}
+.les>iframe.lespagina[hidden]{display:none}

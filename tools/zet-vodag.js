@@ -23,7 +23,7 @@ const les = {
   titel: 'VO-dag: Seven Nation Army op boomwhackers',
   detail: 'Groep 8 speelt in 25 minuten samen de riff van Seven Nation Army op boomwhackers en slagwerk. Iedereen speelt tegelijk; niemand speelt alleen of voor de anderen. Zonder helpers: de meespeelpagina op het digibord speelt drums en bas (ook de laatste toon, de B), laat de kleuren oplichten en kan voorspelen. Vaste grens: op minuut 18 gaat de volle muziek aan, ook als de riff nog niet perfect is.\n' +
     'Opstelling: stoelen in een U met de opening naar het digibord. Van links: slagwerk, oranje, geel in het midden, groen, rood, slagwerk. Het instrument ligt al onder de stoel en blijft daar: niets uitdelen, niets ophalen. Kleinere groep: eerst alle buizen bezetten, overgebleven slagwerkstoelen achterin.\n' +
-    'Riff: E geel (1), E geel (2-en), G groen (3), E geel (3-a), D oranje (4), C rood (maat 2, tel 1, lang); de B speelt de bas op de pagina. Oefenen op 75, met de muziek op 85.\n' +
+    'Riff: E geel (1), E geel (2-en), G groen (3), E geel (3-a, door tel 4 heen), D oranje (4-en), C rood (maat 2, tel 1, lang); de B speelt de bas op de pagina. Oefenen op 80, met de muziek op 100; het origineel is 120.\n' +
     'Werkt het digibord of het geluid niet: laptop met losse luidspreker. Werkt er niets: speel de bas op de piano, tel hardop in en wijs de kleuren aan.',
   vraag: 'Kunnen we samen de riff van Seven Nation Army spelen?',
   doel: 'Je speelt samen met de hele groep de riff van Seven Nation Army op boomwhackers of slagwerk, met de muziek erbij.',
@@ -34,7 +34,7 @@ const les = {
       docent: 'Welkom in twee zinnen en het stopteken afspreken. Meespeelpagina: fase Binnenkomst (zachte groove).' },
     { min: 5, soort: 'doen', kop: 'Bodypercussie',
       stappen: ['Stamp op 1, klap op 2, borst op 3, knip op 4.', 'Doe mij na. Daarna gaat het tempo omhoog.', 'In twee helften: de ene helft stampt de beat, de andere klapt op 2 en 4.'],
-      docent: 'Fase Bodypercussie, Spelen (spatie). Tempo 75, dan 85. Toets 2 (of dubbelklik) voor de twee helften. Komt de groep te laat: inkorten tot 3 minuten.' },
+      docent: 'Fase Bodypercussie, Spelen (spatie). Tempo 80, dan 100. Toets 2 (of dubbelklik) voor de twee helften. Komt de groep te laat: inkorten tot 3 minuten.' },
     { min: 2, soort: 'doen', kop: 'Instrument pakken',
       stappen: ['Pak je instrument.', 'Twintig seconden vrij geluid maken.', 'Handen omhoog: stil.', 'Buis op je hand of je been, niet op elkaar en niet op een ander.'],
       docent: 'Fase Instrument pakken, daarna H om het stopteken weg te halen.' },
@@ -43,10 +43,10 @@ const les = {
       docent: 'Fase Kleur voor kleur: kleuren één voor één aanzetten, met Voorspelen. Loop rond en doe voor bij de kleur die het moeilijk heeft. Blijft één kleur achter: alleen die kleur aan met Voorspelen en speel zelf mee bij dat groepje, daarna de rest er weer bij.' },
     { min: 4, soort: 'doen', kop: 'Samen langzaam',
       stappen: ['De hele riff, alle kleuren samen.', 'Eerst langzaam. Gaat het goed, dan iets sneller.'],
-      docent: 'Fase Samen langzaam (Voorspelen aan). Tempo 75, lukt het dan 85. Lukt de riff niet: alleen geel en groen (andere kleuren uitzetten), de bas op de pagina speelt de rest.' },
+      docent: 'Fase Samen langzaam (Voorspelen aan). Tempo 80, lukt het dan 100. Lukt de riff niet: alleen geel en groen (andere kleuren uitzetten), de bas op de pagina speelt de rest.' },
     { min: 5, soort: 'doen', kop: 'Samen met de muziek',
       stappen: ['Drums en bas spelen mee.', 'Het hele nummer: 4 keer de riff, even stil, 4 keer, meezingen op "oh", slotklap.', 'Gaat het goed? Nog een keer.'],
-      docent: 'Minuut 18: volle muziek aan, ook als de riff nog niet perfect is. Fase Samen met muziek (zonder voorspelen), daarna Hele nummer (N). Te luid of onrustig: H, daarna eerst alleen de buizen. Tijd over: Hele nummer op 95.' },
+      docent: 'Minuut 18: volle muziek aan, ook als de riff nog niet perfect is. Fase Samen met muziek (zonder voorspelen), daarna Hele nummer (N). Te luid of onrustig: H, daarna eerst alleen de buizen. Tijd over: Hele nummer op 120, het tempo van het origineel.' },
     { min: 2, soort: 'afsluiten', kop: 'Afsluiten',
       stappen: ['Leg je instrument terug onder je eigen stoel.', 'Blijf zitten tot je groep vertrekt.'],
       docent: 'Kort compliment. Fase Afsluiten. Wisselen in 5 minuten: loop de U één keer langs (goed instrument onder elke stoel?), lesklok op 0 (dubbelklik), fase Binnenkomst zodra de volgende groep eraan komt. Na les 4: buizen per kleur in de bakken, slagwerk in de mand, stoelen terug.' }

@@ -3182,7 +3182,7 @@ function notVul() { // na het laden: alleen het notitiepaneel en zijn knop bijwe
 /* Op het bord één opdracht aanwijzen: de rest wordt rustiger. Nog een keer tikken haalt het weg. */
 /* Volle dia's: tekst stapsgewijs kleiner tot alles op het bord past, ook nadat het venster naar het digibord is gesleept. */
 function pasIn() { const el = document.querySelector('#les .slide'); if (!el) return; for (const f of [1, .92, .84, .76, .68, .6]) { el.style.setProperty('--past', f); if (el.scrollHeight <= el.clientHeight + 1) break; } }
-window.addEventListener('resize', () => { if (LES) pasIn(); });
+window.addEventListener('resize', () => { if (LES) { pasIn(); paginaPlaats(); } });
 function wijsStap(li) { const was = li.classList.contains('nu'); li.parentElement.querySelectorAll('li.nu').forEach(x => x.classList.remove('nu')); if (!was) li.classList.add('nu'); }
 document.addEventListener('click', e => { const st = e.target.closest('#les .stappen li'); if (st) wijsStap(st); });
 /* Proefles: #lesproef/mavo3:8.1 opent die les met een verzonnen uur vanaf nu. Geen rooster nodig en er wordt niets bewaard. */
@@ -3222,6 +3222,38 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   $('#les').hidden = false; document.body.style.overflow = 'hidden'; waak(true); toonSlide();
   if (!bord && !NOT) notitiesLaad().then(() => notVul());
 }
+/* Eigen meespeelpagina (materiaal ./naam.html, zoals de VO-dag): staat in de fase- en checkdia's zelf, niet in een ander venster.
+   Eén iframe blijft de hele les bestaan, zodat het geluid doorloopt als je naar de volgende fase gaat. Het iframe hangt in #les
+   (ook bij volledig scherm) en ligt over de lege plek #pgPlek in de dia. Bij een fasedia krijgt de pagina het fasenummer en kiest
+   zelf de bijbehorende stand (tempo, kleuren, voorspelen). */
+const lesPagina = l => { const m = ((l && l.materiaal) || []).find(y => /^\.\/[\w-]+\.html$/i.test(y.u || '')); return m ? m.u : null; };
+let PG = null;
+function lesVul(html) { // als innerHTML, maar het iframe van de meespeelpagina blijft staan (verplaatsen of weghalen laadt het opnieuw)
+  const les = $('#les'); const pg = PG && PG.el.parentNode === les ? PG.el : null;
+  if (!pg) { les.innerHTML = html; return; }
+  [...les.childNodes].forEach(n => { if (n !== pg) n.remove(); });
+  const t = document.createElement('template'); t.innerHTML = html; les.insertBefore(t.content, pg);
+}
+function paginaZeg(m) { if (!PG) return; if (!PG.klaar) { PG.wacht = m; return; } try { PG.el.contentWindow.postMessage(m, location.origin); } catch (e) { /* pagina nog niet klaar */ } }
+function paginaToon(aan, fi) {
+  const u = LES && lesPagina(LES.l);
+  if (!aan || !u) { if (PG) { PG.el.hidden = true; paginaZeg({ lesdag: 'stil' }); } return; }
+  if (!PG || PG.u !== u) {
+    paginaWeg(); const el = document.createElement('iframe');
+    el.className = 'lespagina'; el.title = 'Meespeelpagina'; el.setAttribute('allow', 'autoplay'); el.src = u + '?ingebed=1';
+    PG = { el, u, klaar: false, wacht: null };
+    el.addEventListener('load', () => { if (!PG || PG.el !== el) return; PG.klaar = true; if (PG.wacht) { const w = PG.wacht; PG.wacht = null; paginaZeg(w); } });
+    $('#les').appendChild(el);
+  }
+  PG.el.hidden = false; paginaPlaats(); setTimeout(paginaPlaats, 260); // na de inschuifanimatie van de dia
+  if (fi >= 0) paginaZeg({ lesdag: 'fase', i: fi });
+}
+function paginaPlaats() {
+  if (!PG || PG.el.hidden) return; const p = $('#pgPlek'), les = $('#les'); if (!p || !les) return;
+  const r = p.getBoundingClientRect(), o = les.getBoundingClientRect();
+  Object.assign(PG.el.style, { left: (r.left - o.left) + 'px', top: (r.top - o.top) + 'px', width: r.width + 'px', height: r.height + 'px' });
+}
+function paginaWeg() { if (PG) { PG.el.remove(); PG = null; } }
 function toonSlide() {
   const fk = focusSleutel(document.activeElement); // knop blijft bereikbaar met het toetsenbord na elke dia
   const P = LES; const sl = P.slides[P.i]; stopTimer();
@@ -3232,16 +3264,19 @@ function toonSlide() {
   if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
   else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
   else { P.left = 0; P.tot = 0; }
+  const metPg = !!lesPagina(P.l) && (sl.k === 'fase' || sl.k === 'check'); // een eigen meespeelpagina staat in de dia zelf
+  const bodyPg = metPg ? sl.h.split('<div class="fase-body')[0] + '<div class="lespagina-plek" id="pgPlek"></div>' : body;
   const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
   const krap = !P.bord ? krapZin(P) : ''; const ingekort = fklok && faseMin(P, P.i) !== sl.min;
-  $('#les').className = 'les s-' + soort + (sl.werk ? ' werk' : ''); $('#les').dataset.thema = 'licht'; /* besluit Frans 10-11: het bord is licht */ $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
+  $('#les').className = 'les s-' + soort + (sl.werk ? ' werk' : '') + (metPg ? ' met-pagina' : ''); $('#les').dataset.thema = 'licht'; /* besluit Frans 10-11: het bord is licht */ $('#les').style.setProperty('--c', kl ? kl.kleur : '#5B247F'); $('#les').style.setProperty('--z', kl ? kl.zacht : '#d8b8ff');
   { const st = LESMODUS.stijlVan(P.x.item.lg); if (st) { $('#les').dataset.niveau = st.niveau; $('#les').dataset.jaar = st.jaar; $('#les').style.setProperty('--jaar', st.kleur); } }
-  $('#les').innerHTML = `<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
-  <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${body}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
+  lesVul(`<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
+  <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${bodyPg}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
   ${fklok ? timerHtml() : ''}
   ${fklok ? `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd · volgende fase</div>` : ''}
   <div class="notities ${P.notities && notInh ? 'open' : ''}" id="notities">${notInh}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`;
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`);
+  paginaToon(metPg, sl.k === 'fase' ? fi : -1);
   if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
   if (fk && fk.w === '#les' && !focusHerstel(fk)) $('#les').focus({ preventScroll: true });
   bordZeg(); plekBewaar();
@@ -3283,7 +3318,7 @@ function timerToon(voor) {
   const ft = $('#faseTijd'); if (ft && ft.hidden !== P.left > 0) ft.hidden = P.left > 0;
   if (voor > 0 && P.left <= 0) tril();
 }
-function sluitLes() { const bord = LES && LES.bord; plekBewaar(); stopTimer(); LES = null; if (!bord) try { sessionStorage.removeItem('lesdag-lesopen'); } catch (e) {} waak(false); if (bord) { rgStuur('dicht'); window.close(); } $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
+function sluitLes() { paginaWeg(); const bord = LES && LES.bord; plekBewaar(); stopTimer(); LES = null; if (!bord) try { sessionStorage.removeItem('lesdag-lesopen'); } catch (e) {} waak(false); if (bord) { rgStuur('dicht'); window.close(); } $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
 function slaLesOp() {
   const P = LES; const g = P.x.u.groep; const n = ($('#lnot') || {}).value || '';
   S.voortgang[g] = S.voortgang[g] || {};

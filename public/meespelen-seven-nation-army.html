@@ -85,6 +85,8 @@
   .kleurknop.aan { border-color: #fff; }
   input[type=range] { width: 110px; }
   .klein:disabled { opacity: .35; cursor: default; }
+  body.ingebed #balk { display: none; }   /* in Lesdag: de les heeft zelf klok en fasen */
+  #geluidAan { position: absolute; inset: 0; z-index: 9; display: none; align-items: center; justify-content: center; background: rgba(16,22,36,.88); border: 0; color: #fff; font-size: clamp(24px, 4vw, 52px); font-weight: 800; }
   #hulp { color: var(--zacht); font-size: 13px; margin-left: auto; }
   @media (max-width: 700px) { #riff { grid-template-columns: 1fr; } #hulp { display: none; } }
 </style>
@@ -103,6 +105,7 @@
   <div id="riff"></div>
   <div id="body"></div>
   <div id="groot"><div class="getal"></div><div class="uitleg"></div></div>
+  <button id="geluidAan">🔊 Tik hier voor geluid</button>
 </div>
 
 <div id="bediening">
@@ -110,10 +113,9 @@
   <button class="knop" id="nummer" title="N: intro, 4×, stil, 4×, zingen, slotklap">Hele nummer</button>
   <button class="knop stil" id="handen" title="H of Esc">✋ Handen omhoog</button>
   <div class="groep"><label>Tempo</label>
-    <button class="klein" data-tempo="75">75</button>
-    <button class="klein" data-tempo="85">85</button>
-    <button class="klein" data-tempo="95">95</button>
-    <button class="klein" data-tempo="105">105</button>
+    <button class="klein" data-tempo="80">80</button>
+    <button class="klein" data-tempo="100">100</button>
+    <button class="klein" data-tempo="120" title="Tempo van het origineel">120</button>
   </div>
   <div class="groep"><label>Muziek</label>
     <button class="klein" id="tDrums">Drums</button>
@@ -148,8 +150,8 @@ const RIFF = [
   { tel: 0,    duur: 1.5,  kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },
   { tel: 1.5,  duur: 0.5,  kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },
   { tel: 2,    duur: 0.75, kleur: "groen",  toon: "G", hz: 392.00, bas: 98.00 },
-  { tel: 2.75, duur: 0.25, kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },
-  { tel: 3,    duur: 1,    kleur: "oranje", toon: "D", hz: 293.66, bas: 73.42 },
+  { tel: 2.75, duur: 0.75, kleur: "geel",   toon: "E", hz: 329.63, bas: 82.41 },   // over tel 4 heen (ritme gekozen door Frans, 11-11)
+  { tel: 3.5,  duur: 0.5,  kleur: "oranje", toon: "D", hz: 293.66, bas: 73.42 },
   { tel: 4,    duur: 2,    kleur: "rood",   toon: "C", hz: 261.63, bas: 65.41 },
   { tel: 6,    duur: 2,    kleur: "track",  toon: "B", hz: null,   bas: 61.74 },
 ];
@@ -168,7 +170,7 @@ const FASEN = [
 
 /* ---------- Toestand ---------- */
 const st = {
-  tempo: 85, drums: true, bas: true, voor: false,
+  tempo: 100, drums: true, bas: true, voor: false,
   kleuren: { geel: true, groen: true, oranje: true, rood: true },
   weergave: "riff", helften: false,   // riff | body
   speelt: false, nummer: false,
@@ -380,8 +382,15 @@ function plannen() {
   }
 }
 
+// Houdt de browser het geluid tegen (geen klik in deze pagina, bijvoorbeeld als Lesdag de fase kiest), dan één tik om het aan te zetten.
+const geluidAan = document.getElementById("geluidAan");
+function geluidCheck() {
+  if (!ctx) return;
+  setTimeout(() => { geluidAan.style.display = ctx.state === "running" ? "none" : "flex"; }, 300);
+}
+geluidAan.onclick = () => { audio(); ctx.resume().then(() => { geluidAan.style.display = "none"; }); };
 function start(heleNummer) {
-  audio(); if (ctx.state === "suspended") ctx.resume();
+  audio(); if (ctx.state === "suspended") ctx.resume(); geluidCheck();
   stop(true);
   st.nummer = !!heleNummer; lijst = maatLijst();
   st.speelt = true; plan = []; maatNr = 0;
@@ -489,12 +498,12 @@ function kiesPreset(p) {
   stop(true); handenOmhoog = false; groot.style.display = "none";
   st.modus = null; st.weergave = "riff"; st.helften = false;
   const alle = { geel: true, groen: true, oranje: true, rood: true };
-  if (p === "binnen")   { st.modus = "beat"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 85; zetTitel("Welkom! Ga zitten op een stoel"); start(); }
-  if (p === "body")     { st.weergave = "body"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 75; zetTitel("Bodypercussie"); }
+  if (p === "binnen")   { st.modus = "beat"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 100; zetTitel("Welkom! Ga zitten op een stoel"); start(); }
+  if (p === "body")     { st.weergave = "body"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 80; zetTitel("Bodypercussie"); }
   if (p === "pakken")   { zetTitel("Pak je instrument onder je stoel"); toonGroot("✋", "Handen omhoog is stil"); handenOmhoog = true; }
-  if (p === "oefen")    { st.drums = true; st.bas = false; st.voor = true; st.tempo = 75; st.kleuren = { geel: true, groen: false, oranje: false, rood: false }; zetTitel("Kleur voor kleur"); }
-  if (p === "langzaam") { st.drums = true; st.bas = false; st.voor = true; st.tempo = 75; st.kleuren = { ...alle }; zetTitel("Samen, langzaam"); }
-  if (p === "samen")    { st.drums = true; st.bas = true; st.voor = false; st.tempo = 85; st.kleuren = { ...alle }; zetTitel("Seven Nation Army"); }
+  if (p === "oefen")    { st.drums = true; st.bas = false; st.voor = true; st.tempo = 80; st.kleuren = { geel: true, groen: false, oranje: false, rood: false }; zetTitel("Kleur voor kleur"); }
+  if (p === "langzaam") { st.drums = true; st.bas = false; st.voor = true; st.tempo = 80; st.kleuren = { ...alle }; zetTitel("Samen, langzaam"); }
+  if (p === "samen")    { st.drums = true; st.bas = true; st.voor = false; st.tempo = 100; st.kleuren = { ...alle }; zetTitel("Seven Nation Army"); }
   if (p === "af")       { zetTitel("Buis onder je stoel. Goed gedaan!"); }
   bodyEl.style.display = st.weergave === "body" ? "grid" : "none";
   riffEl.style.display = st.weergave === "body" ? "none" : "grid";
@@ -588,6 +597,15 @@ kSpeel.onclick = () => {
 kAudio.onplay = kAudio.onpause = kAudio.onended = karaokeKnoppen;
 document.querySelectorAll("[data-snel]").forEach(b => b.onclick = () => { kSnel = +b.dataset.snel; kAudio.playbackRate = kSnel; karaokeKnoppen(); });
 karaokeKnoppen();
+
+/* ---------- In Lesdag: de les kiest de fase ---------- */
+// Lesdag zet deze pagina in de fasedia's (iframe, ?ingebed=1) en stuurt bij elke fase {lesdag: "fase", i} of {lesdag: "stil"}.
+if (/[?&]ingebed=1/.test(location.search)) document.body.classList.add("ingebed");
+window.addEventListener("message", e => {
+  if (e.origin !== location.origin || !e.data || !e.data.lesdag) return;
+  if (e.data.lesdag === "fase" && FASEN[e.data.i]) kiesPreset(FASEN[e.data.i].preset);
+  else if (e.data.lesdag === "stil") { stop(); karaokePauze(); }
+});
 
 kiesPreset("samen"); zetTitel("Seven Nation Army");
 requestAnimationFrame(teken);
