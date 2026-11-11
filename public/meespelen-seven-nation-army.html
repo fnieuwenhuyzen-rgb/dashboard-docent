@@ -84,6 +84,7 @@
   .kleurknop.uit { opacity: .25; }
   .kleurknop.aan { border-color: #fff; }
   input[type=range] { width: 110px; }
+  .klein:disabled { opacity: .35; cursor: default; }
   #hulp { color: var(--zacht); font-size: 13px; margin-left: auto; }
   @media (max-width: 700px) { #riff { grid-template-columns: 1fr; } #hulp { display: none; } }
 </style>
@@ -124,6 +125,15 @@
     <button class="kleurknop" data-kleur="groen" style="background:var(--groen)" title="Groen"></button>
     <button class="kleurknop" data-kleur="oranje" style="background:var(--oranje)" title="Oranje"></button>
     <button class="kleurknop" data-kleur="rood" style="background:var(--rood)" title="Rood"></button>
+  </div>
+  <div class="groep" id="karaoke"><label>Karaoke</label>
+    <button class="klein" id="kKies" title="Kies een instrumentale versie (mp3 of mp4) van deze laptop. Er wordt alleen geluid afgespeeld, geen beeld of tekst.">Kies bestand…</button>
+    <button class="klein" id="kSpeel" disabled>▶</button>
+    <button class="klein" data-snel="0.8" title="Langzamer, zelfde toonhoogte">80%</button>
+    <button class="klein" data-snel="0.9">90%</button>
+    <button class="klein" data-snel="1">100%</button>
+    <input type="file" id="kBestand" accept="audio/*,video/mp4,.mp3,.m4a,.mp4,.wav,.ogg" hidden>
+    <audio id="kAudio" preload="auto"></audio>
   </div>
   <div class="groep"><label>Volume</label><input type="range" id="volume" min="0" max="100" value="80"></div>
   <div id="hulp">Spatie spelen/stop · H stil · N hele nummer</div>
@@ -216,31 +226,55 @@ FASEN.forEach((f, i) => {
 });
 
 /* ---------- Geluid ---------- */
-let ctx = null, master, gDrums, gBas, gVoor, gKlik, ruis;
+let ctx = null, master, comp, gDrums, gBas, gVoor, gKlik, gTrack, ruis;
+const gKleur = {};
+// Alle partijen worden altijd ingepland; de knoppen Drums, Bas, Voorspelen en de kleuren
+// zetten alleen hun volume open of dicht. Zo hoor je een knop meteen, niet pas na een maat.
+function mixDoel() {
+  return {
+    drums: st.drums ? (st.modus === "beat" ? .4 : .9) : 0,
+    bas: st.bas ? .8 : 0,
+    voor: st.voor ? .55 : 0,
+    klik: .5, track: .8,
+  };
+}
+function zetMix(snel) {
+  if (!ctx) return;
+  const t = ctx.currentTime, d = mixDoel();
+  const zet = (g, v) => { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(v, t + (snel ? .01 : .06)); };
+  zet(gDrums, d.drums); zet(gBas, d.bas); zet(gVoor, d.voor); zet(gKlik, d.klik); zet(gTrack, d.track);
+  Object.keys(gKleur).forEach(k => zet(gKleur[k], st.kleuren[k] ? 1 : 0));
+}
+function maakUitgangen() {
+  const nieuw = () => { const g = ctx.createGain(); g.gain.value = 0; g.connect(comp); return g; };
+  gDrums = nieuw(); gBas = nieuw(); gVoor = nieuw(); gKlik = nieuw(); gTrack = nieuw();
+  ["geel", "groen", "oranje", "rood"].forEach(k => { gKleur[k] = ctx.createGain(); gKleur[k].connect(gVoor); });
+}
 function audio() {
   if (ctx) return ctx;
   ctx = new (window.AudioContext || window.webkitAudioContext)();
   master = ctx.createGain(); master.connect(ctx.destination);
-  const comp = ctx.createDynamicsCompressor(); comp.connect(master);
-  gDrums = ctx.createGain(); gDrums.gain.value = .9; gDrums.connect(comp);
-  gBas = ctx.createGain(); gBas.gain.value = .8; gBas.connect(comp);
-  gVoor = ctx.createGain(); gVoor.gain.value = .55; gVoor.connect(comp);
-  gKlik = ctx.createGain(); gKlik.gain.value = .5; gKlik.connect(comp);
+  comp = ctx.createDynamicsCompressor(); comp.connect(master);
+  maakUitgangen();
   ruis = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
   const d = ruis.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-  zetVolume();
+  zetVolume(); zetMix(true);
   return ctx;
 }
-function zetVolume() { if (master) master.gain.value = (document.getElementById("volume").value / 100) ** 1.5; }
+function zetVolume() {
+  const v = (document.getElementById("volume").value / 100) ** 1.5;
+  if (master) master.gain.value = v;
+  const a = document.getElementById("kAudio"); if (a) a.volume = Math.min(1, v);
+}
 function env(g, t, piek, aanslag, verval) {
   g.gain.setValueAtTime(0.0001, t);
   g.gain.exponentialRampToValueAtTime(piek, t + aanslag);
   g.gain.exponentialRampToValueAtTime(0.0001, t + aanslag + verval);
 }
-function kick(t, v = 1) {
+function kick(t, v = 1, uit = gDrums) {
   const o = ctx.createOscillator(), g = ctx.createGain();
   o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(42, t + .14);
-  env(g, t, v, .004, .32); o.connect(g).connect(gDrums); o.start(t); o.stop(t + .4);
+  env(g, t, v, .004, .32); o.connect(g).connect(uit); o.start(t); o.stop(t + .4);
 }
 function ruisSlag(t, hp, v, verval, uit = gDrums) {
   const s = ctx.createBufferSource(); s.buffer = ruis;
@@ -254,26 +288,26 @@ function snare(t) {
   env(g, t, .35, .002, .09); o.connect(g).connect(gDrums); o.start(t); o.stop(t + .15);
 }
 function hat(t, v = .12) { ruisSlag(t, 7500, v, .05); }
-function crash(t) { ruisSlag(t, 4000, .5, 1.8); kick(t, 1); }
+function crash(t) { ruisSlag(t, 4000, .5, 1.8, gTrack); kick(t, 1, gTrack); }  // slotklap klinkt altijd
 function klik(t, accent) {
   const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "square";
   o.frequency.value = accent ? 1600 : 1100; env(g, t, accent ? .5 : .3, .001, .04);
   o.connect(g).connect(gKlik); o.start(t); o.stop(t + .07);
 }
-function basNoot(t, hz, duur) {
+function basNoot(t, hz, duur, uit = gBas) {
   const o = ctx.createOscillator(), o2 = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
   o.type = "sawtooth"; o.frequency.value = hz; o2.type = "sine"; o2.frequency.value = hz;
   f.type = "lowpass"; f.frequency.setValueAtTime(900, t); f.frequency.exponentialRampToValueAtTime(380, t + .25);
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(.7, t + .01);
   g.gain.setValueAtTime(.7, t + Math.max(.02, duur - .06)); g.gain.exponentialRampToValueAtTime(0.0001, t + duur);
-  o.connect(f); o2.connect(f); f.connect(g).connect(gBas);
+  o.connect(f); o2.connect(f); f.connect(g).connect(uit);
   o.start(t); o2.start(t); o.stop(t + duur + .05); o2.stop(t + duur + .05);
 }
-function buis(t, hz) {  // boomwhacker-achtige klank
+function buis(t, hz, uit = gVoor) {  // boomwhacker-achtige klank
   const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
   o.type = "sine"; o.frequency.value = hz; o2.type = "triangle"; o2.frequency.value = hz * 2;
   const g2 = ctx.createGain(); g2.gain.value = .15;
-  env(g, t, .8, .004, .4); o.connect(g); o2.connect(g2).connect(g); g.connect(gVoor);
+  env(g, t, .8, .004, .4); o.connect(g); o2.connect(g2).connect(g); g.connect(uit);
   o.start(t); o2.start(t); o.stop(t + .5); o2.stop(t + .5);
 }
 
@@ -303,7 +337,7 @@ function planMaat(t, m) {
   const s = spb();
   const vol = st.weergave === "body" ? false : true;
   // Drums
-  const drumsAan = st.drums && m.soort !== "stil" && m.soort !== "aftel";
+  const drumsAan = m.soort !== "stil" && m.soort !== "aftel";   // aan/uit via het volume (zetMix)
   if (m.soort === "slot") { crash(t); }
   else if (drumsAan) {
     for (let i = 0; i < 4; i++) kick(t + i * s, i % 2 === 0 ? 1 : .75);
@@ -315,8 +349,8 @@ function planMaat(t, m) {
   if (m.soort === "riff" && vol) {
     RIFF.filter(n => Math.floor(n.tel / 4) === m.helft).forEach(n => {
       const tn = t + (n.tel % 4) * s;
-      if (st.bas || n.kleur === "track") basNoot(tn, n.bas, n.duur * s * .95);
-      if (st.voor && n.hz && st.kleuren[n.kleur]) buis(tn, n.hz);
+      basNoot(tn, n.bas, n.duur * s * .95, n.kleur === "track" ? gTrack : gBas);
+      if (n.hz) buis(tn, n.hz, gKleur[n.kleur]);
     });
   }
   plan.push({ start: t, eind: t + 4 * s, ...m });
@@ -351,8 +385,7 @@ function start(heleNummer) {
   stop(true);
   st.nummer = !!heleNummer; lijst = maatLijst();
   st.speelt = true; plan = []; maatNr = 0;
-  [gDrums, gBas, gVoor, gKlik].forEach(g => g.gain.cancelScheduledValues(0));
-  gDrums.gain.value = st.modus === "beat" ? .4 : .9; gBas.gain.value = .8; gVoor.gain.value = .55; gKlik.gain.value = .5;
+  zetMix(true);
   const dezeRun = ++run;
   volgendeMaat = ctx.currentTime + 0.12;
   plannen(); timer = setInterval(plannen, 40);
@@ -363,8 +396,11 @@ function stop(stilletjes) {
   if (ctx && st.speelt) {
     // Wat al ingepland staat snel wegdraaien
     const t = ctx.currentTime;
-    [gDrums, gBas, gVoor, gKlik].forEach(g => { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + .15); });
-    setTimeout(() => { if (!st.speelt) { gDrums.gain.value = .9; gBas.gain.value = .8; gVoor.gain.value = .55; gKlik.gain.value = .5; } }, 250);
+    [gDrums, gBas, gVoor, gKlik, gTrack].forEach(g => { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + .15); });
+    // Al ingeplande noten afkappen: de oude uitgangen gaan na het wegdraaien los, nieuwe noten krijgen nieuwe uitgangen
+    const oud = [gDrums, gBas, gVoor, gKlik, gTrack];
+    setTimeout(() => oud.forEach(g => g.disconnect()), 200);
+    maakUitgangen(); zetMix(true);
   }
   st.speelt = false; plan = []; st.nummer = false; lijst = null;
   if (!stilletjes) knoppen();
@@ -484,23 +520,32 @@ function knoppen() {
 }
 function opnieuw() { if (st.speelt) { const n = st.nummer, mod = st.modus; start(n); st.modus = mod; } knoppen(); }
 
-speelKnop.onclick = () => { handenOmhoog = false; if (st.speelt && !st.nummer) stop(); else start(false); };
+speelKnop.onclick = () => { handenOmhoog = false; karaokePauze(); if (st.speelt && !st.nummer) stop(); else start(false); };
 document.getElementById("nummer").onclick = () => {
   handenOmhoog = false;
   if (st.speelt && st.nummer) { stop(); return; }
+  karaokePauze();
   if (st.weergave === "body") kiesPreset("samen");
   st.modus = null; start(true);
 };
 function handen() {
   if (handenOmhoog) { handenOmhoog = false; groot.style.display = "none"; knoppen(); return; }
-  stop(); handenOmhoog = true; toonGroot("✋", "Handen omhoog is stil"); knoppen();
+  stop(); karaokePauze(); handenOmhoog = true; toonGroot("✋", "Handen omhoog is stil"); knoppen();
 }
 document.getElementById("handen").onclick = handen;
 document.querySelectorAll("[data-tempo]").forEach(b => b.onclick = () => { st.tempo = +b.dataset.tempo; opnieuw(); });
-document.getElementById("tDrums").onclick = () => { st.drums = !st.drums; knoppen(); };
-document.getElementById("tBas").onclick = () => { st.bas = !st.bas; knoppen(); };
-document.getElementById("tVoor").onclick = () => { st.voor = !st.voor; knoppen(); };
-document.querySelectorAll("[data-kleur]").forEach(b => b.onclick = () => { st.kleuren[b.dataset.kleur] = !st.kleuren[b.dataset.kleur]; knoppen(); });
+// Muziekknoppen: aan of uit is meteen te horen. Speelt er nog niets en zet je iets aan, dan start het spelen.
+function wissel(sleutel) {
+  st[sleutel] = !st[sleutel];
+  audio(); if (ctx.state === "suspended") ctx.resume();
+  if (st[sleutel] && !st.speelt) { karaokePauze(); handenOmhoog = false; groot.style.display = "none"; start(false); }
+  else zetMix();
+  knoppen();
+}
+document.getElementById("tDrums").onclick = () => wissel("drums");
+document.getElementById("tBas").onclick = () => wissel("bas");
+document.getElementById("tVoor").onclick = () => wissel("voor");
+document.querySelectorAll("[data-kleur]").forEach(b => b.onclick = () => { st.kleuren[b.dataset.kleur] = !st.kleuren[b.dataset.kleur]; zetMix(); knoppen(); });
 document.getElementById("volume").oninput = zetVolume;
 bodyEl.ondblclick = () => { st.helften = !st.helften; bouwBody(); };
 document.addEventListener("keydown", e => {
@@ -510,6 +555,39 @@ document.addEventListener("keydown", e => {
   else if (e.key === "l" || e.key === "L") klokKnop.click();
   else if (e.key === "2" && st.weergave === "body") { st.helften = !st.helften; bouwBody(); }
 });
+
+/* ---------- Karaoke: eigen instrumentale versie van deze laptop ---------- */
+// Alleen geluid: een video (mp4) wordt in een <audio>-element afgespeeld, dus beeld en tekst komen niet in beeld.
+const kAudio = document.getElementById("kAudio"), kSpeel = document.getElementById("kSpeel"), kBestand = document.getElementById("kBestand");
+let kSnel = 1, kUrl = null;
+function karaokePauze() { if (!kAudio.paused) kAudio.pause(); }
+function karaokeKnoppen() {
+  kSpeel.textContent = kAudio.paused ? "▶" : "❚❚";
+  kSpeel.classList.toggle("aan", !kAudio.paused);
+  document.querySelectorAll("[data-snel]").forEach(b => b.classList.toggle("aan", +b.dataset.snel === kSnel));
+}
+document.getElementById("kKies").onclick = () => kBestand.click();
+kBestand.onchange = () => {
+  const f = kBestand.files[0]; if (!f) return;
+  if (kUrl) URL.revokeObjectURL(kUrl);
+  kUrl = URL.createObjectURL(f); kAudio.src = kUrl;
+  kAudio.preservesPitch = kAudio.mozPreservesPitch = kAudio.webkitPreservesPitch = true;
+  kAudio.playbackRate = kSnel;
+  document.getElementById("kKies").textContent = f.name.replace(/\.[^.]+$/, "").slice(0, 24);
+  document.getElementById("kKies").title = f.name;
+  kSpeel.disabled = false; karaokeKnoppen();
+};
+kSpeel.onclick = () => {
+  if (!kAudio.src) return;
+  if (kAudio.paused) {
+    stop(); handenOmhoog = false; groot.style.display = "none";
+    zetVolume(); kAudio.playbackRate = kSnel; kAudio.play();
+    zetTitel("Seven Nation Army: speel mee!");
+  } else kAudio.pause();
+};
+kAudio.onplay = kAudio.onpause = kAudio.onended = karaokeKnoppen;
+document.querySelectorAll("[data-snel]").forEach(b => b.onclick = () => { kSnel = +b.dataset.snel; kAudio.playbackRate = kSnel; karaokeKnoppen(); });
+karaokeKnoppen();
 
 kiesPreset("samen"); zetTitel("Seven Nation Army");
 requestAnimationFrame(teken);
