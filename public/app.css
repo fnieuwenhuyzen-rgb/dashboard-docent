@@ -49,7 +49,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .top{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--lk-h,0px));z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
 .topin{display:flex;align-items:center;gap:.4rem 1rem;flex-wrap:wrap;padding:.55rem max(16px,env(safe-area-inset-right,0px)) .55rem max(16px,env(safe-area-inset-left,0px))}
 .brand{display:flex;align-items:center;gap:.45rem;font-family:var(--lees);font-weight:700;font-size:1.25rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
-.mark{width:1.05rem;height:1.05rem;background:var(--rood);clip-path:polygon(0 0,100% 0,0 100%)}
+.mark{width:1.5rem;height:1.5rem;display:block}
 .nav{display:flex;gap:.15rem;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
 .nav a{font-family:var(--lees);font-weight:600;font-size:.95rem;color:var(--muted);text-decoration:none;padding:.35rem .65rem;border-radius:6px;white-space:nowrap}
 .nav a[aria-current="page"]{background:var(--paars-zacht);color:var(--paars)}

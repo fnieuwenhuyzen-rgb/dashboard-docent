@@ -67,7 +67,7 @@ In de app: `koorOp(s)` (Koorapp-item, anders op dinsdag de vaste repetitie 12:45
 - PTO-richtlijnen: vóór elke PTO-toets een formatieve toets.
 - Mavo 4: twee lessen per week tot de meivakantie (aanname bevestigd door Frans). Mavo 3, havo 3, vwo 3, BB1, keuzeuur h3: één les per week.
 - Cijferinvoer-deadlines in de sectiedata zijn aannames (een week vóór de rapportvergadering); echte data nog onbekend.
-- Lesmateriaal voor leerlingen: niet in de schoolhuisstijl, printvriendelijk. De app zelf gebruikt paars #5B247F en rood #C5002E, Encode Sans Condensed en Neuton.
+- Lesmateriaal voor leerlingen: niet in de schoolhuisstijl, printvriendelijk. De app zelf gebruikt paars #5B247F en rood #C5002E, met Encode Sans voor alle tekst (sinds 3-11; eerder Encode Sans Condensed en Neuton). Logo sinds 12-11: witte L met gele nu-punt #FFC24B op paars; maken met `node tools/maak-pictogrammen.js`.
 
 ## Beoordelingsmodellen (29-10)
 
