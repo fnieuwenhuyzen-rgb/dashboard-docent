@@ -30,13 +30,13 @@
   .fase.nu b { color: #fff; }
 
   /* Podium */
-  #podium { flex: 1; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 2vh 3vw; gap: 2vh; min-height: 0; }
-  #titel { text-align: center; font-size: clamp(22px, 3.2vw, 48px); font-weight: 700; }
-  #banner { text-align: center; font-size: clamp(20px, 3vw, 44px); font-weight: 700; min-height: 1.3em; color: var(--geel); }
+  #podium { flex: 1; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 1.5vh 3vw; gap: 1.2vh; min-height: 0; }
+  #titel { text-align: center; font-size: clamp(20px, min(3.2vw, 6vh), 48px); font-weight: 700; }
+  #banner { text-align: center; font-size: clamp(18px, min(3vw, 5vh), 44px); font-weight: 700; min-height: 1.3em; color: var(--geel); }
 
   #riff { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vw; }
   .maat { position: relative; }
-  .rij { position: relative; height: clamp(120px, 26vh, 320px); background: var(--paneel); border-radius: 14px; overflow: hidden; }
+  .rij { position: relative; height: clamp(90px, 20vh, 300px); background: var(--paneel); border-radius: 14px; overflow: hidden; }
   .blok {
     position: absolute; top: 8%; bottom: 8%; border-radius: 12px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -52,9 +52,21 @@
   .blok.aan { opacity: 1; transform: scale(1.06); border-color: #fff; filter: brightness(1.15); box-shadow: 0 0 40px rgba(255,255,255,.45); }
   .blok.uit { opacity: .12; }
   .kop { position: absolute; top: 0; bottom: 0; width: 4px; background: #fff; border-radius: 2px; opacity: 0; pointer-events: none; }
-  .tellen { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 8px; }
-  .tellen span { font-size: clamp(18px, 2.4vw, 36px); font-weight: 700; color: var(--zacht); padding-left: 4px; border-left: 2px solid var(--rand); }
+  .tellen { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 4px; }
+  .tellen span { font-size: clamp(16px, min(2.4vw, 4.5vh), 36px); font-weight: 700; color: var(--zacht); padding-left: 4px; border-left: 2px solid var(--rand); }
   .tellen span.aan { color: #fff; }
+
+  /* Slagwerk: per groep een rij met acht tellen, oplichten op de tel waarop de groep speelt */
+  #slag { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vw; }
+  .slagmaat { display: flex; flex-direction: column; gap: 2px; }
+  .slagrij { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; height: clamp(28px, 5vh, 64px); margin-top: clamp(12px, 2.4vh, 22px); transition: opacity .15s; }
+  .slagrij.uit { opacity: .12; }
+  .slagrij .wie { position: absolute; left: 0; top: -2px; transform: translateY(-100%); font-size: clamp(11px, 1vw, 16px); color: var(--zacht); font-weight: 600; white-space: nowrap; display: none; }
+  .slagmaat:first-child .slagrij .wie { display: block; }
+  .slagvak { border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: .4em; font-weight: 800; font-size: clamp(12px, min(1.6vw, 3.2vh), 26px); color: var(--zacht); border: 2px solid var(--rand); background: transparent; transition: transform .06s, background .1s; }
+  .slagvak.speel { background: #2a3350; color: #dfe5f5; border-color: #3a4566; }
+  .slagvak.aan { background: #fff; color: #111; border-color: #fff; transform: scale(1.06); box-shadow: 0 0 28px rgba(255,255,255,.5); }
+  .slagvak .vorm { font-size: 1.1em; line-height: 1; }
 
   /* Bodypercussie */
   #body { display: none; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; }
@@ -89,7 +101,7 @@
   body.ingebed #balk { display: none; }   /* in Lesdag: de les heeft zelf klok en fasen */
   #geluidAan { position: absolute; inset: 0; z-index: 9; display: none; align-items: center; justify-content: center; background: rgba(16,22,36,.88); border: 0; color: #fff; font-size: clamp(24px, 4vw, 52px); font-weight: 800; }
   #hulp { color: var(--zacht); font-size: 13px; margin-left: auto; }
-  @media (max-width: 700px) { #riff { grid-template-columns: 1fr; } #hulp { display: none; } }
+  @media (max-width: 700px) { #riff, #slag { grid-template-columns: 1fr; } #hulp { display: none; } }
 </style>
 </head>
 <body>
@@ -104,6 +116,7 @@
   <div id="titel">Seven Nation Army</div>
   <div id="banner"></div>
   <div id="riff"></div>
+  <div id="slag"></div>
   <div id="body"></div>
   <div id="groot"><div class="getal"></div><div class="uitleg"></div></div>
   <button id="geluidAan">🔊 Tik hier voor geluid</button>
@@ -128,6 +141,11 @@
     <button class="kleurknop" data-kleur="groen" style="background:var(--groen)" title="Groen"></button>
     <button class="kleurknop" data-kleur="oranje" style="background:var(--oranje)" title="Oranje"></button>
     <button class="kleurknop" data-kleur="rood" style="background:var(--rood)" title="Rood"></button>
+  </div>
+  <div class="groep"><label>Slagwerk</label>
+    <button class="klein" data-slag="laag" title="Djembé, trommels, cajon: tel 1 en 3">Laag</button>
+    <button class="klein" data-slag="hoog" title="Woodblock, claves, tamboerijnen: tel 2 en 4">Hoog</button>
+    <button class="klein" data-slag="drum" title="Drumstel 1 en 2: voet op elke tel, snare op 2 en 4">Drumstel</button>
   </div>
   <div class="groep" id="karaoke"><label>Karaoke</label>
     <button class="klein" id="kKies" title="Kies een instrumentale versie (mp3 of mp4) van deze laptop. Er wordt alleen geluid afgespeeld, geen beeld of tekst.">Kies bestand…</button>
@@ -173,6 +191,7 @@ const FASEN = [
 const st = {
   tempo: 100, drums: true, bas: true, voor: false,
   kleuren: { geel: true, groen: true, oranje: true, rood: true },
+  slag: { laag: true, hoog: true, drum: true },
   weergave: "riff", helften: false,   // riff | body
   speelt: false, nummer: false,
   klokStart: null, klokGepauzeerd: 0,
@@ -198,6 +217,31 @@ for (let m = 0; m < 2; m++) {
   const tellen = document.createElement("div"); tellen.className = "tellen";
   for (let t = 1; t <= 4; t++) { const s = document.createElement("span"); s.textContent = t; tellen.appendChild(s); telSpans.push(s); }
   maat.appendChild(rij); maat.appendChild(tellen); riffEl.appendChild(maat);
+}
+
+// Slagwerk: welke groep op welke tel speelt (tellen 0-3 binnen een maat).
+const SLAG = [
+  { id: "laag", wie: "Djembé · trommels · cajon", tellen: { 0: "BOEM", 2: "BOEM" }, vorm: "⬤" },
+  { id: "hoog", wie: "Woodblock · claves · tamboerijn", tellen: { 1: "TIK", 3: "TIK" }, vorm: "▲" },
+  { id: "drum", wie: "Drumstel 1 en 2", tellen: { 0: "voet", 1: "voet + snare", 2: "voet", 3: "voet + snare" }, vorm: "■" },
+];
+const slagEl = document.getElementById("slag");
+const slagVakken = [];   // {el, groep, maat, tel}
+const slagRijen = [];    // {el, groep}
+for (let m = 0; m < 2; m++) {
+  const maat = document.createElement("div"); maat.className = "slagmaat";
+  SLAG.forEach(g => {
+    const rij = document.createElement("div"); rij.className = "slagrij"; rij.dataset.groep = g.id;
+    rij.innerHTML = `<span class="wie">${g.vorm} ${g.wie}</span>`;
+    for (let t = 0; t < 4; t++) {
+      const v = document.createElement("div"); const w = g.tellen[t];
+      v.className = "slagvak" + (w ? " speel" : "");
+      if (w) v.innerHTML = `<span class="vorm">${g.vorm}</span><span>${w}</span>`;
+      rij.appendChild(v); if (w) slagVakken.push({ el: v, groep: g.id, maat: m, tel: t });
+    }
+    maat.appendChild(rij); slagRijen.push({ el: rij, groep: g.id });
+  });
+  slagEl.appendChild(maat);
 }
 
 // Kleurnaam passend maken: in een smal blok (zoals Oranje, een halve tel) wordt de letter kleiner tot het woord past.
@@ -484,6 +528,11 @@ function teken() {
     else k.style.opacity = 0;
   });
   telSpans.forEach((s, i) => s.classList.toggle("aan", riffActief && Math.floor(i / 4) === m.helft && Math.floor(pos) === i % 4));
+  // Slagwerk: licht op tijdens de riff en de intro, kort na de tel
+  const slagActief = m && (m.soort === "riff" || m.soort === "intro");
+  const slagMaat = m && m.soort === "riff" ? m.helft : 0, slagTel = Math.floor(pos);
+  slagVakken.forEach(v => v.el.classList.toggle("aan", !!slagActief && st.slag[v.groep] && v.maat === slagMaat && v.tel === slagTel && (pos % 1) < .5));
+  slagRijen.forEach(r => r.el.classList.toggle("uit", !st.slag[r.groep]));
 
   // Bodypercussie
   if (st.weergave === "body") {
@@ -496,8 +545,9 @@ function teken() {
 function bannerStandaard() {
   if (!st.speelt) return "";
   const aan = Object.keys(st.kleuren).filter(k => st.kleuren[k]);
-  if (aan.length === 4) return "";
-  return "Nu spelen: " + aan.map(k => NAAM[k]).join(" + ");
+  const slag = SLAG.filter(g => st.slag[g.id]);
+  if (aan.length === 4 && slag.length === SLAG.length) return "";
+  return "Nu spelen: " + aan.map(k => NAAM[k]).concat(slag.length === SLAG.length ? [] : slag.map(g => g.wie)).join(" + ");
 }
 function toonGroot(getal, uitleg) {
   groot.style.display = "flex";
@@ -530,15 +580,17 @@ function kiesPreset(p) {
   stop(true); handenOmhoog = false; groot.style.display = "none";
   st.modus = null; st.weergave = "riff"; st.helften = false;
   const alle = { geel: true, groen: true, oranje: true, rood: true };
+  st.slag = { laag: true, hoog: true, drum: true };
   if (p === "binnen")   { st.modus = "beat"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 100; zetTitel("Welkom! Ga zitten op een stoel"); start(); }
   if (p === "body")     { st.weergave = "body"; st.drums = true; st.bas = false; st.voor = false; st.tempo = 80; zetTitel("Bodypercussie"); }
   if (p === "pakken")   { zetTitel("Pak je instrument onder je stoel"); toonGroot("✋", "Handen omhoog is stil"); handenOmhoog = true; }
-  if (p === "oefen")    { st.drums = true; st.bas = false; st.voor = true; st.tempo = 80; st.kleuren = { geel: true, groen: false, oranje: false, rood: false }; zetTitel("Kleur voor kleur"); }
+  if (p === "oefen")    { st.drums = true; st.bas = false; st.voor = true; st.tempo = 80; st.kleuren = { geel: true, groen: false, oranje: false, rood: false }; st.slag = { laag: true, hoog: false, drum: false }; zetTitel("Kleur voor kleur"); }
   if (p === "langzaam") { st.drums = true; st.bas = false; st.voor = true; st.tempo = 80; st.kleuren = { ...alle }; zetTitel("Samen, langzaam"); }
   if (p === "samen")    { st.drums = true; st.bas = true; st.voor = false; st.tempo = 100; st.kleuren = { ...alle }; zetTitel("Seven Nation Army"); }
   if (p === "af")       { zetTitel("Buis onder je stoel. Goed gedaan!"); }
   bodyEl.style.display = st.weergave === "body" ? "grid" : "none";
   riffEl.style.display = st.weergave === "body" ? "none" : "grid";
+  slagEl.style.display = st.weergave === "body" ? "none" : "grid";
   bouwBody();
   knoppen(); pasNamen();
 }
@@ -558,6 +610,7 @@ function knoppen() {
     b.classList.toggle("uit", !st.kleuren[b.dataset.kleur]);
   });
   document.getElementById("handen").classList.toggle("aan", handenOmhoog);
+  document.querySelectorAll("[data-slag]").forEach(b => b.classList.toggle("aan", !!st.slag[b.dataset.slag]));
 }
 function opnieuw() { if (st.speelt) { const n = st.nummer, mod = st.modus; start(n); st.modus = mod; } knoppen(); }
 
@@ -587,6 +640,7 @@ document.getElementById("tDrums").onclick = () => wissel("drums");
 document.getElementById("tBas").onclick = () => wissel("bas");
 document.getElementById("tVoor").onclick = () => wissel("voor");
 document.querySelectorAll("[data-kleur]").forEach(b => b.onclick = () => { st.kleuren[b.dataset.kleur] = !st.kleuren[b.dataset.kleur]; zetMix(); knoppen(); });
+document.querySelectorAll("[data-slag]").forEach(b => b.onclick = () => { st.slag[b.dataset.slag] = !st.slag[b.dataset.slag]; knoppen(); });
 document.getElementById("volume").oninput = zetVolume;
 bodyEl.ondblclick = () => { st.helften = !st.helften; bouwBody(); };
 document.addEventListener("keydown", e => {
