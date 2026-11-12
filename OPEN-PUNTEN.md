@@ -6,7 +6,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 
-- Nieuw logo (12-11, tak `logo-monogram` in `lesdag-werk/logo-monogram`, niet gecommit, niet live): witte L met gele nu-punt op paars, ook in de kopbalk; eigen maskable- en iOS-pictogram, donkere themakleur. Maken: `node tools/maak-pictogrammen.js`. Nog: commit, samenvoegen met cachenummer omhoog, daarna de app op telefoon en tablet opnieuw op het beginscherm zetten voor het nieuwe pictogram. [Frans: ja voor live]
+- Nieuw logo (12-11, tak `logo-monogram` in `lesdag-werk/logo-monogram`, gecommit, niet live): witte L met gele nu-punt op paars, ook in de kopbalk; eigen maskable- en iOS-pictogram, donkere themakleur. Maken: `node tools/maak-pictogrammen.js`. Nog: samenvoegen met cachenummer omhoog, daarna de app op telefoon en tablet opnieuw op het beginscherm zetten voor het nieuwe pictogram. [Frans: ja voor live]
 
 - Alles live sinds 9-11 (cache v57, Beoordelen stap 3 inbegrepen). Nieuw werk vanaf `main`. Repo sinds 9-11 in `C:/Projecten/Lesdag`; documenten blijven in OneDrive onder `Dashboard Docent/lesdag project`.
 - Reclame live sinds 10-11 (cache v59): printposter A3, ticketlink en prijs Christmas Carols, extra waarschuwingen. Nog proefprinten en de QR-code scannen. [Frans] Sinds 10-11 (cache v62) ook per activiteit "Schoolleiding informeren en uitnodigen", vier weken vooraf; Sing-Ins en Kerstvieringen niet (staan op `overslaan`).
