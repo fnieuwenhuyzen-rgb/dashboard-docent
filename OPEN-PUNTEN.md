@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 10 november 2026. Houd dit bestand onder de 45 regels.
+Bijgewerkt: 12 november 2026. Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
@@ -15,6 +15,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 - VO-dag do 12-11 (live sinds 10-11, cache v65): mini-leergang `vodag` met één les (7 fasen, 25 min) en vier uren in `meta.uren` (12.45, 13.15, 13.45, 14.15, lokaal 009). App: `basisUren`/`eenmaligLg` in `app.js`, `benodigdVast`, links naar eigen pagina's (`LINK_RE`). Meespeelpagina als kopie in `public/` (bron blijft de sectiemap; wijzig je die, kopieer opnieuw). Script: `tools/zet-vodag.js`. Na 12-11 mag de leergang weer weg (ook uit `bron/leergang-data.json`).
 - Sectietaken in lijn met de herindeling van de sectiemap (11-11, cache v66): actielijst blijft de bron, Lesdag toont alleen wat Frans zelf moet doen, met actienummer. Acties van collega's en "Sectie" staan bij de agendataak van de vergadering. Na elke sectievergadering: nieuwe acties van Frans toevoegen in `tools/zet-sectie-acties.js` en draaien. Na 12-1 de acties met een nieuwe trekker opnemen. Knoppen naar de sectiemap gebruiken de mappen 01 t/m 07.
 - Past in dit gat, onderdeel A (live sinds 11-11, cache v68, commit bf468f1): een eigen taak boven 30 min mag in stukken (`deel: {groep, nr, van}`); planning ziet per groep alleen het laagste open deel. Rekenregels en tests in `functies.js` / `test-functies.js`. Voorstel: `lesdag project/rapporten/voorstel-past-in-dit-gat-2026-11.html`. Nog in een echte week bekijken. [Frans]
+- God Rest Ye (vwo 3, box `839c630f-4946-49e1-8fce-a0dc30745cc2`), 12-11: leadsheet en drie melodievideo's gemaakt, **nog niet in de box**. Leadsheet (melodie, akkoorden, tekst couplet 1 en refrein): `Kerst/God Rest Ye (vwo)/Leadsheet`, gemaakt met `tools/melodie-bladen/maak-leadsheet.js` en het veld `leadsheet` in `god-rest-ye.json`. Video's `... - niveau 1/2/3 - melodie.mp4` in `Video's voor YouTube`: noten, tab gitaar, tab ukelele, gele markering, eigen geluid met tel, tempo 110; gemaakt met `tools/melodie-video/` (`maak-data.js`, `server.js`, `pagina.html`; opnemen in de browser, tijdens de opname de pagina niet aanraken, daarna `controle()` in de pagina: 25, 67 en 91 noten goed). Niet gecommit. Niet gedaan: op gehoor geluisterd; tekst vergeleken met hoofdstuk Zang in de box; regel 2 van de tekstverdeling is van Claude (boogje op "Christ-"). Te doen: [Frans] video's op YouTube zetten en de links geven, leadsheet nakijken; [Claude] leadsheet in de box (werkwijze afbeelding plaatsen: archief, zoek "Melodie God Rest Ye"), videolinks in hoofdstuk Melodie per niveau, na herladen nameten. Daarna hetzelfde voor Mary's Boy Child en Go Tell It als Frans dat wil (`maak-data.js` kan nog geen capo).
 
 ## Na live, in deze volgorde
 

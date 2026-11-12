@@ -431,5 +431,6 @@
     }
    ]
   }
- ]
+ ],
+  "leadsheet": {"wat": "Leadsheet · melodie, akkoorden en tekst · couplet 1 en refrein", "bronTekst": "Tekstverdeling van het refrein en regel 1 en 3: LilyPond-partituur op Wikipedia (geopend 12-11-2026). Regel 2 ('Remember Christ our Saviour was born on Christmas Day') staat daar niet; verdeling van Claude, met een boogje op 'Christ-'.", "onder": "Em = E-mineur. Een boogje: twee noten op één lettergreep.", "regels": [{"n": 0, "metcon": false, "noten": ["E4/4"]}, {"m": 1, "label": "Couplet"}, {"m": 2}, {"m": 3}, {"m": 4}, {"m": 5, "sb": true}, {"m": 6}, {"m": 7}, {"m": 8}, {"m": 9, "sb": true}, {"m": 10}, {"m": 11}, {"m": 12}, {"m": 13, "sb": true, "label": "Refrein"}, {"m": 14}, {"m": 15}, {"m": 16}, {"m": 17, "sb": true}, {"m": 18}, {"m": 19, "noten": ["E4/1"], "right": "end"}], "tekst": ["God", "rest", "ye", "mer-", "ry,", "gen-", "tle-", "men,", "let", "no-", "thing", "you", "dis-", "may,", "Re-", "mem-", "ber", "Christ", "our", "Sa-", "viour", "was", "born", "on", "Christ-", "_", "mas", "Day,", "To", "save", "us", "all", "from", "Sa-", "tan's", "power", "when", "we", "were", "gone", "a-", "stray.", "O", "_", "ti-", "dings", "of", "com-", "_", "fort", "and", "joy,", "com-", "fort", "and", "joy,", "O", "_", "ti-", "_", "dings", "of", "com-", "_", "fort", "and", "joy."]}
 }

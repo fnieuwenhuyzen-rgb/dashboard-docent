@@ -1,0 +1,185 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>melodievideo</title>
+<style>body{margin:0;font-family:"Encode Sans",sans-serif;background:#eee}canvas{display:block;width:960px;height:540px;background:#fff}#bron{position:absolute;left:0;top:600px;visibility:hidden}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<button id="start">Opnemen</button> <button id="proef">Proef (zonder opnemen)</button> <span id="stand">laden</span>
+<div id="bron"></div>
+<script src="/verovio.js"></script>
+<script>
+// ?n=<niveau>. Opnemen: tekent en speelt op de klok van het geluid, zodat beeld en geluid gelijk lopen.
+const NV = +(new URLSearchParams(location.search).get('n') || 1);
+const c = document.getElementById('c'), g = c.getContext('2d'), stand = document.getElementById('stand');
+const W = 1280, H = 720, NAVY = '#1b2a4a';
+let D, N, img, systemen = [], pos = {}, schaal = 2, uitslag = null;
+
+verovio.module.onRuntimeInitialized = async () => {
+  D = await (await fetch('/data.json')).json();
+  N = D.niveaus.find(x => x.nr === NV);
+  const tk = new verovio.toolkit();
+  tk.setOptions({ breaks: 'encoded', pageWidth: 2000, pageHeight: 20000, adjustPageHeight: true, scale: 60, pageMarginTop: 20, pageMarginBottom: 20, pageMarginLeft: 50, pageMarginRight: 50, footer: 'none', header: 'none', minLastJustification: 0, spacingStaff: 6, spacingSystem: 30, font: 'Bravura' });
+  if (!tk.loadData(N.mei)) throw new Error('verovio laadt niet');
+  if (tk.getPageCount() !== 1) throw new Error('meer dan een pagina');
+  let svg = tk.renderToSVG(1).replace(/<\?xml[^>]*>/, '');
+  svg = svg.replace(/font-family="[^"]*"/g, 'font-family="Encode Sans"').replace(/font-family:\s*[^;"]*/g, 'font-family:Encode Sans');
+  svg = svg.replace(/font-style="italic"/g, '').replace(/font-style:\s*italic;?/g, '');
+  const b = +/width="(\d+)px"/.exec(svg)[1], h = +/height="(\d+)px"/.exec(svg)[1];
+  // Plaatsen meten in de pagina zelf.
+  const bron = document.getElementById('bron');
+  bron.innerHTML = svg;
+  const el = bron.querySelector('svg'), r0 = el.getBoundingClientRect(), f = b / r0.width;
+  const vak = e => { const r = e.getBoundingClientRect(); return { x: (r.left - r0.left) * f, y: (r.top - r0.top) * f, w: r.width * f, h: r.height * f }; };
+  systemen = [...el.querySelectorAll('g.system')].map(s => {
+    const v = vak(s), staven = [...s.querySelectorAll('g.measure')].length;
+    // Hoogte van de balken: van de bovenste tot de onderste lijn van het systeem.
+    const lijnen = [...s.querySelectorAll('g.staff > path')].map(vak);
+    // Bovenste lijn van de twee tabbalken, voor de namen Gitaar en Ukelele.
+    const tabs = [...s.querySelector('g.measure').querySelectorAll('g.staff')].slice(1).map(st => Math.min(...[...st.querySelectorAll(':scope > path')].map(l => vak(l).y)));
+    return { ...v, tabs, boven: Math.min(...lijnen.map(l => l.y)), onder: Math.max(...lijnen.map(l => l.y + l.h)), staven, el: s };
+  });
+  for (const n of N.noten) {
+    const e = document.getElementById(n.id);
+    if (!e) throw new Error('noot niet in beeld: ' + n.id);
+    const kop = e.querySelector('.notehead') || e;
+    pos[n.id] = { ...vak(kop), sys: systemen.findIndex(s => s.el.contains(e)) };
+    if (pos[n.id].sys < 0) throw new Error('noot zonder systeem: ' + n.id);
+  }
+  // De partituur als afbeelding, twee keer zo groot voor scherpte.
+  const groot = svg.replace(/width="\d+px"/, `width="${b * schaal}px"`).replace(/height="\d+px"/, `height="${h * schaal}px"`);
+  img = new Image();
+  await new Promise((ok, fout) => { img.onload = ok; img.onerror = fout; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(groot); });
+  await document.fonts.load('700 30px "Encode Sans"');
+  window.meting = { systemen: systemen.map(s => ({ x: Math.round(s.x), y: Math.round(s.y), w: Math.round(s.w), h: Math.round(s.h), staven: s.staven })), noten: N.noten.length, breedte: b, hoogte: h, sysPerNoot: N.noten.map(n => pos[n.id].sys).join('') };
+  teken(-N.aftel - 1);
+  stand.textContent = 'klaar om op te nemen';
+  document.title = 'geladen';
+};
+
+// tel: tellen vanaf de eerste noot (negatief tijdens het aftellen).
+function teken(tel) {
+  g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+  g.fillStyle = NAVY; g.fillRect(0, 0, W, 78);
+  g.fillStyle = '#fff'; g.textBaseline = 'middle';
+  g.font = '700 32px "Encode Sans"'; g.textAlign = 'left'; g.fillText(D.titel, 30, 40);
+  g.font = '300 24px "Encode Sans"'; g.textAlign = 'right'; g.fillText(`Melodie · niveau ${N.nr}: ${N.wat}`, W - 30, 41);
+  // Welke noot klinkt, en welk systeem staat in beeld.
+  let nu = null, volgende = N.noten[0];
+  for (const n of N.noten) { if (n.t <= tel) { nu = tel < n.t + n.d ? n : null; volgende = n; } else { if (!nu && volgende.t <= tel) volgende = n; break; } }
+  let sys = pos[volgende.id].sys;
+  if (tel >= N.tellen) { sys = systemen.length - 1; nu = null; }
+  const s = systemen[sys], marge = 24;
+  const k = Math.min((W - 60) / s.w, (H - 78 - 150) / (s.h + 2 * marge));
+  const ox = (W - s.w * k) / 2 - s.x * k, oy = 78 + 20 + marge * k - s.y * k;
+  if (nu) {
+    const p = pos[nu.id], bw = Math.max(p.w, 20) + 22;
+    g.fillStyle = '#ffd84d';
+    window.band = { x: ox + (p.x + p.w / 2) * k, y: oy + (s.onder + 34) * k - 8 };
+    g.beginPath(); g.roundRect(ox + (p.x + p.w / 2 - bw / 2) * k, oy + (s.boven - 34) * k, bw * k, (s.onder - s.boven + 68) * k, 8); g.fill();
+  }
+  g.drawImage(img, s.x * schaal, (s.y - marge) * schaal, s.w * schaal, (s.h + 2 * marge) * schaal, ox + s.x * k, oy + (s.y - marge) * k, s.w * k, (s.h + 2 * marge) * k);
+  g.fillStyle = NAVY; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.font = '700 19px "Encode Sans"';
+  ['Gitaar', 'Ukelele'].forEach((naam, i) => g.fillText(naam, ox + (s.x + 2) * k, oy + (s.tabs[i] - 12) * k));
+  g.textBaseline = 'middle';
+  // Onderbalk: de tel, het tempo, en welke regel in beeld staat.
+  const maatTel = ((Math.floor(tel + N.aftel) % 4) + 4) % 4, af = tel < 0, y = H - 52;
+  g.textAlign = 'left'; g.font = '300 22px "Encode Sans"'; g.fillStyle = NAVY;
+  g.fillText(af ? 'Aftellen' : 'Tel', 30, y);
+  for (let i = 0; i < 4; i++) {
+    const aan = tel >= -N.aftel && tel < N.tellen && i === maatTel, x = 150 + i * 56;
+    g.beginPath(); g.arc(x, y, 20, 0, 7); g.fillStyle = aan ? (af ? '#c2410c' : NAVY) : '#e5e7eb'; g.fill();
+    g.fillStyle = aan ? '#fff' : '#6b7280'; g.textAlign = 'center'; g.font = '700 22px "Encode Sans"'; g.fillText(i + 1, x, y + 1);
+  }
+  g.textAlign = 'right'; g.font = '300 22px "Encode Sans"'; g.fillStyle = NAVY;
+  g.fillText(`Regel ${sys + 1} van ${systemen.length}     Tempo ${D.tempo}`, W - 30, y);
+}
+
+function geluid(ac, uit, t0) {
+  const sp = 60 / D.tempo;
+  const toon = (midi, t, d) => {
+    const f = 440 * Math.pow(2, (midi - 69) / 12), v = ac.createGain();
+    const lang = Math.max(d * sp, 0.25);
+    v.gain.setValueAtTime(0, t); v.gain.linearRampToValueAtTime(0.32, t + 0.012);
+    v.gain.exponentialRampToValueAtTime(0.12, t + Math.min(0.35, lang)); v.gain.setValueAtTime(0.12, t + lang - 0.04 > t + 0.36 ? t + lang - 0.04 : t + 0.36);
+    v.gain.linearRampToValueAtTime(0.0001, Math.max(t + lang, t + 0.4));
+    for (const [soort, maal, sterk] of [['triangle', 1, 1], ['sine', 2, 0.25]]) {
+      const o = ac.createOscillator(), w = ac.createGain();
+      o.type = soort; o.frequency.value = f * maal; w.gain.value = sterk;
+      o.connect(w).connect(v); o.start(t); o.stop(Math.max(t + lang, t + 0.4) + 0.05);
+    }
+    v.connect(uit);
+  };
+  const tik = (t, zwaar, af) => {
+    const o = ac.createOscillator(), v = ac.createGain();
+    o.type = 'square'; o.frequency.value = zwaar ? 1500 : 1000;
+    const hard = af ? 0.16 : 0.05;
+    v.gain.setValueAtTime(hard, t); v.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+    o.connect(v).connect(uit); o.start(t); o.stop(t + 0.06);
+  };
+  for (let i = 0; i < N.aftel + N.tellen; i++) tik(t0 + i * sp, i % 4 === 0, i < N.aftel);
+  for (const n of N.noten) toon(n.midi, t0 + (N.aftel + n.t) * sp, n.d);
+}
+
+async function speel(opnemen) {
+  const ac = new AudioContext(), mix = ac.createGain(), sp = 60 / D.tempo;
+  mix.connect(ac.destination);
+  let rec, stukken = [], soort = '';
+  if (opnemen) {
+    const naarOpname = ac.createMediaStreamDestination();
+    mix.connect(naarOpname);
+    const stroom = new MediaStream([...c.captureStream(30).getVideoTracks(), ...naarOpname.stream.getAudioTracks()]);
+    soort = ['video/mp4;codecs=avc1.640028,mp4a.40.2', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm'].find(s => MediaRecorder.isTypeSupported(s));
+    rec = new MediaRecorder(stroom, { mimeType: soort, videoBitsPerSecond: 3000000, audioBitsPerSecond: 160000 });
+    rec.ondataavailable = e => e.data.size && stukken.push(e.data);
+    rec.start(1000);
+  }
+  const t0 = ac.currentTime + 1.0, eind = t0 + (N.aftel + N.tellen) * sp + 2.5;
+  geluid(ac, mix, t0);
+  let beelden = 0;
+  stand.textContent = 'bezig'; document.title = 'bezig';
+  await new Promise(ok => {
+    // setInterval: loopt ook door als het venster niet in beeld is.
+    const k = setInterval(() => {
+      const t = ac.currentTime;
+      teken((t - t0) / sp - N.aftel); beelden++;
+      if (t >= eind) { clearInterval(k); ok(); }
+    }, 1000 / 30);
+  });
+  if (opnemen) {
+    await new Promise(ok => { rec.onstop = ok; rec.stop(); });
+    const blob = new Blob(stukken, { type: soort }), ext = soort.includes('mp4') ? 'mp4' : 'webm';
+    const naam = `${D.titel} - niveau ${N.nr} - melodie.${ext}`;
+    await fetch('/' + encodeURIComponent(naam), { method: 'POST', body: blob });
+    window.opname = blob;
+    uitslag = { naam, soort, kb: Math.round(blob.size / 1024), beelden, duur: +(eind - t0 + 1).toFixed(1) };
+  } else uitslag = { beelden, duur: +(eind - t0 + 1).toFixed(1) };
+  window.uitslag = uitslag;
+  ac.close();
+  stand.textContent = 'af: ' + JSON.stringify(uitslag); document.title = 'af';
+}
+// Controle van de opname: staat bij elke noot de gele balk op de goede plek? Kijkt halverwege elke noot in de video.
+async function controle() {
+  const v = document.createElement('video'), sp = 60 / D.tempo;
+  v.muted = true; v.src = URL.createObjectURL(window.opname);
+  await new Promise(ok => { v.onloadedmetadata = ok; });
+  const k = document.createElement('canvas'); k.width = W; k.height = H;
+  const kg = k.getContext('2d', { willReadFrequently: true });
+  let goed = 0; const mis = [];
+  for (const n of N.noten) {
+    teken(n.t + n.d / 2);
+    const b = window.band;
+    let ok3 = true;
+    // Drie momenten per noot: op een kwart, halverwege en op driekwart.
+    for (const deel of [0.25, 0.5, 0.75]) {
+      v.currentTime = 1.0 + (N.aftel + n.t + n.d * deel) * sp;
+      await new Promise(ok => { v.onseeked = ok; });
+      kg.drawImage(v, 0, 0, W, H);
+      const [r, gr, bl] = kg.getImageData(Math.round(b.x), Math.round(b.y), 1, 1).data;
+      if (!(r > 215 && gr > 180 && bl < 150)) { ok3 = false; mis.push(n.id + '@' + deel + ':' + [r, gr, bl].join(',')); }
+    }
+    if (ok3) goed++;
+  }
+  return { duur: +v.duration.toFixed(2), breedte: v.videoWidth, hoogte: v.videoHeight, noten: N.noten.length, goed, mis: mis.slice(0, 8) };
+}
+document.getElementById('start').onclick = () => speel(true);
+document.getElementById('proef').onclick = () => speel(false);
+</script>
