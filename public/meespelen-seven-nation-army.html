@@ -144,7 +144,7 @@
   </div>
   <div class="groep"><label>Slagwerk</label>
     <button class="klein" data-slag="laag" title="Djembé, trommels, cajon: tel 1 en 3">Laag</button>
-    <button class="klein" data-slag="hoog" title="Woodblock: tel 2 en 4">Hoog</button>
+    <button class="klein" data-slag="hoog" title="Woodblock, claves, tamboerijnen: tel 2 en 4">Hoog</button>
     <button class="klein" data-slag="drum" title="Drumstel 1 en 2: voet op elke tel, snare op 2 en 4">Drumstel</button>
   </div>
   <div class="groep" id="karaoke"><label>Karaoke</label>
@@ -222,7 +222,7 @@ for (let m = 0; m < 2; m++) {
 // Slagwerk: welke groep op welke tel speelt (tellen 0-3 binnen een maat).
 const SLAG = [
   { id: "laag", wie: "Djembé · trommels · cajon", tellen: { 0: "BOEM", 2: "BOEM" }, vorm: "⬤" },
-  { id: "hoog", wie: "Woodblock", tellen: { 1: "TIK", 3: "TIK" }, vorm: "▲" },
+  { id: "hoog", wie: "Woodblock · claves · tamboerijn", tellen: { 1: "TIK", 3: "TIK" }, vorm: "▲" },
   { id: "drum", wie: "Drumstel 1 en 2", tellen: { 0: "voet", 1: "voet + snare", 2: "voet", 3: "voet + snare" }, vorm: "■" },
 ];
 const slagEl = document.getElementById("slag");
