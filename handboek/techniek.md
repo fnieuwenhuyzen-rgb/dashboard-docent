@@ -16,7 +16,7 @@ Twee losse workers doen werk dat een browser zelf niet mag: Zermelo lezen en een
 | De app | `public/` | `index.html`, `app.css`, `app.js` (bijna alles), `lesmodus.js` (digibord), `lesklok.js` (resttijd), `sync.js`, `agendafeed.js`, `reclame.js`, `bm-reken.js` en `bm-pdf.js` (beoordelen) |
 | Gegevens van de les | `public/data/` | `basis.json`, `beoordeling.json`, `notities.json`, `reclame.json` |
 | Service worker | `public/sw.js` | cache voor offline gebruik |
-| API achter Access | `functions/api/staat.js`, `functions/api/agenda.js` | Pages Functions: synchroniseren en de agendafeed schrijven |
+| API achter Access | `functions/api/staat.js`, `functions/api/agenda.js`, `functions/api/regie.js` | Pages Functions: synchroniseren, de agendafeed schrijven, bord en tablet-regie |
 | Worker `lesdag-rooster` | `worker/rooster-proxy.js` | doorgeefluik naar Zermelo (koppelcode, afspraken, iCal) |
 | Worker `lesdag-agenda` | `worker/agenda-feed.js`, `worker/agenda-feed.toml` | geeft Outlook de agenda via een geheime link |
 | Database `lesdag-sync` | D1, `migrations/0001_staat.sql` | de staat van Frans (alleen aan productie gekoppeld, `wrangler.toml`) |
@@ -119,6 +119,15 @@ Naast `S` staan drie dingen in de browser die bewust niet in `S` zitten:
 - Antwoordt de server 503 (geen database gekoppeld), dan blijft de app gewoon op het apparaat werken: "Op dit apparaat".
 - `syncMag` laat het synchroniseren wachten tijdens de lesmodus, bij typen en bij een open paneel.
 
+### 4.1 Bord en regie op de tablet (16-11-2026)
+
+- Het bord is de lesmodus schermvullend op de laptop (`bordOpen`, `LES.bord`); de regie is `#regie` op de tablet (`viewRegie`). Code: blok "regie" in `app.js`, `public/regie.js` (speling en verbinding), `functions/api/regie.js`. Tests: `tools/test-regie.js`, onderdeel 6 van `tools/test-routes-lesmodus.js`.
+- Verbinding: polling, elke seconde (`/api/regie`), één rij `regie` en een tabel `regie_opdracht` in dezelfde D1 als de staat (`migrations/0002_regie.sql`; de functie maakt ze ook zelf aan). Gekozen boven een Durable Object (dat vraagt een losse worker naast Pages) en KV (tot een minuut vertraging). Kosten: ±6.000 leesacties per les, ruim binnen het gratis deel.
+- Over de lijn: les-id, rooster-uur, dia-index, begin van de dia en de klokstand (eindtijd, geen tikken). `schoonStaat` en `schoonOpdracht` laten niets anders door; de tablet bouwt dia's en notities zelf uit `basis.json` en `notities.json`.
+- Opdrachten hebben een id: komen ze via de server en via BroadcastChannel (bord en regie op één apparaat), dan voert het bord ze één keer uit. Opdrachten ouder dan een minuut tellen niet.
+- Zonder server (503, 404, geen netwerk) werkt het bord gewoon met de pijltjes; de regie zegt "geen verbinding".
+- Lokaal: `node tools/serve-lokaal.js public <poort> --api` draait `functions/api` met een nagebootste database in het geheugen (`tools/nep-d1.js`, `node:sqlite`) en een vast testadres in plaats van Access.
+
 ## 5. De workers
 
 ### `lesdag-rooster` (Zermelo)
@@ -186,7 +195,8 @@ Overgenomen uit `CLAUDE.md` op 8 november 2026, zodat die korter kon.
 - `public/app.js`: alles behalve de lesmodus. Agenda: `dagItems`, `agendaRaster`, `agPaneel`, `planKaart`; nieuw in de agenda en slepen: `nwOpen`, `nwNu`, `AGD`. Koor: `koorOp`, `koorKaart`. Jaar: `viewPartituur` (`#jaar`, `jaarBalk`, alleen lezend) en `viewKlasblad` (`#jaar/<groep>`). Beoordelen: `viewBeoordelen`, `bmExport` (route `#beoordelen/<model>/<groep>`). Nu-scherm: `viewNu`, `moment`, `partituur`, `voorstellen`; pauzes `pauzeDag` (`S.pauzes`, rustblok); regie `viewRegie` + bord via BroadcastChannel; opdrachtbalk `paletOpen`, `leesTaak`. Principes in `OPEN-PUNTEN.md`, sectie Proef Nu-scherm. Synchroniseren: `syncStart`, `syncKaart`, `syncDoc`, `syncZet` en `syncMag` (wacht tijdens lesmodus, typen of een open paneel). Service worker `public/sw.js`: verhoog `CACHE` bij elke wijziging in de vaste bestandenlijst; `/api/` blijft buiten de cache.
 - `public/reclame.js` + `public/data/reclame.json`: reclame voor weekinfo, borden en prikbord (tekst, afbeelding, staande pptx, printposter A3 als pdf met één afbeelding, zonder bibliotheek). `S.reclame[id].naVerstuurd` onthoudt dat gegevens wijzigden nadat iets al weg was. Taken en tabblad Reclame staan in `app.js` (`reclameActs`, `reclameMomenten`, `reclameOpen`, `viewReclame`).
 - `public/lesklok.js`: resttijd in elk scherm en het opruimsignaal, 4 minuten voor het einde van het rooster. `app.js` geeft via `LESKLOK.start` door wat de klok nodig heeft (`app.js` staat in een eigen functie, zijn namen zijn niet globaal). Tests: `tools/test-lesklok.js`.
-- `public/lesmodus.js`: digibordpresentatie (fasen als objecten `{min, soort, kop, stappen, klaar, docent, beeld}`).
+- `public/lesmodus.js`: digibordpresentatie (fasen als objecten `{min, soort, kop, stappen, klaar, docent, beeld}`). Geen geplande minuten op het bord; de timer alleen als Frans hem start (`timerStart`, `timerWeg`, `timer` in `app.js`).
+- `public/regie.js`: speling (`REGIE.speling`) en de verbinding bord–tablet. Zie hoofdstuk 4.1.
 - `tools/`: lesinhoud (`inhoud-*.json` + `merge-inhoud.js`), presentaties (`lesdeck.js`, `maak-decks-*.js`), SharePoint-links (`sp.js`), koor (`koor-sync.js`), beoordeling (`beoordeling/`). Na `merge-inhoud.js --force` altijd `zet-decks-in-leergang.js` en `beoordeling/koppel-beoordeling.js` opnieuw draaien.
 
 ## 11. Laptop, beheer en opsplitsen

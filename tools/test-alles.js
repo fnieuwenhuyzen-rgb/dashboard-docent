@@ -15,6 +15,7 @@ const STAPPEN = [
   ['Rekenregels beoordeling', 'beoordeling/test-reken.js', []],
   ['Beoordelen: jaaroverzicht en strookje', 'test-beoordeling-overzicht.js', []],
   ['Lesklok', 'test-lesklok.js', []],
+  ['Regie op de tablet (speling, /api/regie)', 'test-regie.js', []],
   ['Agendafeed', 'test-agendafeed.js', []],
   ['Toetsdatum (basis.json)', 'test-toetsdatum.js', []],
   ['Planning: toetsen op hun datum', 'test-planning.js', []],

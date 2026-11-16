@@ -97,9 +97,10 @@ const TOON = process.argv.includes('--toon');
   { let welkom = '', vroeg = '';
     await kijk('2026-11-16T08:40:00+01:00', 'vandaag', null, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(150); welkom = await page.evaluate(() => (document.querySelector('#les .slide') || {}).innerText || ''); });
     await kijk('2026-11-16T08:00:00+01:00', 'vandaag', null, async page => { await page.click('[data-start]'); await page.waitForSelector('#les:not([hidden])'); await page.waitForTimeout(150); await page.click('#les [data-l="volgende"]'); await page.waitForTimeout(150); vroeg = await page.evaluate(() => document.querySelector('#les .slide').innerText); });
-    const tot = x => +(x.match(/(\d+) minuten\s*$/) || [0, 0])[1];
-    is('73: welkomdia na een late start telt niet 45 minuten', tot(welkom) > 0 && tot(welkom) < 45 && tot(welkom) <= 35, welkom.slice(-120));
-    is('73: vóór de les staat er de geplande tijd', tot(vroeg) === 45, vroeg.slice(-80)); }
+    // herzien 16-11 (ontwerp timer op het bord): het welkomdia toont nooit minuten, ook niet na een late start of vóór de les
+    const min = x => /\d+\s*min/.test(x);
+    is('73: welkomdia na een late start toont geen minuten', !!welkom && !min(welkom), welkom.slice(-120));
+    is('73: welkomdia vóór de les toont geen minuten', !!vroeg && !min(vroeg), vroeg.slice(-80)); }
 
 
   // 44: Beoordelen op een telefoon (375×812): de eerste scoreknop staat meteen in beeld; op een laptop begint de pagina bovenaan

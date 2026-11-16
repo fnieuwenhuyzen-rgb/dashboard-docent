@@ -144,9 +144,9 @@
   }
 
   // ---------- slides ----------
-  function agenda(fasen, kort) { // kort: de ingekorte minuten per fase als de les al loopt (bevinding 73)
+  function agenda(fasen, kort) { // kort: de ingekorte minuten per fase als de les al loopt (bevinding 73); alleen voor de breedte van de balk
     const fs = fasen.map(fase).map((f, i) => kort && kort[i] != null ? Object.assign({}, f, { min: kort[i] }) : f); const tot = fs.reduce((a, f) => a + (f.min || 0), 0) || 1;
-    return `<div class="agenda"><div class="balk">${fs.map(f => `<div style="flex:${f.min || 1};background:${SOORT[f.soort].kleur}" title="${esc(f.kop)}"></div>`).join('')}</div><ol>${fs.map(f => `<li style="--fc:${SOORT[f.soort].kleur};--fz:${SOORT[f.soort].zacht}"><i>${ico(f.soort)}</i><span><b><span class="a-soort">${esc(SOORT[f.soort].naam)}</span><span class="a-sep"> · </span><span class="a-min">${f.min} min</span></b><span class="a-kop">${esc(f.kop)}</span></span></li>`).join('')}</ol><div class="tot">${tot} minuten</div></div>`;
+    return `<div class="agenda"><div class="balk">${fs.map(f => `<div style="flex:${f.min || 1};background:${SOORT[f.soort].kleur}" title="${esc(f.kop)}"></div>`).join('')}</div><ol>${fs.map(f => `<li style="--fc:${SOORT[f.soort].kleur};--fz:${SOORT[f.soort].zacht}"><i>${ico(f.soort)}</i><span><b><span class="a-soort">${esc(SOORT[f.soort].naam)}</span></b><span class="a-kop">${esc(f.kop)}</span></span></li>`).join('')}</ol></div>`; // geen minuten op het bord (ontwerp 16-11): de balk toont alleen de verhouding
   }
   // Foto op een dia, met bronvermelding. f: {src, bron, focus: 'x% y%'}
   const fotoHtml = f => f && f.src ? `<figure class="lesfoto"><img src="${esc(f.src)}" alt="" loading="eager"${f.focus ? ` style="object-position:${esc(f.focus)}"` : ''}>${f.bron ? `<figcaption>Foto: ${esc(f.bron)}</figcaption>` : ''}</figure>` : '';
