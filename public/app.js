@@ -187,7 +187,7 @@ function icsTijd(v) {
 function icsParse(txt) {
   const lines = String(txt).replace(/\r\n[ \t]/g, '').replace(/\n[ \t]/g, '').split(/\r?\n/);
   const out = []; let e = null;
-  const un = v => v.replace(/\\n/gi, '\n').replace(/\\,/g, ',').replace(/\;/g, ';').replace(/\\\\/g, '\\');
+  const un = v => v.replace(/\\([\\nN,;])/g, (m, c) => c === 'n' || c === 'N' ? '\n' : c); // RFC 5545 in één keer: \\ \n \, \; (zo wordt \\n geen regeleinde)
   for (const ln of lines) {
     if (ln === 'BEGIN:VEVENT') { e = {}; continue; }
     if (ln === 'END:VEVENT') { if (e && e.DTSTART) { const a = icsTijd(e.DTSTART), b = icsTijd(e.DTEND || e.DTSTART);
@@ -3054,9 +3054,11 @@ const agfAan = () => { try { return localStorage.getItem(AGF_VLAG) === '1'; } ca
 const agfLink = () => AGF && AGF.token ? agfCfg() + '/' + AGF.token + '.ics' : '';
 async function agfApi(method, body) {
   const r = await fetch('/api/agenda', { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, redirect: 'manual' });
+  if (r.status === 409) { agfLokaalUit(); throw new Error('gestopt'); } // de agenda is op een ander apparaat gestopt
   if (!r.ok) throw new Error(r.status || 'login');
   return r.json();
 }
+function agfLokaalUit() { try { localStorage.removeItem(AGF_VLAG); localStorage.removeItem(AGF_VLAG + '-stand'); } catch (e) {} AGF = null; }
 async function agendaBij(forceer) { // true als er iets is verstuurd
   if (!agfAan() || !navigator.onLine) return false;
   const punten = agendaItems(); if (!punten.length) return false; // nooit een lege agenda over een goede heen zetten
@@ -3076,8 +3078,8 @@ function agendaKaart() {
   if (!agfCfg()) return '';
   const wat = `<p class="lead">Lessen, toetsen, surveillance, koor en sectiepunten van twee weken terug tot zes weken vooruit, als eigen agenda in Outlook. Eigen taken, afspraken, notities en leerlinggegevens gaan niet mee. ${agfRuim() ? 'Zermelo-afspraken staan er met hun eigen titel in (met vak en groep) en lessen met de tekst uit het rooster.' : 'Zermelo-afspraken staan er met een vaste titel (Surveillance, Toets, Afspraak), zonder vak of groep, en bij een les alleen de lestitel uit de leergang.'} Alleen lezen; een wijziging staat vaak pas na enkele uren in Outlook.</p>`;
   if (!agfAan()) return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<div class="knoppen"><button class="btn hoofd" data-agf="maak">Agendalink maken</button></div></div>`;
-  if (!AGF) { AGF = { laden: true }; agfApi('GET').then(st => { AGF = st; }).catch(() => { AGF = { fout: true }; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
-  const stand = AGF.laden ? 'Even kijken…' : AGF.fout ? 'De agenda is nu niet bereikbaar.' : `Bijgewerkt: ${esc(new Date(AGF.bijgewerkt).toLocaleString('nl-NL'))}${AGF.punten ? ', ' + AGF.punten + ' punten' : ''}.`;
+  if (!AGF) { AGF = { laden: true }; agfApi('GET').then(st => { if (st && st.aan === false) agfLokaalUit(); else AGF = st; }).catch(() => { AGF = { fout: true }; }).then(() => { if (route.naam === 'instellingen' && !PAL) render(); }); }
+  const stand = AGF.laden ? 'Even kijken…' : AGF.fout ? 'De agenda is nu niet bereikbaar.' : AGF.bijgewerkt ? `Bijgewerkt: ${esc(new Date(AGF.bijgewerkt).toLocaleString('nl-NL'))}${AGF.punten ? ', ' + AGF.punten + ' punten' : ''}.` : 'Nog niet bijgewerkt.';
   return `<div class="kaart"><h2>Agenda in Outlook</h2>${wat}<p class="lead">Dit apparaat werkt de agenda bij als Lesdag open staat. Toevoegen in Outlook op het web: Agenda, Agenda toevoegen, Abonneren via internet, link plakken. Behandel de link als een wachtwoord: wie hem heeft, ziet deze agenda.</p><p class="sub">${stand}</p><div class="knoppen"><button class="btn hoofd" data-agf="kopie">Link kopiëren</button><button class="btn" data-agf="nu">Nu bijwerken</button><button class="btn" data-agf="nieuw">Nieuwe link</button><button class="btn" data-agf="stop">Stoppen</button></div>
     <p class="sub" style="margin-top:.6rem">Titels in de agenda: <b>${agfRuim() ? 'ruim' : 'veilig'}</b>.</p><div class="knoppen"><button class="btn klein" data-agf="${agfRuim() ? 'veilig' : 'ruim'}">${agfRuim() ? 'Terug naar de veilige stand' : 'Zermelo-titels toch meenemen…'}</button></div></div>`;
 }
@@ -3085,13 +3087,13 @@ async function agendaKlik(D) {
   if (D.agf == null) return false;
   try {
     if (D.agf === 'maak') { const st = await agfApi('GET'); AGF = st.aan ? st : await agfApi('POST'); localStorage.setItem(AGF_VLAG, '1'); await agendaBij(true); toast('Agendalink staat klaar'); }
-    else if (D.agf === 'kopie') { if (!agfLink()) AGF = await agfApi('GET'); await navigator.clipboard.writeText(agfLink()); toast('Link gekopieerd'); }
+    else if (D.agf === 'kopie') { if (!agfLink()) AGF = await agfApi('GET'); if (!agfLink()) { if (AGF && AGF.aan === false) agfLokaalUit(); throw new Error('gestopt'); } await navigator.clipboard.writeText(agfLink()); toast('Link gekopieerd'); }
     else if (D.agf === 'nu') { await agendaBij(true); toast('Agenda bijgewerkt'); }
     else if (D.agf === 'nieuw') { if (!confirm('Nieuwe link maken? De oude werkt dan niet meer: je moet in Outlook opnieuw abonneren.')) return true; AGF = await agfApi('POST'); await agendaBij(true); toast('Nieuwe link staat klaar'); }
     else if (D.agf === 'ruim') { if (!confirm('In Outlook komen dan de titels uit Zermelo te staan, met vak en groep, en bij lessen ook de tekst uit het rooster. Wie de agendalink heeft, ziet dat. Doorgaan?')) return true; localStorage.setItem(AGF_RUIM, '1'); await agendaBij(true); toast('Agenda bijgewerkt met ruime titels'); }
     else if (D.agf === 'veilig') { localStorage.removeItem(AGF_RUIM); await agendaBij(true); toast('Agenda bijgewerkt met vaste titels'); }
     else if (D.agf === 'stop') { if (!confirm('Agenda stoppen? De link werkt dan niet meer. Verwijder de agenda ook zelf uit Outlook.')) return true; await agfApi('DELETE'); localStorage.removeItem(AGF_VLAG); localStorage.removeItem(AGF_VLAG + '-stand'); AGF = null; toast('Agenda gestopt'); }
-  } catch (e) { toast('Dat lukt nu niet. Ben je nog ingelogd?'); }
+  } catch (e) { toast(e && e.message === 'gestopt' ? 'De agenda is gestopt, misschien op een ander apparaat. Maak zo nodig een nieuwe link.' : 'Dat lukt nu niet. Ben je nog ingelogd?'); }
   render(); return true;
 }
 
