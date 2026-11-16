@@ -542,6 +542,10 @@ function planning(van, tot) {
   }
   return res;
 }
+function printLink(b, l) { // printregel bij Klaarzetten → link naar het bestand uit het materiaal van de les (FUNCTIES.printBestand)
+  const m = window.FUNCTIES && l ? FUNCTIES.printBestand(b, l.materiaal) : null;
+  return m ? ` <a class="printlink" href="${esc(m.u)}" target="_blank" rel="noopener" title="${esc(m.t)}">open bestand</a>` : '';
+}
 function benodigd(l) {
   const out = []; const add = x => { if (x && !out.includes(x)) out.push(x); };
   (l.benodigd || []).forEach(add);
@@ -680,7 +684,7 @@ function viewVandaag() {
     if (vorig && eenmaligLg(x.u.groep) && vorig.x.item.id === x.item.id && eenmaligLg(vorig.x.u.groep)) { vorig.n++; vorig.rijen.push(x.u); return; } // eenmalige groepen met dezelfde les: één keer klaarzetten
     arr.push({ x, ben: benodigd(l), l, n: 1, rijen: [x.u] }); });
   const perGroep = rijen => `<div style="margin:.15rem 0 .3rem;color:var(--muted);font-size:var(--t-klein);line-height:1.5">${rijen.map(u => { const b = basisUren().find(y => y.id === u.id) || {}; return `<div>${esc(u.start)} ${esc(u.groep)}${b.klaar ? ': ' + esc(b.klaar) : ''}</div>`; }).join('')}</div>`;
-  if (Object.keys(perLokaal).length) klaarzet = `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben, rijen }) => `<div>${eenmaligLg(x.u.groep) ? `<b style="font-family:var(--lees)">${esc(lgNaam(leergangVan(x.u.groep)))}</b>${perGroep(rijen)}` : `<b style="font-family:var(--lees)">${esc(x.u.start)} ${esc(x.u.groep)}</b>`}<div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
+  if (Object.keys(perLokaal).length) klaarzet = `<div class="grid">${Object.entries(perLokaal).map(([lok, arr]) => `<div class="kaart lokaalblok klaarzet"><h3>Klaarzetten in ${esc(lok)}</h3>${arr.map(({ x, ben, rijen, l }) => `<div>${eenmaligLg(x.u.groep) ? `<b style="font-family:var(--lees)">${esc(lgNaam(leergangVan(x.u.groep)))}</b>${perGroep(rijen)}` : `<b style="font-family:var(--lees)">${esc(x.u.start)} ${esc(x.u.groep)}</b>`}<div class="mats" style="margin:.2rem 0 .5rem">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}${printLink(b, l)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div></div>`).join('')}</div>`).join('')}</div>`;
   // ontwerp Ensemble B (30-10): links de zin en wat je met het gekozen blok doet, rechts de dag van boven naar beneden, zoals op Nu.
   // De lijsten staan op een breed scherm links onder het blok (10-11), op een telefoon pas onder de agenda (bevinding 46)
   return h + `<div class="dag-b"><div class="dag-links">${onder.map(o => `<p class="ens-twijfel">${esc(o)}</p>`).join('')}
@@ -1878,14 +1882,14 @@ function startKaart(s, p, A, nu, zinNoemt) { // zinNoemt: de zin bovenaan Nu zeg
 function eersteLesBlok(s, x) { // doel, klaarzetten en materiaal van de eerste les, zoals de kaart vlak voor de les
   const l = les(x.item); const ben = klaarLijst(s, l);
   return `<p class="sub" style="margin-top:.3rem">${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}${ookRegel(l)}
-    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}`;
+    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}${printLink(b, l)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}`;
 }
 function voorLesKaart(s, p, x, nu) {
   const l = les(x.item); const ben = klaarLijst(s, l);
   const min = minuten(x.u.start) - nu; const rest = s === vandaag() ? teAfronden(s, p, nu) : [];
   return `<div class="kaart"><p class="eyebrow">${s === vandaag() && min > 0 && min <= 90 ? `Over ${min} ${min === 1 ? 'minuut' : 'minuten'} · ` : ''}${esc(x.u.start)}–${esc(x.u.eind)} · lokaal ${esc(x.u.lokaal || '009')}</p>
     <h2>${esc(x.u.groep)} · ${esc(l.titel || '')}</h2>${vorigeRegel(x)}${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}${ookRegel(l)}
-    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>
+    <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}${printLink(b, l)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>
     ${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}
     <!--dok-->${bordKnoppen(x, s)}<button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok--><div class="knoppen" style="margin-top:.9rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button></div>
     ${rest.length ? `<h3>Nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
@@ -3282,7 +3286,7 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord (scherm
   const th = x.item.week.thuis || {};
   const vor = vorigeVan(x);
   const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => LINK_RE.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
-  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), materiaalHtml, fotos: (window.LESFOTOS || {})[x.item.id], stijl: LESMODUS.stijlVan(x.item.lg) };
+  const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), printLink: b => printLink(b, l), materiaalHtml, fotos: (window.LESFOTOS || {})[x.item.id], stijl: LESMODUS.stijlVan(x.item.lg) };
   let slides = LESMODUS.bouwSlides(l, kctx);
   { const kr = lesKrap({ s, x, slides, i: 0, bord: false }); // bevinding 73: loopt de les al, dan staan op het welkomdia de ingekorte minuten, niet de geplande
     if (kr) { const kort = slides.map((y, j) => ({ y, j })).filter(o => o.y.k === 'fase').map(o => kr.min[o.j] != null ? kr.min[o.j] : null); slides[slides.findIndex(y => y.k === 'welkom')] = LESMODUS.bouwSlides(l, Object.assign(kctx, { kort })).find(y => y.k === 'welkom'); } }

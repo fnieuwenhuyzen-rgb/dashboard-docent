@@ -90,6 +90,7 @@ main{max-width:var(--wrap);margin:0 auto;padding-block:1.2rem 4rem;display:grid;
 .groep{font-family:var(--lees);font-weight:700;font-size:1.15rem}
 .titel{font-family:var(--lees);font-weight:700;font-size:1.1rem}
 .chip{display:inline-block;font-family:var(--lees);font-size:var(--t-klein);font-weight:600;border-radius:4px;padding:.05rem .45rem;background:var(--uit-zacht);color:var(--uit);white-space:nowrap}
+.printlink{color:inherit;text-decoration:underline;text-underline-offset:2px;margin-left:.3rem;white-space:nowrap}
 .chip.theorie{background:var(--theorie);color:var(--theorie-ink)}.chip.praktijk{background:var(--praktijk);color:var(--praktijk-ink)}
 .chip.toets{background:var(--toets);color:var(--toets-ink)}.chip.ok{background:var(--ok-zacht);color:var(--ok)}
 .chip.let{background:var(--let-zacht);color:var(--let)}.chip.rood{background:var(--rood-zacht);color:var(--rood)}

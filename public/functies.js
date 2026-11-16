@@ -76,5 +76,20 @@
   const eersteDelen = taken => { const laag = {}; (taken || []).forEach(k => { if (k.deel && !k.af) { const l = laag[k.deel.groep]; if (!l || k.deel.nr < l.deel.nr) laag[k.deel.groep] = k; } });
     return k => !k.deel || k.af || laag[k.deel.groep] === k; };
 
-  return { stukAantal, stukMinuten, kaleTitel, stukTitel, maakStukken, eersteDelen, KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
+  /* Printregel bij Klaarzetten → het bestand uit het materiaal van dezelfde les (16-11). Alleen regels over printen of bladen; presentaties,
+     Musicbox, oefensites en video's tellen niet. Meeste gedeelde woorden wint, bij gelijkspel de kortste titel (dus niet "met antwoorden"). */
+  const PRINT_RE = /print|kopie|uitdel|werkblad|bladmuziek/i;
+  const GEEN_BESTAND = /powerpoint|presentatie|musicbox|oefensite|youtube|video/i;
+  const STOP = new Set('de het een en of op bij per van voor met in uit naar alleen geprint printen print blad bladen kaart pdf word een leerling leerlingen twee les bord'.split(' '));
+  const woorden = s => (String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').match(/[a-z0-9]{3,}/g) || []).filter(w => !STOP.has(w));
+  const printBestand = (tekst, materiaal) => {
+    if (!PRINT_RE.test(tekst || '')) return null;
+    const wb = new Set(woorden(tekst)); let best = null, sc = 0, len = 0;
+    (materiaal || []).forEach(m => { if (!/^https?:/i.test(m.u || '') || GEEN_BESTAND.test(m.t || '')) return;
+      const w = woorden(m.t); const s = w.filter(x => wb.has(x) || [...wb].some(y => Math.min(x.length, y.length) >= 4 && (x.startsWith(y) || y.startsWith(x)))).length;
+      if (s > sc || (s && s === sc && w.length < len)) { best = m; sc = s; len = w.length; } });
+    return best;
+  };
+
+  return { printBestand, stukAantal, stukMinuten, kaleTitel, stukTitel, maakStukken, eersteDelen, KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
 });

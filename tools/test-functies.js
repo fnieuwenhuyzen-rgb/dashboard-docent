@@ -3,6 +3,15 @@ const F = require('../public/functies.js'); let fouten = 0, n = 0;
 const is = (naam, ok) => { n++; if (!ok) { fouten++; console.log('  FOUT ' + naam); } };
 is('keuzes zijn benoemd', F.KEUZES.week && F.KEUZES.samen && F.KEUZES.jaar);
 //FUNCTIE-TESTS
+// Printregel bij Klaarzetten krijgt het bestand uit het materiaal
+{ const M = [{ t: 'Presentatie: Oefentoets (PowerPoint)', u: 'https://x/p' }, { t: 'Oefentoets met antwoorden (pdf)', u: 'https://x/a' }, { t: 'Oefentoets (pdf)', u: 'https://x/o' }, { t: 'Musicbox: Piano', u: 'https://x/m' }, { t: 'Begrippenlijst klas 1 (pdf)', u: 'https://x/b' }];
+  is('printregel vindt het bestand', (F.printBestand('Oefentoets geprint', M) || {}).u === 'https://x/o');
+  is('ander bestand in dezelfde les', (F.printBestand('Begrippenlijst geprint', M) || {}).u === 'https://x/b');
+  is('geen printregel, geen link', F.printBestand('Keyboards, koptelefoons', M) === null);
+  is('geen passend bestand, geen link', F.printBestand('Strookje geprint, één per leerling', M) === null);
+  is('presentatie telt niet', F.printBestand('Piano geprint', [{ t: 'Musicbox: Piano', u: 'https://x/m' }]) === null);
+  is('bingobladen vindt Bingo instrumenten', (F.printBestand('Bingobladen geprint', [{ t: 'Instrumenten herkennen (Word)', u: 'https://x/i' }, { t: 'Bingo instrumenten (Word)', u: 'https://x/b' }]) || {}).u === 'https://x/b');
+  is('materiaal zonder webadres telt niet', F.printBestand('Oefentoets geprint', [{ t: 'Oefentoets (pdf)' }]) === null); }
 // Week afsluiten: weekgrenzen en de regel voor maandag
 is('maandag van een woensdag', F.maandagVan('2026-11-11') === '2026-11-09');
 is('maandag van een zondag is de maandag ervoor', F.maandagVan('2026-11-15') === '2026-11-09');
