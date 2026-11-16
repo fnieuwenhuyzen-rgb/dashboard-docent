@@ -9,11 +9,6 @@
 <body>
 <p>Je wordt teruggestuurd naar Lesdag…</p>
 <script src="vendor/msal-redirect-bridge.min.js"></script>
-<script>
-  // Antwoordpagina voor de Microsoft-login (MSAL v5 redirect bridge).
-  msalRedirectBridge.broadcastResponseToMainFrame().catch(function (e) {
-    document.body.innerHTML = '<p>Inloggen is niet gelukt: ' + String(e && e.message || e).replace(/</g, '&lt;') + '</p><p><a href="./">Terug naar Lesdag</a></p>';
-  });
-</script>
+<script src="auth-brug.js"></script>
 </body>
 </html>

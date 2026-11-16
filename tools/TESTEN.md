@@ -44,3 +44,5 @@ Vóór het committen: `node tools/test-alles.js --snel` (met `NODE_PATH` gezet).
 Alleen verzonnen groepscodes (`tv4`, `th3`, …) en namen ("Testleerling, Anna"). De schermtest zet zijn eigen staat in een wegwerpbrowser; er blijft niets staan.
 
 Regie op de tablet (16-11): onderdeel 6 van `test-routes-lesmodus.js` opent het bord en de regie in twee losse browsercontexten, zodat alles via `/api/regie` gaat (de test start `serve-lokaal.js --api`). Met de hand: `node tools/serve-lokaal.js public 8745 --api`, het bord in het ene tabblad, `#regie` in het andere. In één browser praten ze ook via BroadcastChannel; zet dat uit met `BroadcastChannel.prototype.postMessage = function () {}` in beide tabbladen om de server te testen.
+
+CSP (16-11): `node tools/test-csp.js` (in `test-alles`, ±15 s) zet de policy uit `public/_headers` als afgedwongen kop en meldt elke overtreding op negen schermen, in de lesmodus en bij een PowerPoint met pptxgen. De lokale server kent `_headers` niet; de test zet de kop zelf. Een inline `<script>` of `on…=`-attribuut laat hem falen.

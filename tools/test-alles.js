@@ -27,6 +27,7 @@ const STAPPEN = [
   ['Foutlogboek', 'test-logboek.js', a.includes('--zonder-browser') ? ['--zonder-browser'] : []],
   ['Nieuwe versie (service worker)', 'test-nieuwe-versie.js', []],
   ['Automatische kopie', 'test-autokopie.js', []],
+  ['CSP afgedwongen (headless)', 'test-csp.js', []],
   ['Vier functies (headless)', 'test-functies-scherm.js', []],
   ['Schermen (headless)', 'test-schermen.js', a.includes('--snel') ? ['--snel'] : []],
   ...(a.includes('--routes') ? [['Routes Beoordelen (headless)', 'test-routes-beoordelen.js', []], ['Routes Agenda en planning (headless)', 'test-routes-agenda.js', []], ['Routes Lesmodus (headless, snel)', 'test-routes-lesmodus.js', ['--snel']]] : []),
