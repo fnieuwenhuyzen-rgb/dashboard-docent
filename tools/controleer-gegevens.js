@@ -81,11 +81,13 @@ const verwachteVorm = (f, d) => {
 let fouten = 0; const regels = [];
 const meld = (ok, tekst) => { regels.push((ok ? '  ok   ' : '  FOUT ') + tekst); if (!ok) fouten++; };
 const aantalOk = process.env.LESDAG_AANTALLEN_OK === '1';
+const gelezen = {};
 for (const f of BESTANDEN) {
   const tekst = lees(f);
   if (tekst === null) { meld(false, f + ': niet te lezen'); continue; }
   let d; try { d = JSON.parse(tekst); } catch (e) { meld(false, f + ': geen geldige JSON (' + e.message + ')'); continue; }
   const vorm = verwachteVorm(f, d); if (vorm) { meld(false, f + ': ' + vorm); continue; }
+  gelezen[f.endsWith('basis.json') ? 'basis' : f.endsWith('leergang-data.json') ? 'bron' : 'ander'] = d;
   const nu = maten(f, d); const oudTekst = eerder(f); let oud = null;
   if (oudTekst !== null) { try { oud = maten(f, JSON.parse(oudTekst)); } catch (e) { oud = null; } }
   const dalend = [];
@@ -93,6 +95,16 @@ for (const f of BESTANDEN) {
   if (dalend.length && !aantalOk) meld(false, `${f}: minder dan in ${tegen}: ${dalend.join('; ')}. Teruggevallen stand (OneDrive)? Vergelijk met ${tegen}; bedoeld? zet LESDAG_AANTALLEN_OK=1`);
   else meld(true, `${f}: ${Object.entries(nu).map(([k, w]) => w + ' ' + k).join(', ')}${oud ? '' : ' (geen vergelijkingsstand)'}${dalend.length ? ' [dalingen toegestaan: ' + dalend.join('; ') + ']' : ''}`);
   const pr = privacy(f, d); if (pr.length) meld(false, `${f}: mogelijk leerlinggegevens: ${pr.join(' | ')}`);
+}
+// tweeling: bron/leergang-data.json moet dezelfde lesweken en sectiepunten hebben als basis.json (handboek/techniek.md)
+if (gelezen.basis && gelezen.bron) {
+  const B = gelezen.basis, R = gelezen.bron, anders = [];
+  for (const lg of new Set([...Object.keys(B.leergangen), ...Object.keys(R.klassen)])) {
+    const wb = (B.leergangen[lg] || {}).weken, wr = (R.klassen[lg] || {}).weken;
+    if (JSON.stringify(wb) !== JSON.stringify(wr)) anders.push('lesweken ' + lg + ((wb && wr) ? ' (' + wb.filter((w, i) => JSON.stringify(w) !== JSON.stringify(wr[i])).map(w => 'week ' + w.w).slice(0, 3).join(', ') + ')' : ' (maar in één bestand)'));
+  }
+  if (JSON.stringify(B.sectie) !== JSON.stringify(R.sectie)) anders.push('sectie (' + B.sectie.length + ' tegen ' + R.sectie.length + ')');
+  meld(!anders.length, anders.length ? 'basis.json en bron/leergang-data.json lopen uiteen: ' + anders.join('; ') + '. Pas beide aan.' : 'basis.json en bron/leergang-data.json zijn gelijk (lesweken en sectie)');
 }
 console.log('Gegevens' + (staged ? ' (staged)' : '') + ' vergeleken met ' + tegen + ':\n' + regels.join('\n'));
 console.log(fouten ? `\n${fouten} fout(en). Niet committen voor dit is nagekeken.` : '\nGegevens in orde.');
