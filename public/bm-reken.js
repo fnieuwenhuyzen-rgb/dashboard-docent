@@ -55,7 +55,7 @@ function eind(m, L, T, id) {
   if (isPoging(L, T) && r && r.vast) { const v = r.vast; return { d: v.d, z: v.z == null ? null : v.z, k: v.k == null ? null : v.k, kn: v.kn || 0, e: v.e, delen: D, mist: [], vast: true }; }
   const d = docentCijfer(m, L, T, id); const mist = []; if (d == null) mist.push('docent');
   const z = r && r.zelf != null ? r.zelf : null; if (D.zelf && z == null) mist.push('zelf');
-  const kg = D.klasgenoten ? klasgenoten(r, +m.klasgenotenMin || 3) : { n: 0, gem: null }; if (D.klasgenoten && kg.gem == null) mist.push('klasgenoten');
+  const kg = D.klasgenoten ? klasgenoten(r, isPoging(L, T) && T.vast && T.vast.min ? T.vast.min : +m.klasgenotenMin || 3) /* na het eerste afronden het vastgelegde minimum, ook voor inhalers */ : { n: 0, gem: null }; if (D.klasgenoten && kg.gem == null) mist.push('klasgenoten');
   const ruw = mist.length ? null : rond1((d * D.docent + (D.zelf ? z * D.zelf : 0) + (D.klasgenoten ? kg.gem * D.klasgenoten : 0)) / 100);
   const pl = plafondVan(m, veldenVan(L, T, id)); const e = ruw != null && pl != null ? Math.min(ruw, pl) : ruw; // plafond per niveau geldt voor het eindcijfer
   return { d, z, k: kg.gem, kn: kg.n, e, ruw, plafond: pl, delen: D, mist, vast: false };
@@ -79,7 +79,7 @@ function heropen(T, id, L) { const r = (L || T).ll[id]; if (r) delete r.vast; if
 const kolom = (T, lijst) => lijst.map(x => fmt(poging(T, x.id).e));
 
 /* ---------- getallen ---------- */
-function leesCijfer(t) { // "7,5" of "8": een cijfer van 1 tot en met 10 met hooguit één decimaal, anders null
+function leesCijfer(t) { // "7,5" of "8": een cijfer van 1 tot en met 10, afgerond op één decimaal ("7,45" wordt 7,5); anders null
   const s = String(t == null ? '' : t).trim().replace(',', '.'); if (!/^\d{1,2}(\.\d+)?$/.test(s)) return null;
   const x = +s; return x >= 1 && x <= 10 ? rond1(x) : null;
 }

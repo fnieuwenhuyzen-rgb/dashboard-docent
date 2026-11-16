@@ -12,6 +12,9 @@ const nieuweT = () => ({ ll: {}, volgorde: [] });
   is('examenconcert', R.eind(m, T, T, 'x').e, 7.6);
   is('klasgenoten gem', R.eind(m, T, T, 'x').k, 8.2);
   T.ll.x.klas.forms = [8, 8.2]; is('minder dan 3: geen eind', R.eind(m, T, T, 'x').e, null); is('minder dan 3: mist', R.eind(m, T, T, 'x').mist, ['klasgenoten']);
+  // inhaler na het afronden: het vastgelegde minimum geldt, ook als het model later verandert
+  T.ll.y = { s: { a: 7 }, zelf: 8, klas: { forms: [8, 8, 8] } }; R.afronden(m, T, [{ id: 'y' }], 1); is('minimum vastgelegd', T.vast.min, 3);
+  const m3 = Object.assign({}, m, { klasgenotenMin: 2 }); T.ll.z = { s: { a: 7 }, zelf: 8, klas: { forms: [8, 8] } }; is('inhaler: vastgelegd minimum 3, niet 2 uit het model', R.eind(m3, T, T, 'z').mist, ['klasgenoten']);
   T.ll.x.klas = { forms: [8, 8], papier: [8.6] }; is('papier telt mee', R.eind(m, T, T, 'x').k, 8.2);
   delete T.ll.x.zelf; is('zelf mist: geen eind', R.eind(m, T, T, 'x').e, null); }
 // 90/10 en afrondingsgrenzen: 7,5 x 0,9 + 8 x 0,1 = 7,55 wordt 7,6 (Excel ROUND)
