@@ -16,7 +16,11 @@ export async function onRequest({ request, env }) {
   try { email = await whoAmI(request, env); } catch (e) { return json({ fout: "niet ingelogd" }, 401); }
   if (email !== String(env.EIGENAAR || env.DEV_EMAIL).toLowerCase()) return json({ fout: "geen toegang" }, 403);
   if (request.method === "GET") { try { return await lees(new URL(request.url).searchParams, env); } catch (e) { if (e instanceof Beschadigd) return json({ fout: "beschadigd", sleutel: e.sleutel }, 500); throw e; } }
-  if (request.method === "PUT") return schrijf(await request.json(), env);
+  if (request.method === "PUT") {
+    let body = null; try { body = await request.json(); } catch (e) {}
+    if (!body || typeof body !== "object") return json({ fout: "verzoek" }, 400);
+    return schrijf(body, env);
+  }
   if (request.method === "DELETE") {
     // een andere website mag hier niets wissen: een DELETE met cookie van een andere herkomst wordt geweigerd
     const herkomst = request.headers.get("Origin");
@@ -69,8 +73,8 @@ async function schrijf({ basis, gewijzigd }, env) {
   const paren = Object.entries(gewijzigd).map(([k, v]) => [k, v === null ? null : JSON.stringify(v)]);
   const teGroot = paren.find(([k, w]) => w && new TextEncoder().encode(w).length > MAX_RIJ);
   if (teGroot) return json({ fout: "te groot", sleutel: teGroot[0] }, 413);
-  const db = env.DB, nu = Date.now(), ik = crypto.randomUUID(), dag = new Date(nu).toISOString().slice(0, 10);
-  const oud = new Date(nu - BEWAAR_DAGEN * 864e5).toISOString().slice(0, 10);
+  const db = env.DB, nu = Date.now(), ik = crypto.randomUUID(), dag = dagNL(nu);
+  const oud = dagNL(nu - BEWAAR_DAGEN * 864e5);
   const vanMij = "(SELECT schrijver FROM meta WHERE id = 1) = ?";
   const res = await db.batch([
     db.prepare("UPDATE meta SET versie = versie + 1, bijgewerkt = ?, schrijver = ? WHERE id = 1 AND versie = ?").bind(nu, ik, basis),
@@ -89,6 +93,8 @@ async function schrijf({ basis, gewijzigd }, env) {
 // een rij die geen JSON is: nooit overslaan (de client zou dat als "verwijderd" lezen), maar stoppen met een eigen foutmelding
 class Beschadigd extends Error { constructor(sleutel) { super("beschadigd"); this.sleutel = sleutel; } }
 const rijen = L => Object.fromEntries(L.map(r => { try { return [r.sleutel, JSON.parse(r.waarde)]; } catch (e) { throw new Beschadigd(r.sleutel); } }));
+// de dag in Nederland (YYYY-MM-DD), niet in UTC: een wijziging om 00:30 hoort bij de nieuwe dag
+const dagNL = ms => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Amsterdam", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(ms));
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
 
 /* ---- Access-token controleren (zelfde aanpak als de Koorapp) ---- */
