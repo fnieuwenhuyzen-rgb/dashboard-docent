@@ -57,13 +57,13 @@ const paginaFouten = [];
       await page.click('[data-samenfase="b|0"]'); await page.waitForTimeout(150);
       let teller = await page.evaluate(() => document.querySelector('.samenteller').innerText);
       ok(/te veel/.test(teller) && await page.evaluate(() => document.querySelector('#krapForm button[type=submit]').disabled), 'samenvoegen: te veel minuten maar Doen kan toch: ' + teller);
-      await page.click('[data-samenfase="a|0"]'); await page.waitForTimeout(150); // de eerste fase van les A (5 minuten) weer weg
-      teller = await page.evaluate(() => document.querySelector('.samenteller').innerText);
-      ok(/45 van 45 minuten/.test(teller) && /Past precies/.test(teller) && await page.evaluate(() => !document.querySelector('#krapForm button[type=submit]').disabled), 'samenvoegen: 45 van 45 past niet: ' + teller);
+      // fasen van les A weer weg tot het past; zo hangt de test niet af van de lesduur in de gegevens
+      let weg = 0; while (/te veel/.test(teller) && weg < nA) { await page.click('[data-samenfase="a|' + weg + '"]'); weg++; await page.waitForTimeout(150); teller = await page.evaluate(() => document.querySelector('.samenteller').innerText); }
+      ok(/van 45 minuten/.test(teller) && !/te veel/.test(teller) && await page.evaluate(() => !document.querySelector('#krapForm button[type=submit]').disabled), 'samenvoegen: 45 van 45 past niet: ' + teller);
       await page.click('#krapForm button[type=submit]'); await page.waitForTimeout(300);
       const s = await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')));
       const ids = Object.keys(s.les || {}).filter(k => (s.les[k] || {}).samengevoegd); ok(ids.length === 1, 'samenvoegen: geen samengevoegde les opgeslagen');
-      const A = ids[0], Bid = s.les[A].samengevoegd.met; ok(s.les[A].fasen.length === nA - 1 + 1, 'samenvoegen: aantal fasen klopt niet: ' + (s.les[A].fasen || []).length + ' van ' + nA);
+      const A = ids[0], Bid = s.les[A].samengevoegd.met; ok(s.les[A].fasen.length === nA - weg + 1, 'samenvoegen: aantal fasen klopt niet: ' + (s.les[A].fasen || []).length + ' van ' + (nA - weg + 1));
       ok(s.voortgang.tv4[Bid] && s.voortgang.tv4[Bid].st === 'overgeslagen' && s.voortgang.tv4[Bid].hoortBij === A, 'samenvoegen: de tweede les is niet overgeslagen met hoortBij');
       ok(/ \+ /.test(s.les[A].titel) && s.afwijkingen.some(a => a.samenA === A && /samengevoegd/.test(a.wat)), 'samenvoegen: titel of afwijking ontbreekt');
       // ongedaan maken: de eigen aanpassing en de status zijn terug, de les-id's zijn niet veranderd
