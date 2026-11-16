@@ -136,7 +136,7 @@ Naast `S` staan drie dingen in de browser die bewust niet in `S` zitten:
 - Drie acties: `koppel` (koppelcode inwisselen voor een token), `afspraken` (eigen afspraken lezen), en een iCal-lezer als reserve.
 - Praat met `https://csgpm.zportal.nl/api/v3`. Leerlingen worden bewust niet opgevraagd.
 - Antwoordt alleen op `https://lesdag-muziek.pages.dev`, op `*.lesdag-muziek.pages.dev` en op `localhost`. Bewaart en logt niets. De token komt per verzoek uit de browser.
-- Online zetten: `wrangler deploy worker/rooster-proxy.js --name lesdag-rooster --compatibility-date 2026-01-01`. Uploaden via de dashboard-API blokkeert Cloudflare.
+- Online zetten: `wrangler deploy rooster-proxy.js --name lesdag-rooster --compatibility-date 2026-01-01`. Uploaden via de dashboard-API blokkeert Cloudflare. Twee valkuilen (16-11): draai het vanuit een losse map buiten de repo met alleen een kopie van `rooster-proxy.js`, want in de repo vindt wrangler de `wrangler.toml` van Pages en weigert. En wrangler staat niet op de laptop: `npx --yes wrangler@4.163.0` werkt alleen als de map van node vooraan in `$env:Path` staat (anders falen de installatiescripts van esbuild en workerd zonder duidelijke melding).
 
 ### `lesdag-agenda` (Outlook)
 
