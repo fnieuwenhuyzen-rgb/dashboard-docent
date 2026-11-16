@@ -26,10 +26,12 @@ export default {
 
     let body;
     try { body = await req.json(); } catch (e) { return new Response('Ongeldig verzoek', { status: 400, headers: cors }); }
+    if (!body || typeof body !== 'object') return new Response('Ongeldig verzoek', { status: 400, headers: cors });
     const json = (data, status = 200) => new Response(JSON.stringify(data), {
       status, headers: { ...cors, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }
     });
 
+    try { // valt Zermelo weg, dan toch een antwoord met CORS-koppen, zodat de app de echte reden toont
     if (body.actie === 'koppel') {
       const code = String(body.code || '').replace(/\s/g, '');
       if (!/^[A-Za-z0-9]{6,32}$/.test(code)) return json({ fout: 'Ongeldige koppelcode' }, 400);
@@ -68,5 +70,6 @@ export default {
       status: r.status,
       headers: { ...cors, 'Content-Type': 'text/calendar; charset=utf-8', 'Cache-Control': 'no-store' }
     });
+    } catch (e) { return json({ fout: 'Zermelo is nu niet bereikbaar. Probeer het later opnieuw.' }, 502); }
   }
 };
