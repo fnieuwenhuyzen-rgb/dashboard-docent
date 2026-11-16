@@ -68,8 +68,9 @@
     const out = []; let cur = null;
     for (const raw of String(tekst || '').split('\n')) {
       const ln = raw.trim(); if (!ln) continue;
-      const m = ln.match(/^(\d+)\s*min\s*·\s*([a-z]+)\s*·\s*(.+)$/i);
-      if (m && SOORT[m[2].toLowerCase()]) { cur = { min: +m[1], soort: m[2].toLowerCase(), kop: m[3].trim(), stappen: [] }; out.push(cur); continue; }
+      // kopregel "10 min · uitleg · Kop"; ook met - – | • of / ertussen (de · zit niet op het toetsenbord), zonder kop, of met een onbekende soort (wordt doen)
+      const m = ln.match(/^(\d+)\s*min\s*[·\-–|•/]\s*([a-z]+)\s*(?:[·\-–|•/]\s*(.*))?$/i);
+      if (m) { const sd = m[2].toLowerCase(); cur = { min: +m[1], soort: SOORT[sd] ? sd : 'doen', kop: (m[3] || '').trim() || (SOORT[sd] ? '' : m[2]), stappen: [] }; out.push(cur); continue; }
       if (/^\d+\s*min/i.test(ln) || !cur) { cur = null; out.push(ln); continue; }
       if (ln.startsWith('- ')) cur.stappen.push(ln.slice(2).trim());
       else if (ln.startsWith('> ')) cur.docent = ((cur.docent ? cur.docent + ' ' : '') + ln.slice(2).trim());

@@ -17,6 +17,7 @@ const STAPPEN = [
   ['Lesklok', 'test-lesklok.js', []],
   ['Regie op de tablet (speling, /api/regie)', 'test-regie.js', []],
   ['Agendafeed', 'test-agendafeed.js', []],
+  ['Fasen als tekst', 'test-fasetekst.js', []],
   ['Toetsdatum (basis.json)', 'test-toetsdatum.js', []],
   ['Planning: toetsen op hun datum', 'test-planning.js', []],
   ['Nu en de lesdag (ochtend, afronden, ziekte, vakantie)', 'test-nu-ochtend.js', []],
