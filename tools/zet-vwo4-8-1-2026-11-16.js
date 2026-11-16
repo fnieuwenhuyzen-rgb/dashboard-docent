@@ -40,7 +40,7 @@ const FASEN = [
   { min: 5, soort: 'afsluiten', kop: 'Klaar voor woensdag', stappen: [
     'Schrijf op: mijn partij, mijn niveau.',
     'Eén ding dat je thuis oefent met Musicbox.',
-    'Woensdag: improviseren op de bluestoonladder in A.'
+    'Woensdag: improviseren op de bluestoonladder in A en de generale. Maandag 23 november is P1.'
   ], docent: 'Partijen en niveaus overnemen voor het formulier P1.' }
 ];
 
