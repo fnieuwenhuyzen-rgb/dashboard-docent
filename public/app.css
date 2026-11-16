@@ -1104,10 +1104,10 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 
   /* sectie: nu doen, tijdlijn, en links en invoer */
   .s-raster{display:grid;grid-template-columns:minmax(20rem,24rem) minmax(0,1fr);grid-template-rows:auto auto 1fr;gap:1.2rem;align-items:start}
-  .s-doen{grid-column:1;grid-row:1}
-  .s-links{grid-column:1;grid-row:2}
-  .s-form{grid-column:1;grid-row:3}
-  .s-tijd{grid-column:2;grid-row:1/span 3}
+  .s-raster>.s-doen{grid-column:1;grid-row:1}
+  .s-raster>.s-links{grid-column:1;grid-row:2}
+  .s-raster>.s-form{grid-column:1;grid-row:3}
+  .s-raster>.s-tijd{grid-column:2;grid-row:1/span 3}
   .s-maand{font-family:var(--kop);font-size:1.15rem;margin:1.1rem 0 .3rem}
   .s-maand:first-child{margin-top:0}
   .s-tijd .vorige{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-width:85ch;cursor:pointer}
@@ -1141,10 +1141,10 @@ input[type=date]:focus-within,input[type=time]:focus-within{outline:2px solid va
 }
 @media (min-width:1700px){
   .s-raster{grid-template-columns:minmax(20rem,24rem) minmax(0,1fr) minmax(20rem,26rem);grid-template-rows:auto 1fr}
-  .s-doen{grid-column:1;grid-row:1/span 2;position:sticky;top:calc(4.2rem + var(--lk-h,0px));max-height:calc(100vh - 5.5rem - var(--lk-h,0px));overflow:auto}
-  .s-tijd{grid-column:2;grid-row:1/span 2}
-  .s-links{grid-column:3;grid-row:1}
-  .s-form{grid-column:3;grid-row:2}
+  .s-raster>.s-doen{grid-column:1;grid-row:1/span 2;position:sticky;top:calc(4.2rem + var(--lk-h,0px));max-height:calc(100vh - 5.5rem - var(--lk-h,0px));overflow:auto}
+  .s-raster>.s-tijd{grid-column:2;grid-row:1/span 2}
+  .s-raster>.s-links{grid-column:3;grid-row:1}
+  .s-raster>.s-form{grid-column:3;grid-row:2}
 }
 /* jaar: het klasblad opent naast de partituur, vanaf 1600 px is daar genoeg plek voor */
 .jr-naast{display:grid;grid-template-columns:minmax(58rem,1.25fr) minmax(0,1fr);gap:1.2rem;align-items:start}
