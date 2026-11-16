@@ -71,7 +71,8 @@ export function schoonStaat(x) {
     uid: x.uid, s: x.s, les: x.les, i: x.i, n: x.n, fb: x.fb || 0,
     klok: x.klok ? { tot: x.klok.tot, left: x.klok.left, eind: x.klok.eind || 0, loopt: x.klok.loopt === true } : null
   };
-  if (typeof uit.uid !== "string" || !/^[^\s<>"'&\\]{1,80}$/.test(uit.uid)) return null;
+  // een gewone spatie mag: een Zermelo-uur zonder vast rooster heet z-<start>-<groep>, en de groep kan "kmu h3" zijn
+  if (typeof uit.uid !== "string" || !/^[^\t\n\r\f\v<>"'&\\]{1,80}$/.test(uit.uid) || uit.uid.trim() !== uit.uid) return null;
   if (typeof uit.s !== "string" || !/^\d{4}-\d\d-\d\d$/.test(uit.s)) return null;
   if (typeof uit.les !== "string" || !/^[a-z0-9_-]{1,20}:[\w.-]{1,20}$/i.test(uit.les)) return null;
   if (!geheel(uit.i, 0, 500) || !geheel(uit.n, 1, 500) || uit.i >= uit.n || !geheel(uit.fb, 0, 9e15)) return null;

@@ -58,9 +58,13 @@ console.log('speling en klok: goed');
   assert.ok(!JSON.stringify(g).includes('Testleerling') && !JSON.stringify(g).includes('geheim'), 'geen leerlinggegevens of notities over de lijn');
   assert.strictEqual(g.staat.klok.eind, 1763280900000); assert.ok(Math.abs(g.nu - Date.now()) < 5000);
   // kapotte staat wordt geweigerd, de oude blijft
-  for (const fout of [{ ...staat, i: 9 }, { ...staat, les: '<script>' }, { ...staat, s: 'morgen' }, { ...staat, uid: 'a b' }, { ...staat, klok: { tot: 'tien' } }, 'tekst'])
+  for (const fout of [{ ...staat, i: 9 }, { ...staat, les: '<script>' }, { ...staat, s: 'morgen' }, { ...staat, uid: 'a\tb' }, { ...staat, uid: 'a<b' }, { ...staat, uid: ' a' }, { ...staat, klok: { tot: 'tien' } }, 'tekst'])
     assert.strictEqual((await vraag('PUT', { staat: fout })).status, 400, 'geweigerd: ' + JSON.stringify(fout).slice(0, 60));
   assert.strictEqual((await j(await vraag('GET'))).staat.i, 3);
+  // een Zermelo-uur zonder vast rooster: de groep in het id kan een spatie hebben (kmu h3)
+  assert.strictEqual((await vraag('PUT', { staat: { ...staat, uid: 'z-13:10-kmu h3' } })).status, 200, 'uid met spatie wordt geweigerd');
+  assert.strictEqual((await j(await vraag('GET'))).staat.uid, 'z-13:10-kmu h3');
+  assert.strictEqual((await vraag('PUT', { staat })).status, 200);
   assert.strictEqual((await vraag('PUT', {})).status, 400);
 
   // de tablet stuurt opdrachten; het bord haalt alleen wat nieuw is

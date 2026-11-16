@@ -59,7 +59,7 @@
     const s = staat !== undefined ? staat : wachtZet; wachtZet = undefined;
     const tekst = JSON.stringify(s);
     const r = await fetch(URL_API, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ staat: s }), credentials: 'same-origin' });
-    if (!r.ok) { wachtZet = s; throw new Error(r.status); }
+    if (!r.ok) { if (r.status !== 400) wachtZet = s; throw new Error(r.status); } // 400 weigert de server altijd: niet elke ronde opnieuw sturen, wel weer ophalen
     laatsteZet = s ? tekst : ''; laatsteZetMs = Date.now();
   }
   function start(nieuweRol, handlers) {
