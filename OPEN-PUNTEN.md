@@ -6,7 +6,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 - Wat tot 16-11 live ging, met details per onderdeel: `handboek/stand-tot-2026-11-16.md` (zoek). Daaruit nog open:
-  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord").
+  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken (bestand ontbreekt nog voor strookje bb1, reflectieformulier havo 3, werkblad notenbalk mavo 4); regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord").
   [Claude] lesfoto's koppelen en verkleinen, PowerPoint-link klein; God Rest Ye-leadsheet en videolinks in de box (leadsheet akkoord en YouTube-links van Frans: zie stand); na elke sectievergadering `zet-sectie-acties.js`.
 
 ## Audit 16-11 (live sinds 16-11, cache v82)
