@@ -1887,7 +1887,7 @@ function voorLesKaart(s, p, x, nu) {
     <h2>${esc(x.u.groep)} · ${esc(l.titel || '')}</h2>${vorigeRegel(x)}${l.doel ? `<p class="doel" style="margin-top:.3rem">${esc(l.doel)}</p>` : ''}${ookRegel(l)}
     <h3>Klaarzetten</h3><div class="mats">${ben.length ? ben.map(b => `<span class="chip">${esc(b)}</span>`).join('') : '<span class="leeg">niets bijzonders</span>'}</div>
     ${(l.materiaal || []).length ? `<h3>Materiaal</h3>${matLinks(l, true)}` : ''}
-    <!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok--><div class="knoppen" style="margin-top:.9rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button></div>
+    <!--dok-->${bordKnoppen(x, s)}<button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok--><div class="knoppen" style="margin-top:.9rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}<button class="btn" data-bewerk="${esc(x.item.id)}">bewerk les</button></div>
     ${rest.length ? `<h3>Nog afronden</h3>${rest.map(y => afrondRij(s, y)).join('')}` : ''}</div>`;
 }
 function lesKaart(s, x, nu) {
@@ -1895,7 +1895,7 @@ function lesKaart(s, x, nu) {
   const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
   const fasen = (l.fasen || []).map(LESMODUS.fase);
   return `<div class="kaart"><p class="eyebrow">Les loopt · ${esc(x.u.groep)} · nog ${rest} min · tot ${esc(x.u.eind)}</p><h2>${esc(l.titel || '')}</h2>${vorigeRegel(x)}${ookRegel(l)}
-    ${bordLoopt ? `<p class="lead">Het bord loopt in het andere venster.</p><!--dok--><a class="btn hoofd" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a><!--/dok-->` : `<!--dok--><button class="btn hoofd" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button><button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok-->`}
+    ${bordLoopt ? `<p class="lead">Het bord loopt.</p><!--dok--><a class="btn hoofd" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a><!--/dok-->` : `<!--dok-->${bordKnoppen(x, s)}<button class="btn" data-start="${esc(x.u.id)}|${s}">Les op dit scherm</button><!--/dok-->`}
     ${fasen.length ? `<h3>Verloop · alleen jij ziet dit</h3><ol class="fasen nu-fasen">${fasen.map(f => `<li><b>${f.min} min · ${esc(LESMODUS.SOORT[f.soort].naam.toLowerCase())}</b> ${esc(f.kop)}${f.docent ? `<div class="sub">${esc(f.docent)}</div>` : ''}</li>`).join('')}</ol>` : ''}
     ${bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}${magBlok(s, x)}</div>`;
 }
@@ -2161,7 +2161,7 @@ function presKaart(s, x, nu) { // de eerste 15 minuten van elke les staat de pre
   const k = magKey(s, x); const rest = Math.max(1, minuten(x.u.start) + 15 - nu); const bordLoopt = RG && RG.uid === x.u.id && Date.now() - RG.tijd < 5000;
   return `<div class="kaart"><p class="eyebrow mag">Eerst · Magister · binnen ${rest} ${rest === 1 ? 'minuut' : 'minuten'}</p><h2>Magister afronden · ${esc(x.u.groep)}</h2>${vorigeRegel(x)}
     <p class="lead">Zet de absenten in Magister zodra de klas aan het werk is en rond de les daar af. Tik daarna op Afgerond; Lesdag kijkt zelf niet in Magister.</p>
-    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `<button class="btn" data-bord="${esc(x.u.id)}|${s}">Op het bord, regie hier</button>`}<!--/dok-->
+    <!--dok-->${magOpenKnop(k)}<button class="btn${GEOPEND[k] ? ' hoofd' : ''}" data-mag="p|${esc(k)}">Afgerond</button>${bordLoopt ? `<a class="btn" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Naar de regie</a>` : `${bordKnoppen(x, s, true)}`}<!--/dok-->
     ${x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn hoofd" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div>`; // bevinding 58: op het toetsmoment één tik naar de scorekaart
 }
 function magBlok(s, x) { // Magister in het oog, tijdens en na de les: presentie, huiswerk bij de bel, logboek
@@ -2269,65 +2269,141 @@ function rondAf(s, x, keuze, n) {
   plekWeg(s, x.u.id); // afgerond: opnieuw openen begint weer vooraan
 }
 
-/* ---------- regie: het bord in een tweede venster, de regie op dit scherm ----------
-   "Op het bord, regie hier" opent de lesmodus in een eigen venster: sleep dat naar het digibord. Dat venster laat alleen zien wat
-   leerlingen mogen zien (geen jouw-kaart, geen notities, geen afronden). Dit venster wordt de regie: fase, klok, je notities,
-   volgende en vorige, afronden. De twee vensters praten via BroadcastChannel op hetzelfde apparaat; er gaat niets over het netwerk. */
+/* ---------- regie: het bord op de laptop, de regie op de tablet (ontwerp 16-11-2026, handboek/werkvoorraad.md) ----------
+   "Op het bord" zet de lesmodus schermvullend op de laptop. Die is gespiegeld op het digibord, dus het bord laat alleen zien wat
+   leerlingen mogen zien: geen jouw-kaart, geen notities, geen geplande minuten en geen uitloop. Een timer staat er alleen als jij hem
+   start (groepjes), met de duur die je dan kiest. De regie (#regie, op de tablet) toont fase, vorige/volgende, notities, de groepjestimer
+   en de speling. Bord en regie praten via /api/regie (public/regie.js) en, op hetzelfde apparaat, ook via BroadcastChannel.
+   Over het netwerk gaat alleen les-id, dia en klokstand; de tablet bouwt de dia's zelf. Zonder verbinding werkt het bord met de pijltjes. */
 const KAN = 'BroadcastChannel' in window ? new BroadcastChannel('lesdag-les') : null;
-let RG = null, rgWacht = null;
-const rgStuur = (t, x) => { if (KAN) KAN.postMessage(Object.assign({ t }, x || {})); };
-function bordOpen(uid, s) {
-  const w = window.open(location.pathname + '#bord/' + encodeURIComponent(uid) + '/' + s, 'lesdag-bord', 'popup=yes,width=1280,height=760');
-  if (!w) { toast('Je browser houdt het tweede venster tegen. Sta pop-ups toe voor Lesdag.'); return; }
-  RG = null; location.hash = 'regie/' + encodeURIComponent(uid) + '/' + s;
+window.addEventListener('pagehide', () => { if (LES && LES.bord) { REGIE.dicht(); if (KAN) KAN.postMessage({ t: 'dicht' }); } });
+let RG = null, rgTik = null, rgNet = 'uit', rgTrilKey = '', rgCache = null, rgDuur = null;
+const rgGezien = []; // opdrachten die het bord al uitvoerde: dezelfde kan via twee wegen binnenkomen
+const rgNieuw = id => { if (!id || rgGezien.includes(id)) return false; rgGezien.push(id); if (rgGezien.length > 200) rgGezien.shift(); return true; };
+function rgStuur(t, x) { // regie → bord
+  const o = Object.assign({ id: REGIE.nieuwId(), t }, x || {});
+  if (KAN) KAN.postMessage({ t: 'opdracht', o });
+  REGIE.stuur(o);
+}
+function bordOpen(uid, s) { // dit venster wordt het bord, schermvullend; de regie staat op de tablet
+  startLes(uid, s, true); if (!LES) return;
+  const el = $('#les'); if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {});
+}
+const opTablet = () => matchMedia('(pointer: coarse)').matches && !matchMedia('(pointer: fine)').matches;
+function bordKnoppen(x, s, klein) { // laptop: het bord schermvullend; tablet: de regie. Op een tablet staat Regie voorop.
+  const bord = `<button class="btn${!klein && !opTablet() ? ' hoofd' : ''}" data-bord="${esc(x.u.id)}|${s}">Op het bord</button>`, regie = `<a class="btn${!klein && opTablet() ? ' hoofd' : ''}" href="#regie/${encodeURIComponent(x.u.id)}/${s}">Regie</a>`;
+  return opTablet() ? regie + bord : bord + regie;
+}
+function bordStaat() { // alleen les-id, dia en klokstand; een lopende klok gaat als eindtijd, zodat er niet elke seconde iets verstuurd wordt
+  const P = LES;
+  return { uid: String(P.x.u.id), s: P.s, les: P.x.item.id, i: P.i, n: P.slides.length, fb: P.faseBegin || 0,
+    klok: P.tot > 0 ? { tot: P.tot, left: P.timer ? 0 : Math.max(0, P.left), eind: P.timer ? Math.round(P.eindMs) : 0, loopt: !!P.timer } : null };
 }
 function bordZeg() {
-  if (!LES || !LES.bord) return; const P = LES;
-  rgStuur('staat', { uid: P.x.u.id, s: P.s, i: P.i, left: P.left, tot: P.tot, loopt: !!P.timer, groep: P.x.u.groep, start: P.x.u.start, eind: P.x.u.eind, titel: P.l.titel || '',
-    krap: krapZin(P), slides: P.slides.map((x, j) => ({ k: x.k, soort: x.soort || '', kop: x.kop || '', min: x.k === 'fase' && x.min ? faseMin(P, j) : x.min || 0, was: x.min || 0, docent: typeof x.docent === 'string' ? x.docent : '' })) });
+  if (!LES || !LES.bord) return; const st = bordStaat();
+  if (KAN) KAN.postMessage({ t: 'staat', staat: st });
+  if (!LES.proef) REGIE.zet(st);
+}
+function bordVerbind(aan) {
+  if (aan) { REGIE.start('bord', { opdracht: rgOpdracht }); return; }
+  if (REGIE.rol() === 'bord') { REGIE.stop(); REGIE.dicht(); }
+  if (KAN) KAN.postMessage({ t: 'dicht' });
+}
+function rgOpdracht(o) { // op het bord: een opdracht van de regie
+  if (!LES || !LES.bord || !o || !rgNieuw(o.id)) return;
+  if (o.t === 'ga' && o.i >= 0 && o.i < LES.slides.length) { LES.i = o.i; toonSlide(); }
+  else if (o.t === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
+  else if (o.t === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
+  else if (o.t === 'timer' && o.sec > 0) timerStart(o.sec);
+  else if (o.t === 'pauze') { if (LES.tot > 0) timer(); }
+  else if (o.t === 'stop') timerWeg();
+  else if (o.t === 'sluit') sluitLes();
+}
+function rgOntvang(st, bron) { // op de regie: waar het bord is (null = dicht)
+  if (bron === 'net' && RG && RG.bron === 'hier' && Date.now() - RG.tijd < 5000) return; // hetzelfde apparaat is sneller en gaat voor
+  const oud = RG; RG = st ? Object.assign({}, st, { tijd: Date.now(), bron }) : null;
+  if (route.naam !== 'regie') return;
+  const anders = !oud !== !RG || (RG && (oud.uid !== RG.uid || oud.les !== RG.les || oud.i !== RG.i || JSON.stringify(oud.klok) !== JSON.stringify(RG.klok)));
+  if (anders) render(); else rgBij();
 }
 if (KAN) KAN.onmessage = e => {
   const m = e.data || {};
-  if (m.t === 'staat') { const nieuw = !RG || RG.i !== m.i || RG.loopt !== m.loopt || RG.uid !== m.uid || RG.tot !== m.tot || (RG.left > 0) !== (m.left > 0) || RG.krap !== m.krap; const om = RG && RG.uid === m.uid && RG.i === m.i && RG.left > 0 && m.left <= 0; RG = Object.assign(m, { tijd: Date.now() });
-    if (route.naam === 'regie') { if (nieuw) render(); else { const el = $('#rgTijd'); if (el) el.textContent = LESMODUS.timerTekst(m.left); const k = $('#rgKlok'); if (k) k.classList.toggle('bijna', m.left > 0 && m.left <= 120 && m.tot >= 300); } }
-    if (om && route.naam === 'regie') tril(); // de fase is om: één korte tril op de tablet
-    if (m.loopt && m.left === 120 && m.tot >= 300) tril(); return; }
-  if (m.t === 'dicht') { RG = null; if (route.naam === 'regie') render(); return; }
-  if (!LES || !LES.bord) return;
-  if (m.t === 'ga' && m.i >= 0 && m.i < LES.slides.length) { LES.i = m.i; toonSlide(); }
-  else if (m.t === 'volgende' && LES.i < LES.slides.length - 1) { LES.i++; toonSlide(); }
-  else if (m.t === 'vorige' && LES.i > 0) { LES.i--; toonSlide(); }
-  else if (m.t === 'timer') timer();
-  else if (m.t === 'plus') { LES.left += 60; LES.tot += 60; if (LES.eindMs) LES.eindMs += 60000; timerToon(LES.left); bordZeg(); plekBewaar(); }
+  if (m.t === 'staat') rgOntvang(m.staat, 'hier');
+  else if (m.t === 'dicht') rgOntvang(null, 'hier');
   else if (m.t === 'vraag') bordZeg();
-  else if (m.t === 'sluit') sluitLes();
+  else if (m.t === 'opdracht') rgOpdracht(m.o);
 };
+function rgStart() { // de regie luistert zolang #regie open is
+  if (REGIE.rol() !== 'regie' && !(LES && LES.bord)) REGIE.start('regie', { // is dit apparaat zelf het bord, dan blijft het bord zijn stand doorgeven
+    staat: st => { if (st === undefined) { rgNet = 'fout'; rgBij(); return; } rgOntvang(st, 'net'); },
+    status: s => { rgNet = s; rgBij(); } });
+  if (KAN && !RG) KAN.postMessage({ t: 'vraag' });
+  if (!rgTik) rgTik = setInterval(() => { if (route.naam !== 'regie') { clearInterval(rgTik); rgTik = null; if (REGIE.rol() === 'regie') REGIE.stop(); return; } rgBij(); }, 500);
+}
 const SLNAAM = { klaar: 'Jouw kaart', welkom: 'Welkom', doel: 'Lesdoel', check: 'Check', id: 'Rode draad', thuis: 'Thuis en materiaal', af: 'Einde' };
 const slideNaam = x => x.k === 'fase' ? ((LESMODUS.SOORT[x.soort] || {}).naam || 'Fase') + (x.kop ? ': ' + x.kop : '') : (SLNAAM[x.k] || x.k) + (x.k === 'check' && x.kop ? ': ' + x.kop : '');
-function viewRegie() {
-  const uid = decodeURIComponent(route.arg[0] || ''); const s = route.arg[1] || vandaag(); waak(true);
-  if (!RG || RG.uid !== uid || Date.now() - RG.tijd > 4000) {
-    rgStuur('vraag'); if (!rgWacht) rgWacht = setTimeout(() => { rgWacht = null; if (route.naam === 'regie' && (!RG || RG.uid !== uid)) render(); }, 2000);
-    return `<div class="kop"><div><p class="eyebrow">Regie</p><h1>Het bord is niet open</h1></div></div><div class="kaart"><p class="lead">Open het bord opnieuw en sleep het venster naar het digibord. Of geef de les op dit scherm.</p>
-      <div class="knoppen" style="margin-top:.6rem"><button class="btn hoofd" data-bord="${esc(uid)}|${s}">Bord openen</button><button class="btn" data-start="${esc(uid)}|${s}">Les op dit scherm</button><a class="btn" href="#nu">Naar Nu</a></div></div>`;
+function rgLes(st) { // de tablet bouwt de dia's van de les zelf, uit basis.json: over het netwerk komt alleen het les-id
+  const key = st.les + '|' + st.uid + '|' + st.s; if (rgCache && rgCache.key === key) return rgCache;
+  const lg = st.les.split(':')[0]; const item = (reeks(lg) || []).find(y => y.id === st.les) || null;
+  const p = planning(st.s, st.s)[st.s]; const x = ((p && p.uren) || []).find(y => String(y.u.id) === st.uid) || null;
+  const l = item ? les(item) : null;
+  const slides = l ? LESMODUS.bouwSlides(l, { groep: x ? x.u.groep : '', lgNaam: lgNaam(lg), thuis: (item.week || {}).thuis || {} }).filter(y => y.k !== 'klaar') : [];
+  rgCache = { key, item, l, x: x && x.item ? x : null, u: x ? x.u : null, slides }; return rgCache;
+}
+function rgSpeling() { // speling op dit moment, uit de lesklok (rooster, aansluitende uren tellen mee) en de fases die nog komen
+  if (!RG) return null; const R = rgLes(RG); if (!R.u || RG.s !== vandaag()) return null;
+  const d = new Date(); const nuSec = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+  const van = minuten(R.u.start), tot = minuten(R.u.eind);
+  const lr = LESKLOK.lesRest(nuSec, { groep: R.u.groep, van, tot }, LESKLOK.blokken(lesklokUren()));
+  const restSec = lr.wat === 'loopt' ? lr.rest : lr.wat === 'straks' ? (lr.blok.tot - lr.blok.van) * 60 : 0;
+  const sp = REGIE.speling({ slides: R.slides, i: RG.i, restSec, inFaseSec: RG.fb ? (Date.now() - RG.fb) / 1000 : 0 });
+  const b = lr.blok; return sp && Object.assign(sp, { lr, eind: Math.floor(b.tot / 60) + ":" + String(b.tot % 60).padStart(2, "0") });
+}
+function rgBij() { // de regie bijwerken zonder alles opnieuw te tekenen: klok, speling, verbinding, tril als de groepjestimer om is
+  if (route.naam !== 'regie') return;
+  const net = $('#rgNet'); if (net) { const t = RG && RG.bron === 'hier' ? 'bord op dit apparaat' : rgNet === 'aan' ? 'verbonden' : rgNet === 'fout' ? 'geen verbinding · gebruik de pijltjes op de laptop' : 'verbinden…'; if (net.textContent !== t) net.textContent = t; net.classList.toggle('fout', rgNet === 'fout' && !(RG && RG.bron === 'hier')); }
+  if (!RG) return;
+  const sp = rgSpeling(); const se = $('#rgSpeling');
+  if (se) { se.textContent = sp ? sp.tekst : 'geen lestijd'; se.classList.toggle('min', !!sp && sp.min < 0); }
+  const re = $('#rgRest'); if (re && sp) re.textContent = sp.lr.wat === 'loopt' ? `${sp.lr.tekst} les, tot ${sp.eind} · afsluiten houdt ${Math.round(sp.reserve / 60)} min` : sp.lr.tekst;
+  if (RG.klok) {
+    const left = REGIE.klokLeft(RG.klok, Date.now()); const el = $('#rgTijd'); if (el) el.textContent = LESMODUS.timerTekst(left);
+    const k = $('#rgKlok'); if (k) { k.classList.toggle('over', left <= 0); const st = $('#rgTstat'); if (st) st.textContent = left <= 0 ? 'Tijd om' : RG.klok.loopt ? 'loopt op het bord' : 'staat stil'; }
+    const key = RG.les + '|' + RG.i + '|' + RG.klok.eind; if (RG.klok.loopt && left <= 0 && key !== rgTrilKey) { rgTrilKey = key; tril(); } // groepjestimer om: één korte tril
   }
-  const sl = RG.slides[RG.i] || {};
-  const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
+}
+const rgDuurVan = sl => { const k = RG.les + '|' + RG.i; if (!rgDuur || rgDuur.k !== k) rgDuur = { k, min: Math.max(1, sl.min || 5) }; return rgDuur.min; }; // de geplande minuten zijn alleen de voorinstelling
+function viewRegie() {
+  const uid = decodeURIComponent(route.arg[0] || ''); const s = route.arg[1] || vandaag(); waak(true); rgStart();
+  const netRegel = `<span class="rg-net" id="rgNet">verbinden…</span>`;
+  if (!RG) {
+    setTimeout(rgBij, 0);
+    return `<div class="kop"><div><p class="eyebrow">Regie · alleen op de tablet</p><h1>Wacht op het bord</h1><div class="sub">${netRegel}</div></div></div><div class="kaart"><p class="lead">Zet op de laptop de les op het bord: Nu, Op het bord. Deze regie volgt dan vanzelf. Lukt het niet, dan werkt het bord ook met de pijltjes op de laptop.</p>
+      <div class="knoppen" style="margin-top:.6rem">${uid ? `<button class="btn" data-start="${esc(uid)}|${s}">Les op dit scherm</button>` : ''}<a class="btn" href="#nu">Naar Nu</a></div></div>`;
+  }
+  const R = rgLes(RG); const sl = R.slides[RG.i] || {}; const x = R.x; const titel = R.l ? R.l.titel || '' : RG.les;
   if (!NOT) notitiesLaad().then(j => { if (j && route.naam === 'regie') render(); });
-  const spreek = NOT && x && x.item ? notHtml(x.item, les(x.item), sl, RG.slides.slice(0, RG.i).filter(y => y.k === 'fase').length) : '';
-  return `<div class="kop"><div><p class="eyebrow">Regie · alleen op dit scherm</p><h1>${esc(RG.groep)} · ${esc(RG.titel)}</h1><div class="sub">${esc(RG.start)}–${esc(RG.eind)}</div></div><div class="knoppen"><button class="btn" data-rg="sluit">Bord sluiten</button></div></div>
+  const spreek = NOT && R.item ? notHtml(R.item, R.l, sl, R.slides.slice(0, RG.i).filter(y => y.k === 'fase').length) : '';
+  const fase = sl.k === 'fase'; const duur = fase ? rgDuurVan(sl) : 0;
+  const klok = RG.klok ? `<div class="rg-klok" id="rgKlok"><b id="rgTijd">${LESMODUS.timerTekst(REGIE.klokLeft(RG.klok, Date.now()))}</b><span id="rgTstat"></span></div>
+      <div class="rg-knoppen"><button class="btn" data-rg="pauze">${RG.klok.loopt ? 'Pauze' : 'Verder'}</button><button class="btn" data-rg="stop">Timer van het bord</button></div>`
+    : fase ? `<${sl.soort === 'doen' ? 'div' : 'details'} class="rg-timer">${sl.soort === 'doen' ? '<p class="eyebrow">Groepjestimer</p>' : '<summary>Timer op het bord</summary>'}<div class="rg-duur"><button class="btn" data-rgduur="-1" aria-label="Minuut minder">−</button><b id="rgDuur">${duur} min</b><button class="btn" data-rgduur="1" aria-label="Minuut meer">+</button><button class="btn hoofd" data-rg="timer">Start op het bord</button></div><p class="sub">Start als de groepjes beginnen. Gepland: ${sl.min || 0} min; dat ziet de klas niet.</p></${sl.soort === 'doen' ? 'div' : 'details'}>` : '';
+  setTimeout(rgBij, 0);
+  return `<div class="kop"><div><p class="eyebrow">Regie · alleen op de tablet</p><h1>${esc(R.u ? R.u.groep : '')}${R.u ? ' · ' : ''}${esc(titel)}</h1><div class="sub">${R.u ? esc(R.u.start) + '–' + esc(R.u.eind) + ' · ' : ''}${netRegel}</div></div><div class="knoppen"><button class="btn" data-rg="sluit">Bord sluiten</button></div></div>
+  ${!R.l ? `<div class="kaart"><p class="lead">Deze les (${esc(RG.les)}) staat niet in de leergangen op de tablet. Ververs de app op de tablet.</p></div>` : R.slides.length !== RG.n ? `<p class="rg-krap">De les op de tablet heeft ${R.slides.length} dia's, het bord ${RG.n}. Ververs de app op de tablet als de namen niet kloppen.</p>` : ''}
   <div class="rg"><div class="kaart"><p class="eyebrow">Op het bord</p><h2>${esc(slideNaam(sl))}</h2>
-    ${sl.min ? `<div class="rg-klok ${RG.left <= 0 ? 'over' : RG.left <= 120 && RG.tot >= 300 ? 'bijna' : ''}" id="rgKlok"><b id="rgTijd">${LESMODUS.timerTekst(RG.left)}</b><span>${RG.left <= 0 ? 'Tijd · volgende fase' : RG.loopt ? 'loopt' : 'staat stil'}</span></div>${RG.krap ? `<p class="rg-krap">${esc(RG.krap)}</p>` : ''}` : ''}
+    <div class="rg-speling-rij"><b class="rg-speling" id="rgSpeling"></b><span class="sub" id="rgRest"></span></div>
+    ${klok}
+    <div class="rg-knoppen"><button class="btn" data-rg="vorige">‹ Vorige</button><button class="btn hoofd" data-rg="volgende">Volgende ›</button></div>
     ${sl.docent ? `<div class="rg-notitie"><b>Alleen jij ziet dit</b>${esc(sl.docent)}</div>` : ''}
     ${spreek ? `<div class="rg-notitie rg-spreker"><b>Sprekersnotities · alleen jij ziet dit</b>${spreek}</div>` : ''}
-    <div class="rg-knoppen"><button class="btn" data-rg="vorige">‹ Vorige</button><button class="btn hoofd" data-rg="volgende">Volgende ›</button>${sl.min ? `<button class="btn" data-rg="timer">${RG.loopt ? 'Klok stil' : 'Klok aan'}</button><button class="btn" data-rg="plus">+1 min</button>` : ''}</div>
-    <p class="sub" style="margin-top:.6rem">Pijltjes en de presenter werken ook als dit venster voorop staat · t = klok</p></div>
-  <div class="rg-rechts">${x && magTelt(s, x) ? `<div class="kaart">${magBlok(s, x)}</div>` : ''}
-  <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${RG.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min${y.was && y.was !== y.min ? ` (was ${y.was})` : ''}</small>` : ''}</button></li>`).join('')}</ol></div></div>
-  <div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
+    <p class="sub" style="margin-top:.6rem">Speling: resterende lestijd min de geplande minuten van wat nog komt. Afsluiten houdt altijd minstens ${REGIE.ONDERGRENS_SEC / 60} min.</p></div>
+  <div class="rg-rechts">${x && magTelt(RG.s, x) ? `<div class="kaart">${magBlok(RG.s, x)}</div>` : ''}
+  <div class="kaart"><p class="eyebrow">De les</p>${x ? vorigeRegel(x) : ''}<ol class="rg-lijst">${R.slides.map((y, j) => y.k === 'af' ? '' : `<li><button class="rg-s ${j === RG.i ? 'nu' : j < RG.i ? 'af' : ''}" data-rg="ga" data-i="${j}">${esc(slideNaam(y))}${y.min ? ` <small>${y.min} min</small>` : ''}</button></li>`).join('')}</ol></div></div>
+  ${x ? `<div class="kaart"><p class="eyebrow">Afronden, als de les klaar is</p>
     <div class="nu-keuzes"><button class="btn hoofd" data-rgaf="gegeven">Gegeven</button><button class="btn" data-rgaf="half">Half af, volgende keer verder</button><button class="btn" data-rgaf="niet">Niet aan toegekomen</button></div>
-    <textarea id="rgNot" placeholder="Notitie voor de volgende les">${x && x.item ? esc(notitieVak(x, s)) : ''}</textarea>
-    ${x && x.item && bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div></div>`;
+    <textarea id="rgNot" placeholder="Notitie voor de volgende les">${esc(notitieVak(x, RG.s))}</textarea>
+    ${bmVoor(x.item).length ? `<div class="knoppen" style="margin-top:.6rem">${bmVoor(x.item).map(m => `<button class="btn" data-beoordeel="${esc(m.id)}|${esc(x.u.groep)}">Beoordelen ${esc(m.toets)}</button>`).join('')}</div>` : ''}</div>` : ''}</div>`;
 }
 /* tablet en laptop: scherm aan tijdens de les; kort trillen twee minuten voor het eind van een fase (alleen jij merkt het) */
 let WL = null;
@@ -2352,7 +2428,8 @@ function paletActies() {
   const voeg = (t, z, run, sub) => A.push({ t, sub, run, z: (t + ' ' + (z || '') + ' ' + (sub || '')).toLowerCase() });
   ROUTES.forEach(([k, n]) => voeg('Naar ' + n, k, () => { location.hash = k; }));
   lesUren(p).filter(x => !x.klaar).forEach(x => { const l = les(x.item); const sub = `${x.u.start} · ${l.titel || ''}`;
-    voeg(`Op het bord, regie hier: ${x.u.groep}`, 'les geven digibord lesmodus', () => bordOpen(x.u.id, s), sub);
+    voeg(`Op het bord: ${x.u.groep}`, 'les geven digibord lesmodus laptop', () => bordOpen(x.u.id, s), sub);
+    voeg(`Regie: ${x.u.groep}`, 'les geven tablet regie timer', () => { location.hash = 'regie/' + encodeURIComponent(x.u.id) + '/' + s; }, sub);
     voeg(`Les op dit scherm: ${x.u.groep}`, 'les geven lesmodus', () => startLes(x.u.id, s), sub);
     voeg(`Voorbereiden: ${x.u.groep}`, 'les bekijken klaarzetten', () => { nuKijk = 'les:' + x.u.id; location.hash = 'nu'; render(); }, sub);
     bmVoor(x.item).forEach(m => voeg(`Beoordelen ${m.toets}: ${x.u.groep}`, 'beoordeling cijfers rubric', () => { location.hash = 'beoordelen/' + encodeURIComponent(m.id) + '/' + encodeURIComponent(x.u.groep); })); });
@@ -3193,7 +3270,7 @@ function startProef(id) {
 }
 function proefUitHash() { const m = location.hash.match(/^#lesproef\/(.+)$/); if (m && !LES && B) startProef(decodeURIComponent(m[1])); }
 window.addEventListener('hashchange', proefUitHash);
-function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de regie zit in het andere venster
+function startLes(uurId, s, bord) { // bord: dit venster is het digibord (schermvullend op de laptop); de regie staat op de tablet
   const proef = uurId && typeof uurId === 'object' ? uurId : null; // proefles (#lesproef/...): geen rooster, niets wordt bewaard
   s = s || vandaag(); const p = proef ? { uren: [proef] } : planning(s, s)[s];
   if (!p || p.reden || !p.uren.length) { toast('Geen lessen op deze dag'); return; }
@@ -3217,8 +3294,9 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord, de reg
   let i = pl ? pl.i : 0; if (i === 0 && s === vandaag() && nuMin() >= minuten(x.u.start)) i = 1;
   LES.i = Math.max(0, Math.min(slides.length - 1, bord ? i - 1 : i));
   if (pl) { LES.krap = pl.krap || null;
-    if (pl.klok && pl.i === LES.i + (bord ? 1 : 0) && slides[LES.i].k === 'fase') LES.herstel = { left: pl.eind ? Math.round((pl.eind - Date.now()) / 1000) : pl.left, tot: pl.tot, loopt: !!pl.eind }; }
-  if (!bord && !proef) try { sessionStorage.setItem('lesdag-lesopen', x.u.id + '|' + s); } catch (e) {}
+    if (pl.klok && pl.i === LES.i + (bord ? 1 : 0) && slides[LES.i].k === 'fase') LES.herstel = { left: Math.max(0, pl.eind ? Math.round((pl.eind - Date.now()) / 1000) : pl.left), tot: pl.tot, loopt: !!pl.eind }; }
+  if (!proef) try { sessionStorage.setItem('lesdag-lesopen', x.u.id + '|' + s + (bord ? '|bord' : '')); } catch (e) {} // na herladen gaat de les weer open, ook als bord
+  if (bord) bordVerbind(true);
   $('#les').hidden = false; document.body.style.overflow = 'hidden'; waak(true); toonSlide();
   if (!bord && !NOT) notitiesLaad().then(() => notVul());
 }
@@ -3260,10 +3338,12 @@ function toonSlide() {
   const body = sl.k === 'af' ? (P.bord || P.proef ? `<p class="eyebrow">${esc(P.x.u.groep)}</p><h1>Tot de volgende les</h1>` : afrondenHtml()) : sl.h;
   const soort = sl.soort || sl.k; const kl = LESMODUS.SOORT[sl.soort];
   const fasen = P.slides.filter(x => x.k === 'fase'); const fi = fasen.indexOf(sl);
-  const herstel = P.herstel; delete P.herstel; const fklok = sl.k === 'fase' && !!sl.min;
-  if (fklok && herstel) { P.left = herstel.left; P.tot = herstel.tot; }
-  else if (fklok || sl.k === 'klaar') { P.krap = lesKrap(P); P.left = P.tot = fklok ? faseMin(P, P.i) * 60 : 0; } // elke fase rekent opnieuw met de eindtijd van de les
-  else { P.left = 0; P.tot = 0; }
+  // Ontwerp 16-11: geen klok vanzelf. Een timer staat er alleen als Frans hem start (groepjes), met de duur die hij dan kiest; na heropenen komt hij terug.
+  const herstel = P.herstel; delete P.herstel; const fase = sl.k === 'fase';
+  if (P.faseI !== P.i) { P.faseI = P.i; P.faseBegin = Date.now(); } // voor de speling op de regie: hoe lang staat deze dia er al
+  if (fase && herstel) { P.left = herstel.left; P.tot = herstel.tot; } else { P.left = 0; P.tot = 0; }
+  if ((fase && sl.min) || sl.k === 'klaar') P.krap = lesKrap(P); // elke fase rekent opnieuw met de eindtijd van de les (alleen voor jou)
+  const fklok = fase && !!sl.min;
   const metPg = !!lesPagina(P.l) && (sl.k === 'fase' || sl.k === 'check'); // een eigen meespeelpagina staat in de dia zelf
   const bodyPg = metPg ? sl.h.split('<div class="fase-body')[0] + '<div class="lespagina-plek" id="pgPlek"></div>' : body;
   const notInh = P.bord ? '' : vorHtml(P, sl, fi) + (typeof sl.docent === 'string' && sl.docent ? `<b>Docent</b> ${esc(sl.docent)}` : '') + notHtml(P.x.item, P.l, sl, fi);
@@ -3272,12 +3352,11 @@ function toonSlide() {
   { const st = LESMODUS.stijlVan(P.x.item.lg); if (st) { $('#les').dataset.niveau = st.niveau; $('#les').dataset.jaar = st.jaar; $('#les').style.setProperty('--jaar', st.kleur); } }
   lesVul(`<div class="lkop"><b>${esc(P.x.u.groep)}</b><span>${esc(P.x.u.start)}–${esc(P.x.u.eind)}${P.x.u.lokaal ? ' · ' + esc(P.x.u.lokaal) : ''}</span><span class="sp"></span><span class="stip">${P.slides.map((x, j) => `<i class="${j === P.i ? 'nu' : j < P.i ? 'af' : ''} ${x.k}" style="${x.soort && LESMODUS.SOORT[x.soort] ? '--s:' + LESMODUS.SOORT[x.soort].kleur : ''}"></i>`).join('')}</span><span class="lk-rest" id="lkRest"></span><span class="klok" id="klok">${klok()}</span></div>
   <div class="slide ${sl.docent === true ? 'docentkaart' : ''}">${bodyPg}${sl.k === 'klaar' && krap ? `<p class="lm-krap">${esc(krap)}</p>` : ''}</div>
-  ${fklok ? timerHtml() : ''}
-  ${fklok ? `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd · volgende fase</div>` : ''}
+  <div id="klokPlek" style="display:contents">${klokHtml()}</div>
   <div class="notities ${P.notities && notInh ? 'open' : ''}" id="notities">${notInh}</div>
-  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${sl.min ? `<button class="timer" data-l="timer" id="tbtn">${P.timer ? 'pauze' : 'start'} timer</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`);
+  <div class="lbalk"><button data-l="vorige" aria-label="Vorige">‹</button><button data-l="volgende" aria-label="Volgende">›</button><span class="waar">${sl.k === 'fase' ? `fase ${fi + 1} van ${fasen.length}${ingekort && !P.bord ? ` · ${faseMin(P, P.i)} min, was ${sl.min}` : ''}` : sl.k === 'klaar' ? 'jouw kaart' : sl.k === 'welkom' ? 'welkom' : sl.k === 'doel' ? 'lesdoel' : sl.k === 'check' ? 'check' : sl.k === 'id' ? 'rode draad' : sl.k === 'thuis' ? 'thuis' : 'afronden'}</span>${fase ? `<button class="timer" data-l="timer" id="tbtn">${tbtnTekst()}</button>` : ''}<span class="sp"></span>${!P.bord ? `<button data-l="notities" aria-pressed="${P.notities}"${notInh ? '' : ' hidden'}>notities</button>` : ''}<button data-l="scherm">volledig scherm</button>${sl.k !== 'af' && !P.bord && !P.proef ? '<button class="af" data-l="naaraf">les afronden</button>' : ''}<button data-l="sluit">sluiten</button></div>`);
   paginaToon(metPg, sl.k === 'fase' ? fi : -1);
-  if (fklok && (!herstel || herstel.loopt)) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
+  if (P.tot > 0 && P.left > 0 && herstel && herstel.loopt) timer(true); // een gepauzeerde timer blijft na heropenen gepauzeerd
   if (fk && fk.w === '#les' && !focusHerstel(fk)) $('#les').focus({ preventScroll: true });
   bordZeg(); plekBewaar();
   LESKLOK.tik(); // de band en de resttijd staan meteen goed op de nieuwe dia
@@ -3285,6 +3364,9 @@ function toonSlide() {
 }
 function klok() { const d = new Date(); return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes(); }
 function timerHtml() { return `<div class="timerhoek">${LESMODUS.timerRing(LES.left, LES.tot)}</div>`; }
+function klokHtml() { const P = LES; return P && P.tot > 0 ? timerHtml() + `<div class="fase-tijd" id="faseTijd" role="status"${P.left > 0 ? ' hidden' : ''}>Tijd</div>` : ''; }
+const tbtnTekst = () => LES.timer ? 'pauze timer' : LES.tot > 0 && LES.left > 0 ? 'timer verder' : LES.tot > 0 ? 'timer weg' : 'timer';
+function klokBij() { const P = LES; if (!P) return; const el = $('#klokPlek'); if (el) el.innerHTML = klokHtml(); const b = $('#tbtn'); if (b) b.textContent = tbtnTekst(); pasIn(); bordZeg(); plekBewaar(); }
 function afrondenHtml() {
   const P = LES;
   return `<div class="afronden"><p class="eyebrow">Les afronden · ${esc(P.x.u.groep)}</p><h2>${esc(P.l.titel || '')}</h2>
@@ -3294,31 +3376,40 @@ function afrondenHtml() {
 }
 function pad(sec) { const m = Math.floor(sec / 60), s = sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; }
 function stopTimer() { if (LES && LES.timer) { clearInterval(LES.timer); LES.timer = null; } }
-function timer(auto) {
+/* De groepjestimer (ontwerp 16-11): start alleen als Frans hem start, op de tablet (met een duur) of met t / de knop op de laptop
+   (dan met de geplande minuten). Op 0:00 loopt de ring vol in amber met de band "Tijd" en stopt de klok: geen uitloop met plus-tijd op het bord.
+   Rustig: geen rood, geen knipperen, geen geluid; op de tablet één korte tril. Rood blijft voor het opruimsignaal. */
+function timerStart(sec) {
+  const P = LES; if (!P || P.slides[P.i].k !== 'fase') return;
+  stopTimer(); P.tot = P.left = Math.max(10, Math.round(sec)); klokBij(); timer(true);
+}
+function timerWeg() { const P = LES; if (!P) return; stopTimer(); P.left = P.tot = 0; klokBij(); }
+function timer(auto) { // zonder auto: wisselen (starten, pauzeren, verder, en op 0:00 weghalen)
   const P = LES; if (!P) return;
-  if (P.timer && !auto) { stopTimer(); const b = $('#tbtn'); if (b) b.textContent = 'start timer'; bordZeg(); plekBewaar(); return; }
-  if (P.timer) return;
+  if (!auto) {
+    if (P.timer) { stopTimer(); klokBij(); return; }
+    if (!P.tot) { const sl = P.slides[P.i]; if (sl.k === 'fase') timerStart((sl.min || 5) * 60); return; }
+    if (P.left <= 0) { timerWeg(); return; }
+  }
+  if (P.timer || P.left <= 0) return;
   P.eindMs = Date.now() + P.left * 1000; // rekenen met de klok, niet met tikken: een venster op de achtergrond tikt trager
   P.timer = setInterval(() => {
-    const voor = P.left; P.left = Math.round((P.eindMs - Date.now()) / 1000); if (P.left === voor) return;
+    const voor = P.left; P.left = Math.max(0, Math.round((P.eindMs - Date.now()) / 1000)); if (P.left === voor) return;
     const k = $('#klok'); if (k) k.textContent = klok();
     timerToon(voor);
-    if (voor > 120 && P.left <= 120 && P.tot >= 300) tril(); // twee minuten voor het eind: alleen voelbaar op de tablet
-    bordZeg();
+    if (P.left <= 0) { stopTimer(); const b = $('#tbtn'); if (b) b.textContent = tbtnTekst(); bordZeg(); plekBewaar(); }
   }, 250);
-  const b = $('#tbtn'); if (b) b.textContent = 'pauze timer'; bordZeg(); plekBewaar();
+  const b = $('#tbtn'); if (b) b.textContent = tbtnTekst(); bordZeg(); plekBewaar();
 }
-/* De fasetimer op het scherm. Op 0:00 (bevinding 16): de ring loopt vol in amber, de band "Tijd · volgende fase" komt erbij
-   en de klok telt door als uitloop. Rustig: geen rood, geen knipperen, geen geluid; op de tablet één korte tril. Rood blijft voor het opruimsignaal. */
 function timerToon(voor) {
   const P = LES; if (!P) return; const c = 2 * Math.PI * 54;
-  const el = $('#tl'); if (el) el.textContent = LESMODUS.timerTekst(P.left);
+  const el = $('#tl'); if (el) el.textContent = LESMODUS.timerTekst(Math.max(0, P.left));
   const ring = $('#ring'); if (ring) { const v = ring.querySelector('.voort'); if (v) v.style.strokeDashoffset = c * (1 - LESMODUS.ringDeel(P.left, P.tot));
     ring.classList.toggle('over', P.left <= 0); ring.classList.toggle('bijna', P.left > 0 && P.left <= 60); }
   const ft = $('#faseTijd'); if (ft && ft.hidden !== P.left > 0) ft.hidden = P.left > 0;
   if (voor > 0 && P.left <= 0) tril();
 }
-function sluitLes() { paginaWeg(); const bord = LES && LES.bord; plekBewaar(); stopTimer(); LES = null; if (!bord) try { sessionStorage.removeItem('lesdag-lesopen'); } catch (e) {} waak(false); if (bord) { rgStuur('dicht'); window.close(); } $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
+function sluitLes() { paginaWeg(); const bord = LES && LES.bord; plekBewaar(); stopTimer(); LES = null; try { sessionStorage.removeItem('lesdag-lesopen'); } catch (e) {} waak(false); if (bord) { bordVerbind(false); if (route.naam === 'bord') window.close(); /* alleen een apart bordvenster */ } $('#les').hidden = true; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); render(); }
 function slaLesOp() {
   const P = LES; const g = P.x.u.groep; const n = ($('#lnot') || {}).value || '';
   S.voortgang[g] = S.voortgang[g] || {};
@@ -3404,7 +3495,8 @@ document.addEventListener('click', async e => {
   if (D.stap) { nuStap(+D.stap); return; }
   if (D.kijk != null) { nuKijk = D.kijk || null; if (route.naam !== 'nu') location.hash = 'nu'; else render(); return; }
   if (D.bord) { const [u, s] = D.bord.split('|'); bordOpen(u, s); return; }
-  if (D.rg) { if (D.rg === 'ga') rgStuur('ga', { i: +D.i }); else if (D.rg === 'sluit') { rgStuur('sluit'); RG = null; location.hash = 'nu'; } else rgStuur(D.rg); return; }
+  if (D.rg) { if (D.rg === 'ga') rgStuur('ga', { i: +D.i }); else if (D.rg === 'sluit') { rgStuur('sluit'); RG = null; location.hash = 'nu'; } else if (D.rg === 'timer') rgStuur('timer', { sec: (rgDuur ? rgDuur.min : 5) * 60 }); else rgStuur(D.rg); return; }
+  if (D.rgduur) { if (rgDuur) { rgDuur.min = Math.max(1, Math.min(90, rgDuur.min + +D.rgduur)); const b = $('#rgDuur'); if (b) b.textContent = rgDuur.min + ' min'; } return; }
   if (D.mag) { const i = D.mag.indexOf('|'); const w = D.mag.slice(0, i), k = D.mag.slice(i + 1); const terug = foto();
     if (w === 'p') { magZet(k, { p: Date.now() }); delete AP.weg[k]; apBewaar(); bewaar(); const j = k.indexOf('|'); const x = uurOp(k.slice(0, j), k.slice(j + 1));
       toast(x && magStatus(k.slice(0, j), x) === 'ingehaald' ? 'Ingehaald. Telt als gedaan.' : 'Afgerond, op tijd', terug); }
@@ -3427,7 +3519,7 @@ document.addEventListener('click', async e => {
     if (w === 'opslaan') { if (!bmLijstOk(bmParse($('#bmLijst').value))) return; const terug = foto(); const t = lijstOpslaan(g, $('#bmLijst').value); bewaar(); toast(t, terug); } else render(); return; }
   if (D.colopslaan != null) { const terug = foto(); const L = collegaParse(($('#colLijst') || {}).value || ''); colMis = L.mis; AP.collegas = L.slice(); apBewaar(); render();
     toast(`${AP.collegas.length} collega's opgeslagen op dit apparaat${colMis.length ? `. ${colMis.length === 1 ? 'Eén regel lukte' : colMis.length + ' regels lukten'} niet; die staan onder de lijst.` : ''}`, terug); return; }
-  if (D.rgaf) { const uid = decodeURIComponent(route.arg[0] || ''); const s = route.arg[1] || vandaag(); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
+  if (D.rgaf) { const uid = RG ? RG.uid : decodeURIComponent(route.arg[0] || ''); const s = RG ? RG.s : route.arg[1] || vandaag(); const x = (planning(s, s)[s].uren || []).find(y => String(y.u.id) === uid);
     if (!x || !x.item) { toast('Deze les staat niet meer op de planning'); return; }
     const terug = foto(); rondAf(s, x, D.rgaf, ($('#rgNot') || {}).value); bewaar(true); rgStuur('sluit'); RG = null; toast(x.u.groep + ' afgerond', terug); location.hash = 'nu'; return; }
   if (D.rondaf) { const [s, uid, keuze] = D.rondaf.split('|'); const x = (planning(s, s)[s].uren || []).find(y => y.u.id === uid);
@@ -3642,7 +3734,7 @@ document.addEventListener('keydown', e => {
   if (route.naam === 'regie' && !LES && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) { // de presenter stuurt pijltjes naar het venster dat voorop staat
     if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); rgStuur('volgende'); return; }
     if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); rgStuur('vorige'); return; }
-    if (e.key === 't') { rgStuur('timer'); return; } }
+    if (e.key === 't' && RG) { if (RG.klok) rgStuur('pauze'); else rgStuur('timer', { sec: (rgDuur ? rgDuur.min : 5) * 60 }); return; } }
   if (document.body.classList.contains('bm-concert') && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) { // laptop: 1 tot en met 4 voor het eerste open criterium, Enter voor verder
     if (['1', '2', '3', '4'].includes(e.key)) { e.preventDefault(); const x = bmCsMerk(); const k = x && x.querySelectorAll('.bm-knoppen button:not(.tussen)')[+e.key - 1]; if (k) k.click(); return; }
     if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') { const k = document.querySelector('.bm-cs [data-bm="volgende"],.bm-cs [data-bm="gverder"]'); if (k) { e.preventDefault(); k.click(); } return; } }
@@ -4273,13 +4365,13 @@ const laadJson = n => (window.VOORAF && window.VOORAF[n]) || fetch('data/' + n +
     lesTijd: () => LES && LES.s === vandaag() ? { groep: LES.x.u.groep, van: minuten(LES.x.u.start), tot: minuten(LES.x.u.eind) } : null });
   if (route.naam === 'bord') { // dit venster is het digibord
     document.body.classList.add('bordvenster'); startLes(decodeURIComponent(route.arg[0] || ''), route.arg[1] || vandaag(), true);
-    window.addEventListener('pagehide', () => rgStuur('dicht')); if (!LES) render(); return; }
+    if (!LES) render(); return; }
   jaarWisselLokaal();
   render();
   proefUitHash();
   try { // herladen midden in de les: de lesmodus gaat weer open, op de plek waar je was
-    const op = sessionStorage.getItem('lesdag-lesopen'); const [uid, s] = (op || '').split('|');
-    if (op && s === vandaag() && ((planning(s, s)[s] || {}).uren || []).some(y => y.u.id === uid && y.item)) startLes(uid, s); else if (op) sessionStorage.removeItem('lesdag-lesopen');
+    const op = sessionStorage.getItem('lesdag-lesopen'); const [uid, s, bordMerk] = (op || '').split('|');
+    if (op && s === vandaag() && ((planning(s, s)[s] || {}).uren || []).some(y => y.u.id === uid && y.item)) startLes(uid, s, bordMerk === 'bord'); else if (op) sessionStorage.removeItem('lesdag-lesopen');
   } catch (e) { console.warn(e); }
   try { const vk = JSON.parse(localStorage.getItem(VOOR_KOPIE) || 'null'); if (vk && Date.now() - vk.tijd > 2 * 864e5) localStorage.removeItem(VOOR_KOPIE); } catch (e) { localStorage.removeItem(VOOR_KOPIE); } // na twee dagen gewoon starten is de reserve niet meer nodig
   if (/diag/.test(location.search)) setTimeout(diag, 800);

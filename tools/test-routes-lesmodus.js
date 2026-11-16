@@ -3,10 +3,10 @@
 //  1. Les voor les: elke les van elke leergang in basis.json, alle dia's vooruit (1280x800) en terug (1920x1080): past het, staat er
 //     "undefined"/"NaN" in beeld, ontbrekende beelden en links, consolefouten, en op het bord (apart venster) geen sprekersnotities.
 //  2. Lege en kapotte lesvelden (verzonnen lessen met alles leeg, onbekend beeld, kapotte fasen, tekst met HTML).
-//  3. Timers: fase loopt af, ring over, "Tijd · volgende fase", pauze en +1 minuut.
+//  3. Timers (ontwerp 16-11): geen klok vanzelf, t start de groepjestimer, pauze, op 0:00 "Tijd" zonder plus-tijd, geen minuten op het welkomscherm.
 //  4. Lesklok en opruimsignaal op alle tijden van de dag, met en zonder open les, ook in de pauze, na de les en voor een les die later begint.
 //  5. Sluiten en heropenen, herladen, afronden als half af met notitie, de volgende les, de notitie bij de les erna.
-//  6. Regie: bord in twee vensters via BroadcastChannel.
+//  6. Regie (ontwerp 16-11): bord op de laptop, regie op de tablet, twee browsercontexten via /api/regie (serve-lokaal --api).
 //  7. Later begonnen: fasen inkorten.
 // Fouten in code laten de test falen (exitcode 1). Lesinhoud die niet op het scherm past of de lestijd overschrijdt is geen codefout: dat komt
 // in het rapport (--rapport, standaard tools/rapport-lesmodus.txt wordt NIET geschreven tenzij gevraagd) en niet in de exitcode.
@@ -67,7 +67,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
 
 (async () => {
   const poort = +arg('poort', 0) || await vrijePoort();
-  const server = cp.spawn(process.execPath, [path.join(__dirname, 'serve-lokaal.js'), PUBLIC, String(poort)], { stdio: 'ignore' });
+  const server = cp.spawn(process.execPath, [path.join(__dirname, 'serve-lokaal.js'), PUBLIC, String(poort), '--api'], { stdio: 'ignore' });
   const basis = 'http://localhost:' + poort + '/';
   let browser;
   try {
@@ -82,7 +82,7 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
     opt = opt || {};
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, timezoneId: 'Europe/Amsterdam', locale: 'nl-NL', serviceWorkers: 'block', permissions: [] });
     await ctx.route(u => !u.href.startsWith(basis), r => r.fulfill({ status: 200, contentType: r.request().resourceType() === 'stylesheet' ? 'text/css' : 'text/plain', body: '' }));
-    await ctx.route(u => u.pathname.startsWith('/api/'), r => r.fulfill({ status: 404, contentType: 'application/json', body: '{}' }));
+    await ctx.route(u => u.pathname.startsWith('/api/') && !(opt.api && u.pathname === '/api/regie'), r => r.fulfill({ status: 404, contentType: 'application/json', body: '{}' }));
     await ctx.addInitScript(([st]) => { try { if (st && !sessionStorage.getItem('lesdag-rt-init') && !localStorage.getItem('lesdag-staat')) { localStorage.setItem('lesdag-staat', JSON.stringify(st)); } sessionStorage.setItem('lesdag-rt-init', '1'); } catch (e) {} }, [staat || null]);
     return ctx;
   }
@@ -295,23 +295,25 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
     await laadApp(page); await page.evaluate(([u, d]) => { sessionStorage.setItem('lesdag-lesopen', u + '|' + d); }, ['u_' + lg, DAG]); await page.reload({ waitUntil: 'load' });
     await wacht(page, () => { const l = document.querySelector('#les'); return l && !l.hidden && l.querySelector('.slide'); }, null, 4000);
     await ctx.clock.runFor(1000);
-    // naar de eerste fase
-    for (let i = 0; i < 12 && !(await page.$('#les #ring')); i++) { await druk(page, 'ArrowRight'); }
-    const ringOp = await page.$('#les #ring'); ok(waar, 'timer', 'geen ring op een fase-dia', !!ringOp);
+    ok(waar, 'timer', 'geplande minuten op het welkomscherm', await page.evaluate(() => !!document.querySelector('#les .agenda') && !document.querySelector('#les .agenda .a-min, #les .agenda .tot') && !/\d+ min/.test(document.querySelector('#les .agenda').innerText)));
+    // naar de eerste fase (ontwerp 16-11: daar staat geen klok vanzelf)
+    for (let i = 0; i < 12 && !(await page.evaluate(() => /fase/.test((document.querySelector('#les .lbalk .waar') || {}).textContent || ''))); i++) { await druk(page, 'ArrowRight'); }
+    ok(waar, 'timer', 'een fase-dia zet zelf een klok op het bord', !(await page.$('#les #ring')));
+    await druk(page, 't'); // t: groepjestimer met de geplande minuten
+    const ringOp = await page.$('#les #ring'); ok(waar, 'timer', 't zet geen timer op het bord', !!ringOp);
     if (ringOp) {
-      const tl = () => page.evaluate(() => ({ t: (document.querySelector('#tl') || {}).textContent, over: document.querySelector('#ring').classList.contains('over'), bijna: document.querySelector('#ring').classList.contains('bijna'), band: !document.querySelector('#faseTijd').hidden, knop: (document.querySelector('#tbtn') || {}).textContent, bord: !!document.querySelector('#lsBord') }));
-      const a = await tl(); ok(waar, 'timer', `timer begint niet op de faseminuten (${a.t})`, /^\d+:00$/.test(a.t) || /^\d+:5\d$/.test(a.t)); ok(waar, 'timer', 'timer start niet vanzelf', /pauze/.test(a.knop || ''));
+      const tl = () => page.evaluate(() => ({ t: (document.querySelector('#tl') || {}).textContent, over: !!document.querySelector('#ring.over'), bijna: !!document.querySelector('#ring.bijna'), band: !!document.querySelector('#faseTijd') && !document.querySelector('#faseTijd').hidden, knop: (document.querySelector('#tbtn') || {}).textContent }));
+      const a = await tl(); ok(waar, 'timer', `timer begint niet op de faseminuten (${a.t})`, /^\d+:00$/.test(a.t) || /^\d+:5\d$/.test(a.t)); ok(waar, 'timer', 'timer loopt niet na t', /pauze/.test(a.knop || ''));
       const sec0 = (() => { const [m, s] = a.t.split(':').map(Number); return m * 60 + s; })();
       await ctx.clock.runFor(5000); const b = await tl(); const sec1 = (() => { const [m, s] = b.t.split(':').map(Number); return m * 60 + s; })(); ok(waar, 'timer', `timer loopt niet (${a.t} → ${b.t})`, sec1 <= sec0 - 4 && sec1 >= sec0 - 6);
-      await druk(page, 't'); await ctx.clock.runFor(10000); const c = await tl(); ok(waar, 'timer', 'pauze houdt de timer niet stil', c.t === b.t || c.t === ((x) => x)(b.t)); ok(waar, 'timer', 'knop zegt na pauze niet "start timer"', /start/.test(c.knop || ''));
+      await druk(page, 't'); await ctx.clock.runFor(10000); const c = await tl(); ok(waar, 'timer', 'pauze houdt de timer niet stil', c.t === b.t); ok(waar, 'timer', 'knop zegt na pauze niet "timer verder"', /verder/.test(c.knop || ''));
       await druk(page, 't'); await ctx.clock.runFor(1000);
       await ctx.clock.runFor(Math.max(0, sec1 - 50) * 1000); const d = await tl(); ok(waar, 'timer', 'ring wordt niet "bijna" binnen een minuut', d.bijna || sec1 < 62);
-      await ctx.clock.runFor(55 * 1000); const e = await tl(); ok(waar, 'timer', `ring niet "over" op 0:00 (${e.t})`, e.over); ok(waar, 'timer', 'band "Tijd · volgende fase" ontbreekt op 0:00', e.band); ok(waar, 'timer', `uitloop telt niet door (${e.t})`, /^\+/.test(e.t));
-      await ctx.clock.runFor(30000); const f = await tl(); ok(waar, 'timer', 'uitloop telt niet door', f.t !== e.t && /^\+/.test(f.t));
-      // volgende fase: timer begint opnieuw, band weg
-      await druk(page, 'ArrowRight'); const g = await tl().catch(() => null); if (g && g.t) ok(waar, 'timer', 'volgende fase begint niet opnieuw (' + g.t + ')', !g.over && !g.band);
-      // +1 minuut bestaat alleen in de regie; hier: terug en weer vooruit herstart de timer
-      await druk(page, 'ArrowLeft'); const h = await tl(); ok(waar, 'timer', 'terug naar de fase zet de timer niet opnieuw', !h.over);
+      await ctx.clock.runFor(55 * 1000); const e = await tl(); ok(waar, 'timer', `ring niet "over" op 0:00 (${e.t})`, e.over); ok(waar, 'timer', 'band "Tijd" ontbreekt op 0:00', e.band); ok(waar, 'timer', `klok staat niet stil op 0:00 (${e.t})`, e.t === '0:00');
+      await ctx.clock.runFor(30000); const f = await tl(); ok(waar, 'timer', `plus-tijd op het bord (${f.t})`, f.t === '0:00' && !/\+\d/.test(await page.evaluate(() => document.querySelector('#les').innerText)));
+      await druk(page, 't'); ok(waar, 'timer', 't op 0:00 haalt de timer niet weg', !(await page.$('#les #ring')));
+      // volgende fase: geen klok vanzelf
+      await druk(page, 'ArrowRight'); ok(waar, 'timer', 'volgende fase zet zelf een klok op het bord', !(await page.$('#les #ring')));
     }
     await ctx.close(); log('timers gedaan');
   }
@@ -419,83 +421,94 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
     await ctx.close(); log('sluiten/heropenen/afronden gedaan');
   }
 
-  // ---------- 6. regie met het bord in twee vensters ----------
+  // ---------- 6. regie: bord op de laptop, regie op de tablet (ontwerp 16-11), via /api/regie ----------
+  // Twee aparte browsercontexten: ze delen geen localStorage en geen BroadcastChannel, dus alles gaat via de server (serve-lokaal --api).
   if (wil(6)) {
     const lg = 'vwo4'; const alle = lessenVan(lg); const it = alle.find(x => (x.l.fasen || []).length >= 3 && NOTITIES[x.id]) || alle.find(x => (x.l.fasen || []).length >= 3); const k = alle.indexOf(it);
     const voortgang = {}; voortgang[lgGroep(lg)] = {}; alle.slice(0, k).forEach((x, j) => { voortgang[lgGroep(lg)][x.id] = { st: 'gegeven', d: '2026-09-01', uur: 'oud' + j }; });
-    const ctx = await nieuweContext(staatVoor([lg], { voortgang })); const A = await ctx.newPage(); let waar = 'regie'; volg(A, () => waar);
-    await ctx.clock.install({ time: new Date(tijdIso('08:20')) }); await ctx.clock.pauseAt(new Date(tijdIso('08:30:00')));
-    const uid = 'u_' + lg; const regieHash = '#regie/' + encodeURIComponent(uid) + '/' + DAG;
-    await laadApp(A, regieHash);
-    await A.waitForTimeout(300); await ctx.clock.runFor(2500);
-    ok(waar, 'regie: zonder bord', 'zegt niet dat het bord dicht is', /Het bord is niet open/.test(await A.evaluate(() => document.querySelector('#main').innerText)));
-    const [B] = await Promise.all([ctx.waitForEvent('page', { timeout: 6000 }).catch(() => null), A.evaluate(() => { const b = document.querySelector('[data-bord]'); if (b) b.click(); })]);
-    ok(waar, 'regie: bord openen', 'het bordvenster ging niet open (popup)', !!B);
-    if (B) {
-      let waarB = 'bord'; volg(B, () => waarB);
-      await wacht(B, () => { const l = document.querySelector('#les'); return l && !l.hidden && l.querySelector('.slide'); }, null, 5000);
-      const b0 = await meet(B); ok(waar, 'regie: bord', 'bord opent niet', b0.open);
-      ok(waar, 'regie: bord', 'bord begint op jouw kaart', b0.open && !b0.docentkaart);
-      ok(waar, 'regie: bord', 'bord heeft de klasse bordvenster niet', await B.evaluate(() => document.body.classList.contains('bordvenster')));
-      await ctx.clock.runFor(2500); await A.waitForTimeout(150);
-      const ra = await A.evaluate(() => document.querySelector('#main').innerText); if (process.env.DBG) console.log('REGIE:', ra.slice(0, 400).split('\n').join(' | '));
-      ok(waar, 'regie: regie-scherm', 'regie toont het bord niet (staat nog "niet open")', !/Het bord is niet open/.test(ra) && /op het bord/i.test(ra));
-      ok(waar, 'regie: regie-scherm', 'regie toont niet de naam van de dia', /welkom/i.test(ra));
-      // volgende op de regie → bord
-      const stipB = () => B.evaluate(() => [...document.querySelectorAll('#les .stip i')].findIndex(x => x.classList.contains('nu')));
-      const i0 = await stipB();
-      await A.evaluate(() => document.querySelector('[data-rg="volgende"]').click()); await A.waitForTimeout(150); const i1 = await stipB(); ok(waar, 'regie: volgende', `bord ging niet vooruit (${i0}→${i1})`, i1 === i0 + 1);
-      await A.evaluate(() => document.querySelector('[data-rg="vorige"]').click()); await A.waitForTimeout(150); ok(waar, 'regie: vorige', 'bord ging niet terug', (await stipB()) === i0);
-      // pijltjes op de regie
-      await A.bringToFront(); await druk(A, 'ArrowRight'); await A.waitForTimeout(150); ok(waar, 'regie: pijl rechts', 'bord volgde de pijl op de regie niet', (await stipB()) === i0 + 1);
-      // lijst: spring naar de eerste fase
-      const naarFase = await A.evaluate(() => { const rows = [...document.querySelectorAll('[data-rg="ga"]')]; const r = rows.find(x => /^(Opening|Luisteren|Uitleg|Aan de slag|Gesprek|Check|Afsluiting):/.test(x.innerText.trim())); if (r) { r.click(); return r.dataset.i; } return null; });
-      await A.waitForTimeout(200);
-      if (naarFase != null) { ok(waar, 'regie: ga naar fase', 'bord sprong niet mee', (await stipB()) === +naarFase);
-        const bm = await meet(B); const rb = await A.evaluate(() => document.querySelector('#main').innerText);
-        ok(waar, 'regie: klok', 'regie toont geen klok op een fase', /\d+:\d\d/.test(rb) && /loopt|staat stil|Tijd/.test(rb));
-        const t1 = await A.evaluate(() => (document.querySelector('#rgTijd') || {}).textContent); await ctx.clock.runFor(5000); await A.waitForTimeout(100);  await B.waitForTimeout(300);
-         await A.waitForTimeout(200);
-        // klok aan/uit en +1 minuut via de regie
-        await A.evaluate(() => { const b = document.querySelector('[data-rg="timer"]'); if (b) b.click(); }); await A.waitForTimeout(150);
-        const na = await A.evaluate(() => (document.querySelector('[data-rg="timer"]') || {}).textContent || ''); ok(waar, 'regie: klok aan/uit', 'knop wisselt niet (' + na + ')', /Klok (aan|stil)/.test(na));
-        const tp = await B.evaluate(() => (document.querySelector('#tl') || {}).textContent); await A.evaluate(() => document.querySelector('[data-rg="plus"]') && document.querySelector('[data-rg="plus"]').click()); await B.waitForTimeout(200);
-        const tq = await B.evaluate(() => (document.querySelector('#tl') || {}).textContent); const sec = x => { const [m, s] = String(x || '0:0').replace('+', '').split(':').map(Number); return m * 60 + s; };
-        ok(waar, 'regie: +1 min', `bord kreeg er geen minuut bij (${tp} → ${tq})`, sec(tq) - sec(tp) >= 55 && sec(tq) - sec(tp) <= 65);
-      }
-      // notities: alleen op de regie, nooit op het bord
-      const spreker = notitieStrings(it.id)[0];
-      for (let j = 0; j < 8; j++) { await A.evaluate(([j]) => { const rows = [...document.querySelectorAll('[data-rg="ga"]')]; if (rows[j]) rows[j].click(); }, [j]); await A.waitForTimeout(120);
-        const tb = (await meet(B)).tekst; ok(waar, 'regie: notities niet op het bord', `sprekersnotities op het bord (dia ${j + 1})`, !/sprekersnotities|alleen jij ziet/i.test(tb)); }
-      if (NOTITIES[it.id]) { let zag = false; for (let j = 0; j < 8; j++) { await A.evaluate(([j]) => { const rows = [...document.querySelectorAll('[data-rg="ga"]')]; if (rows[j]) rows[j].click(); }, [j]); await A.waitForTimeout(150);
-          if (/sprekersnotities/i.test(await A.evaluate(() => document.querySelector('#main').innerText))) { zag = true; break; } } ok(waar, 'regie: notities op de regie', 'de regie toont de sprekersnotities nooit', zag); }
-      // het bord herladen: plek blijft
-      await A.evaluate(() => document.querySelector('[data-rg="ga"][data-i="2"]') && document.querySelector('[data-rg="ga"][data-i="2"]').click()); await A.waitForTimeout(150);
-      const voor = await stipB(); await B.reload({ waitUntil: 'load' }); await wacht(B, () => { const l = document.querySelector('#les'); return l && !l.hidden && l.querySelector('.slide'); }, null, 4000); await B.waitForTimeout(200);
-      ok(waar, 'regie: bord herladen', `bord begint na herladen niet op dezelfde plek (${voor} → ${await stipB()})`, (await stipB()) === voor);
-      // afronden vanuit de regie: half met notitie
-      await A.fill('#rgNot', 'Regie-notitie voor de volgende keer').catch(() => {});
-      const gesloten = B.waitForEvent('close', { timeout: 5000 }).then(() => true).catch(() => false);
-      await A.evaluate(() => { const b = document.querySelector('[data-rgaf="half"]'); if (b) b.click(); }); await A.waitForTimeout(300);
-      ok(waar, 'regie: afronden sluit het bord', 'bordvenster bleef open na afronden', await gesloten);
-      const SA = await A.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat'))); const vg = ((SA.voortgang || {})[lgGroep(lg)] || {})[it.id];
-      ok(waar, 'regie: afronden', 'half-af met notitie niet bewaard', !!vg && vg.st === 'half' && /Regie-notitie/.test(vg.n || ''));
-      ok(waar, 'regie: afronden', 'regie gaat niet terug naar Nu', /#nu/.test(await A.evaluate(() => location.hash)));
-    }
-    // bord sluiten vanuit het bord zelf: de regie ziet het
-    const ctx2 = await nieuweContext(staatVoor([lg], { voortgang })); const A2 = await ctx2.newPage(); volg(A2, () => 'regie 2');
-    await ctx2.clock.install({ time: new Date(tijdIso('08:20')) }); await ctx2.clock.pauseAt(new Date(tijdIso('08:30:00')));
-    await laadApp(A2, regieHash); await ctx2.clock.runFor(2500);
-    const [B2] = await Promise.all([ctx2.waitForEvent('page', { timeout: 6000 }).catch(() => null), A2.evaluate(() => { const b = document.querySelector('[data-bord]'); if (b) b.click(); })]);
-    if (B2) { await wacht(B2, () => { const l = document.querySelector('#les'); return l && !l.hidden; }, null, 5000); await ctx2.clock.runFor(2500); await A2.waitForTimeout(100);
-      await B2.evaluate(() => document.querySelector('#les [data-l="sluit"]').click()).catch(() => {}); await A2.waitForTimeout(300); await ctx2.clock.runFor(1000);
-      ok('regie', 'regie: bord sluiten', 'regie merkt niet dat het bord dicht is', /Het bord is niet open/.test(await A2.evaluate(() => document.querySelector('#main').innerText))); }
-    // bord sluiten vanuit de regie
-    const [B3] = await Promise.all([ctx2.waitForEvent('page', { timeout: 6000 }).catch(() => null), A2.evaluate(() => { const b = document.querySelector('[data-bord]'); if (b) b.click(); })]);
-    if (B3) { await wacht(B3, () => { const l = document.querySelector('#les'); return l && !l.hidden; }, null, 5000); await ctx2.clock.runFor(2500); await A2.waitForTimeout(100);
-      const dicht = B3.waitForEvent('close', { timeout: 4000 }).then(() => true).catch(() => false); await A2.evaluate(() => { const b = document.querySelector('[data-rg="sluit"]'); if (b) b.click(); });
-      ok('regie', 'regie: bord sluiten', 'bordvenster sluit niet vanuit de regie', await dicht); }
-    await ctx.close(); await ctx2.close(); log('regie gedaan');
+    const ctxL = await nieuweContext(staatVoor([lg], { voortgang }), { api: true }), ctxT = await nieuweContext(staatVoor([lg], { voortgang }), { api: true });
+    await ctxL.clock.install({ time: new Date(tijdIso('08:31')) }); await ctxT.clock.install({ time: new Date(tijdIso('08:31')) }); // de tijd loopt gewoon door
+    const B = await ctxL.newPage(), A = await ctxT.newPage(); let waar = 'regie'; volg(A, () => waar + ' (tablet)'); volg(B, () => waar + ' (bord)');
+    const tot = (p, f, arg, t) => wacht(p, f, arg, t || 6000);
+    const tekstA = () => A.evaluate(() => document.querySelector('#main').innerText);
+    const stipB = () => B.evaluate(() => [...document.querySelectorAll('#les .stip i')].findIndex(x => x.classList.contains('nu')));
+    const bordOp = i => tot(B, i => [...document.querySelectorAll('#les .stip i')].findIndex(x => x.classList.contains('nu')) === i, i);
+    const regieOp = i => tot(A, i => !!document.querySelector('.rg-s.nu[data-i="' + i + '"]'), i);
+    await laadApp(A, '#regie');
+    ok(waar, 'regie: zonder bord', 'zegt niet dat het op het bord wacht', await tot(A, () => /Wacht op het bord/.test(document.querySelector('#main').innerText)));
+    await laadApp(B, '#nu');
+    let popup = false; ctxL.on('page', () => { popup = true; });
+    await B.evaluate(() => { const b = document.querySelector('[data-bord]'); if (b) b.click(); });
+    ok(waar, 'regie: bord', 'bord opent niet op de laptop', await tot(B, () => { const l = document.querySelector('#les'); return l && !l.hidden && !!l.querySelector('.slide'); }));
+    ok(waar, 'regie: bord', 'bord opent nog een tweede venster', !popup);
+    const b0 = await meet(B); ok(waar, 'regie: bord', 'bord begint op jouw kaart', b0.open && !b0.docentkaart);
+    ok(waar, 'regie: regie-scherm', 'tablet volgt het bord niet via de server', await tot(A, () => /Op het bord/i.test(document.querySelector('#main').innerText) && !!document.querySelector('.rg-s.nu'), null, 8000));
+    const ra = await tekstA(); if (process.env.DBG) console.log('REGIE:', ra.slice(0, 400).split('\n').join(' | '));
+    ok(waar, 'regie: regie-scherm', 'regie toont niet de naam van de dia', /welkom/i.test(ra));
+    ok(waar, 'regie: speling', 'regie toont geen speling', await tot(A, () => /speling|op schema|−\d+ min/.test((document.querySelector('#rgSpeling') || {}).textContent || '')));
+    ok(waar, 'regie: verbinding', 'regie zegt niet dat ze verbonden is', await tot(A, () => /verbonden/.test((document.querySelector('#rgNet') || {}).textContent || '')));
+    // volgende en vorige op de tablet → bord
+    const i0 = await stipB();
+    await A.evaluate(() => document.querySelector('[data-rg="volgende"]').click()); ok(waar, 'regie: volgende', 'bord ging niet vooruit', await bordOp(i0 + 1));
+    await regieOp(i0 + 1); await A.evaluate(() => document.querySelector('[data-rg="vorige"]').click()); ok(waar, 'regie: vorige', 'bord ging niet terug', await bordOp(i0));
+    await regieOp(i0); await A.bringToFront(); await druk(A, 'ArrowRight'); ok(waar, 'regie: pijl rechts', 'bord volgde de pijl op de tablet niet', await bordOp(i0 + 1));
+    // pijltje op de laptop → de tablet loopt mee
+    await druk(B, 'ArrowRight'); ok(waar, 'regie: laptop', 'tablet volgde het pijltje op de laptop niet', await regieOp(i0 + 2));
+    // naar een fase: geen klok op het bord tot de tablet hem start, met de gekozen duur
+    const naarFase = await A.evaluate(() => { const r = [...document.querySelectorAll('[data-rg="ga"]')].find(x => /^Aan de slag:/.test(x.innerText.trim())) || [...document.querySelectorAll('[data-rg="ga"]')].find(x => /^(Opening|Luisteren|Uitleg|Gesprek|Check|Afsluiting):/.test(x.innerText.trim())); if (r) { r.click(); return +r.dataset.i; } return null; });
+    if (naarFase != null) {
+      ok(waar, 'regie: ga naar fase', 'bord sprong niet mee', await bordOp(naarFase)); await regieOp(naarFase);
+      ok(waar, 'regie: klok', 'bord zet zelf een klok op een fase', !(await B.$('#les #ring')));
+      await A.evaluate(() => { const d = document.querySelector('details.rg-timer'); if (d) d.open = true; });
+      const plan = await A.evaluate(() => parseInt((document.querySelector('#rgDuur') || {}).textContent, 10));
+      await A.evaluate(() => document.querySelector('[data-rgduur="1"]').click());
+      ok(waar, 'regie: duur', 'plus verandert de duur niet', await A.evaluate(p => parseInt(document.querySelector('#rgDuur').textContent, 10) === p + 1, plan));
+      await A.evaluate(() => document.querySelector('[data-rg="timer"]').click());
+      ok(waar, 'regie: timer', 'timer verschijnt niet op het bord', await tot(B, () => !!document.querySelector('#les #ring')));
+      const tb = await B.evaluate(() => document.querySelector('#tl').textContent); const sec = x => { const [m, s] = String(x || '0:0').split(':').map(Number); return m * 60 + s; };
+      ok(waar, 'regie: timer', `bord kreeg niet de gekozen duur (${plan + 1} min, bord ${tb})`, Math.abs(sec(tb) - (plan + 1) * 60) <= 3);
+      ok(waar, 'regie: timer', 'tablet toont de klok niet', await tot(A, () => /\d+:\d\d/.test((document.querySelector('#rgTijd') || {}).textContent || '') && /loopt/.test((document.querySelector('#rgTstat') || {}).textContent || '')));
+      await A.evaluate(() => document.querySelector('[data-rg="pauze"]').click());
+      ok(waar, 'regie: pauze', 'pauze komt niet aan op het bord', await tot(B, () => /verder/.test((document.querySelector('#tbtn') || {}).textContent || '')));
+      await tot(A, () => /Verder/.test((document.querySelector('[data-rg="pauze"]') || {}).textContent || ''));
+      await A.evaluate(() => document.querySelector('[data-rg="stop"]').click());
+      ok(waar, 'regie: timer weg', 'timer gaat niet van het bord', await tot(B, () => !document.querySelector('#les #ring')));
+    } else fout('regie: ga naar fase', 'les zonder fase', it.id);
+    // notities: alleen op de tablet, nooit op het bord
+    for (let j = 0; j < 6; j++) { await A.evaluate(j => { const r = document.querySelector('[data-rg="ga"][data-i="' + j + '"]'); if (r) r.click(); }, j); await bordOp(j);
+      const tb = (await meet(B)).tekst; ok(waar, 'regie: notities niet op het bord', `notities op het bord (dia ${j + 1})`, !/sprekersnotities|alleen jij ziet|speling/i.test(tb)); }
+    if (NOTITIES[it.id]) { let zag = false; for (let j = 0; j < 8 && !zag; j++) { await A.evaluate(j => { const r = document.querySelector('[data-rg="ga"][data-i="' + j + '"]'); if (r) r.click(); }, j); await regieOp(j); zag = /sprekersnotities/i.test(await tekstA()); }
+      ok(waar, 'regie: notities op de regie', 'de regie toont de sprekersnotities nooit', zag); }
+    // het bord herladen: het bord komt terug op dezelfde plek en de tablet volgt weer
+    await A.evaluate(() => { const r = document.querySelector('[data-rg="ga"][data-i="2"]'); if (r) r.click(); }); await bordOp(2);
+    await B.reload({ waitUntil: 'load' });
+    ok(waar, 'regie: bord herladen', 'bord gaat na herladen niet terug op dezelfde plek', await tot(B, () => { const l = document.querySelector('#les'); return l && !l.hidden && [...l.querySelectorAll('.stip i')].findIndex(x => x.classList.contains('nu')) === 2; }));
+    ok(waar, 'regie: bord herladen', 'tablet volgt het bord na herladen niet', await regieOp(2));
+    // verbinding weg op de tablet: de regie zegt het, het bord werkt met de pijltjes
+    const weg = u => u.pathname === '/api/regie'; await ctxT.route(weg, r => r.abort());
+    ok(waar, 'regie: verbinding weg', 'regie zegt niet dat de verbinding weg is', await tot(A, () => /geen verbinding/.test((document.querySelector('#rgNet') || {}).textContent || ''), null, 12000));
+    await druk(B, 'ArrowRight'); ok(waar, 'regie: verbinding weg', 'bord werkt niet met de pijltjes', await bordOp(3));
+    await ctxT.unroute(weg);
+    ok(waar, 'regie: verbinding terug', 'regie herstelt niet', await tot(A, () => /verbonden/.test((document.querySelector('#rgNet') || {}).textContent || '') && !!document.querySelector('.rg-s.nu[data-i="3"]'), null, 12000));
+    // afronden vanuit de regie: half met notitie; het bord gaat dicht
+    await A.fill('#rgNot', 'Regie-notitie voor de volgende keer').catch(() => {});
+    await A.evaluate(() => { const b = document.querySelector('[data-rgaf="half"]'); if (b) b.click(); });
+    ok(waar, 'regie: afronden sluit het bord', 'bord bleef open na afronden', await tot(B, () => document.querySelector('#les').hidden));
+    const SA = await A.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat'))); const vg = ((SA.voortgang || {})[lgGroep(lg)] || {})[it.id];
+    ok(waar, 'regie: afronden', 'half-af met notitie niet bewaard', !!vg && vg.st === 'half' && /Regie-notitie/.test(vg.n || ''));
+    ok(waar, 'regie: afronden', 'regie gaat niet terug naar Nu', /#nu/.test(await A.evaluate(() => location.hash)));
+    // bord sluiten op de laptop: de tablet ziet het
+    await laadApp(A, '#regie'); await laadApp(B, '#nu');
+    await B.evaluate(() => { const b = document.querySelector('[data-bord]'); if (b) b.click(); });
+    if (await tot(A, () => !!document.querySelector('.rg-s.nu'), null, 8000)) {
+      await B.evaluate(() => document.querySelector('#les [data-l="sluit"]').click());
+      ok(waar, 'regie: bord sluiten', 'tablet merkt niet dat het bord dicht is', await tot(A, () => /Wacht op het bord/.test(document.querySelector('#main').innerText)));
+      // bord sluiten vanaf de tablet
+      await B.evaluate(() => { const b = document.querySelector('[data-bord]'); if (b) b.click(); }); await tot(A, () => !!document.querySelector('.rg-s.nu'), null, 8000);
+      await A.evaluate(() => document.querySelector('[data-rg="sluit"]').click());
+      ok(waar, 'regie: bord sluiten', 'bord sluit niet vanaf de tablet', await tot(B, () => document.querySelector('#les').hidden));
+    } else fout('regie: bord sluiten', 'tablet zag het tweede bord niet', it.id);
+    await ctxL.close(); await ctxT.close(); log('regie gedaan');
   }
 
   // ---------- 7. later begonnen: fasen inkorten ----------
@@ -510,9 +523,11 @@ const FILTER = t => /Failed to load resource/.test(t) || /net::ERR_/.test(t);
       let m = await meet(page); const n = m.n; const rest = hm('9:15') * 60 - (hm(late) * 60 + 1); let som = 0; let hel = true;
       const fasen = (it.l.fasen || []).map(f => typeof f === 'object' ? f : { min: +((String(f).match(/^(\d+)/) || [])[1] || 0), soort: /afsluit|check/i.test(f) ? 'afsluiten' : 'doen' });
       for (let i = 0; i < n; i++) { if (i) { await druk(page, 'ArrowRight'); m = await meet(page); }
-        if (m.fase === 'fase') { const tl = await page.evaluate(() => (document.querySelector('#tl') || {}).textContent || ''); const [mm, ss] = tl.split(':').map(Number); const getoond = mm + (ss > 0 ? 1 : 0);
+        if (m.fase === 'fase') { // ontwerp 16-11: geen klok vanzelf; de ingekorte minuten staan alleen voor Frans in de onderbalk ("12 min, was 15")
+          ok(waar, 'later begonnen: klok vanzelf', 'een fase zet zelf een klok op het scherm', !(await page.$('#les #ring')));
+          const wt = await page.evaluate(() => (document.querySelector('#les .lbalk .waar') || {}).textContent || ''); const mk = wt.match(/· (\d+) min, was (\d+)/);
           const idx = (await page.evaluate(() => [...document.querySelectorAll('#les .stip i')].filter(x => x.classList.contains('fase')).findIndex(x => x.classList.contains('nu'))));
-          const f = fasen[idx]; if (f) { ok(waar, 'later begonnen: fase langer dan gepland', `fase ${idx + 1} toont ${getoond} min, gepland ${f.min}`, getoond <= f.min + 0); if (f.soort === 'afsluiten' || f.soort === 'check') ok(waar, 'later begonnen: check/afsluiting ingekort', `fase ${idx + 1} (${f.soort}) is ingekort van ${f.min} naar ${getoond}`, getoond === f.min); } } }
+          const f = fasen[idx]; const getoond = mk ? +mk[1] : f ? f.min : 0; if (f) { ok(waar, 'later begonnen: fase langer dan gepland', `fase ${idx + 1} toont ${getoond} min, gepland ${f.min}`, getoond <= f.min + 0); if (f.soort === 'afsluiten' || f.soort === 'check') ok(waar, 'later begonnen: check/afsluiting ingekort', `fase ${idx + 1} (${f.soort}) is ingekort van ${f.min} naar ${getoond}`, getoond === f.min); } } }
       await ctx.close();
     }
     log('later begonnen gedaan');

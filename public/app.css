@@ -579,6 +579,16 @@ body.bordvenster .top{display:none}
 .rg-s.nu{border-color:var(--paars);background:var(--paars-zacht);color:var(--paars);font-weight:700}
 .rg-s.af{color:var(--muted)}
 .rg-s small{color:var(--muted);font-weight:400}
+.rg-speling-rij{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:.4rem 0 .2rem}
+.rg-speling{font-family:var(--lees);font-weight:700;font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.1;color:var(--paars)}
+.rg-speling.min{color:#8a5a00}
+.rg-net{font-family:var(--lees);font-size:var(--t-klein);color:var(--muted)}
+.rg-net.fout{color:#8a5a00;font-weight:700}
+.rg-timer{margin:.7rem 0 .2rem;padding:.6rem .8rem;border:1px solid var(--line);border-radius:8px}
+.rg-timer summary{cursor:pointer;font-family:var(--lees);font-weight:700;color:var(--paars);min-height:32px}
+.rg-duur{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.3rem 0}
+.rg-duur .btn{font-size:1.15rem;min-height:48px;min-width:48px}
+.rg-duur b{font-family:var(--lees);font-size:1.5rem;min-width:4.5em;text-align:center;font-variant-numeric:tabular-nums}
 
 /* tablet: vingers in plaats van een muis */
 @media (pointer:coarse){.btn{min-height:44px;padding:.5rem .9rem}.btn.klein{min-height:44px;padding:.3rem .7rem}.nl-r{padding-block:.7rem}}
