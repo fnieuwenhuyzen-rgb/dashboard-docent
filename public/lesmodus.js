@@ -164,7 +164,7 @@
       const breed = f.beeld && (f.beeld.soort === 'vorm' || f.beeld.soort === 'opbouw');
       const rechts = f.beeld && !breed ? beeldHtml(f.beeld) : f.beeld ? '' : fotoHtml(foto);
       // werkfase: lang zelf aan de slag, zonder beeld ernaast. Grote klok, opdrachten groot.
-      const werk = f.soort === 'doen' && f.min >= 10 && !f.beeld && !foto;
+      const werk = f.soort === 'doen' && f.min >= 10 && !f.beeld && !foto && (f.stappen || []).length > 0; // zonder stappen: gewone dia, anders staat de kop onleesbaar in de zijkolom
       S.push({ k: 'fase', soort: f.soort, min: f.min, docent: f.docent, kop: f.kop, werk, h: `<div class="fase-kop"><div class="fasekop" style="--c:${s.kleur};--z:${s.zacht}"><i>${ico(f.soort)}</i><span>${esc(s.naam)} · fase ${i + 1} van ${fasen.length}</span></div><h2>${esc(f.kop)}</h2></div><div class="fase-body${rechts ? ' twee' : ''}"><div class="fase-links">${f.stappen && f.stappen.length ? `<ol class="stappen">${f.stappen.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : i === 0 && l.detail && !f.beeld ? `<p class="detail">${esc(l.detail)}</p>` : ''}${breed ? beeldHtml(f.beeld) : ''}${f.klaar ? `<div class="klaarkaart"><b>Klaar?</b> ${esc(f.klaar)}</div>` : ''}</div>${rechts}</div>` });
     });
     if (!fasen.length && l.detail) S.push({ k: 'fase', soort: 'doen', h: `<div class="fasekop" style="--c:#15803d;--z:#bbf7d0"><i>${ico('doen')}</i><span>Les</span></div><h2>${esc(l.detail)}</h2>` });
