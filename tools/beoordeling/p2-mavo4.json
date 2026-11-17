@@ -27,6 +27,14 @@
     },
     {
       "lg": "mavo4",
+      "w": 14,
+      "slot": "l2",
+      "wat": [
+        "leerling"
+      ]
+    },
+    {
+      "lg": "mavo4",
       "w": 17,
       "slot": "l2",
       "wat": [
@@ -241,5 +249,31 @@
     "klasgenoten": 15
   },
   "zelfSoort": "cijfer",
-  "klasgenotenMin": 3
+  "klasgenotenMin": 3,
+  "strookje": {
+    "titel": "Examenconcert: zo ging het",
+    "stellingen": [
+      "Ik speel of zing mijn partij zeker",
+      "Ik blijf in de maat en zet op tijd in",
+      "Je hoort hard en zacht, kort en lang",
+      "Ik luister naar de anderen",
+      "Ik houd me aan de afspraken",
+      "Ik sta rustig en speel door na een fout",
+      "Ik doe mijn taak in de organisatie op tijd"
+    ],
+    "vragen": [
+      "Eén voorbeeld uit het concert of de repetitie:",
+      "Mijn cijfer voor mezelf (4 tot 10):"
+    ],
+    "score": "Het cijfer dat de leerling zichzelf geeft (10%). Vraag naar het voorbeeld: eerlijk en concreet, niet hoog.",
+    "crit": [
+      "techniek",
+      "timing",
+      "dynamiek",
+      "samenspel",
+      "samenwerking",
+      "presentatie",
+      "organisatie"
+    ]
+  }
 }

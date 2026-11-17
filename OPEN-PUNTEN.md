@@ -30,7 +30,7 @@ Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7y
 
 ## Op datum
 - Na toets 23-11: PT1-namen in formulieren en decks vwo 4 naar P1 (links mee). [Frans]
-- Voor 7-12 (mavo 4 les 14.2): strookje voor model p2-mavo4 maken (skill lesdag-beoordeling); de lessen 14.2, 17.2, 21.2, 22.2 noemen het al. [Claude]
+- [Frans] Strookje p2-mavo4 staat sinds 17-11 in de sectiemap (P2 Format zelfbeoordeling leerling: twee per A4, 7 zinnen, voorbeeld en eigen cijfer). Printen en kijken of het past, vóór 7-12 (les 14.2). Let op: koppel-beoordeling.js zet bij vwo 4 dubbele P1-links tot de PT1-namen weg zijn.
 - Voor 7-12: fasen voorstellen voor vwo 4 15.1 (14-12), daarna 21.1, 30.1, 32.2; Frans keurt. [Claude + Frans]
 - Voor 15-3 (vwo 5 lesweek 26): wat komt er in vwo5:26.3 in plaats van "iedereen presenteert één stijl"? Voor 7-6: havo 4 blok B4 "optreden in de klas" (les 36). [Frans]
 - Voor de kerst: PTA en leergangen 2027-2028 aanpassen (praktijktoetsen vwo 4 en 5 niet vlak na de zomer). [Frans]

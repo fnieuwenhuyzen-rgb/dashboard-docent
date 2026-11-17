@@ -90,7 +90,10 @@ table.vink td { padding: 5pt 6pt; vertical-align: middle; }
 td.schrijf { border: none; border-bottom: 0.75pt solid #1d1d1b; height: 24pt; padding: 0; }
 .voet { font-size: 8.5pt; color: #5d5850; margin-top: 9pt; }
 .knip { border-bottom: 0.75pt dashed #9a948b; margin: 24pt 0 24pt 0; font-size: 2pt; }
-</style>`);
+${M.strookje.stellingen.length > 4 ? `/* veel zinnen (p2-mavo4: zeven): krapper, zodat er twee op een A4 passen */
+h1 { font-size: 16pt; margin: 0 0 4pt 0; } .naam { margin-bottom: 5pt; } table.vink td { padding: 2.5pt 6pt; } .stelling { font-size: 11pt; }
+.vraag { margin: 6pt 0 0 0; } td.schrijf { height: 18pt; } .voet { margin-top: 5pt; } .knip { margin: 12pt 0 12pt 0; }
+` : ''}</style>`);
   l += strookjeHtml(M.strookje) + '<p class="knip">&nbsp;</p>' + strookjeHtml(M.strookje) + '<p>&nbsp;</p>'; // naar-word.ps1 verkleint de laatste alinea
 } else {
   l = kop(`${M.toets} format zelfbeoordeling`);

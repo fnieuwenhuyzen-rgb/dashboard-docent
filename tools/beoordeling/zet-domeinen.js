@@ -20,7 +20,7 @@ const DOMEIN = {
   'Improvisatie': E, 'Groove en tempo': R, 'Luisteren en balans': S, 'Toon, ritme en tempo': T, 'Frasering en stijl': T, 'Barokke bouw': E, 'Uitleg van keuzes': E,
 };
 // strookje.crit: per zin op het strookje het criterium (id) waar die bij hoort. Twee zinnen vragen eigenlijk twee dingen ("luister en speel door", "patroon vast en speel door"): die gaan naar één criterium.
-const STROOKJE = { 'p1a-mavo3-zang': ['tekst', 'ritme', 'samenspel'], 'p1b-mavo3-akkoord': ['presentatie', 'wisselen', 'patroon'], 'p1c-mavo3-slagwerk': ['presentatie', 'timing', 'fill'] };
+const STROOKJE = { 'p1a-mavo3-zang': ['tekst', 'ritme', 'samenspel'], 'p1b-mavo3-akkoord': ['presentatie', 'wisselen', 'patroon'], 'p1c-mavo3-slagwerk': ['presentatie', 'timing', 'fill'], 'p2-mavo4': ['techniek', 'timing', 'dynamiek', 'samenspel', 'samenwerking', 'presentatie', 'organisatie'] };
 const dir = __dirname; const mist = new Set(); let n = 0;
 for (const f of fs.readdirSync(dir).filter(x => x.endsWith('.json'))) {
   const t = fs.readFileSync(path.join(dir, f), 'utf8'); const M = JSON.parse(t);
