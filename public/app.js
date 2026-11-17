@@ -549,6 +549,7 @@ function printLink(b, l) { // printregel bij Klaarzetten → link naar het besta
 function benodigd(l) {
   const out = []; const add = x => { if (x && !out.includes(x)) out.push(x); };
   (l.benodigd || []).forEach(add);
+  for (const k of l.kaart || []) if (!out.some(x => x.startsWith('Kaart ' + k))) add(`Kaart ${k} geprint, één per leerling`); // besluit 16-11: elke kaart ligt geprint klaar
   const txt = [l.titel, l.detail, (l.fasen || []).map(LESMODUS.faseTekst).join(' '), (l.formatief || {}).tekst, (l.formatief || {}).soort].join(' ');
   if (!l.benodigdVast) for (const [re, n] of BENODIGD) if (re.test(txt)) add(n); // benodigdVast: de lijst is compleet, niets raden uit de tekst (VO-dag: geen bas, drumstel of keyboard)
   return out;

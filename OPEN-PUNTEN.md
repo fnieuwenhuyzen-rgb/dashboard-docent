@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 16 november 2026 (audit). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 17 november 2026 (lijst 2 van de audit). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
@@ -12,8 +12,9 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 ## Audit 16-11 (live sinds 16-11, cache v82)
 - Rapport: `lesdag project/rapporten/audit-2026-11-16.md`. Op 16-11 met het ja van Frans samengevoegd en gepusht. Rooster-worker apart uitgerold met `wrangler deploy`.
 - Gedaan: VO-dag weg; bron gelijk aan basis (+ controle); beveiligingsaudit 2, 6, 9; regie met kmu h3; agendafeed gestopt elders; back-up per NL-dag; inhaler-minimum; fasen-tekst met streepje; inline scripts weg en CSP afgedwongen (losse commit `2757df1`, weglaten kan); rooster-worker foutbestendig (los uitrollen met `wrangler deploy`).
-- Frans beslist (details in het rapport): lessen tegen de vaste regels (vwo5:26.3, havo4 blok B4, vwo6-presentaties, mavo 4 publiek bij examenconcert, havo5:11.1-11.2 en vwo5:26.1 groepjes, gitaar niveau 1 zonder kleine grepen, lange zelfbeoordelingen mavo 4 en klas 3); welke kaarten geprint klaar moeten liggen; welke 12 modellen een strookje krijgen; vwo4 10.2 "Generale" na de toets; vwo6 T10 week; mavo3 P1 herkansing vóór de toets.
-- Nog open techniek [Claude, na ja]: Google Fonts zelf aanbieden; Microsoft-code weghalen; PTA-velden mavo 4 aanvullen.
+- Lijst 2 besloten op 16/17-11 en verwerkt op tak `lijst2` (cache v83, script `tools/zet-lijst2-2026-11-17.js`): havo 5 11.1 klassikaal en 11.2 hele klas; vwo4 10.2 vervalt; kaarten automatisch "geprint, één per leerling" in Klaarzetten; gitaar niveau 1 kleine grepen (klas 3 en brugklas); zelfbeoordeling mavo 4 en bb1 17.1 naar strookje van 3 min (mavo 4 telt nog 10%); vwo5:26.1 gesprek met de docent; vwo4 34.2 en blok P3 voor de docent; vwo6 T10 week 27; mavo3 P1 herkansing na 14-6; PTA-velden mavo 3 en 4; Google Fonts zelf aangeboden; Microsoft-code weg (m365.js is een leeg stuk). Uitzonderingen examenconcert (mavo 4 bands, vwo6 P19, vwo5 P10) en "tweetal is geen groepje" staan in het geheugen. Niet veranderd: havo3/vwo3 20.1 (telt voor P1), vwo5:33.2, plafond bij inhalers.
+- Tegenstrijdig met het PTA, Frans kiest [Frans]: mavo3 P1 herkansing volgens PTA in TW3, besluit 16-11 zegt na 14-6; mavo4 P3 PTA-inleverdatum 22-1, Lesdag zegt 30-3.
+- [Frans] Back-up `eerste`: Instellingen, Synchroniseren, Back-ups. Staat er "Eerste upload", zeg het; dan wist Claude hem.
 
 ## Na live, in deze volgorde
 1. Live versie bekijken met het echte rooster, op laptop en tablet. De nachtserie ging live zonder de proefversie. [Frans]
@@ -23,17 +24,18 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Wacht op Frans
 Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (10-11: alleen privémail bewezen klaar. Schoolmail en Gmail nagekeken: PTA-lijst niet per mail verstuurd, niets aan Mar sinds 8-11. Antwoord aan Jan ging 9-11 uit; solist en namen kaarsendragers volgen nog, Frans heeft ze eind volgende week).
-
 - Uit de week van 9-11, nagaan of het gedaan is: bericht over 23-11 aan vwo 4 en 5 in Magister; PTA-lijst doorsturen (`lesdag project/PTA-punten muziek 2026-2027 voor PTA-beheerder.docx`); oude map `lesdag project/lesdag` verwijderen; al geprinte onderhoudsteamkaarten opnieuw printen (meldpunt sinds 10-11 bij Sectie Muziek, `Claude werkmap/Meldpunt kapotte instrumenten/bouwlog.md`).
 - Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen.
-
 - Voor 23-11, op een echt apparaat: Cijferkolom plakken in Magister. Lesmodus op het digibord. Zermelo met het echte rooster. Concertstand op de tablet. Feedbackblad printen. Beoordelen in een echte les (vwo 4 PT1), checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
 
 ## Op datum
-- Na toets 23-11: PT1-namen in formulieren en decks vwo 4 naar P1 (links mee). En vwo 4 les 10.2 (oude generale) in Jaar op overgeslagen zetten, anders verschijnt hij op 25-11. [Frans]
+- Na toets 23-11: PT1-namen in formulieren en decks vwo 4 naar P1 (links mee). [Frans]
+- Voor 7-12 (mavo 4 les 14.2): strookje voor model p2-mavo4 maken (skill lesdag-beoordeling); de lessen 14.2, 17.2, 21.2, 22.2 noemen het al. [Claude]
+- Voor 7-12: fasen voorstellen voor vwo 4 15.1 (14-12), daarna 21.1, 30.1, 32.2; Frans keurt. [Claude + Frans]
+- Voor 15-3 (vwo 5 lesweek 26): wat komt er in vwo5:26.3 in plaats van "iedereen presenteert één stijl"? Voor 7-6: havo 4 blok B4 "optreden in de klas" (les 36). [Frans]
 - Voor de kerst: PTA en leergangen 2027-2028 aanpassen (praktijktoetsen vwo 4 en 5 niet vlak na de zomer). [Frans]
 - TW2-rooster (januari): de toetsen van 18-1 een datum geven. Vwo 5 T5 hangt sinds de uitval van ma 18-1 aan geen les (de controle meldt dat): geef hem dan ook weer een les.
-- Voor 22 maart, na mavo 3 presentatie 2: 12 beoordelingsmodellen naar een strookje. 16 hebben er geen; voorstel voor de 12 in het auditrapport van 16-11. [Frans]
+- Voor 22 maart, na mavo 3 presentatie 2: 12 beoordelingsmodellen naar een strookje, de 12 uit het auditrapport (besloten 16-11). [Claude]
 - Voor eind maart: zomertijd-jacht in de agenda.
 - Mei 2027: opnames St. Louis Blues en Mahler kiezen voor keuzeuur havo 3.
 

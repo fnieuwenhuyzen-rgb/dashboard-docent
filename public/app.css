@@ -2,6 +2,9 @@
    Fundament (3-11): Encode Sans voor alle tekst, koppen en getallen, koppen vet; in smalle weekkolommen dezelfde letter iets smaller.
    Maten per kijkafstand: laptop 16 px (nooit kleiner dan 14), tablet 18 px (nooit kleiner dan 16). Agenda: les paars, toets en koor rood, afspraak omlijnd, de rest stil; elders werk en open oker, bijzaak grijs; daarbij Magister-blauw en Outlook-teal. Elke tekstkleur haalt minstens 4,5:1
    tegen zijn achtergrond, licht en donker (nagerekend, laagste 4,9). Overgangen hoogstens 200 ms, en geen beweging bij minder beweging. */
+/* Encode Sans (SIL OFL, vendor/fonts/OFL-LICENTIE.txt) zelf aangeboden sinds 17-11: variabel, gewicht 400-900 en breedte 75-125%. */
+@font-face{font-family:"Encode Sans";font-style:normal;font-weight:400 900;font-stretch:75% 125%;font-display:swap;src:url(vendor/fonts/EncodeSans-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Encode Sans";font-style:normal;font-weight:400 900;font-stretch:75% 125%;font-display:swap;src:url(vendor/fonts/EncodeSans-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 :root{
   --bg:#f7f5f9;--surface:#ffffff;--ink:#241c2b;--muted:#6b6175;--line:#e3dde8;
   --paars:#5B247F;--paars-zacht:#efe6f5;--rood:#C5002E;--rood-zacht:#fbe5ea;

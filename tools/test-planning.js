@@ -22,7 +22,7 @@ for (const [lg, L] of Object.entries(B.leergangen)) {
 const uur = (id, dag, s, e, g) => ({ id, dag, start: s, eind: e, groep: g, lokaal: '009' });
 const SC_ROOSTER = [uur('a', 1, '8:30', '9:15', 'tv4'), uur('b', 3, '8:30', '9:15', 'tv4'), uur('c', 1, '13:40', '14:25', 'tv5'), uur('d', 1, '15:25', '16:10', 'tv5'), uur('e', 4, '10:15', '11:00', 'tv5')];
 const gegeven = (lg, totWeek, behalve) => { const o = {}; for (const w of B.leergangen[lg].weken) if (w.w <= totWeek) for (const i of [1, 2, 3]) { const l = w['l' + i]; const id = `${lg}:${w.w}.${i}`; if (l && l.type !== 'uitval' && l.type !== 'toetsweek' && id !== behalve) o[id] = { st: 'gegeven', d: '2026-10-26', uur: 'x' }; } return o; };
-const SC_STAAT = { v: 1, rooster: SC_ROOSTER, groepLeergang: { tv4: 'vwo4', tv5: 'vwo5' }, magVanaf: '2026-08-01', voortgang: { tv4: gegeven('vwo4', 8, 'vwo4:8.2'), tv5: gegeven('vwo5', 7) }, uitval: { '2026-11-09': ['a', 'c', 'd'], '2026-11-11': ['b'] }, beoord: { toetsen: {}, lijsten: {} } };
+const SC_STAAT = { v: 1, rooster: SC_ROOSTER, groepLeergang: { tv4: 'vwo4', tv5: 'vwo5' }, magVanaf: '2026-08-01', voortgang: { tv4: gegeven('vwo4', 7), tv5: gegeven('vwo5', 7) }, uitval: { '2026-11-09': ['a', 'c', 'd'], '2026-11-11': ['b'] }, beoord: { toetsen: {}, lijsten: {} } };
 const ALLE_STAAT = { v: 1, rooster, groepLeergang, magVanaf: '2026-08-01', beoord: { toetsen: {}, lijsten: {} } };
 
 (async () => {
@@ -84,15 +84,15 @@ const ALLE_STAAT = { v: 1, rooster, groepLeergang, magVanaf: '2026-08-01', beoor
   klopt(sc.ag.length >= 3, 'agendafeed 23-11: minder dan 3 punten: ' + sc.ag.join(' / '));
   klopt(sc.r4[0] && sc.r4[0].s === '2026-11-23', 'tekortberekening vwo 4: eerste toets niet op 23-11: ' + JSON.stringify(sc.r4[0]));
   klopt(sc.r5[0] && sc.r5[0].s === '2026-11-23', 'tekortberekening vwo 5: eerste toets niet op 23-11: ' + JSON.stringify(sc.r5[0]));
-  klopt(sc.r4[0] && sc.r4[0].nog.some(t => /Generale P1/.test(t)), 'tekortberekening vwo 4: de generale telt niet mee voor P1');
+  klopt(sc.r4[0] && sc.r4[0].nog.some(t => /generale P1/i.test(t)), 'tekortberekening vwo 4: de generale telt niet mee voor P1');
   klopt(sc.r4[0] && sc.r4[0].tekort === 0, 'tekortberekening vwo 4: onterecht een tekort: ' + JSON.stringify(sc.r4[0]));
   klopt(!sc.gemist.length, 'toets staat als gemist: ' + sc.gemist.join(', '));
   klopt(sc.jaar4[0] === 12 && sc.jaar5[0] === 12, `Jaar: P1 in lesweek ${sc.jaar4[0]}, P9 in lesweek ${sc.jaar5[0]} (moet 12 zijn)`);
   klopt(/23 nov/.test(sc.klasblad), 'klasblad vwo 4 toont 23 nov niet');
-  // de lessen eromheen: improvisatie en generale vóór P1, generale als laatste les ervoor, geen les van na de toets ertussen
-  const v4 = Object.keys(sc.dagen).filter(s => s <= '2026-11-23').flatMap(s => dag(s).filter(t => /^(Improviseren|Generale|Praktijktoets 1|Wat is pop)/.test(t)).map(t => s + ' ' + t.split('|')[0]));
+  // de lessen eromheen (stand 16-11: 8.1 op ma 16-11, 8.2 improviseren en generale op wo 18-11, 10.2 vervalt): generale als laatste les vóór P1, geen les van na de toets ertussen
+  const v4 = Object.keys(sc.dagen).filter(s => s <= '2026-11-23').flatMap(s => dag(s).filter(t => /^(Samenspel: blues|Improviseren|Generale|Praktijktoets 1|Wat is pop)/.test(t)).map(t => s + ' ' + t.split('|')[0]));
   const iPT1 = v4.findIndex(t => /Praktijktoets 1/.test(t));
-  klopt(iPT1 > 0 && /Generale P1/.test(v4[iPT1 - 1]), 'vwo 4: de generale is niet de les vlak voor P1: ' + v4.join(' / '));
+  klopt(iPT1 > 0 && /generale P1/i.test(v4[iPT1 - 1]), 'vwo 4: de generale is niet de les vlak voor P1: ' + v4.join(' / '));
   klopt(!v4.slice(0, iPT1).some(t => /Wat is pop/.test(t)), 'vwo 4: een les van na P1 staat ervoor: ' + v4.join(' / '));
   if (toon) console.log(JSON.stringify(sc.dagen, null, 1), v4);
 
