@@ -32,6 +32,24 @@ const paginaFouten = [];
       ok(/Je week is afgesloten/i.test(t2), 'week afsluiten: stille tekst na afsluiten ontbreekt: ' + t2.slice(0, 200)); await ctx.close(); }
     { const { ctx, tekst } = await open('#nu', '2026-11-19T16:20:00+01:00', { staat: WSTAAT });
       const t3 = await tekst(); ok(/Dag afsluiten/.test(t3) && !/Week afsluiten/.test(t3) && !/Volgende week/i.test(t3), 'week afsluiten: donderdag is geen weekafsluiting'); await ctx.close(); }
+    // 1b. Past in dit gat B: een eigen taak zonder deadline die twee weken openstaat, komt terug bij Week afsluiten
+    { const id = dag => 'k' + new Date(dag + 'T12:00:00+01:00').getTime().toString(36) + 'abc';
+      const STIL = Object.assign({}, WSTAAT, { taken: [{ id: id('2026-11-01'), titel: 'Oude map opruimen', bron: 'overig', af: false }, { id: id('2026-11-02') + 'x', titel: 'Archief ordenen', bron: 'overig', af: false },
+        { id: id('2026-11-15'), titel: 'Nieuw idee uitwerken', bron: 'overig', af: false }, { id: id('2026-11-01') + 'd', titel: 'Met deadline', bron: 'overig', af: false, d: '2026-12-10' }] });
+      const { ctx, page, tekst } = await open('#nu', '2026-11-20T16:20:00+01:00', { staat: STIL });
+      const t = await tekst(); const blok = t.slice(t.toLowerCase().indexOf('ligt stil'));
+      ok(/Ligt stil, zonder deadline/i.test(t) && /Oude map opruimen/.test(blok) && /Archief ordenen/.test(blok), 'stil: oude taken zonder deadline staan niet bij Week afsluiten');
+      ok(!/Nieuw idee uitwerken/.test(blok.split(/Volgende week/i)[0]) && !/Met deadline/.test(blok.split(/Volgende week/i)[0]), 'stil: een jonge taak of een taak met deadline staat er ook');
+      ok(/Laat vallen/.test(blok) && (await page.$$('[data-stildatum]')).length === 2, 'stil: knoppen Datum en Laat vallen ontbreken');
+      await page.click(`[data-stilweg="${id('2026-11-01')}"]`); await page.waitForTimeout(300);
+      let st = await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')).taken);
+      ok(!st.some(k => k.titel === 'Oude map opruimen') && /Ongedaan maken/.test(await page.evaluate(() => document.body.innerText)), 'stil: laten vallen haalt de taak niet weg of zonder terugzetten');
+      await page.fill(`[data-stildatum="${id('2026-11-02')}x"]`, '2026-12-04'); await page.waitForTimeout(300);
+      st = await page.evaluate(() => JSON.parse(localStorage.getItem('lesdag-staat')).taken);
+      ok(st.find(k => k.titel === 'Archief ordenen').d === '2026-12-04' && !/Ligt stil/i.test(await tekst()), 'stil: Datum geeft geen deadline of de taak blijft staan');
+      await ctx.close(); }
+    { const { ctx, tekst } = await open('#nu', '2026-11-19T16:20:00+01:00', { staat: Object.assign({}, WSTAAT, { taken: [{ id: 'k' + new Date('2026-11-01T12:00:00+01:00').getTime().toString(36) + 'abc', titel: 'Oude map opruimen', bron: 'overig', af: false }] }) });
+      ok(!/Ligt stil/i.test(await tekst()), 'stil: ook bij Dag afsluiten, niet alleen bij Week afsluiten'); await ctx.close(); }
     { const { ctx, tekst } = await open('#nu', '2026-11-23T08:10:00+01:00', { staat: WSTAAT });
       ok((await tekst()).includes('Deze week: praktijktoets tv4 (ma).'), 'week afsluiten: maandagregel ontbreekt'); await ctx.close(); }
     { const { ctx, tekst } = await open('#nu', '2026-11-19T08:10:00+01:00', { staat: Object.assign({}, WSTAAT, { goed: { '2026-11-18': 'Vwo 4 speelde het schema zonder blad.' } }) });

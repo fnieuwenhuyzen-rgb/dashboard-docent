@@ -42,4 +42,4 @@ Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7y
 ## Als eerste oppakken
 - Vaste lesdag per klas uit Zermelo: kan bij de proefversie met het echte rooster. [Claude]
 - 32 voorgestelde lessen (havo 4, vwo 4, mavo 3) eerst aanpassen, dan per klas overnemen, begin havo 4. [Claude + Frans]
-- Past in dit gat, onderdeel B (besloten 11-11): een eigen taak zonder deadline die twee weken openstaat, komt terug bij Week afsluiten met drie knoppen: plan, datum geven of laten vallen. Nu staat zo'n taak in `kandidaten` altijd achteraan. Na A. [Claude]
+- Past in dit gat, onderdeel B (gebouwd 19-11 in branch `bord/les-t16`, worktree `lesdag-werk/les-t16`, nog niet live): bij Week afsluiten een stuk "Ligt stil, zonder deadline" voor eigen taken zonder deadline en plan die 14 dagen openstaan, met twee tijdchips (plan), Datum en Laat vallen (met terugzetten). Aanmaakdatum uit het id; onbekend: vanaf de eerste keer gezien. Regels en tests: `stilLiggend` in `functies.js` / `test-functies.js`. Samenvoegen en cachenummer ophogen na ja van Frans. [Frans]

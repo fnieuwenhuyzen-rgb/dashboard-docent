@@ -2035,6 +2035,15 @@ function weekBlokken(s) { // de extra stukken van Week afsluiten, na Nog open: a
   if (T.length || krap.length) h += `<h3>Volgende week</h3>${T.map(x => `<div class="nu-rij"><span>${esc(x.g)} · ${x.soort === 'praktijk' ? 'praktijktoets' : 'toets'} ${esc(x.id)} op ${esc(x.dag)}</span><span class="tb"><span class="chip ${x.vast ? 'ok' : ''}">${x.vast ? 'staat vast' : 'schuift mee'}</span></span></div>`).join('')}${krap.map(d => `<div class="nu-rij"><span>${esc(d.g)} · krap voor ${esc(d.t.id)}</span><span class="tb"><a class="btn klein" href="${esc(klasUrl(d.g))}">Bekijk</a></span></div>`).join('')}`;
   return h;
 }
+/* Past in dit gat B (besluit 11-11): een eigen taak zonder deadline die twee weken openstaat, komt terug bij Week afsluiten. Plan, datum of laten vallen.
+   Een taak zonder herkenbare aanmaakdatum telt vanaf de eerste keer dat Lesdag hem hier ziet (veld gezien, wordt bij de volgende opslag bewaard). */
+function stilBlok(s, chips, rij) {
+  (S.taken || []).forEach(k => { if (!k.af && !k.d && !k.plan && !FUNCTIES.gemaaktOp(k)) k.gezien = vandaag(); });
+  const L = FUNCTIES.stilLiggend(S.taken, s); if (!L.length) return '';
+  const morgen = addD(vandaag(), 1);
+  return `<h3>Ligt stil, zonder deadline</h3><p class="sub">Staat al twee weken open. Plan hem, geef hem een datum of laat hem vallen.</p>${L.map(k => rij(k.titel, 'open sinds ' + fmtD(FUNCTIES.gemaaktOp(k)),
+    chips('eigen:' + k.id, schat(soortVan(k), k.titel, k.min), null) + `<label class="later">Datum<input type="date" min="${morgen}" data-stildatum="${esc(k.id)}" aria-label="Deadline voor ${esc(k.titel)}"></label><button class="btn klein" data-stilweg="${esc(k.id)}">Laat vallen</button>`)).join('')}`;
+}
 function afsluitKaart(s, p, A, nu) {
   const wk = weekAfsluitDag(s);
   const af = teAfronden(s, p, nu); const open = A.items.filter(it => it.soort === 'taak' && !it.k.af);
@@ -2053,6 +2062,7 @@ function afsluitKaart(s, p, A, nu) {
     ${deadl.map(k => rij(k.titel, 'deadline ' + fmtD(k.d), chips(k.v, k.min, k.d))).join('')}
     ${n ? '' : '<p class="lead">Niets open. Alles heeft een plek.</p>'}
     ${s === vandaag() && magWeekZin(s) ? `<p class="sub mag-week">${esc(magWeekZin(s))}</p>` : ''}
+    ${wk ? stilBlok(s, chips, rij) : ''}
     ${wk ? weekBlokken(s) : ''}
     <!--dok--><button class="btn hoofd" data-afsluiten="${s}" data-open="${n}">${wk ? 'Week' : 'Dag'} afsluiten${n ? ` · ${n} nog open` : ''}</button><!--/dok--></div>`; // het aantal staat op de knop, zonder dialoog (bevinding 50)
 }
@@ -3569,6 +3579,8 @@ document.addEventListener('click', async e => {
   if (D.reset) { const terug = foto(); const [g, id] = D.reset.split('|'); if (S.voortgang[g]) delete S.voortgang[g][id]; bewaar(); toast('Weer niet gegeven', terug); return; }
   if (D.opplan) { const terug = foto(); const n = opPlanning(D.opplan); bewaar(); toast(`${n} lessen op gegeven gezet`, terug); return; }
   if (D.opplanalle != null) { const terug = foto(); rooGroepen().forEach(opPlanning); bewaar(); toast('Groepen staan op de planning', terug); return; }
+  if (D.stilweg) { const terug = foto(); const w = (S.taken || []).find(k => k.id === D.stilweg); if (!w) return; const g = w.deel ? w.deel.groep : null; // een taak in stukken: alle open stukken vallen
+    S.taken = S.taken.filter(k => k.id !== w.id && !(g && k.deel && k.deel.groep === g && !k.af)); bewaar(); toast(kort(FUNCTIES.kaleTitel(w.titel)) + ' is gevallen', terug); return; }
   if (D.taakweg) { const terug = foto(); const w = (S.taken || []).find(k => k.id === D.taakweg); S.taken = (S.taken || []).filter(k => k.id !== D.taakweg); sluit(); bewaar(); toast(w && !w.af && (w.sectieId || w.koorId || w.reclameId || w.dagTaak) ? 'Uit je planning gehaald. De taak zelf staat nog open; vink hem af als hij klaar is.' : w && w.afspraak ? 'Afspraak verwijderd' : 'Taak verwijderd', terug); return; }
   if (D.weg) { const terug = foto(); S.rooster = S.rooster.filter(u => u.id !== D.weg); bewaar(); toast('Lesuur verwijderd', terug); return; }
   if (D.salles != null) { sAlles = !sAlles; render(); return; }
@@ -3608,6 +3620,7 @@ document.addEventListener('change', e => {
   if (t.dataset.bericht) { const a = (S.afwijkingen || []).find(x => x.id === t.dataset.bericht); if (a) { a.bericht = t.value; bewaar(true); } return; }
   if (t.checked && t.closest('.taak-klaar')) sluit();
   if (t.dataset.taaknoot) { const i = t.dataset.taaknoot.indexOf('|'), soort = t.dataset.taaknoot.slice(0, i), n = t.dataset.taaknoot.slice(i + 1), k = soort === 'ff' ? nootVooruit(n) : n; S.taakNoot = S.taakNoot || {}; const r = S.taakNoot[k] = S.taakNoot[k] || {}; const w = t.value.trim(); if (w) { r[soort] = w; r.d = vandaag(); r.titel = $('#drawer > h2').textContent; } else { delete r[soort]; if (!r.fb && !r.ff) delete S.taakNoot[k]; } bewaar(); return; }
+  if (t.dataset.stildatum) { const k = (S.taken || []).find(x => x.id === t.dataset.stildatum); if (k && t.value > vandaag()) { const terug = foto(); k.d = t.value; bewaar(); toast(kort(k.titel) + ': deadline ' + fmtD(t.value), terug); } return; }
   if (t.dataset.liggentot) { if (t.value > vandaag()) stelUit(t.dataset.liggentot, t.value); return; }
   if (t.dataset.minv) { const v = t.dataset.minv; const m = Math.round(+t.value); if (!(m >= 1 && m <= 480)) { bewaar(); return; } const k = v.startsWith('eigen:') && (S.taken || []).find(x => x.id === v.slice(6)); if (k) { if (k.min !== m) delete k.heel; k.min = m; } else (S.minuten = S.minuten || {})[v] = m; bewaar(); if (k) stukVraag(k); return; }
   if (t.dataset.schatstart) { const m = Math.round(+t.value); S.schatStart = S.schatStart || {}; if (m >= 1 && m <= 480) S.schatStart[t.dataset.schatstart] = m; else delete S.schatStart[t.dataset.schatstart]; bewaar(); return; }
