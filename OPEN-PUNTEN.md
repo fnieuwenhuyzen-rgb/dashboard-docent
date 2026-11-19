@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 17 november 2026 (lijst 2 van de audit). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 19 november 2026 (lessen-16-11 klaar voor push). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
@@ -25,7 +25,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 ## Wacht op Frans
 Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (10-11: alleen privémail bewezen klaar. Schoolmail en Gmail nagekeken: PTA-lijst niet per mail verstuurd, niets aan Mar sinds 8-11. Antwoord aan Jan ging 9-11 uit; solist en namen kaarsendragers volgen nog, Frans heeft ze eind volgende week).
 - Uit de week van 9-11, nagaan of het gedaan is: bericht over 23-11 aan vwo 4 en 5 in Magister; PTA-lijst doorsturen (`lesdag project/PTA-punten muziek 2026-2027 voor PTA-beheerder.docx`); oude map `lesdag project/lesdag` verwijderen; al geprinte onderhoudsteamkaarten opnieuw printen (meldpunt sinds 10-11 bij Sectie Muziek, `Claude werkmap/Meldpunt kapotte instrumenten/bouwlog.md`).
-- Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen.
+- Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen. Branch `lessen-16-11` (vwo 5 10.1 klassikaal, HD4 zonder laptop, cache v85) staat klaar: 1 commit op main, tests goed (19-11). Wacht op ja voor samenvoegen en push (bordtaak les-t1).
 - Voor 23-11, op een echt apparaat: Cijferkolom plakken in Magister. Lesmodus op het digibord. Zermelo met het echte rooster. Concertstand op de tablet. Feedbackblad printen. Beoordelen in een echte les (vwo 4 PT1), checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
 
 ## Op datum
