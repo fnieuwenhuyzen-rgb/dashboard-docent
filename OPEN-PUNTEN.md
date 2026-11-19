@@ -1,13 +1,16 @@
 # Open punten Lesdag
 
-Bijgewerkt: 17 november 2026 (lijst 2 van de audit). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 19 november 2026 (bordtaak les-t7). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 - Wat tot 16-11 live ging, met details per onderdeel: `handboek/stand-tot-2026-11-16.md` (zoek). Daaruit nog open:
-  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken (bestand ontbreekt nog voor strookje bb1, reflectieformulier havo 3, werkblad notenbalk mavo 4); regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord").
+  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken; regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord").
   [Claude] lesfoto's koppelen en verkleinen, PowerPoint-link klein; God Rest Ye-leadsheet en videolinks in de box (leadsheet akkoord en YouTube-links van Frans: zie stand); na elke sectievergadering `zet-sectie-acties.js`.
+
+## Printbestanden bij Klaarzetten (19-11, branch `bord/les-t7`, niet gepusht)
+- [Frans] Nakijken en zeggen of het mag samenvoegen: nieuw strookje BB1 lesweek 30 en 37 (`01 Klas 1/Lessen 2026-2027`), werkblad notenbalk mavo 4 lesweek 5 met antwoordenblad (`Mavo 4/Lessen 2026-2027`); reflectieformulier speelstuk nu ook bij havo 3 19.1. Bladen: `tools/printbladen/`, links: `tools/zet-printbestanden-2026-11-19.js`. Cachenummer niet verhoogd (doet wie samenvoegt). Nog zonder bestand: vwo 4 8.1 "Kaart BL schema" en mavo 4 "partijen of bladmuziek" (hangt van de keuze af).
 
 ## Audit 16-11 (live sinds 16-11, cache v82)
 - Rapport: `lesdag project/rapporten/audit-2026-11-16.md`. Op 16-11 met het ja van Frans samengevoegd en gepusht. Rooster-worker apart uitgerold met `wrangler deploy`.
