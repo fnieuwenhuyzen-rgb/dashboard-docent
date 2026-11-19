@@ -3290,7 +3290,10 @@ function startLes(uurId, s, bord) { // bord: dit venster is het digibord (scherm
   const t = l.type === 'toets' ? toetsVan(x.item.lg, l.toets) : null;
   const th = x.item.week.thuis || {};
   const vor = vorigeVan(x);
-  const materiaalHtml = (l.materiaal || []).length ? `<div class="mats lesmats">${l.materiaal.map((m, i) => LINK_RE.test(m.u || '') ? `<span><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
+  // de PowerPoint is reserve naast Geef les: klein en als laatste
+  const isPres = m => /presentatie|\.pptx/i.test((m.t || '') + ' ' + (m.u || ''));
+  const matVolgorde = (l.materiaal || []).map((m, i) => [m, i]).sort((a, b) => isPres(a[0]) - isPres(b[0]));
+  const materiaalHtml = matVolgorde.length ? `<div class="mats lesmats">${matVolgorde.map(([m, i]) => LINK_RE.test(m.u || '') ? `<span${isPres(m) ? ' class="pres"' : ''}><a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t)}</a>${m.itemId && m.driveId ? ` <button class="btn klein" data-preview="${i}">toon hier</button>` : ''}</span>` : `<span>${esc(m.t)}</span>`).join('')}</div><div id="pv" style="display:contents"></div>` : '';
   const kctx = { groep: x.u.groep, lgNaam: lgNaam(x.item.lg), lokaal: x.u.lokaal, toets: t ? t.naam + ' · ' + (t.waar || '') : '', thuis: th, vorige: vor ? vor.n : '', vorigeKop: vor ? vorigeKop(vor) : '', benodigd: klaarLijst(s, l), printLink: b => printLink(b, l), materiaalHtml, fotos: (window.LESFOTOS || {})[x.item.id], stijl: LESMODUS.stijlVan(x.item.lg) };
   let slides = LESMODUS.bouwSlides(l, kctx);
   { const kr = lesKrap({ s, x, slides, i: 0, bord: false }); // bevinding 73: loopt de les al, dan staan op het welkomdia de ingekorte minuten, niet de geplande
