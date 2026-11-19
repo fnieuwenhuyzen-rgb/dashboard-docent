@@ -1,12 +1,12 @@
 # Open punten Lesdag
 
-Bijgewerkt: 17 november 2026 (lijst 2 van de audit). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 19 november 2026 (losse wijzigingen hoofdmap, bord les-t0). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 - Wat tot 16-11 live ging, met details per onderdeel: `handboek/stand-tot-2026-11-16.md` (zoek). Daaruit nog open:
-  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken (bestand ontbreekt nog voor strookje bb1, reflectieformulier havo 3, werkblad notenbalk mavo 4); regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord").
+  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken (bestand ontbreekt nog voor strookje bb1, reflectieformulier havo 3, werkblad notenbalk mavo 4); regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord"); branch `bord/les-t0` nakijken en samenvoegen (19-11: losse wijzigingen uit de hoofdmap, van 12-11 en 16-11 maar nooit vastgelegd: dat werkvoorraad-hoofdstuk zelf, de Go Tell It-notitie en het boogje op "Saviour" in `god-rest-ye.json`; hoofdmap daarna schoon via `git stash`, stash "bord/les-t0" mag weg na samenvoegen).
   [Claude] lesfoto's koppelen en verkleinen, PowerPoint-link klein; God Rest Ye-leadsheet en videolinks in de box (leadsheet akkoord en YouTube-links van Frans: zie stand); na elke sectievergadering `zet-sectie-acties.js`.
 
 ## Audit 16-11 (live sinds 16-11, cache v82)
