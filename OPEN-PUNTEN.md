@@ -41,5 +41,5 @@ Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7y
 
 ## Als eerste oppakken
 - Vaste lesdag per klas uit Zermelo: kan bij de proefversie met het echte rooster. [Claude]
-- 32 voorgestelde lessen (havo 4, vwo 4, mavo 3) eerst aanpassen, dan per klas overnemen, begin havo 4. [Claude + Frans]
+- 32 voorgestelde lessen (`tools/voorstel-lessen-2026-11.json`). Havo 4 (27) overgenomen op 19-11, branch `bord/les-t11`, niet live: `tools/zet-voorstel-havo4.js` (op les-id; Forms bij de opnames, rapportverwijzingen weg). [Frans] nakijken: `lesdag project/rapporten/lessen-havo4-overgenomen-2026-11-19.html`. Vwo 4 (4) = branch `bord/les-t10`. Mavo 3 37.1 wacht op de vorm van H1 [Frans]. Samenvoegen: basis.json botst altijd met `lessen-16-11`; dan het script opnieuw draaien, cache ophogen.
 - Past in dit gat, onderdeel B (besloten 11-11): een eigen taak zonder deadline die twee weken openstaat, komt terug bij Week afsluiten met drie knoppen: plan, datum geven of laten vallen. Nu staat zo'n taak in `kandidaten` altijd achteraan. Na A. [Claude]
