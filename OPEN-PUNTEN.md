@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 17 november 2026 (lijst 2 van de audit). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 20 november 2026 (migratie vwo 5 akkoord). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
@@ -18,7 +18,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Na live, in deze volgorde
 1. Live versie bekijken met het echte rooster, op laptop en tablet. De nachtserie ging live zonder de proefversie. [Frans]
-2. Controleer dat de migratie van vwo 5 de eigen voortgang goed heeft omgenummerd. [Frans, op de laptop]
+2. ~~Migratie vwo 5 controleren~~: door Frans gecontroleerd en akkoord bevonden (19-11-2026).
 3. Synchroniseren aan, zonder leerlinggegevens. Agendalink maken in Outlook (vaste titels, geen eigen afspraken). [Frans, op de laptop]
 4. Dashboard verversen: `tools/ververs-dashboard.js`. [Claude]
 
