@@ -19,7 +19,8 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 ## Na live, in deze volgorde
 1. Live versie bekijken met het echte rooster, op laptop en tablet. De nachtserie ging live zonder de proefversie. [Frans]
 2. Controleer dat de migratie van vwo 5 de eigen voortgang goed heeft omgenummerd. [Frans, op de laptop]
-3. Synchroniseren aan, zonder leerlinggegevens. Agendalink maken in Outlook (vaste titels, geen eigen afspraken). [Frans, op de laptop]
+3. Synchroniseren aan, mét leerlinggegevens (besluit 18-11, bordtaak les-t13). Branch `bord/les-t13` (worktree `lesdag-werk/les-t13`): klassenlijsten en scores gaan nu standaard mee, lokaal getest; nog niet live, wacht op ja. Daarna per apparaat Instellingen, Synchroniseren aanzetten; eerst "Wat staat er op de server?" bij Leerlinggegevens (oude rijen kunnen botsen). Agendalink: Instellingen, Agenda in Outlook, link maken, in Outlook op het web Agenda toevoegen, Abonneren via internet (vaste titels, geen eigen afspraken). [Frans, op de laptop]
+   Risico's leerlinggegevens: D1 is versleuteld opgeslagen door Cloudflare (Cloudflare heeft de sleutel, geen eigen versleuteling); toegang alleen via Access en controle op nwn@csgpm.nl; ook in 30 dagen back-ups en `eerste`. Locatie database onbekend (niet EU-vastgezet), en een privé Cloudflare-account valt niet onder een verwerkersovereenkomst van school. [Frans: nagaan of dit mag]
 4. Dashboard verversen: `tools/ververs-dashboard.js`. [Claude]
 
 ## Wacht op Frans

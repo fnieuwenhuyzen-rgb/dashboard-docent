@@ -2884,8 +2884,10 @@ function viewTeam() {
 
 /* ---------- synchroniseren tussen apparaten (sync.js) ---------- */
 const SYNC_VLAG = 'lesdag-sync-aan';
-const SYNC_LLN = 'lesdag-sync-leerlingen'; // per apparaat; alleen '1' neemt klassenlijsten en scores mee. Standaard veilig: niet.
-const leerlingenMee = () => { try { return localStorage.getItem(SYNC_LLN) === '1'; } catch (e) { return false; } };
+/* per apparaat. Besluit Frans 18-11: klassenlijsten en scores gaan standaard mee (alle apparaten moeten ze hebben).
+   Alleen '0' (knop "Niet meer meenemen" of na wissen van de server) houdt ze op dit apparaat. Zonder localStorage: niet mee. */
+const SYNC_LLN = 'lesdag-sync-leerlingen';
+const leerlingenMee = () => { try { return localStorage.getItem(SYNC_LLN) !== '0'; } catch (e) { return false; } };
 let syncUit = '';
 function syncDoc() { const { updated, ...d } = S; const t = zApiToken(); if (t) d._zermeloApi = t; return d; } // de Zermelo-koppeling staat buiten S maar gaat wel mee
 function syncZet(d) {
@@ -2940,7 +2942,7 @@ async function syncKlik(D) {
 }
 
 /* ---------- leerlinggegevens, bewaartermijn en botsingen (Instellingen) ----------
-   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard niet). Ze blijven één cursusjaar staan.
+   Per apparaat: gaan klassenlijsten en scores mee met synchroniseren (standaard wel, sinds 18-11; uitzetten kan per apparaat). Ze blijven één cursusjaar staan.
    Het beoordelingslogboek staat in IndexedDB en gaat nooit naar de server. Rekenwerk in sync.js (jaarWissel, padZet); tests: tools/test-sync.js. */
 /* bewaartermijn: het cursusjaar (besluit Frans 9-11). Vanaf 1 augustus gaan klassenlijsten, scores, verwijderde leerlingen, absenten, logboeknotities,
    het beoordelingslogboek en de automatische kopieën weg, per apparaat bij de eerste start in het nieuwe cursusjaar en vóór er gesynchroniseerd wordt:
@@ -2994,12 +2996,12 @@ async function leerlingKlik(D) {
   if (D.lln != null) {
     try {
       if (D.lln === 'aan') { if (!confirm('Klassenlijsten en scores gaan dan naar de Lesdag-server achter je login, en komen ook in de dagelijkse back-ups te staan. Weet je zeker dat dit mag?')) return true; localStorage.setItem(SYNC_LLN, '1'); if (SY.aan()) SY.nu(); toast('Klassenlijsten en scores gaan mee'); }
-      else if (D.lln === 'uit') { localStorage.removeItem(SYNC_LLN); toast('Klassenlijsten en scores gaan niet meer mee. Wat al op de server staat blijft daar tot je het wist.'); }
+      else if (D.lln === 'uit') { localStorage.setItem(SYNC_LLN, '0'); toast('Klassenlijsten en scores gaan niet meer mee. Wat al op de server staat blijft daar tot je het wist.'); }
       else if (D.lln === 'kijk') LLN.server = await SY.leerlingenOpServer().catch(() => ({ fout: true }));
       else if (D.lln === 'wis') {
         const n = await SY.leerlingenOpServer();
         if (!confirm(`${n.onderdelen} onderdelen en ${n.back_ups} back-up-rijen met klassenlijsten en scores worden van de server gewist, ook uit de dagelijkse back-ups. Op je apparaten blijft alles staan. Dit kan niet ongedaan worden gemaakt.${leerlingenMee() ? '\n\nLesdag zet daarna ook het meenemen op dit apparaat uit.' : ''}\n\nDoorgaan?`)) return true;
-        localStorage.removeItem(SYNC_LLN); const r = await SY.leerlingenWissen(); LLN.server = await SY.leerlingenOpServer(); toast(`Gewist: ${r.onderdelen} onderdelen en ${r.back_ups} back-up-rijen`);
+        localStorage.setItem(SYNC_LLN, '0'); const r = await SY.leerlingenWissen(); LLN.server = await SY.leerlingenOpServer(); toast(`Gewist: ${r.onderdelen} onderdelen en ${r.back_ups} back-up-rijen`);
       }
       else if (D.lln === 'eerstekijk') LLN.eerste = await SY.eersteOpServer().catch(() => ({ rijen: 0 }));
       else if (D.lln === 'eerstewis') { if (!confirm('De back-up van de eerste upload wordt van de server gewist. Dat kan niet ongedaan worden gemaakt. Doorgaan?')) return true; await SY.eersteWissen(); LLN.eerste = { rijen: 0 }; toast('Back-up gewist'); }
