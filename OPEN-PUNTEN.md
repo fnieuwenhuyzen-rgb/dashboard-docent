@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 21 november 2026 (les-t12 gepusht; live versie met echt rooster klopt; migratie vwo 5 akkoord; lijst 2 van de audit 17-11). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 21 november 2026 (lessen-16-11 samengevoegd en gepusht, cache v88; les-t12 gepusht; live versie met echt rooster klopt; migratie vwo 5 akkoord; lijst 2 van de audit 17-11). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
@@ -27,7 +27,7 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 ## Wacht op Frans
 Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (10-11: alleen privémail bewezen klaar. Schoolmail en Gmail nagekeken: PTA-lijst niet per mail verstuurd, niets aan Mar sinds 8-11. Antwoord aan Jan ging 9-11 uit; solist en namen kaarsendragers volgen nog, Frans heeft ze eind volgende week).
 - Uit de week van 9-11, nagaan of het gedaan is: bericht over 23-11 aan vwo 4 en 5 in Magister; PTA-lijst doorsturen (`lesdag project/PTA-punten muziek 2026-2027 voor PTA-beheerder.docx`); oude map `lesdag project/lesdag` verwijderen; al geprinte onderhoudsteamkaarten opnieuw printen (meldpunt sinds 10-11 bij Sectie Muziek, `Claude werkmap/Meldpunt kapotte instrumenten/bouwlog.md`).
-- Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen.
+- Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen. Branch `lessen-16-11` (vwo 5 10.1 klassikaal, HD4 zonder laptop) op 21-11 samengevoegd in main en gepusht (bordtaak les-vmwq1m01k), cache v88 (v86 en v87 waren al gebruikt); alle tests met schermtest goed. Op de laptop (ingelogd) nakijken: vwo 5 les 10.1 en havo 5 11.2. Let op: bord/les-t7 (v86) en bord/les-t11 (v87) hebben nu een te laag cachenummer; bij samenvoegen v89 of hoger.
 - Voor 23-11, op een echt apparaat: Cijferkolom plakken in Magister. Lesmodus op het digibord. Concertstand op de tablet. Feedbackblad printen. Beoordelen in een echte les (vwo 4 PT1), checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
 
 ## Op datum
