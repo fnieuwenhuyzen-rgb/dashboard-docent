@@ -15,7 +15,7 @@ Bron: https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (54 van 54 gekozen). Dit
 ## Live zetten
 - Testbranch: eerst een proefversie bekijken, live voor 16-11.
 - "Alles weg" aan het eind van het cursusjaar: alles over leerlingen. Taken, planning en rooster blijven.
-- Synchroniseren na live: aan, zonder leerlinggegevens.
+- Synchroniseren na live: aan, zonder leerlinggegevens. **Vervangen 18-11 (bordtaak les-t13): leerlinggegevens moeten juist mee.** Standaard aan per apparaat, uitzetten kan bij Instellingen, Leerlinggegevens.
 - Agenda in Outlook: vaste titels, geen eigen afspraken.
 - CSP afdwingen: een week na het live gaan van de testbranch.
 - Testen vanzelf: beide aan (controle bij commits en snelle test voor live), zodra de testbranch live staat.

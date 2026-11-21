@@ -1,5 +1,5 @@
 // Offline: de app, de leergangen en de lettertypen blijven beschikbaar zonder netwerk. Lettertypen zelf aangeboden sinds 17-11 (vendor/fonts).
-const CACHE = 'lesdag-v86';
+const CACHE = 'lesdag-v88';
 const NET_WACHT = 2000; // ms wachten op het netwerk voordat de cache voorgaat
 const SHELL = ['./', 'index.html', 'vooraf.js', 'app.css', 'app.js', 'lesmodus.js', 'lesfotos.js', 'lesklok.js', 'regie.js', 'functies.js', 'bm-reken.js', 'bm-overzicht.js', 'bm-pdf.js', 'reclame.js', 'sync.js', 'agendafeed.js', 'toetsdatum.js', 'staat.js', 'logboek.js', 'kopie.js', 'm365.js', 'config.js', 'data/basis.json', 'data/beoordeling.json', 'data/notities.json', 'data/reclame.json', 'vendor/pptxgen.bundle.js', 'vendor/qrcode.js',
   'vendor/fonts/EncodeSans-latin.woff2', 'vendor/fonts/EncodeSans-latin-ext.woff2', 'vendor/fonts/EncodeSans-Light.ttf', 'vendor/fonts/EncodeSans-Bold.ttf', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
