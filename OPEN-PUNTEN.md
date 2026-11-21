@@ -1,17 +1,16 @@
 # Open punten Lesdag
 
-Bijgewerkt: 20 november 2026 (les-t12 gepusht; les-t7 klaar om te pushen; lijst 2 van de audit 17-11). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 21 november 2026 (printbladen les-t7 samengevoegd en gepusht, cache v89; lessen-16-11 samengevoegd en gepusht, cache v88; les-t12 gepusht; live versie met echt rooster klopt; migratie vwo 5 akkoord; lijst 2 van de audit 17-11). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
 ## Stand
 - Wat tot 16-11 live ging, met details per onderdeel: `handboek/stand-tot-2026-11-16.md` (zoek). Daaruit nog open:
-  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken; regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord").
+  [Frans] logo-pictogram op telefoon en tablet opnieuw op het beginscherm; reclameposter proefprinten en QR scannen; brede indeling en Beoordelen met echte klassen (vóór 23-11); lay-out per groep bevestigen; Forms-formulieren (kerstopname, oefenopnames, PTA); Past in dit gat A in een echte week; printlinks bij Klaarzetten live bekijken; regie op de echte tablet proberen (werkvoorraad, "Ontwerp timer op het bord"); main pushen (20-11: branch `bord/les-t0` samengevoegd, losse wijzigingen van 12-11 en 16-11: werkvoorraad-hoofdstuk "Ontwerp timer op het bord", Go Tell It-notitie, boogje op "Saviour" in `god-rest-ye.json`; werkmap en stash opgeruimd; nog niet gepusht).
   [Claude] na elke sectievergadering `zet-sectie-acties.js`. Bordtaak les-t12 (19-11, cache v85, op 20-11 samengevoegd in main en gepusht, commit `511ee9b`; live niet nagekeken: Access vraagt inlog): foto's uit de presentaties nu ook in Geef les, 50 lessen, 46 foto's verkleind (max 1280 px) in `public/beeld/les` met bronregels; opnieuw maken met `node tools/koppel-lesfotos.js` (fasefoto alleen als de fasekop in de app gelijk is). PowerPoint-link op de dia Thuis en materiaal klein en onderaan. [Frans] op de laptop (ingelogd) controleren dat Geef les v85 heeft en een les met foto's bekijken via `#lesproef/vwo3:12.1` of een andere les uit `public/lesfotos.js`. Ook nog: [Frans] God Rest Ye in Musicbox (box `839c630f…`): leadsheet `Sectie Muziek/01 Onderbouw muziek/03 Klas 3/Kerst/God Rest Ye (vwo)/Leadsheet/god-rest-ye-leadsheet.png` en videolinks per niveau (YouTube Qa3v9gc6u24, Bhuo3QOV088, YLCyANnBHkE) staan nog niet in de box. Claude doet dit alleen in een sessie waarin Frans meekijkt (aanpassen in Musicbox, ingelogd als Frans), of Frans zet ze er zelf in. Werkwijze: stand, regel God Rest Ye.
 
-## Printbestanden bij Klaarzetten (les-t7; 20-11 main erin samengevoegd en cache v86 op de branch, nog niet in main en niet gepusht)
+## Printbestanden bij Klaarzetten (les-t7; op 21-11 samengevoegd in main en gepusht, cache v89, bordtaak les-vmwnxh3iv)
 - [Frans] Na live bij Klaarzetten de links nakijken: nieuw strookje BB1 lesweek 30 en 37 (`01 Klas 1/Lessen 2026-2027`), werkblad notenbalk mavo 4 lesweek 5 met antwoordenblad (`Mavo 4/Lessen 2026-2027`); reflectieformulier speelstuk nu ook bij havo 3 19.1. Bladen: `tools/printbladen/`, links: `tools/zet-printbestanden-2026-11-19.js`. Nog zonder bestand: vwo 4 8.1 "Kaart BL schema" en mavo 4 "partijen of bladmuziek" (hangt van de keuze af).
-- [Claude] Nog doen: tests draaien (`node tools/test-alles.js --snel`), dan main fast-forward naar `bord/les-t7` en pushen via run_in_terminal. Lukte 20-11 niet in de bordwachter: geen Node en geen terminal.
 
 ## Audit 16-11 (live sinds 16-11, cache v82)
 - Rapport: `lesdag project/rapporten/audit-2026-11-16.md`. Op 16-11 met het ja van Frans samengevoegd en gepusht. Rooster-worker apart uitgerold met `wrangler deploy`.
@@ -21,16 +20,18 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 - [Frans] Back-up `eerste`: Instellingen, Synchroniseren, Back-ups. Staat er "Eerste upload", zeg het; dan wist Claude hem.
 
 ## Na live, in deze volgorde
-1. Live versie bekijken met het echte rooster, op laptop en tablet. De nachtserie ging live zonder de proefversie. [Frans]
-2. Controleer dat de migratie van vwo 5 de eigen voortgang goed heeft omgenummerd. [Frans, op de laptop]
-3. Synchroniseren aan, zonder leerlinggegevens. Agendalink maken in Outlook (vaste titels, geen eigen afspraken). [Frans, op de laptop]
+- Gedaan 19-11: Frans heeft de live versie met het echte rooster bekeken; alles klopt (bord, taak les-t2).
+1. Volgende stap: vaste lesdag per klas uit Zermelo halen. [Claude]
+2. Synchroniseren aan, mét leerlinggegevens (besluit 18-11, bordtaak les-t13). Klassenlijsten en scores gaan nu standaard mee: op 21-11 samengevoegd in main en gepusht (bordtaak les-vmwq19aai, cache v86). Daarna per apparaat Instellingen, Synchroniseren aanzetten; eerst "Wat staat er op de server?" bij Leerlinggegevens (oude rijen kunnen botsen). Agendalink: Instellingen, Agenda in Outlook, link maken, in Outlook op het web Agenda toevoegen, Abonneren via internet (vaste titels, geen eigen afspraken). [Frans, op de laptop]
+   Risico's leerlinggegevens: D1 is versleuteld opgeslagen door Cloudflare (Cloudflare heeft de sleutel, geen eigen versleuteling); toegang alleen via Access en controle op nwn@csgpm.nl; ook in 30 dagen back-ups en `eerste`. Locatie database onbekend (niet EU-vastgezet), en een privé Cloudflare-account valt niet onder een verwerkersovereenkomst van school. [Frans: nagaan of dit mag]
+- Gedaan 19-11: Frans heeft de migratie van vwo 5 gecontroleerd en akkoord bevonden (op 21-11 in main, bordtaak les-vmwq1an9d).
 4. Dashboard verversen: `tools/ververs-dashboard.js`. [Claude]
 
 ## Wacht op Frans
 Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7yB5yp (10-11: alleen privémail bewezen klaar. Schoolmail en Gmail nagekeken: PTA-lijst niet per mail verstuurd, niets aan Mar sinds 8-11. Antwoord aan Jan ging 9-11 uit; solist en namen kaarsendragers volgen nog, Frans heeft ze eind volgende week).
 - Uit de week van 9-11, nagaan of het gedaan is: bericht over 23-11 aan vwo 4 en 5 in Magister; PTA-lijst doorsturen (`lesdag project/PTA-punten muziek 2026-2027 voor PTA-beheerder.docx`); oude map `lesdag project/lesdag` verwijderen; al geprinte onderhoudsteamkaarten opnieuw printen (meldpunt sinds 10-11 bij Sectie Muziek, `Claude werkmap/Meldpunt kapotte instrumenten/bouwlog.md`).
-- Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen.
-- Voor 23-11, op een echt apparaat: Cijferkolom plakken in Magister. Lesmodus op het digibord. Zermelo met het echte rooster. Concertstand op de tablet. Feedbackblad printen. Beoordelen in een echte les (vwo 4 PT1), checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
+- Nu (na 16-11): Power Automate-stroom HD4 uit en proefantwoord wissen. Branch `lessen-16-11` (vwo 5 10.1 klassikaal, HD4 zonder laptop) op 21-11 samengevoegd in main en gepusht (bordtaak les-vmwq1m01k), cache v88 (v86 en v87 waren al gebruikt); alle tests met schermtest goed. Op de laptop (ingelogd) nakijken: vwo 5 les 10.1 en havo 5 11.2. bord/les-t7 ging live met v89; bord/les-t11 moet hoger dan v89.
+- Voor 23-11, op een echt apparaat: Cijferkolom plakken in Magister. Lesmodus op het digibord. Concertstand op de tablet. Feedbackblad printen. Beoordelen in een echte les (vwo 4 PT1), checklist: `handboek/pt1-vwo4-checklist-2026-11-09.md`.
 
 ## Op datum
 - Na toets 23-11: PT1-namen in formulieren en decks vwo 4 naar P1 (links mee). [Frans]
@@ -44,6 +45,5 @@ Handtaken: lijst en afvinkstaat op https://claude.ai/artifact/Sg88D8jGnJpHXYfC7y
 - Mei 2027: opnames St. Louis Blues en Mahler kiezen voor keuzeuur havo 3.
 
 ## Als eerste oppakken
-- Vaste lesdag per klas uit Zermelo: kan bij de proefversie met het echte rooster. [Claude]
 - 32 voorgestelde lessen (havo 4, vwo 4, mavo 3) eerst aanpassen, dan per klas overnemen, begin havo 4. [Claude + Frans]
-- Past in dit gat, onderdeel B (besloten 11-11): een eigen taak zonder deadline die twee weken openstaat, komt terug bij Week afsluiten met drie knoppen: plan, datum geven of laten vallen. Nu staat zo'n taak in `kandidaten` altijd achteraan. Na A. [Claude]
+- Past in dit gat, onderdeel B (gebouwd 19-11 in `bord/les-t16`; op 21-11 samengevoegd in main en gepusht, bordtaak les-vmwq1agij, cache v87): bij Week afsluiten een stuk "Ligt stil, zonder deadline" voor eigen taken zonder deadline en plan die 14 dagen openstaan, met twee tijdchips (plan), Datum en Laat vallen (met terugzetten). Aanmaakdatum uit het id; onbekend: vanaf de eerste keer gezien. Regels en tests: `stilLiggend` in `functies.js` / `test-functies.js`. [Frans] in een echte week proberen.

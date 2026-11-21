@@ -20,8 +20,8 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 
 - Papieren formulier havo 5 P4 noemt nog 3 klasgenoten (moet 2).
 - Forms-inlevering wordt de vaste route voor opnames; de inzender telt voor de groep.
-- Go Tell It couplet maat 2 is sinds 9-11 G (blad, box, lessen, deck 14). De zes meespeelvideo's van niveau 2 en 3 in de box tonen en spelen vermoedelijk nog D7; bronnen in `02 Keuzevak muziek/Mavo/Mavo 3/Kerst/Video's voor YouTube`. Vervangen kan alleen Frans. [Frans]
-- Go Tell It in de box nakijken: keyboard niveau 2 "grondtonen van het couplet: E, D, G, A" klopt als rijtje, niet meer als volgorde; bas niveau 2 toont in de tab nog Em, D7, G, A7 als overzicht. [Frans]
+- Go Tell It couplet maat 2 is sinds 9-11 G (blad, box, lessen, deck 14). De zes meespeelvideo's van niveau 2 en 3 in de box tonen en spelen vermoedelijk nog D7; bronnen in `02 Keuzevak muziek/Mavo/Mavo 3/Kerst/Video's voor YouTube`. Vervangen kan alleen Frans. De video's zijn van 2-11, dus van vóór de wijziging. [Frans]
+- Klaar (12-11): Go Tell It-box niveau 2. Keyboard zegt nu "grondtonen van het couplet: E, G, E, A, D". De bas-tab toont nu het hele couplet in twee rijen (Em G G G / Em Em A7 D7), gemaakt uit stukken van de oude afbeelding. Na herladen gemeten; live afbeelding is pixel voor pixel gelijk aan de gecontroleerde versie.
 - Mavo 4 week 12 les 1, dia 5 raakt de timer.
 - Decks vwo 5 10.2 en vwo 6 10.2 lopen licht achter op de bron.
 - `notitieAgenda` vwo 5 10.1 noemt nog 25 minuten.
@@ -64,3 +64,34 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen; [onzeker] uit het ou
 
 - De oude map `Dashboard Docent/lesdag project/lesdag`: Frans verwijdert hem.
 - `public/m365.js`, `auth.html`, `config.js` doen niets meer, maar staan in de app. Weghalen is een aparte taak, dat is een wijziging in `public/`.
+
+## Ontwerp timer op het bord en regie op de tablet (overlegd 16-11, live sinds 16-11, commit cab0b2f, cache v76) [Frans]
+
+Probleem (Frans): de fasetimer op het bord maakt van geplande minuten een norm voor de klas. Is Frans eerder klaar of heeft hij te weinig tijd, dan is het onduidelijk of hij meer of minder had moeten doen. Leerlingen voelen druk ("moeten we nog zo lang?" of "moeten we het nu al kennen?"). Alleen de eindtijd van de les ligt vast; fases zijn flexibel. Bij groepjes werkt de timer perfect; bij uitleg, check, afronden en klassikaal oefenen niet.
+
+Besluit: wat de klas ziet en wat Frans ziet worden gescheiden. De regie komt op de tablet.
+
+- **Bord, groepjes/zelfstandig oefenen:** timer blijft. Frans start hem zelf op het moment dat de groepjes beginnen, met een duur die hij dan kiest; de geplande minuten zijn alleen de voorinstelling.
+- **Bord, klassikaal oefenen:** geen klok, wel het doel van de fase ("door tot de overgang lukt").
+- **Bord, uitleg, check, afronden:** geen tijd. Hooguit bolletjes die laten zien waar de les is.
+- **Bord, nooit:** plus-tijd (uitlopen) en geplande minuten.
+- **Tablet (regie):** fase, vorige/volgende, notities, en de **speling**: resterende lestijd uit de lesklok (`public/lesklok.js`, rooster) min de geplande minuten van de fases die nog komen. Bijvoorbeeld "+4 min speling" of "−3 min". Afronden heeft een vaste ondergrens die niet wegvalt. Korte tril als de groepjestimer om is (`tril()` bestaat al).
+
+Techniek (gekozen 16-11): polling via `/api/regie` in dezelfde D1, elke seconde. Uitleg en code: `handboek/techniek.md`, hoofdstuk 4.1. Er gaan alleen les-id, dia en klokstand over, geen leerlinggegevens.
+
+Gebouwd (16-11, samengevoegd en gepusht als cab0b2f, cachenummer v76; live gecontroleerd op 16-11 in v77: bestanden, `/api/regie` geeft 200 achter Access, `#regie` zegt "verbonden"):
+- Laptop: Nu → **Op het bord** zet de les schermvullend in hetzelfde venster (geen tweede venster meer). Geen klok vanzelf, geen geplande minuten (ook niet in het verloop op het welkomscherm), geen plus-tijd: de timer stopt op 0:00 met "Tijd". Pijltjes en `t` (timer met de geplande minuten) werken op de laptop, ook zonder verbinding.
+- Tablet: Nu → **Regie** (op een tablet staat die knop voorop), of `#regie`: volgt vanzelf de les die op het bord staat. Fase, vorige/volgende, lijst van dia's, notities, speling, groepjestimer (− / + en "Start op het bord"; bij "aan de slag" open, bij andere fases ingeklapt), pauze/verder, timer weg, afronden, bord sluiten. Eén tril als de groepjestimer om is.
+- Speling: rest van de les (lesklok, aansluitende uren tellen mee) min de geplande minuten van wat nog komt; de huidige fase telt voor wat er van zijn minuten over is. Afsluiten houdt minstens 4 minuten (zoals het opruimsignaal) of de geplande afsluiting als die langer is.
+- Klassikaal oefenen: het doel staat op het bord als de fase een "Klaar?"-tekst heeft (144 van de 799 aan-de-slagfases). Groepjes zijn niet betrouwbaar uit de fasetekst te halen; daarom start Frans de timer zelf op elke fase.
+- Getest: `tools/test-regie.js` (nieuw), onderdelen 3, 6 en 7 van `tools/test-routes-lesmodus.js` (6: bord en tablet in twee losse browsers via de server), `test-nu-ochtend.js` bevinding 73 (welkomdia toont nu nooit minuten), `test-alles --snel`, en met de hand in twee tabbladen. Bekend en al op `main`: mavo3:20.1 dia 5 loopt 9 px zijwaarts over op 1280.
+
+Nog te doen, op de echte apparaten [Frans]:
+1. App herladen op laptop en tablet (v77 of nieuwer). De databasetabellen staan er al.
+2. Op de echte tablet: inloggen via Access, Regie openen terwijl de laptop het bord heeft. Volgt de tablet binnen een à twee seconden? Komen vorige/volgende goed aan?
+3. Groepjestimer starten vanaf de tablet, duur aanpassen; voel je de tril als hij om is (alleen Android, iPad trilt niet)?
+4. Klopt de speling met je gevoel, ook bij een dubbel uur? Is 4 minuten ondergrens voor afsluiten goed?
+5. Wifi op de tablet even uit: zegt de regie "geen verbinding", werken de pijltjes op de laptop, en herstelt de regie als wifi terugkomt?
+6. Blijft het tabletscherm aan tijdens de les (wake lock)?
+
+Digibord (Frans, 16-11): gespiegeld, een directe verbinding met de laptop. De klas ziet dus alles wat op het laptopscherm staat; de huidige regie in een tweede venster op de laptop is daarom niet bruikbaar. Het bord gaat schermvullend op de laptop, alles wat alleen voor Frans is komt op de tablet.

@@ -79,5 +79,19 @@ is('alles af: alleen de losse taak', alle.filter(k => !k.af && telt(k)).map(k =>
 const door = F.maakStukken({ id: 'g', titel: 'Y' }, 2, 60, () => 'g2').reverse(); telt = F.eersteDelen(door);
 is('volgorde in de lijst doet er niet toe', door.filter(k => telt(k)).map(k => k.id).join() === 'g');
 is('zonder taken geen fout', F.eersteDelen(undefined)({ id: 'z' }) === true);
+// Past in dit gat B: taken zonder deadline die twee weken stil liggen
+const idOp = (dag, rest) => 'k' + new Date(dag + 'T12:00:00').getTime().toString(36) + (rest || 'abc');
+is('aanmaakdatum uit het id', F.gemaaktOp({ id: idOp('2026-11-02') }) === '2026-11-02');
+is('veld gemaakt gaat voor', F.gemaaktOp({ id: idOp('2026-11-02'), gemaakt: '2026-10-01' }) === '2026-10-01');
+is('onbekend id: gezien telt, anders niets', F.gemaaktOp({ id: 'x1', gezien: '2026-11-05' }) === '2026-11-05' && F.gemaaktOp({ id: 'x1' }) === null);
+is('stuk telt vanaf de groep', F.gemaaktOp({ id: idOp('2026-11-18'), deel: { groep: idOp('2026-11-01'), nr: 2, van: 3 } }) === '2026-11-01');
+const oud = idOp('2026-11-01'), jong = idOp('2026-11-10');
+const ST = [{ id: oud, titel: 'Oud' }, { id: jong, titel: 'Jong' }, { id: oud + 'd', titel: 'Met deadline', d: '2026-12-01' }, { id: oud + 'p', titel: 'Gepland', plan: { dag: '2026-11-20' } },
+  { id: oud + 'f', titel: 'Af', af: true }, { id: oud + 'a', titel: 'Afspraak', afspraak: true }, { id: oud + 't', titel: 'Dagtaak', dagTaak: { key: 'koor' } }];
+is('alleen de oude open taak zonder deadline en plan', F.stilLiggend(ST, '2026-11-20').map(k => k.titel).join() === 'Oud');
+is('precies twee weken telt mee', F.stilLiggend([{ id: idOp('2026-11-06') }], '2026-11-20').length === 1 && F.stilLiggend([{ id: idOp('2026-11-07') }], '2026-11-20').length === 0);
+const SG = F.maakStukken({ id: oud, titel: 'Groot' }, 3, 90, (() => { let i = 0; return () => idOp('2026-11-15', 'n' + (++i)); })());
+is('van een groep alleen het eerstvolgende stuk', F.stilLiggend(SG, '2026-11-20').map(k => k.deel.nr).join() === '1');
+is('zonder taken geen fout', F.stilLiggend(undefined, '2026-11-20').length === 0 && F.KEUZES.stil.dagen === 14);
 console.log(fouten ? fouten + ' fout(en).' : 'functies: alles goed (' + n + ' controles)');
 process.exit(fouten ? 1 : 0);
