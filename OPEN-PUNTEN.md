@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 20 november 2026 (les-t12 gepusht; live versie met echt rooster klopt; lijst 2 van de audit 17-11). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 21 november 2026 (les-t12 gepusht; live versie met echt rooster klopt; migratie vwo 5 akkoord; lijst 2 van de audit 17-11). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
@@ -17,11 +17,12 @@ Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 - [Frans] Back-up `eerste`: Instellingen, Synchroniseren, Back-ups. Staat er "Eerste upload", zeg het; dan wist Claude hem.
 
 ## Na live, in deze volgorde
+<<<<<<< HEAD
 - Gedaan 19-11: Frans heeft de live versie met het echte rooster bekeken; alles klopt (bord, taak les-t2).
 1. Volgende stap: vaste lesdag per klas uit Zermelo halen. [Claude]
 2. Synchroniseren aan, mét leerlinggegevens (besluit 18-11, bordtaak les-t13). Klassenlijsten en scores gaan nu standaard mee: op 21-11 samengevoegd in main en gepusht (bordtaak les-vmwq19aai, cache v86). Daarna per apparaat Instellingen, Synchroniseren aanzetten; eerst "Wat staat er op de server?" bij Leerlinggegevens (oude rijen kunnen botsen). Agendalink: Instellingen, Agenda in Outlook, link maken, in Outlook op het web Agenda toevoegen, Abonneren via internet (vaste titels, geen eigen afspraken). [Frans, op de laptop]
    Risico's leerlinggegevens: D1 is versleuteld opgeslagen door Cloudflare (Cloudflare heeft de sleutel, geen eigen versleuteling); toegang alleen via Access en controle op nwn@csgpm.nl; ook in 30 dagen back-ups en `eerste`. Locatie database onbekend (niet EU-vastgezet), en een privé Cloudflare-account valt niet onder een verwerkersovereenkomst van school. [Frans: nagaan of dit mag]
-3. Controleer dat de migratie van vwo 5 de eigen voortgang goed heeft omgenummerd. [Frans, op de laptop]
+- Gedaan 19-11: Frans heeft de migratie van vwo 5 gecontroleerd en akkoord bevonden (op 21-11 in main, bordtaak les-vmwq1an9d).
 4. Dashboard verversen: `tools/ververs-dashboard.js`. [Claude]
 
 ## Wacht op Frans
