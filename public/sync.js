@@ -104,7 +104,7 @@
   /* leerlinggegevens (klassenlijsten, scores, beoord.weg) zitten allemaal onder beoord; het beoordelingslogboek staat in IndexedDB en is nooit onderdeel van de staat */
   const zonderLeerlingen = doc => { if (!isObj(doc) || !('beoord' in doc)) return doc; const { beoord, ...rest } = doc; return rest; };
 
-  /* app.leerlingen(): true = klassenlijsten en scores gaan mee. Ontbreekt de functie, dan gaat alles mee (zoals voorheen); de app geeft standaard false. */
+  /* app.leerlingen(): true = klassenlijsten en scores gaan mee. Ontbreekt de functie, dan gaat alles mee; de app geeft standaard true (besluit 18-11), false na "Niet meer meenemen". */
   function maak({ app, opslag, vlag, fetch: f, url = 'api/staat', slot }) {
     let timer = null, nogEens = false;
     const mee = () => !app.leerlingen || !!app.leerlingen();

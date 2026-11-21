@@ -22,6 +22,9 @@
     stukken: {                        // voorstel "Past in dit gat", onderdeel A (besluit Frans 11-11-2026)
       grens: 30,                      // een eigen taak boven zoveel minuten: Lesdag vraagt of hij in stukken mag, stukken van zoveel minuten
       max: 8                          // hoogstens zoveel stukken
+    },
+    stil: {                           // voorstel "Past in dit gat", onderdeel B (besluit Frans 11-11-2026)
+      dagen: 14                       // een eigen taak zonder deadline en zonder plan die zo lang openstaat, komt terug bij Week afsluiten
     }
   };
 
@@ -76,6 +79,15 @@
   const eersteDelen = taken => { const laag = {}; (taken || []).forEach(k => { if (k.deel && !k.af) { const l = laag[k.deel.groep]; if (!l || k.deel.nr < l.deel.nr) laag[k.deel.groep] = k; } });
     return k => !k.deel || k.af || laag[k.deel.groep] === k; };
 
+  /* ---- Past in dit gat B: taken zonder deadline die stil liggen. De aanmaakdatum: het veld gemaakt, anders de tijdstempel in het id
+     ('k' + Date.now() in base 36; bij stukken het id van de groep), anders gezien (de eerste keer dat Lesdag de taak zag). ---- */
+  const gemaaktOp = k => { if (!k) return null; if (k.gemaakt) return k.gemaakt;
+    const id = String(k.deel ? k.deel.groep : k.id || ''); const m = /^k([0-9a-z]{8})[0-9a-z]+$/.exec(id); const ms = m ? parseInt(m[1], 36) : NaN;
+    if (ms > 1704067200000 && ms < 4102444800000) return naarTekst(new Date(ms)); return k.gezien || null; };
+  /* welke taken komen terug: eigen taken die openstaan, zonder deadline, zonder plan, geen afspraak of dagtaak, van een groep alleen het eerstvolgende stuk */
+  const stilLiggend = (taken, vandaag, dagen) => { const telt = eersteDelen(taken); const grens = plusDagen(vandaag, -(dagen == null ? KEUZES.stil.dagen : dagen));
+    return (taken || []).filter(k => k && !k.af && !k.d && !k.plan && !k.afspraak && !k.dagTaak && telt(k) && gemaaktOp(k) && gemaaktOp(k) <= grens); };
+
   /* Printregel bij Klaarzetten → het bestand uit het materiaal van dezelfde les (16-11). Alleen regels over printen of bladen; presentaties,
      Musicbox, oefensites en video's tellen niet. Meeste gedeelde woorden wint, bij gelijkspel de kortste titel (dus niet "met antwoorden"). */
   const PRINT_RE = /print|kopie|uitdel|werkblad|bladmuziek/i;
@@ -91,5 +103,5 @@
     return best;
   };
 
-  return { printBestand, stukAantal, stukMinuten, kaleTitel, stukTitel, maakStukken, eersteDelen, KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
+  return { printBestand, stukAantal, stukMinuten, kaleTitel, stukTitel, maakStukken, eersteDelen, gemaaktOp, stilLiggend, KEUZES, maandagVan, plusDagen, laatsteLesdagVanWeek, eersteLesdagVanWeek, weekRegel, luchtRegel, faseMinuten, telMinuten, pastSamen, samenFasen, ookIn, kiesPaar, unie };
 });

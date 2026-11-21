@@ -87,6 +87,7 @@ Belangrijkste onderdelen:
 Naast `S` staan drie dingen in de browser die bewust niet in `S` zitten:
 
 - `lesdag-zermelo-api`: de Zermelo-token. Een wachtwoord. Niet in een kopie. Gaat wel mee met synchroniseren (als `_zermeloApi`).
+- `lesdag-sync-leerlingen`: `0` houdt klassenlijsten en scores op dit apparaat; leeg of `1` neemt ze mee (standaard sinds 18-11, besluit Frans).
 - `lesdag-sync-aan`: de vlag dat synchroniseren op dit apparaat aanstaat. Daarnaast bewaart IndexedDB `lesdag-sync` de laatst gedeelde versie (de "basis" voor het samenvoegen).
 - IndexedDB van het beoordelingslogboek en `lesdag-beoordeling-reserve`.
 
@@ -102,7 +103,7 @@ Naast `S` staan drie dingen in de browser die bewust niet in `S` zitten:
 | Lessen, kalender, sectietaken (`basis.json`) | ja | gecached | nee | nee |
 | Beoordelingsmodellen | ja | gecached | nee | nee |
 | Voortgang, taken, rooster (`S`) | nee | ja | ja, als sync aan staat | ja |
-| Klassenlijsten en scores (`S.beoord`) | **nee, nooit** | ja | ja (achter de login) | ja |
+| Klassenlijsten en scores (`S.beoord`) | **nee, nooit** | ja | ja, standaard mee (achter de login; per apparaat uit te zetten) | ja |
 | Zermelo-token | **nee, nooit** | ja | ja (achter de login) | nee |
 | Absenten, logboek, verjaardagen (`AP`) | nee | ja | **nee** | nee |
 | Agenda voor Outlook | nee | nee | alleen in `lesdag-agenda` | nee |
