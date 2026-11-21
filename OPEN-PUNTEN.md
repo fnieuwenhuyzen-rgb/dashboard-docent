@@ -1,6 +1,6 @@
 # Open punten Lesdag
 
-Bijgewerkt: 20 november 2026 (lessen-16-11 bijgewerkt met main, wacht op Frans; les-t0 samengevoegd, les-t12 gepusht). Houd dit bestand onder de 45 regels.
+Bijgewerkt: 20 november 2026 (les-t0 samengevoegd, les-t12 gepusht; lijst 2 van de audit 17-11; bordkeuze les-k3: worktrees audit-2026-11, beslisblad-avond, lijst2, logo-monogram en stukken-taken opgeruimd, hd4-logboekfase bleef staan om het losse script `tools/zet-hd4-logboek.js`). Houd dit bestand onder de 45 regels.
 Kleine en minder dringende punten: `handboek/werkvoorraad.md` (zoek op onderwerp). Afgehandeld: `handboek/archief-open-punten-tot-2026-11-09.md` (zoek, niet lezen). Besluiten: `handboek/beslisblad-2026-11-09.md`.
 Labels: [Frans] wacht op hem; [Claude] kan een sessie doen.
 
